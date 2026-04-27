@@ -1,18 +1,80 @@
 #!/usr/bin/env python3
 """
-BirdCLEF 2026 — v94: Exact v67 Parameters + ONNX Perch (Minimal Change)
+BirdCLEF 2026 — v237 Weighted Ensemble Kernel
 =============================================================================
 
-Based on v90 with CRITICAL speed improvement:
-- ONNX Perch replaces TensorFlow Perch for test inference (9x faster)
-- Eliminates timeout risk on hidden test
-- Keeps TF Perch for labels.csv mapping only (or reads directly)
-- All v90 improvements: tuned fusion, event smoothing, 3 seeds
+Purpose
+-------
+This Kaggle **code-competition** script builds `submission.csv` for BirdCLEF
+2026. It is intentionally self-contained: Kaggle runs this file in a fresh
+container, mounts competition/model/dataset/kernel sources under `/kaggle/input`,
+and expects the script to write exactly one CSV with `row_id` plus one column per
+primary label.
 
-Target: 0.925+ LB. CPU-only, ~3 min with cache + fast ONNX inference.
+High-level strategy
+-------------------
+The kernel is not a single neural net trained from scratch. It is a layered
+stack of complementary signals:
+
+1. **Perch foundation model features/logits**
+   - Tool/data behind it: Google's Bird Vocalization Classifier (Perch), mounted
+     as a Kaggle model source, with an ONNX export mounted as a dataset for fast
+     CPU inference.
+   - Expected contribution: robust bioacoustic embeddings and base class scores.
+
+2. **Ecological/metadata prior fusion**
+   - Tool/data behind it: BirdCLEF training soundscape labels, parsed filename
+     metadata (`site`, UTC hour), taxonomy/family groupings, and proxy taxa.
+   - Expected contribution: adjust raw Perch logits using where/when/co-occurring
+     species patterns in the training distribution.
+
+3. **Per-class MLP probes**
+   - Tool/data behind it: PCA-compressed Perch embeddings, class prototypes,
+     base logits, priors, and family-level aggregates.
+   - Expected contribution: class-specific calibration heads for labels with
+     enough positive examples.
+
+4. **ProtoSSM sequence model**
+   - Tool/data behind it: file-level sequences of 12 contiguous 5-second windows
+     (60 seconds total), using an S4D-inspired state-space layer implemented in
+     PyTorch.
+   - Expected contribution: temporal context across adjacent windows, especially
+     for weak calls that need surrounding evidence.
+
+5. **Rank/simple weighted ensemble + post-processing**
+   - Tool/data behind it: weighted blend of MLP probe logits and ProtoSSM logits,
+     rank averaging, per-class temperature sharpening, Gaussian temporal
+     smoothing, file-level context boost, and power calibration.
+   - Expected contribution: convert heterogeneous model outputs into stable,
+     well-ranked probabilities for leaderboard AUC.
+
+Important Kaggle mounts
+-----------------------
+The `kernel-metadata.json` must use the right source types:
+- `competition_sources`: `birdclef-2026`
+- `model_sources`: `google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1`
+- `dataset_sources`: `jaejohn/perch-meta`, `rishikeshjani/perch-onnx-for-birdclef-2026`
+- `kernel_sources`: `kdmitrie/bc26-tensorflow-2-20-0`
+
+Putting `kdmitrie/bc26-tensorflow-2-20-0` in `dataset_sources` can lead to the
+TF/XLA `Cannot deserialize computation` failure because the TF 2.20 wheel is not
+mounted where this script expects it.
+
+Expected output
+---------------
+- Local/Kaggle dry run: generates a syntactically valid `submission.csv` on a
+  small subset of train soundscapes if hidden test audio is unavailable.
+- Real Kaggle run: generates `submission.csv` for all hidden `test_soundscapes`.
+- Target behavior: improve over the current 0.923 LB anchor by combining v111/v118
+  strengths (per-class temperatures, ensemble weight 0.6, temporal smoothing).
 """
 
 # === Cell: Install TF 2.20 ===
+# Why this exists:
+# Perch's TensorFlow SavedModel was exported against a newer TF runtime than the
+# default Kaggle image. We install the offline TF 2.20 wheel from a Kaggle kernel
+# source before importing/loading the model. Without this, the model can mount
+# correctly but fail later with TF/XLA deserialization errors.
 import subprocess, sys, glob as _glob
 from pathlib import Path
 
@@ -33,6 +95,9 @@ else:
     print('WARNING: No TF wheel directory found')
 
 # === Cell: Install ONNX Runtime (9x faster than TF Perch) ===
+# The ONNX Perch export is the fast path for hidden-test inference. TensorFlow
+# Perch is kept primarily for label/signature compatibility, but ONNX Runtime is
+# preferred for CPU speed and lower timeout risk.
 import glob as _glob_onnx
 _whl_candidates = _glob_onnx.glob('/kaggle/input/**/onnxruntime*cp312*x86_64*.whl', recursive=True)
 if _whl_candidates:
@@ -43,6 +108,11 @@ else:
     print('WARNING: No onnxruntime wheel found. Will fall back to TF Perch.')
 
 # === Cell: Imports ===
+# Runtime stack:
+# - NumPy/Pandas: tabular labels, arrays, metadata priors
+# - TensorFlow: load official Perch SavedModel if ONNX is unavailable
+# - scikit-learn: PCA, MLP per-class probes, validation AUC utilities
+# - PyTorch: train the lightweight ProtoSSM temporal model inside the kernel
 import gc, json, os, random, re, time, warnings
 from collections import defaultdict
 from pathlib import Path
@@ -98,6 +168,11 @@ print('NumPy      :', np.__version__)
 print('V94: Tuned Fusion + Event Smoothing + 3 Seeds (from 0.943 analysis)')
 
 # === Cell: Settings ===
+# All high-impact knobs are centralized here so experiments can be audited.
+# v237 keeps the known-strong v111/v118 family of settings, especially:
+# - ProtoSSM ensemble weight = 0.60
+# - widened Gaussian smoothing kernel [0.1, 0.2, 0.4, 0.2, 0.1]
+# - power gamma and file-context boost post-processing
 SEED = 42
 random.seed(SEED)
 os.environ['PYTHONHASHSEED'] = str(SEED)
@@ -186,6 +261,11 @@ print(f'V94: mixup_alpha={PROTOSSM_MIXUP_ALPHA}, label_smooth={PROTOSSM_LABEL_SM
 print(f'V94: seeds={PROTOSSM_SEEDS}, epochs={PROTOSSM_EPOCHS}, patience={PROTOSSM_PATIENCE}')
 
 # === Cell: Data Loading ===
+# Competition data used here:
+# - taxonomy.csv: class labels and taxonomic metadata
+# - sample_submission.csv: required output schema/order
+# - train_soundscapes_labels.csv: supervised soundscape windows for priors/probes
+# - train/test_soundscapes/*.ogg: 60-second audio files split into 12 windows
 taxonomy = pd.read_csv(BASE / 'taxonomy.csv')
 sample_sub = pd.read_csv(BASE / 'sample_submission.csv')
 soundscape_raw = pd.read_csv(BASE / 'train_soundscapes_labels.csv')
@@ -196,6 +276,9 @@ N_CLASSES = len(PRIMARY_LABELS)
 label_to_idx = {c: i for i, c in enumerate(PRIMARY_LABELS)}
 
 # === Cell: Parse Labels ===
+# BirdCLEF labels are semicolon-separated multi-label strings per 5-second
+# segment. This block normalizes them into a binary matrix and extracts site/hour
+# metadata from filenames so priors can learn location/time structure.
 FNAME_RE = re.compile(r'BC2026_(?:Train|Test)_(\d+)_(S\d+)_(\d{8})_(\d{6})\.ogg')
 
 def parse_labels(x):
@@ -242,6 +325,10 @@ Y_FULL_TRUTH = Y_SC[full_truth['index'].to_numpy()]
 print(f'Files: {len(full_files)}, Windows: {len(full_truth)}, Active: {(Y_FULL_TRUTH.sum(0) > 0).sum()}')
 
 # === Cell: Load Perch & Mapping ===
+# Perch supplies two things:
+# 1) semantic audio embeddings used as features for probes/ProtoSSM;
+# 2) class-level logits/scores used as the base detector.
+# The label mapping aligns Perch outputs to BirdCLEF primary labels.
 print('Loading Perch model...')
 birdclassifier = tf.saved_model.load(str(MODEL_DIR))
 infer_fn = birdclassifier.signatures['serving_default']
@@ -270,6 +357,9 @@ MAPPED_BC_INDICES = BC_INDICES[MAPPED_MASK].astype(np.int32)
 print(f'Mapped: {MAPPED_MASK.sum()}/{N_CLASSES}')
 
 # === Cell: Class Types & Extended Proxies ===
+# Some BirdCLEF labels are not birds (amphibians/insects/proxy sound classes).
+# This section marks class types so later priors can treat true birds and proxy
+# taxa differently instead of forcing every sound through bird-only assumptions.
 CLASS_NAME_MAP = taxonomy_.set_index('primary_label')['class_name'].to_dict()
 TEXTURE_TAXA = {'Amphibia', 'Insecta'}
 ACTIVE_CLASSES = [PRIMARY_LABELS[i] for i in np.where(Y_SC.sum(0) > 0)[0]]
@@ -303,6 +393,9 @@ idx_selected_prioronly_active_event = np.setdiff1d(idx_unmapped_active_event, se
 print(f'Proxy targets: {len(SELECTED_PROXY_TARGETS)}')
 
 # === Cell: Family taxonomy ===
+# Family-level grouping is a weak biological prior. Related species often share
+# acoustic texture or habitat; the probe feature builder uses family averages as
+# an additional calibration signal.
 FAMILY_MAP = taxonomy_.set_index('primary_label')['class_name'].to_dict()
 FAMILY_GROUPS = {}
 for ci, label in enumerate(PRIMARY_LABELS):
@@ -314,6 +407,9 @@ CLASS_FAMILY = {ci: FAMILY_MAP.get(label, 'Unknown') for ci, label in enumerate(
 print(f'Family groups: {len(FAMILY_GROUPS)} — {sorted(FAMILY_GROUPS.keys())}')
 
 # === Cell: Utilities ===
+# Small numerical helpers used by multiple stages: AUC diagnostics, temporal
+# smoothing, sequence features, prototype cosine similarity, sigmoid/logit
+# transforms, and file-level context boosting.
 def macro_auc(y_true, y_score):
     keep = y_true.sum(0) > 0
     return roc_auc_score(y_true[:, keep], y_score[:, keep], average='macro')
@@ -393,6 +489,9 @@ def file_context_boost(probs, alpha=FILE_CONTEXT_ALPHA):
     return probs.copy()
 
 # === Cell: Perch Inference ===
+# TensorFlow fallback path: load each 60-second file, split into 12 five-second
+# windows, run Perch, and collect row metadata + logits + embeddings. This is
+# slower than ONNX but useful if ONNX assets are unavailable.
 def read_soundscape_60s(path):
     y, sr = sf.read(path, dtype='float32', always_2d=False)
     if y.ndim == 2: y = y.mean(axis=1)
@@ -437,6 +536,9 @@ def infer_perch_batch(paths, verbose=True):
     return meta_df, scores, embeddings
 
 # === Cell: ONNX Perch Inference (9x faster) ===
+# Fast path: use ONNX Runtime to run Perch embeddings/logits on CPU. This is the
+# preferred hidden-test path because Kaggle inference is time-limited and CPU-only
+# kernels can otherwise timeout.
 try:
     import onnxruntime as ort
     HAS_ONNX = True
@@ -521,6 +623,9 @@ def infer_perch_onnx(paths, verbose=True):
 print(f'V94: ONNX={HAS_ONNX and ONNX_MODEL_PATH is not None}')
 
 # === Cell: Load Cache or Infer ===
+# Training Perch features are expensive to recompute. If the `perch-meta` cache is
+# mounted, load precomputed embeddings/logits and metadata. Otherwise run Perch
+# inference over train soundscapes and optionally cache results in /kaggle/working.
 if CACHE_EXISTS:
     print(f'Loading Perch cache from: {CACHE_DIR}')
     meta_full = pd.read_parquet(CACHE_DIR / 'full_perch_meta.parquet')
@@ -540,6 +645,9 @@ Y_FULL = Y_SC[full_truth_aligned['index'].to_numpy()]
 print(f'scores: {scores_full_raw.shape}, emb: {emb_full.shape}, Y: {Y_FULL.shape}')
 
 # === Cell: Prior Fusion ===
+# Learn and apply non-neural priors from training metadata. These priors estimate
+# how likely each class is by site, hour, broad acoustic texture, and event/proxy
+# class type, then fuse those priors with raw Perch logits.
 def fit_prior_tables(prior_df, Y_prior):
     prior_df = prior_df.reset_index(drop=True)
     global_p = Y_prior.mean(0).astype(np.float32)
@@ -619,6 +727,9 @@ def fuse_scores(base, sites, hours, tables):
     return scores.astype(np.float32), prior
 
 # === Cell: OOF Computation ===
+# Out-of-fold predictions approximate how the calibrated system behaves on unseen
+# data. They are used to train per-class probes without giving each probe its own
+# target window's fitted prior directly.
 gkf = GroupKFold(n_splits=5)
 groups = meta_full['site'].to_numpy()
 
@@ -639,6 +750,9 @@ auc_base = macro_auc(Y_FULL, oof_base)
 print(f'\nOOF AUC (base fusion): {auc_base:.6f}')
 
 # === Cell: PCA + Prototypes ===
+# Compress high-dimensional Perch embeddings into a 64D space and compute class
+# prototypes from positive examples. The probes use distances to prototypes as a
+# lightweight nearest-class acoustic similarity feature.
 emb_scaler = StandardScaler()
 emb_scaled = emb_scaler.fit_transform(emb_full)
 
@@ -655,6 +769,9 @@ for ci in range(N_CLASSES):
 print(f'Class prototypes: {len(CLASS_PROTOTYPES)} classes')
 
 # === Cell: Probe Training ===
+# Train one small MLP per sufficiently represented class. Each probe sees:
+# PCA embedding, raw Perch score, prior-fused score, base OOF score, optional
+# prototype similarity, and optional family mean score.
 print(f'\n=== V94: Training MLP probes ===')
 
 pos_counts = Y_FULL.sum(0)
@@ -691,6 +808,10 @@ for cls_idx in tqdm(probe_idx, desc='Training MLP probes'):
 print(f'MLP probes: {len(probe_models)} / {N_CLASSES} classes')
 
 # === Cell: ProtoSSM v2 — State Space Model + Mixup + SWA ===
+# Temporal model stage. A 60-second soundscape becomes a sequence of 12 windows.
+# ProtoSSM consumes Perch embeddings plus base logits and learns how evidence
+# should propagate across adjacent windows. Its S4D-style convolutional state
+# space layer is much cheaper than a Transformer while still modeling context.
 print(f'\n=== V94: Training ProtoSSM v2 + Mixup + SWA ===')
 
 import torch
@@ -698,6 +819,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class S4DKernel(nn.Module):
+    """Generate a diagonal state-space convolution kernel.
+
+    Intuition: instead of attention over all pairs of time windows, S4D learns a
+    compact impulse response K[time, channel]. Convolving embeddings with this
+    kernel lets each 5-second window borrow evidence from nearby windows at much
+    lower cost than a Transformer.
+    """
     def __init__(self, d_model, d_state=16, dt_min=0.001, dt_max=0.1):
         super().__init__()
         self.d_model = d_model
@@ -722,6 +850,12 @@ class S4DKernel(nn.Module):
         return K
 
 class S4DLayer(nn.Module):
+    """One residual temporal mixing block for 12-window soundscape sequences.
+
+    Input/output shape: (files, windows=12, d_model). The layer normalizes,
+    applies an FFT convolution using the learned S4D kernel, gates with GELU,
+    projects back to d_model, and adds a residual connection.
+    """
     def __init__(self, d_model, d_state=16, dropout=0.1):
         super().__init__()
         self.kernel = S4DKernel(d_model, d_state)
@@ -744,6 +878,18 @@ class S4DLayer(nn.Module):
         return residual + self.dropout(y)
 
 class ProtoSSM(nn.Module):
+    """File-level sequence classifier used as the temporal ensemble member.
+
+    Inputs:
+    - x: Perch embeddings for 12 contiguous 5-second windows.
+    - base_logits: optional Perch/prior logits for the same windows.
+
+    Output:
+    - logits for all BirdCLEF primary labels at each 5-second window.
+
+    The learned `fusion_alpha` decides how much to trust ProtoSSM's temporal
+    signal versus the base Perch/prior logits.
+    """
     def __init__(self, input_dim, n_classes, d_model=128, d_state=16,
                  n_layers=2, dropout=0.15, n_families=5):
         super().__init__()
@@ -895,6 +1041,9 @@ protossm_time = time.time() - protossm_start
 print(f'ProtoSSM training time: {protossm_time:.1f}s ({len(PROTOSSM_SEEDS)} seed(s))')
 
 # === Cell: Test Inference ===
+# Run the same feature extractor/fusion stack on hidden test files. If no hidden
+# test files are mounted (local dry-run), fall back to a small train subset so the
+# script can still validate output shape and invariants.
 final_tables = fit_prior_tables(sc_clean.reset_index(drop=True), Y_SC)
 
 test_dir = BASE / 'test_soundscapes'
@@ -916,6 +1065,10 @@ test_base, test_prior = fuse_scores(
 Z_TEST = emb_pca.transform(emb_scaler.transform(emb_test)).astype(np.float32)
 
 # === Cell: Apply Probes ===
+# Apply the two learned calibration systems to test windows:
+# - MLP probes: per-class, tabular calibration over embeddings/priors/logits
+# - ProtoSSM: temporal sequence model over each 60-second file
+# Their outputs are blended downstream.
 print('\n=== V94: Applying MLP probes + ProtoSSM ensemble ===')
 
 # Step 1: MLP probe predictions
@@ -1047,6 +1200,11 @@ print(f'Rank ensemble range: {rank_ensemble.min():.3f} to {rank_ensemble.max():.
 print(f'Quantile-mix range: {final_scores.min():.3f} to {final_scores.max():.3f}')
 
 # === Cell: Post-processing + Submission ===
+# Final probability shaping. This is not extra training; it calibrates rankings:
+# - per-class temperatures sharpen selected classes
+# - Gaussian smoothing shares evidence across adjacent windows
+# - file-context boost rewards classes repeatedly present in the same file
+# - power transform adjusts probability concentration for leaderboard AUC
 print('\n=== V111: Post-processing with per-class temperatures ===')
 
 # Per-class temperatures from 0.943 cache (oof_temps_v19.npy)
@@ -1068,6 +1226,9 @@ probs = np.power(probs, POWER_GAMMA)
 print(f'Final prob range: {probs.min():.6f} to {probs.max():.6f}, mean: {probs.mean():.4f}')
 
 # === Cell: Build Submission ===
+# Construct the required BirdCLEF output. The assertions are intentionally strict:
+# Kaggle code submissions fail if columns are out of order, row_ids are missing,
+# or probabilities contain NaN/out-of-range values.
 submission = pd.DataFrame(
     data=probs.astype(np.float32),
     columns=PRIMARY_LABELS
