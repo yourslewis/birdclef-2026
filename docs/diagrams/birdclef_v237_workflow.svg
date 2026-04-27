@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="900" viewBox="0 0 1260 900">
+<defs>
+<marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 z" fill="#94a3b8" /></marker>
+<style>
+svg{background:#0f172a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}.title{font-size:34px;font-weight:700;fill:#e5e7eb}.subtitle{font-size:20px;fill:#94a3b8}.node-title{font-size:17px;font-weight:700;fill:#fff}.body{font-size:14px;fill:#e5e7eb}.muted{font-size:13px;fill:#94a3b8}.edge{stroke:#94a3b8;stroke-width:3;fill:none;marker-end:url(#arrow)}
+</style>
+</defs>
+<text x="40" y="58" class="title">BirdCLEF v237 Weighted-Ensemble Workflow</text>
+<text x="42" y="88" class="subtitle">End-to-end path from Kaggle inputs to submission.csv</text>
+<line x1="320" y1="175" x2="390" y2="175" class="edge"/>
+<line x1="660" y1="175" x2="730" y2="175" class="edge"/>
+<line x1="730" y1="175" x2="480" y2="365" class="edge"/>
+<line x1="660" y1="175" x2="570" y2="365" class="edge"/>
+<line x1="480" y1="365" x2="570" y2="365" class="edge"/>
+<line x1="570" y1="365" x2="420" y2="560" class="edge"/>
+<line x1="525" y1="230" x2="655" y2="505" class="edge"/>
+<line x1="480" y1="365" x2="500" y2="560" class="edge"/>
+<line x1="420" y1="560" x2="875" y2="560" class="edge"/>
+<rect x="585" y="546" width="124" height="28" rx="8" fill="#0f172a" stroke="#334155"/>
+<text x="647" y="565" class="muted" text-anchor="middle">probe scores</text>
+<line x1="810" y1="560" x2="875" y2="560" class="edge"/>
+<rect x="780" y="546" width="124" height="28" rx="8" fill="#0f172a" stroke="#334155"/>
+<text x="842" y="565" class="muted" text-anchor="middle">ProtoSSM scores</text>
+<line x1="875" y1="560" x2="660" y2="755" class="edge"/>
+<line x1="660" y1="755" x2="760" y2="755" class="edge"/>
+<rect x="75" y="125" width="250" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="70" y="120" width="250" height="110" rx="16" fill="#111827" stroke="#475569" stroke-width="3"/>
+<path d="M 86 120 H 304 Q 320 120 320 136 V 154 H 70 V 136 Q 70 120 86 120" fill="#475569"/>
+<text x="84" y="143" class="node-title">Kaggle inputs</text>
+<text x="86" y="180" class="body">• taxonomy + sample</text>
+<text x="86" y="200" class="body">• submission</text>
+<text x="86" y="220" class="body">• train labels / train</text>
+<text x="86" y="240" class="body">• soundscapes</text>
+<text x="86" y="260" class="body">• hidden test</text>
+<text x="86" y="280" class="body">• soundscapes</text>
+<rect x="395" y="125" width="270" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="390" y="120" width="270" height="110" rx="16" fill="#111827" stroke="#2563eb" stroke-width="3"/>
+<path d="M 406 120 H 644 Q 660 120 660 136 V 154 H 390 V 136 Q 390 120 406 120" fill="#2563eb"/>
+<text x="404" y="143" class="node-title">Perch inference</text>
+<text x="406" y="180" class="body">• ONNX fast path when</text>
+<text x="406" y="200" class="body">• available</text>
+<text x="406" y="220" class="body">• TF SavedModel fallback</text>
+<text x="406" y="240" class="body">• embeddings + base logits</text>
+<rect x="735" y="125" width="290" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="730" y="120" width="290" height="110" rx="16" fill="#111827" stroke="#0891b2" stroke-width="3"/>
+<path d="M 746 120 H 1004 Q 1020 120 1020 136 V 154 H 730 V 136 Q 730 120 746 120" fill="#0891b2"/>
+<text x="744" y="143" class="node-title">Metadata + label prep</text>
+<text x="746" y="180" class="body">• parse site/hour from</text>
+<text x="746" y="200" class="body">• filenames</text>
+<text x="746" y="220" class="body">• map Perch labels to</text>
+<text x="746" y="240" class="body">• BirdCLEF</text>
+<text x="746" y="260" class="body">• active/proxy/prior-only</text>
+<text x="746" y="280" class="body">• groups</text>
+<rect x="215" y="315" width="270" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="210" y="310" width="270" height="110" rx="16" fill="#111827" stroke="#16a34a" stroke-width="3"/>
+<path d="M 226 310 H 464 Q 480 310 480 326 V 344 H 210 V 326 Q 210 310 226 310" fill="#16a34a"/>
+<text x="224" y="333" class="node-title">Ecological priors</text>
+<text x="226" y="370" class="body">• site, hour, site×hour</text>
+<text x="226" y="390" class="body">• tables</text>
+<text x="226" y="410" class="body">• global fallback</text>
+<text x="226" y="430" class="body">• probabilities</text>
+<text x="226" y="450" class="body">• fuse selected logits</text>
+<rect x="575" y="315" width="300" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="570" y="310" width="300" height="110" rx="16" fill="#111827" stroke="#7c3aed" stroke-width="3"/>
+<path d="M 586 310 H 854 Q 870 310 870 326 V 344 H 570 V 326 Q 570 310 586 310" fill="#7c3aed"/>
+<text x="584" y="333" class="node-title">Probe features</text>
+<text x="586" y="370" class="body">• standardize → PCA-64</text>
+<text x="586" y="390" class="body">• class prototypes + cosine</text>
+<text x="586" y="410" class="body">• sim</text>
+<text x="586" y="430" class="body">• raw/base/prior/family</text>
+<text x="586" y="450" class="body">• signals</text>
+<rect x="135" y="510" width="290" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="130" y="505" width="290" height="110" rx="16" fill="#111827" stroke="#db2777" stroke-width="3"/>
+<path d="M 146 505 H 404 Q 420 505 420 521 V 539 H 130 V 521 Q 130 505 146 505" fill="#db2777"/>
+<text x="144" y="528" class="node-title">Per-class MLP probes</text>
+<text x="146" y="565" class="body">• train one small classifier</text>
+<text x="146" y="585" class="body">• only sufficiently</text>
+<text x="146" y="605" class="body">• represented classes</text>
+<text x="146" y="625" class="body">• tabular calibration branch</text>
+<rect x="505" y="510" width="310" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="500" y="505" width="310" height="110" rx="16" fill="#111827" stroke="#d97706" stroke-width="3"/>
+<path d="M 516 505 H 794 Q 810 505 810 521 V 539 H 500 V 521 Q 500 505 516 505" fill="#d97706"/>
+<text x="514" y="528" class="node-title">ProtoSSM branch</text>
+<text x="516" y="565" class="body">• d_model=128, state=16</text>
+<text x="516" y="585" class="body">• layers=2, seeds=42, 137,</text>
+<text x="516" y="605" class="body">• 2026</text>
+<text x="516" y="625" class="body">• temporal/file sequence</text>
+<text x="516" y="645" class="body">• modeling</text>
+<rect x="880" y="510" width="315" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="875" y="505" width="315" height="110" rx="16" fill="#111827" stroke="#dc2626" stroke-width="3"/>
+<path d="M 891 505 H 1174 Q 1190 505 1190 521 V 539 H 875 V 521 Q 875 505 891 505" fill="#dc2626"/>
+<text x="889" y="528" class="node-title">Ensemble + calibration</text>
+<text x="891" y="565" class="body">• simple blend: ProtoSSM</text>
+<text x="891" y="585" class="body">• weight 0.60</text>
+<text x="891" y="605" class="body">• rank-average ensemble</text>
+<text x="891" y="625" class="body">• quantile mix α=0.5</text>
+<rect x="335" y="705" width="330" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="330" y="700" width="330" height="110" rx="16" fill="#111827" stroke="#16a34a" stroke-width="3"/>
+<path d="M 346 700 H 644 Q 660 700 660 716 V 734 H 330 V 716 Q 330 700 346 700" fill="#16a34a"/>
+<text x="344" y="723" class="node-title">Post-process</text>
+<text x="346" y="760" class="body">• per-class temperatures</text>
+<text x="346" y="780" class="body">• Gaussian temporal smoothing</text>
+<text x="346" y="800" class="body">• file-context boost + power</text>
+<text x="346" y="820" class="body">• calibration</text>
+<rect x="765" y="705" width="270" height="110" rx="16" fill="#020617" opacity="0.8"/>
+<rect x="760" y="700" width="270" height="110" rx="16" fill="#111827" stroke="#2563eb" stroke-width="3"/>
+<path d="M 776 700 H 1014 Q 1030 700 1030 716 V 734 H 760 V 716 Q 760 700 776 700" fill="#2563eb"/>
+<text x="774" y="723" class="node-title">submission.csv</text>
+<text x="776" y="760" class="body">• clip/order to</text>
+<text x="776" y="780" class="body">• sample_submission</text>
+<text x="776" y="800" class="body">• write Kaggle artifact</text>
+<text x="776" y="820" class="body">• print final run summary</text>
+<text x="42" y="865" class="muted">Generated from docs/diagrams/generate_v237_diagrams.py</text>
+<text x="42" y="883" class="muted">Target: kaggle-kernels/v237-weighted-ensemble/script.py</text>
+</svg>
