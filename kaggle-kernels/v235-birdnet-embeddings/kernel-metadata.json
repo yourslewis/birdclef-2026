@@ -1,0 +1,13 @@
+{
+  "id": "yourslewis/birdclef-2026-v235-birdnet-embeddings",
+  "title": "BirdCLEF 2026 v235 BirdNET Embeddings",
+  "code_file": "script.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "false",
+  "dataset_sources": [],
+  "competition_sources": ["birdclef-2026"],
+  "kernel_sources": []
+}

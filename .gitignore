@@ -1,0 +1,47 @@
+# macOS / editor noise
+.DS_Store
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Kaggle/local credentials and generated data
+.kaggle/
+kaggle.json
+*.key
+*.pem
+.env
+.env.*
+
+# Large/generated artifacts
+input/
+data/
+datasets/
+models/
+checkpoints/
+outputs/
+results/
+catboost_info/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+submission.csv
+*.zip
+*.tar
+*.tar.gz
+
+# Local temp
+/tmp/
+tmp/
