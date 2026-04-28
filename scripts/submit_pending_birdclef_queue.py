@@ -22,6 +22,7 @@ PENDING = [
     {"name": "v256", "kernel": "yourslewis/birdclef-2026-v256-v245-strong-topk-contrast", "version": version, "message": "v256: v245 smoothing + stronger top-k confidence contrast"},
     {"name": "v257", "kernel": "yourslewis/birdclef-2026-v257-v245-tail-damp", "version": version, "message": "v257: v245 smoothing + low-rank tail dampening"},
     {"name": "v258", "kernel": "yourslewis/birdclef-2026-v258-v245-strong-tail-damp", "version": version, "message": "v258: v245 smoothing + stronger low-rank tail dampening"},
+    {"name": "v259", "kernel": "yourslewis/birdclef-2026-v259-v245-gentle-tail-damp", "version": version, "message": "v259: v245 smoothing + gentle low-rank tail dampening"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
