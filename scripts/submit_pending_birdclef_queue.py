@@ -24,8 +24,14 @@ PENDING = [
     {
         "name": "v249",
         "kernel": "yourslewis/birdclef-2026-v249-v245-gamma090",
-        "version": int(os.environ.get("KAGGLE_KERNEL_VERSION", "1")),
+        "version": 1,
         "message": "v249: v245 smoothing + power gamma 0.90",
+    },
+    {
+        "name": "v250",
+        "kernel": "yourslewis/birdclef-2026-v250-immediate-temporal-smoothing",
+        "version": int(os.environ.get("KAGGLE_KERNEL_VERSION", "1")),
+        "message": "v250: v245 center mass + immediate-only temporal smoothing",
     },
 ]
 
