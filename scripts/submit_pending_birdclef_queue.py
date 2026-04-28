@@ -8,14 +8,16 @@ import os
 import time
 from kaggle.api.kaggle_api_extended import KaggleApi
 
+version = int(os.environ.get("KAGGLE_KERNEL_VERSION", "1"))
 PENDING = [
-    {"name": "v247", "kernel": "yourslewis/birdclef-2026-v247-minimal-temporal-smoothing", "version": 1, "message": "v247: v245/v246 axis + minimal temporal smoothing center 0.90"},
-    {"name": "v248", "kernel": "yourslewis/birdclef-2026-v248-v245-gamma080", "version": 1, "message": "v248: v245 smoothing + power gamma 0.80"},
-    {"name": "v249", "kernel": "yourslewis/birdclef-2026-v249-v245-gamma090", "version": 1, "message": "v249: v245 smoothing + power gamma 0.90"},
-    {"name": "v250", "kernel": "yourslewis/birdclef-2026-v250-immediate-temporal-smoothing", "version": 1, "message": "v250: v245 center mass + immediate-only temporal smoothing"},
-    {"name": "v251", "kernel": "yourslewis/birdclef-2026-v251-v245-context015", "version": 1, "message": "v251: v245 smoothing + gentler file context alpha 0.15"},
-    {"name": "v252", "kernel": "yourslewis/birdclef-2026-v252-v245-context010", "version": 1, "message": "v252: v245 smoothing + lighter file context alpha 0.10"},
-    {"name": "v253", "kernel": "yourslewis/birdclef-2026-v253-v245-context000", "version": int(os.environ.get("KAGGLE_KERNEL_VERSION", "1")), "message": "v253: v245 smoothing + no file context boost"},
+    {"name": "v247", "kernel": "yourslewis/birdclef-2026-v247-minimal-temporal-smoothing", "version": version, "message": "v247: v245/v246 axis + minimal temporal smoothing center 0.90"},
+    {"name": "v248", "kernel": "yourslewis/birdclef-2026-v248-v245-gamma080", "version": version, "message": "v248: v245 smoothing + power gamma 0.80"},
+    {"name": "v249", "kernel": "yourslewis/birdclef-2026-v249-v245-gamma090", "version": version, "message": "v249: v245 smoothing + power gamma 0.90"},
+    {"name": "v250", "kernel": "yourslewis/birdclef-2026-v250-immediate-temporal-smoothing", "version": version, "message": "v250: v245 center mass + immediate-only temporal smoothing"},
+    {"name": "v251", "kernel": "yourslewis/birdclef-2026-v251-v245-context015", "version": version, "message": "v251: v245 smoothing + gentler file context alpha 0.15"},
+    {"name": "v252", "kernel": "yourslewis/birdclef-2026-v252-v245-context010", "version": version, "message": "v252: v245 smoothing + lighter file context alpha 0.10"},
+    {"name": "v253", "kernel": "yourslewis/birdclef-2026-v253-v245-context000", "version": version, "message": "v253: v245 smoothing + no file context boost"},
+    {"name": "v254", "kernel": "yourslewis/birdclef-2026-v254-v245-context005", "version": version, "message": "v254: v245 smoothing + very light file context alpha 0.05"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
