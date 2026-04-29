@@ -32,6 +32,7 @@ PENDING = [
     {"name": "v263", "kernel": "yourslewis/birdclef-2026-v263-v245-protossm-ew055", "version": version, "message": "v263: v245 smoothing + ProtoSSM ensemble weight 0.55"},
     {"name": "v264", "kernel": "yourslewis/birdclef-2026-v264-v245-protossm-ew050", "version": version, "message": "v264: v245 smoothing + ProtoSSM ensemble weight 0.50"},
     {"name": "v265", "kernel": "yourslewis/birdclef-2026-v265-v245-gamma0875", "version": version, "message": "v265: v245 smoothing + power gamma 0.875"},
+    {"name": "v266", "kernel": "yourslewis/birdclef-2026-v266-v245-gamma0825", "version": version, "message": "v266: v245 smoothing + power gamma 0.825"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
