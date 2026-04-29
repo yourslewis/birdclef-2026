@@ -36,6 +36,11 @@ PENDING = [
     {"name": "v269", "kernel": "yourslewis/birdclef-2026-v269-immediate-temporal075", "version": version, "message": "v269: immediate-only temporal smoothing center 0.75"},
     {"name": "v270", "kernel": "yourslewis/birdclef-2026-v270-immediate-gamma080", "version": version, "message": "v270: immediate-only temporal smoothing + power gamma 0.80"},
     {"name": "v271", "kernel": "yourslewis/birdclef-2026-v271-immediate-gamma090", "version": version, "message": "v271: immediate-only temporal smoothing + power gamma 0.90"},
+    {"name": "v272", "kernel": "yourslewis/birdclef-2026-v272-immediate-quantile055", "version": version, "message": "v272: immediate-only temporal smoothing + quantile mix alpha 0.55"},
+    {"name": "v273", "kernel": "yourslewis/birdclef-2026-v273-immediate-quantile045", "version": version, "message": "v273: immediate-only temporal smoothing + quantile mix alpha 0.45"},
+    {"name": "v274", "kernel": "yourslewis/birdclef-2026-v274-immediate-quantile0525", "version": version, "message": "v274: immediate-only temporal smoothing + quantile mix alpha 0.525"},
+    {"name": "v275", "kernel": "yourslewis/birdclef-2026-v275-immediate-quantile0475", "version": version, "message": "v275: immediate-only temporal smoothing + quantile mix alpha 0.475"},
+    {"name": "v276", "kernel": "yourslewis/birdclef-2026-v276-immediate-protossm-ew055", "version": version, "message": "v276: immediate-only temporal smoothing + ProtoSSM ensemble weight 0.55"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
@@ -70,37 +75,23 @@ while True:
         all_done = False
         if not is_complete(item["kernel"]):
             print(f"{item['name']} not complete yet; sleeping 10 minutes.", flush=True)
-            time.sleep(600)
-            progressed = True
-            break
+            time.sleep(600); progressed = True; break
         print(f"Submitting {item['name']} kernel version {item['version']}...", flush=True)
         try:
-            res = api.competition_submit_code(
-                file_name="submission.csv",
-                message=item["message"],
-                competition="birdclef-2026",
-                kernel=item["kernel"],
-                kernel_version=item["version"],
-            )
+            res = api.competition_submit_code(file_name="submission.csv", message=item["message"], competition="birdclef-2026", kernel=item["kernel"], kernel_version=item["version"])
             print("Submission result:", res, flush=True)
-            progressed = True
-            time.sleep(30)
-            break
+            progressed = True; time.sleep(30); break
         except Exception as exc:
             response = getattr(exc, "response", None)
             text = getattr(response, "text", "") if response is not None else ""
             print(f"Submission attempt failed for {item['name']}: {type(exc).__name__}: {exc}", flush=True)
-            if text:
-                print(text[:2000], flush=True)
+            if text: print(text[:2000], flush=True)
             if "daily Submission allowance" in text or ("daily" in text.lower() and "allowance" in text.lower()):
                 sleep_s = quota_sleep_seconds(text)
                 print(f"Daily submission allowance exhausted; sleeping {sleep_s} seconds before retry.", flush=True)
-                time.sleep(sleep_s)
-                progressed = True
-                break
+                time.sleep(sleep_s); progressed = True; break
             raise
     if all_done:
-        print("All pending kernels are already submitted.", flush=True)
-        break
+        print("All pending kernels are already submitted.", flush=True); break
     if not progressed:
         time.sleep(600)
