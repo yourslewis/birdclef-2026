@@ -1,9 +1,7 @@
 """Submit pending completed BirdCLEF kernels in order, with quota retry.
 
-This avoids losing completed kernels when Kaggle's daily code-submission cap is hit.
-It skips any message already visible in recent submissions and, when Kaggle returns
-an allowance reset estimate, sleeps until just after that estimate instead of a
-fixed hour.
+Skips messages already visible in recent submissions and sleeps until just after
+Kaggle's reported allowance reset when the daily code-submission cap is hit.
 """
 import json
 import os
@@ -36,6 +34,7 @@ PENDING = [
     {"name": "v267", "kernel": "yourslewis/birdclef-2026-v267-v245-temporal075", "version": version, "message": "v267: v245 family + intermediate temporal smoothing center 0.75"},
     {"name": "v268", "kernel": "yourslewis/birdclef-2026-v268-v245-context025", "version": version, "message": "v268: v245 smoothing + stronger file context alpha 0.25"},
     {"name": "v269", "kernel": "yourslewis/birdclef-2026-v269-immediate-temporal075", "version": version, "message": "v269: immediate-only temporal smoothing center 0.75"},
+    {"name": "v270", "kernel": "yourslewis/birdclef-2026-v270-immediate-gamma080", "version": version, "message": "v270: immediate-only temporal smoothing + power gamma 0.80"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
