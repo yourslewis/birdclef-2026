@@ -45,6 +45,7 @@ PENDING=[
     {"name":"v285","kernel":"yourslewis/bc26-v285-prob-temporal-smooth","version":version,"message":"v285: immediate temporal smoothing after sigmoid in probability space"},
     {"name":"v286","kernel":"yourslewis/bc26-v286-prob-smooth-mean010","version":version,"message":"v286: probability temporal smoothing + file mean blend alpha 0.10"},
     {"name":"v287","kernel":"yourslewis/bc26-v287-prob-smooth-q0475","version":version,"message":"v287: probability temporal smoothing + quantile mix alpha 0.475"},
+    {"name":"v288","kernel":"yourslewis/bc26-v288-prob-smooth-q0525","version":version,"message":"v288: probability temporal smoothing + quantile mix alpha 0.525"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
