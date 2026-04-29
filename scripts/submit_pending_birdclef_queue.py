@@ -40,6 +40,9 @@ PENDING=[
     {"name":"v280","kernel":"yourslewis/bc26-v280-selective-context-top8","version":version,"message":"v280: immediate-only temporal smoothing + selective top-8 file context boost"},
     {"name":"v281","kernel":"yourslewis/bc26-v281-file-mean-blend","version":version,"message":"v281: immediate-only temporal smoothing + file mean blend context"},
     {"name":"v282","kernel":"yourslewis/bc26-v282-file-mean-alpha010","version":version,"message":"v282: immediate-only temporal smoothing + file mean blend alpha 0.10"},
+    {"name":"v283","kernel":"yourslewis/bc26-v283-file-mean-alpha015","version":version,"message":"v283: immediate-only temporal smoothing + file mean blend alpha 0.15"},
+    {"name":"v284","kernel":"yourslewis/bc26-v284-file-mean-alpha005","version":version,"message":"v284: immediate-only temporal smoothing + file mean blend alpha 0.05"},
+    {"name":"v285","kernel":"yourslewis/bc26-v285-prob-temporal-smooth","version":version,"message":"v285: immediate temporal smoothing after sigmoid in probability space"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
