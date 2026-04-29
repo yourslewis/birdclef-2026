@@ -5,6 +5,7 @@ It skips any message already visible in recent submissions.
 """
 import json
 import os
+import re
 import time
 from kaggle.api.kaggle_api_extended import KaggleApi
 
@@ -27,6 +28,9 @@ PENDING = [
     {"name": "v261", "kernel": "yourslewis/birdclef-2026-v261-v245-quantile-alpha045", "version": version, "message": "v261: v245 smoothing + quantile mix alpha 0.45"},
     {"name": "v262", "kernel": "yourslewis/birdclef-2026-v262-v245-quantile-alpha0525", "version": version, "message": "v262: v245 smoothing + quantile mix alpha 0.525"},
     {"name": "v263", "kernel": "yourslewis/birdclef-2026-v263-v245-protossm-ew055", "version": version, "message": "v263: v245 smoothing + ProtoSSM ensemble weight 0.55"},
+    {"name": "v264", "kernel": "yourslewis/birdclef-2026-v264-v245-protossm-ew050", "version": version, "message": "v264: v245 smoothing + ProtoSSM ensemble weight 0.50"},
+    {"name": "v265", "kernel": "yourslewis/birdclef-2026-v265-v245-gamma0875", "version": version, "message": "v265: v245 smoothing + power gamma 0.875"},
+    {"name": "v266", "kernel": "yourslewis/birdclef-2026-v266-v245-gamma0825", "version": version, "message": "v266: v245 smoothing + power gamma 0.825"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
@@ -40,6 +44,15 @@ def is_complete(kernel):
     status = api.kernels_status(kernel)
     print(f"Kernel status {kernel}: {status}", flush=True)
     return "COMPLETE" in str(getattr(status, "status", status)).upper()
+
+def quota_sleep_seconds(text: str) -> int:
+    match = re.search(r"(\d+(?:\.\d+)?)\s+hours?\s+from now", text)
+    if match:
+        return max(300, int(float(match.group(1)) * 3600) + 120)
+    match = re.search(r"(\d+)\s+minutes?\s+from now", text)
+    if match:
+        return max(300, int(match.group(1)) * 60 + 120)
+    return 3600
 
 while True:
     messages = recent_messages()
@@ -75,8 +88,9 @@ while True:
             if text:
                 print(text[:2000], flush=True)
             if "daily Submission allowance" in text or ("daily" in text.lower() and "allowance" in text.lower()):
-                print("Daily submission allowance exhausted; sleeping 1 hour before retry.", flush=True)
-                time.sleep(3600)
+                sleep_s = quota_sleep_seconds(text)
+                print(f"Daily submission allowance exhausted; sleeping {sleep_s} seconds before retry.", flush=True)
+                time.sleep(sleep_s)
                 progressed = True
                 break
             raise
