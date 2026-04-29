@@ -39,6 +39,7 @@ PENDING = [
     {"name": "v272", "kernel": "yourslewis/birdclef-2026-v272-immediate-quantile055", "version": version, "message": "v272: immediate-only temporal smoothing + quantile mix alpha 0.55"},
     {"name": "v273", "kernel": "yourslewis/birdclef-2026-v273-immediate-quantile045", "version": version, "message": "v273: immediate-only temporal smoothing + quantile mix alpha 0.45"},
     {"name": "v274", "kernel": "yourslewis/birdclef-2026-v274-immediate-quantile0525", "version": version, "message": "v274: immediate-only temporal smoothing + quantile mix alpha 0.525"},
+    {"name": "v275", "kernel": "yourslewis/birdclef-2026-v275-immediate-quantile0475", "version": version, "message": "v275: immediate-only temporal smoothing + quantile mix alpha 0.475"},
 ]
 
 with open(os.path.expanduser("~/.kaggle/kaggle.json"), "r") as f:
