@@ -35,6 +35,7 @@ PENDING=[
     {"name":"v275","kernel":"yourslewis/birdclef-2026-v275-immediate-quantile0475","version":version,"message":"v275: immediate-only temporal smoothing + quantile mix alpha 0.475"},
     {"name":"v276","kernel":"yourslewis/birdclef-2026-v276-immediate-protossm-ew055","version":version,"message":"v276: immediate-only temporal smoothing + ProtoSSM ensemble weight 0.55"},
     {"name":"v277","kernel":"yourslewis/birdclef-2026-v277-immediate-protossm-ew050","version":version,"message":"v277: immediate-only temporal smoothing + ProtoSSM ensemble weight 0.50"},
+    {"name":"v278","kernel":"yourslewis/bc26-v278-immediate-selective-context","version":version,"message":"v278: immediate-only temporal smoothing + selective top-k file context boost"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
