@@ -39,6 +39,7 @@ PENDING=[
     {"name":"v279","kernel":"yourslewis/bc26-v279-selective-context-top16","version":version,"message":"v279: immediate-only temporal smoothing + selective top-16 file context boost"},
     {"name":"v280","kernel":"yourslewis/bc26-v280-selective-context-top8","version":version,"message":"v280: immediate-only temporal smoothing + selective top-8 file context boost"},
     {"name":"v281","kernel":"yourslewis/bc26-v281-file-mean-blend","version":version,"message":"v281: immediate-only temporal smoothing + file mean blend context"},
+    {"name":"v282","kernel":"yourslewis/bc26-v282-file-mean-alpha010","version":version,"message":"v282: immediate-only temporal smoothing + file mean blend alpha 0.10"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
