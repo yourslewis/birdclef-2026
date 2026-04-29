@@ -1,7 +1,9 @@
 """Submit pending completed BirdCLEF kernels in order, with quota retry.
 
 This avoids losing completed kernels when Kaggle's daily code-submission cap is hit.
-It skips any message already visible in recent submissions.
+It skips any message already visible in recent submissions and, when Kaggle returns
+an allowance reset estimate, sleeps until just after that estimate instead of a
+fixed hour.
 """
 import json
 import os
