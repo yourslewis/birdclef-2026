@@ -58,6 +58,7 @@ PENDING=[
     {"name":"v298","kernel":"yourslewis/bc26-v298-topk-k8","version":version,"message":"v298: v245 smoothing + broad top-k contrast K=8"},
     {"name":"v299","kernel":"yourslewis/bc26-v299-topk-k4","version":version,"message":"v299: v245 smoothing + top-k contrast K=4"},
     {"name":"v300","kernel":"yourslewis/bc26-v300-topk-k6","version":version,"message":"v300: v245 smoothing + top-k contrast K=6"},
+    {"name":"v301","kernel":"yourslewis/bc26-v301-topk-k7","version":version,"message":"v301: v245 smoothing + top-k contrast K=7"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
