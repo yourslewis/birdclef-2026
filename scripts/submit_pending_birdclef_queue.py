@@ -63,6 +63,10 @@ PENDING=[
     {"name":"v303","kernel":"yourslewis/bc26-v303-topk-boost-only","version":version,"message":"v303: v245 smoothing + top-k boost-only K=5 p0.85/1.00"},
     {"name":"v304","kernel":"yourslewis/bc26-v304-topk-damp-only","version":version,"message":"v304: v245 smoothing + non-top damp-only K=5 p1.00/1.15"},
     {"name":"v305","kernel":"yourslewis/bc26-v305-immediate-topk","version":version,"message":"v305: immediate-only temporal smoothing + top-k contrast K=5"},
+    {"name":"v306","kernel":"yourslewis/bc26-v306-immediate-boostonly","version":version,"message":"v306: immediate-only temporal smoothing + top-k boost-only K=5 p0.85/1.00"},
+    {"name":"v307","kernel":"yourslewis/bc26-v307-immediate-damponly","version":version,"message":"v307: immediate-only temporal smoothing + non-top damp-only K=5 p1.00/1.15"},
+    {"name":"v308","kernel":"yourslewis/bc26-v308-immediate-stronger-topk","version":version,"message":"v308: immediate-only temporal smoothing + stronger top-k contrast K=5 p0.85/1.15"},
+    {"name":"v309","kernel":"yourslewis/bc26-v309-immediate-topk-alpha0475","version":version,"message":"v309: immediate top-k contrast + rank-heavy quantile alpha 0.475"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
