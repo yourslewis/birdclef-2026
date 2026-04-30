@@ -50,6 +50,7 @@ PENDING=[
     {"name":"v290","kernel":"yourslewis/bc26-v290-prob-smooth-gamma090","version":version,"message":"v290: probability temporal smoothing + power gamma 0.90"},
     {"name":"v291","kernel":"yourslewis/bc26-v291-prob-smooth-gamma0825","version":version,"message":"v291: probability temporal smoothing + power gamma 0.825"},
     {"name":"v292","kernel":"yourslewis/bc26-v292-prob-smooth-gamma0875","version":version,"message":"v292: probability temporal smoothing + power gamma 0.875"},
+    {"name":"v293","kernel":"yourslewis/bc26-v293-topk-gamma090","version":version,"message":"v293: v245 smoothing + strong top-k contrast + gamma 0.90"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
