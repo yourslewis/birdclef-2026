@@ -55,6 +55,16 @@ PENDING=[
     {"name":"v295","kernel":"yourslewis/bc26-v295-topk-gamma0825","version":version,"message":"v295: v245 smoothing + strong top-k contrast + gamma 0.825"},
     {"name":"v296","kernel":"yourslewis/bc26-v296-topk-gamma0875","version":version,"message":"v296: v245 smoothing + strong top-k contrast + gamma 0.875"},
     {"name":"v297","kernel":"yourslewis/bc26-v297-topk-k3","version":version,"message":"v297: v245 smoothing + focused top-k contrast K=3"},
+    {"name":"v298","kernel":"yourslewis/bc26-v298-topk-k8","version":version,"message":"v298: v245 smoothing + broad top-k contrast K=8"},
+    {"name":"v299","kernel":"yourslewis/bc26-v299-topk-k4","version":version,"message":"v299: v245 smoothing + top-k contrast K=4"},
+    {"name":"v300","kernel":"yourslewis/bc26-v300-topk-k6","version":version,"message":"v300: v245 smoothing + top-k contrast K=6"},
+    {"name":"v301","kernel":"yourslewis/bc26-v301-topk-k7","version":version,"message":"v301: v245 smoothing + top-k contrast K=7"},
+    {"name":"v302","kernel":"yourslewis/bc26-v302-topk-stronger","version":version,"message":"v302: v245 smoothing + stronger top-k contrast K=5 p0.85/1.15"},
+    {"name":"v303","kernel":"yourslewis/bc26-v303-topk-boost-only","version":version,"message":"v303: v245 smoothing + top-k boost-only K=5 p0.85/1.00"},
+    {"name":"v304","kernel":"yourslewis/bc26-v304-topk-damp-only","version":version,"message":"v304: v245 smoothing + non-top damp-only K=5 p1.00/1.15"},
+    {"name":"v305","kernel":"yourslewis/bc26-v305-immediate-topk","version":version,"message":"v305: immediate-only temporal smoothing + top-k contrast K=5"},
+    {"name":"v306","kernel":"yourslewis/bc26-v306-immediate-boostonly","version":version,"message":"v306: immediate-only temporal smoothing + top-k boost-only K=5 p0.85/1.00"},
+    {"name":"v307","kernel":"yourslewis/bc26-v307-immediate-damponly","version":version,"message":"v307: immediate-only temporal smoothing + non-top damp-only K=5 p1.00/1.15"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
