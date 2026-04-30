@@ -55,6 +55,10 @@ PENDING=[
     {"name":"v295","kernel":"yourslewis/bc26-v295-topk-gamma0825","version":version,"message":"v295: v245 smoothing + strong top-k contrast + gamma 0.825"},
     {"name":"v296","kernel":"yourslewis/bc26-v296-topk-gamma0875","version":version,"message":"v296: v245 smoothing + strong top-k contrast + gamma 0.875"},
     {"name":"v297","kernel":"yourslewis/bc26-v297-topk-k3","version":version,"message":"v297: v245 smoothing + focused top-k contrast K=3"},
+    {"name":"v298","kernel":"yourslewis/bc26-v298-topk-k8","version":version,"message":"v298: v245 smoothing + broad top-k contrast K=8"},
+    {"name":"v299","kernel":"yourslewis/bc26-v299-topk-k4","version":version,"message":"v299: v245 smoothing + top-k contrast K=4"},
+    {"name":"v300","kernel":"yourslewis/bc26-v300-topk-k6","version":version,"message":"v300: v245 smoothing + top-k contrast K=6"},
+    {"name":"v301","kernel":"yourslewis/bc26-v301-topk-k7","version":version,"message":"v301: v245 smoothing + top-k contrast K=7"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
