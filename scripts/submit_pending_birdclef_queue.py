@@ -72,6 +72,10 @@ PENDING=[
     {"name":"v312","kernel":"yourslewis/bc26-v312-immediate-topk-alpha055","version":version,"message":"v312: immediate top-k contrast + mean-heavy quantile alpha 0.55"},
     {"name":"v313","kernel":"yourslewis/bc26-v313-immediate-topk-gamma090","version":version,"message":"v313: immediate top-k contrast + power gamma 0.90"},
     {"name":"v314","kernel":"yourslewis/bc26-v314-immediate-topk-gamma080","version":version,"message":"v314: immediate top-k contrast + power gamma 0.80"},
+    {"name":"v315","kernel":"yourslewis/bc26-v315-immediate-topk-gamma0825","version":version,"message":"v315: immediate top-k contrast + power gamma 0.825"},
+    {"name":"v316","kernel":"yourslewis/bc26-v316-immediate-topk-gamma0875","version":version,"message":"v316: immediate top-k contrast + power gamma 0.875"},
+    {"name":"v317","kernel":"yourslewis/bc26-v317-immediate-tail-damp","version":version,"message":"v317: immediate-only temporal smoothing + low-rank tail dampening K10 p1.05"},
+    {"name":"v318","kernel":"yourslewis/bc26-v318-immediate-strong-tail-damp","version":version,"message":"v318: immediate-only temporal smoothing + stronger low-rank tail dampening K5 p1.10"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
