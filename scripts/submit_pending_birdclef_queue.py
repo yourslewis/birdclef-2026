@@ -91,6 +91,10 @@ PENDING=[
     {"name":"v331","kernel":"yourslewis/bc26-v331-immediate-topk-context01875","version":version,"message":"v331: immediate top-k contrast + file context alpha 0.1875"},
     {"name":"v332","kernel":"yourslewis/bc26-v332-immediate-topk-context02125","version":version,"message":"v332: immediate top-k contrast + file context alpha 0.2125"},
     {"name":"v333","kernel":"yourslewis/bc26-v333-immediate-topk-context020625","version":version,"message":"v333: immediate top-k contrast + file context alpha 0.20625"},
+    {"name":"v334","kernel":"yourslewis/bc26-v334-immediate-topk-context019375","version":version,"message":"v334: immediate top-k contrast + file context alpha 0.19375"},
+    {"name":"v335","kernel":"yourslewis/bc26-v335-immediate-topk-context0203125","version":version,"message":"v335: immediate top-k contrast + file context alpha 0.203125"},
+    {"name":"v336","kernel":"yourslewis/bc26-v336-immediate-topk-context0196875","version":version,"message":"v336: immediate top-k contrast + file context alpha 0.196875"},
+    {"name":"v337","kernel":"yourslewis/bc26-v337-immediate-topk-context02015625","version":version,"message":"v337: immediate top-k contrast + file context alpha 0.2015625"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
