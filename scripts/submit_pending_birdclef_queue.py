@@ -89,6 +89,7 @@ PENDING=[
     {"name":"v329","kernel":"yourslewis/bc26-v329-immediate-topk-context0225","version":version,"message":"v329: immediate top-k contrast + file context alpha 0.225"},
     {"name":"v330","kernel":"yourslewis/bc26-v330-immediate-topk-context0175","version":version,"message":"v330: immediate top-k contrast + file context alpha 0.175"},
     {"name":"v331","kernel":"yourslewis/bc26-v331-immediate-topk-context01875","version":version,"message":"v331: immediate top-k contrast + file context alpha 0.1875"},
+    {"name":"v332","kernel":"yourslewis/bc26-v332-immediate-topk-context02125","version":version,"message":"v332: immediate top-k contrast + file context alpha 0.2125"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
