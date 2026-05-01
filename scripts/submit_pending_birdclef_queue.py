@@ -72,6 +72,19 @@ PENDING=[
     {"name":"v312","kernel":"yourslewis/bc26-v312-immediate-topk-alpha055","version":version,"message":"v312: immediate top-k contrast + mean-heavy quantile alpha 0.55"},
     {"name":"v313","kernel":"yourslewis/bc26-v313-immediate-topk-gamma090","version":version,"message":"v313: immediate top-k contrast + power gamma 0.90"},
     {"name":"v314","kernel":"yourslewis/bc26-v314-immediate-topk-gamma080","version":version,"message":"v314: immediate top-k contrast + power gamma 0.80"},
+    {"name":"v315","kernel":"yourslewis/bc26-v315-immediate-topk-gamma0825","version":version,"message":"v315: immediate top-k contrast + power gamma 0.825"},
+    {"name":"v316","kernel":"yourslewis/bc26-v316-immediate-topk-gamma0875","version":version,"message":"v316: immediate top-k contrast + power gamma 0.875"},
+    {"name":"v317","kernel":"yourslewis/bc26-v317-immediate-tail-damp","version":version,"message":"v317: immediate-only temporal smoothing + low-rank tail dampening K10 p1.05"},
+    {"name":"v318","kernel":"yourslewis/bc26-v318-immediate-strong-tail-damp","version":version,"message":"v318: immediate-only temporal smoothing + stronger low-rank tail dampening K5 p1.10"},
+    {"name":"v319","kernel":"yourslewis/bc26-v319-immediate-gentle-tail-damp","version":version,"message":"v319: immediate-only temporal smoothing + gentle low-rank tail dampening K20 p1.03"},
+    {"name":"v320","kernel":"yourslewis/bc26-v320-immediate-topk-tail-damp","version":version,"message":"v320: immediate top-k contrast + gentle tail dampening K10 p1.05"},
+    {"name":"v321","kernel":"yourslewis/bc26-v321-immediate-topk-strong-tail","version":version,"message":"v321: immediate top-k contrast + strong tail dampening K5 p1.10"},
+    {"name":"v322","kernel":"yourslewis/bc26-v322-immediate-topk-gentle-tail","version":version,"message":"v322: immediate top-k contrast + gentle tail dampening K20 p1.03"},
+    {"name":"v323","kernel":"yourslewis/bc26-v323-immediate-topk-k7","version":version,"message":"v323: immediate-only temporal smoothing + broader top-k contrast K=7"},
+    {"name":"v324","kernel":"yourslewis/bc26-v324-immediate-topk-k3","version":version,"message":"v324: immediate-only temporal smoothing + focused top-k contrast K=3"},
+    {"name":"v325","kernel":"yourslewis/bc26-v325-immediate-topk-k4","version":version,"message":"v325: immediate-only temporal smoothing + focused top-k contrast K=4"},
+    {"name":"v326","kernel":"yourslewis/bc26-v326-immediate-topk-k6","version":version,"message":"v326: immediate-only temporal smoothing + broader top-k contrast K=6"},
+    {"name":"v327","kernel":"yourslewis/bc26-v327-immediate-topk-context025","version":version,"message":"v327: immediate top-k contrast + stronger file context alpha 0.25"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
