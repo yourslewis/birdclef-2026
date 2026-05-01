@@ -85,6 +85,11 @@ PENDING=[
     {"name":"v325","kernel":"yourslewis/bc26-v325-immediate-topk-k4","version":version,"message":"v325: immediate-only temporal smoothing + focused top-k contrast K=4"},
     {"name":"v326","kernel":"yourslewis/bc26-v326-immediate-topk-k6","version":version,"message":"v326: immediate-only temporal smoothing + broader top-k contrast K=6"},
     {"name":"v327","kernel":"yourslewis/bc26-v327-immediate-topk-context025","version":version,"message":"v327: immediate top-k contrast + stronger file context alpha 0.25"},
+    {"name":"v328","kernel":"yourslewis/bc26-v328-immediate-topk-context030","version":version,"message":"v328: immediate top-k contrast + strong file context alpha 0.30"},
+    {"name":"v329","kernel":"yourslewis/bc26-v329-immediate-topk-context0225","version":version,"message":"v329: immediate top-k contrast + file context alpha 0.225"},
+    {"name":"v330","kernel":"yourslewis/bc26-v330-immediate-topk-context0175","version":version,"message":"v330: immediate top-k contrast + file context alpha 0.175"},
+    {"name":"v331","kernel":"yourslewis/bc26-v331-immediate-topk-context01875","version":version,"message":"v331: immediate top-k contrast + file context alpha 0.1875"},
+    {"name":"v332","kernel":"yourslewis/bc26-v332-immediate-topk-context02125","version":version,"message":"v332: immediate top-k contrast + file context alpha 0.2125"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
