@@ -114,6 +114,12 @@ PENDING=[
     {"name":"v349","kernel":"yourslewis/bc26-v349-immediate-topk-ew060-gamma0825","version":version,"message":"v349: immediate top-k + ProtoSSM EW0.60 + power gamma 0.825"},
     {"name":"v350","kernel":"yourslewis/bc26-v350-immediate-topk-ew060-gamma0875","version":version,"message":"v350: immediate top-k + ProtoSSM EW0.60 + power gamma 0.875"},
     {"name":"v351","kernel":"yourslewis/bc26-v351-immediate-topk-ew060-gamma090","version":version,"message":"v351: immediate top-k + ProtoSSM EW0.60 + power gamma 0.90"},
+    {"name":"v352","kernel":"yourslewis/bc26-v352-immediate-topk-ew060-gamma080","version":version,"message":"v352: immediate top-k + ProtoSSM EW0.60 + power gamma 0.80"},
+    {"name":"v353","kernel":"yourslewis/bc26-v353-immediate-topk-ew0625-gamma0825","version":version,"message":"v353: immediate top-k + ProtoSSM EW0.625 + power gamma 0.825"},
+    {"name":"v354","kernel":"yourslewis/bc26-v354-immediate-topk-ew0625-gamma0875","version":version,"message":"v354: immediate top-k + ProtoSSM EW0.625 + power gamma 0.875"},
+    {"name":"v355","kernel":"yourslewis/bc26-v355-immediate-topk-ew0625-gamma090","version":version,"message":"v355: immediate top-k + ProtoSSM EW0.625 + power gamma 0.90"},
+    {"name":"v356","kernel":"yourslewis/bc26-v356-immediate-topk-ew0625-gamma080","version":version,"message":"v356: immediate top-k + ProtoSSM EW0.625 + power gamma 0.80"},
+    {"name":"v357","kernel":"yourslewis/bc26-v357-immediate-topk-ew065-gamma0825","version":version,"message":"v357: immediate top-k + ProtoSSM EW0.65 + power gamma 0.825"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
