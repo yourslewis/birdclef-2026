@@ -1,6 +1,11 @@
 """Submit pending completed BirdCLEF kernels in order, with quota retry."""
 import json, os, re, time
-from kaggle.api.kaggle_api_extended import KaggleApi
+import requests
+from kagglesdk.kaggle_http_client import KaggleHttpClient
+from kagglesdk.competitions.services.competition_api_service import CompetitionApiClient
+from kagglesdk.competitions.types.competition_api_service import ApiCreateCodeSubmissionRequest, ApiListSubmissionsRequest
+from kagglesdk.kernels.services.kernels_api_service import KernelsApiClient
+from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelSessionStatusRequest
 
 version=int(os.environ.get("KAGGLE_KERNEL_VERSION","1"))
 PENDING=[
@@ -104,17 +109,45 @@ PENDING=[
     {"name":"v344","kernel":"yourslewis/bc26-v344-immediate-topk-ew055-alpha0475","version":version,"message":"v344: immediate top-k + ProtoSSM EW0.55 + quantile alpha 0.475"},
     {"name":"v345","kernel":"yourslewis/bc26-v345-immediate-topk-ew055-gamma0825","version":version,"message":"v345: immediate top-k + ProtoSSM EW0.55 + power gamma 0.825"},
 ]
-with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
-api=KaggleApi(); api.authenticate()
-def recent_messages(): return {str(getattr(s,"description","")) for s in api.competition_submissions("birdclef-2026")[:50]}
+with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
+    token=json.load(f)["key"]
+http=KaggleHttpClient(api_token=token)
+competitions=CompetitionApiClient(http)
+kernels=KernelsApiClient(http)
+
+def recent_messages():
+    req=ApiListSubmissionsRequest(); req.competition_name="birdclef-2026"; req.page_size=50
+    return {str(s.description) for s in competitions.list_submissions(req).submissions}
+
+def split_kernel(kernel):
+    owner, slug = kernel.split("/", 1)
+    return owner, slug
+
 def is_complete(kernel):
-    status=api.kernels_status(kernel); print(f"Kernel status {kernel}: {status}", flush=True); return "COMPLETE" in str(getattr(status,"status",status)).upper()
+    owner, slug = split_kernel(kernel)
+    req=ApiGetKernelSessionStatusRequest(); req.user_name=owner; req.kernel_slug=slug
+    status=kernels.get_kernel_session_status(req)
+    print(f"Kernel status {kernel}: {status}", flush=True)
+    return "COMPLETE" in str(status.status).upper()
+
 def quota_sleep_seconds(text):
     m=re.search(r"(\d+(?:\.\d+)?)\s+hours?\s+from now", text)
     if m: return max(300,int(float(m.group(1))*3600)+120)
     m=re.search(r"(\d+)\s+minutes?\s+from now", text)
     if m: return max(300,int(m.group(1))*60+120)
     return 3600
+
+def submit_code(item):
+    owner, slug = split_kernel(item["kernel"])
+    req=ApiCreateCodeSubmissionRequest()
+    req.competition_name="birdclef-2026"
+    req.kernel_owner=owner
+    req.kernel_slug=slug
+    req.kernel_version=item["version"]
+    req.file_name="submission.csv"
+    req.submission_description=item["message"]
+    return competitions.create_code_submission(req)
+
 while True:
     messages=recent_messages(); progressed=False; all_done=True
     for item in PENDING:
@@ -125,9 +158,9 @@ while True:
             print(f"{item['name']} not complete yet; sleeping 10 minutes.", flush=True); time.sleep(600); progressed=True; break
         print(f"Submitting {item['name']} kernel version {item['version']}...", flush=True)
         try:
-            res=api.competition_submit_code(file_name="submission.csv", message=item["message"], competition="birdclef-2026", kernel=item["kernel"], kernel_version=item["version"]); print("Submission result:", res, flush=True); progressed=True; time.sleep(30); break
-        except Exception as exc:
-            response=getattr(exc,"response",None); text=getattr(response,"text","") if response is not None else ""
+            res=submit_code(item); print("Submission result:", res, flush=True); progressed=True; time.sleep(30); break
+        except requests.exceptions.HTTPError as exc:
+            response=getattr(exc,"response",None); text=getattr(response,"text","") if response is not None else str(exc)
             print(f"Submission attempt failed for {item['name']}: {type(exc).__name__}: {exc}", flush=True)
             if text: print(text[:2000], flush=True)
             if "daily Submission allowance" in text or ("daily" in text.lower() and "allowance" in text.lower()):
