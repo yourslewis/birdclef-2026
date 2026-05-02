@@ -95,6 +95,14 @@ PENDING=[
     {"name":"v335","kernel":"yourslewis/bc26-v335-immediate-topk-context0203125","version":version,"message":"v335: immediate top-k contrast + file context alpha 0.203125"},
     {"name":"v336","kernel":"yourslewis/bc26-v336-immediate-topk-context0196875","version":version,"message":"v336: immediate top-k contrast + file context alpha 0.196875"},
     {"name":"v337","kernel":"yourslewis/bc26-v337-immediate-topk-context02015625","version":version,"message":"v337: immediate top-k contrast + file context alpha 0.2015625"},
+    {"name":"v338","kernel":"yourslewis/bc26-v338-immediate-topk-protossm-ew0625","version":version,"message":"v338: immediate top-k contrast + ProtoSSM ensemble weight 0.625"},
+    {"name":"v339","kernel":"yourslewis/bc26-v339-immediate-topk-protossm-ew0575","version":version,"message":"v339: immediate top-k contrast + ProtoSSM ensemble weight 0.575"},
+    {"name":"v340","kernel":"yourslewis/bc26-v340-immediate-topk-protossm-ew055","version":version,"message":"v340: immediate top-k contrast + ProtoSSM ensemble weight 0.55"},
+    {"name":"v341","kernel":"yourslewis/bc26-v341-immediate-topk-protossm-ew065","version":version,"message":"v341: immediate top-k contrast + ProtoSSM ensemble weight 0.65"},
+    {"name":"v342","kernel":"yourslewis/bc26-v342-immediate-topk-ew055-tail","version":version,"message":"v342: immediate top-k + ProtoSSM EW0.55 + tail dampening"},
+    {"name":"v343","kernel":"yourslewis/bc26-v343-immediate-topk-ew055-alpha0525","version":version,"message":"v343: immediate top-k + ProtoSSM EW0.55 + quantile alpha 0.525"},
+    {"name":"v344","kernel":"yourslewis/bc26-v344-immediate-topk-ew055-alpha0475","version":version,"message":"v344: immediate top-k + ProtoSSM EW0.55 + quantile alpha 0.475"},
+    {"name":"v345","kernel":"yourslewis/bc26-v345-immediate-topk-ew055-gamma0825","version":version,"message":"v345: immediate top-k + ProtoSSM EW0.55 + power gamma 0.825"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f: os.environ["KAGGLE_API_TOKEN"]=json.load(f)["key"]
 api=KaggleApi(); api.authenticate()
