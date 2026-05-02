@@ -109,6 +109,7 @@ PENDING=[
     {"name":"v344","kernel":"yourslewis/bc26-v344-immediate-topk-ew055-alpha0475","version":version,"message":"v344: immediate top-k + ProtoSSM EW0.55 + quantile alpha 0.475"},
     {"name":"v345","kernel":"yourslewis/bc26-v345-immediate-topk-ew055-gamma0825","version":version,"message":"v345: immediate top-k + ProtoSSM EW0.55 + power gamma 0.825"},
     {"name":"v346","kernel":"yourslewis/bc26-v346-immediate-topk-ew055-gamma0875","version":version,"message":"v346: immediate top-k + ProtoSSM EW0.55 + power gamma 0.875"},
+    {"name":"v347","kernel":"yourslewis/bc26-v347-immediate-topk-ew055-gamma080","version":version,"message":"v347: immediate top-k + ProtoSSM EW0.55 + power gamma 0.80"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
