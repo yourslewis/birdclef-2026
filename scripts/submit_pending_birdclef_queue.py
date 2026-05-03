@@ -39,6 +39,7 @@ PENDING=[
     {"name":"v364","kernel":"yourslewis/bc26-v364-ew0675-g0825-ctx0275","version":version,"message":"v364: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.275"},
     {"name":"v365","kernel":"yourslewis/bc26-v365-ew0675-g0825-ctx0225","version":version,"message":"v365: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.225"},
     {"name":"v366","kernel":"yourslewis/bc26-v366-ew055-g0825-ctx025","version":version,"message":"v366: immediate top-k + ProtoSSM EW0.55 + gamma 0.825 + context alpha 0.25"},
+    {"name":"v367","kernel":"yourslewis/bc26-v367-ew060-g0825-ctx025","version":version,"message":"v367: immediate top-k + ProtoSSM EW0.60 + gamma 0.825 + context alpha 0.25"},
     {"name":"v272","kernel":"yourslewis/birdclef-2026-v272-immediate-quantile055","version":version,"message":"v272: immediate-only temporal smoothing + quantile mix alpha 0.55"},
     {"name":"v273","kernel":"yourslewis/birdclef-2026-v273-immediate-quantile045","version":version,"message":"v273: immediate-only temporal smoothing + quantile mix alpha 0.45"},
     {"name":"v274","kernel":"yourslewis/birdclef-2026-v274-immediate-quantile0525","version":version,"message":"v274: immediate-only temporal smoothing + quantile mix alpha 0.525"},
