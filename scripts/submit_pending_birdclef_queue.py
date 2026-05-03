@@ -36,6 +36,7 @@ PENDING=[
     {"name":"v271","kernel":"yourslewis/birdclef-2026-v271-immediate-gamma090","version":version,"message":"v271: immediate-only temporal smoothing + power gamma 0.90"},
     {"name":"v362","kernel":"yourslewis/bc26-v362-ew0675-g0825-ctx025","version":version,"message":"v362: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.25"},
     {"name":"v366","kernel":"yourslewis/bc26-v366-ew055-g0825-ctx025","version":version,"message":"v366: immediate top-k + ProtoSSM EW0.55 + gamma 0.825 + context alpha 0.25"},
+    {"name":"v370","kernel":"yourslewis/bc26-v370-ew0575-g0825-ctx025","version":version,"message":"v370: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context alpha 0.25"},
     {"name":"v367","kernel":"yourslewis/bc26-v367-ew060-g0825-ctx025","version":version,"message":"v367: immediate top-k + ProtoSSM EW0.60 + gamma 0.825 + context alpha 0.25"},
     {"name":"v368","kernel":"yourslewis/bc26-v368-ew0625-g0825-ctx025","version":version,"message":"v368: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v369","kernel":"yourslewis/bc26-v369-ew065-g0825-ctx025","version":version,"message":"v369: immediate top-k + ProtoSSM EW0.65 + gamma 0.825 + context alpha 0.25"},
