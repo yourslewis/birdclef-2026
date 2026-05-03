@@ -34,6 +34,9 @@ PENDING=[
     {"name":"v269","kernel":"yourslewis/birdclef-2026-v269-immediate-temporal075","version":version,"message":"v269: immediate-only temporal smoothing center 0.75"},
     {"name":"v270","kernel":"yourslewis/birdclef-2026-v270-immediate-gamma080","version":version,"message":"v270: immediate-only temporal smoothing + power gamma 0.80"},
     {"name":"v271","kernel":"yourslewis/birdclef-2026-v271-immediate-gamma090","version":version,"message":"v271: immediate-only temporal smoothing + power gamma 0.90"},
+    {"name":"v362","kernel":"yourslewis/bc26-v362-ew0675-g0825-ctx025","version":version,"message":"v362: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.25"},
+    {"name":"v363","kernel":"yourslewis/bc26-v363-ew0675-g0825-ctx030","version":version,"message":"v363: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.30"},
+    {"name":"v364","kernel":"yourslewis/bc26-v364-ew0675-g0825-ctx0275","version":version,"message":"v364: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.275"},
     {"name":"v272","kernel":"yourslewis/birdclef-2026-v272-immediate-quantile055","version":version,"message":"v272: immediate-only temporal smoothing + quantile mix alpha 0.55"},
     {"name":"v273","kernel":"yourslewis/birdclef-2026-v273-immediate-quantile045","version":version,"message":"v273: immediate-only temporal smoothing + quantile mix alpha 0.45"},
     {"name":"v274","kernel":"yourslewis/birdclef-2026-v274-immediate-quantile0525","version":version,"message":"v274: immediate-only temporal smoothing + quantile mix alpha 0.525"},
@@ -124,8 +127,6 @@ PENDING=[
     {"name":"v359","kernel":"yourslewis/bc26-v359-immediate-topk-ew065-gamma090","version":version,"message":"v359: immediate top-k + ProtoSSM EW0.65 + power gamma 0.90"},
     {"name":"v360","kernel":"yourslewis/bc26-v360-immediate-topk-ew065-gamma080","version":version,"message":"v360: immediate top-k + ProtoSSM EW0.65 + power gamma 0.80"},
     {"name":"v361","kernel":"yourslewis/bc26-v361-immediate-topk-ew0675-gamma0825","version":version,"message":"v361: immediate top-k + ProtoSSM EW0.675 + power gamma 0.825"},
-    {"name":"v362","kernel":"yourslewis/bc26-v362-ew0675-g0825-ctx025","version":version,"message":"v362: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.25"},
-    {"name":"v363","kernel":"yourslewis/bc26-v363-ew0675-g0825-ctx030","version":version,"message":"v363: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.30"},
 ]
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
