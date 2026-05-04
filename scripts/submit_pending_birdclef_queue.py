@@ -57,6 +57,7 @@ PENDING=[
     {"name":"v386","kernel":"yourslewis/bc26-v386-ew0625-g0875-ctx025","version":version,"message":"v386: immediate top-k + ProtoSSM EW0.625 + gamma 0.875 + context 0.25"},
     {"name":"v387","kernel":"yourslewis/bc26-v387-ew060-g0875-ctx025","version":version,"message":"v387: immediate top-k + ProtoSSM EW0.60 + gamma 0.875 + context 0.25"},
     {"name":"v388","kernel":"yourslewis/bc26-v388-ew0625-g0825-ctx025-a0525","version":version,"message":"v388: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context 0.25 + quantile alpha 0.525"},
+    {"name":"v389","kernel":"yourslewis/bc26-v389-ew0625-g0825-ctx025-a0475","version":version,"message":"v389: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context 0.25 + quantile alpha 0.475"},
     {"name":"v369","kernel":"yourslewis/bc26-v369-ew065-g0825-ctx025","version":version,"message":"v369: immediate top-k + ProtoSSM EW0.65 + gamma 0.825 + context alpha 0.25"},
     {"name":"v364","kernel":"yourslewis/bc26-v364-ew0675-g0825-ctx0275","version":version,"message":"v364: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.275"},
     {"name":"v363","kernel":"yourslewis/bc26-v363-ew0675-g0825-ctx030","version":version,"message":"v363: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.30"},
