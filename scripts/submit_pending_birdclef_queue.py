@@ -71,6 +71,7 @@ PENDING=[
     {"name":"v400","kernel":"yourslewis/bc26-v400-ew0625-g0825-ctx025-p100115","version":version,"message":"v400: immediate top-k damp-only p1.00/1.15 + ProtoSSM EW0.625 + gamma 0.825 + context 0.25"},
     {"name":"v401","kernel":"yourslewis/bc26-v401-ew0625-g0825-ctx025-p095105","version":version,"message":"v401: immediate top-k mild contrast p0.95/1.05 + ProtoSSM EW0.625 + gamma 0.825 + context 0.25"},
     {"name":"v402","kernel":"yourslewis/bc26-v402-ew0625-g0825-ctx025-notopk","version":version,"message":"v402: immediate no top-k contrast + ProtoSSM EW0.625 + gamma 0.825 + context 0.25"},
+    {"name":"v403","kernel":"yourslewis/bc26-v403-ew0625-g0825-ctx030","version":version,"message":"v403: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.30"},
     {"name":"v369","kernel":"yourslewis/bc26-v369-ew065-g0825-ctx025","version":version,"message":"v369: immediate top-k + ProtoSSM EW0.65 + gamma 0.825 + context alpha 0.25"},
     {"name":"v364","kernel":"yourslewis/bc26-v364-ew0675-g0825-ctx0275","version":version,"message":"v364: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.275"},
     {"name":"v363","kernel":"yourslewis/bc26-v363-ew0675-g0825-ctx030","version":version,"message":"v363: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.30"},
