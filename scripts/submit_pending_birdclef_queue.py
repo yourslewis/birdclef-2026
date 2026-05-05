@@ -92,6 +92,7 @@ PENDING=[
     {"name":"v421","kernel":"yourslewis/bc26-v421-ew0625-g0825-ctx025-a049875","version":version,"message":"v421: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25 + quantile alpha 0.49875"},
     {"name":"v422","kernel":"yourslewis/bc26-v422-ew0625-g0825-ctx025-a0500625","version":version,"message":"v422: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25 + quantile alpha 0.500625"},
     {"name":"v423","kernel":"yourslewis/bc26-v423-ew0625-g0825-ctx025-a0499375","version":version,"message":"v423: immediate top-k + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25 + quantile alpha 0.499375"},
+    {"name":"v500","kernel":"yourslewis/bc26-v500-sed-local-event-boost","version":version,"message":"v500: SED-inspired local event boost + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.20"},
     {"name":"v369","kernel":"yourslewis/bc26-v369-ew065-g0825-ctx025","version":version,"message":"v369: immediate top-k + ProtoSSM EW0.65 + gamma 0.825 + context alpha 0.25"},
     {"name":"v364","kernel":"yourslewis/bc26-v364-ew0675-g0825-ctx0275","version":version,"message":"v364: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.275"},
     {"name":"v363","kernel":"yourslewis/bc26-v363-ew0675-g0825-ctx030","version":version,"message":"v363: immediate top-k + ProtoSSM EW0.675 + gamma 0.825 + context alpha 0.30"},
