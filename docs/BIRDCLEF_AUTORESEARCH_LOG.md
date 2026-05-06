@@ -266,3 +266,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - `scripts/birdclef_sed_build_bundle.py` builds a manifest-based TorchScript SED bundle from one or more OOF experiment roots, with per-member blend weights and optional model copying.
   - `scripts/birdclef_sed_infer_torchscript.py` loads that manifest without timm/training code, decodes OGG via ffmpeg, recreates log-mel features, averages TorchScript fold probabilities, and writes wide CSV/NPZ predictions.
 - **Bundle smoke validation on `192.168.0.10`:** built `artifacts/sed_bundles/sed-nfnet-v13v15-blend-v1/` from 6 TorchScript fold models with weights v13=0.4 and v15=0.6. Manifest has 6 models, 234 classes, copied model size `539.223 MB`. CPU smoke inference on 3 real train OGGs passed: 3 files × 234 classes, about `0.67 sec/file` with 2 torch threads after model load. Next step is a Kaggle-style inference script that maps soundscape 5s rows and blends SED probabilities into the current v504/v508 axis.
+
+## 2026-05-06 18:35 UTC — Kaggle-style SED soundscape row inference smoke
+
+- **Track:** A+G Real SED frame/event inference packaging prep.
+- **Hypothesis:** The v13/v15 TorchScript SED bundle is only useful if it can produce BirdCLEF 5-second soundscape rows (`<soundscape_stem>_5` ... `_60`) in the exact `sample_submission` column shape. Validate that bridge before attempting a Kaggle kernel/dataset push.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Status checks:** Kaggle LB unchanged: latest scored v504/v503/v502/v501 at `0.927`, v500 at `0.926`; v505-v509 kernels COMPLETE/no failure messages; queue monitor pid `52652` is alive and sleeping on daily submission cap after v505 attempt.
+- **Code added:** `scripts/birdclef_sed_soundscape_infer.py`.
+  - Loads the manifest bundle without timm/training code.
+  - Decodes 60s OGG soundscapes with ffmpeg.
+  - Emits one prediction row per 5s endpoint with Kaggle row ids.
+  - Uses the trained model context length (10s) ending at each 5s row endpoint, zero-padded at file boundaries.
+  - Aligns columns to `sample_submission.csv` when provided and can write CSV + compressed NPZ.
+- **Smoke validation on `192.168.0.10`:** ran the v13/v15 bundle on one real train soundscape (`BC2026_Train_0001_S08_20250606_030007.ogg`) using CPU, 6 TorchScript folds, batch size 4, 2 torch threads. Output `artifacts/sed_bundles/sed-nfnet-v13v15-blend-v1/soundscape_smoke_submission.csv` has shape `12 x 235` (`row_id` + 234 labels), no NaNs, probability range `0.001024` to `0.422720`, and row ids `_5` through `_60`. Runtime was `6.409 sec/file` for a 60s soundscape.
+- **Interpretation:** SED packaging now reaches real Kaggle row shape. The next implementation step is to embed this script into a Kaggle kernel candidate with the model bundle as an input dataset, then blend SED probabilities into the existing v504/v508 inference axis rather than submitting SED-only.
