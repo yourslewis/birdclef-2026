@@ -313,3 +313,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Follow-up hypothesis:** Since v510 v2 successfully uses all six SED models and runtime is acceptable, test a single stronger SED blend weight before pivoting tracks. v511 changes only `REAL_SED_BLEND_WEIGHT=0.05 -> 0.10` on the same v508 + real SED bundle path.
 - **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v511-real-sed-bundle-blend-010`, version 1, with no invalid data/competition/kernel/model sources.
 - **Queue monitor:** Updated monitor queue to submit v510 version 2, then v511 version 1, before old v376+ variants. Next step is to restart/verify the monitor with this updated queue and monitor v511 completion/logs.
+
+## 2026-05-06 22:45 UTC — v511 verified + v512 ultra-conservative SED blend
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and lightweight blend-weight tuning.
+- **Status checks:** Latest scored LB remains unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`; v505-v512 kernels are `COMPLETE` or running as noted below. Existing queue monitor was alive and sleeping on daily cap after v505 retry.
+- **v511 verification:** v511 version 1 completed with `submission.csv` and confirmed real SED usage: found the SED manifest under `/kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, loaded `6/6` TorchScript models, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 222.2s`, and applied `REAL_SED_BLEND_WEIGHT=0.10`. Dry-run output shape was `240 x 235`, wall time `354.1s`; final prob range `0.017495` to `0.914253`, mean `0.4115`.
+- **Follow-up hypothesis:** Complete the small planned SED blend-weight bracket (`0.02`, `0.05`, `0.10`) with a safer low-weight variant in case the real SED model improves rank diversity but is undercalibrated versus the v508 axis.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v512-real-sed-bundle-blend-002`, version 1, changing only `REAL_SED_BLEND_WEIGHT=0.02` from the same v508 + SED bundle path. Kaggle push returned version `1` with no invalid sources.
+- **Queue monitor:** Updated queue to submit v510 version 2, then v511 version 1, then v512 version 1 after v505-v509 and before old v376+ variants. Next step: restart/verify the monitor with v512 included and monitor v512 completion/logs for the same SED markers.
