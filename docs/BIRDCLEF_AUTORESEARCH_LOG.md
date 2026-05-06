@@ -167,3 +167,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - v5 B0 AUC `0.533127`; v7 NFNet AUC `0.565955`; correlation `0.352376`; best simple blend at 50% NFNet = `0.578510`.
   - v6 V2-S AUC `0.538471`; v7 NFNet AUC `0.565955`; correlation `0.588825`; best simple blend at 70% NFNet = `0.572567`.
 - **Interpretation:** NFNet is the best SED backbone so far on the balanced OOF harness and also blends well with B0, giving the best observed SED OOF blend (`0.578510`) on this benchmark. This is a real model-family improvement, not a postprocess micro-sweep. Next step should either (a) launch a larger NFNet/B0 OOF with more classes/files or more epochs, or (b) start packaging an inference path for the NFNet+B0 SED ensemble once teacher/raw prediction artifacts are available for blend calibration.
+
+## 2026-05-06 13:35 UTC — SED B0/NFNet 100-class balanced OOF scale-up
+
+- **Track:** A+G Real SED frame/event scaled balanced OOF.
+- **Hypothesis:** The 50-class balanced OOF showed NFNet is the best SED backbone so far and NFNet+B0 gives the best SED blend. Scale the exact B0/NFNet 10s/160 regularized pair from 50 to 100 balanced classes to see whether the signal survives broader class coverage.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Configs:**
+  - `configs/birdclef/sed_b0_balanced_oof_v8_10s_160_100cls.json`
+  - `configs/birdclef/sed_nfnet_balanced_oof_v9_10s_160_100cls.json`
+- **Common setup:** 10s crops, 160 mels, 100 classes × 10 files/class = 1000 files, 3-fold OOF, 5 epochs, focal BCE gamma 1.5, sqrt positive class weighting, label smoothing 0.01, mixup 0.2, TorchScript export only (`export_onnx=false`).
+- **v8 B0 command:** launched on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=0`, output root `artifacts/sed_oof/sed-b0-balanced-oof-v8-10s-160-100cls`, log `logs/sed_oof_v8_b0_100cls_20260506T133739Z.log`.
+- **v9 NFNet command:** launched on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=1`, output root `artifacts/sed_oof/sed-nfnet-balanced-oof-v9-10s-160-100cls`, log `logs/sed_oof_v9_nfnet_100cls_20260506T133739Z.log`.
+- **v8 B0 status/result:** complete. OOF macro AUC `0.485820` over 100 valid classes, 1000 OOF files. Fold 0 AUC `0.558764`; fold 2 AUC `0.555638`; overall AUC dropped materially vs 50-class v5 (`0.533127`), so B0 does not scale cleanly to broader class coverage in this setup.
+- **v9 NFNet status at log time:** still running fold 2. Fold 0 AUC `0.618094` over 100 classes, fold 1 AUC `0.633719` over 98 classes; fold 2 child process active (`birdclef_sed_pilot_train.py --config ...config_fold2.json`) on GPU. Next run should collect `artifacts/sed_oof/sed-nfnet-balanced-oof-v9-10s-160-100cls/oof_summary.json`, compare v8/v9 if complete, and decide whether to scale NFNet further or tune it.
+- **Interpretation so far:** B0 weakens badly at 100 classes, while NFNet fold 0/1 remain strong (>0.61 fold AUC). This supports continuing NFNet as the primary SED backbone and deprioritizing B0 except as a diversity/blend component if its correlation remains useful.
