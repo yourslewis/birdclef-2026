@@ -1331,6 +1331,17 @@ def _sed_find_manifest():
     for c in candidates:
         if c.exists():
             return c
+    # Kaggle may mount this dataset under a title-normalized directory, and it
+    # may expose the uploaded archive as extracted files rather than the zip.
+    # Search for the manifest directly before falling back to zip extraction.
+    manifest_hits = sorted(Path('/kaggle/input').glob('**/sed_bundle_manifest.json'))
+    if manifest_hits:
+        print('Real SED manifest candidates: ' + ', '.join(str(p) for p in manifest_hits[:5]))
+        return manifest_hits[0]
+    try:
+        print('Kaggle input roots: ' + ', '.join(p.name for p in Path('/kaggle/input').iterdir()))
+    except Exception as exc:
+        print(f'WARNING: could not list /kaggle/input while finding SED bundle: {exc}')
     zip_candidates = [
         Path('/kaggle/input') / REAL_SED_DATASET_SLUG / REAL_SED_ZIP_NAME,
         Path('/kaggle/input') / REAL_SED_ZIP_NAME,
