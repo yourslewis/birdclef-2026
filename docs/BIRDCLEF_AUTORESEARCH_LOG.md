@@ -102,3 +102,34 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - best simple blend in grid: 50% v3 / 50% v1, macro AUC `0.573316`
   - blend grid AUCs by v3 weight: 0.0=`0.513541`, 0.1=`0.547246`, 0.2=`0.563622`, 0.3=`0.570250`, 0.4=`0.572934`, 0.5=`0.573316`, 0.6=`0.560046`, 0.7=`0.550302`, 0.8=`0.539320`, 0.9=`0.529698`, 1.0=`0.519907`.
 - **Interpretation:** This is the first strong evidence that the SED crop/mel variants are complementary: individual tiny-holdout AUCs are modest, but same-split blend improves by about +0.060 over v1 and correlation is low. Next step is to convert this from tiny holdout into proper fold/OOF artifacts, then compare/blend against the v504/v508 teacher family if raw prediction artifacts can be located or regenerated.
+
+## 2026-05-06 10:35 UTC — SED OOF runner + balanced-class OOF check
+
+- **Track:** A+G Real SED frame/event OOF artifacts.
+- **Hypothesis:** The prior 512-file OOF attempt was structurally weak because the default selector included many classes with too few examples, so folds often validated species with no training positives. Add explicit fold support plus a balanced-class selector to produce a more meaningful small OOF benchmark before scaling.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Code/configs added:**
+  - `scripts/birdclef_sed_oof_runner.py` — runs `birdclef_sed_pilot_train.py` across folds and aggregates `oof_predictions.npz`.
+  - `scripts/birdclef_compare_oof_predictions.py` — aligns OOF files and computes AUC/correlation/blend grid.
+  - `birdclef_sed_pilot_train.py` now supports `n_folds`, `fold_index`, and `selection_strategy=balanced_classes` with `max_classes`, `files_per_class`, `min_files_per_class`.
+  - `configs/birdclef/sed_b0_balanced_oof_v1_5s_128.json`.
+  - `configs/birdclef/sed_b0_balanced_oof_v3_10s_160.json`.
+- **Smoke validation:** local tiny-CNN 2-fold OOF smoke passed on 6 real files.
+- **Teacher artifact search:** no raw v504/v508 OOF/test prediction artifact was found locally; only kernel push/poll scripts and Perch cache files were visible. Comparison to v504/v508 will require regenerating/locating raw teacher predictions.
+
+### Unbalanced 512-file OOF baseline
+
+- Ran 3-fold OOF for the previous default 512-file selector.
+- `sed-b0-oof-v1-5s-128-focal15-possqrt`: OOF macro AUC `0.499948` over 206 valid classes.
+- `sed-b0-oof-v3-10s-160-focal15-possqrt`: OOF macro AUC `0.455467` over 206 valid classes.
+- OOF blend comparison: flat Pearson `0.152588`; best blend was all v1 (`weight_b=0.0`, AUC `0.499948`).
+- **Interpretation:** this OOF is not trustworthy for model selection because class coverage per fold is poor.
+
+### Balanced-class 300-file OOF benchmark
+
+- Selection: `balanced_classes`, 30 classes, 10 files/class, 300 files total, 3 folds; this ensures each fold has positives in train/validation for the chosen classes.
+- `sed-b0-balanced-oof-v1-5s-128-focal15-possqrt`: OOF macro AUC `0.476316` over 30 valid classes. Fold AUCs were roughly low/mid `0.4` to `0.557793`.
+- `sed-b0-balanced-oof-v3-10s-160-focal15-possqrt`: OOF macro AUC `0.534575` over 30 valid classes. Fold AUCs: `0.544453`, `0.594332`, `0.605642`.
+- Balanced OOF comparison: aligned 300 files; flat Pearson `0.092054`; mean absolute prediction diff `0.024793`.
+- Blend grid by v3 weight: 0.0=`0.476316`, 0.1=`0.486609`, 0.2=`0.498391`, 0.3=`0.508402`, 0.4=`0.514299`, 0.5=`0.521264`, 0.6=`0.526822`, 0.7=`0.531931`, 0.8=`0.532828`, 0.9=`0.533563`, 1.0=`0.534575`.
+- **Interpretation:** On a more meaningful balanced-class OOF subset, 10s/160-mel is better than 5s/128, but the simple blend does not beat 10s alone. Low correlation still suggests diversity, but the 5s model is too weak at this setting. Next A+G move should improve the 10s model (more classes/files, more epochs, label smoothing/mixup or LR sweep), not push a Kaggle kernel yet.

@@ -47,8 +47,14 @@ class PilotConfig:
     epochs: int = 2
     batch_size: int = 16
     max_files: int = 512
+    selection_strategy: str = "default"  # default | balanced_classes
+    max_classes: int = 30
+    files_per_class: int = 10
+    min_files_per_class: int = 6
     seed: int = 42
     val_fraction: float = 0.2
+    n_folds: int = 1
+    fold_index: int = 0
     loss_name: str = "focal_bce"
     focal_gamma: float = 1.5
     label_smoothing: float = 0.0
@@ -168,9 +174,28 @@ def build_model(cfg: PilotConfig, n_classes: int) -> nn.Module:
     return TinySEDSmoke(n_classes)
 
 
-def select_examples(data_root: Path, labels: list[str], max_files: int, seed: int) -> list[tuple[Path, str]]:
-    rng = random.Random(seed)
+def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> list[tuple[Path, str]]:
+    rng = random.Random(cfg.seed)
     train_audio = data_root / "train_audio"
+    if cfg.selection_strategy == "balanced_classes":
+        selected: list[tuple[Path, str]] = []
+        eligible = []
+        for label_dir in sorted(train_audio.iterdir()):
+            if not label_dir.is_dir() or label_dir.name not in labels:
+                continue
+            files = sorted(label_dir.glob("*.ogg"))
+            if len(files) >= cfg.min_files_per_class:
+                eligible.append((label_dir.name, files))
+        rng.shuffle(eligible)
+        for label, files in eligible[: cfg.max_classes]:
+            files = list(files)
+            rng.shuffle(files)
+            for path in files[: cfg.files_per_class]:
+                selected.append((path, label))
+        selected = selected[: cfg.max_files]
+        rng.shuffle(selected)
+        return selected
+
     selected: list[tuple[Path, str]] = []
     for label_dir in sorted(train_audio.iterdir()):
         if not label_dir.is_dir() or label_dir.name not in labels:
@@ -178,7 +203,7 @@ def select_examples(data_root: Path, labels: list[str], max_files: int, seed: in
         files = sorted(label_dir.glob("*.ogg"))
         if files:
             selected.append((rng.choice(files), label_dir.name))
-        if len(selected) >= max_files:
+        if len(selected) >= cfg.max_files:
             return selected
     all_files = [(p, p.parent.name) for p in train_audio.glob("*/*.ogg") if p.parent.name in labels]
     rng.shuffle(all_files)
@@ -186,7 +211,7 @@ def select_examples(data_root: Path, labels: list[str], max_files: int, seed: in
     for path, label in all_files:
         if path not in seen:
             selected.append((path, label))
-        if len(selected) >= max_files:
+        if len(selected) >= cfg.max_files:
             break
     return selected
 
@@ -199,8 +224,17 @@ def make_targets(meta: list[dict[str, Any]], labels: list[str]) -> torch.Tensor:
     return y
 
 
-def split_indices(n_items: int, val_fraction: float, seed: int) -> tuple[torch.Tensor, torch.Tensor]:
+def split_indices(n_items: int, val_fraction: float, seed: int, n_folds: int = 1, fold_index: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
     order = torch.randperm(n_items, generator=torch.Generator().manual_seed(seed))
+    if n_folds > 1:
+        if not 0 <= fold_index < n_folds:
+            raise ValueError(f"fold_index must be in [0, {n_folds}), got {fold_index}")
+        mask = torch.arange(n_items) % n_folds == fold_index
+        val_idx = order[mask]
+        train_idx = order[~mask]
+        if len(val_idx) == 0 or len(train_idx) == 0:
+            raise ValueError(f"Invalid fold split: n_items={n_items} n_folds={n_folds} fold_index={fold_index}")
+        return train_idx, val_idx
     n_val = min(max(int(round(n_items * val_fraction)), 1), max(n_items - 1, 1))
     return order[n_val:], order[:n_val]
 
@@ -326,7 +360,7 @@ def main() -> int:
     start_all = time.time()
     taxonomy = pd.read_csv(Path(cfg.data_root) / "taxonomy.csv")
     labels = taxonomy["primary_label"].astype(str).tolist()
-    examples = select_examples(Path(cfg.data_root), labels, cfg.max_files, cfg.seed)
+    examples = select_examples(Path(cfg.data_root), labels, cfg)
     if len(examples) < 5:
         raise RuntimeError(f"Need at least 5 examples, found {len(examples)}")
 
@@ -340,7 +374,7 @@ def main() -> int:
         meta.append({"path": str(path), "label": label})
     x = torch.stack(xs)
     y = make_targets(meta, labels)
-    train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed)
+    train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
 
     model = build_model(cfg, len(labels)).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
@@ -376,6 +410,8 @@ def main() -> int:
         "n_train": int(len(train_idx)),
         "n_val": int(len(val_idx)),
         "n_classes": len(labels),
+        "n_folds": int(cfg.n_folds),
+        "fold_index": int(cfg.fold_index),
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "auc_summary": auc,
