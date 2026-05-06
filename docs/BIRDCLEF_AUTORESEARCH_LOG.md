@@ -286,7 +286,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 
 - **Track:** A+G Real SED frame/event inference packaging → Kaggle kernel candidate.
 - **Hypothesis:** The strong low-correlation NFNet SED v13/v15 OOF bundle can add real temporal/model-family signal to the current v508 Perch/ProtoSSM axis if blended conservatively after existing probability shaping.
-- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Branch/PR:** `feature/v510-real-sed-bundle-kernel`, PR #205. PR #204 was already merged, so this v510 work was moved to a fresh review branch.
 - **Status checks:** Latest scored LB remains v504/v503/v502/v501 at `0.927` and v500 at `0.926`. v505-v509 kernels are `COMPLETE` with no failure messages, still waiting behind the daily submission cap.
 - **Dataset packaging:** Created private Kaggle dataset `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1` from `sed-nfnet-v13v15-blend-v1.zip` (manifest + 6 TorchScript NFNet folds; about 514 MB zipped / 539 MB unzipped). Upload used the repo helper `scripts/upload_kaggle_dataset_bearer.py` because legacy `kaggle datasets` CLI returned 401 under current KGAT auth.
 - **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v510-real-sed-bundle-blend-005`, version 1.
