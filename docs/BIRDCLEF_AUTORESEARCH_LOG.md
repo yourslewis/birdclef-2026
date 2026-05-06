@@ -304,3 +304,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Root cause evidence:** Dataset API reports private dataset `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1` is `ready` and lists extracted files (`sed_bundle_manifest.json` + six `models/*.pt`) rather than the zip archive. The v510 v1 finder only checked exact slug manifest paths plus recursive zip names, not recursive manifest paths.
 - **Fix:** Updated `_sed_find_manifest()` to recursively search `/kaggle/input/**/sed_bundle_manifest.json`, print manifest candidates / input roots for debugging, and only then fall back to zip extraction. Updated the queue monitor so v510 submits kernel version `2` instead of bad/fallback version `1`.
 - **Validation:** `py_compile` passed for v510 script and queue monitor. Next: push v510 version 2 via Bearer API, verify the log contains `Real SED manifest candidates` and `Applied real SED bundle blend`, then keep the queue monitor on v505-v510 with v510 version 2.
+
+## 2026-05-06 21:45 UTC — v510 v2 verified + v511 blend weight 0.10 follow-up
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and lightweight blend-weight tuning.
+- **Status checks:** Latest scored LB still unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. v505-v509 are `COMPLETE`, and v510 v2 is now `COMPLETE` with `submission.csv`.
+- **v510 v2 verification:** Output log confirms the real SED path actually ran: `Real SED manifest candidates: /kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, `Loading 6/6 real SED TorchScript models`, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 214.4s`, and `Applied real SED bundle blend: weight=0.05`. Dry-run output shape was `240 x 235`, wall time `370.6s`; this is safely within Kaggle CPU budget on the public dry-run workload.
+- **Follow-up hypothesis:** Since v510 v2 successfully uses all six SED models and runtime is acceptable, test a single stronger SED blend weight before pivoting tracks. v511 changes only `REAL_SED_BLEND_WEIGHT=0.05 -> 0.10` on the same v508 + real SED bundle path.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v511-real-sed-bundle-blend-010`, version 1, with no invalid data/competition/kernel/model sources.
+- **Queue monitor:** Updated monitor queue to submit v510 version 2, then v511 version 1, before old v376+ variants. Next step is to restart/verify the monitor with this updated queue and monitor v511 completion/logs.
