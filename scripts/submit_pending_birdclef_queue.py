@@ -50,6 +50,7 @@ PENDING=[
     {"name":"v503","kernel":"yourslewis/bc26-v503-sed-local-top3","version":version,"message":"v503: SED local event boost top3 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v504","kernel":"yourslewis/bc26-v504-sed-logit-top3","version":version,"message":"v504: SED local logit-event boost top3 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v505","kernel":"yourslewis/bc26-v505-sed-logit-top5","version":version,"message":"v505: SED local logit-event boost top5 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
+    {"name":"v506","kernel":"yourslewis/bc26-v506-sed-logit-top5-a0025","version":version,"message":"v506: SED local logit-event boost top5 alpha0.025 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v376","kernel":"yourslewis/bc26-v376-ew0575-g0825-ctx025-a055","version":version,"message":"v376: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context 0.25 + quantile alpha 0.55"},
     {"name":"v377","kernel":"yourslewis/bc26-v377-ew0575-g080-ctx025-a055","version":version,"message":"v377: immediate top-k + ProtoSSM EW0.575 + gamma 0.80 + context 0.25 + quantile alpha 0.55"},
     {"name":"v378","kernel":"yourslewis/bc26-v378-ew0575-g0875-ctx025-a045","version":version,"message":"v378: immediate top-k + ProtoSSM EW0.575 + gamma 0.875 + context 0.25 + quantile alpha 0.45"},
