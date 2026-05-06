@@ -294,7 +294,7 @@ def export_model(model: nn.Module, example: torch.Tensor, out_dir: Path, cfg: Pi
                 input_names=["logmel"],
                 output_names=["clip_logits", "frame_logits"],
                 dynamic_axes={"logmel": {0: "batch", 2: "frames"}, "clip_logits": {0: "batch"}, "frame_logits": {0: "batch", 1: "frames"}},
-                opset_version=17,
+                opset_version=18,
             )
             exports["onnx_path"] = str(onnx_path)
             exports["onnx_size_mb"] = round(onnx_path.stat().st_size / 1e6, 3)
