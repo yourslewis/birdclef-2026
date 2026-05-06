@@ -182,3 +182,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **v8 B0 status/result:** complete. OOF macro AUC `0.485820` over 100 valid classes, 1000 OOF files. Fold 0 AUC `0.558764`; fold 2 AUC `0.555638`; overall AUC dropped materially vs 50-class v5 (`0.533127`), so B0 does not scale cleanly to broader class coverage in this setup.
 - **v9 NFNet status at log time:** still running fold 2. Fold 0 AUC `0.618094` over 100 classes, fold 1 AUC `0.633719` over 98 classes; fold 2 child process active (`birdclef_sed_pilot_train.py --config ...config_fold2.json`) on GPU. Next run should collect `artifacts/sed_oof/sed-nfnet-balanced-oof-v9-10s-160-100cls/oof_summary.json`, compare v8/v9 if complete, and decide whether to scale NFNet further or tune it.
 - **Interpretation so far:** B0 weakens badly at 100 classes, while NFNet fold 0/1 remain strong (>0.61 fold AUC). This supports continuing NFNet as the primary SED backbone and deprioritizing B0 except as a diversity/blend component if its correlation remains useful.
+
+### v9 NFNet 100-class completion + v8/v9 comparison
+
+- **v9 NFNet final result:** complete. OOF macro AUC `0.587033` over 100 valid classes, 1000 OOF files. Fold AUCs: `0.618094`, `0.633719`, `0.648795`. This is a strong scale-up from 50-class v7 (`0.565955`) despite doubling class count.
+- **v8/v9 comparison:** aligned 1000 files. B0 v8 AUC `0.485820`; NFNet v9 AUC `0.587033`; flat Pearson `0.620113`; mean absolute diff `0.126029`.
+- **Blend grid:** B0->NFNet weight 0.0=`0.485820`, 0.1=`0.524593`, 0.2=`0.539884`, 0.3=`0.552519`, 0.4=`0.562065`, 0.5=`0.570213`, 0.6=`0.577273`, 0.7=`0.582413`, 0.8=`0.586091`, 0.9=`0.587667`, 1.0=`0.587033`.
+- **Interpretation update:** NFNet clearly scales; B0 mainly contributes a tiny complementary bump at ~10% weight. Best SED-only balanced OOF result so far is B0 10% + NFNet 90% = `0.587667`. Next actionable step should be NFNet-focused: either tune NFNet lr/gamma/epochs on 100-class OOF, or extend NFNet to more classes/files before building inference packaging.
