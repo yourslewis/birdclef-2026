@@ -43,6 +43,9 @@ submission.csv
 *.tar
 *.tar.gz
 
+# Local logs
+logs/
+
 # Local temp
 /tmp/
 tmp/

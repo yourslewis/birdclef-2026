@@ -3,9 +3,11 @@
 
 This is intentionally small and dependency-light. It validates the real-audio
 SED pipeline before we spend GPU time on EfficientNet/timm models:
-- decode 3-5 real OGG clips via ffmpeg
+- decode real OGG clips via ffmpeg
 - build log-mel features with torch.stft + an internal mel filterbank
-- train a weak-label frame/event model for a smoke epoch
+- train a weak-label frame/event model for a smoke epoch or small sweep
+- exercise early SED knobs: crop length, mel bins, BCE/focal loss,
+  label smoothing, mixup, and positive-class weighting
 - export TorchScript and ONNX when the onnx package is available
 - write artifacts + metrics in the AutoResearch log format
 """
@@ -13,15 +15,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
-import os
 import random
 import shutil
 import subprocess
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Iterable
 
 import numpy as np
 import pandas as pd
@@ -45,6 +44,12 @@ class SmokeConfig:
     batch_size: int = 2
     max_files: int = 5
     seed: int = 42
+    loss_name: str = "bce"  # bce | focal_bce
+    focal_gamma: float = 1.5
+    label_smoothing: float = 0.0
+    mixup_alpha: float = 0.0
+    class_balancing: str = "none"  # none | pos_weight_sqrt | pos_weight_linear
+    val_fraction: float = 0.2
     export_onnx: bool = True
 
 
@@ -162,19 +167,85 @@ def select_examples(data_root: Path, labels: list[str], max_files: int, seed: in
     return examples
 
 
+def smooth_targets(target: torch.Tensor, eps: float) -> torch.Tensor:
+    if eps <= 0:
+        return target
+    return target * (1.0 - eps) + 0.5 * eps
+
+
+def make_pos_weight(n_classes: int, mode: str) -> torch.Tensor | None:
+    if mode == "none":
+        return None
+    if mode == "pos_weight_sqrt":
+        return torch.full((n_classes,), float(np.sqrt(max(n_classes - 1, 1))), dtype=torch.float32)
+    if mode == "pos_weight_linear":
+        return torch.full((n_classes,), float(max(n_classes - 1, 1)), dtype=torch.float32)
+    raise ValueError(f"Unknown class_balancing={mode!r}")
+
+
+def compute_loss(logits: torch.Tensor, target: torch.Tensor, cfg: SmokeConfig, pos_weight: torch.Tensor | None) -> torch.Tensor:
+    target = smooth_targets(target, cfg.label_smoothing)
+    if cfg.loss_name == "bce":
+        return F.binary_cross_entropy_with_logits(logits, target, pos_weight=pos_weight)
+    if cfg.loss_name == "focal_bce":
+        bce = F.binary_cross_entropy_with_logits(logits, target, pos_weight=pos_weight, reduction="none")
+        prob = torch.sigmoid(logits)
+        pt = prob * target + (1.0 - prob) * (1.0 - target)
+        focal = (1.0 - pt).clamp_min(1e-6).pow(cfg.focal_gamma) * bce
+        return focal.mean()
+    raise ValueError(f"Unknown loss_name={cfg.loss_name!r}")
+
+
+def maybe_mixup(batch_x: torch.Tensor, batch_y: torch.Tensor, alpha: float) -> tuple[torch.Tensor, torch.Tensor]:
+    if alpha <= 0 or len(batch_x) < 2:
+        return batch_x, batch_y
+    lam = float(np.random.beta(alpha, alpha))
+    perm = torch.randperm(len(batch_x), device=batch_x.device)
+    return lam * batch_x + (1.0 - lam) * batch_x[perm], lam * batch_y + (1.0 - lam) * batch_y[perm]
+
+
+def split_indices(n_items: int, val_fraction: float, seed: int) -> tuple[torch.Tensor, torch.Tensor]:
+    order = torch.randperm(n_items, generator=torch.Generator().manual_seed(seed))
+    n_val = int(round(n_items * val_fraction)) if n_items >= 5 else 0
+    n_val = min(max(n_val, 1 if n_items >= 5 and val_fraction > 0 else 0), max(n_items - 1, 0))
+    val_idx = order[:n_val]
+    train_idx = order[n_val:]
+    if len(train_idx) == 0:
+        train_idx = order
+        val_idx = torch.tensor([], dtype=torch.long)
+    return train_idx, val_idx
+
+
+def evaluate_loss(model: nn.Module, x: torch.Tensor, y: torch.Tensor, cfg: SmokeConfig, pos_weight: torch.Tensor | None) -> float | None:
+    if len(x) == 0:
+        return None
+    model.eval()
+    with torch.no_grad():
+        logits, _ = model(x)
+        loss = compute_loss(logits, y, cfg, pos_weight)
+    return float(loss.detach())
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path)
     parser.add_argument("--max-files", type=int)
     parser.add_argument("--epochs", type=int)
     parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--loss-name", choices=["bce", "focal_bce"])
+    parser.add_argument("--focal-gamma", type=float)
+    parser.add_argument("--label-smoothing", type=float)
+    parser.add_argument("--mixup-alpha", type=float)
+    parser.add_argument("--class-balancing", choices=["none", "pos_weight_sqrt", "pos_weight_linear"])
+    parser.add_argument("--duration-sec", type=float)
+    parser.add_argument("--n-mels", type=int)
     args = parser.parse_args()
 
     cfg = load_config(args.config)
-    if args.max_files is not None:
-        cfg.max_files = args.max_files
-    if args.epochs is not None:
-        cfg.epochs = args.epochs
+    for attr in ["max_files", "epochs", "loss_name", "focal_gamma", "label_smoothing", "mixup_alpha", "class_balancing", "duration_sec", "n_mels"]:
+        cli_value = getattr(args, attr)
+        if cli_value is not None:
+            setattr(cfg, attr, cli_value)
     if args.output_dir is not None:
         cfg.output_dir = str(args.output_dir)
 
@@ -196,8 +267,8 @@ def main() -> int:
     mel_fb = make_mel_filter(cfg.sample_rate, cfg.n_fft, cfg.n_mels)
     xs, ys, meta = [], [], []
     for path, label in examples:
-        y = decode_audio_ffmpeg(path, cfg.sample_rate, n_samples)
-        logmel = waveform_to_logmel(torch.from_numpy(y.copy()), cfg, mel_fb)
+        y_audio = decode_audio_ffmpeg(path, cfg.sample_rate, n_samples)
+        logmel = waveform_to_logmel(torch.from_numpy(y_audio.copy()), cfg, mel_fb)
         target = torch.zeros(len(labels), dtype=torch.float32)
         target[label_to_idx[label]] = 1.0
         xs.append(logmel)
@@ -206,22 +277,27 @@ def main() -> int:
 
     x = torch.stack(xs)
     y = torch.stack(ys)
+    train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed)
     model = TinySEDSmoke(n_classes=len(labels))
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate)
+    pos_weight = make_pos_weight(len(labels), cfg.class_balancing)
     losses = []
     start = time.time()
     model.train()
-    for epoch in range(cfg.epochs):
-        order = torch.randperm(len(x))
+    for _epoch in range(cfg.epochs):
+        order = train_idx[torch.randperm(len(train_idx))]
         for i in range(0, len(order), cfg.batch_size):
             idx = order[i:i + cfg.batch_size]
-            logits, frame_logits = model(x[idx])
-            loss = F.binary_cross_entropy_with_logits(logits, y[idx])
+            batch_x, batch_y = maybe_mixup(x[idx], y[idx], cfg.mixup_alpha)
+            logits, _frame_logits = model(batch_x)
+            loss = compute_loss(logits, batch_y, cfg, pos_weight)
             opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
             losses.append(float(loss.detach()))
 
+    train_loss_final = evaluate_loss(model, x[train_idx], y[train_idx], cfg, pos_weight)
+    val_loss_final = evaluate_loss(model, x[val_idx], y[val_idx], cfg, pos_weight) if len(val_idx) else None
     model.eval()
     with torch.no_grad():
         clip_logits, frame_logits = model(x)
@@ -251,16 +327,30 @@ def main() -> int:
         except Exception as exc:  # pragma: no cover - artifact logging path
             onnx_status = f"failed: {type(exc).__name__}: {exc}"
 
+    top1_train = top1_val = None
+    true_idx = torch.tensor([label_to_idx[item["label"]] for item in meta], dtype=torch.long)
+    pred_idx = top_idx.cpu()
+    if len(train_idx):
+        top1_train = float((pred_idx[train_idx] == true_idx[train_idx]).float().mean())
+    if len(val_idx):
+        top1_val = float((pred_idx[val_idx] == true_idx[val_idx]).float().mean())
+
     metrics = {
         "experiment_id": cfg.experiment_id,
         "track": "A+G Real SED frame/event smoke + export packaging",
         "status": "smoke_passed",
         "n_examples": len(examples),
+        "n_train": int(len(train_idx)),
+        "n_val": int(len(val_idx)),
         "n_classes": len(labels),
         "input_shape": list(x.shape),
         "frame_logits_shape": list(frame_logits.shape),
         "loss_start": losses[0] if losses else None,
-        "loss_end": losses[-1] if losses else None,
+        "loss_end_batch": losses[-1] if losses else None,
+        "train_loss_final": train_loss_final,
+        "val_loss_final": val_loss_final,
+        "top1_train": top1_train,
+        "top1_val": top1_val,
         "runtime_sec": round(time.time() - start, 3),
         "torchscript_path": str(torchscript_path),
         "onnx_path": str(onnx_path) if onnx_status == "exported" else None,

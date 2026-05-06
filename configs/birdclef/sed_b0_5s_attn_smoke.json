@@ -15,12 +15,18 @@
   "loss": "BCEWithLogitsLoss",
   "label_smoothing": 0.0,
   "mixup_alpha": 0.0,
-  "class_balancing": "none_smoke",
+  "class_balancing": "none",
   "optimizer": "AdamW",
   "learning_rate": 0.0003,
   "epochs": 1,
   "batch_size": 2,
   "max_files": 5,
-  "export_backends": ["torchscript", "onnx_if_available"],
-  "notes": "This is an operational smoke test, not a leaderboard model. It validates audio decode, mel features, SED forward/backward, artifact schema, and export path using only dependencies currently available on the Mac venv."
+  "export_backends": [
+    "torchscript",
+    "onnx_if_available"
+  ],
+  "notes": "This is an operational smoke test, not a leaderboard model. It validates audio decode, mel features, SED forward/backward, artifact schema, and export path using only dependencies currently available on the Mac venv.",
+  "loss_name": "bce",
+  "focal_gamma": 1.5,
+  "val_fraction": 0.2
 }
