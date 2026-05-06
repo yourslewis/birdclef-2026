@@ -247,3 +247,22 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - v14: `CUDA_VISIBLE_DEVICES=0`, pid `3280334`, log `logs/sed_oof_v14_nfnet_150cls_lr1e4_ep8_20260506T163713Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v14-10s-160-150cls-lr1e4-ep8/`.
   - v15: `CUDA_VISIBLE_DEVICES=1`, pid `3280336`, log `logs/sed_oof_v15_nfnet_200cls_lr1e4_ep8_20260506T163713Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v15-10s-160-200cls-lr1e4-ep8/`.
 - **Status at log time:** both new runners started fold 0 cleanly. Next run should collect v14/v15 summaries, compare v14 against v12 and v13, then start NFNet TorchScript inference/kernel packaging around the best low-LR/8-epoch SED folds.
+
+## 2026-05-06 17:35 UTC — NFNet v15 broad SED result + TorchScript bundle smoke
+
+- **Track:** A+G Real SED frame/event inference packaging prep.
+- **Hypothesis:** If the low-LR 8-epoch NFNet signal survives broad class coverage, package the best complementary TorchScript folds into a portable bundle that can become a Kaggle dataset/kernel input.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Status checks:** Kaggle LB unchanged: latest scored v504/v503/v502/v501 at `0.927`, v500 at `0.926`; v505-v509 kernels COMPLETE/no failure messages; queue monitor pid `52652` is alive and sleeping on daily submission cap after v505 attempt.
+- **Completed results collected:**
+  - `v14` NFNet 150-class LR `1e-4`, 8 epochs: OOF macro AUC `0.620580` over 150 valid classes / 1500 files. This is essentially tied with v12 150-class 5-epoch (`0.620044`) and not a useful standalone upgrade.
+  - `v15` NFNet 200-class LR `1e-4`, 8 epochs: OOF macro AUC `0.640274` over 181 valid classes / 1810 files. Fold AUCs `0.678960`, `0.692266`, `0.687347`; only 181 eligible classes reached the min-file threshold under the balanced selector.
+- **OOF comparison artifacts:** on GPU server under `artifacts/sed_oof/comparisons/`.
+  - `v12_vs_v14.json`: Pearson `0.658493`, mean abs diff `0.065642`; best blend uses v14 weight `0.6` for OOF AUC `0.633421` over 150 classes.
+  - `v13_vs_v15.json`: on the 100-class overlap, v13 AUC `0.636878`, v15 overlap AUC `0.633091`, Pearson `0.294601`, mean abs diff `0.069209`; best blend uses v15 weight `0.6` for OOF AUC `0.657329`.
+  - `v14_vs_v15.json`: on the 150-class overlap, v14 AUC `0.620580`, v15 overlap AUC `0.635854`, Pearson `0.359808`, mean abs diff `0.057227`; best blend uses v15 weight `0.7` for OOF AUC `0.652849`.
+- **Interpretation:** v15 is the best broad-coverage SED candidate and has unusually low correlation with v13/v14, so a v13+v15 or v14+v15 fold blend is the right inference packaging target.
+- **Packaging code added:**
+  - `scripts/birdclef_sed_build_bundle.py` builds a manifest-based TorchScript SED bundle from one or more OOF experiment roots, with per-member blend weights and optional model copying.
+  - `scripts/birdclef_sed_infer_torchscript.py` loads that manifest without timm/training code, decodes OGG via ffmpeg, recreates log-mel features, averages TorchScript fold probabilities, and writes wide CSV/NPZ predictions.
+- **Bundle smoke validation on `192.168.0.10`:** built `artifacts/sed_bundles/sed-nfnet-v13v15-blend-v1/` from 6 TorchScript fold models with weights v13=0.4 and v15=0.6. Manifest has 6 models, 234 classes, copied model size `539.223 MB`. CPU smoke inference on 3 real train OGGs passed: 3 files × 234 classes, about `0.67 sec/file` with 2 torch threads after model load. Next step is a Kaggle-style inference script that maps soundscape 5s rows and blends SED probabilities into the current v504/v508 axis.
