@@ -226,3 +226,24 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - v12: `CUDA_VISIBLE_DEVICES=0`, pid `3114781`, log `logs/sed_oof_v12_nfnet_150cls_lr1e4_20260506T154031Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v12-10s-160-150cls-lr1e4/`.
   - v13: `CUDA_VISIBLE_DEVICES=1`, pid `3114783`, log `logs/sed_oof_v13_nfnet_100cls_lr1e4_ep8_20260506T154031Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v13-10s-160-100cls-lr1e4-ep8/`.
 - **Status at log time:** both new OOF runners started fold 0 cleanly. Next run should collect v12/v13 summaries, compare against v11, and if v11/v13 remain best, start inference/kernel packaging for NFNet TorchScript folds and/or build a v9+v11 SED blend candidate.
+
+## 2026-05-06 16:37 UTC — NFNet 8-epoch SED win + broader ep8 scale launch
+
+- **Track:** A+G Real SED frame/event NFNet tuning/scaling.
+- **Hypothesis:** The low-LR NFNet recipe improves with longer training on the same 100-class OOF harness. Test whether that 8-epoch recipe remains stable when class coverage expands beyond 100 classes.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Completed results collected:**
+  - `v11` NFNet 100-class, LR `1e-4`, 5 epochs: OOF macro AUC `0.622721` over 100 valid classes / 1000 files.
+  - `v12` NFNet 150-class, LR `1e-4`, 5 epochs: OOF macro AUC `0.620044` over 150 valid classes / 1500 files. Fold AUCs `0.680537`, `0.663893`, `0.668911`.
+  - `v13` NFNet 100-class, LR `1e-4`, 8 epochs: OOF macro AUC `0.636878` over 100 valid classes / 1000 files. Fold AUCs `0.695652`, `0.661716`, `0.681349`.
+- **OOF comparison artifacts:** on GPU server under `artifacts/sed_oof/comparisons/`.
+  - `v11_vs_v13.json`: Pearson `0.783948`, mean abs diff `0.042331`; best blend uses v13 weight `0.6` for OOF AUC `0.644676`, better than either model alone.
+  - `v9_vs_v13.json`: Pearson `0.724891`, mean abs diff `0.069515`; best blend uses v13 weight `0.8` for OOF AUC `0.638740`.
+- **Interpretation:** 8 epochs at LR `1e-4` is the strongest same-benchmark SED model so far, and blending 5-epoch + 8-epoch low-LR NFNet snapshots gives a large OOF gain. The 150-class 5-epoch run stayed stable and near the 100-class v11 score despite broader class coverage.
+- **New configs launched:**
+  - `configs/birdclef/sed_nfnet_balanced_oof_v14_10s_160_150cls_lr1e4_ep8.json`: 150 classes × 10 files/class, 8 epochs, 3-fold.
+  - `configs/birdclef/sed_nfnet_balanced_oof_v15_10s_160_200cls_lr1e4_ep8.json`: 200 classes × 10 files/class, 8 epochs, 3-fold.
+- **Commands launched on `192.168.0.10`:**
+  - v14: `CUDA_VISIBLE_DEVICES=0`, pid `3280334`, log `logs/sed_oof_v14_nfnet_150cls_lr1e4_ep8_20260506T163713Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v14-10s-160-150cls-lr1e4-ep8/`.
+  - v15: `CUDA_VISIBLE_DEVICES=1`, pid `3280336`, log `logs/sed_oof_v15_nfnet_200cls_lr1e4_ep8_20260506T163713Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v15-10s-160-200cls-lr1e4-ep8/`.
+- **Status at log time:** both new runners started fold 0 cleanly. Next run should collect v14/v15 summaries, compare v14 against v12 and v13, then start NFNet TorchScript inference/kernel packaging around the best low-LR/8-epoch SED folds.
