@@ -53,6 +53,7 @@ PENDING=[
     {"name":"v506","kernel":"yourslewis/bc26-v506-sed-logit-top5-a0025","version":version,"message":"v506: SED local logit-event boost top5 alpha0.025 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v507","kernel":"yourslewis/bc26-v507-sed-logit-top3-ew060","version":version,"message":"v507: SED local logit-event boost top3 + ProtoSSM EW0.60 + gamma 0.825 + context alpha 0.25"},
     {"name":"v508","kernel":"yourslewis/bc26-v508-sed-logit-top3-ctx0275","version":version,"message":"v508: SED local logit-event boost top3 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.275"},
+    {"name":"v509","kernel":"yourslewis/bc26-v509-nocall-confidence-gate","version":version,"message":"v509: Spec E no-call confidence gate + SED local logit top3 + EW0.625 + gamma 0.825 + context alpha 0.275"},
     {"name":"v376","kernel":"yourslewis/bc26-v376-ew0575-g0825-ctx025-a055","version":version,"message":"v376: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context 0.25 + quantile alpha 0.55"},
     {"name":"v377","kernel":"yourslewis/bc26-v377-ew0575-g080-ctx025-a055","version":version,"message":"v377: immediate top-k + ProtoSSM EW0.575 + gamma 0.80 + context 0.25 + quantile alpha 0.55"},
     {"name":"v378","kernel":"yourslewis/bc26-v378-ew0575-g0875-ctx025-a045","version":version,"message":"v378: immediate top-k + ProtoSSM EW0.575 + gamma 0.875 + context 0.25 + quantile alpha 0.45"},
