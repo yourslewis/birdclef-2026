@@ -133,3 +133,19 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Balanced OOF comparison: aligned 300 files; flat Pearson `0.092054`; mean absolute prediction diff `0.024793`.
 - Blend grid by v3 weight: 0.0=`0.476316`, 0.1=`0.486609`, 0.2=`0.498391`, 0.3=`0.508402`, 0.4=`0.514299`, 0.5=`0.521264`, 0.6=`0.526822`, 0.7=`0.531931`, 0.8=`0.532828`, 0.9=`0.533563`, 1.0=`0.534575`.
 - **Interpretation:** On a more meaningful balanced-class OOF subset, 10s/160-mel is better than 5s/128, but the simple blend does not beat 10s alone. Low correlation still suggests diversity, but the 5s model is too weak at this setting. Next A+G move should improve the 10s model (more classes/files, more epochs, label smoothing/mixup or LR sweep), not push a Kaggle kernel yet.
+
+## 2026-05-06 11:35 UTC — SED 10s/160 larger balanced OOF + smoothing/mixup A/B
+
+- **Track:** A+G Real SED frame/event OOF hyperparameter tuning.
+- **Hypothesis:** Since the balanced 30-class OOF showed 10s/160-mel is stronger than 5s/128, scale the 10s/160 setting to more balanced classes/files and test one regularization bundle (label smoothing 0.01 + mixup 0.2) while keeping backbone, crop, mel bins, loss, and class balancing fixed.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Configs:**
+  - `configs/birdclef/sed_b0_balanced_oof_v4_10s_160_moredata.json`
+  - `configs/birdclef/sed_b0_balanced_oof_v5_10s_160_smooth_mixup.json`
+- **Common setup:** EfficientNet-B0, 10s crops, 160 mels, focal BCE gamma 1.5, sqrt positive class weighting, 50 classes × 10 files/class = 500 files, 3 folds, 5 epochs, ONNX/TorchScript export.
+- **v4 command:** on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=0`, `scripts/birdclef_sed_oof_runner.py --base-config configs/birdclef/sed_b0_balanced_oof_v4_10s_160_moredata.json --output-root artifacts/sed_oof/sed-b0-balanced-oof-v4-10s-160-moredata --n-folds 3`.
+- **v5 command:** on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=1`, `scripts/birdclef_sed_oof_runner.py --base-config configs/birdclef/sed_b0_balanced_oof_v5_10s_160_smooth_mixup.json --output-root artifacts/sed_oof/sed-b0-balanced-oof-v5-10s-160-smooth-mixup --n-folds 3`.
+- **v4 result (more data, no regularization):** OOF macro AUC `0.506684` over 50 valid classes. Fold AUCs: `0.635036`, `0.562333`, `0.602611`; final fold val losses around `0.1631`-`0.1705`. Artifacts under `~/birdclef-2026/artifacts/sed_oof/sed-b0-balanced-oof-v4-10s-160-moredata/`.
+- **v5 result (label smoothing 0.01 + mixup 0.2):** OOF macro AUC `0.533127` over 50 valid classes. Fold AUCs approximately `0.607204`, `0.579449`, plus a high-0.5/low-0.6 first fold; final fold val losses around `0.1790`-`0.1983`. Artifacts under `~/birdclef-2026/artifacts/sed_oof/sed-b0-balanced-oof-v5-10s-160-smooth-mixup/`.
+- **v4/v5 comparison:** aligned 500 files; v4 AUC `0.506684`, v5 AUC `0.533127`, flat Pearson `0.666455`, mean absolute diff `0.013875`. Blend grid barely beats v5 at v5 weight 0.9: AUC `0.533167`; v5 alone is effectively best.
+- **Interpretation:** Scaling from 30 to 50 classes made the benchmark harder, but smoothing+mixup recovered most of the previous 30-class 10s/160 performance and clearly beat the unregularized larger run. Regularization helps, but the high v4/v5 correlation means this is not a new diversity axis. Next A+G action should tune 10s/160 regularized model learning rate/gamma or increase epochs carefully; alternatively move to a stronger backbone (EfficientNetV2-S/NFNet) on the same balanced OOF harness.
