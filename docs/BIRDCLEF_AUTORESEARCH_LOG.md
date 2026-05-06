@@ -83,3 +83,22 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Result:** complete. 512 real clips, train/val `410/102`, input `[512,160,626]`. Train loss `0.30597 -> 0.26143`; val loss `0.30555 -> 0.33323`; holdout macro AUC `0.57967` across 78 valid classes.
 - **Artifacts:** `~/birdclef-2026/artifacts/sed_pilots/sed-b0-gpu-pilot-v2-10s-m160-focal15-possqrt/metrics.json`, `holdout_predictions.npz`, `model_torchscript.pt` (`15.388 MB`), and `model.onnx` + external data (`0.56 MB` + `14.647 MB`).
 - **Interpretation:** 10s/160-mel sibling has better tiny holdout macro AUC than the 5s/128 pilot (`0.57967` vs `0.51354`) but worse final val loss, suggesting useful context signal with possible overfit/calibration drift. Next A+G move should add proper fold split/OOF and compare blend correlation with the v504/v508 prediction family before expanding epochs.
+
+## 2026-05-06 09:46 UTC — `sed-b0-gpu-pilot-v3-10s-m160-seed42-focal15-possqrt` + matched split blend check
+
+- **Track:** A+G Real SED frame/event GPU pilot + same-split comparison.
+- **Hypothesis:** The prior 10s/160-mel v2 pilot used seed 43, so it could not be directly correlated/blended with the 5s/128-mel v1 holdout. Rerun the 10s/160-mel variant with seed 42 to match v1's file/holdout split and test whether crop/mel diversity produces complementary predictions.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Config:** `configs/birdclef/sed_b0_gpu_pilot_v3_10s_m160_seed42_focal_possqrt.json`.
+- **Comparison script:** `scripts/birdclef_compare_sed_pilots.py` aligns holdout files and computes per-model AUC, flat prediction correlation, and a simple blend grid.
+- **Command launched:** on `192.168.0.10`, from `~/birdclef-2026`:
+  `nohup env CUDA_VISIBLE_DEVICES=1 bash -lc "source ~/kaggle_envs/s6e3/bin/activate; python scripts/birdclef_sed_pilot_train.py --config configs/birdclef/sed_b0_gpu_pilot_v3_10s_m160_seed42_focal_possqrt.json" > logs/sed_b0_gpu_pilot_v3_20260506T094611Z.log 2>&1 &`
+- **Result:** complete. 512 real clips, train/val `410/102`, input `[512,160,626]`. Train loss `0.31030 -> 0.26279`; val loss `0.31319 -> 0.27319`; holdout macro AUC `0.51991` across 76 valid classes. TorchScript and ONNX exported.
+- **Matched split comparison:** v1 5s/128 seed42 vs v3 10s/160 seed42 aligned on 102 holdout files and 234 classes.
+  - v1 macro AUC: `0.513541`
+  - v3 macro AUC: `0.519907`
+  - flat Pearson correlation: `0.164600`
+  - mean absolute prediction difference: `0.030940`
+  - best simple blend in grid: 50% v3 / 50% v1, macro AUC `0.573316`
+  - blend grid AUCs by v3 weight: 0.0=`0.513541`, 0.1=`0.547246`, 0.2=`0.563622`, 0.3=`0.570250`, 0.4=`0.572934`, 0.5=`0.573316`, 0.6=`0.560046`, 0.7=`0.550302`, 0.8=`0.539320`, 0.9=`0.529698`, 1.0=`0.519907`.
+- **Interpretation:** This is the first strong evidence that the SED crop/mel variants are complementary: individual tiny-holdout AUCs are modest, but same-split blend improves by about +0.060 over v1 and correlation is low. Next step is to convert this from tiny holdout into proper fold/OOF artifacts, then compare/blend against the v504/v508 teacher family if raw prediction artifacts can be located or regenerated.
