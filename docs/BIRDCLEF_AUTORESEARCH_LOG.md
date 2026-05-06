@@ -149,3 +149,21 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **v5 result (label smoothing 0.01 + mixup 0.2):** OOF macro AUC `0.533127` over 50 valid classes. Fold AUCs approximately `0.607204`, `0.579449`, plus a high-0.5/low-0.6 first fold; final fold val losses around `0.1790`-`0.1983`. Artifacts under `~/birdclef-2026/artifacts/sed_oof/sed-b0-balanced-oof-v5-10s-160-smooth-mixup/`.
 - **v4/v5 comparison:** aligned 500 files; v4 AUC `0.506684`, v5 AUC `0.533127`, flat Pearson `0.666455`, mean absolute diff `0.013875`. Blend grid barely beats v5 at v5 weight 0.9: AUC `0.533167`; v5 alone is effectively best.
 - **Interpretation:** Scaling from 30 to 50 classes made the benchmark harder, but smoothing+mixup recovered most of the previous 30-class 10s/160 performance and clearly beat the unregularized larger run. Regularization helps, but the high v4/v5 correlation means this is not a new diversity axis. Next A+G action should tune 10s/160 regularized model learning rate/gamma or increase epochs carefully; alternatively move to a stronger backbone (EfficientNetV2-S/NFNet) on the same balanced OOF harness.
+
+## 2026-05-06 12:35 UTC — SED stronger-backbone balanced OOF check
+
+- **Track:** A+G Real SED frame/event model-zoo/backbone sweep on the balanced OOF harness.
+- **Hypothesis:** Since EfficientNet-B0 10s/160 with smoothing+mixup is the current best SED configuration, test whether stronger Spec-A backbones add quality/diversity on the same 50-class balanced OOF benchmark. Smoke first, then scale only if safe.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Configs:**
+  - `configs/birdclef/sed_v2s_balanced_oof_v6_10s_160_smooth_mixup.json`
+  - `configs/birdclef/sed_nfnet_balanced_oof_v7_10s_160_smooth_mixup.json`
+- **Common setup:** 10s crops, 160 mels, 50 classes × 10 files/class = 500 files, 3-fold OOF, 5 epochs, focal BCE gamma 1.5, sqrt positive class weighting, label smoothing 0.01, mixup 0.2.
+- **Preflight:** both backbones passed tiny CUDA preflight on `192.168.0.10`: `tf_efficientnetv2_s` on 12 files and `eca_nfnet_l0` on 8 files. ONNX export for V2-S was too slow/hung during first preflight, so full OOF runs used TorchScript export only (`export_onnx=false`) for these larger backbones.
+- **v6 EfficientNetV2-S result:** OOF macro AUC `0.538471` over 50 valid classes. Fold AUCs: `0.605863`, `0.589326`, `0.594774`. TorchScript size about `81.443 MB` per fold.
+- **v7 eca_nfnet_l0 result:** OOF macro AUC `0.565955` over 50 valid classes. Fold AUCs: `0.615302`, `0.634777`, `0.652672`. TorchScript size about `89.870 MB` per fold.
+- **Backbone comparison against v5 B0 regularized baseline:**
+  - v5 B0 AUC `0.533127`; v6 V2-S AUC `0.538471`; correlation `0.273131`; best simple blend at 50% V2-S = `0.547722`.
+  - v5 B0 AUC `0.533127`; v7 NFNet AUC `0.565955`; correlation `0.352376`; best simple blend at 50% NFNet = `0.578510`.
+  - v6 V2-S AUC `0.538471`; v7 NFNet AUC `0.565955`; correlation `0.588825`; best simple blend at 70% NFNet = `0.572567`.
+- **Interpretation:** NFNet is the best SED backbone so far on the balanced OOF harness and also blends well with B0, giving the best observed SED OOF blend (`0.578510`) on this benchmark. This is a real model-family improvement, not a postprocess micro-sweep. Next step should either (a) launch a larger NFNet/B0 OOF with more classes/files or more epochs, or (b) start packaging an inference path for the NFNet+B0 SED ensemble once teacher/raw prediction artifacts are available for blend calibration.
