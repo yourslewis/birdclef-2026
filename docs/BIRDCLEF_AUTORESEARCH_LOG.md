@@ -189,3 +189,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **v8/v9 comparison:** aligned 1000 files. B0 v8 AUC `0.485820`; NFNet v9 AUC `0.587033`; flat Pearson `0.620113`; mean absolute diff `0.126029`.
 - **Blend grid:** B0->NFNet weight 0.0=`0.485820`, 0.1=`0.524593`, 0.2=`0.539884`, 0.3=`0.552519`, 0.4=`0.562065`, 0.5=`0.570213`, 0.6=`0.577273`, 0.7=`0.582413`, 0.8=`0.586091`, 0.9=`0.587667`, 1.0=`0.587033`.
 - **Interpretation update:** NFNet clearly scales; B0 mainly contributes a tiny complementary bump at ~10% weight. Best SED-only balanced OOF result so far is B0 10% + NFNet 90% = `0.587667`. Next actionable step should be NFNet-focused: either tune NFNet lr/gamma/epochs on 100-class OOF, or extend NFNet to more classes/files before building inference packaging.
+
+## 2026-05-06 14:35 UTC — NFNet 100-class LR/gamma sweep launch
+
+- **Track:** A+G Real SED frame/event NFNet-focused hyperparameter tuning.
+- **Hypothesis:** NFNet is the strongest SED backbone so far on the 100-class balanced OOF harness. Test two single-knob variants against v9 baseline (`lr=3e-4`, focal gamma `1.5`, AUC `0.587033`): lower focal gamma to `1.0`, and lower learning rate to `1e-4`.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Baseline:** `sed-nfnet-balanced-oof-v9-10s-160-100cls-smooth001-mixup02`, OOF AUC `0.587033`; best B0/NFNet blend `0.587667`.
+- **Configs:**
+  - `configs/birdclef/sed_nfnet_balanced_oof_v10_10s_160_100cls_gamma10.json` — same as v9, but focal gamma `1.0`.
+  - `configs/birdclef/sed_nfnet_balanced_oof_v11_10s_160_100cls_lr1e4.json` — same as v9, but learning rate `1e-4`.
+- **Common setup:** eca_nfnet_l0, 10s crops, 160 mels, 100 classes × 10 files/class = 1000 files, 3-fold OOF, 5 epochs, sqrt positive class weighting, label smoothing 0.01, mixup 0.2, TorchScript export only.
+- **Commands launched:**
+  - v10 on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=0`, log `logs/sed_oof_v10_nfnet_gamma10_20260506T143709Z.log`, pid `2979001`.
+  - v11 on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=1`, log `logs/sed_oof_v11_nfnet_lr1e4_20260506T143709Z.log`, pid `2979003`.
+- **Status at report time:** both OOF runners are still active. v10 fold 0 completed with AUC `0.599032` over 100 classes (below v9 fold 0 `0.618094`), then started fold 1. v11 had started fold 0 and was still running. Next run should collect both `oof_summary.json` files, compare v10/v11/v9, and decide whether focal gamma/lr tuning improves NFNet or whether to scale v9 directly.
