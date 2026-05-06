@@ -23,6 +23,7 @@ kaggle.json
 .env.*
 
 # Large/generated artifacts
+artifacts/
 input/
 data/
 datasets/
