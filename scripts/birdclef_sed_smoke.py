@@ -93,11 +93,20 @@ def make_mel_filter(sr: int, n_fft: int, n_mels: int, fmin: float = 20.0, fmax: 
     return torch.from_numpy(fb)
 
 
+def ffmpeg_binary() -> str:
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception as exc:
+        raise RuntimeError("ffmpeg is required for OGG decode; install ffmpeg or imageio-ffmpeg") from exc
+
+
 def decode_audio_ffmpeg(path: Path, sr: int, samples: int) -> np.ndarray:
-    if shutil.which("ffmpeg") is None:
-        raise RuntimeError("ffmpeg is required for OGG decode but was not found on PATH")
     cmd = [
-        "ffmpeg", "-v", "error", "-i", str(path), "-f", "f32le", "-ac", "1", "-ar", str(sr), "-",
+        ffmpeg_binary(), "-v", "error", "-i", str(path), "-f", "f32le", "-ac", "1", "-ar", str(sr), "-",
     ]
     raw = subprocess.check_output(cmd)
     y = np.frombuffer(raw, dtype=np.float32)
