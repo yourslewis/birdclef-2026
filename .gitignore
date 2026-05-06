@@ -23,6 +23,7 @@ kaggle.json
 .env.*
 
 # Large/generated artifacts
+artifacts/
 input/
 data/
 datasets/
@@ -41,6 +42,9 @@ submission.csv
 *.zip
 *.tar
 *.tar.gz
+
+# Local logs
+logs/
 
 # Local temp
 /tmp/
