@@ -204,3 +204,25 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - v10 on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=0`, log `logs/sed_oof_v10_nfnet_gamma10_20260506T143709Z.log`, pid `2979001`.
   - v11 on `192.168.0.10`, `CUDA_VISIBLE_DEVICES=1`, log `logs/sed_oof_v11_nfnet_lr1e4_20260506T143709Z.log`, pid `2979003`.
 - **Status at report time:** both OOF runners are still active. v10 fold 0 completed with AUC `0.599032` over 100 classes (below v9 fold 0 `0.618094`), then started fold 1. v11 had started fold 0 and was still running. Next run should collect both `oof_summary.json` files, compare v10/v11/v9, and decide whether focal gamma/lr tuning improves NFNet or whether to scale v9 directly.
+
+## 2026-05-06 15:40 UTC — NFNet LR=1e-4 win + scale probes launched
+
+- **Track:** A+G Real SED frame/event NFNet-focused scaling/tuning.
+- **Hypothesis:** The prior NFNet 100-class sweep showed optimizer step size is a major knob. Lower LR may stabilize NFNet on weak-label SED training; if it holds under wider class coverage or longer training, this becomes the primary SED candidate for inference packaging.
+- **Branch/PR:** `feature/sed-smoke-export-scaffold`, PR #204.
+- **Completed sweep results:**
+  - `v9` baseline NFNet, LR `3e-4`, focal gamma `1.5`: OOF macro AUC `0.587033` over 100 valid classes / 1000 files.
+  - `v10` NFNet, LR `3e-4`, focal gamma `1.0`: OOF macro AUC `0.524482`; fold 2 collapsed (`val_loss=0.716058`), so lower gamma is rejected.
+  - `v11` NFNet, LR `1e-4`, focal gamma `1.5`: OOF macro AUC `0.622721` over 100 valid classes / 1000 files. Fold AUCs `0.686372`, `0.654855`, `0.681563`.
+- **OOF comparison artifacts:** on GPU server under `artifacts/sed_oof/comparisons/`.
+  - `v9_vs_v11.json`: Pearson `0.873790`, mean abs diff `0.043709`; best blend uses v11 weight `0.7` for OOF AUC `0.628163`, better than v11 alone.
+  - `v8_vs_v11.json`: Pearson `0.589312`, mean abs diff `0.141561`; best blend is v11 alone (`0.622721`), so B0 no longer adds useful signal after the LR fix.
+  - `v10_vs_v11.json`: Pearson `0.659454`; best blend is v11 alone.
+- **Interpretation:** LR `1e-4` is the clearest SED OOF improvement so far. v11 is both a stronger standalone SED model and a useful complement to the older LR `3e-4` NFNet, but B0 can be deprioritized.
+- **New configs launched:**
+  - `configs/birdclef/sed_nfnet_balanced_oof_v12_10s_160_150cls_lr1e4.json`: scale winning LR to 150 balanced classes × 10 files/class = 1500 files, 3-fold, 5 epochs.
+  - `configs/birdclef/sed_nfnet_balanced_oof_v13_10s_160_100cls_lr1e4_ep8.json`: same 100-class benchmark as v11 but train 8 epochs to test whether longer low-LR training improves or overfits.
+- **Commands launched on `192.168.0.10`:**
+  - v12: `CUDA_VISIBLE_DEVICES=0`, pid `3114781`, log `logs/sed_oof_v12_nfnet_150cls_lr1e4_20260506T154031Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v12-10s-160-150cls-lr1e4/`.
+  - v13: `CUDA_VISIBLE_DEVICES=1`, pid `3114783`, log `logs/sed_oof_v13_nfnet_100cls_lr1e4_ep8_20260506T154031Z.log`, output `artifacts/sed_oof/sed-nfnet-balanced-oof-v13-10s-160-100cls-lr1e4-ep8/`.
+- **Status at log time:** both new OOF runners started fold 0 cleanly. Next run should collect v12/v13 summaries, compare against v11, and if v11/v13 remain best, start inference/kernel packaging for NFNet TorchScript folds and/or build a v9+v11 SED blend candidate.
