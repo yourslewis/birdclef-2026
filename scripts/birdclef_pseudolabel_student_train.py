@@ -62,6 +62,9 @@ class StudentConfig:
     mixup_alpha: float = 0.2
     num_workers: int = 0
     export_onnx: bool = False
+    target_mode: str = "soft"  # soft or hard_conf
+    positive_threshold: float = 0.90
+    negative_threshold: float = 0.05
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -90,7 +93,7 @@ def split_indices(n_items: int, val_fraction: float, seed: int) -> tuple[torch.T
     return order[n_val:], order[:n_val]
 
 
-def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndarray, np.ndarray]:
+def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndarray, np.ndarray, np.ndarray]:
     z = np.load(cfg.pred_npz, allow_pickle=True)
     row_ids = z["row_ids"].astype(str)
     labels = [str(x) for x in z["labels"].astype(str).tolist()]
@@ -98,10 +101,24 @@ def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndar
     if cfg.max_rows is not None:
         row_ids = row_ids[: cfg.max_rows]
         probs = probs[: cfg.max_rows]
-    # Power scaling for soft labels, clipped to preserve valid BCE targets.
-    soft = np.clip(probs, 1e-5, 1 - 1e-5) ** float(cfg.teacher_power)
-    soft = np.clip(soft, 1e-5, 1 - 1e-5).astype(np.float32)
-    return row_ids, labels, probs, soft
+    mode = str(cfg.target_mode).lower()
+    if mode == "soft":
+        # Power scaling for soft labels, clipped to preserve valid BCE targets.
+        targets = np.clip(probs, 1e-5, 1 - 1e-5) ** float(cfg.teacher_power)
+        targets = np.clip(targets, 1e-5, 1 - 1e-5).astype(np.float32)
+        mask = np.ones_like(targets, dtype=np.float32)
+    elif mode == "hard_conf":
+        pos = probs >= float(cfg.positive_threshold)
+        neg = probs <= float(cfg.negative_threshold)
+        mask = (pos | neg).astype(np.float32)
+        targets = pos.astype(np.float32)
+        if not np.any(pos):
+            raise RuntimeError(f"hard_conf found no positives at threshold {cfg.positive_threshold}")
+        if not np.any(neg):
+            raise RuntimeError(f"hard_conf found no negatives at threshold {cfg.negative_threshold}")
+    else:
+        raise ValueError(f"Unsupported target_mode={cfg.target_mode!r}; expected soft or hard_conf")
+    return row_ids, labels, probs, targets.astype(np.float32), mask.astype(np.float32)
 
 
 def build_windows(cfg: StudentConfig, row_ids: np.ndarray) -> torch.Tensor:
@@ -124,8 +141,12 @@ def build_windows(cfg: StudentConfig, row_ids: np.ndarray) -> torch.Tensor:
     return torch.stack(xs)
 
 
-def bce_soft_loss(logits: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
-    return F.binary_cross_entropy_with_logits(logits, target)
+def bce_soft_loss(logits: torch.Tensor, target: torch.Tensor, mask: torch.Tensor | None = None) -> torch.Tensor:
+    loss = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
+    if mask is None:
+        return loss.mean()
+    denom = mask.sum().clamp_min(1.0)
+    return (loss * mask).sum() / denom
 
 
 def predict_probs(model, x: torch.Tensor, indices: torch.Tensor, batch_size: int, device: torch.device) -> np.ndarray:
@@ -152,10 +173,11 @@ def main() -> int:
     out_dir = Path(cfg.output_dir); out_dir.mkdir(parents=True, exist_ok=True)
     started = time.time()
 
-    row_ids, labels, teacher_probs, soft_targets = load_pseudo_data(cfg)
+    row_ids, labels, teacher_probs, train_targets, target_mask_np = load_pseudo_data(cfg)
     decode_start = time.time()
     x = build_windows(cfg, row_ids)
-    y_soft = torch.from_numpy(soft_targets)
+    y_target = torch.from_numpy(train_targets)
+    target_mask = torch.from_numpy(target_mask_np)
     y_teacher = teacher_probs
     y_true = build_truth(pd.read_csv(cfg.labels_csv), row_ids, labels)
     train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
@@ -167,10 +189,13 @@ def main() -> int:
         model.train(); losses = []
         for idx in batch_iter(train_idx, cfg.batch_size, shuffle=True):
             bx = x[idx].to(device)
-            by = y_soft[idx].to(device)
-            bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
+            by = y_target[idx].to(device)
+            bm = target_mask[idx].to(device)
+            if str(cfg.target_mode).lower() == "soft":
+                bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
+                bm = None
             logits, _ = model(bx)
-            loss = bce_soft_loss(logits, by)
+            loss = bce_soft_loss(logits, by, bm)
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_pred = predict_probs(model, x, val_idx, cfg.batch_size, device)
@@ -211,6 +236,10 @@ def main() -> int:
         "n_val": int(len(val_idx)),
         "n_classes": int(len(labels)),
         "teacher_power": float(cfg.teacher_power),
+        "target_mode": str(cfg.target_mode),
+        "target_mask_fraction": float(target_mask_np.mean()),
+        "target_positive_cells": int((train_targets * target_mask_np).sum()),
+        "target_negative_cells": int(((1.0 - train_targets) * target_mask_np).sum()),
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "final_all_student_vs_truth": auc_summary(y_true, student_probs),
