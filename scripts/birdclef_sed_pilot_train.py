@@ -47,7 +47,11 @@ class PilotConfig:
     epochs: int = 2
     batch_size: int = 16
     max_files: int = 512
-    selection_strategy: str = "default"  # default | balanced_classes
+    selection_strategy: str = "default"  # default | balanced_classes | manifest
+    manifest_csv: str = ""
+    manifest_path_column: str = "path"
+    manifest_label_column: str = "primary_label"
+    manifest_split: str = ""
     max_classes: int = 30
     files_per_class: int = 10
     min_files_per_class: int = 6
@@ -176,6 +180,33 @@ def build_model(cfg: PilotConfig, n_classes: int) -> nn.Module:
 
 def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> list[tuple[Path, str]]:
     rng = random.Random(cfg.seed)
+    if cfg.selection_strategy == "manifest":
+        if not cfg.manifest_csv:
+            raise ValueError("selection_strategy=manifest requires manifest_csv")
+        manifest_path = Path(cfg.manifest_csv)
+        if not manifest_path.is_absolute():
+            manifest_path = data_root / cfg.manifest_csv
+        manifest = pd.read_csv(manifest_path, dtype={cfg.manifest_label_column: str})
+        if cfg.manifest_split:
+            if "split" not in manifest.columns:
+                raise ValueError("manifest_split was set but manifest has no split column")
+            manifest = manifest[manifest["split"].astype(str) == cfg.manifest_split].copy()
+        required = {cfg.manifest_path_column, cfg.manifest_label_column}
+        missing = sorted(required - set(manifest.columns))
+        if missing:
+            raise ValueError(f"manifest missing required columns: {missing}")
+        selected: list[tuple[Path, str]] = []
+        for row in manifest.itertuples(index=False):
+            label = str(getattr(row, cfg.manifest_label_column))
+            if label not in labels:
+                continue
+            raw_path = Path(str(getattr(row, cfg.manifest_path_column)))
+            path = raw_path if raw_path.is_absolute() else data_root / raw_path
+            if path.exists():
+                selected.append((path, label))
+        rng.shuffle(selected)
+        return selected[: cfg.max_files]
+
     train_audio = data_root / "train_audio"
     if cfg.selection_strategy == "balanced_classes":
         selected: list[tuple[Path, str]] = []
@@ -349,7 +380,7 @@ def main() -> int:
     parser.add_argument("--backbone", type=str)
     args = parser.parse_args()
     cfg = load_config(args.config)
-    for key in ["data_root", "output_dir", "max_files", "epochs", "batch_size", "backbone"]:
+    for key in ["data_root", "output_dir", "max_files", "epochs", "batch_size", "backbone", "selection_strategy", "manifest_csv", "manifest_split"]:
         val = getattr(args, key.replace("-", "_"), None)
         if val is not None:
             setattr(cfg, key, val)
