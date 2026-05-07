@@ -513,3 +513,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Status checks:** Current best remains `0.927`. Latest scored submissions unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime/no public score, v505/v506 `0.927`; v513/v514 remain complete with `submission.csv`. Queue monitor pid `99291` is alive and still sleeping after daily cap on v513.
 - **v22b monitoring:** Retried GPU server collection for `sed-nfnet-balanced-oof-v22b-20s-160-100cls-lr1e4-ep5-gpu1retry`. Network is degraded: ping to `192.168.0.10` had packet loss (`1/3` replies) and SSH again reached TCP connect but timed out during banner/key exchange. No reliable read of v22b artifacts was possible this turn.
 - **Action taken:** Did not launch `v23` fallback because v22b may still be running/completed and duplicating 20s NFNet OOF would waste scarce GPU. Kept PR #208 state as-is and documented the blocker. Next run should retry SSH first; if still blocked, consider a user-visible infrastructure note rather than stacking more GPU jobs blindly.
+
+## 2026-05-07 19:41 UTC — Spec A v22b monitor blocked by GPU host outage
+
+- **Track:** A Real SED NFNet crop/context tuning, PR #208 (`feature/nfnet-sed-context-sweep`).
+- **Status checks:** Current best remains `0.927`. Latest scored submissions unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime/no public score, v505/v506 `0.927`; v513/v514 remain complete with `submission.csv`. Queue monitor pid `99291` is alive and still sleeping after daily cap on v513.
+- **Infrastructure status:** GPU server `192.168.0.10` is now worse than previous SSH banner timeouts: ping had `0/5` replies (`100%` packet loss), and SSH returned `Host is down`. No reliable remote read of v22b logs/artifacts was possible.
+- **Decision:** Did not launch `v23` fallback or stack any new GPU jobs because the server is unreachable and v22b may already be running/completed. Launching blind would risk duplicate work once the host returns.
+- **Next step:** When `192.168.0.10` is reachable again, first collect `artifacts/sed_oof/sed-nfnet-balanced-oof-v22b-20s-160-100cls-lr1e4-ep5-gpu1retry/oof_summary.json` and logs, compare against NFNet v13/v15, then decide whether to launch the prepared v23 20s/128-mel fallback.
