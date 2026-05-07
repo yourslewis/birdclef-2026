@@ -362,3 +362,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Restarted queue monitor with v513 included: pid `77351`, log `logs/submit_pending_birdclef_queue_20260507T013726Z.log`.
 - Monitor sees v510/v511/v512 already submitted, then checks v513 and reports `RUNNING` with no failure message; it is sleeping in 10-minute intervals until v513 completes. No output log/files were available at final check.
 - Current scoring at this point: v510 `0.927` (safe tie), v511 `0.926` (drop), v512 still `PENDING`, v505/v506 `0.927`; current best remains `0.927`.
+
+### v513 completed + monitor hardening
+
+- v513 completed and produced `submission.csv`. Output log confirms the intended rank-blend path: SED manifest found, `6/6` TorchScript models loaded, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 336.8s`, `Applied real SED rank blend: weight=0.05`, output shape `240 x 235`, wall time `517.2s`.
+- v512 completed but did not receive a public score: Kaggle returned runtime exceeded for the hidden submission, so v512 is not a useful scored candidate despite public dry-run success.
+- Queue monitor crashed on a transient Kaggle `RemoteDisconnected`/`ConnectionError` while listing submissions after v513 completed. Hardened `scripts/submit_pending_birdclef_queue.py` to catch `ConnectionError`/`Timeout`, sleep 10 minutes, and retry instead of dying. Next: restart the monitor; it should wait on the daily cap and submit v513 at the next reset.

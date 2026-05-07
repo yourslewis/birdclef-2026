@@ -241,23 +241,27 @@ def submit_code(item):
     return competitions.create_code_submission(req)
 
 while True:
-    messages=recent_messages(); progressed=False; all_done=True
-    for item in PENDING:
-        if item["message"] in messages:
-            print(f"{item['name']} already submitted; skipping.", flush=True); continue
-        all_done=False
-        if not is_complete(item["kernel"]):
-            print(f"{item['name']} not complete yet; sleeping 10 minutes.", flush=True); time.sleep(600); progressed=True; break
-        print(f"Submitting {item['name']} kernel version {item['version']}...", flush=True)
-        try:
-            res=submit_code(item); print("Submission result:", res, flush=True); progressed=True; time.sleep(30); break
-        except requests.exceptions.HTTPError as exc:
-            response=getattr(exc,"response",None); text=getattr(response,"text","") if response is not None else str(exc)
-            print(f"Submission attempt failed for {item['name']}: {type(exc).__name__}: {exc}", flush=True)
-            if text: print(text[:2000], flush=True)
-            if "daily Submission allowance" in text or ("daily" in text.lower() and "allowance" in text.lower()):
-                sleep_s=quota_sleep_seconds(text); print(f"Daily submission allowance exhausted; sleeping {sleep_s} seconds before retry.", flush=True); time.sleep(sleep_s); progressed=True; break
-            raise
-    if all_done:
-        print("All pending kernels are already submitted.", flush=True); break
-    if not progressed: time.sleep(600)
+    try:
+        messages=recent_messages(); progressed=False; all_done=True
+        for item in PENDING:
+            if item["message"] in messages:
+                print(f"{item['name']} already submitted; skipping.", flush=True); continue
+            all_done=False
+            if not is_complete(item["kernel"]):
+                print(f"{item['name']} not complete yet; sleeping 10 minutes.", flush=True); time.sleep(600); progressed=True; break
+            print(f"Submitting {item['name']} kernel version {item['version']}...", flush=True)
+            try:
+                res=submit_code(item); print("Submission result:", res, flush=True); progressed=True; time.sleep(30); break
+            except requests.exceptions.HTTPError as exc:
+                response=getattr(exc,"response",None); text=getattr(response,"text","") if response is not None else str(exc)
+                print(f"Submission attempt failed for {item['name']}: {type(exc).__name__}: {exc}", flush=True)
+                if text: print(text[:2000], flush=True)
+                if "daily Submission allowance" in text or ("daily" in text.lower() and "allowance" in text.lower()):
+                    sleep_s=quota_sleep_seconds(text); print(f"Daily submission allowance exhausted; sleeping {sleep_s} seconds before retry.", flush=True); time.sleep(sleep_s); progressed=True; break
+                raise
+        if all_done:
+            print("All pending kernels are already submitted.", flush=True); break
+        if not progressed: time.sleep(600)
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as exc:
+        print(f"Transient Kaggle API/network error: {type(exc).__name__}: {exc}; sleeping 10 minutes before retry.", flush=True)
+        time.sleep(600)
