@@ -336,3 +336,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **v512 verification:** v512 version 1 completed with `submission.csv` and confirmed real SED usage: found the SED manifest under `/kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, loaded `6/6` TorchScript models, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 233.3s`, and applied `REAL_SED_BLEND_WEIGHT=0.02`. Dry-run output shape was `240 x 235`, wall time `386.3s`; final prob range `0.019048` to `0.977209`, mean `0.4426`.
 - **Queue decision:** Reordered the submission monitor to prioritize the genuinely new real SED candidates at the UTC reset. New order after already-scored v500-v504: v510 version 2 (`0.05`), v511 (`0.10`), v512 (`0.02`), then older v505-v509 postprocess candidates, then old v376+ variants. This avoids spending the next daily cap entirely on older micro-sweeps while real SED candidates wait another day.
 - **Validation:** `py_compile` passed for the reordered queue monitor. Next step: restart the monitor before UTC reset and verify it submits v510/v511/v512 first when quota returns.
+
+## 2026-05-07 00:35 UTC — real SED submissions queued after UTC reset
+
+- **Track:** A+G Real SED frame/event Kaggle submission monitoring.
+- **Status checks:** Latest scored LB remains unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. After UTC reset, the queue monitor submitted five kernels before hitting the new daily cap: v510, v511, v512, v505, and v506. All five are currently `PENDING` score.
+- **Submitted real SED candidates:**
+  - v510 ref `52403401`: real NFNet SED v13/v15 bundle blend weight `0.05` + v508 axis.
+  - v511 ref `52403421`: real NFNet SED v13/v15 bundle blend weight `0.10` + v508 axis.
+  - v512 ref `52403456`: real NFNet SED v13/v15 bundle blend weight `0.02` + v508 axis.
+- **Additional submitted older candidates:** v505 ref `52403474`, v506 ref `52403489`.
+- **Queue monitor:** pid `74432`, log `logs/submit_pending_birdclef_queue_20260506T233656Z.log`. It attempted v507 after the five submissions and hit the daily cap with `23 hours` remaining, then slept `82920s`.
+- **Interpretation:** The real SED blend bracket is now finally in Kaggle scoring. No further Kaggle submissions can be made today; next step is to monitor pending scores and then decide whether to continue real SED blend/runtime variants, pivot to pseudo-label/noisy-student, or prune if LB drops.
