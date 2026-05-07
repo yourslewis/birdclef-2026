@@ -117,6 +117,22 @@ def load_models(manifest: dict[str, Any], manifest_dir: Path, device: torch.devi
 def find_soundscapes(args: argparse.Namespace, base: Path) -> tuple[list[Path], bool]:
     if args.soundscape:
         return [Path(p) for p in args.soundscape], False
+    if args.soundscape_list:
+        roots = [Path(args.soundscape_dir)] if args.soundscape_dir else [base / "train_soundscapes", base / "test_soundscapes", base]
+        paths = []
+        for raw in args.soundscape_list.read_text().splitlines():
+            raw = raw.strip()
+            if not raw or raw.startswith("#"):
+                continue
+            p = Path(raw)
+            if not p.is_absolute() and not p.exists():
+                for root in roots:
+                    candidate = root / raw
+                    if candidate.exists():
+                        p = candidate
+                        break
+            paths.append(p)
+        return paths, False
     if args.soundscape_dir:
         return sorted(Path(args.soundscape_dir).glob("*.ogg")), False
     test_dir = base / "test_soundscapes"
@@ -154,6 +170,7 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--base-dir", type=Path, default=Path("/kaggle/input/birdclef-2026"))
     parser.add_argument("--soundscape", action="append", help="Specific soundscape OGG; repeatable")
+    parser.add_argument("--soundscape-list", type=Path, help="Text file with one soundscape path or filename per line")
     parser.add_argument("--soundscape-dir", type=Path)
     parser.add_argument("--sample-submission", type=Path)
     parser.add_argument("--output", type=Path, default=Path("submission.csv"))

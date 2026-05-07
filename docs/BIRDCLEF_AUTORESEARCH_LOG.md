@@ -281,3 +281,209 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - Aligns columns to `sample_submission.csv` when provided and can write CSV + compressed NPZ.
 - **Smoke validation on `192.168.0.10`:** ran the v13/v15 bundle on one real train soundscape (`BC2026_Train_0001_S08_20250606_030007.ogg`) using CPU, 6 TorchScript folds, batch size 4, 2 torch threads. Output `artifacts/sed_bundles/sed-nfnet-v13v15-blend-v1/soundscape_smoke_submission.csv` has shape `12 x 235` (`row_id` + 234 labels), no NaNs, probability range `0.001024` to `0.422720`, and row ids `_5` through `_60`. Runtime was `6.409 sec/file` for a 60s soundscape.
 - **Interpretation:** SED packaging now reaches real Kaggle row shape. The next implementation step is to embed this script into a Kaggle kernel candidate with the model bundle as an input dataset, then blend SED probabilities into the existing v504/v508 inference axis rather than submitting SED-only.
+
+## 2026-05-06 19:50 UTC — v510 real SED bundle Kaggle kernel push
+
+- **Track:** A+G Real SED frame/event inference packaging → Kaggle kernel candidate.
+- **Hypothesis:** The strong low-correlation NFNet SED v13/v15 OOF bundle can add real temporal/model-family signal to the current v508 Perch/ProtoSSM axis if blended conservatively after existing probability shaping.
+- **Branch/PR:** `feature/v510-real-sed-bundle-kernel`, PR #205. PR #204 was already merged, so this v510 work was moved to a fresh review branch.
+- **Status checks:** Latest scored LB remains v504/v503/v502/v501 at `0.927` and v500 at `0.926`. v505-v509 kernels are `COMPLETE` with no failure messages, still waiting behind the daily submission cap.
+- **Dataset packaging:** Created private Kaggle dataset `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1` from `sed-nfnet-v13v15-blend-v1.zip` (manifest + 6 TorchScript NFNet folds; about 514 MB zipped / 539 MB unzipped). Upload used the repo helper `scripts/upload_kaggle_dataset_bearer.py` because legacy `kaggle datasets` CLI returned 401 under current KGAT auth.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v510-real-sed-bundle-blend-005`, version 1.
+- **Config:** Base is v508 (`ProtoSSM EW=0.625`, gamma `0.825`, context alpha `0.275`, top3 local-logit event propagation), plus `REAL_SED_BLEND_WEIGHT=0.05` after the v508 final probability post-processing.
+- **Runtime guard:** v510 loads the zipped SED bundle from `/kaggle/input`, extracts it to `/kaggle/working`, selects TorchScript models with a time-budget guard (round-robin across v13/v15 if capped), emits 5-second soundscape row predictions aligned to `sample_submission.csv`, and falls back to pure v508 probabilities if the bundle is missing or inference fails.
+- **Validation:** `py_compile` passed for the v510 kernel script, the dataset-upload helper, and the queue monitor script. Kaggle push returned version `1`, no invalid data/competition/kernel/model sources. Kernel status immediately after push: `RUNNING`, no failure message.
+- **Queue monitor:** Refreshed monitor with v510 inserted after v509 and before old v376+ candidates. New monitor pid `68226`, log `logs/submit_pending_birdclef_queue_20260506T194754Z.log`; it retried v505 and is sleeping on the daily cap (~4.2h at launch). It will submit v505-v510 in order once quota returns, provided v510 completes.
+- **Next step:** Monitor v510 kernel completion/failure. If it completes without timeout/model-mount issues, let the refreshed queue submit it after v505-v509. If v510 times out, reduce `REAL_SED_MAX_MODELS`/blend path to a 2-model v13+v15 representative bundle or precompute a lighter exported ONNX/OpenVINO SED path.
+
+## 2026-05-06 20:45 UTC — v510 v1 fallback diagnosis + v2 mount-search fix
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and monitoring.
+- **Hypothesis:** v510 version 1 completed but did not actually use the real SED signal because the SED dataset mounted as extracted files under a Kaggle-normalized directory rather than as `sed-nfnet-v13v15-blend-v1.zip` under the exact slug path.
+- **Status checks:** Latest scored LB unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. v505-v509 are `COMPLETE`. v510 v1 is `COMPLETE` with `submission.csv`, but its log shows `WARNING: real SED bundle dataset not found; using v508 probabilities only`, so it must not be submitted as the real SED candidate.
+- **Root cause evidence:** Dataset API reports private dataset `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1` is `ready` and lists extracted files (`sed_bundle_manifest.json` + six `models/*.pt`) rather than the zip archive. The v510 v1 finder only checked exact slug manifest paths plus recursive zip names, not recursive manifest paths.
+- **Fix:** Updated `_sed_find_manifest()` to recursively search `/kaggle/input/**/sed_bundle_manifest.json`, print manifest candidates / input roots for debugging, and only then fall back to zip extraction. Updated the queue monitor so v510 submits kernel version `2` instead of bad/fallback version `1`.
+- **Validation:** `py_compile` passed for v510 script and queue monitor. Next: push v510 version 2 via Bearer API, verify the log contains `Real SED manifest candidates` and `Applied real SED bundle blend`, then keep the queue monitor on v505-v510 with v510 version 2.
+
+## 2026-05-06 21:45 UTC — v510 v2 verified + v511 blend weight 0.10 follow-up
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and lightweight blend-weight tuning.
+- **Status checks:** Latest scored LB still unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. v505-v509 are `COMPLETE`, and v510 v2 is now `COMPLETE` with `submission.csv`.
+- **v510 v2 verification:** Output log confirms the real SED path actually ran: `Real SED manifest candidates: /kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, `Loading 6/6 real SED TorchScript models`, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 214.4s`, and `Applied real SED bundle blend: weight=0.05`. Dry-run output shape was `240 x 235`, wall time `370.6s`; this is safely within Kaggle CPU budget on the public dry-run workload.
+- **Follow-up hypothesis:** Since v510 v2 successfully uses all six SED models and runtime is acceptable, test a single stronger SED blend weight before pivoting tracks. v511 changes only `REAL_SED_BLEND_WEIGHT=0.05 -> 0.10` on the same v508 + real SED bundle path.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v511-real-sed-bundle-blend-010`, version 1, with no invalid data/competition/kernel/model sources.
+- **Queue monitor:** Updated monitor queue to submit v510 version 2, then v511 version 1, before old v376+ variants. Next step is to restart/verify the monitor with this updated queue and monitor v511 completion/logs.
+
+## 2026-05-06 22:45 UTC — v511 verified + v512 ultra-conservative SED blend
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and lightweight blend-weight tuning.
+- **Status checks:** Latest scored LB remains unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`; v505-v512 kernels are `COMPLETE` or running as noted below. Existing queue monitor was alive and sleeping on daily cap after v505 retry.
+- **v511 verification:** v511 version 1 completed with `submission.csv` and confirmed real SED usage: found the SED manifest under `/kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, loaded `6/6` TorchScript models, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 222.2s`, and applied `REAL_SED_BLEND_WEIGHT=0.10`. Dry-run output shape was `240 x 235`, wall time `354.1s`; final prob range `0.017495` to `0.914253`, mean `0.4115`.
+- **Follow-up hypothesis:** Complete the small planned SED blend-weight bracket (`0.02`, `0.05`, `0.10`) with a safer low-weight variant in case the real SED model improves rank diversity but is undercalibrated versus the v508 axis.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v512-real-sed-bundle-blend-002`, version 1, changing only `REAL_SED_BLEND_WEIGHT=0.02` from the same v508 + SED bundle path. Kaggle push returned version `1` with no invalid sources.
+- **Queue monitor:** Updated queue to submit v510 version 2, then v511 version 1, then v512 version 1 after v505-v509 and before old v376+ variants. Next step: restart/verify the monitor with v512 included and monitor v512 completion/logs for the same SED markers.
+
+### Monitor refresh after v512 push
+
+- Restarted consolidated queue monitor with v512 included: pid `72673`, log `logs/submit_pending_birdclef_queue_20260506T223724Z.log`.
+- It retried v505 and hit the daily submission cap again, with about `82 minutes` remaining until UTC reset at restart time.
+- Final kernel status in this run: v510 `COMPLETE`, v511 `COMPLETE`, v512 `RUNNING` with no failure message and no output log yet. Next run should verify v512 logs for `Real SED manifest candidates`, `Loading 6/6 real SED TorchScript models`, `Applied real SED bundle blend: weight=0.02`, and `submission.csv saved`.
+
+## 2026-05-06 23:45 UTC — v512 verified + prioritize real SED submissions at reset
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and submission monitoring.
+- **Status checks:** Latest scored LB still unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. v505-v512 kernels are all `COMPLETE` with no failure messages.
+- **v512 verification:** v512 version 1 completed with `submission.csv` and confirmed real SED usage: found the SED manifest under `/kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, loaded `6/6` TorchScript models, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 233.3s`, and applied `REAL_SED_BLEND_WEIGHT=0.02`. Dry-run output shape was `240 x 235`, wall time `386.3s`; final prob range `0.019048` to `0.977209`, mean `0.4426`.
+- **Queue decision:** Reordered the submission monitor to prioritize the genuinely new real SED candidates at the UTC reset. New order after already-scored v500-v504: v510 version 2 (`0.05`), v511 (`0.10`), v512 (`0.02`), then older v505-v509 postprocess candidates, then old v376+ variants. This avoids spending the next daily cap entirely on older micro-sweeps while real SED candidates wait another day.
+- **Validation:** `py_compile` passed for the reordered queue monitor. Next step: restart the monitor before UTC reset and verify it submits v510/v511/v512 first when quota returns.
+
+## 2026-05-07 00:35 UTC — real SED submissions queued after UTC reset
+
+- **Track:** A+G Real SED frame/event Kaggle submission monitoring.
+- **Status checks:** Latest scored LB remains unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. After UTC reset, the queue monitor submitted five kernels before hitting the new daily cap: v510, v511, v512, v505, and v506. All five are currently `PENDING` score.
+- **Submitted real SED candidates:**
+  - v510 ref `52403401`: real NFNet SED v13/v15 bundle blend weight `0.05` + v508 axis.
+  - v511 ref `52403421`: real NFNet SED v13/v15 bundle blend weight `0.10` + v508 axis.
+  - v512 ref `52403456`: real NFNet SED v13/v15 bundle blend weight `0.02` + v508 axis.
+- **Additional submitted older candidates:** v505 ref `52403474`, v506 ref `52403489`.
+- **Queue monitor:** pid `74432`, log `logs/submit_pending_birdclef_queue_20260506T233656Z.log`. It attempted v507 after the five submissions and hit the daily cap with `23 hours` remaining, then slept `82920s`.
+- **Interpretation:** The real SED blend bracket is now finally in Kaggle scoring. No further Kaggle submissions can be made today; next step is to monitor pending scores and then decide whether to continue real SED blend/runtime variants, pivot to pseudo-label/noisy-student, or prune if LB drops.
+
+## 2026-05-07 01:35 UTC — v510 tied, v511 dropped, v513 rank-blend candidate
+
+- **Track:** A+G Real SED frame/event Kaggle monitoring + calibrated follow-up.
+- **Status checks:** New scores arrived: v510 real SED probability blend `0.05` scored `0.927` (safe tie), v511 stronger probability blend `0.10` scored `0.926` (drop), v505 and v506 older postprocess candidates scored `0.927`; v512 low probability blend `0.02` remains `PENDING`. Current best remains `0.927`.
+- **Interpretation:** Real SED signal can tie the plateau, but probability blending appears calibration-sensitive; increasing the probability weight to 0.10 hurt LB. Since AUC only cares per-class rank ordering, the next safer follow-up is to keep the tied-safe 0.05 weight but blend in per-class rank space rather than probability space.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v513-real-sed-rankblend-005`, version 1. It uses the same v508 + six-model NFNet SED bundle path but replaces `probs = (1-w)*v508_probs + w*sed_probs` with `rank_average_ensemble([v508_probs, sed_probs], weights=[0.95, 0.05])`, then clips to valid probability range.
+- **Queue monitor:** Added v513 after v512 and before older v505-v509 in `scripts/submit_pending_birdclef_queue.py`. Daily cap is already consumed for today, so v513 is prepared for the next available submission window after it completes.
+
+### v513 monitor status
+
+- Restarted queue monitor with v513 included: pid `77351`, log `logs/submit_pending_birdclef_queue_20260507T013726Z.log`.
+- Monitor sees v510/v511/v512 already submitted, then checks v513 and reports `RUNNING` with no failure message; it is sleeping in 10-minute intervals until v513 completes. No output log/files were available at final check.
+- Current scoring at this point: v510 `0.927` (safe tie), v511 `0.926` (drop), v512 still `PENDING`, v505/v506 `0.927`; current best remains `0.927`.
+
+### v513 completed + monitor hardening
+
+- v513 completed and produced `submission.csv`. Output log confirms the intended rank-blend path: SED manifest found, `6/6` TorchScript models loaded, `Real SED prob range: 0.000003 to 0.624691, mean: 0.0617; runtime 336.8s`, `Applied real SED rank blend: weight=0.05`, output shape `240 x 235`, wall time `517.2s`.
+- v512 completed but did not receive a public score: Kaggle returned runtime exceeded for the hidden submission, so v512 is not a useful scored candidate despite public dry-run success.
+- Queue monitor crashed on a transient Kaggle `RemoteDisconnected`/`ConnectionError` while listing submissions after v513 completed. Hardened `scripts/submit_pending_birdclef_queue.py` to catch `ConnectionError`/`Timeout`, sleep 10 minutes, and retry instead of dying. Next: restart the monitor; it should wait on the daily cap and submit v513 at the next reset.
+
+## 2026-05-07 03:45 UTC — v514 runtime-safe 2-model real SED rank-blend candidate
+
+- **Track:** A+G Real SED frame/event Kaggle inference packaging and monitoring.
+- **Status checks:** Current best remains `0.927`. Latest scored real SED results are v510 probability blend `0.05` = `0.927`, v511 probability blend `0.10` = `0.926`, v505/v506 = `0.927`; v512 completed but hidden submission exceeded allowed runtime and has no public score. v513 full six-model rank blend completed and is waiting behind the daily submission cap.
+- **Hypothesis:** Since v512 hit hidden runtime limits and v513 full rank-blend uses all six TorchScript SED folds, keep the safer per-class rank-blend calibration from v513 but cap inference to one v13 + one v15 representative model (`REAL_SED_MAX_MODELS=2`). This should materially reduce CPU/runtime risk while preserving both low-correlation NFNet SED members.
+- **Kernel candidate:** Added `kaggle-kernels/v514-real-sed-rankblend005-2model/` copied from v513 with only the runtime/model-count cap and metadata/message changed. Constants: `REAL_SED_BLEND_WEIGHT=0.05`, `REAL_SED_MAX_MODELS=2`, `REAL_SED_MIN_MODELS=2`, v508 base axis unchanged.
+- **Validation:** Local syntax check passed with `python3 -m py_compile`. Pushed real Kaggle kernel `yourslewis/bc26-v514-real-sed-rankblend-005-2m`, version 1; push returned no invalid dataset/kernel/model sources.
+- **Queue:** Added v514 immediately after v513 in `scripts/submit_pending_birdclef_queue.py`. Restarted monitor at `logs/submit_pending_birdclef_queue_20260507T034053Z.log` (pid `80441`); it confirmed v513 is complete, attempted submission, hit the daily cap with ~20h remaining, and is sleeping until the next UTC allowance. v514 is therefore queued but not yet reachable until v513 submits or the cap resets.
+- **Next step:** Collect v514 completion log/output; at the next reset, let the monitor submit v513 first, then v514 if daily quota remains. If v513 hidden-times out or underperforms, v514 is the runtime-safe fallback real SED rank-blend candidate.
+
+### v514 completion verification
+
+- v514 completed successfully. Kaggle session output contains `submission.csv` and confirms intended runtime-safe path: manifest found under `/kaggle/input/datasets/yourslewis/bc26-sed-nfnet-v13v15-bundle-v1/sed_bundle_manifest.json`, loaded `2/6` TorchScript models, `Real SED prob range: 0.000000 to 0.825038, mean: 0.0523; runtime 125.8s`, applied `real SED rank blend: weight=0.05`, output shape `240 x 235`, wall time `331.1s` / `5.5 min`.
+- Interpretation: v514 is now verified as the runtime-safe fallback to v513. It uses about 37% of v513's real-SED runtime on the public dry run (125.8s vs 336.8s) while keeping both v13/v15 members represented. It remains queued behind v513 due to daily cap.
+
+## 2026-05-07 04:55 UTC — Spec D EfficientNet-B3 SED diversity OOF baseline
+
+- **Track:** D Model zoo diversity baseline/backbone sweep, while A+G real SED submissions are blocked by daily cap.
+- **Hypothesis:** The NFNet v13/v15 real SED bundle is the strongest packaged SED signal, but an EfficientNet-B3 SED may add a lower-correlation convolutional backbone component. Test it on the same 100-class balanced OOF harness before considering any bundle expansion.
+- **Config:** Added `configs/birdclef/sed_b3_preflight_v16_10s_160.json` and `configs/birdclef/sed_b3_balanced_oof_v16_10s_160_100cls_lr1e4_ep8.json`. Main run uses backbone `efficientnet_b3`, 10s clips, 160 mels, hop 512, focal BCE gamma 1.5, label smoothing 0.01, mixup 0.2, sqrt positive class weights, LR `1e-4`, batch size 6, 8 epochs, 100 balanced classes x 10 files/class, 3 folds, TorchScript export only.
+- **Smoke gate:** Remote CUDA preflight on `192.168.0.10` passed: 16 files, `efficientnet_b3`, input `[16,160,626]`, 1 epoch, macro AUC `0.6667` over 3 valid toy classes, TorchScript size `41.99 MB`, runtime `4.8s` after decode.
+- **Command launched/run:** `CUDA_VISIBLE_DEVICES=0 python scripts/birdclef_sed_oof_runner.py --base-config configs/birdclef/sed_b3_balanced_oof_v16_10s_160_100cls_lr1e4_ep8.json --output-root artifacts/sed_oof/sed-b3-balanced-oof-v16-10s-160-100cls-lr1e4-ep8 --n-folds 3`, log `logs/sed_oof_v16_b3_100cls_20260507T043753Z.log`.
+- **OOF result:** v16 B3 completed: OOF macro AUC `0.506158` over 100 valid classes. Fold AUCs: `0.569995`, `0.595988`, `0.559534`. Artifacts: `artifacts/sed_oof/sed-b3-balanced-oof-v16-10s-160-100cls-lr1e4-ep8/oof_predictions.npz` plus three `41.99 MB` TorchScript folds.
+- **Comparisons:** vs v13 NFNet-100 ep8, B3 standalone is much weaker (`0.5062` vs `0.6369`) but low-correlation (`r=0.2723`) and gives a small blend bump at 10% B3: `0.638184` vs `0.636878`. vs v15 NFNet-200, B3 has very low correlation (`r=0.0627`) but no two-way blend gain. Three-way grid over v13/v15/v16 finds best `w13=0.35, w15=0.60, w16=0.05` with AUC `0.657364`, essentially tied with the old best v13/v15-only grid (`w13=0.40, w15=0.60`, AUC `0.657329`).
+- **Interpretation:** EfficientNet-B3 is diverse but too weak to justify immediate Kaggle packaging. Keep v16 as a possible 5% auxiliary member if future bundle work needs extra diversity, but do not spend a daily submission slot on B3 until v513/v514 LB results are known. Next non-Kaggle research action should be pseudo-label/noisy-student cache or a stronger model-zoo candidate, not B3 packaging.
+
+## 2026-05-07 05:55 UTC — Spec B pseudo-label cache smoke + labeled soundscape teacher cache
+
+- **Track:** B Pseudo-label/noisy-student cache, while A+G v513/v514 are complete but blocked by daily submission cap.
+- **Status checks:** Current best remains `0.927`. Latest scored real SED submissions are unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime exceeded/no score, v505/v506 `0.927`. v513 and v514 kernels are both `COMPLETE` and queue monitor `80441` is sleeping on the daily cap before submitting v513.
+- **Hypothesis:** Before training noisy-student models, build a durable row-level pseudo-label cache and measure whether the packaged NFNet v13/v15 teacher is calibrated enough for the spec's hard thresholds (`0.90/0.95/0.98`) or should be used only as soft labels / low-threshold features.
+- **Implementation:** Added `scripts/birdclef_pseudolabel_cache_summary.py` to summarize row-level pseudo-label NPZ files against `train_soundscapes_labels.csv` with macro AUC, top-k recall, positive/negative threshold counts, class histograms, and previews. Extended `scripts/birdclef_sed_soundscape_infer.py` with `--soundscape-list` so cache generation can target the 66 labeled train soundscapes instead of accidentally scanning all `10,658` train soundscape OGGs.
+- **Teacher:** Created remote manifest `artifacts/pseudolabels/sed-v13v15-2m-teacher-r0/sed_bundle_manifest_2m.json` with one v13 fold and one v15 fold, weights `0.5/0.5`, using absolute model paths from the existing SED bundle. This mirrors v514's runtime-safe two-model teacher.
+- **Smoke gate:** 5 labeled soundscapes / 60 rows on GPU passed. Runtime `2.75s`; summary macro AUC `0.4781` over 19 valid classes, top-k recall `0.0`, and no probabilities above `0.90`. This showed the train soundscape labels include many `47158son*`/soundscape-heavy targets and that hard high-threshold pseudo positives are likely too strict for this teacher.
+- **Full labeled cache:** Generated cache for the 66 labeled train soundscapes / 792 rows: `artifacts/pseudolabels/sed-v13v15-2m-teacher-r0/labeled_train_soundscape_probs.npz` and `.csv`; summary at `artifacts/pseudolabels/sed-v13v15-2m-teacher-r0/labeled_summary.json`. Runtime `7.67s` on GPU, `0.116s/file`, 2 models, 234 classes.
+- **Cache metrics:** Macro AUC `0.555240` over 75 valid classes. Top-k recall remains low (`top1=0.0008`, `top3=0.0171`, `top5=0.0289`, `top10=0.0499`). Prob stats: max `0.8688`, mean `0.0509`, p95 `0.2162`, p99 `0.3782`; hard positives at `0.90/0.95/0.98` are all `0`. Negative counts are plentiful (`<=0.01`: `82,845`, `<=0.02`: `98,600`, `<=0.05`: `127,122`).
+- **Interpretation:** The current NFNet SED bundle is not calibrated for high-confidence hard pseudo-labeling on labeled train soundscapes; the spec's `p095/p098` hard-positive variants should be rejected for this teacher unless logits are recalibrated or a stronger v501-v504 teacher cache is regenerated. The cache is still useful for soft-label/noisy-student experiments and for negative mining / low-confidence background signals. Next Spec B action should be a soft-label student or power-scaled teacher (`power=0.75/0.85`) rather than hard-positive thresholding.
+
+## 2026-05-07 06:55 UTC — Spec B soft-label noisy-student B0 pilot
+
+- **Track:** B Pseudo-label/noisy-student student training, while A+G v513/v514 remain complete but blocked by daily cap.
+- **Status checks:** Current best remains `0.927`; latest scored submissions unchanged (`v510=0.927`, `v511=0.926`, `v512` hidden runtime exceeded/no score, `v505/v506=0.927`). v513/v514 are `COMPLETE`; monitor pid `80441` is still sleeping after daily cap.
+- **Hypothesis:** Since the v13/v15 2-model teacher produced no hard positives at `0.90+`, test the softer route: train a small EfficientNet-B0 SED student on the row-level train-soundscape teacher probabilities with power scaling `0.85`. This checks whether a student can distill/denoise the teacher and become a usable new prediction artifact.
+- **Implementation:** Added `scripts/birdclef_pseudolabel_student_train.py`, which reconstructs 10s endpoint windows from pseudo-label row IDs, trains a timm SED student with soft-label BCE, exports TorchScript, and evaluates against `train_soundscapes_labels.csv`. Added configs `configs/birdclef/pl_r1_b0_soft_power085_smoke.json` and `configs/birdclef/pl_r1_b0_soft_power085_labeled.json`.
+- **Smoke gate:** 96 rows, 1 epoch, EfficientNet-B0, 10s/160-mel, batch 16, power `0.85`, mixup `0.2` passed on GPU. It exported a `15.391 MB` TorchScript model. Smoke student remained weak after 1 epoch: all-row student AUC `0.4457` vs teacher AUC `0.6643` over 23 valid classes.
+- **Full labeled pilot:** Ran all 792 labeled rows, 4 epochs, same config. Artifacts under `artifacts/pseudolabels/students/pl-r1-b0-soft-power085-labeled-soundscapes/`: `student_predictions.npz`, `metrics.json`, `model_torchscript.pt`, and `teacher_student_blend.json`. Runtime `10.94s` after feature decode on GPU; TorchScript size `15.391 MB`.
+- **Results:** Validation student AUC peaked at epoch 2 (`0.5443`) but ended lower at epoch 4 (`0.5209`), while the teacher validation AUC was `0.5508`. All-row student AUC `0.5052` vs teacher `0.5552` over 75 valid classes. Student-teacher correlation `0.3668`, MAE `0.3411`. Teacher+student blend grid shows only a tiny gain at 10% student (`0.55545` vs teacher `0.55524`).
+- **Interpretation:** The soft-label B0 student is operational but not yet useful as a standalone or Kaggle-package candidate. Early stopping around epoch 2 is better than epoch 4, but the tiny blend gain is too small to justify submission. Next Spec B action should either (a) improve the teacher with a v501-v504/v508 cache before student training, or (b) test a stronger pseudo student/backbone (`NFNet` or `V2-S`) with early stopping and/or lower teacher power, rather than spending a submission slot on this B0 student.
+
+## 2026-05-07 07:55 UTC — Spec B NFNet soft-label student follow-up
+
+- **Track:** B Pseudo-label/noisy-student stronger-student follow-up while A+G v513/v514 remain complete but blocked by daily cap.
+- **Status checks:** Current best remains `0.927`; latest scored submissions unchanged (`v510=0.927`, `v511=0.926`, `v512` hidden runtime exceeded/no score, `v505/v506=0.927`). v513/v514 are `COMPLETE`; monitor pid `80441` is still sleeping after the daily cap.
+- **Hypothesis:** The B0 soft-label student was operational but weak and low-correlation. Try the stronger `eca_nfnet_l0` student with early stopping at 2 epochs using the same v13/v15 2-model soft-label cache and power `0.85`, to see if a more capable architecture can distill the teacher without overfitting.
+- **Config:** Added `configs/birdclef/pl_r1_nfnet_soft_power085_smoke.json` and `configs/birdclef/pl_r1_nfnet_soft_power085_labeled_ep2.json`. Main run: `eca_nfnet_l0`, 10s/160-mel, LR `1e-4`, batch 8, 2 epochs, teacher power `0.85`, mixup `0.2`, 792 labeled rows, TorchScript export only.
+- **Smoke gate:** 96 rows, 1 epoch passed on GPU and exported an `89.872 MB` TorchScript model. Smoke validation student AUC `0.6331` vs teacher `0.6755` over 21 valid classes; all-row teacher AUC `0.6643`. This was much healthier than the B0 smoke.
+- **Full pilot:** All 792 rows completed in `13.09s` after feature decode. Artifacts under `artifacts/pseudolabels/students/pl-r1-nfnet-soft-power085-labeled-soundscapes-ep2/`: `student_predictions.npz`, `metrics.json`, `model_torchscript.pt`, and `teacher_student_blend.json`.
+- **Results:** Final all-row student AUC `0.53213` vs teacher `0.55524` over 75 valid classes. Student-teacher correlation is very high (`0.9136`) with low MAE (`0.0243`), meaning the NFNet student mostly copied a slightly worse/smoothed teacher. Blend grid shows no gain: best is `0%` student, AUC `0.55524`; any positive student weight reduces AUC.
+- **Interpretation:** Stronger NFNet distills the teacher much more faithfully than B0, but it does not improve or diversify the teacher. The bottleneck is teacher quality/calibration, not student capacity. Stop training more students on the current 2-model SED teacher cache. Next Spec B action should regenerate a stronger pseudo-label teacher from the v501-v504/v508 Kaggle axis or use the current SED cache only for negatives/background, not standalone positive-label student training.
+
+## 2026-05-07 08:35 UTC — Spec B v508 teacher cache + longer B0 distillation sweep
+
+- **Track:** B Pseudo-label/noisy-student cache and student tuning, while A+G v513/v514 remain complete but blocked by daily submission cap.
+- **Status checks:** Current best remains `0.927`. Latest scored submissions: v510 real SED probability blend `0.05` = `0.927`, v511 `0.10` = `0.926`, v512 hidden runtime exceeded/no public score, v505/v506 = `0.927`. v513/v514 are complete and queue monitor pid `80441` is still sleeping on the daily cap before submitting v513.
+- **Hypothesis:** The prior 2-model NFNet SED teacher cache was too weak/calibration-poor for pseudo-label positives. Regenerate the 66 labeled-soundscape cache using the stronger v508 Kaggle inference stack itself (`ProtoSSM EW=0.625`, gamma `0.825`, context alpha `0.275`, top3 local-logit event propagation), then test whether a tiny B0 student can distill that stronger teacher.
+- **Kaggle teacher-cache kernel:** Added `kaggle-kernels/v515-v508-teacher-cache66/`, copied from v508 with `DRYRUN_N_FILES=66` and metadata `yourslewis/bc26-v515-v508-teacher-cache66`. Pushed real Kaggle kernel version 1; Kaggle canonical slug returned `yourslewis/bc26-v515-v508-teacher-cache-66`. Kernel completed with `submission.csv`.
+- **Teacher cache artifacts:** Downloaded v515 `submission.csv` and converted it to `artifacts/pseudolabels/v508-teacher-cache66/predictions.npz` locally; generated summary `artifacts/pseudolabels/v508-teacher-cache66/summary.json`.
+- **Teacher cache metrics:** 792 rows x 234 classes. Macro AUC vs labeled train soundscapes `0.991149` over 75 valid classes, top-k recall `top1=0.2266`, `top3=0.5272`, `top5=0.6437`, `top10=0.7689`. Prob stats: min `0.01535`, max `0.99718`, mean `0.44222`, p95 `0.72743`, p99 `0.89057`. High-confidence positives now exist: `1668` entries >= `0.90`, `880` >= `0.95`, `372` >= `0.98`.
+- **Caution:** This v508 teacher-cache score is a labeled-train soundscape sanity check, not a clean OOF estimate; v508 trains/fits components on the same labeled soundscape pool before dry-running the 66 files, so the very high AUC may include in-sample leakage. Use it for operational distillation experiments, not as proof of generalization.
+- **Configs added:**
+  - `configs/birdclef/pl_r1_b0_v508_soft_p100_smoke.json`
+  - `configs/birdclef/pl_r1_b0_v508_soft_p100_labeled.json`
+  - `configs/birdclef/pl_r1_b0_v508_soft_p100_lr1e3_nomix_ep20.json`
+  - `configs/birdclef/pl_r1_b0_v508_soft_p100_lr3e4_mix02_ep20.json`
+- **Smoke gate:** B0, 96 rows, 1 epoch, teacher power `1.0`, mixup `0.2` passed on GPU and exported a `15.391 MB` TorchScript model. Smoke all-row student AUC `0.46125` vs teacher `0.98727` over 23 valid classes, so the first epoch underfit badly but the pipeline was valid.
+- **Full B0 soft-label baseline:** 792 rows, 4 epochs, LR `3e-4`, mixup `0.2`. Final all-row student AUC `0.78116` vs teacher `0.99115`, student-teacher corr `0.6189`, MAE `0.1247`; blend grid did not beat teacher.
+- **Longer B0 sweep 1:** 792 rows, 20 epochs, LR `1e-3`, no mixup. Runtime `27.3s`, TorchScript `15.391 MB`. Validation student AUC climbed to a best of `0.98572` at epoch 19; final all-row student AUC `0.98340` vs teacher `0.99115`, corr `0.9798`, MAE `0.0289`. Blend grid best on all rows remains `0%` student; validation had only a negligible `1%` student gain (`0.994095` vs teacher `0.994091`).
+- **Longer B0 sweep 2:** 792 rows, 20 epochs, LR `3e-4`, mixup `0.2`. Runtime `27.3s`, TorchScript `15.391 MB`. Final all-row student AUC `0.95997`, corr `0.9317`, MAE `0.0489`; blend grid again did not beat teacher.
+- **Interpretation:** The stronger v508 teacher cache fixes the pseudo-label confidence problem and produces meaningful hard-positive candidates, but a tiny B0 student mostly learns to imitate the teacher and does not provide useful blend diversity. The best distilled model is lightweight and close to the teacher, but too correlated to justify a Kaggle submission slot yet. Next Spec B step should add a clean OOF/holdout teacher-cache path or use hard high-confidence v508 positives/negatives for regularizing a genuinely independent real-audio SED model, rather than submitting this B0 student directly.
+
+## 2026-05-07 09:35 UTC — Spec B v508 hard-confidence student/regularizer pilot
+
+- **Track:** B Pseudo-label/noisy-student hard-positive/negative regularization, while A+G v513/v514 remain complete but blocked by daily submission cap.
+- **Status checks:** Current best remains `0.927`. Latest scored submissions unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime/no public score, v505/v506 `0.927`. v513 and v514 are both `COMPLETE` with `submission.csv`; queue monitor pid `80441` remains alive and sleeping on the daily cap before submitting v513.
+- **Hypothesis:** The v508 teacher cache created useful high-confidence positive cells, but soft-label B0 distillation was too correlated with the teacher. Train a masked hard-confidence student using only `p>=positive_threshold` as positives and `p<=0.05` as negatives, ignoring the ambiguous middle, to see whether it creates lower-correlation signal that can regularize/blend with the v508 teacher.
+- **Implementation:** Extended `scripts/birdclef_pseudolabel_student_train.py` with `target_mode="hard_conf"`, `positive_threshold`, `negative_threshold`, target-mask accounting, and masked BCE loss. Soft-label behavior remains the default. Added configs:
+  - `configs/birdclef/pl_r1_b0_v508_hard_p90n05_smoke.json`
+  - `configs/birdclef/pl_r1_b0_v508_hard_p90n05_lr1e3_ep20.json`
+  - `configs/birdclef/pl_r1_b0_v508_hard_p95n05_lr1e3_ep20.json`
+- **Smoke gate:** B0, 96 rows, 1 epoch, `p>=0.90` positives / `p<=0.05` negatives passed on GPU. Mask fraction `0.0176`, positive cells `178`, negative cells `217`; smoke all-row student AUC `0.5357` vs teacher `0.9873` over 23 classes. This validated the masked-loss path.
+- **P90/N05 full run:** 792 rows, 20 epochs, LR `1e-3`, no mixup. Mask fraction `0.02441`, positives `1668`, negatives `2856`, runtime `27.8s`, TorchScript `15.391 MB`. Final student AUC `0.63155` vs teacher `0.99115` over 75 classes, corr `0.2381`, MAE `0.2338`. Validation AUC peaked at epoch 2 (`0.6608`) then overfit. Despite weak standalone AUC, blend grid showed a small all-row gain at `10%` student: `0.991539` vs teacher `0.991149`; validation best `20%` student: `0.994126` vs teacher `0.994091`.
+- **P95/N05 full run:** 792 rows, 20 epochs, LR `1e-3`, no mixup. Mask fraction `0.02016`, positives `880`, negatives `2856`, runtime `27.1s`, TorchScript `15.391 MB`. Final student AUC `0.56397`, corr `0.2670`, MAE `0.1891`. Blend grid showed a smaller all-row gain at `10%` student: `0.991237`; validation best `10%` student: `0.994411`.
+- **Interpretation:** Hard-confidence training gives genuinely lower-correlation signal than soft distillation, and tiny teacher+hard-student blend gains appear on the labeled-train sanity set. However, the standalone students are weak and the validation split is still not clean OOF because the v508 teacher cache is in-sample/leaky. Do not submit this directly. The useful next step is to add early-best checkpointing and/or a clean OOF teacher-cache/hard-label path before packaging any hard-confidence student blend.
+
+## 2026-05-07 10:35 UTC — Spec B hard-confidence early-best checkpointing
+
+- **Track:** B Pseudo-label/noisy-student hard-confidence regularizer refinement, while A+G v513/v514 remain complete but blocked by daily submission cap.
+- **Status checks:** Current best remains `0.927`. Latest scored submissions unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime/no public score, v505/v506 `0.927`. v513/v514 remain `COMPLETE` with `submission.csv`; queue monitor pid `80441` is alive and sleeping on the daily cap before submitting v513.
+- **Hypothesis:** The previous hard-confidence p90/n05 student peaked early and then overfit. Restoring the best validation-AUC checkpoint should preserve the lower-correlation signal while improving standalone sanity-set AUC and export the actually selected checkpoint rather than the final overfit epoch.
+- **Implementation:** Added `restore_best_by_val_auc` to `scripts/birdclef_pseudolabel_student_train.py`. When enabled, it tracks max `val_student_vs_truth.macro_auc`, stores the best state dict, restores it before final all-row prediction/export, and writes `best_checkpoint_info.json`. Default remains `false` to preserve existing config behavior.
+- **Configs added:**
+  - `configs/birdclef/pl_r1_b0_v508_hard_p90n05_lr1e3_ep20_bestval.json`
+  - `configs/birdclef/pl_r1_b0_v508_hard_p95n05_lr1e3_ep20_bestval.json`
+- **P90/N05 best-val run:** 792 rows, 20 epochs, LR `1e-3`, no mixup, `restore_best_by_val_auc=true`. Selected epoch `2` with validation AUC `0.658354`. Final restored all-row student AUC `0.658888` vs teacher `0.991149`, corr `0.2185`, MAE `0.2046`. Blend grid best all-row is only a tiny `2%` student gain (`0.991165` vs `0.991149`); validation best is also `2%` student (`0.994245` vs teacher `0.994091`). Artifact path: `artifacts/pseudolabels/students/pl-r1-b0-v508-hard-p90n05-lr1e3-ep20-bestval/`.
+- **P95/N05 best-val run:** attempted after p90, but GPU 0 OOMed because a separate non-BirdCLEF LRM job was occupying ~22.6GB on GPU 0 and another LRM process occupied GPU 1. I did not kill those jobs. The p95 best-val config is committed for later rerun when GPU memory is free.
+- **Interpretation:** Early-best checkpointing fixes the overfit-final-export issue and improves p90 hard-confidence student standalone AUC (`0.6589` vs previous final `0.6315`), but the teacher+student blend gain remains negligible on the leaky sanity set. This is useful infrastructure, not a Kaggle candidate yet. Next step remains a clean OOF teacher-cache/hard-label path or applying hard labels as a regularizer inside an independent SED OOF harness.
+
+## 2026-05-07 11:35 UTC — Spec B clean OOF pseudo-label diagnostics
+
+- **Track:** B Pseudo-label/noisy-student clean teacher-cache diagnostics, while A+G v513/v514 remain complete but blocked by daily submission cap.
+- **Status checks:** Current best remains `0.927`. Latest scored submissions unchanged: v510 `0.927`, v511 `0.926`, v512 hidden runtime/no public score, v505/v506 `0.927`. v513 and v514 remain `COMPLETE` with `submission.csv`. At final check, old queue monitor pid `80441` was gone, so I restarted it as pid `99291`, log `logs/submit_pending_birdclef_queue_20260507T114053Z.log`; it confirmed v513 is complete, attempted submission, hit the daily cap with ~12h remaining, and is sleeping until retry.
+- **Hypothesis:** The v508 teacher-cache hard positives looked strong only on an in-sample/leaky labeled-train sanity set. Before training more students, inspect clean OOF SED predictions to see whether high-confidence pseudo positives are actually precise under out-of-fold evaluation.
+- **Implementation:** Added `scripts/birdclef_oof_pseudolabel_diagnostics.py`. It loads one or more `oof_predictions.npz` artifacts, aligns overlapping files/labels, computes macro AUC, top-k recall, correlation, ensemble/blend diagnostics, and threshold precision/recall for pseudo-label cutoffs. This gives a reusable clean gate for pseudo-label thresholds.
+- **Artifacts analyzed:** pulled remote OOF artifacts for v13 NFNet-100 ep8, v15 NFNet-200 ep8, and v16 B3-100 ep8 into local ignored `artifacts/sed_oof/...` and wrote summaries under `artifacts/pseudolabels/oof-teacher-diagnostics/`.
+- **v13/v15 clean OOF ensemble:** On the 1000-file overlap, v13/v15 weights `0.4/0.6` gives macro AUC `0.657329` over 100 classes, top-k recall top1 `0.087`, top3 `0.146`, top5 `0.184`, top10 `0.259`. High thresholds are extremely sparse: `p>=0.90` gives 11 cells with precision `0.636` and recall `0.007`; `p>=0.95` gives 5 cells with precision `0.800`; `p>=0.98` gives 2 cells with precision `1.000`. Negatives at `p<=0.05` are abundant and clean: 125,015 cells, negative precision `0.99934`.
+- **v13/v15/v16 clean OOF ensemble:** On the same 1000-file overlap, weights `0.35/0.60/0.05` gives macro AUC `0.657364`, confirming the prior tiny B3 blend bump. Thresholds remain too sparse for positive mining: `p>=0.90` gives 10 cells, precision `0.700`, recall `0.007`; `p>=0.95` gives 2 cells, precision `1.000`; no `p>=0.98` cells. `p<=0.05` negatives remain abundant/clean with negative precision `0.99954`.
+- **v15 full clean OOF:** On all 1810 v15 files, macro AUC `0.640274` over 181 classes. High thresholds are not reliable positives at wider class coverage: `p>=0.90` gives 202 cells but precision only `0.119`; `p>=0.95` gives 97 cells with precision `0.113`; `p>=0.98` gives 42 cells with precision `0.119`. `p<=0.05` negatives remain high precision (`0.99801`) but include 465 false negatives.
+- **Interpretation:** Clean OOF diagnostics strongly contradict the leaky v508-cache hard-positive story. High-confidence positives are either too sparse (v13/v15 overlap) or low precision (v15 full coverage), while low-probability negatives are consistently plentiful and very clean. Stop pursuing hard-positive pseudo-label students until a stronger clean OOF teacher exists. Near-term Spec B value is negative/background/no-call regularization or cleaner OOF teacher generation, not hard positive mining from the current SED OOF artifacts.
