@@ -9,6 +9,7 @@ and evaluates against train_soundscapes_labels.csv when present.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import random
 import sys
@@ -65,6 +66,7 @@ class StudentConfig:
     target_mode: str = "soft"  # soft or hard_conf
     positive_threshold: float = 0.90
     negative_threshold: float = 0.05
+    restore_best_by_val_auc: bool = False
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -185,6 +187,9 @@ def main() -> int:
     model = build_model(cfg, len(labels)).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     epoch_logs = []
+    best_state = None
+    best_epoch = None
+    best_val_auc = None
     for epoch in range(cfg.epochs):
         model.train(); losses = []
         for idx in batch_iter(train_idx, cfg.batch_size, shuffle=True):
@@ -201,15 +206,29 @@ def main() -> int:
         val_pred = predict_probs(model, x, val_idx, cfg.batch_size, device)
         val_teacher = y_teacher[val_idx.numpy()]
         val_true = y_true[val_idx.numpy()]
+        val_student_auc = auc_summary(val_true, val_pred)
         epoch_logs.append({
             "epoch": epoch + 1,
             "train_loss": float(np.mean(losses)),
-            "val_student_vs_truth": auc_summary(val_true, val_pred),
+            "val_student_vs_truth": val_student_auc,
             "val_teacher_vs_truth": auc_summary(val_true, val_teacher),
             "val_student_teacher_corr": flat_corr(val_pred, val_teacher),
             "val_student_teacher_mae": float(np.mean(np.abs(val_pred - val_teacher))),
         })
+        metric = val_student_auc.get("macro_auc")
+        if cfg.restore_best_by_val_auc and metric is not None and (best_val_auc is None or float(metric) > float(best_val_auc)):
+            best_val_auc = float(metric)
+            best_epoch = epoch + 1
+            best_state = copy.deepcopy(model.state_dict())
         print(json.dumps(epoch_logs[-1]), flush=True)
+
+    if cfg.restore_best_by_val_auc and best_state is not None:
+        model.load_state_dict(best_state)
+        (out_dir / "best_checkpoint_info.json").write_text(json.dumps({
+            "selection": "max_val_student_vs_truth_macro_auc",
+            "best_epoch": int(best_epoch),
+            "best_val_auc": float(best_val_auc),
+        }, indent=2) + "\n")
 
     all_idx = torch.arange(len(row_ids))
     student_probs = predict_probs(model, x, all_idx, cfg.batch_size, device)
@@ -240,6 +259,9 @@ def main() -> int:
         "target_mask_fraction": float(target_mask_np.mean()),
         "target_positive_cells": int((train_targets * target_mask_np).sum()),
         "target_negative_cells": int(((1.0 - train_targets) * target_mask_np).sum()),
+        "restore_best_by_val_auc": bool(cfg.restore_best_by_val_auc),
+        "best_epoch": int(best_epoch) if best_epoch is not None else None,
+        "best_val_auc": float(best_val_auc) if best_val_auc is not None else None,
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "final_all_student_vs_truth": auc_summary(y_true, student_probs),
