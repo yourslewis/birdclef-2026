@@ -356,3 +356,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Interpretation:** Real SED signal can tie the plateau, but probability blending appears calibration-sensitive; increasing the probability weight to 0.10 hurt LB. Since AUC only cares per-class rank ordering, the next safer follow-up is to keep the tied-safe 0.05 weight but blend in per-class rank space rather than probability space.
 - **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v513-real-sed-rankblend-005`, version 1. It uses the same v508 + six-model NFNet SED bundle path but replaces `probs = (1-w)*v508_probs + w*sed_probs` with `rank_average_ensemble([v508_probs, sed_probs], weights=[0.95, 0.05])`, then clips to valid probability range.
 - **Queue monitor:** Added v513 after v512 and before older v505-v509 in `scripts/submit_pending_birdclef_queue.py`. Daily cap is already consumed for today, so v513 is prepared for the next available submission window after it completes.
+
+### v513 monitor status
+
+- Restarted queue monitor with v513 included: pid `77351`, log `logs/submit_pending_birdclef_queue_20260507T013726Z.log`.
+- Monitor sees v510/v511/v512 already submitted, then checks v513 and reports `RUNNING` with no failure message; it is sleeping in 10-minute intervals until v513 completes. No output log/files were available at final check.
+- Current scoring at this point: v510 `0.927` (safe tie), v511 `0.926` (drop), v512 still `PENDING`, v505/v506 `0.927`; current best remains `0.927`.
