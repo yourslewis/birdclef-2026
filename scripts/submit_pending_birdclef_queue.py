@@ -52,6 +52,7 @@ PENDING=[
     {"name":"v510","kernel":"yourslewis/bc26-v510-real-sed-bundle-blend-005","version":2,"message":"v510: real NFNet SED v13/v15 bundle blend weight 0.05 + v508 axis"},
     {"name":"v511","kernel":"yourslewis/bc26-v511-real-sed-bundle-blend-010","version":version,"message":"v511: real NFNet SED v13/v15 bundle blend weight 0.10 + v508 axis"},
     {"name":"v512","kernel":"yourslewis/bc26-v512-real-sed-bundle-blend-002","version":version,"message":"v512: real NFNet SED v13/v15 bundle blend weight 0.02 + v508 axis"},
+    {"name":"v513","kernel":"yourslewis/bc26-v513-real-sed-rankblend-005","version":version,"message":"v513: real NFNet SED v13/v15 per-class rank blend weight 0.05 + v508 axis"},
     {"name":"v505","kernel":"yourslewis/bc26-v505-sed-logit-top5","version":version,"message":"v505: SED local logit-event boost top5 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v506","kernel":"yourslewis/bc26-v506-sed-logit-top5-a0025","version":version,"message":"v506: SED local logit-event boost top5 alpha0.025 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.25"},
     {"name":"v507","kernel":"yourslewis/bc26-v507-sed-logit-top3-ew060","version":version,"message":"v507: SED local logit-event boost top3 + ProtoSSM EW0.60 + gamma 0.825 + context alpha 0.25"},

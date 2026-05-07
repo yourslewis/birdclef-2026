@@ -348,3 +348,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Additional submitted older candidates:** v505 ref `52403474`, v506 ref `52403489`.
 - **Queue monitor:** pid `74432`, log `logs/submit_pending_birdclef_queue_20260506T233656Z.log`. It attempted v507 after the five submissions and hit the daily cap with `23 hours` remaining, then slept `82920s`.
 - **Interpretation:** The real SED blend bracket is now finally in Kaggle scoring. No further Kaggle submissions can be made today; next step is to monitor pending scores and then decide whether to continue real SED blend/runtime variants, pivot to pseudo-label/noisy-student, or prune if LB drops.
+
+## 2026-05-07 01:35 UTC — v510 tied, v511 dropped, v513 rank-blend candidate
+
+- **Track:** A+G Real SED frame/event Kaggle monitoring + calibrated follow-up.
+- **Status checks:** New scores arrived: v510 real SED probability blend `0.05` scored `0.927` (safe tie), v511 stronger probability blend `0.10` scored `0.926` (drop), v505 and v506 older postprocess candidates scored `0.927`; v512 low probability blend `0.02` remains `PENDING`. Current best remains `0.927`.
+- **Interpretation:** Real SED signal can tie the plateau, but probability blending appears calibration-sensitive; increasing the probability weight to 0.10 hurt LB. Since AUC only cares per-class rank ordering, the next safer follow-up is to keep the tied-safe 0.05 weight but blend in per-class rank space rather than probability space.
+- **Kernel candidate:** Added and pushed real Kaggle kernel `yourslewis/bc26-v513-real-sed-rankblend-005`, version 1. It uses the same v508 + six-model NFNet SED bundle path but replaces `probs = (1-w)*v508_probs + w*sed_probs` with `rank_average_ensemble([v508_probs, sed_probs], weights=[0.95, 0.05])`, then clips to valid probability range.
+- **Queue monitor:** Added v513 after v512 and before older v505-v509 in `scripts/submit_pending_birdclef_queue.py`. Daily cap is already consumed for today, so v513 is prepared for the next available submission window after it completes.
