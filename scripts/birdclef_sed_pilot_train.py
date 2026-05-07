@@ -62,6 +62,9 @@ class PilotConfig:
     class_balancing: str = "pos_weight_sqrt"
     num_workers: int = 0
     export_onnx: bool = True
+    oof_negative_cache: str = ""
+    aux_negative_weight: float = 0.0
+    oof_negative_mask_key: str = "negative_mask"
 
 
 def load_config(path: Path | None) -> PilotConfig:
@@ -174,9 +177,33 @@ def build_model(cfg: PilotConfig, n_classes: int) -> nn.Module:
     return TinySEDSmoke(n_classes)
 
 
+def path_key(path: str | Path) -> str:
+    parts = Path(str(path)).parts
+    if "train_audio" in parts:
+        i = parts.index("train_audio")
+        return "/".join(parts[i + 1:])
+    p = Path(str(path))
+    return f"{p.parent.name}/{p.name}"
+
+
 def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> list[tuple[Path, str]]:
     rng = random.Random(cfg.seed)
     train_audio = data_root / "train_audio"
+    if cfg.selection_strategy == "oof_negative_cache":
+        if not cfg.oof_negative_cache:
+            raise ValueError("selection_strategy=oof_negative_cache requires oof_negative_cache")
+        z = np.load(cfg.oof_negative_cache, allow_pickle=True)
+        cache_files = [path_key(x) for x in z["files"].astype(str)]
+        examples = []
+        for key in cache_files:
+            label = key.split("/", 1)[0]
+            path = train_audio / key
+            if label in labels and path.exists():
+                examples.append((path, label))
+        if len(examples) < 5:
+            raise RuntimeError(f"Need at least 5 cache-backed examples, found {len(examples)}")
+        rng.shuffle(examples)
+        return examples[: cfg.max_files]
     if cfg.selection_strategy == "balanced_classes":
         selected: list[tuple[Path, str]] = []
         eligible = []
@@ -222,6 +249,47 @@ def make_targets(meta: list[dict[str, Any]], labels: list[str]) -> torch.Tensor:
     for i, item in enumerate(meta):
         y[i, label_to_idx[item["label"]]] = 1.0
     return y
+
+
+def load_oof_negative_mask(cfg: PilotConfig, meta: list[dict[str, Any]], labels: list[str]) -> tuple[torch.Tensor | None, dict[str, Any]]:
+    if not cfg.oof_negative_cache or cfg.aux_negative_weight <= 0:
+        return None, {"enabled": False}
+    z = np.load(cfg.oof_negative_cache, allow_pickle=True)
+    cache_labels = z["labels"].astype(str)
+    if not np.array_equal(cache_labels, np.array(labels, dtype=str)):
+        raise RuntimeError("OOF negative cache labels do not match training labels")
+    if cfg.oof_negative_mask_key not in z.files:
+        raise RuntimeError(f"Mask key {cfg.oof_negative_mask_key!r} not in {cfg.oof_negative_cache}")
+    mask_arr = z[cfg.oof_negative_mask_key].astype(bool)
+    key_to_idx = {path_key(f): i for i, f in enumerate(z["files"].astype(str))}
+    out = np.zeros((len(meta), len(labels)), dtype=np.float32)
+    covered_rows = 0
+    for i, item in enumerate(meta):
+        key = path_key(item["path"])
+        idx = key_to_idx.get(key)
+        if idx is None:
+            continue
+        out[i] = mask_arr[idx].astype(np.float32)
+        covered_rows += 1
+    cells = int(out.sum())
+    return torch.from_numpy(out), {
+        "enabled": True,
+        "cache_path": cfg.oof_negative_cache,
+        "mask_key": cfg.oof_negative_mask_key,
+        "aux_negative_weight": float(cfg.aux_negative_weight),
+        "covered_rows": int(covered_rows),
+        "coverage_fraction": float(covered_rows / max(len(meta), 1)),
+        "negative_cells": cells,
+        "mean_negative_cells_per_covered_row": float(cells / max(covered_rows, 1)),
+    }
+
+
+def masked_negative_loss(logits: torch.Tensor, mask: torch.Tensor | None) -> torch.Tensor:
+    if mask is None or float(mask.sum().detach().cpu()) <= 0:
+        return logits.new_tensor(0.0)
+    target = torch.zeros_like(logits)
+    loss = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
+    return (loss * mask).sum() / mask.sum().clamp_min(1.0)
 
 
 def split_indices(n_items: int, val_fraction: float, seed: int, n_folds: int = 1, fold_index: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
@@ -374,6 +442,7 @@ def main() -> int:
         meta.append({"path": str(path), "label": label})
     x = torch.stack(xs)
     y = make_targets(meta, labels)
+    aux_negative_mask, aux_negative_summary = load_oof_negative_mask(cfg, meta, labels)
     train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
 
     model = build_model(cfg, len(labels)).to(device)
@@ -387,6 +456,9 @@ def main() -> int:
             bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
             logits, _ = model(bx)
             loss = compute_loss(logits, by, cfg, pos_weight)
+            if aux_negative_mask is not None and cfg.aux_negative_weight > 0:
+                nm = aux_negative_mask[idx].to(device)
+                loss = loss + float(cfg.aux_negative_weight) * masked_negative_loss(logits, nm)
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_probs, _ = predict(model, x, val_idx, cfg.batch_size, device)
@@ -415,6 +487,7 @@ def main() -> int:
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "auc_summary": auc,
+        "aux_negative_summary": aux_negative_summary,
         "prediction_time_sec": pred_time,
         "holdout_predictions_path": str(npz_path),
         "decode_feature_sec": round(time.time() - decode_start, 3),
