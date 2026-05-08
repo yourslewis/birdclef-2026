@@ -12,6 +12,7 @@ import argparse
 import copy
 import json
 import random
+import subprocess
 import sys
 import time
 from dataclasses import asdict, dataclass
@@ -31,6 +32,7 @@ from birdclef_sed_pilot_train import (  # noqa: E402
     build_model,
     decode_audio_ffmpeg,
     export_model,
+    ffmpeg_binary,
     make_mel_filter,
     maybe_mixup,
     resolve_manifest_audio_path,
@@ -81,6 +83,7 @@ class StudentConfig:
     supervised_min_files_per_class: int = 1
     supervised_weight: float = 1.0
     supervised_label_smoothing: float = 0.0
+    supervised_crop_start_sec_max: float = 0.0
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -168,6 +171,29 @@ def parse_secondary_labels(value: object) -> list[str]:
     return [x.strip() for x in text.split(";") if x.strip()]
 
 
+def stable_crop_start_sec(path: Path, seed: int, max_start_sec: float) -> float:
+    if max_start_sec <= 0:
+        return 0.0
+    # Deterministic per file without depending on Python's randomized hash().
+    key = f"{seed}:{path}".encode("utf-8")
+    value = 0
+    for byte in key:
+        value = (value * 131 + byte) % 1_000_003
+    return float(max_start_sec) * (value / 1_000_003.0)
+
+
+def decode_audio_ffmpeg_segment(path: Path, sr: int, samples: int, start_sec: float) -> np.ndarray:
+    cmd = [ffmpeg_binary(), "-v", "error"]
+    if start_sec > 0:
+        cmd.extend(["-ss", f"{start_sec:.3f}"])
+    cmd.extend(["-i", str(path), "-f", "f32le", "-ac", "1", "-ar", str(sr), "-"])
+    raw = subprocess.check_output(cmd)
+    y = np.frombuffer(raw, dtype=np.float32)
+    if len(y) < samples:
+        y = np.pad(y, (0, samples - len(y)))
+    return y[:samples].astype(np.float32, copy=False)
+
+
 def build_supervised_clip_data(cfg: StudentConfig, labels: list[str]) -> tuple[torch.Tensor | None, torch.Tensor | None, dict[str, Any]]:
     if not cfg.supervised_csv:
         return None, None, {"enabled": False}
@@ -210,7 +236,8 @@ def build_supervised_clip_data(cfg: StudentConfig, labels: list[str]) -> tuple[t
             missing_paths += 1
             continue
         try:
-            wave = decode_audio_ffmpeg(path, cfg.sample_rate, samples)
+            start_sec = stable_crop_start_sec(path, cfg.seed, float(cfg.supervised_crop_start_sec_max))
+            wave = decode_audio_ffmpeg_segment(path, cfg.sample_rate, samples, start_sec)
         except Exception:
             missing_paths += 1
             continue
@@ -238,6 +265,7 @@ def build_supervised_clip_data(cfg: StudentConfig, labels: list[str]) -> tuple[t
         "min_files_per_class": int(cfg.supervised_min_files_per_class),
         "weight": float(cfg.supervised_weight),
         "label_smoothing": float(cfg.supervised_label_smoothing),
+        "crop_start_sec_max": float(cfg.supervised_crop_start_sec_max),
     }
 
 
