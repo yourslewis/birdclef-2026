@@ -9,6 +9,7 @@ config/log/holdout predictions, macro AUC diagnostics, timing, and exports.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import random
 import shutil
@@ -72,6 +73,7 @@ class PilotConfig:
     oof_negative_cache: str = ""
     aux_negative_weight: float = 0.0
     oof_negative_mask_key: str = "negative_mask"
+    restore_best_by_val_loss: bool = False
 
 
 def load_config(path: Path | None) -> PilotConfig:
@@ -527,6 +529,9 @@ def main() -> int:
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     pos_weight = make_pos_weight(len(labels), cfg.class_balancing, device)
     epoch_logs = []
+    best_state = None
+    best_epoch = None
+    best_val_loss = None
     for epoch in range(cfg.epochs):
         model.train(); losses = []
         for idx in batch_iter(train_idx, cfg.batch_size, shuffle=True):
@@ -541,8 +546,17 @@ def main() -> int:
             losses.append(float(loss.detach().cpu()))
         val_probs, _ = predict(model, x, val_idx, cfg.batch_size, device)
         val_loss = compute_loss(torch.logit(torch.from_numpy(val_probs).clamp(1e-6, 1 - 1e-6)).to(device), y[val_idx].to(device), cfg, pos_weight)
-        epoch_logs.append({"epoch": epoch + 1, "train_loss": float(np.mean(losses)), "val_loss": float(val_loss.detach().cpu())})
+        epoch_log = {"epoch": epoch + 1, "train_loss": float(np.mean(losses)), "val_loss": float(val_loss.detach().cpu())}
+        epoch_logs.append(epoch_log)
+        if cfg.restore_best_by_val_loss and (best_val_loss is None or float(epoch_log["val_loss"]) < float(best_val_loss)):
+            best_val_loss = float(epoch_log["val_loss"])
+            best_epoch = epoch + 1
+            best_state = copy.deepcopy(model.state_dict())
         print(json.dumps(epoch_logs[-1]), flush=True)
+
+    if cfg.restore_best_by_val_loss and best_state is not None:
+        model.load_state_dict(best_state)
+        (out_dir / "best_checkpoint_info.json").write_text(json.dumps({"best_epoch": best_epoch, "best_val_loss": best_val_loss, "criterion": "val_loss"}, indent=2) + "\n")
 
     val_probs, pred_time = predict(model, x, val_idx, cfg.batch_size, device)
     train_probs, _ = predict(model, x, train_idx, cfg.batch_size, device)
@@ -565,6 +579,9 @@ def main() -> int:
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "auc_summary": auc,
+        "restore_best_by_val_loss": bool(cfg.restore_best_by_val_loss),
+        "best_epoch": best_epoch,
+        "best_val_loss": best_val_loss,
         "aux_negative_summary": aux_negative_summary,
         "prediction_time_sec": pred_time,
         "holdout_predictions_path": str(npz_path),
