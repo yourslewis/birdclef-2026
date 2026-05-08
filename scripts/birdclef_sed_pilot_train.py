@@ -33,6 +33,7 @@ except Exception:  # pragma: no cover
 @dataclass
 class PilotConfig:
     experiment_id: str = "sed-b0-gpu-pilot-v1-5s-focal15-possqrt"
+    track: str = "A+G Real SED frame/event GPU pilot"
     data_root: str = "/mnt/mac_data/workspace_don/kaggle_birdclef2026/data"
     output_dir: str = "artifacts/sed_pilots/sed-b0-gpu-pilot-v1-5s-focal15-possqrt"
     sample_rate: int = 32000
@@ -52,6 +53,8 @@ class PilotConfig:
     manifest_path_column: str = "path"
     manifest_label_column: str = "primary_label"
     manifest_split: str = ""
+    manifest_max_files_per_class: int = 0
+    manifest_min_files_per_class: int = 1
     max_classes: int = 30
     files_per_class: int = 10
     min_files_per_class: int = 6
@@ -190,6 +193,39 @@ def path_key(path: str | Path) -> str:
     return f"{p.parent.name}/{p.name}"
 
 
+def resolve_manifest_audio_path(raw_path: str | Path, data_root: Path) -> Path | None:
+    """Resolve manifest audio paths across Mac, SMB, and GPU-local mirrors.
+
+    External-pretrain manifests are commonly built on the Mac with absolute
+    `/Volumes/ExternalSSD/.../data/train_audio/<label>/<file>.ogg` paths, while
+    durable GPU jobs run on `trainer` with data staged under
+    `~/birdclef-2026/data/train_audio`.  Keep the manifest portable by falling
+    back to the path relative to the `train_audio` anchor.
+    """
+    raw = Path(str(raw_path))
+    candidates: list[Path] = []
+    if raw.is_absolute():
+        candidates.append(raw)
+    else:
+        candidates.extend([data_root / raw, data_root / "train_audio" / raw])
+
+    key = path_key(raw)
+    candidates.extend([
+        data_root / "train_audio" / key,
+        Path("/mnt/mac_data/workspace_don/kaggle_birdclef2026/data/train_audio") / key,
+        Path("/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_audio") / key,
+    ])
+    seen: set[str] = set()
+    for cand in candidates:
+        marker = str(cand)
+        if marker in seen:
+            continue
+        seen.add(marker)
+        if cand.exists():
+            return cand
+    return None
+
+
 def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> list[tuple[Path, str]]:
     rng = random.Random(cfg.seed)
     if cfg.selection_strategy == "manifest":
@@ -207,14 +243,25 @@ def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> lis
         missing = sorted(required - set(manifest.columns))
         if missing:
             raise ValueError(f"manifest missing required columns: {missing}")
+        if cfg.manifest_max_files_per_class > 0 or cfg.manifest_min_files_per_class > 1:
+            balanced_parts = []
+            for label, group in manifest.groupby(cfg.manifest_label_column, sort=True):
+                if str(label) not in labels or len(group) < cfg.manifest_min_files_per_class:
+                    continue
+                if cfg.manifest_max_files_per_class > 0 and len(group) > cfg.manifest_max_files_per_class:
+                    group = group.sample(n=cfg.manifest_max_files_per_class, random_state=cfg.seed)
+                balanced_parts.append(group)
+            if balanced_parts:
+                manifest = pd.concat(balanced_parts, ignore_index=True).sample(frac=1.0, random_state=cfg.seed).reset_index(drop=True)
+            else:
+                manifest = manifest.iloc[0:0].copy()
         selected: list[tuple[Path, str]] = []
         for row in manifest.itertuples(index=False):
             label = str(getattr(row, cfg.manifest_label_column))
             if label not in labels:
                 continue
-            raw_path = Path(str(getattr(row, cfg.manifest_path_column)))
-            path = raw_path if raw_path.is_absolute() else data_root / raw_path
-            if path.exists():
+            path = resolve_manifest_audio_path(getattr(row, cfg.manifest_path_column), data_root)
+            if path is not None:
                 selected.append((path, label))
         rng.shuffle(selected)
         return selected[: cfg.max_files]
@@ -505,7 +552,7 @@ def main() -> int:
     exports = export_model(model, x[:1], out_dir, cfg)
     metrics = {
         "experiment_id": cfg.experiment_id,
-        "track": "A+G Real SED frame/event GPU pilot",
+        "track": cfg.track,
         "status": "pilot_complete",
         "device": str(device),
         "backbone_actual": getattr(model, "backbone_name", cfg.backbone),
