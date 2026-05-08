@@ -755,3 +755,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **B3/V2S external smoke:** Added `xc-b3-q3-cap80-external-pretrain-lr1e4-smoke` and `xc-v2s-q3-cap80-external-pretrain-lr1e4-smoke`. EfficientNet-B3 AUC `0.538324`, runtime `5.665s`, TorchScript `41.988MB`; EfficientNetV2-RW-S AUC `0.544671`, runtime `7.444s`, TorchScript `88.730MB`. Both are also far below B0 smoke and not better than RegNetY lr3e-4.
 - **Decision:** Kill external-pretrained model-zoo branch for now; do not run ep6 full or package any zoo model. The best model-zoo smoke (RegNetY lr3e-4 `0.546421`) is not close enough to justify scaling, especially after raw RegNetY full did not blend linearly with v508/ep12-B0.
 - **Interpretation / next:** The only validated active bridge remains v519 / ep12 external-init B0. Further model-zoo work should wait for clean OOF teacher labels or a stronger external manifest/data-cleaning pass, not just same q3/cap80 manifest with larger/different timm backbones.
+
+## 2026-05-08 17:42 UTC — Spec C manifest quality/coverage smoke sweep
+
+- **Track:** C external-data pretraining/taxonomy mapping, after model-zoo external-pretrain smokes failed. Goal was to test whether the active B0 external bridge is sensitive to manifest cleanliness/coverage before spending another full pretrain or Kaggle slot.
+- **Status checks:** Current best remains `0.927`. Latest visible submissions unchanged: v509/v508/v507 `0.927`, v514 `0.924`, v513 hidden complete, v506/v505 `0.927`, v512 hidden complete, v511 `0.926`, v510 `0.927`. v510/v516/v517/v518/v519 are COMPLETE with no failure messages. Queue monitor pid `29481` is alive and sleeping on daily cap before v516; no duplicate submissions added.
+- **Infrastructure note:** Staged missing `sample_submission.csv` onto trainer so the manifest builder can run remotely. Built `manifest_q4_cap80` (XC only, min rating 4, cap80, quality-preferring): 1,926 rows, 1,867 train / 59 val, class mix Amphibia 27 / Aves 1,889 / Mammalia 10, no iNat rows.
+- **Smoke configs/results:**
+  - `xc-b0-q4-cap80-external-pretrain-smoke`: B0, ImageNet/timm init, q4/cap80 manifest, 5s/128mel, lr3e-4, 128 files, 1 epoch. AUC `0.478367` over 25 valid classes, runtime `4.586s`.
+  - `xc-b0-qall-cap120-external-pretrain-smoke`: B0, qall/cap120 manifest with iNat/unrated coverage, same recipe. AUC `0.459203` over 23 valid classes, runtime `4.885s`.
+  - `xc-b0-q3-cap80-external-pretrain-lr1e3-smoke`: original q3/cap80 manifest but higher spec-grid LR `1e-3`. AUC `0.455688` over 23 valid classes, runtime `5.090s`.
+  - Built `manifest_q3_cap40` (XC only, min rating 3, cap40, quality-preferring): 2,151 rows, 2,082 train / 69 val, class mix Amphibia 31 / Aves 2,109 / Mammalia 11. `xc-b0-q3-cap40-external-pretrain-smoke` AUC `0.529792` over 24 valid classes, runtime `4.456s`.
+- **Comparison:** The prior q3/cap80 B0 smoke remains much stronger at `0.643700` over 25 valid classes. All four new manifest/LR smokes are substantially worse, so none pass the scale gate.
+- **Decision:** Do not scale q4, qall/iNat, cap40, or lr1e-3 variants. Keep the original q3/cap80 + lr3e-4 B0 path as the only useful external-pretrain recipe, with v519/ep12 still the active bridge. Next C work should be a genuinely stronger data-cleaning or teacher-pseudo-labeling pass, not simpler rating/cap changes.
