@@ -74,6 +74,8 @@ class PilotConfig:
     aux_negative_weight: float = 0.0
     oof_negative_mask_key: str = "negative_mask"
     restore_best_by_val_loss: bool = False
+    initial_checkpoint: str = ""
+    initial_load_head: bool = False
 
 
 def load_config(path: Path | None) -> PilotConfig:
@@ -184,6 +186,59 @@ def build_model(cfg: PilotConfig, n_classes: int) -> nn.Module:
         except Exception as exc:
             print(f"WARNING: timm backbone {cfg.backbone!r} unavailable ({type(exc).__name__}: {exc}); using tiny_cnn fallback", flush=True)
     return TinySEDSmoke(n_classes)
+
+
+def load_initial_checkpoint(model: nn.Module, cfg: PilotConfig) -> dict[str, Any]:
+    if not cfg.initial_checkpoint:
+        return {"enabled": False}
+    path = Path(cfg.initial_checkpoint)
+    if not path.exists():
+        raise FileNotFoundError(path)
+    try:
+        obj = torch.jit.load(str(path), map_location="cpu")
+        state = obj.state_dict()
+        source = "torchscript"
+    except Exception:
+        obj = torch.load(path, map_location="cpu")
+        if isinstance(obj, dict) and "state_dict" in obj:
+            state = obj["state_dict"]
+        elif isinstance(obj, dict) and "model" in obj:
+            state = obj["model"]
+        elif isinstance(obj, dict):
+            state = obj
+        else:
+            raise TypeError(f"Unsupported checkpoint object from {path}: {type(obj)!r}")
+        source = "torch"
+
+    model_state = model.state_dict()
+    filtered = {}
+    skipped_shape = []
+    skipped_head = []
+    skipped_missing = []
+    for key, value in state.items():
+        if not cfg.initial_load_head and key.startswith("frame_head."):
+            skipped_head.append(key)
+            continue
+        if key not in model_state:
+            skipped_missing.append(key)
+            continue
+        if tuple(value.shape) != tuple(model_state[key].shape):
+            skipped_shape.append(key)
+            continue
+        filtered[key] = value
+    missing, unexpected = model.load_state_dict(filtered, strict=False)
+    return {
+        "enabled": True,
+        "path": str(path),
+        "source": source,
+        "load_head": bool(cfg.initial_load_head),
+        "loaded_keys": int(len(filtered)),
+        "skipped_head_keys": int(len(skipped_head)),
+        "skipped_shape_keys": skipped_shape[:20],
+        "skipped_missing_keys": skipped_missing[:20],
+        "model_missing_after_partial_load": list(missing)[:20],
+        "model_unexpected_after_partial_load": list(unexpected)[:20],
+    }
 
 
 def path_key(path: str | Path) -> str:
@@ -525,7 +580,9 @@ def main() -> int:
     aux_negative_mask, aux_negative_summary = load_oof_negative_mask(cfg, meta, labels)
     train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
 
-    model = build_model(cfg, len(labels)).to(device)
+    model = build_model(cfg, len(labels))
+    initial_checkpoint_summary = load_initial_checkpoint(model, cfg)
+    model = model.to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     pos_weight = make_pos_weight(len(labels), cfg.class_balancing, device)
     epoch_logs = []
@@ -582,6 +639,7 @@ def main() -> int:
         "restore_best_by_val_loss": bool(cfg.restore_best_by_val_loss),
         "best_epoch": best_epoch,
         "best_val_loss": best_val_loss,
+        "initial_checkpoint_summary": initial_checkpoint_summary,
         "aux_negative_summary": aux_negative_summary,
         "prediction_time_sec": pred_time,
         "holdout_predictions_path": str(npz_path),
