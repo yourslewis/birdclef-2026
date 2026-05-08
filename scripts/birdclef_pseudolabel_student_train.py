@@ -29,9 +29,11 @@ from birdclef_sed_pilot_train import (  # noqa: E402
     auc_summary,
     batch_iter,
     build_model,
+    decode_audio_ffmpeg,
     export_model,
     make_mel_filter,
     maybe_mixup,
+    resolve_manifest_audio_path,
     waveform_to_logmel,
 )
 from birdclef_sed_soundscape_infer import decode_soundscape, extract_context  # noqa: E402
@@ -69,6 +71,16 @@ class StudentConfig:
     positive_threshold: float = 0.90
     negative_threshold: float = 0.05
     restore_best_by_val_auc: bool = False
+    supervised_csv: str = ""
+    supervised_data_root: str = ""
+    supervised_path_column: str = "filename"
+    supervised_label_column: str = "primary_label"
+    supervised_secondary_column: str = "secondary_labels"
+    supervised_max_files: int = 0
+    supervised_max_files_per_class: int = 0
+    supervised_min_files_per_class: int = 1
+    supervised_weight: float = 1.0
+    supervised_label_smoothing: float = 0.0
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -145,12 +157,104 @@ def build_windows(cfg: StudentConfig, row_ids: np.ndarray) -> torch.Tensor:
     return torch.stack(xs)
 
 
-def bce_soft_loss(logits: torch.Tensor, target: torch.Tensor, mask: torch.Tensor | None = None) -> torch.Tensor:
+def parse_secondary_labels(value: object) -> list[str]:
+    text = str(value)
+    if not text or text == "nan" or text == "[]":
+        return []
+    text = text.strip()
+    if text.startswith("[") and text.endswith("]"):
+        text = text[1:-1].replace("'", "").replace('"', "")
+        return [x.strip() for x in text.split(",") if x.strip()]
+    return [x.strip() for x in text.split(";") if x.strip()]
+
+
+def build_supervised_clip_data(cfg: StudentConfig, labels: list[str]) -> tuple[torch.Tensor | None, torch.Tensor | None, dict[str, Any]]:
+    if not cfg.supervised_csv:
+        return None, None, {"enabled": False}
+    csv_path = Path(cfg.supervised_csv)
+    if not csv_path.exists():
+        raise FileNotFoundError(csv_path)
+    data_root = Path(cfg.supervised_data_root or Path(cfg.soundscape_dir).parent)
+    df = pd.read_csv(csv_path, dtype={cfg.supervised_label_column: str})
+    required = {cfg.supervised_path_column, cfg.supervised_label_column}
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"supervised_csv missing required columns: {missing}")
+    df = df[df[cfg.supervised_label_column].astype(str).isin(labels)].copy()
+    if cfg.supervised_max_files_per_class > 0 or cfg.supervised_min_files_per_class > 1:
+        parts = []
+        for label, group in df.groupby(cfg.supervised_label_column, sort=True):
+            if len(group) < cfg.supervised_min_files_per_class:
+                continue
+            if cfg.supervised_max_files_per_class > 0 and len(group) > cfg.supervised_max_files_per_class:
+                group = group.sample(n=cfg.supervised_max_files_per_class, random_state=cfg.seed)
+            parts.append(group)
+        df = pd.concat(parts, ignore_index=True) if parts else df.iloc[0:0].copy()
+    if cfg.supervised_max_files > 0 and len(df) > cfg.supervised_max_files:
+        df = df.sample(n=cfg.supervised_max_files, random_state=cfg.seed)
+    df = df.sample(frac=1.0, random_state=cfg.seed).reset_index(drop=True)
+    mel_fb = make_mel_filter(cfg.sample_rate, cfg.n_fft, cfg.n_mels)
+    samples = int(round(cfg.sample_rate * cfg.duration_sec))
+    label_to_idx = {label: i for i, label in enumerate(labels)}
+    xs = []
+    ys = []
+    used_rows = 0
+    missing_paths = 0
+    for row in df.itertuples(index=False):
+        label = str(getattr(row, cfg.supervised_label_column))
+        raw_path = getattr(row, cfg.supervised_path_column)
+        path = resolve_manifest_audio_path(raw_path, data_root)
+        if path is None:
+            path = resolve_manifest_audio_path(Path("train_audio") / str(raw_path), data_root)
+        if path is None:
+            missing_paths += 1
+            continue
+        try:
+            wave = decode_audio_ffmpeg(path, cfg.sample_rate, samples)
+        except Exception:
+            missing_paths += 1
+            continue
+        target = np.full(len(labels), float(cfg.supervised_label_smoothing), dtype=np.float32)
+        target[label_to_idx[label]] = 1.0
+        if cfg.supervised_secondary_column and cfg.supervised_secondary_column in df.columns:
+            for sec in parse_secondary_labels(getattr(row, cfg.supervised_secondary_column)):
+                if sec in label_to_idx:
+                    target[label_to_idx[sec]] = max(target[label_to_idx[sec]], 1.0)
+        xs.append(waveform_to_logmel(torch.from_numpy(wave.copy()), cfg, mel_fb))
+        ys.append(target)
+        used_rows += 1
+    if not xs:
+        return None, None, {"enabled": True, "requested_rows": int(len(df)), "used_rows": 0, "missing_paths": int(missing_paths)}
+    y = torch.from_numpy(np.stack(ys).astype(np.float32))
+    return torch.stack(xs), y, {
+        "enabled": True,
+        "csv": str(csv_path),
+        "data_root": str(data_root),
+        "requested_rows": int(len(df)),
+        "used_rows": int(used_rows),
+        "missing_paths": int(missing_paths),
+        "max_files": int(cfg.supervised_max_files),
+        "max_files_per_class": int(cfg.supervised_max_files_per_class),
+        "min_files_per_class": int(cfg.supervised_min_files_per_class),
+        "weight": float(cfg.supervised_weight),
+        "label_smoothing": float(cfg.supervised_label_smoothing),
+    }
+
+
+def bce_soft_loss(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+    mask: torch.Tensor | None = None,
+    sample_weight: torch.Tensor | None = None,
+) -> torch.Tensor:
     loss = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
-    if mask is None:
-        return loss.mean()
-    denom = mask.sum().clamp_min(1.0)
-    return (loss * mask).sum() / denom
+    weight = torch.ones_like(loss)
+    if mask is not None:
+        weight = weight * mask
+    if sample_weight is not None:
+        weight = weight * sample_weight.view(-1, 1)
+    denom = weight.sum().clamp_min(1.0)
+    return (loss * weight).sum() / denom
 
 
 def predict_probs(model, x: torch.Tensor, indices: torch.Tensor, batch_size: int, device: torch.device) -> np.ndarray:
@@ -231,12 +335,28 @@ def main() -> int:
 
     row_ids, labels, teacher_probs, train_targets, target_mask_np = load_pseudo_data(cfg)
     decode_start = time.time()
-    x = build_windows(cfg, row_ids)
-    y_target = torch.from_numpy(train_targets)
-    target_mask = torch.from_numpy(target_mask_np)
+    x_pseudo = build_windows(cfg, row_ids)
+    y_target_pseudo = torch.from_numpy(train_targets)
+    target_mask_pseudo = torch.from_numpy(target_mask_np)
+    x_sup, y_sup, supervised_summary = build_supervised_clip_data(cfg, labels)
+    if x_sup is not None and y_sup is not None:
+        x = torch.cat([x_pseudo, x_sup], dim=0)
+        y_target = torch.cat([y_target_pseudo, y_sup], dim=0)
+        target_mask = torch.cat([target_mask_pseudo, torch.ones_like(y_sup)], dim=0)
+        sample_weight = torch.cat([torch.ones(len(row_ids)), torch.full((len(y_sup),), float(cfg.supervised_weight))])
+    else:
+        x = x_pseudo
+        y_target = y_target_pseudo
+        target_mask = target_mask_pseudo
+        sample_weight = torch.ones(len(row_ids))
     y_teacher = teacher_probs
     y_true = build_truth(pd.read_csv(cfg.labels_csv), row_ids, labels)
-    train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
+    pseudo_train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
+    if x_sup is not None and y_sup is not None:
+        sup_idx = torch.arange(len(row_ids), len(row_ids) + len(y_sup))
+        train_idx = torch.cat([pseudo_train_idx, sup_idx])
+    else:
+        train_idx = pseudo_train_idx
 
     model = build_model(cfg, len(labels)).to(device)
     initial_checkpoint_summary = load_initial_checkpoint(model, cfg)
@@ -252,11 +372,15 @@ def main() -> int:
             bx = x[idx].to(device)
             by = y_target[idx].to(device)
             bm = target_mask[idx].to(device)
+            bw = sample_weight[idx].to(device)
             if str(cfg.target_mode).lower() == "soft":
-                bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
+                # Mixup only for all-pseudo batches. Mixing supervised one-hot clip labels
+                # with pseudo-label rows made attribution hard during early pilots.
+                if cfg.mixup_alpha > 0 and torch.all(bw == 1.0):
+                    bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
                 bm = None
             logits, _ = model(bx)
-            loss = bce_soft_loss(logits, by, bm)
+            loss = bce_soft_loss(logits, by, bm, bw)
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_pred = predict_probs(model, x, val_idx, cfg.batch_size, device)
@@ -307,8 +431,11 @@ def main() -> int:
         "device": str(device),
         "backbone_actual": getattr(model, "backbone_name", cfg.backbone),
         "n_rows": int(len(row_ids)),
+        "n_pseudo_train": int(len(pseudo_train_idx)),
+        "n_supervised_train": int(len(y_sup)) if y_sup is not None else 0,
         "n_train": int(len(train_idx)),
         "n_val": int(len(val_idx)),
+        "supervised_summary": supervised_summary,
         "n_classes": int(len(labels)),
         "teacher_power": float(cfg.teacher_power),
         "target_mode": str(cfg.target_mode),
