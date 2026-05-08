@@ -84,6 +84,9 @@ class StudentConfig:
     supervised_weight: float = 1.0
     supervised_label_smoothing: float = 0.0
     supervised_crop_start_sec_max: float = 0.0
+    loss_name: str = "bce"  # bce | bce_soft_auc
+    auc_loss_weight: float = 0.0
+    soft_auc_scale: float = 8.0
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -285,6 +288,38 @@ def bce_soft_loss(
     return (loss * weight).sum() / denom
 
 
+def soft_auc_pairwise_loss(logits: torch.Tensor, target: torch.Tensor, scale: float = 8.0) -> torch.Tensor:
+    """Differentiable soft-label macro AUC surrogate.
+
+    For each class, treat target values as positive weights and (1-target) as
+    negative weights, then penalize pos logits not ranking above neg logits. This
+    follows the BirdCLEF writeup hint to optimize AUC directly while still
+    supporting soft pseudo-labels.
+    """
+    losses = []
+    for j in range(logits.shape[1]):
+        y = target[:, j].float().clamp(0.0, 1.0)
+        pos_w = y
+        neg_w = 1.0 - y
+        denom = pos_w.sum() * neg_w.sum()
+        if float(denom.detach().cpu()) <= 1e-6:
+            continue
+        diff = logits[:, j][:, None] - logits[:, j][None, :]
+        pair_w = pos_w[:, None] * neg_w[None, :]
+        # softplus(-scale * diff) is small when positive rows rank above negatives.
+        losses.append((F.softplus(-float(scale) * diff) * pair_w).sum() / denom.clamp_min(1e-6))
+    if not losses:
+        return logits.new_tensor(0.0)
+    return torch.stack(losses).mean()
+
+
+def student_loss(logits: torch.Tensor, target: torch.Tensor, mask: torch.Tensor | None, sample_weight: torch.Tensor | None, cfg: StudentConfig) -> torch.Tensor:
+    base = bce_soft_loss(logits, target, mask, sample_weight)
+    if str(cfg.loss_name).lower() == "bce_soft_auc" and float(cfg.auc_loss_weight) > 0:
+        return base + float(cfg.auc_loss_weight) * soft_auc_pairwise_loss(logits, target, cfg.soft_auc_scale)
+    return base
+
+
 def predict_probs(model, x: torch.Tensor, indices: torch.Tensor, batch_size: int, device: torch.device) -> np.ndarray:
     model.eval()
     out = []
@@ -408,7 +443,7 @@ def main() -> int:
                     bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
                 bm = None
             logits, _ = model(bx)
-            loss = bce_soft_loss(logits, by, bm, bw)
+            loss = student_loss(logits, by, bm, bw, cfg)
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_pred = predict_probs(model, x, val_idx, cfg.batch_size, device)
@@ -467,6 +502,9 @@ def main() -> int:
         "n_classes": int(len(labels)),
         "teacher_power": float(cfg.teacher_power),
         "target_mode": str(cfg.target_mode),
+        "loss_name": str(cfg.loss_name),
+        "auc_loss_weight": float(cfg.auc_loss_weight),
+        "soft_auc_scale": float(cfg.soft_auc_scale),
         "target_mask_fraction": float(target_mask_np.mean()),
         "target_positive_cells": int((train_targets * target_mask_np).sum()),
         "target_negative_cells": int(((1.0 - train_targets) * target_mask_np).sum()),
