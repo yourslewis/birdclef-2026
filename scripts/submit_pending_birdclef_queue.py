@@ -62,6 +62,7 @@ PENDING=[
     {"name":"v516","kernel":"yourslewis/bc26-v516-taxon-max-gate","version":version,"message":"v516: Spec E taxon max gate floor0.30 alpha0.75 + v508 axis"},
     {"name":"v517","kernel":"yourslewis/bc26-v517-taxon-max-gate-a050","version":version,"message":"v517: Spec E softer taxon max gate floor0.30 alpha0.50 + v508 axis"},
     {"name":"v518","kernel":"yourslewis/bc26-v518-student-b0-5s-blend-002","version":version,"message":"v518: Spec B 5s external-init B0 pseudo-label student linear blend weight 0.02 + v508 axis"},
+    {"name":"v519","kernel":"yourslewis/bc26-v519-student-b0-5s-ep12-init-blend-015","version":version,"message":"v519: Spec B 5s ep12 external-init B0 pseudo-label student linear blend weight 0.15 + v508 axis"},
     {"name":"v376","kernel":"yourslewis/bc26-v376-ew0575-g0825-ctx025-a055","version":version,"message":"v376: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context 0.25 + quantile alpha 0.55"},
     {"name":"v377","kernel":"yourslewis/bc26-v377-ew0575-g080-ctx025-a055","version":version,"message":"v377: immediate top-k + ProtoSSM EW0.575 + gamma 0.80 + context 0.25 + quantile alpha 0.55"},
     {"name":"v378","kernel":"yourslewis/bc26-v378-ew0575-g0875-ctx025-a045","version":version,"message":"v378: immediate top-k + ProtoSSM EW0.575 + gamma 0.875 + context 0.25 + quantile alpha 0.45"},
