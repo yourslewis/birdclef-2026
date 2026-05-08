@@ -63,9 +63,12 @@ class StudentConfig:
     mixup_alpha: float = 0.2
     num_workers: int = 0
     export_onnx: bool = False
-    target_mode: str = "soft"  # soft or hard_conf
+    target_mode: str = "soft"  # soft, hard_conf, or soft_anchor
     positive_threshold: float = 0.90
     negative_threshold: float = 0.05
+    soft_label_weight: float = 1.0
+    anchor_positive_weight: float = 2.0
+    anchor_negative_weight: float = 1.0
     restore_best_by_val_auc: bool = False
 
 
@@ -87,6 +90,24 @@ def row_end_sec(row_id: str) -> int:
 
 def row_stem(row_id: str) -> str:
     return str(row_id).rsplit("_", 1)[0]
+
+
+def resolve_data_path(path_like: str | Path) -> Path:
+    """Resolve Mac/server mirror paths without changing committed configs."""
+    path = Path(path_like)
+    if path.exists():
+        return path
+    text = str(path)
+    mirrors = [
+        ("/mnt/mac_data", "/Volumes/ExternalSSD/data"),
+        ("/Volumes/ExternalSSD/data", "/mnt/mac_data"),
+    ]
+    for src, dst in mirrors:
+        if text.startswith(src):
+            alt = Path(dst + text[len(src):])
+            if alt.exists():
+                return alt
+    return path
 
 
 def split_indices(n_items: int, val_fraction: float, seed: int) -> tuple[torch.Tensor, torch.Tensor]:
@@ -118,13 +139,27 @@ def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndar
             raise RuntimeError(f"hard_conf found no positives at threshold {cfg.positive_threshold}")
         if not np.any(neg):
             raise RuntimeError(f"hard_conf found no negatives at threshold {cfg.negative_threshold}")
+    elif mode == "soft_anchor":
+        targets = np.clip(probs, 1e-5, 1 - 1e-5) ** float(cfg.teacher_power)
+        targets = np.clip(targets, 1e-5, 1 - 1e-5).astype(np.float32)
+        mask = np.full_like(targets, float(cfg.soft_label_weight), dtype=np.float32)
+        pos = probs >= float(cfg.positive_threshold)
+        neg = probs <= float(cfg.negative_threshold)
+        targets[pos] = 1.0
+        targets[neg] = 0.0
+        mask[pos] = float(cfg.anchor_positive_weight)
+        mask[neg] = float(cfg.anchor_negative_weight)
+        if not np.any(pos):
+            raise RuntimeError(f"soft_anchor found no positives at threshold {cfg.positive_threshold}")
+        if not np.any(neg):
+            raise RuntimeError(f"soft_anchor found no negatives at threshold {cfg.negative_threshold}")
     else:
-        raise ValueError(f"Unsupported target_mode={cfg.target_mode!r}; expected soft or hard_conf")
+        raise ValueError(f"Unsupported target_mode={cfg.target_mode!r}; expected soft, hard_conf, or soft_anchor")
     return row_ids, labels, probs, targets.astype(np.float32), mask.astype(np.float32)
 
 
 def build_windows(cfg: StudentConfig, row_ids: np.ndarray) -> torch.Tensor:
-    soundscape_dir = Path(cfg.soundscape_dir)
+    soundscape_dir = resolve_data_path(cfg.soundscape_dir)
     mel_fb = make_mel_filter(cfg.sample_rate, cfg.n_fft, cfg.n_mels)
     file_samples = int(round(cfg.sample_rate * 60.0))
     audio_cache: dict[str, np.ndarray] = {}
@@ -181,7 +216,7 @@ def main() -> int:
     y_target = torch.from_numpy(train_targets)
     target_mask = torch.from_numpy(target_mask_np)
     y_teacher = teacher_probs
-    y_true = build_truth(pd.read_csv(cfg.labels_csv), row_ids, labels)
+    y_true = build_truth(pd.read_csv(resolve_data_path(cfg.labels_csv)), row_ids, labels)
     train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
 
     model = build_model(cfg, len(labels)).to(device)
