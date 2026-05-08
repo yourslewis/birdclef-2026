@@ -63,6 +63,8 @@ class StudentConfig:
     mixup_alpha: float = 0.2
     num_workers: int = 0
     export_onnx: bool = False
+    initial_checkpoint: str = ""
+    initial_load_head: bool = False
     target_mode: str = "soft"  # soft or hard_conf
     positive_threshold: float = 0.90
     negative_threshold: float = 0.05
@@ -165,6 +167,58 @@ def flat_corr(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.corrcoef(a.reshape(-1), b.reshape(-1))[0, 1])
 
 
+def load_initial_checkpoint(model: torch.nn.Module, cfg: StudentConfig) -> dict[str, Any]:
+    if not cfg.initial_checkpoint:
+        return {"enabled": False}
+    path = Path(cfg.initial_checkpoint)
+    if not path.exists():
+        raise FileNotFoundError(path)
+    try:
+        obj = torch.jit.load(str(path), map_location="cpu")
+        state = obj.state_dict()
+        source = "torchscript"
+    except Exception:
+        obj = torch.load(path, map_location="cpu")
+        if isinstance(obj, dict) and "state_dict" in obj:
+            state = obj["state_dict"]
+        elif isinstance(obj, dict) and "model" in obj:
+            state = obj["model"]
+        elif isinstance(obj, dict):
+            state = obj
+        else:
+            raise TypeError(f"Unsupported checkpoint object from {path}: {type(obj)!r}")
+        source = "torch"
+    model_state = model.state_dict()
+    filtered = {}
+    skipped_shape = []
+    skipped_head = []
+    skipped_missing = []
+    for key, value in state.items():
+        if not cfg.initial_load_head and key.startswith("frame_head."):
+            skipped_head.append(key)
+            continue
+        if key not in model_state:
+            skipped_missing.append(key)
+            continue
+        if tuple(value.shape) != tuple(model_state[key].shape):
+            skipped_shape.append(key)
+            continue
+        filtered[key] = value
+    missing, unexpected = model.load_state_dict(filtered, strict=False)
+    return {
+        "enabled": True,
+        "path": str(path),
+        "source": source,
+        "load_head": bool(cfg.initial_load_head),
+        "loaded_keys": int(len(filtered)),
+        "skipped_head_keys": int(len(skipped_head)),
+        "skipped_shape_keys": skipped_shape[:20],
+        "skipped_missing_keys": skipped_missing[:20],
+        "model_missing_after_partial_load": list(missing)[:20],
+        "model_unexpected_after_partial_load": list(unexpected)[:20],
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", type=Path)
@@ -185,6 +239,8 @@ def main() -> int:
     train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
 
     model = build_model(cfg, len(labels)).to(device)
+    initial_checkpoint_summary = load_initial_checkpoint(model, cfg)
+    model = model.to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     epoch_logs = []
     best_state = None
@@ -260,6 +316,7 @@ def main() -> int:
         "target_positive_cells": int((train_targets * target_mask_np).sum()),
         "target_negative_cells": int(((1.0 - train_targets) * target_mask_np).sum()),
         "restore_best_by_val_auc": bool(cfg.restore_best_by_val_auc),
+        "initial_checkpoint_summary": initial_checkpoint_summary,
         "best_epoch": int(best_epoch) if best_epoch is not None else None,
         "best_val_auc": float(best_val_auc) if best_val_auc is not None else None,
         "input_shape": list(x.shape),
