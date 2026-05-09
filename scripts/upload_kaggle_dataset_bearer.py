@@ -49,10 +49,19 @@ def upload_blob(path: Path, token: str) -> str:
     return start.token
 
 
-def create_dataset(owner: str, slug: str, title: str, description: str, file_token: str, private: bool, token: str):
+def create_dataset(
+    owner: str,
+    slug: str,
+    title: str,
+    description: str,
+    file_token: str,
+    private: bool,
+    token: str,
+    file_description: str,
+):
     file = ApiDatasetNewFile()
     file.token = file_token
-    file.description = "TorchScript SED v13/v15 blend bundle zip"
+    file.description = file_description
 
     req = ApiCreateDatasetRequest()
     req.owner_slug = owner
@@ -78,12 +87,22 @@ def main() -> int:
     p.add_argument("--slug", required=True)
     p.add_argument("--title", required=True)
     p.add_argument("--description", default="BirdCLEF 2026 TorchScript SED bundle")
+    p.add_argument("--file-description", default="TorchScript SED bundle zip")
     p.add_argument("--public", action="store_true")
     args = p.parse_args()
 
     token = load_token()
     blob_token = upload_blob(args.file, token)
-    create_dataset(args.owner, args.slug, args.title, args.description, blob_token, private=not args.public, token=token)
+    create_dataset(
+        args.owner,
+        args.slug,
+        args.title,
+        args.description,
+        blob_token,
+        private=not args.public,
+        token=token,
+        file_description=args.file_description,
+    )
     return 0
 
 
