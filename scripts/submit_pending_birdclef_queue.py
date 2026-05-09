@@ -59,6 +59,16 @@ PENDING=[
     {"name":"v507","kernel":"yourslewis/bc26-v507-sed-logit-top3-ew060","version":version,"message":"v507: SED local logit-event boost top3 + ProtoSSM EW0.60 + gamma 0.825 + context alpha 0.25"},
     {"name":"v508","kernel":"yourslewis/bc26-v508-sed-logit-top3-ctx0275","version":version,"message":"v508: SED local logit-event boost top3 + ProtoSSM EW0.625 + gamma 0.825 + context alpha 0.275"},
     {"name":"v509","kernel":"yourslewis/bc26-v509-nocall-confidence-gate","version":version,"message":"v509: Spec E no-call confidence gate + SED local logit top3 + EW0.625 + gamma 0.825 + context alpha 0.275"},
+    {"name":"v516","kernel":"yourslewis/bc26-v516-taxon-max-gate","version":version,"message":"v516: Spec E taxon max gate floor0.30 alpha0.75 + v508 axis"},
+    {"name":"v517","kernel":"yourslewis/bc26-v517-taxon-max-gate-a050","version":version,"message":"v517: Spec E softer taxon max gate floor0.30 alpha0.50 + v508 axis"},
+    {"name":"v523","kernel":"yourslewis/bc26-v523-taxon-max-gate-alpha0875","version":version,"message":"v523: Spec E stronger taxon max gate floor0.30 alpha0.875 + v508 axis"},
+    {"name":"v524","kernel":"yourslewis/bc26-v524-taxon-max-gate-floor020","version":version,"message":"v524: Spec E lower-floor taxon max gate floor0.20 alpha0.75 + v508 axis"},
+    {"name":"v525","kernel":"yourslewis/bc26-v525-taxon-max-gate-floor040","version":version,"message":"v525: Spec E higher-floor taxon max gate floor0.40 alpha0.75 + v508 axis"},
+    {"name":"v518","kernel":"yourslewis/bc26-v518-student-b0-5s-blend-002","version":version,"message":"v518: Spec B 5s external-init B0 pseudo-label student linear blend weight 0.02 + v508 axis"},
+    {"name":"v519","kernel":"yourslewis/bc26-v519-student-b0-5s-ep12-init-blend-015","version":version,"message":"v519: Spec B 5s ep12 external-init B0 pseudo-label student linear blend weight 0.15 + v508 axis"},
+    {"name":"v520","kernel":"yourslewis/bc26-v520-sed-b0-ep12init-v23-blend-005","version":version,"message":"v520: Spec A/C clean OOF B0 ep12 external-init SED v23 bundle blend weight 0.05 + v508 axis"},
+    {"name":"v521","kernel":"yourslewis/bc26-v521-sed-b0-ep12init-v23-blend-010","version":version,"message":"v521: Spec A/C clean OOF B0 ep12 external-init SED v23 bundle blend weight 0.10 + v508 axis"},
+    {"name":"v522","kernel":"yourslewis/bc26-v522-sed-b0-ep12init-v26-allfiles-blend-005","version":version,"message":"v522: Spec A/C clean OOF B0 ep12 external-init SED v26 all-files bundle blend weight 0.05 + v508 axis"},
     {"name":"v376","kernel":"yourslewis/bc26-v376-ew0575-g0825-ctx025-a055","version":version,"message":"v376: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context 0.25 + quantile alpha 0.55"},
     {"name":"v377","kernel":"yourslewis/bc26-v377-ew0575-g080-ctx025-a055","version":version,"message":"v377: immediate top-k + ProtoSSM EW0.575 + gamma 0.80 + context 0.25 + quantile alpha 0.55"},
     {"name":"v378","kernel":"yourslewis/bc26-v378-ew0575-g0875-ctx025-a045","version":version,"message":"v378: immediate top-k + ProtoSSM EW0.575 + gamma 0.875 + context 0.25 + quantile alpha 0.45"},
@@ -202,6 +212,15 @@ PENDING=[
     {"name":"v360","kernel":"yourslewis/bc26-v360-immediate-topk-ew065-gamma080","version":version,"message":"v360: immediate top-k + ProtoSSM EW0.65 + power gamma 0.80"},
     {"name":"v361","kernel":"yourslewis/bc26-v361-immediate-topk-ew0675-gamma0825","version":version,"message":"v361: immediate top-k + ProtoSSM EW0.675 + power gamma 0.825"},
 ]
+
+# Keep the active spec-driven candidates ahead of the long legacy backlog.  A
+# previous monitor run submitted v516, then burned the remaining daily slots on
+# old v247-v250 because the historical list still appeared before the new block.
+# Sorting here preserves the legacy backlog but guarantees v517-v522 are next.
+FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", "v520", "v521", "v522"]
+FOCUS_PRIORITY = {name: i for i, name in enumerate(FOCUS_PRIORITY_NAMES)}
+PENDING.sort(key=lambda item: (FOCUS_PRIORITY.get(item["name"], len(FOCUS_PRIORITY) + 1), item["name"]))
+
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
 http=KaggleHttpClient(api_token=token)
@@ -209,7 +228,7 @@ competitions=CompetitionApiClient(http)
 kernels=KernelsApiClient(http)
 
 def recent_messages():
-    req=ApiListSubmissionsRequest(); req.competition_name="birdclef-2026"; req.page_size=50
+    req=ApiListSubmissionsRequest(); req.competition_name="birdclef-2026"; req.page_size=200
     return {str(s.description) for s in competitions.list_submissions(req).submissions}
 
 def split_kernel(kernel):
