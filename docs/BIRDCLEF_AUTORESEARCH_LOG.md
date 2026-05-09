@@ -1016,3 +1016,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Queue/monitor:** Running focus-only monitor pid `32468`, log `logs/submit_pending_birdclef_queue_20260509T124415Z_focusonly.log`, is sleeping on daily cap before `v517` after correctly skipping submitted `v516`. The script defaults `BIRDCLEF_QUEUE_STOP_AFTER_FOCUS=1`, so it will stop after `v516/v517/v523/v524/v525/v518/v519/v520/v521/v522` instead of falling into legacy backlog.
 - **Infrastructure:** GPU server `192.168.0.10` still times out on SSH, so NFNet 20s `v22b` remains unverified and no blind `v23` fallback was launched.
 - **Decision:** Open a new PR for the focus-only guard because PR #212 is closed and no open PR remains. Continue holding until UTC reset; after scores land, compare taxon bracket to `v516=0.929`, then pivot slots to `v518/v519/v520-v522` if needed.
+
+## 2026-05-09 14:42 UTC — focus queue hold; GPU host still down
+
+- **Track:** Queue monitoring / infrastructure triage. No new model/kernel was added because all focus candidates are complete, the daily cap still blocks `v517`, and the GPU host is unreachable for collecting or launching training work.
+- **Status:** Public best remains `0.929` from `v516`. Latest visible unchanged: `v250=0.926`, `v249=0.926`, `v248=0.926`, `v247=0.925`, `v516=0.929`, `v509/v508/v507=0.927`, `v514=0.924`, `v510=0.927`. Focus kernels remain COMPLETE/no failure: `v517`, `v523`, `v524`, `v525`, `v518`, `v519`, `v520`, `v521`, `v522`.
+- **Required v510 check:** `bc26-v510-real-sed-bundle-blend-005` remains COMPLETE/no failure and is already scored/submitted at `0.927`; no dataset-mount, TorchScript, timeout, missing-output, or silent-skip issue is currently indicated.
+- **Queue/PR:** Focus-only monitor pid `32468`, log `logs/submit_pending_birdclef_queue_20260509T124415Z_focusonly.log`, remains alive and sleeping on daily cap before `v517`. PR #214 is open/mergeable but branch-policy BLOCKED, with no status checks reported. It is now the only open PR and preserves the focus-only guard after PR #212 was closed/consolidated.
+- **Infrastructure:** GPU server `192.168.0.10` had `100%` ping packet loss (`0/3`) and SSH timed out. NFNet 20s `v22b` remains unverified; do not launch `v23` fallback or any new GPU job until the host returns and v22b artifacts are checked.
+- **Decision:** Hold. Let the guarded monitor submit after UTC reset. If `v517/v523/v524/v525` miss `0.929`, use queued new-model signals `v518/v519/v520-v522` rather than more gate micro-sweeps.
