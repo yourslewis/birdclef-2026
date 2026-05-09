@@ -209,6 +209,15 @@ PENDING=[
     {"name":"v360","kernel":"yourslewis/bc26-v360-immediate-topk-ew065-gamma080","version":version,"message":"v360: immediate top-k + ProtoSSM EW0.65 + power gamma 0.80"},
     {"name":"v361","kernel":"yourslewis/bc26-v361-immediate-topk-ew0675-gamma0825","version":version,"message":"v361: immediate top-k + ProtoSSM EW0.675 + power gamma 0.825"},
 ]
+
+# Keep the active spec-driven candidates ahead of the long legacy backlog.  A
+# previous monitor run submitted v516, then burned the remaining daily slots on
+# old v247-v250 because the historical list still appeared before the new block.
+# Sorting here preserves the legacy backlog but guarantees v517-v522 are next.
+FOCUS_PRIORITY_NAMES = ["v516", "v517", "v518", "v519", "v520", "v521", "v522"]
+FOCUS_PRIORITY = {name: i for i, name in enumerate(FOCUS_PRIORITY_NAMES)}
+PENDING.sort(key=lambda item: (FOCUS_PRIORITY.get(item["name"], len(FOCUS_PRIORITY) + 1), item["name"]))
+
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
 http=KaggleHttpClient(api_token=token)
@@ -216,7 +225,7 @@ competitions=CompetitionApiClient(http)
 kernels=KernelsApiClient(http)
 
 def recent_messages():
-    req=ApiListSubmissionsRequest(); req.competition_name="birdclef-2026"; req.page_size=50
+    req=ApiListSubmissionsRequest(); req.competition_name="birdclef-2026"; req.page_size=200
     return {str(s.description) for s in competitions.list_submissions(req).submissions}
 
 def split_kernel(kernel):
