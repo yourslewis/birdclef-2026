@@ -1007,3 +1007,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Validation/monitor:** `python3 -m py_compile scripts/submit_pending_birdclef_queue.py` passed. Restarted the sleeping monitor once to activate the guard: old pid `50272` -> new pid `32468`, log `logs/submit_pending_birdclef_queue_20260509T124415Z_focusonly.log`. It skipped submitted `v516`, attempted `v517`, hit Kaggle daily cap with ~11h remaining, and is sleeping correctly.
 - **Infrastructure:** GPU server `192.168.0.10` still times out on SSH, so old NFNet 20s `v22b` remains unverified and no blind `v23` fallback was launched.
 - **Decision:** Hold focus-only queue until reset. After focus queue completes, the monitor should exit instead of spending a spare quota slot on legacy variants. If gate bracket misses `0.929`, next information-rich slots are already validated `v518/v519/v520-v522`.
+
+## 2026-05-09 13:42 UTC — focus-only guard preserved after PR consolidation
+
+- **Track:** Queue safety and monitoring while capped. PR #212 was closed unmerged after its prior commits were consolidated through PR #213 into `main`, but the latest focus-only queue guard commit was not in `origin/main`; this run preserved that safety change on a fresh active branch.
+- **Status:** Public best remains `0.929` from `v516`. Latest visible unchanged: `v250=0.926`, `v249=0.926`, `v248=0.926`, `v247=0.925`, `v516=0.929`, `v509/v508/v507=0.927`, `v514=0.924`, `v510=0.927`. Focus kernels remain COMPLETE/no failure: `v517`, `v523`, `v524`, `v525`, `v518`, `v519`, `v520`, `v521`, `v522`.
+- **Required v510 check:** `bc26-v510-real-sed-bundle-blend-005` remains COMPLETE/no failure and already scored `0.927`; no SED packaging failure is open.
+- **Queue/monitor:** Running focus-only monitor pid `32468`, log `logs/submit_pending_birdclef_queue_20260509T124415Z_focusonly.log`, is sleeping on daily cap before `v517` after correctly skipping submitted `v516`. The script defaults `BIRDCLEF_QUEUE_STOP_AFTER_FOCUS=1`, so it will stop after `v516/v517/v523/v524/v525/v518/v519/v520/v521/v522` instead of falling into legacy backlog.
+- **Infrastructure:** GPU server `192.168.0.10` still times out on SSH, so NFNet 20s `v22b` remains unverified and no blind `v23` fallback was launched.
+- **Decision:** Open a new PR for the focus-only guard because PR #212 is closed and no open PR remains. Continue holding until UTC reset; after scores land, compare taxon bracket to `v516=0.929`, then pivot slots to `v518/v519/v520-v522` if needed.
