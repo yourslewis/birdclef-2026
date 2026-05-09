@@ -221,6 +221,14 @@ FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", 
 FOCUS_PRIORITY = {name: i for i, name in enumerate(FOCUS_PRIORITY_NAMES)}
 PENDING.sort(key=lambda item: (FOCUS_PRIORITY.get(item["name"], len(FOCUS_PRIORITY) + 1), item["name"]))
 
+# Default to the active spec-driven queue only.  This prevents a long-running
+# monitor from falling through into stale legacy micro-sweep variants after the
+# focus candidates finish.  Set BIRDCLEF_QUEUE_STOP_AFTER_FOCUS=0 only if we
+# explicitly want to spend future quota on the historical backlog.
+STOP_AFTER_FOCUS = os.environ.get("BIRDCLEF_QUEUE_STOP_AFTER_FOCUS", "1") != "0"
+if STOP_AFTER_FOCUS:
+    PENDING = [item for item in PENDING if item["name"] in FOCUS_PRIORITY]
+
 with open(os.path.expanduser("~/.kaggle/kaggle.json")) as f:
     token=json.load(f)["key"]
 http=KaggleHttpClient(api_token=token)
