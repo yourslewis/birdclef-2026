@@ -9,6 +9,7 @@ config/log/holdout predictions, macro AUC diagnostics, timing, and exports.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import random
 import shutil
@@ -33,6 +34,7 @@ except Exception:  # pragma: no cover
 @dataclass
 class PilotConfig:
     experiment_id: str = "sed-b0-gpu-pilot-v1-5s-focal15-possqrt"
+    track: str = "A+G Real SED frame/event GPU pilot"
     data_root: str = "/mnt/mac_data/workspace_don/kaggle_birdclef2026/data"
     output_dir: str = "artifacts/sed_pilots/sed-b0-gpu-pilot-v1-5s-focal15-possqrt"
     sample_rate: int = 32000
@@ -52,6 +54,8 @@ class PilotConfig:
     manifest_path_column: str = "path"
     manifest_label_column: str = "primary_label"
     manifest_split: str = ""
+    manifest_max_files_per_class: int = 0
+    manifest_min_files_per_class: int = 1
     max_classes: int = 30
     files_per_class: int = 10
     min_files_per_class: int = 6
@@ -69,6 +73,9 @@ class PilotConfig:
     oof_negative_cache: str = ""
     aux_negative_weight: float = 0.0
     oof_negative_mask_key: str = "negative_mask"
+    restore_best_by_val_loss: bool = False
+    initial_checkpoint: str = ""
+    initial_load_head: bool = False
 
 
 def load_config(path: Path | None) -> PilotConfig:
@@ -181,6 +188,59 @@ def build_model(cfg: PilotConfig, n_classes: int) -> nn.Module:
     return TinySEDSmoke(n_classes)
 
 
+def load_initial_checkpoint(model: nn.Module, cfg: PilotConfig) -> dict[str, Any]:
+    if not cfg.initial_checkpoint:
+        return {"enabled": False}
+    path = Path(cfg.initial_checkpoint)
+    if not path.exists():
+        raise FileNotFoundError(path)
+    try:
+        obj = torch.jit.load(str(path), map_location="cpu")
+        state = obj.state_dict()
+        source = "torchscript"
+    except Exception:
+        obj = torch.load(path, map_location="cpu")
+        if isinstance(obj, dict) and "state_dict" in obj:
+            state = obj["state_dict"]
+        elif isinstance(obj, dict) and "model" in obj:
+            state = obj["model"]
+        elif isinstance(obj, dict):
+            state = obj
+        else:
+            raise TypeError(f"Unsupported checkpoint object from {path}: {type(obj)!r}")
+        source = "torch"
+
+    model_state = model.state_dict()
+    filtered = {}
+    skipped_shape = []
+    skipped_head = []
+    skipped_missing = []
+    for key, value in state.items():
+        if not cfg.initial_load_head and key.startswith("frame_head."):
+            skipped_head.append(key)
+            continue
+        if key not in model_state:
+            skipped_missing.append(key)
+            continue
+        if tuple(value.shape) != tuple(model_state[key].shape):
+            skipped_shape.append(key)
+            continue
+        filtered[key] = value
+    missing, unexpected = model.load_state_dict(filtered, strict=False)
+    return {
+        "enabled": True,
+        "path": str(path),
+        "source": source,
+        "load_head": bool(cfg.initial_load_head),
+        "loaded_keys": int(len(filtered)),
+        "skipped_head_keys": int(len(skipped_head)),
+        "skipped_shape_keys": skipped_shape[:20],
+        "skipped_missing_keys": skipped_missing[:20],
+        "model_missing_after_partial_load": list(missing)[:20],
+        "model_unexpected_after_partial_load": list(unexpected)[:20],
+    }
+
+
 def path_key(path: str | Path) -> str:
     parts = Path(str(path)).parts
     if "train_audio" in parts:
@@ -188,6 +248,39 @@ def path_key(path: str | Path) -> str:
         return "/".join(parts[i + 1:])
     p = Path(str(path))
     return f"{p.parent.name}/{p.name}"
+
+
+def resolve_manifest_audio_path(raw_path: str | Path, data_root: Path) -> Path | None:
+    """Resolve manifest audio paths across Mac, SMB, and GPU-local mirrors.
+
+    External-pretrain manifests are commonly built on the Mac with absolute
+    `/Volumes/ExternalSSD/.../data/train_audio/<label>/<file>.ogg` paths, while
+    durable GPU jobs run on `trainer` with data staged under
+    `~/birdclef-2026/data/train_audio`.  Keep the manifest portable by falling
+    back to the path relative to the `train_audio` anchor.
+    """
+    raw = Path(str(raw_path))
+    candidates: list[Path] = []
+    if raw.is_absolute():
+        candidates.append(raw)
+    else:
+        candidates.extend([data_root / raw, data_root / "train_audio" / raw])
+
+    key = path_key(raw)
+    candidates.extend([
+        data_root / "train_audio" / key,
+        Path("/mnt/mac_data/workspace_don/kaggle_birdclef2026/data/train_audio") / key,
+        Path("/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_audio") / key,
+    ])
+    seen: set[str] = set()
+    for cand in candidates:
+        marker = str(cand)
+        if marker in seen:
+            continue
+        seen.add(marker)
+        if cand.exists():
+            return cand
+    return None
 
 
 def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> list[tuple[Path, str]]:
@@ -207,14 +300,25 @@ def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> lis
         missing = sorted(required - set(manifest.columns))
         if missing:
             raise ValueError(f"manifest missing required columns: {missing}")
+        if cfg.manifest_max_files_per_class > 0 or cfg.manifest_min_files_per_class > 1:
+            balanced_parts = []
+            for label, group in manifest.groupby(cfg.manifest_label_column, sort=True):
+                if str(label) not in labels or len(group) < cfg.manifest_min_files_per_class:
+                    continue
+                if cfg.manifest_max_files_per_class > 0 and len(group) > cfg.manifest_max_files_per_class:
+                    group = group.sample(n=cfg.manifest_max_files_per_class, random_state=cfg.seed)
+                balanced_parts.append(group)
+            if balanced_parts:
+                manifest = pd.concat(balanced_parts, ignore_index=True).sample(frac=1.0, random_state=cfg.seed).reset_index(drop=True)
+            else:
+                manifest = manifest.iloc[0:0].copy()
         selected: list[tuple[Path, str]] = []
         for row in manifest.itertuples(index=False):
             label = str(getattr(row, cfg.manifest_label_column))
             if label not in labels:
                 continue
-            raw_path = Path(str(getattr(row, cfg.manifest_path_column)))
-            path = raw_path if raw_path.is_absolute() else data_root / raw_path
-            if path.exists():
+            path = resolve_manifest_audio_path(getattr(row, cfg.manifest_path_column), data_root)
+            if path is not None:
                 selected.append((path, label))
         rng.shuffle(selected)
         return selected[: cfg.max_files]
@@ -476,10 +580,15 @@ def main() -> int:
     aux_negative_mask, aux_negative_summary = load_oof_negative_mask(cfg, meta, labels)
     train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
 
-    model = build_model(cfg, len(labels)).to(device)
+    model = build_model(cfg, len(labels))
+    initial_checkpoint_summary = load_initial_checkpoint(model, cfg)
+    model = model.to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     pos_weight = make_pos_weight(len(labels), cfg.class_balancing, device)
     epoch_logs = []
+    best_state = None
+    best_epoch = None
+    best_val_loss = None
     for epoch in range(cfg.epochs):
         model.train(); losses = []
         for idx in batch_iter(train_idx, cfg.batch_size, shuffle=True):
@@ -494,8 +603,17 @@ def main() -> int:
             losses.append(float(loss.detach().cpu()))
         val_probs, _ = predict(model, x, val_idx, cfg.batch_size, device)
         val_loss = compute_loss(torch.logit(torch.from_numpy(val_probs).clamp(1e-6, 1 - 1e-6)).to(device), y[val_idx].to(device), cfg, pos_weight)
-        epoch_logs.append({"epoch": epoch + 1, "train_loss": float(np.mean(losses)), "val_loss": float(val_loss.detach().cpu())})
+        epoch_log = {"epoch": epoch + 1, "train_loss": float(np.mean(losses)), "val_loss": float(val_loss.detach().cpu())}
+        epoch_logs.append(epoch_log)
+        if cfg.restore_best_by_val_loss and (best_val_loss is None or float(epoch_log["val_loss"]) < float(best_val_loss)):
+            best_val_loss = float(epoch_log["val_loss"])
+            best_epoch = epoch + 1
+            best_state = copy.deepcopy(model.state_dict())
         print(json.dumps(epoch_logs[-1]), flush=True)
+
+    if cfg.restore_best_by_val_loss and best_state is not None:
+        model.load_state_dict(best_state)
+        (out_dir / "best_checkpoint_info.json").write_text(json.dumps({"best_epoch": best_epoch, "best_val_loss": best_val_loss, "criterion": "val_loss"}, indent=2) + "\n")
 
     val_probs, pred_time = predict(model, x, val_idx, cfg.batch_size, device)
     train_probs, _ = predict(model, x, train_idx, cfg.batch_size, device)
@@ -505,7 +623,7 @@ def main() -> int:
     exports = export_model(model, x[:1], out_dir, cfg)
     metrics = {
         "experiment_id": cfg.experiment_id,
-        "track": "A+G Real SED frame/event GPU pilot",
+        "track": cfg.track,
         "status": "pilot_complete",
         "device": str(device),
         "backbone_actual": getattr(model, "backbone_name", cfg.backbone),
@@ -518,6 +636,10 @@ def main() -> int:
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "auc_summary": auc,
+        "restore_best_by_val_loss": bool(cfg.restore_best_by_val_loss),
+        "best_epoch": best_epoch,
+        "best_val_loss": best_val_loss,
+        "initial_checkpoint_summary": initial_checkpoint_summary,
         "aux_negative_summary": aux_negative_summary,
         "prediction_time_sec": pred_time,
         "holdout_predictions_path": str(npz_path),
