@@ -1230,3 +1230,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Smoke result: 5 files, 60 rows, output shape 60 x 235, no NaNs, probability range 0.016877 to 0.486025, mean 0.126975, runtime 16.430 sec total / 3.286 sec per file. First row BC2026_Train_0001_S08_20250606_030007_5, last row BC2026_Train_0005_S08_20250607_070007_60.
 - Interpretation: The staged v23+v26 0.40/0.60 bundle is operationally safe and fast enough locally; keep it ready but do not spend a public slot until the queued v520/v521/v522 public scores validate the B0 SED axis.
 - Next step: Let the focus monitor submit v519 after UTC reset, then v520-v522/v526-v528 in order. If v520/v521/v522 tie/lift, upload the v23+v26 zip and push a real v529-style kernel; otherwise wait for trainer SSH and v23d/v29 OOF grid.
+
+
+## 2026-05-10 10:55 UTC - v23+v26 combined SED private dataset uploaded; queue still capped
+
+- Track: Spec A+G inference packaging prep while public queue is capped. No new public Kaggle kernel was pushed because v519-v522/v526-v528 remain complete and queued; v520/v521/v522 public scores should still decide whether to spend the next submission slot on this B0 SED combined artifact.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure and already scored 0.927.
+- Queue/monitor: v519, v520, v521, v522, v526, v527, and v528 all report COMPLETE/no failure. Focus monitor pid 75964 is alive and sleeping after the expected v519 daily-cap response.
+- Dataset upload: Created private Kaggle dataset yourslewis/bc26-sed-b0-v23v26-oofblend040060-v1 from artifacts/sed_bundles/sed-b0-v23v26-oofblend040060-v1.zip. Upload response status was Ok, URL https://www.kaggle.com/datasets/yourslewis/bc26-sed-b0-v23v26-oofblend040060-v1.
+- Dataset verification: Kaggle dataset status is READY. File listing shows 7 extracted files: six TorchScript models under sed-b0-v23v26-oofblend040060-v1/models/ at 15,387,928 bytes each plus sed_bundle_manifest.json at 7,858 bytes. This confirms the dataset is ready for a future kernel mount.
+- Infrastructure: 192.168.0.10 remains pingable but SSH still times out during banner exchange, so remote v23d/v29 OOF grid remains blocked.
+- Decision: Keep the dataset staged but do not push a v529 kernel yet. If v520/v521/v522 tie or lift publicly, the next run can immediately create/push a v529-style kernel pointing at dataset slug bc26-sed-b0-v23v26-oofblend040060-v1; otherwise wait for trainer SSH and v23d/v29 grid before spending another slot.
