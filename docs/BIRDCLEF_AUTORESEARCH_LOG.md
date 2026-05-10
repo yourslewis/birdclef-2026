@@ -1241,3 +1241,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Dataset verification: Kaggle dataset status is READY. File listing shows 7 extracted files: six TorchScript models under sed-b0-v23v26-oofblend040060-v1/models/ at 15,387,928 bytes each plus sed_bundle_manifest.json at 7,858 bytes. This confirms the dataset is ready for a future kernel mount.
 - Infrastructure: 192.168.0.10 remains pingable but SSH still times out during banner exchange, so remote v23d/v29 OOF grid remains blocked.
 - Decision: Keep the dataset staged but do not push a v529 kernel yet. If v520/v521/v522 tie or lift publicly, the next run can immediately create/push a v529-style kernel pointing at dataset slug bc26-sed-b0-v23v26-oofblend040060-v1; otherwise wait for trainer SSH and v23d/v29 grid before spending another slot.
+
+
+## 2026-05-10 11:55 UTC - v529 v517 plus v23/v26 SED kernel pushed and queued after v528
+
+- Track: Spec A+G real SED packaging and queue management. I promoted the already-staged v23+v26 B0 SED combined dataset into a real Kaggle kernel candidate, but placed it after the existing focus queue so it cannot jump ahead of v519-v522/v526-v528.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure and already scored 0.927.
+- v529 implementation: Added kaggle-kernels/v529-v517-v23v26-blend005/ and scripts/push_v529.py. v529 copies the v528/v517 taxon-gated real-SED path, points to private dataset yourslewis/bc26-sed-b0-v23v26-oofblend040060-v1, uses REAL_SED_BLEND_WEIGHT=0.05, REAL_SED_MAX_MODELS=3, REAL_SED_MIN_MODELS=1, and applies the v517 taxon max gate after blending.
+- Push: Pushed real Kaggle kernel yourslewis/bc26-v529-v517-plus-v23v26-sed-blend-005, version 1. Push returned no invalid dataset/competition/kernel/model sources. Initial status is RUNNING with no failure message; no completion/output yet at final check.
+- Queue update: Added v529 to scripts/submit_pending_birdclef_queue.py after v528 and extended focus priority to include v529. Restarted focus-only monitor old pid 75964 -> new pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log. It skipped already-submitted v516/v517/v523/v524/v525/v518, attempted v519, hit the expected daily cap with 12 hours remaining, and sleeps 43320 seconds.
+- Validation: python3 -m py_compile passed for kaggle-kernels/v529-v517-v23v26-blend005/script.py, scripts/push_v529.py, and scripts/submit_pending_birdclef_queue.py. The v23+v26 dataset was already verified READY in the previous run.
+- Next step: Monitor v529 completion/output log for manifest found, loaded models, applied real SED blend, v517 taxon gate, and submission.csv. Let the focus monitor submit v519 first after reset; v529 is intentionally queued behind v520-v522/v526-v528.
