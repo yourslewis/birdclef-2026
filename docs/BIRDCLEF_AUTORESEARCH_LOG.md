@@ -1332,3 +1332,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Validation: python3 -m py_compile passed for scripts/birdclef_sed_combine_bundles.py and scripts/birdclef_sed_soundscape_infer.py. CPU smoke on one real train soundscape with batch size 4 and two torch threads loaded all 6 models and produced 12 x 235 output with no NaNs; probability range 0.019460 to 0.496435, mean 0.124421, runtime 5.020s/file.
 - Decision: This is now the smallest precise mixed B0+NFNet package candidate (~292 MB instead of the ~999 MB four-member NFNet package). Hold upload/push until queued LB scores land. If v522 (B0 v26) and/or v528 (v29 sidecar) tie/improve, this is the preferred next package candidate at conservative blend weight; otherwise keep as infrastructure and do not spend a slot.
 - Branch/PR: feature/focus-only-queue-guard / PR #216. Artifact is ignored under artifacts/; log entry preserves enough metadata to reproduce it.
+
+
+## 2026-05-10 19:58 UTC - held v530 mixed B0v26+v29 kernel scaffold
+
+- Track: Spec A/G packaging plus Spec F retune after new SED artifacts. No public Kaggle push or dataset upload this run because daily submission slots are still capped and v519-v522/v526-v529 public scores are pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. v510/v519/v520/v521/v522/v526/v527/v528/v529 are COMPLETE/no failure. Focus monitor pid 71760 is alive and sleeping after expected daily-cap response on v519.
+- Implementation: Added held local Kaggle scaffold kaggle-kernels/v530-b0v26-v29-mixed-hold/. It copies the v522 B0-v26 all-files path but points metadata at future private dataset slug yourslewis/bc26-sed-b0v26-nfnet-v29-oofblend090010-v1 and kernel id yourslewis/bc26-v530-b0v26-v29-mixed-blend-005. This is intentionally not pushed to Kaggle yet.
+- Mixed-config fix: The held v530 script now supports per-model audio_config in the in-kernel real SED loader. It caches decoded audio by sample rate and 12 row windows by full audio_config, so one bundle can safely run B0 10s/160-mel folds and NFNet v29 20s/128-mel folds in the same code competition kernel. Constants: REAL_SED_BLEND_WEIGHT=0.05, REAL_SED_MAX_MODELS=6, REAL_SED_MIN_MODELS=3, REAL_SED_EST_SEC_PER_FILE_PER_MODEL=0.95, REAL_SED_ZIP_NAME=sed-b0v26-plus-nfnet-v29-oofblend090010-v1.zip.
+- Validation: python3 -m py_compile passed for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py. The underlying bundle smoke from previous run loaded all 6 models on one real train soundscape and produced 12 x 235 output with no NaNs in 5.020s/file.
+- Decision: Keep v530 as a held scaffold only. If v522 and/or v528 public scores tie/improve after the monitor submits them, upload the prepared 291.764 MB B0v26+v29 dataset and push this v530 kernel. If queued SED sidecars fall, do not spend a public slot.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
