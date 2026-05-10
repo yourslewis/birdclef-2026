@@ -70,6 +70,7 @@ PENDING=[
     {"name":"v521","kernel":"yourslewis/bc26-v521-sed-b0-ep12init-v23-blend-010","version":version,"message":"v521: Spec A/C clean OOF B0 ep12 external-init SED v23 bundle blend weight 0.10 + v508 axis"},
     {"name":"v522","kernel":"yourslewis/bc26-v522-sed-b0-ep12init-v26-allfiles-blend-005","version":version,"message":"v522: Spec A/C clean OOF B0 ep12 external-init SED v26 all-files bundle blend weight 0.05 + v508 axis"},
     {"name":"v526","kernel":"yourslewis/bc26-v526-v516-plus-v23d-sed-blend-005","version":version,"message":"v526: Spec A/E v516 taxon gate + v23d 20s128 NFNet low-corr bundle blend weight 0.05"},
+    {"name":"v527","kernel":"yourslewis/bc26-v527-taxon-max-gate-a0375","version":version,"message":"v527: Spec E softer taxon max gate floor0.30 alpha0.375 + v508 axis"},
     {"name":"v376","kernel":"yourslewis/bc26-v376-ew0575-g0825-ctx025-a055","version":version,"message":"v376: immediate top-k + ProtoSSM EW0.575 + gamma 0.825 + context 0.25 + quantile alpha 0.55"},
     {"name":"v377","kernel":"yourslewis/bc26-v377-ew0575-g080-ctx025-a055","version":version,"message":"v377: immediate top-k + ProtoSSM EW0.575 + gamma 0.80 + context 0.25 + quantile alpha 0.55"},
     {"name":"v378","kernel":"yourslewis/bc26-v378-ew0575-g0875-ctx025-a045","version":version,"message":"v378: immediate top-k + ProtoSSM EW0.575 + gamma 0.875 + context 0.25 + quantile alpha 0.45"},
@@ -217,8 +218,8 @@ PENDING=[
 # Keep the active spec-driven candidates ahead of the long legacy backlog.  A
 # previous monitor run submitted v516, then burned the remaining daily slots on
 # old v247-v250 because the historical list still appeared before the new block.
-# Sorting here preserves the legacy backlog but guarantees v517-v526 focus candidates are next.
-FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", "v520", "v521", "v522", "v526"]
+# Sorting here preserves the legacy backlog but guarantees v517-v527 focus candidates are next.
+FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", "v520", "v521", "v522", "v526", "v527"]
 FOCUS_PRIORITY = {name: i for i, name in enumerate(FOCUS_PRIORITY_NAMES)}
 PENDING.sort(key=lambda item: (FOCUS_PRIORITY.get(item["name"], len(FOCUS_PRIORITY) + 1), item["name"]))
 
