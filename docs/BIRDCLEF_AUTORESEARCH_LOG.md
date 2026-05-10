@@ -1252,3 +1252,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue update: Added v529 to scripts/submit_pending_birdclef_queue.py after v528 and extended focus priority to include v529. Restarted focus-only monitor old pid 75964 -> new pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log. It skipped already-submitted v516/v517/v523/v524/v525/v518, attempted v519, hit the expected daily cap with 12 hours remaining, and sleeps 43320 seconds.
 - Validation: python3 -m py_compile passed for kaggle-kernels/v529-v517-v23v26-blend005/script.py, scripts/push_v529.py, and scripts/submit_pending_birdclef_queue.py. The v23+v26 dataset was already verified READY in the previous run.
 - Next step: Monitor v529 completion/output log for manifest found, loaded models, applied real SED blend, v517 taxon gate, and submission.csv. Let the focus monitor submit v519 first after reset; v529 is intentionally queued behind v520-v522/v526-v528.
+
+
+## 2026-05-10 12:55 UTC - v529 completed and real SED path verified
+
+- Track: Spec A+G real SED packaging verification plus queue monitoring. No new candidate was added; this run focused on verifying the v529 kernel pushed in the previous run and keeping the capped queue healthy.
+- Submission state: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure and already scored 0.927.
+- v529 status: Kaggle kernel yourslewis/bc26-v529-v517-plus-v23v26-sed-blend-005 version 1 is COMPLETE with no failure message and output includes submission.csv.
+- v529 output verification: log confirms manifest found under dataset yourslewis/bc26-sed-b0-v23v26-oofblend040060-v1, loaded 3/6 real SED TorchScript models, real SED prob range 0.009794 to 0.895201 with mean 0.1124, real SED runtime 30.3s, applied real SED blend weight 0.05, applied v517 taxon max gate floor 0.3 alpha 0.5, final prob range 0.013733 to 0.937133 with mean 0.3911, wrote submission.csv shape 240 x 235, wall time 154.3s / 2.6 min. The usual TensorFlow CUDA 303 stderr appears but does not affect successful ONNX/CPU execution.
+- Queue/monitor: Focus monitor pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log, remains alive and sleeping after the expected v519 daily-cap response. Queue order keeps v529 after v528, so it will not jump ahead of v519-v522/v526-v528.
+- Infrastructure: 192.168.0.10 was not reachable in this check (ping 100 percent packet loss; SSH operation timed out), so remote v23d/v29 OOF grid remains blocked.
+- Next step: Let the monitor submit v519 first after reset, then v520-v522/v526-v528/v529. If v529 eventually scores safely or improves, consider a higher B0 v23/v26 blend weight only after v520-v522/v529 public scores are known; otherwise prioritize v23d/v29 OOF grid when trainer returns.
