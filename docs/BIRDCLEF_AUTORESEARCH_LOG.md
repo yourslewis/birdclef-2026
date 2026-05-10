@@ -1252,3 +1252,36 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue update: Added v529 to scripts/submit_pending_birdclef_queue.py after v528 and extended focus priority to include v529. Restarted focus-only monitor old pid 75964 -> new pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log. It skipped already-submitted v516/v517/v523/v524/v525/v518, attempted v519, hit the expected daily cap with 12 hours remaining, and sleeps 43320 seconds.
 - Validation: python3 -m py_compile passed for kaggle-kernels/v529-v517-v23v26-blend005/script.py, scripts/push_v529.py, and scripts/submit_pending_birdclef_queue.py. The v23+v26 dataset was already verified READY in the previous run.
 - Next step: Monitor v529 completion/output log for manifest found, loaded models, applied real SED blend, v517 taxon gate, and submission.csv. Let the focus monitor submit v519 first after reset; v529 is intentionally queued behind v520-v522/v526-v528.
+
+
+## 2026-05-10 12:55 UTC - v529 completed and real SED path verified
+
+- Track: Spec A+G real SED packaging verification plus queue monitoring. No new candidate was added; this run focused on verifying the v529 kernel pushed in the previous run and keeping the capped queue healthy.
+- Submission state: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure and already scored 0.927.
+- v529 status: Kaggle kernel yourslewis/bc26-v529-v517-plus-v23v26-sed-blend-005 version 1 is COMPLETE with no failure message and output includes submission.csv.
+- v529 output verification: log confirms manifest found under dataset yourslewis/bc26-sed-b0-v23v26-oofblend040060-v1, loaded 3/6 real SED TorchScript models, real SED prob range 0.009794 to 0.895201 with mean 0.1124, real SED runtime 30.3s, applied real SED blend weight 0.05, applied v517 taxon max gate floor 0.3 alpha 0.5, final prob range 0.013733 to 0.937133 with mean 0.3911, wrote submission.csv shape 240 x 235, wall time 154.3s / 2.6 min. The usual TensorFlow CUDA 303 stderr appears but does not affect successful ONNX/CPU execution.
+- Queue/monitor: Focus monitor pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log, remains alive and sleeping after the expected v519 daily-cap response. Queue order keeps v529 after v528, so it will not jump ahead of v519-v522/v526-v528.
+- Infrastructure: 192.168.0.10 was not reachable in this check (ping 100 percent packet loss; SSH operation timed out), so remote v23d/v29 OOF grid remains blocked.
+- Next step: Let the monitor submit v519 first after reset, then v520-v522/v526-v528/v529. If v529 eventually scores safely or improves, consider a higher B0 v23/v26 blend weight only after v520-v522/v529 public scores are known; otherwise prioritize v23d/v29 OOF grid when trainer returns.
+
+
+## 2026-05-10 13:55 UTC - remote v13/v15/v23d/v29 OOF blend grid completed
+
+- Track: Spec F post-new-signal OOF retuning plus A/G queue monitoring. No new public kernel was added because v519-v522/v526-v528/v529 are already complete and queued behind the daily cap.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure; v529 also remains COMPLETE/no failure.
+- Queue/monitor: Focus monitor pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log, is alive and sleeping after the expected v519 daily-cap response. Queue order keeps v529 after v528.
+- Infrastructure: Trainer 192.168.0.10 became reachable again. Copied the current sklearn-optional scripts/birdclef_oof_blend_grid.py to /tmp on trainer and ran it with ~/kaggle_envs/s6e3/bin/python.
+- OOF grid: Ran a four-member NFNet SED grid over v13, v15, v23d, and v29 on 497 overlapping rows / 100 valid classes. Step 0.10 best was v13=0.20, v15=0.30, v23d=0.20, v29=0.30 with macro AUC 0.709900. Step 0.05 improved slightly to v13=0.15, v15=0.30, v23d=0.25, v29=0.30 with macro AUC 0.710048.
+- Singles on the 497-row overlap: v13=0.655017, v15=0.662568, v23d=0.641578, v29=0.640396. Pairwise correlations show useful diversity: v13-v15 0.2962, v15-v23d 0.2449, v15-v29 0.3487, v23d-v29 0.3879; v13-v23d is higher at 0.6969.
+- Interpretation: The strongest NFNet blend is a balanced multi-member stack, not a two-member pair. If current public queue misses, next package-worthy candidate should be a combined v13/v15/v23d/v29 NFNet bundle with weights near 0.15/0.30/0.25/0.30, likely blended conservatively into the v517 axis.
+- Next step: Let queued public scores land first. If v526/v528/v529 do not improve but tie safely, consider packaging the four-member NFNet blend as the next real-Sed sidecar; if any queued SED sidecar drops, hold and use the OOF grid only for offline calibration.
+
+
+## 2026-05-10 14:55 UTC - queue monitor recovered; fine NFNet grid aborted as too slow
+
+- Track: Queue monitoring plus Spec F OOF retuning. No new public Kaggle kernel was added because v519-v522/v526-v528/v529 remain complete and queued behind the daily cap.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 and v529 both remain COMPLETE/no failure.
+- Queue/monitor: The previous focus monitor log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log showed sleeping after the v519 cap response, but no matching process was alive. Restarted the focus-only monitor with v529 included: pid 71760, log logs/submit_pending_birdclef_queue_20260510T144421Z_focus_v529_restart.log. It skipped already-submitted v516/v517/v523/v524/v525/v518, attempted v519, hit the expected daily cap with 9.3 hours remaining, and sleeps 33600 seconds.
+- OOF grid follow-up: Tried refining the remote four-member NFNet grid from step 0.05 to step 0.025 for v13/v15/v23d/v29. The run was still active after an extended wait and was killed to avoid tying up the cron/trainer. No result file was produced. The current actionable NFNet weights remain the prior completed step-0.05 result: v13=0.15, v15=0.30, v23d=0.25, v29=0.30 with macro AUC 0.710048 on 497 overlap rows / 100 valid classes.
+- Packaging caveat: v13/v15 use 10s/160-mel audio config, while v23d/v29 use 20s/128-mel. A single-manifest combined bundle would be unsafe with the current one-audio-config kernel loader; a true four-member NFNet package needs either grouped multi-config inference support or separate bundle passes before blending.
+- Next step: Let the queue submit v519 after reset. If queued SED sidecars score safely, implement grouped multi-config SED inference before packaging the four-member NFNet blend; otherwise keep the OOF result as offline calibration only.
