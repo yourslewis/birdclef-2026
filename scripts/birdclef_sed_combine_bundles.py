@@ -82,6 +82,11 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--description", default="BirdCLEF 2026 combined TorchScript SED bundle")
     parser.add_argument("--zip", action="store_true", help="Also write output-dir.with_suffix('.zip')")
+    parser.add_argument(
+        "--allow-mixed-audio-config",
+        action="store_true",
+        help="Allow source bundles with different audio configs; each model entry records its own audio_config.",
+    )
     args = parser.parse_args()
 
     out_dir = args.output_dir
@@ -124,7 +129,7 @@ def main() -> int:
             audio_config = source_manifest.get("audio_config", {})
             if audio_config_ref is None:
                 audio_config_ref = audio_config
-            elif audio_config_ref != audio_config:
+            elif audio_config_ref != audio_config and not args.allow_mixed_audio_config:
                 raise ValueError(f"audio_config mismatch for bundle {bundle_name}: {audio_config} vs {audio_config_ref}")
 
             normalized_bundle_weight = input_weight / total_input_weight
@@ -137,6 +142,7 @@ def main() -> int:
                 "normalized_weight": normalized_bundle_weight,
                 "source_path": str(bundle_path),
                 "source_description": source_manifest.get("description"),
+                "source_audio_config": audio_config,
                 "source_members": source_manifest.get("members", []),
             })
 
@@ -149,13 +155,21 @@ def main() -> int:
                 new_entry["source_path"] = entry["path"]
                 new_entry["path"] = str(dst.relative_to(out_dir))
                 new_entry["weight"] = normalized_bundle_weight * float(entry.get("weight", 0.0)) / source_model_weight_sum
+                new_entry["audio_config"] = entry.get("audio_config") or audio_config
                 manifest["models"].append(new_entry)
 
         if labels_ref is None or audio_config_ref is None:
             raise RuntimeError("no bundles loaded")
         manifest["labels"] = labels_ref
         manifest["n_classes"] = len(labels_ref)
+        unique_audio_configs = []
+        for model in manifest["models"]:
+            cfg = model.get("audio_config") or audio_config_ref
+            if cfg not in unique_audio_configs:
+                unique_audio_configs.append(cfg)
         manifest["audio_config"] = audio_config_ref
+        manifest["audio_configs"] = unique_audio_configs
+        manifest["mixed_audio_config"] = len(unique_audio_configs) > 1
         manifest["total_size_mb"] = round(sum((out_dir / m["path"]).stat().st_size for m in manifest["models"]) / 1e6, 3)
         manifest["model_weight_sum"] = sum(float(m["weight"]) for m in manifest["models"])
 
