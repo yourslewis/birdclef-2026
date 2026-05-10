@@ -1263,3 +1263,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue/monitor: Focus monitor pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log, remains alive and sleeping after the expected v519 daily-cap response. Queue order keeps v529 after v528, so it will not jump ahead of v519-v522/v526-v528.
 - Infrastructure: 192.168.0.10 was not reachable in this check (ping 100 percent packet loss; SSH operation timed out), so remote v23d/v29 OOF grid remains blocked.
 - Next step: Let the monitor submit v519 first after reset, then v520-v522/v526-v528/v529. If v529 eventually scores safely or improves, consider a higher B0 v23/v26 blend weight only after v520-v522/v529 public scores are known; otherwise prioritize v23d/v29 OOF grid when trainer returns.
+
+
+## 2026-05-10 13:55 UTC - remote v13/v15/v23d/v29 OOF blend grid completed
+
+- Track: Spec F post-new-signal OOF retuning plus A/G queue monitoring. No new public kernel was added because v519-v522/v526-v528/v529 are already complete and queued behind the daily cap.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure; v529 also remains COMPLETE/no failure.
+- Queue/monitor: Focus monitor pid 31553, log logs/submit_pending_birdclef_queue_20260510T114618Z_focus_v529.log, is alive and sleeping after the expected v519 daily-cap response. Queue order keeps v529 after v528.
+- Infrastructure: Trainer 192.168.0.10 became reachable again. Copied the current sklearn-optional scripts/birdclef_oof_blend_grid.py to /tmp on trainer and ran it with ~/kaggle_envs/s6e3/bin/python.
+- OOF grid: Ran a four-member NFNet SED grid over v13, v15, v23d, and v29 on 497 overlapping rows / 100 valid classes. Step 0.10 best was v13=0.20, v15=0.30, v23d=0.20, v29=0.30 with macro AUC 0.709900. Step 0.05 improved slightly to v13=0.15, v15=0.30, v23d=0.25, v29=0.30 with macro AUC 0.710048.
+- Singles on the 497-row overlap: v13=0.655017, v15=0.662568, v23d=0.641578, v29=0.640396. Pairwise correlations show useful diversity: v13-v15 0.2962, v15-v23d 0.2449, v15-v29 0.3487, v23d-v29 0.3879; v13-v23d is higher at 0.6969.
+- Interpretation: The strongest NFNet blend is a balanced multi-member stack, not a two-member pair. If current public queue misses, next package-worthy candidate should be a combined v13/v15/v23d/v29 NFNet bundle with weights near 0.15/0.30/0.25/0.30, likely blended conservatively into the v517 axis.
+- Next step: Let queued public scores land first. If v526/v528/v529 do not improve but tie safely, consider packaging the four-member NFNet blend as the next real-Sed sidecar; if any queued SED sidecar drops, hold and use the OOF grid only for offline calibration.
