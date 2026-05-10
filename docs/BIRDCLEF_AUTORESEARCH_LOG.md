@@ -1195,3 +1195,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - artifacts/blend_grids/v23_v26_step005.json: overlap 2053, valid classes 206; singles v23=0.859564, v26=0.883556; pairwise flat Pearson 0.5912; best grid blend v23=0.40, v26=0.60, macro AUC 0.903667. This is the strongest local signal this run and supports preparing a combined v23+v26 package if queued v520/v521/v522 scores justify another slot.
 - Validation: The grid script executed successfully on three real OOF combinations. The JSON outputs are under ignored artifacts/blend_grids/; key metrics are copied here for durable tracking.
 - Next step: Let v519-v522/v526-v528 score. If v520/v521/v522 show any public lift or safe tie, prepare a combined v23+v26 B0 SED bundle/kernel using OOF-informed weights near v23=0.40, v26=0.60; if v23/v26 underperform publicly, wait for trainer SSH and prioritize v23d/v29 OOF grid before adding more kernels.
+
+
+## 2026-05-10 07:55 UTC - OOF grid tool portability fix during capped queue
+
+- Track: Spec F OOF retuning infrastructure while A/G public queue is capped. No new public kernel was added; v519-v522/v526-v528 remain the active complete queue.
+- Status: Latest submissions are unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 remains COMPLETE/no failure and already scored 0.927.
+- Queue/monitor: v519, v520, v521, v522, v526, v527, and v528 all report COMPLETE/no failure. Focus monitor pid 75964 is alive and sleeping after the expected v519 daily-cap response.
+- Infrastructure: 192.168.0.10 remains pingable but SSH still times out during banner exchange, so no remote GPU/OOF work was launched.
+- Implementation: Hardened scripts/birdclef_oof_blend_grid.py so it no longer requires scikit-learn. It now uses sklearn roc_auc_score when available and falls back to a numpy rank-sum ROC-AUC implementation when sklearn is absent. This makes the blend-grid tool runnable under the repo's default system python as well as the Kaggle project venv.
+- Validation: python3 -m py_compile scripts/birdclef_oof_blend_grid.py passed. Then system python3, which previously failed with ModuleNotFoundError: sklearn, successfully ran the real v23+v26 grid and reproduced the same result: singles v23=0.859564 and v26=0.883556, pairwise Pearson 0.5912, best v23=0.40/v26=0.60 with macro AUC 0.903667 over 2053 rows / 206 valid classes.
+- Next step: Keep holding queue until reset. If v520/v521/v522 validate the B0 SED axis publicly, package a combined v23+v26 bundle/kernel with OOF-informed 0.40/0.60 weighting; otherwise wait for trainer SSH and prioritize v23d/v29 grid before spending more slots.

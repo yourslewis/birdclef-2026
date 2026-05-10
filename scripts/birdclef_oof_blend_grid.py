@@ -22,7 +22,44 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from sklearn.metrics import roc_auc_score
+
+try:
+    from sklearn.metrics import roc_auc_score as _sklearn_roc_auc_score
+except Exception:  # pragma: no cover - exercised when sklearn is unavailable.
+    _sklearn_roc_auc_score = None
+
+
+def roc_auc_score_1d(y_true: np.ndarray, y_score: np.ndarray) -> float:
+    """Compute binary ROC-AUC with a numpy fallback.
+
+    Kaggle/repo utility environments do not always have scikit-learn installed;
+    the rank-sum definition keeps this OOF grid tool usable with just numpy.
+    """
+    if _sklearn_roc_auc_score is not None:
+        return float(_sklearn_roc_auc_score(y_true, y_score))
+
+    y = np.asarray(y_true, dtype=np.float64)
+    scores = np.asarray(y_score, dtype=np.float64)
+    n_pos = int(np.sum(y > 0.5))
+    n_neg = int(len(y) - n_pos)
+    if n_pos == 0 or n_neg == 0:
+        raise ValueError("ROC-AUC requires both positive and negative samples")
+
+    order = np.argsort(scores, kind="mergesort")
+    sorted_scores = scores[order]
+    ranks_sorted = np.empty(len(scores), dtype=np.float64)
+    start = 0
+    while start < len(scores):
+        end = start + 1
+        while end < len(scores) and sorted_scores[end] == sorted_scores[start]:
+            end += 1
+        # Ranks are 1-based; ties receive their average rank.
+        ranks_sorted[start:end] = (start + 1 + end) / 2.0
+        start = end
+    ranks = np.empty(len(scores), dtype=np.float64)
+    ranks[order] = ranks_sorted
+    pos_rank_sum = float(np.sum(ranks[y > 0.5]))
+    return (pos_rank_sum - n_pos * (n_pos + 1) / 2.0) / (n_pos * n_neg)
 
 
 def path_key(raw: str) -> str:
@@ -83,7 +120,7 @@ def macro_auc(y: np.ndarray, pred: np.ndarray) -> dict[str, Any]:
         if col.min() == col.max():
             continue
         try:
-            aucs.append(float(roc_auc_score(col, pred[:, j])))
+            aucs.append(float(roc_auc_score_1d(col, pred[:, j])))
         except Exception:
             pass
     return {"macro_auc": float(np.mean(aucs)) if aucs else None, "valid_classes": len(aucs)}
