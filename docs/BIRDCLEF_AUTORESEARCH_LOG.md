@@ -1180,3 +1180,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Validation:** `python3 -m py_compile scripts/submit_pending_birdclef_queue.py scripts/birdclef_oof_blend_grid.py` passed. Monitor process recheck shows pid `75964` alive under `ppid=1`.
 - **Infrastructure:** Trainer `192.168.0.10` is pingable (`0%` packet loss), but SSH still times out during banner exchange even with a 30s connect timeout. Because of that I could not run the new multi-member OOF blend grid on remote v13/v15/v23d/v29 artifacts in this run.
 - **Decision:** Hold public queue. Next useful action once SSH recovers is to run `scripts/birdclef_oof_blend_grid.py` on v13/v15/v23d/v29 with `--step 0.1` or `0.05` and decide whether a combined v15+v29 or v23d+v29 bundle is worth packaging after the queued submissions score.
+
+
+## 2026-05-10 06:55 UTC - capped queue hold; local OOF blend grids while trainer SSH is blocked
+
+- Track: Spec F post-new-signal OOF retuning support plus A/G queue monitoring. I did not add or push a new public Kaggle kernel because the daily quota is exhausted and the focus queue already has diverse complete candidates v519-v522/v526-v527/v528 waiting.
+- Submission state: Latest five BirdCLEF submissions via Bearer API are unchanged and complete: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517.
+- Required v510 check: yourslewis/bc26-v510-real-sed-bundle-blend-005 remains COMPLETE with no failure message; already scored 0.927.
+- Queued kernels: v519, v520, v521, v522, v526, v527, and v528 all report COMPLETE with no failure message. Focus monitor pid 75964, log logs/submit_pending_birdclef_queue_20260510T055002Z_focus_restart_v528.log, is alive and sleeping after the expected v519 daily-cap response.
+- Infrastructure: 192.168.0.10 is still pingable but SSH times out during banner exchange, so remote v23d/v29 OOF grid remains blocked. No blind GPU job was launched.
+- Local grid work: Ran scripts/birdclef_oof_blend_grid.py with /Users/yourslewis/.openclaw/workspace-don/kaggle/playground-series-s6e3/.venv/bin/python on locally available OOF artifacts:
+  - artifacts/blend_grids/v13_v15_step005.json: overlap 1000, valid classes 100; singles v13=0.636878, v15=0.633091; pairwise flat Pearson 0.2946; best grid blend v13=0.40, v15=0.60, macro AUC 0.657329.
+  - artifacts/blend_grids/v13_b3v16_regv20_step01.json: overlap 1000, valid classes 100; singles v13=0.636878, b3v16=0.506158, regv20=0.506402; best grid blend v13=0.90, b3v16=0.10, regv20=0.00, macro AUC 0.638184. B3 has low correlation to v13 (0.2723) but only a tiny blend lift, so it is not package-worthy yet.
+  - artifacts/blend_grids/v23_v26_step005.json: overlap 2053, valid classes 206; singles v23=0.859564, v26=0.883556; pairwise flat Pearson 0.5912; best grid blend v23=0.40, v26=0.60, macro AUC 0.903667. This is the strongest local signal this run and supports preparing a combined v23+v26 package if queued v520/v521/v522 scores justify another slot.
+- Validation: The grid script executed successfully on three real OOF combinations. The JSON outputs are under ignored artifacts/blend_grids/; key metrics are copied here for durable tracking.
+- Next step: Let v519-v522/v526-v528 score. If v520/v521/v522 show any public lift or safe tie, prepare a combined v23+v26 B0 SED bundle/kernel using OOF-informed weights near v23=0.40, v26=0.60; if v23/v26 underperform publicly, wait for trainer SSH and prioritize v23d/v29 OOF grid before adding more kernels.
