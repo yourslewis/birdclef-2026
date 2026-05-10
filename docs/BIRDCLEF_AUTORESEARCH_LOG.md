@@ -1364,3 +1364,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Monitor sanity: New monitor skipped already-submitted v516/v517/v523/v524/v525/v518, verified v519 COMPLETE/no failure, attempted v519 submission, hit the expected daily cap with 2.3h remaining, and is sleeping 8400s. This should wake just after UTC reset and submit v519 first, then continue focus order v520/v521/v522/v526/v527/v528/v529 under the 5/day cap.
 - Decision: Continue holding v530 and the prepared B0v26+v29 dataset until v522 and/or v528 public scores arrive. No extra variants or micro-sweeps added.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 22:58 UTC - capped queue hold + v530 static preflight
+
+- Track: A/G monitoring plus held-package preflight. No public Kaggle dataset/kernel upload this run because daily slots remain capped and v519-v522/v526-v529 scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Required status check: v510/v519/v520/v521/v522/v526/v527/v528/v529 are all COMPLETE/no failure.
+- Queue: Current monitor pid 31151, log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log, remains alive. It already skipped submitted v516/v517/v523/v524/v525/v518, verified v519 complete, hit expected daily cap with 2.3h remaining, and should wake shortly after UTC reset to submit v519 first.
+- Static preflight: Re-ran py_compile for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py and scripts/submit_pending_birdclef_queue.py. Added a local static assertion pass for v530: metadata id is yourslewis/bc26-v530-b0v26-v29-mixed-blend-005; metadata includes future dataset yourslewis/bc26-sed-b0v26-nfnet-v29-oofblend090010-v1; script has v517 taxon constants floor=0.30/alpha=0.50; mixed-audio helper def _sed_audio_config_key exists; per-entry audio_config is used; REAL_SED_MAX_MODELS=6 and REAL_SED_MIN_MODELS=3. All assertions passed.
+- Decision: Keep holding v530 until v522 and/or v528 public scores justify upload. No extra variants or micro-sweeps added.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
