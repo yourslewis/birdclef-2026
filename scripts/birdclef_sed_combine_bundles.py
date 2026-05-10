@@ -43,6 +43,22 @@ def parse_bundle(raw: str) -> tuple[str, float, Path]:
     return name, weight, path
 
 
+def parse_member_weight(raw: str) -> tuple[str, str, float]:
+    parts = raw.split(":", 2)
+    if len(parts) != 3:
+        raise argparse.ArgumentTypeError("member weight must be bundle_name:member_name:weight")
+    bundle_name, member_name, weight_s = parts
+    if not bundle_name or not member_name:
+        raise argparse.ArgumentTypeError("bundle and member names must be non-empty")
+    try:
+        weight = float(weight_s)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(f"invalid member weight {weight_s!r}") from exc
+    if weight <= 0:
+        raise argparse.ArgumentTypeError("member weight must be positive")
+    return bundle_name, member_name, weight
+
+
 def find_manifest(root: Path) -> Path:
     direct = root / "sed_bundle_manifest.json"
     if direct.exists():
@@ -67,6 +83,10 @@ def copy_source_model(src_manifest_dir: Path, entry: dict[str, Any], dst: Path) 
     shutil.copy2(src, dst)
 
 
+def model_member_name(entry: dict[str, Any]) -> str:
+    return str(entry.get("member") or entry.get("name") or Path(str(entry["path"])).stem)
+
+
 def zip_dir(src_dir: Path, zip_path: Path) -> None:
     if zip_path.exists():
         zip_path.unlink()
@@ -79,6 +99,13 @@ def zip_dir(src_dir: Path, zip_path: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--bundle", action="append", required=True, type=parse_bundle, help="name:weight:bundle_dir_or_zip; repeat")
+    parser.add_argument(
+        "--member-weight",
+        action="append",
+        default=[],
+        type=parse_member_weight,
+        help="Optional per-source-member override as bundle_name:member_name:weight; repeat. Weights are normalized within that bundle.",
+    )
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--description", default="BirdCLEF 2026 combined TorchScript SED bundle")
     parser.add_argument("--zip", action="store_true", help="Also write output-dir.with_suffix('.zip')")
@@ -96,6 +123,12 @@ def main() -> int:
     model_dir.mkdir(parents=True, exist_ok=True)
 
     total_input_weight = sum(weight for _, weight, _ in args.bundle)
+    member_weight_overrides: dict[tuple[str, str], float] = {}
+    for bundle_name, member_name, weight in args.member_weight:
+        key = (bundle_name, member_name)
+        if key in member_weight_overrides:
+            raise ValueError(f"duplicate member-weight override for {bundle_name}:{member_name}")
+        member_weight_overrides[key] = weight
     manifest: dict[str, Any] = {
         "schema_version": 1,
         "description": args.description,
@@ -133,9 +166,34 @@ def main() -> int:
                 raise ValueError(f"audio_config mismatch for bundle {bundle_name}: {audio_config} vs {audio_config_ref}")
 
             normalized_bundle_weight = input_weight / total_input_weight
-            source_model_weight_sum = sum(float(m.get("weight", 0.0)) for m in source_manifest.get("models", []))
+            source_models = list(source_manifest.get("models", []))
+            source_model_weight_sum = sum(float(m.get("weight", 0.0)) for m in source_models)
             if source_model_weight_sum <= 0:
                 raise ValueError(f"bundle {bundle_name} has no positive model weights")
+
+            bundle_member_overrides = {
+                member: weight
+                for (override_bundle, member), weight in member_weight_overrides.items()
+                if override_bundle == bundle_name
+            }
+            if bundle_member_overrides:
+                members_seen = {model_member_name(entry) for entry in source_models}
+                missing = sorted(members_seen - set(bundle_member_overrides))
+                extra = sorted(set(bundle_member_overrides) - members_seen)
+                if missing or extra:
+                    raise ValueError(
+                        f"member-weight overrides for {bundle_name} must cover exactly all source members; "
+                        f"missing={missing}, extra={extra}"
+                    )
+                member_source_weight_sum = {
+                    member: sum(float(entry.get("weight", 0.0)) for entry in source_models if model_member_name(entry) == member)
+                    for member in members_seen
+                }
+                member_override_sum = sum(bundle_member_overrides.values())
+            else:
+                member_source_weight_sum = {}
+                member_override_sum = 0.0
+
             manifest["members"].append({
                 "name": bundle_name,
                 "input_weight": input_weight,
@@ -144,9 +202,10 @@ def main() -> int:
                 "source_description": source_manifest.get("description"),
                 "source_audio_config": audio_config,
                 "source_members": source_manifest.get("members", []),
+                "member_weight_overrides": bundle_member_overrides,
             })
 
-            for entry in source_manifest.get("models", []):
+            for entry in source_models:
                 dst_name = safe_model_name(bundle_name, str(entry["path"]))
                 dst = model_dir / dst_name
                 copy_source_model(source_manifest_dir, entry, dst)
@@ -154,7 +213,17 @@ def main() -> int:
                 new_entry["source_bundle"] = bundle_name
                 new_entry["source_path"] = entry["path"]
                 new_entry["path"] = str(dst.relative_to(out_dir))
-                new_entry["weight"] = normalized_bundle_weight * float(entry.get("weight", 0.0)) / source_model_weight_sum
+                if bundle_member_overrides:
+                    member = model_member_name(entry)
+                    new_entry["weight"] = (
+                        normalized_bundle_weight
+                        * bundle_member_overrides[member]
+                        / member_override_sum
+                        * float(entry.get("weight", 0.0))
+                        / member_source_weight_sum[member]
+                    )
+                else:
+                    new_entry["weight"] = normalized_bundle_weight * float(entry.get("weight", 0.0)) / source_model_weight_sum
                 new_entry["audio_config"] = entry.get("audio_config") or audio_config
                 manifest["models"].append(new_entry)
 
