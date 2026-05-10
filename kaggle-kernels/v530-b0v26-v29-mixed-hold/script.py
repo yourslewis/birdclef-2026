@@ -165,7 +165,7 @@ def time_remaining():
 
 print('TensorFlow :', tf.__version__)
 print('NumPy      :', np.__version__)
-print('V530 HOLD: v517/v508 axis + held B0 v26 90% / NFNet v29 10% mixed SED bundle')
+print('V530 HOLD: v517 taxon-gated axis + held B0 v26 90% / NFNet v29 10% mixed SED bundle')
 
 # === Cell: Settings ===
 # All high-impact knobs are centralized here so experiments can be audited.
@@ -247,6 +247,8 @@ PROTOSSM_SWA_START = 999  # Disabled — v67 didn't use SWA
 GAUSSIAN_WEIGHTS = np.array([0.00, 0.15, 0.70, 0.15, 0.00], dtype=np.float32)
 POWER_GAMMA = 0.825
 FILE_CONTEXT_ALPHA = 0.275
+TAXON_MAX_GATE_FLOOR = 0.30
+TAXON_MAX_GATE_ALPHA = 0.50
 QUANTILE_MIX_ALPHA = 0.5
 
 # v368 post-processing: upper-midpoint the ProtoSSM blend between EW0.60
@@ -263,10 +265,9 @@ NON_TOP_DAMP_POWER = 1.10
 LOCAL_EVENT_ALPHA = 0.05
 LOCAL_EVENT_TOPK = 3
 
-# v510: blend in a real weak-label SED NFNet TorchScript bundle after the
-# existing v508 probability shaping. Weight is deliberately conservative until
-# public LB calibration is known; OOF evidence says v13/v15 are strong and
-# low-correlated, but not yet calibrated against the Perch/ProtoSSM axis.
+# v530 HOLD: combine public-best v517 softer taxon-gated axis with
+# the held mixed B0-v26 all-files SED + NFNet-v29 low-correlation bundle.
+# Do not push until queued v522/v528 public scores justify a new slot.
 REAL_SED_BLEND_WEIGHT = 0.05
 REAL_SED_MAX_MODELS = 6
 REAL_SED_MIN_MODELS = 3
@@ -514,6 +515,30 @@ def file_context_boost(probs, alpha=FILE_CONTEXT_ALPHA):
             result = np.vstack([result, probs[n_complete_files * N_WINDOWS:]])
         return result
     return probs.copy()
+
+def taxon_max_gate(probs, labels, taxonomy_df, floor=TAXON_MAX_GATE_FLOOR, alpha=TAXON_MAX_GATE_ALPHA):
+    """Row-wise taxon evidence gate.
+
+    For each taxon group (Aves/Amphibia/etc.), compute the row max probability
+    among labels in that group, then gently downweight species in weakly
+    supported groups. Tuned only on labeled train soundscapes as a Spec-E
+    diagnostic; constants are deliberately conservative.
+    """
+    if alpha <= 0:
+        return probs
+    class_map = {str(k): str(v) for k, v in taxonomy_df.set_index('primary_label')['class_name'].to_dict().items()}
+    label_groups = np.array([class_map.get(str(label), 'Unknown') for label in labels], dtype=object)
+    out = probs.copy()
+    for group in sorted(set(label_groups.tolist())):
+        cols = np.where(label_groups == group)[0]
+        if len(cols) == 0:
+            continue
+        evidence = probs[:, cols].max(axis=1, keepdims=True)
+        mult = np.maximum(float(floor), evidence) ** float(alpha)
+        out[:, cols] = out[:, cols] * mult
+    return np.clip(out, 1e-8, 1.0 - 1e-8)
+
+
 
 def local_event_boost_logits(scores, alpha=LOCAL_EVENT_ALPHA, topk=LOCAL_EVENT_TOPK):
     if alpha <= 0 or topk <= 0:
@@ -1294,7 +1319,8 @@ if TOPK_CONTRAST_K > 0 and TOPK_CONTRAST_K < probs.shape[1]:
 # === Cell: v530 HOLD Real mixed-config SED bundle blend ===
 # This is the first Kaggle-kernel bridge from the strong local SED OOF artifacts
 # into the current Perch/ProtoSSM submission axis. It loads a zipped TorchScript
-# bundle dataset, emits the same 5-second row IDs, and blends probabilities.
+# v29 bundle dataset, emits the same 5-second row IDs, blends probabilities,
+# then applies the v517 taxon gate to the combined probabilities.
 def _sed_hz_to_mel(hz):
     return 2595.0 * np.log10(1.0 + np.asarray(hz) / 700.0)
 
@@ -1483,10 +1509,7 @@ def _sed_infer_bundle(test_paths, target_row_ids):
                     context_sec = float(audio_cfg['duration_sec'])
                     if sr not in audio_cache:
                         audio = _sed_decode_audio(path, sr, int(round(sr * 60.0)))
-                        if audio is None:
-                            audio_cache[sr] = None
-                        else:
-                            audio_cache[sr] = audio
+                        audio_cache[sr] = audio
                     audio = audio_cache.get(sr)
                     if audio is None:
                         continue
@@ -1538,6 +1561,9 @@ if REAL_SED_BLEND_WEIGHT > 0:
     except Exception as exc:
         print(f'WARNING: real SED bundle blend failed; falling back to v508 probabilities: {type(exc).__name__}: {exc}')
 
+probs = taxon_max_gate(probs, PRIMARY_LABELS, taxonomy)
+print(f'Taxon max gate: floor={TAXON_MAX_GATE_FLOOR}, alpha={TAXON_MAX_GATE_ALPHA}')
+
 print(f'Final prob range: {probs.min():.6f} to {probs.max():.6f}, mean: {probs.mean():.4f}')
 
 # === Cell: Build Submission ===
@@ -1581,5 +1607,6 @@ print(f'  Ensemble: quantile-mix ({QUANTILE_MIX_ALPHA} simple + {1-QUANTILE_MIX_
 print(f'  Power gamma={POWER_GAMMA}, File context alpha={FILE_CONTEXT_ALPHA}, local_event_alpha={LOCAL_EVENT_ALPHA}')
 print(f'  Probes: {len(probe_models)} MLP + {len(protossm_models)}x ProtoSSM SSM')
 print(f'  Top-k contrast: k={TOPK_CONTRAST_K}, boost={TOPK_BOOST_POWER}, damp={NON_TOP_DAMP_POWER}')
-print(f'  Post: v508/v517 axis + held B0 v26/NFNet v29 mixed SED bundle blend weight {REAL_SED_BLEND_WEIGHT}')
+print(f'  Taxon max gate: floor={TAXON_MAX_GATE_FLOOR}, alpha={TAXON_MAX_GATE_ALPHA}')
+print(f'  Post: v517 taxon-gated axis + held B0 v26/NFNet v29 mixed SED bundle blend weight {REAL_SED_BLEND_WEIGHT}')
 print(submission.iloc[:3, :8])

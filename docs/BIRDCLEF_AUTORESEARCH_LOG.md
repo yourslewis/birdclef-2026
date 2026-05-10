@@ -1343,3 +1343,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Validation: python3 -m py_compile passed for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py. The underlying bundle smoke from previous run loaded all 6 models on one real train soundscape and produced 12 x 235 output with no NaNs in 5.020s/file.
 - Decision: Keep v530 as a held scaffold only. If v522 and/or v528 public scores tie/improve after the monitor submits them, upload the prepared 291.764 MB B0v26+v29 dataset and push this v530 kernel. If queued SED sidecars fall, do not spend a public slot.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 20:58 UTC - v530 scaffold corrected to v517 taxon-gated base
+
+- Track: Spec A/G packaging plus Spec F retune after new SED artifacts. No public Kaggle push or dataset upload this run; daily slots remain capped and queued v519-v522/v526-v529 scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Focus monitor pid 71760 is alive and sleeping after expected daily-cap response on v519.
+- Fix: Rebased held kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py from v528 (the v517 softer taxon-gated axis + v29 sidecar) instead of v522 (older v508+B0v26 axis). This matters because v517 is current public best and v530 should test new mixed SED signal on top of the strongest base, not regress to the older non-taxoned base.
+- Preserved mixed-config support: v530 still points at future dataset slug bc26-sed-b0v26-nfnet-v29-oofblend090010-v1, keeps REAL_SED_BLEND_WEIGHT=0.05, REAL_SED_MAX_MODELS=6, REAL_SED_MIN_MODELS=3, and supports per-model audio_config for B0 10s/160-mel + NFNet 20s/128-mel. The v517 taxon max gate remains active with floor=0.30, alpha=0.50.
+- Added kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md with the exact future dataset upload command and reminder not to push until queued v522/v528 evidence justifies a slot.
+- Validation: python3 -m py_compile passed for the corrected v530 script. No Kaggle push performed.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
