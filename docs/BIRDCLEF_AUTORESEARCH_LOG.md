@@ -1354,3 +1354,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md with the exact future dataset upload command and reminder not to push until queued v522/v528 evidence justifies a slot.
 - Validation: python3 -m py_compile passed for the corrected v530 script. No Kaggle push performed.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 21:47 UTC - pre-reset monitor refresh, no new variant
+
+- Track: A/G queue monitoring and guarded packaging hold. No public Kaggle dataset/kernel upload this run because slots remain capped and queued v519-v522/v526-v529 LB scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Required status check: v510/v519/v520/v521/v522/v526/v527/v528/v529 are all COMPLETE/no failure.
+- Queue action: Old focus monitor pid 71760 was still sleeping from the earlier 9.3h cap response and had been started before the latest monitor-safety script state. Killed it and restarted current scripts/submit_pending_birdclef_queue.py so the active process has STOP_AFTER_FOCUS semantics and the latest focus priority through v529. New monitor pid 31151, log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log.
+- Monitor sanity: New monitor skipped already-submitted v516/v517/v523/v524/v525/v518, verified v519 COMPLETE/no failure, attempted v519 submission, hit the expected daily cap with 2.3h remaining, and is sleeping 8400s. This should wake just after UTC reset and submit v519 first, then continue focus order v520/v521/v522/v526/v527/v528/v529 under the 5/day cap.
+- Decision: Continue holding v530 and the prepared B0v26+v29 dataset until v522 and/or v528 public scores arrive. No extra variants or micro-sweeps added.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
