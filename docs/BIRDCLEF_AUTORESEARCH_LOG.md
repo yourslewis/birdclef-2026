@@ -1384,3 +1384,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pending-score set: v519 (B0 ep12-init pseudo-label student blend 0.15 + v508), v520/v521 (B0 v23 SED blend 0.05/0.10 + v508), v522 (B0 v26 all-files SED blend 0.05 + v508), v526 (v516 taxon gate + v23d NFNet blend 0.05). Remaining focus queue for next reset: v527, v528, v529.
 - Decision: Keep holding v530 and the prepared B0v26+v29 dataset until scores for v522 and/or v528 arrive. v522 is now submitted/pending; v528 is still queued behind v527 for the next reset. Do not add variants or upload v530 yet.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-11 01:50 UTC - reset scores arrived; B0 SED sidecars below v517
+
+- Track: A/G monitoring and Spec F decision gate after new SED artifacts scored. No new Kaggle dataset/kernel was uploaded.
+- Score update: Current public best remains v517=0.930. Newly scored reset submissions: v519=0.929 (B0 ep12-init pseudo-label student blend 0.15 + v508), v520=0.928 (B0 v23 SED blend 0.05 + v508), v521=0.928 (B0 v23 SED blend 0.10 + v508), v522=0.927 (B0 v26 all-files SED blend 0.05 + v508). v526 remains pending at this check. Previous scored rows: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930.
+- Interpretation: v519 confirms the ep12-init pseudo-label student is safer than v518 but still below current best; do not add more B0 student slots. B0 SED public transfer is weaker than local OOF suggested: v23/v26 all failed to beat v517 and v22 dropped to 0.927. This weakens the held B0v26+v29 v530 case unless v528 independently shows v29 helps on top of v517.
+- Queue: Monitor pid 31151 remains alive and sleeping after attempting v527 and hitting cap. Remaining focus queue: v527, v528, v529. v528 is now the key evidence for the held B0v26+v29 dataset because v522 did not justify upload by itself.
+- Hold update: Tightened kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md: because v522 scored only 0.927, require v528 to tie/improve the 0.930 best before reconsidering upload/push of v530. If v528 scores below 0.930, keep v530 as infrastructure only.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.

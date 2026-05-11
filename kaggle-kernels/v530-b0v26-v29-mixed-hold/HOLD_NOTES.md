@@ -1,6 +1,6 @@
 # v530 HOLD — B0 v26 + NFNet v29 mixed SED bundle
 
-Do not push this kernel until queued public scores for `v522` and/or `v528` justify spending another dataset/kernel/submission slot.
+Do not push this kernel unless queued public scores justify spending another dataset/kernel/submission slot. As of 2026-05-11 UTC, `v522` scored only 0.927, so the B0-v26 half does **not** justify upload by itself; require `v528` to tie/improve the 0.930 best before reconsidering.
 
 ## Future dataset upload
 
@@ -27,7 +27,7 @@ python3 scripts/upload_kaggle_dataset_bearer.py \
   --file-description "TorchScript mixed-config SED bundle zip"
 ```
 
-Then push this kernel via Bearer/Kaggle workflow and add it after current focus queue, not ahead of already-complete candidates.
+Then push this kernel via Bearer/Kaggle workflow and add it after current focus queue, not ahead of already-complete candidates. If `v528` scores below 0.930, keep this scaffold as infrastructure only.
 
 ## Current validation
 
