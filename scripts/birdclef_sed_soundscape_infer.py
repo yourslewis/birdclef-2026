@@ -144,17 +144,44 @@ def find_soundscapes(args: argparse.Namespace, base: Path) -> tuple[list[Path], 
     return train_paths, False
 
 
-def infer_one_file(path: Path, models, labels: list[str], audio_cfg: dict[str, Any], mel_fb: torch.Tensor, device: torch.device, batch_size: int) -> tuple[list[str], np.ndarray]:
-    sr = int(audio_cfg["sample_rate"])
-    context_sec = float(audio_cfg["duration_sec"])
-    file_samples = int(round(sr * 60.0))
-    audio = decode_soundscape(path, sr, file_samples)
-    windows = [waveform_to_logmel(torch.from_numpy(extract_context(audio, sr, end_sec, context_sec).copy()), audio_cfg, mel_fb) for end_sec in ROW_END_SECONDS]
-    x_all = torch.stack(windows)
+def audio_config_key(audio_cfg: dict[str, Any]) -> str:
+    return json.dumps(audio_cfg, sort_keys=True, separators=(",", ":"))
+
+
+def infer_one_file(path: Path, models, labels: list[str], manifest: dict[str, Any], device: torch.device, batch_size: int) -> tuple[list[str], np.ndarray]:
+    """Run one soundscape through all bundle models.
+
+    Mixed bundles may contain models trained with different durations / mel bins.
+    Each model entry can carry its own audio_config; models sharing the same
+    config reuse decoded audio, mel filters, and row windows.
+    """
+    default_audio_cfg = manifest["audio_config"]
     row_probs = np.zeros((len(ROW_END_SECONDS), len(labels)), dtype=np.float32)
     weight_sum = float(sum(float(entry.get("weight", 0.0)) for entry, _ in models))
+    audio_cache: dict[int, np.ndarray] = {}
+    x_cache: dict[str, torch.Tensor] = {}
+
     with torch.no_grad():
         for entry, model in models:
+            audio_cfg = entry.get("audio_config") or default_audio_cfg
+            key = audio_config_key(audio_cfg)
+            if key not in x_cache:
+                sr = int(audio_cfg["sample_rate"])
+                context_sec = float(audio_cfg["duration_sec"])
+                if sr not in audio_cache:
+                    file_samples = int(round(sr * 60.0))
+                    audio_cache[sr] = decode_soundscape(path, sr, file_samples)
+                mel_fb = make_mel_filter(sr, int(audio_cfg["n_fft"]), int(audio_cfg["n_mels"]))
+                windows = [
+                    waveform_to_logmel(
+                        torch.from_numpy(extract_context(audio_cache[sr], sr, end_sec, context_sec).copy()),
+                        audio_cfg,
+                        mel_fb,
+                    )
+                    for end_sec in ROW_END_SECONDS
+                ]
+                x_cache[key] = torch.stack(windows)
+            x_all = x_cache[key]
             model_probs = []
             for start in range(0, len(x_all), batch_size):
                 xb = x_all[start:start + batch_size].to(device)
@@ -187,9 +214,7 @@ def main() -> int:
     manifest = json.loads(args.manifest.read_text())
     manifest_dir = args.manifest.parent
     labels = [str(x) for x in manifest["labels"]]
-    audio_cfg = manifest["audio_config"]
     device = torch.device(args.device)
-    mel_fb = make_mel_filter(int(audio_cfg["sample_rate"]), int(audio_cfg["n_fft"]), int(audio_cfg["n_mels"]))
     models = load_models(manifest, manifest_dir, device)
 
     paths, is_test = find_soundscapes(args, args.base_dir)
@@ -201,7 +226,7 @@ def main() -> int:
     all_row_ids: list[str] = []
     all_probs: list[np.ndarray] = []
     for path in paths:
-        row_ids, probs = infer_one_file(path, models, labels, audio_cfg, mel_fb, device, args.batch_size)
+        row_ids, probs = infer_one_file(path, models, labels, manifest, device, args.batch_size)
         all_row_ids.extend(row_ids)
         all_probs.append(probs)
     probs_arr = np.vstack(all_probs)

@@ -1285,3 +1285,112 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - OOF grid follow-up: Tried refining the remote four-member NFNet grid from step 0.05 to step 0.025 for v13/v15/v23d/v29. The run was still active after an extended wait and was killed to avoid tying up the cron/trainer. No result file was produced. The current actionable NFNet weights remain the prior completed step-0.05 result: v13=0.15, v15=0.30, v23d=0.25, v29=0.30 with macro AUC 0.710048 on 497 overlap rows / 100 valid classes.
 - Packaging caveat: v13/v15 use 10s/160-mel audio config, while v23d/v29 use 20s/128-mel. A single-manifest combined bundle would be unsafe with the current one-audio-config kernel loader; a true four-member NFNet package needs either grouped multi-config inference support or separate bundle passes before blending.
 - Next step: Let the queue submit v519 after reset. If queued SED sidecars score safely, implement grouped multi-config SED inference before packaging the four-member NFNet blend; otherwise keep the OOF result as offline calibration only.
+
+
+## 2026-05-10 15:55 UTC - mixed-audio-config NFNet bundle support and smoke
+
+- Track: Spec A+G packaging/inference support plus queue monitoring. No new public Kaggle kernel was pushed because v519-v522/v526-v528/v529 are already complete and queued behind the daily cap.
+- Status: Latest submissions remain unchanged: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains 0.930 from v517. Required v510 and v529 remain COMPLETE/no failure.
+- Queue/monitor: Focus monitor pid 71760, log logs/submit_pending_birdclef_queue_20260510T144421Z_focus_v529_restart.log, is alive and sleeping after the expected v519 daily-cap response with about 9.3h remaining at launch.
+- Implementation: Extended scripts/birdclef_sed_combine_bundles.py with --allow-mixed-audio-config. The combiner now records source_audio_config per source bundle, audio_config per model entry, audio_configs, and mixed_audio_config in the combined manifest. Extended scripts/birdclef_sed_soundscape_infer.py so inference groups models by per-entry audio_config and reuses decoded audio/windows per config. This resolves the packaging caveat where v13/v15 use 10s/160-mel and v23d/v29 use 20s/128-mel.
+- Artifact smoke: Built local mixed-config bundle artifacts/sed_bundles/sed-nfnet-v13v15-v23d-v29-mixedcfg-v1.zip from existing zips with source bundle weights v13v15=0.45, v23d=0.25, v29=0.30. Because the v13/v15 source zip internally uses v13=0.40 and v15=0.60, this approximates the OOF grid as effective weights v13=0.18, v15=0.27, v23d=0.25, v29=0.30. Bundle has 12 TorchScript models, two audio configs, total model size 1078.446 MB, zip size 998.822 MB, sha256 4b9bd06e1f06380573efe58bff3206e2e42c1ed50915ac599dae87dd7414b0fb.
+- Validation: python3 -m py_compile passed for scripts/birdclef_sed_combine_bundles.py and scripts/birdclef_sed_soundscape_infer.py. Ran one real train soundscape through the mixed bundle using CPU, batch size 4, 2 torch threads: loaded 12 models, output 12 x 235, no NaNs, probability range 0.003634 to 0.342064, mean 0.097957, runtime 9.047s/file.
+- Decision: Mixed-config inference is now operational locally, but do not upload/push the four-member NFNet package until queued public SED sidecar scores land. The bundle is large (~1GB zip), and the v13/v15 effective weights are approximate unless we split/reweight their source models directly.
+- Next step: Let v519 submit after reset. If queued SED sidecars tie/improve, either upload this mixed-config bundle or build a precise v13/v15 split-weight bundle before a public kernel; otherwise keep the mixed-config work as packaging infrastructure.
+
+
+## 2026-05-10 16:58 UTC - precise mixed-config NFNet OOF-grid bundle prepared
+
+- Track: Spec A+G packaging/inference support while daily submissions remain capped. Public best remains 0.930 from v517; latest visible submissions are v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. v510/v519/v520/v521/v522/v526/v527/v528/v529 kernel statuses are COMPLETE/no failure. Focus queue monitor pid 71760 is alive and sleeping after expected v519 daily-cap response.
+- Hypothesis: If queued SED sidecar kernels tie/improve, the next higher-upside candidate should use the four-member NFNet OOF-grid blend rather than the approximate v13/v15 source-bundle ratio. Prior OOF grid best was 0.710048 over 497 overlap rows / 234 classes with weights v13=0.15, v15=0.30, v23d=0.25, v29=0.30.
+- Implementation: Extended scripts/birdclef_sed_combine_bundles.py with repeated --member-weight bundle:member:weight overrides. When a source bundle contains multiple members, overrides now redistribute that source bundle's normalized weight across source members while preserving each member's internal fold weights. This allows the packaged v13/v15 bundle to reproduce the OOF-grid v13/v15 split exactly instead of being constrained to its original 0.40/0.60 internal ratio.
+- Artifact prepared locally: artifacts/sed_bundles/sed-nfnet-v13v15-v23d-v29-oofgrid071005-v1.zip. Inputs: v13v15 source bundle weight 0.45 with member overrides v13_ep8_100=0.15 and v15_ep8_200=0.30, v23d=0.25, v29=0.30. Effective member weights verified exactly: v13_ep8_100=0.15, v15_ep8_200=0.30, v23d_20s128=0.25, v29=0.30. Bundle has 12 TorchScript models, two audio configs (10s/160-mel and 20s/128-mel), model_weight_sum=1.0, zip size 998.822 MB, sha256 7f50069bb7d79ae3b44b461c3af5e533e8a77245e00c0837bf520bac1a9b8534.
+- Validation: python3 -m py_compile passed for scripts/birdclef_sed_combine_bundles.py and scripts/birdclef_sed_soundscape_infer.py. CPU smoke on one real train soundscape with batch size 4 and 2 torch threads loaded all 12 models and produced 12 x 235 submission output with no NaNs; probability range 0.003606 to 0.344208, mean 0.098336, runtime 8.979s/file.
+- Decision: Do not upload/push this ~1GB mixed NFNet package yet. It is now ready as the precise next candidate, but daily submission slots are capped and v519-v522/v526-v529 public scores are still pending. Upload only if queued SED/NFNet sidecars justify spending a dataset/kernel/submission slot.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 18:03 UTC - B0 v26 + NFNet OOF blend diagnostics while capped
+
+- Track: Spec F retune after new SED prediction artifacts, gated by Spec A/G queue monitoring. No new public Kaggle kernel was pushed because the focus queue is capped and v519-v522/v526-v529 public scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. v510/v519/v520/v521/v522/v526/v527/v528/v529 kernel statuses are COMPLETE/no failure. Focus monitor pid 71760 is alive and sleeping after the expected daily-cap response on v519.
+- Diagnostic inputs: copied missing local OOF npz files for v23d and v29 from trainer so local blend grids can include the current NFNet sidecars. Used scripts/birdclef_oof_blend_grid.py with current local artifacts.
+- Grid 1: b0v26 + v13 + v15 + v23d + v29, step 0.10, artifact artifacts/blend_grids/b0v26_v13_v15_v23d_v29_step01.json. Overlap is only 76 rows / 42 valid classes because all five artifacts have different balanced selections, so treat this as directional only. Best coarse weights: b0v26=0.50, v13=0.20, v15=0.10, v23d=0.10, v29=0.10, macro AUC 0.932648 vs b0v26 single 0.922453 on that tiny overlap.
+- Grid 2: b0v26 + v13 + v15 + v23d, step 0.05, artifact artifacts/blend_grids/b0v26_v13_v15_v23d_step005.json. Overlap 119 rows / 61 valid classes. b0v26 single AUC 0.938555; best blend b0v26=0.75, v13=0.15, v15=0.00, v23d=0.10 reaches 0.943334. Because overlap is small, this supports low-weight NFNet sidecars but is not strong enough alone to spend a public slot before queued scores.
+- Grid 3: b0v26 + v13 + v15, step 0.05, artifact artifacts/blend_grids/b0v26_v13_v15_step005.json. Same 119-row overlap; best b0v26=0.80, v13=0.15, v15=0.05 reaches 0.941903, so v23d adds a small incremental lift over v13/v15 on the same overlap.
+- Grid 4: b0v26 + v29, step 0.05, artifact artifacts/blend_grids/b0v26_v29_step005.json. This is the most stable check: overlap 1279 rows / 170 valid classes. b0v26 single AUC 0.910015; best b0v26=0.90, v29=0.10 reaches 0.911282. v29 is low-correlation to b0v26 (flat Pearson 0.3108) and a 5-10% weight is locally positive.
+- Decision: Keep the precise mixed-config NFNet bundle and these B0+NFNet OOF grids as next-candidate preparation only. Do not upload/push another ~1GB package until v519-v522/v526-v529 score. If v522 B0 all-files SED and/or v528 v29 sidecar tie/improve, the most justified follow-up is a conservative B0-v26 + v29 or B0-v26 + v13/v23d low-weight blend, not more taxon/gamma micro-sweeps.
+- Branch/PR: feature/focus-only-queue-guard / PR #216. Artifacts are under ignored artifacts/blend_grids and are summarized here for durability.
+
+
+## 2026-05-10 18:58 UTC - B0 v26 + NFNet v29 mixed bundle prepared
+
+- Track: Spec A/G packaging plus Spec F retune after new SED artifacts. No public Kaggle dataset/kernel was uploaded because daily code-submission slots are still capped and v519-v522/v526-v529 public scores are pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. v510/v519/v520/v521/v522/v526/v527/v528/v529 are COMPLETE/no failure. Focus monitor pid 71760 is alive and sleeping after expected daily-cap response on v519.
+- Hypothesis: The stable OOF blend check from the previous run showed b0v26+v29 has useful low-correlation signal on a much larger overlap than the all-NFNet grids (1279 rows / 170 classes): b0v26 alone 0.910015, best b0v26=0.90 + v29=0.10 reaches 0.911282, v29 flat correlation to b0v26 0.3108. Prepare the exact mixed-config artifact so it is ready if v522 and/or v528 public scores justify a follow-up.
+- Artifact prepared locally: artifacts/sed_bundles/sed-b0v26-plus-nfnet-v29-oofblend090010-v1.zip. Inputs: b0v26 bundle weight 0.90 from sed-b0-q3cap80-ep12init-v26-allfiles-bundle-v1.zip; NFNet v29 bundle weight 0.10 from sed-nfnet-v29-20s128-broad181-v1.zip. Bundle has 6 TorchScript models, two audio configs (10s/160-mel B0 and 20s/128-mel NFNet), model_weight_sum=1.0, total model size 315.775 MB, zip size 291.764 MB, sha256 21771572e0d54f388ccd0cd0bde9480d9ca0b5aeddbad7eb12958e918bed3fc2.
+- Validation: python3 -m py_compile passed for scripts/birdclef_sed_combine_bundles.py and scripts/birdclef_sed_soundscape_infer.py. CPU smoke on one real train soundscape with batch size 4 and two torch threads loaded all 6 models and produced 12 x 235 output with no NaNs; probability range 0.019460 to 0.496435, mean 0.124421, runtime 5.020s/file.
+- Decision: This is now the smallest precise mixed B0+NFNet package candidate (~292 MB instead of the ~999 MB four-member NFNet package). Hold upload/push until queued LB scores land. If v522 (B0 v26) and/or v528 (v29 sidecar) tie/improve, this is the preferred next package candidate at conservative blend weight; otherwise keep as infrastructure and do not spend a slot.
+- Branch/PR: feature/focus-only-queue-guard / PR #216. Artifact is ignored under artifacts/; log entry preserves enough metadata to reproduce it.
+
+
+## 2026-05-10 19:58 UTC - held v530 mixed B0v26+v29 kernel scaffold
+
+- Track: Spec A/G packaging plus Spec F retune after new SED artifacts. No public Kaggle push or dataset upload this run because daily submission slots are still capped and v519-v522/v526-v529 public scores are pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. v510/v519/v520/v521/v522/v526/v527/v528/v529 are COMPLETE/no failure. Focus monitor pid 71760 is alive and sleeping after expected daily-cap response on v519.
+- Implementation: Added held local Kaggle scaffold kaggle-kernels/v530-b0v26-v29-mixed-hold/. It copies the v522 B0-v26 all-files path but points metadata at future private dataset slug yourslewis/bc26-sed-b0v26-nfnet-v29-oofblend090010-v1 and kernel id yourslewis/bc26-v530-b0v26-v29-mixed-blend-005. This is intentionally not pushed to Kaggle yet.
+- Mixed-config fix: The held v530 script now supports per-model audio_config in the in-kernel real SED loader. It caches decoded audio by sample rate and 12 row windows by full audio_config, so one bundle can safely run B0 10s/160-mel folds and NFNet v29 20s/128-mel folds in the same code competition kernel. Constants: REAL_SED_BLEND_WEIGHT=0.05, REAL_SED_MAX_MODELS=6, REAL_SED_MIN_MODELS=3, REAL_SED_EST_SEC_PER_FILE_PER_MODEL=0.95, REAL_SED_ZIP_NAME=sed-b0v26-plus-nfnet-v29-oofblend090010-v1.zip.
+- Validation: python3 -m py_compile passed for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py. The underlying bundle smoke from previous run loaded all 6 models on one real train soundscape and produced 12 x 235 output with no NaNs in 5.020s/file.
+- Decision: Keep v530 as a held scaffold only. If v522 and/or v528 public scores tie/improve after the monitor submits them, upload the prepared 291.764 MB B0v26+v29 dataset and push this v530 kernel. If queued SED sidecars fall, do not spend a public slot.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 20:58 UTC - v530 scaffold corrected to v517 taxon-gated base
+
+- Track: Spec A/G packaging plus Spec F retune after new SED artifacts. No public Kaggle push or dataset upload this run; daily slots remain capped and queued v519-v522/v526-v529 scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Focus monitor pid 71760 is alive and sleeping after expected daily-cap response on v519.
+- Fix: Rebased held kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py from v528 (the v517 softer taxon-gated axis + v29 sidecar) instead of v522 (older v508+B0v26 axis). This matters because v517 is current public best and v530 should test new mixed SED signal on top of the strongest base, not regress to the older non-taxoned base.
+- Preserved mixed-config support: v530 still points at future dataset slug bc26-sed-b0v26-nfnet-v29-oofblend090010-v1, keeps REAL_SED_BLEND_WEIGHT=0.05, REAL_SED_MAX_MODELS=6, REAL_SED_MIN_MODELS=3, and supports per-model audio_config for B0 10s/160-mel + NFNet 20s/128-mel. The v517 taxon max gate remains active with floor=0.30, alpha=0.50.
+- Added kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md with the exact future dataset upload command and reminder not to push until queued v522/v528 evidence justifies a slot.
+- Validation: python3 -m py_compile passed for the corrected v530 script. No Kaggle push performed.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 21:47 UTC - pre-reset monitor refresh, no new variant
+
+- Track: A/G queue monitoring and guarded packaging hold. No public Kaggle dataset/kernel upload this run because slots remain capped and queued v519-v522/v526-v529 LB scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Required status check: v510/v519/v520/v521/v522/v526/v527/v528/v529 are all COMPLETE/no failure.
+- Queue action: Old focus monitor pid 71760 was still sleeping from the earlier 9.3h cap response and had been started before the latest monitor-safety script state. Killed it and restarted current scripts/submit_pending_birdclef_queue.py so the active process has STOP_AFTER_FOCUS semantics and the latest focus priority through v529. New monitor pid 31151, log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log.
+- Monitor sanity: New monitor skipped already-submitted v516/v517/v523/v524/v525/v518, verified v519 COMPLETE/no failure, attempted v519 submission, hit the expected daily cap with 2.3h remaining, and is sleeping 8400s. This should wake just after UTC reset and submit v519 first, then continue focus order v520/v521/v522/v526/v527/v528/v529 under the 5/day cap.
+- Decision: Continue holding v530 and the prepared B0v26+v29 dataset until v522 and/or v528 public scores arrive. No extra variants or micro-sweeps added.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-10 22:58 UTC - capped queue hold + v530 static preflight
+
+- Track: A/G monitoring plus held-package preflight. No public Kaggle dataset/kernel upload this run because daily slots remain capped and v519-v522/v526-v529 scores are still pending.
+- Status: Latest visible submissions remain v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. Current public best remains v517=0.930. Required status check: v510/v519/v520/v521/v522/v526/v527/v528/v529 are all COMPLETE/no failure.
+- Queue: Current monitor pid 31151, log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log, remains alive. It already skipped submitted v516/v517/v523/v524/v525/v518, verified v519 complete, hit expected daily cap with 2.3h remaining, and should wake shortly after UTC reset to submit v519 first.
+- Static preflight: Re-ran py_compile for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py and scripts/submit_pending_birdclef_queue.py. Added a local static assertion pass for v530: metadata id is yourslewis/bc26-v530-b0v26-v29-mixed-blend-005; metadata includes future dataset yourslewis/bc26-sed-b0v26-nfnet-v29-oofblend090010-v1; script has v517 taxon constants floor=0.30/alpha=0.50; mixed-audio helper def _sed_audio_config_key exists; per-entry audio_config is used; REAL_SED_MAX_MODELS=6 and REAL_SED_MIN_MODELS=3. All assertions passed.
+- Decision: Keep holding v530 until v522 and/or v528 public scores justify upload. No extra variants or micro-sweeps added.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-11 00:47 UTC - UTC reset focus submissions v519-v522/v526 landed
+
+- Track: A/G queue monitoring and guarded packaging hold. No new Kaggle dataset/kernel was uploaded; this run waited through UTC reset to verify the focus monitor actually submitted the next completed kernels.
+- Status before new scores: latest scored best remains v517=0.930. Latest visible scored rows before reset were v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. New reset submissions are PENDING score, not scored yet.
+- Queue result: Active monitor pid 31151/log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log woke after cap reset and submitted five focus kernels in order: v519 ref 52528303 at 00:04:31Z, v520 ref 52528318 at 00:05:03Z, v521 ref 52528328 at 00:05:36Z, v522 ref 52528352 at 00:06:07Z, and v526 ref 52528369 at 00:06:39Z. It then attempted v527, hit daily cap with 23h remaining, and is sleeping 82920s.
+- Pending-score set: v519 (B0 ep12-init pseudo-label student blend 0.15 + v508), v520/v521 (B0 v23 SED blend 0.05/0.10 + v508), v522 (B0 v26 all-files SED blend 0.05 + v508), v526 (v516 taxon gate + v23d NFNet blend 0.05). Remaining focus queue for next reset: v527, v528, v529.
+- Decision: Keep holding v530 and the prepared B0v26+v29 dataset until scores for v522 and/or v528 arrive. v522 is now submitted/pending; v528 is still queued behind v527 for the next reset. Do not add variants or upload v530 yet.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-11 01:50 UTC - reset scores arrived; B0 SED sidecars below v517
+
+- Track: A/G monitoring and Spec F decision gate after new SED artifacts scored. No new Kaggle dataset/kernel was uploaded.
+- Score update: Current public best remains v517=0.930. Newly scored reset submissions: v519=0.929 (B0 ep12-init pseudo-label student blend 0.15 + v508), v520=0.928 (B0 v23 SED blend 0.05 + v508), v521=0.928 (B0 v23 SED blend 0.10 + v508), v522=0.927 (B0 v26 all-files SED blend 0.05 + v508). v526 remains pending at this check. Previous scored rows: v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930.
+- Interpretation: v519 confirms the ep12-init pseudo-label student is safer than v518 but still below current best; do not add more B0 student slots. B0 SED public transfer is weaker than local OOF suggested: v23/v26 all failed to beat v517 and v22 dropped to 0.927. This weakens the held B0v26+v29 v530 case unless v528 independently shows v29 helps on top of v517.
+- Queue: Monitor pid 31151 remains alive and sleeping after attempting v527 and hitting cap. Remaining focus queue: v527, v528, v529. v528 is now the key evidence for the held B0v26+v29 dataset because v522 did not justify upload by itself.
+- Hold update: Tightened kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md: because v522 scored only 0.927, require v528 to tie/improve the 0.930 best before reconsidering upload/push of v530. If v528 scores below 0.930, keep v530 as infrastructure only.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
