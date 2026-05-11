@@ -70,6 +70,11 @@ class PilotConfig:
     class_balancing: str = "pos_weight_sqrt"
     num_workers: int = 0
     export_onnx: bool = True
+    oof_teacher_cache: str = ""
+    oof_teacher_pred_key: str = "teacher_pred"
+    oof_teacher_truth_key: str = "y_true"
+    oof_teacher_power: float = 1.0
+    oof_teacher_min_available: int = 1
     oof_negative_cache: str = ""
     aux_negative_weight: float = 0.0
     oof_negative_mask_key: str = "negative_mask"
@@ -324,6 +329,25 @@ def select_examples(data_root: Path, labels: list[str], cfg: PilotConfig) -> lis
         return selected[: cfg.max_files]
 
     train_audio = data_root / "train_audio"
+    if cfg.selection_strategy == "oof_teacher_cache":
+        if not cfg.oof_teacher_cache:
+            raise ValueError("selection_strategy=oof_teacher_cache requires oof_teacher_cache")
+        z = np.load(cfg.oof_teacher_cache, allow_pickle=True)
+        cache_files = [path_key(x) for x in z["files"].astype(str)]
+        available_count = z["available_count"].astype(int) if "available_count" in z.files else np.ones(len(cache_files), dtype=int)
+        examples = []
+        for key, count in zip(cache_files, available_count):
+            if int(count) < int(cfg.oof_teacher_min_available):
+                continue
+            label = key.split("/", 1)[0]
+            path = train_audio / key
+            if label in labels and path.exists():
+                examples.append((path, label))
+        if len(examples) < 5:
+            raise RuntimeError(f"Need at least 5 OOF-teacher cache-backed examples, found {len(examples)}")
+        rng.shuffle(examples)
+        return examples[: cfg.max_files]
+
     if cfg.selection_strategy == "oof_negative_cache":
         if not cfg.oof_negative_cache:
             raise ValueError("selection_strategy=oof_negative_cache requires oof_negative_cache")
@@ -384,6 +408,55 @@ def make_targets(meta: list[dict[str, Any]], labels: list[str]) -> torch.Tensor:
     for i, item in enumerate(meta):
         y[i, label_to_idx[item["label"]]] = 1.0
     return y
+
+
+def load_oof_teacher_targets(cfg: PilotConfig, meta: list[dict[str, Any]], labels: list[str]) -> tuple[torch.Tensor | None, torch.Tensor | None, dict[str, Any]]:
+    if not cfg.oof_teacher_cache:
+        return None, None, {"enabled": False}
+    z = np.load(cfg.oof_teacher_cache, allow_pickle=True)
+    cache_labels = z["labels"].astype(str)
+    if not np.array_equal(cache_labels, np.array(labels, dtype=str)):
+        raise RuntimeError("OOF teacher cache labels do not match training labels")
+    if cfg.oof_teacher_pred_key not in z.files:
+        raise RuntimeError(f"Teacher key {cfg.oof_teacher_pred_key!r} not in {cfg.oof_teacher_cache}")
+    if cfg.oof_teacher_truth_key not in z.files:
+        raise RuntimeError(f"Truth key {cfg.oof_teacher_truth_key!r} not in {cfg.oof_teacher_cache}")
+    pred_arr = z[cfg.oof_teacher_pred_key].astype(np.float32)
+    truth_arr = z[cfg.oof_teacher_truth_key].astype(np.float32)
+    available_count = z["available_count"].astype(int) if "available_count" in z.files else np.ones(len(pred_arr), dtype=int)
+    key_to_idx = {path_key(f): i for i, f in enumerate(z["files"].astype(str))}
+    targets = np.zeros((len(meta), len(labels)), dtype=np.float32)
+    truth = np.zeros((len(meta), len(labels)), dtype=np.float32)
+    counts: list[int] = []
+    covered_rows = 0
+    for i, item in enumerate(meta):
+        key = path_key(item["path"])
+        idx = key_to_idx.get(key)
+        if idx is None or int(available_count[idx]) < int(cfg.oof_teacher_min_available):
+            continue
+        targets[i] = pred_arr[idx]
+        truth[i] = truth_arr[idx]
+        counts.append(int(available_count[idx]))
+        covered_rows += 1
+    if covered_rows != len(meta):
+        raise RuntimeError(f"OOF teacher cache covered {covered_rows}/{len(meta)} selected rows")
+    targets = np.clip(targets, 1e-5, 1 - 1e-5) ** float(cfg.oof_teacher_power)
+    targets = np.clip(targets, 1e-5, 1 - 1e-5).astype(np.float32)
+    hist = {str(k): int(sum(1 for c in counts if c == k)) for k in sorted(set(counts))}
+    return torch.from_numpy(targets), torch.from_numpy(truth), {
+        "enabled": True,
+        "cache_path": cfg.oof_teacher_cache,
+        "pred_key": cfg.oof_teacher_pred_key,
+        "truth_key": cfg.oof_teacher_truth_key,
+        "teacher_power": float(cfg.oof_teacher_power),
+        "min_available": int(cfg.oof_teacher_min_available),
+        "covered_rows": int(covered_rows),
+        "coverage_fraction": float(covered_rows / max(len(meta), 1)),
+        "availability_histogram": hist,
+        "target_min": float(targets.min()),
+        "target_max": float(targets.max()),
+        "target_mean": float(targets.mean()),
+    }
 
 
 def load_oof_negative_mask(cfg: PilotConfig, meta: list[dict[str, Any]], labels: list[str]) -> tuple[torch.Tensor | None, dict[str, Any]]:
@@ -576,7 +649,10 @@ def main() -> int:
         xs.append(waveform_to_logmel(torch.from_numpy(wav.copy()), cfg, mel_fb))
         meta.append({"path": str(path), "label": label})
     x = torch.stack(xs)
-    y = make_targets(meta, labels)
+    y_truth = make_targets(meta, labels)
+    teacher_targets, teacher_truth, oof_teacher_summary = load_oof_teacher_targets(cfg, meta, labels)
+    y_train_target = teacher_targets if teacher_targets is not None else y_truth
+    y_eval = teacher_truth if teacher_truth is not None else y_truth
     aux_negative_mask, aux_negative_summary = load_oof_negative_mask(cfg, meta, labels)
     train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
 
@@ -592,7 +668,7 @@ def main() -> int:
     for epoch in range(cfg.epochs):
         model.train(); losses = []
         for idx in batch_iter(train_idx, cfg.batch_size, shuffle=True):
-            bx, by = x[idx].to(device), y[idx].to(device)
+            bx, by = x[idx].to(device), y_train_target[idx].to(device)
             bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
             logits, _ = model(bx)
             loss = compute_loss(logits, by, cfg, pos_weight)
@@ -602,7 +678,7 @@ def main() -> int:
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_probs, _ = predict(model, x, val_idx, cfg.batch_size, device)
-        val_loss = compute_loss(torch.logit(torch.from_numpy(val_probs).clamp(1e-6, 1 - 1e-6)).to(device), y[val_idx].to(device), cfg, pos_weight)
+        val_loss = compute_loss(torch.logit(torch.from_numpy(val_probs).clamp(1e-6, 1 - 1e-6)).to(device), y_train_target[val_idx].to(device), cfg, pos_weight)
         epoch_log = {"epoch": epoch + 1, "train_loss": float(np.mean(losses)), "val_loss": float(val_loss.detach().cpu())}
         epoch_logs.append(epoch_log)
         if cfg.restore_best_by_val_loss and (best_val_loss is None or float(epoch_log["val_loss"]) < float(best_val_loss)):
@@ -617,9 +693,19 @@ def main() -> int:
 
     val_probs, pred_time = predict(model, x, val_idx, cfg.batch_size, device)
     train_probs, _ = predict(model, x, train_idx, cfg.batch_size, device)
-    auc = auc_summary(y[val_idx].numpy(), val_probs)
+    auc = auc_summary(y_eval[val_idx].numpy(), val_probs)
     npz_path = out_dir / "holdout_predictions.npz"
-    np.savez_compressed(npz_path, val_indices=val_idx.numpy(), train_indices=train_idx.numpy(), y_val=y[val_idx].numpy(), pred_val=val_probs, pred_train=train_probs, labels=np.array(labels), files=np.array([m["path"] for m in meta]))
+    np.savez_compressed(
+        npz_path,
+        val_indices=val_idx.numpy(),
+        train_indices=train_idx.numpy(),
+        y_val=y_eval[val_idx].numpy(),
+        target_val=y_train_target[val_idx].numpy(),
+        pred_val=val_probs,
+        pred_train=train_probs,
+        labels=np.array(labels),
+        files=np.array([m["path"] for m in meta]),
+    )
     exports = export_model(model, x[:1], out_dir, cfg)
     metrics = {
         "experiment_id": cfg.experiment_id,
@@ -640,6 +726,7 @@ def main() -> int:
         "best_epoch": best_epoch,
         "best_val_loss": best_val_loss,
         "initial_checkpoint_summary": initial_checkpoint_summary,
+        "oof_teacher_summary": oof_teacher_summary,
         "aux_negative_summary": aux_negative_summary,
         "prediction_time_sec": pred_time,
         "holdout_predictions_path": str(npz_path),
