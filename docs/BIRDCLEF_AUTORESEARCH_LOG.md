@@ -1449,3 +1449,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue update: added v532 after v531 in focus priority and restarted monitor old pid 71865 -> new pid 3175, log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log`. It hit daily cap at v527 and sleeps until next UTC reset. Queue order: v527, v531, v532. Timeout-prone TorchScript v528/v529 remain held.
 - Branch/PR: `feature/focus-only-queue-guard`, PR #217. Do not merge without Wenhao approval.
 - Next step: recheck v532 completion/output log. At reset, submit v527, v531, then v532 if complete. If v532 completes and scores/ties without hidden timeout, use ONNX for any future real SED sidecar; if it times out or scores below v517, stop public SED packaging until a new low-correlation model signal exists.
+
+
+## 2026-05-11 06:45 UTC - v532 ONNX3 kernel verified complete
+
+- Status check: public best remains v517=0.930. Latest submissions unchanged: v526 completed with hidden runtime timeout/no score; v522=0.927, v521=0.928, v520=0.928, v519=0.929. No duplicate submissions added.
+- Kernel status: v510/v527/v531/v532 are all COMPLETE/no failure. v532 output contains `submission.csv`.
+- v532 output verification: Kaggle log found the ONNX v29 manifest under `yourslewis/bc26-sed-nfnet-v29-20s128-onnx-v1`, loaded 3/3 real SED ONNX models, inferred all 20 public dry-run files, applied real SED blend weight 0.05, applied taxon max gate floor0.30 alpha0.50, wrote submission shape `(240,235)`, and finished in 453.6s / 7.6 min. SED runtime was 276.1s for 20 files; this is much slower than the isolated ORT synthetic benchmark but still far faster/safer than the TorchScript hidden-timeout path and leaves ~82 min remaining on public run.
+- Queue: monitor pid 3175 is alive, log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log`, sleeping after daily-cap response before v527. Current reset order remains v527 -> v531 -> v532. Full TorchScript v528/v529 stay held.
+- Decision: no more public SED variants before v531/v532 scores. If v532 scores/ties and avoids hidden timeout, ONNX becomes the only allowed packaging path for future real SED sidecars; if v532 times out or scores below v517, stop public SED packaging until a new low-correlation model signal exists.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217. Do not merge without Wenhao approval.
