@@ -72,6 +72,10 @@ class StudentConfig:
     target_mode: str = "soft"  # soft, hard_conf, or soft_anchor
     positive_threshold: float = 0.90
     negative_threshold: float = 0.05
+    max_positive_per_row: int = 0
+    max_negative_per_row: int = 0
+    max_positive_per_class: int = 0
+    max_negative_per_class: int = 0
     soft_label_weight: float = 1.0
     anchor_positive_weight: float = 2.0
     anchor_negative_weight: float = 1.0
@@ -102,6 +106,45 @@ def load_config(path: Path | None) -> StudentConfig:
         if key in values:
             values[key] = value
     return StudentConfig(**values)
+
+
+def cap_confidence_mask(
+    mask: np.ndarray,
+    scores: np.ndarray,
+    *,
+    max_per_row: int = 0,
+    max_per_class: int = 0,
+    keep: str = "highest",
+) -> np.ndarray:
+    """Deterministically cap hard pseudo-label masks by confidence.
+
+    keep="highest" preserves the largest probabilities for positives;
+    keep="lowest" preserves the smallest probabilities for mined negatives.
+    Row caps run first, then class caps to prevent common classes from
+    dominating sparse hard-confidence training.
+    """
+    capped = mask.astype(bool).copy()
+    if max_per_row and max_per_row > 0:
+        for i in range(capped.shape[0]):
+            idx = np.flatnonzero(capped[i])
+            if len(idx) > max_per_row:
+                order = np.argsort(scores[i, idx], kind="mergesort")
+                if keep == "highest":
+                    order = order[::-1]
+                keep_idx = idx[order[:max_per_row]]
+                capped[i] = False
+                capped[i, keep_idx] = True
+    if max_per_class and max_per_class > 0:
+        for j in range(capped.shape[1]):
+            idx = np.flatnonzero(capped[:, j])
+            if len(idx) > max_per_class:
+                order = np.argsort(scores[idx, j], kind="mergesort")
+                if keep == "highest":
+                    order = order[::-1]
+                keep_rows = idx[order[:max_per_class]]
+                capped[:, j] = False
+                capped[keep_rows, j] = True
+    return capped
 
 
 def row_end_sec(row_id: str) -> int:
@@ -153,6 +196,20 @@ def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndar
     elif mode == "hard_conf":
         pos = probs >= float(cfg.positive_threshold)
         neg = probs <= float(cfg.negative_threshold)
+        pos = cap_confidence_mask(
+            pos,
+            probs,
+            max_per_row=cfg.max_positive_per_row,
+            max_per_class=cfg.max_positive_per_class,
+            keep="highest",
+        )
+        neg = cap_confidence_mask(
+            neg,
+            probs,
+            max_per_row=cfg.max_negative_per_row,
+            max_per_class=cfg.max_negative_per_class,
+            keep="lowest",
+        )
         mask = (pos | neg).astype(np.float32)
         targets = pos.astype(np.float32)
         if not np.any(pos):
@@ -165,6 +222,20 @@ def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndar
         mask = np.full_like(targets, float(cfg.soft_label_weight), dtype=np.float32)
         pos = probs >= float(cfg.positive_threshold)
         neg = probs <= float(cfg.negative_threshold)
+        pos = cap_confidence_mask(
+            pos,
+            probs,
+            max_per_row=cfg.max_positive_per_row,
+            max_per_class=cfg.max_positive_per_class,
+            keep="highest",
+        )
+        neg = cap_confidence_mask(
+            neg,
+            probs,
+            max_per_row=cfg.max_negative_per_row,
+            max_per_class=cfg.max_negative_per_class,
+            keep="lowest",
+        )
         targets[pos] = 1.0
         targets[neg] = 0.0
         mask[pos] = float(cfg.anchor_positive_weight)
