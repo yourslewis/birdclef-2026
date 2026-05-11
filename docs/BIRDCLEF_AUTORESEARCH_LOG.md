@@ -1374,3 +1374,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Static preflight: Re-ran py_compile for kaggle-kernels/v530-b0v26-v29-mixed-hold/script.py and scripts/submit_pending_birdclef_queue.py. Added a local static assertion pass for v530: metadata id is yourslewis/bc26-v530-b0v26-v29-mixed-blend-005; metadata includes future dataset yourslewis/bc26-sed-b0v26-nfnet-v29-oofblend090010-v1; script has v517 taxon constants floor=0.30/alpha=0.50; mixed-audio helper def _sed_audio_config_key exists; per-entry audio_config is used; REAL_SED_MAX_MODELS=6 and REAL_SED_MIN_MODELS=3. All assertions passed.
 - Decision: Keep holding v530 until v522 and/or v528 public scores justify upload. No extra variants or micro-sweeps added.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-11 00:47 UTC - UTC reset focus submissions v519-v522/v526 landed
+
+- Track: A/G queue monitoring and guarded packaging hold. No new Kaggle dataset/kernel was uploaded; this run waited through UTC reset to verify the focus monitor actually submitted the next completed kernels.
+- Status before new scores: latest scored best remains v517=0.930. Latest visible scored rows before reset were v518=0.927, v525=0.929, v524=0.929, v523=0.928, v517=0.930. New reset submissions are PENDING score, not scored yet.
+- Queue result: Active monitor pid 31151/log logs/submit_pending_birdclef_queue_20260510T214426Z_focus_v529_current.log woke after cap reset and submitted five focus kernels in order: v519 ref 52528303 at 00:04:31Z, v520 ref 52528318 at 00:05:03Z, v521 ref 52528328 at 00:05:36Z, v522 ref 52528352 at 00:06:07Z, and v526 ref 52528369 at 00:06:39Z. It then attempted v527, hit daily cap with 23h remaining, and is sleeping 82920s.
+- Pending-score set: v519 (B0 ep12-init pseudo-label student blend 0.15 + v508), v520/v521 (B0 v23 SED blend 0.05/0.10 + v508), v522 (B0 v26 all-files SED blend 0.05 + v508), v526 (v516 taxon gate + v23d NFNet blend 0.05). Remaining focus queue for next reset: v527, v528, v529.
+- Decision: Keep holding v530 and the prepared B0v26+v29 dataset until scores for v522 and/or v528 arrive. v522 is now submitted/pending; v528 is still queued behind v527 for the next reset. Do not add variants or upload v530 yet.
+- Branch/PR: feature/focus-only-queue-guard / PR #216.
