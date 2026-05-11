@@ -1,6 +1,6 @@
 {
   "experiment_id": "zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5",
-  "data_root": "/mnt/mac_data/workspace_don/kaggle_birdclef2026/data",
+  "data_root": "/home/yourslewis/birdclef-2026/data",
   "output_dir": "artifacts/sed_oof/zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5",
   "sample_rate": 32000,
   "duration_sec": 10.0,
