@@ -63,6 +63,10 @@ class PilotConfig:
     val_fraction: float = 0.2
     n_folds: int = 1
     fold_index: int = 0
+    split_strategy: str = "random"  # random | source_oof_fold
+    split_source_oof: str = ""
+    split_source_n_folds: int = 3
+    split_source_seed: int = 42
     loss_name: str = "focal_bce"
     focal_gamma: float = 1.5
     label_smoothing: float = 0.0
@@ -515,6 +519,57 @@ def split_indices(n_items: int, val_fraction: float, seed: int, n_folds: int = 1
     return order[n_val:], order[:n_val]
 
 
+def split_indices_from_source_oof(cfg: PilotConfig, meta: list[dict[str, Any]]) -> tuple[torch.Tensor, torch.Tensor, dict[str, Any]]:
+    if not cfg.split_source_oof:
+        raise ValueError("split_strategy=source_oof_fold requires split_source_oof")
+    source_path = Path(cfg.split_source_oof)
+    if not source_path.exists():
+        raise FileNotFoundError(source_path)
+    z = np.load(source_path, allow_pickle=True)
+    source_files = [path_key(x) for x in z["files"].astype(str)]
+    if "selected_indices" in z.files:
+        source_indices = z["selected_indices"].astype(int)
+        n_source = int(max(len(source_files), source_indices.max() + 1))
+    else:
+        source_indices = np.arange(len(source_files), dtype=int)
+        n_source = len(source_files)
+    order = torch.randperm(n_source, generator=torch.Generator().manual_seed(int(cfg.split_source_seed))).numpy()
+    source_index_to_fold: dict[int, int] = {}
+    for fold in range(int(cfg.split_source_n_folds)):
+        source_index_to_fold.update({int(idx): fold for idx in order[np.arange(n_source) % int(cfg.split_source_n_folds) == fold]})
+    key_to_fold = {key: source_index_to_fold[int(idx)] for key, idx in zip(source_files, source_indices) if int(idx) in source_index_to_fold}
+    val_rows: list[int] = []
+    missing: list[str] = []
+    fold_hist = {str(fold): 0 for fold in range(int(cfg.split_source_n_folds))}
+    for i, item in enumerate(meta):
+        key = path_key(item["path"])
+        fold = key_to_fold.get(key)
+        if fold is None:
+            missing.append(key)
+            continue
+        fold_hist[str(fold)] += 1
+        if fold == int(cfg.fold_index):
+            val_rows.append(i)
+    if missing:
+        raise RuntimeError(f"source_oof_fold missing {len(missing)} selected files; examples: {missing[:5]}")
+    val_idx = torch.tensor(val_rows, dtype=torch.long)
+    val_mask = torch.zeros(len(meta), dtype=torch.bool)
+    val_mask[val_idx] = True
+    train_idx = torch.arange(len(meta), dtype=torch.long)[~val_mask]
+    if len(val_idx) == 0 or len(train_idx) == 0:
+        raise ValueError(f"Invalid source OOF split: fold={cfg.fold_index} train={len(train_idx)} val={len(val_idx)}")
+    return train_idx, val_idx, {
+        "strategy": "source_oof_fold",
+        "source_oof": str(source_path),
+        "source_n_folds": int(cfg.split_source_n_folds),
+        "source_seed": int(cfg.split_source_seed),
+        "fold_index": int(cfg.fold_index),
+        "fold_histogram": fold_hist,
+        "n_train": int(len(train_idx)),
+        "n_val": int(len(val_idx)),
+    }
+
+
 def smooth_targets(target: torch.Tensor, eps: float) -> torch.Tensor:
     return target if eps <= 0 else target * (1.0 - eps) + 0.5 * eps
 
@@ -654,7 +709,20 @@ def main() -> int:
     y_train_target = teacher_targets if teacher_targets is not None else y_truth
     y_eval = teacher_truth if teacher_truth is not None else y_truth
     aux_negative_mask, aux_negative_summary = load_oof_negative_mask(cfg, meta, labels)
-    train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
+    if cfg.split_strategy == "source_oof_fold":
+        train_idx, val_idx, split_summary = split_indices_from_source_oof(cfg, meta)
+    elif cfg.split_strategy == "random":
+        train_idx, val_idx = split_indices(len(x), cfg.val_fraction, cfg.seed, cfg.n_folds, cfg.fold_index)
+        split_summary = {
+            "strategy": "random",
+            "n_folds": int(cfg.n_folds),
+            "fold_index": int(cfg.fold_index),
+            "seed": int(cfg.seed),
+            "n_train": int(len(train_idx)),
+            "n_val": int(len(val_idx)),
+        }
+    else:
+        raise ValueError(f"Unknown split_strategy={cfg.split_strategy!r}")
 
     model = build_model(cfg, len(labels))
     initial_checkpoint_summary = load_initial_checkpoint(model, cfg)
@@ -719,6 +787,7 @@ def main() -> int:
         "n_classes": len(labels),
         "n_folds": int(cfg.n_folds),
         "fold_index": int(cfg.fold_index),
+        "split_summary": split_summary,
         "input_shape": list(x.shape),
         "epochs": epoch_logs,
         "auc_summary": auc,

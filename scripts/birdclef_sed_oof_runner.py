@@ -35,6 +35,8 @@ def run_fold(repo_root: Path, train_script: Path, base_cfg: dict[str, Any], outp
     cfg = dict(base_cfg)
     cfg["n_folds"] = n_folds
     cfg["fold_index"] = fold
+    if cfg.get("initial_checkpoint_template"):
+        cfg["initial_checkpoint"] = str(cfg["initial_checkpoint_template"]).format(fold=fold)
     cfg["output_dir"] = str(output_root / f"fold{fold}")
     cfg_path = output_root / f"config_fold{fold}.json"
     cfg_path.parent.mkdir(parents=True, exist_ok=True)
