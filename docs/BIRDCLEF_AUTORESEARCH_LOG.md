@@ -1406,3 +1406,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Restarted monitor after replacing old pid 31151: new pid 71865, log `logs/submit_pending_birdclef_queue_20260511T024936Z_focus_v531_fast.log`. It hit daily cap at v527 and is sleeping until the next UTC reset.
 - Branch/PR: `feature/focus-only-queue-guard`, PR #217 (`https://github.com/yourslewis/birdclef-2026/pull/217`). Do not merge without Wenhao approval.
 - Next step: wait for v531 kernel completion; after reset submit v527 first, then v531 if complete. If v531 scores/ties and does not timeout, consider an ONNX/OpenVINO or one-model weight sweep; if it skips SED or scores below v517, stop public SED packaging and pivot to cleaner OOF-teacher pseudo-label/model-zoo training.
+
+
+## 2026-05-11 03:48 UTC - v531 complete; launch ConvNeXt model-zoo OOF while capped
+
+- Status check: Current public best remains v517=0.930. Latest submissions: v526 completed with hidden runtime timeout/no score; v522=0.927; v521=0.928; v520=0.928; v519=0.929. No duplicate submissions added.
+- Kernel status: v510 COMPLETE/no failure; v527 COMPLETE/no failure; v531 COMPLETE/no failure.
+- v531 output verification: Kaggle session output lists `submission.csv`. Log confirms v531 found the v29 manifest, loaded 1/3 TorchScript models, applied real SED blend weight 0.02, applied taxon max gate floor0.30 alpha0.50, wrote `submission.csv` shape `(240,235)`, and finished in 289.9s / 4.8 min on the public dry-run. This validates the runtime-safe path and real SED application on public sample.
+- Queue: monitor pid 71865 remains alive, log `logs/submit_pending_birdclef_queue_20260511T024936Z_focus_v531_fast.log`, sleeping on daily cap before v527. Current focus queue remains v527 then v531; timeout-prone v528/v529 stay held.
+- Track pivot while capped: Spec D model-zoo diversity baseline. Because submissions are capped and SED full bundles timeout, launched a durable ConvNeXt-Tiny 3-fold OOF run on trainer GPU0 to collect a low-correlation prediction artifact rather than waiting.
+- Launch: synced runner/training script/config to `trainer` and started pid `4538`, log `~/birdclef-2026/logs/sed_oof_v21_convnext_tiny_20260511T034518Z.log`, command `CUDA_VISIBLE_DEVICES=0 nohup ~/kaggle_envs/s6e3/bin/python scripts/birdclef_sed_oof_runner.py --base-config configs/birdclef/zoo_convnext_tiny_balanced_oof_v21_10s_160_100cls_lr1e4_ep5.json --output-root artifacts/sed_oof/zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5 --n-folds 3 --experiment-id zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5`. Initial monitor: process alive, fold 0 started, GPUs otherwise idle.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217 (`https://github.com/yourslewis/birdclef-2026/pull/217`). Do not merge without Wenhao approval.
+- Next step: monitor ConvNeXt OOF summary and v527/v531 submissions after UTC reset. If ConvNeXt produces competitive/low-correlation OOF, run a blend grid with v517/v508 teacher-cache predictions before any public packaging.
