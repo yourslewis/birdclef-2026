@@ -4,6 +4,25 @@ Status: draft v1
 Anchor: current stable public LB best = **0.927** from `v268`, `v367`, `v368`, and `v501`-`v504`  
 Problem: the current inference/post-processing family is saturated around 0.926-0.927. The next meaningful jump likely requires new model signal, not more single-parameter post-process sweeps.
 
+
+## 2026-05-11 Public Approach Reprioritization
+
+A new public/shared approach scan found a much stronger public frontier around **0.946 LB**, centered on public distilled SED + Perch/ProtoSSM rank blending.  Treat the older 0.927 plateau language in this document as stale.
+
+Read the addendum before choosing new work:
+
+- `docs/BIRDCLEF_PUBLIC_APPROACH_REEVAL_20260511.md`
+
+Updated priority order:
+
+1. Reproduce/port a robust public **0.946 Perch/ProtoSSM + distilled SED rank-blend** baseline as a controlled repo-owned Kaggle kernel.
+2. Use that reproduced 0.946 stack as the new teacher cache for pseudo-label/noisy-student training.
+3. Blend our internal v517/v537/v538 streams into the public946 anchor as minority streams, not the reverse.
+4. Evaluate CLAP/BirdNET/custom EffNet forks only after the core public946 baseline lands.
+5. Continue OOF-teacher B0 sidecars only as queued diagnostics unless they tie/improve or blend well with public946.
+
+---
+
 ## Executive Summary
 
 The next set of work should split into two lanes:
