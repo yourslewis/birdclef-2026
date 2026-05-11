@@ -1394,3 +1394,68 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue: Monitor pid 31151 remains alive and sleeping after attempting v527 and hitting cap. Remaining focus queue: v527, v528, v529. v528 is now the key evidence for the held B0v26+v29 dataset because v522 did not justify upload by itself.
 - Hold update: Tightened kaggle-kernels/v530-b0v26-v29-mixed-hold/HOLD_NOTES.md: because v522 scored only 0.927, require v528 to tie/improve the 0.930 best before reconsidering upload/push of v530. If v528 scores below 0.930, keep v530 as infrastructure only.
 - Branch/PR: feature/focus-only-queue-guard / PR #216.
+
+
+## 2026-05-11 02:50 UTC - v526 hidden timeout; add timeout-safe v531 v29 probe
+
+- Track: Spec A/G inference packaging failure diagnosis and runtime-safe follow-up. Current public best remains v517=0.930. Latest scored rows: v519=0.929, v520=0.928, v521=0.928, v522=0.927; v526 code submission completed without score because Kaggle reported hidden notebook runtime exceeded.
+- Failure diagnosis: v526 kernel itself was COMPLETE/no failure, but the competition code submission record for ref 52528369 has `errorDescription`: hidden submission notebook exceeded allowed runtime. This means the real NFNet SED path is operational but too slow for hidden code rerun at the existing 3-model / 0.05 blend settings. v527/v528/v529 kernels remain COMPLETE/no failure, but full SED variants are now timeout-risky.
+- Implemented v531 as a minimal A/G runtime probe based on v528/v517 axis: `kaggle-kernels/v531-v517-v29-fast1-blend002`. It keeps the v517 taxon gate (`floor=0.30`, `alpha=0.50`) and v29 20s/128 NFNet dataset, but changes `REAL_SED_BLEND_WEIGHT=0.02`, `REAL_SED_MAX_MODELS=1`, `REAL_SED_TIME_BUFFER_SEC=55*60`, and `REAL_SED_EST_SEC_PER_FILE_PER_MODEL=6.0`. If hidden file count/time budget is too large, it skips real SED and falls back to the safe v517 axis instead of timing out.
+- Pushed real Kaggle kernel `yourslewis/bc26-v531-v517-plus-v29-fast1-sed-blend-002`, version 1. Initial status after push: RUNNING/no failure.
+- Queue safety: Updated `scripts/submit_pending_birdclef_queue.py` so focus queue is now already-submitted v516/v517/v523/v524/v525/v518/v519/v520/v521/v522/v526, then v527, then v531. Removed timeout-prone v528/v529 from focus while `STOP_AFTER_FOCUS=1`, so the monitor will not burn future slots on full 3-model SED submissions unless explicitly re-enabled.
+- Restarted monitor after replacing old pid 31151: new pid 71865, log `logs/submit_pending_birdclef_queue_20260511T024936Z_focus_v531_fast.log`. It hit daily cap at v527 and is sleeping until the next UTC reset.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217 (`https://github.com/yourslewis/birdclef-2026/pull/217`). Do not merge without Wenhao approval.
+- Next step: wait for v531 kernel completion; after reset submit v527 first, then v531 if complete. If v531 scores/ties and does not timeout, consider an ONNX/OpenVINO or one-model weight sweep; if it skips SED or scores below v517, stop public SED packaging and pivot to cleaner OOF-teacher pseudo-label/model-zoo training.
+
+
+## 2026-05-11 03:48 UTC - v531 complete; launch ConvNeXt model-zoo OOF while capped
+
+- Status check: Current public best remains v517=0.930. Latest submissions: v526 completed with hidden runtime timeout/no score; v522=0.927; v521=0.928; v520=0.928; v519=0.929. No duplicate submissions added.
+- Kernel status: v510 COMPLETE/no failure; v527 COMPLETE/no failure; v531 COMPLETE/no failure.
+- v531 output verification: Kaggle session output lists `submission.csv`. Log confirms v531 found the v29 manifest, loaded 1/3 TorchScript models, applied real SED blend weight 0.02, applied taxon max gate floor0.30 alpha0.50, wrote `submission.csv` shape `(240,235)`, and finished in 289.9s / 4.8 min on the public dry-run. This validates the runtime-safe path and real SED application on public sample.
+- Queue: monitor pid 71865 remains alive, log `logs/submit_pending_birdclef_queue_20260511T024936Z_focus_v531_fast.log`, sleeping on daily cap before v527. Current focus queue remains v527 then v531; timeout-prone v528/v529 stay held.
+- Track pivot while capped: Spec D model-zoo diversity baseline. Because submissions are capped and SED full bundles timeout, launched a durable ConvNeXt-Tiny 3-fold OOF run on trainer GPU0 to collect a low-correlation prediction artifact rather than waiting.
+- Launch: synced runner/training script/config to `trainer` and started pid `4538`, log `~/birdclef-2026/logs/sed_oof_v21_convnext_tiny_20260511T034518Z.log`, command `CUDA_VISIBLE_DEVICES=0 nohup ~/kaggle_envs/s6e3/bin/python scripts/birdclef_sed_oof_runner.py --base-config configs/birdclef/zoo_convnext_tiny_balanced_oof_v21_10s_160_100cls_lr1e4_ep5.json --output-root artifacts/sed_oof/zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5 --n-folds 3 --experiment-id zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5`. Initial monitor: process alive, fold 0 started, GPUs otherwise idle.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217 (`https://github.com/yourslewis/birdclef-2026/pull/217`). Do not merge without Wenhao approval.
+- Next step: monitor ConvNeXt OOF summary and v527/v531 submissions after UTC reset. If ConvNeXt produces competitive/low-correlation OOF, run a blend grid with v517/v508 teacher-cache predictions before any public packaging.
+
+
+## 2026-05-11 03:50 UTC - ConvNeXt v21 data-root fix and fold0 result
+
+- Follow-up on Spec D ConvNeXt OOF launch: initial trainer job pid 4538 failed quickly because the config still pointed at stale SMB path `/mnt/mac_data/workspace_don/kaggle_birdclef2026/data/taxonomy.csv`; on trainer the valid data root is `/home/yourslewis/birdclef-2026/data`. This was a config/environment issue, not a model/training failure.
+- Fixed `configs/birdclef/zoo_convnext_tiny_balanced_oof_v21_10s_160_100cls_lr1e4_ep5.json` to use `/home/yourslewis/birdclef-2026/data`, synced it to trainer, removed the failed fold0 output, and relaunched durable retry pid `5006`, log `~/birdclef-2026/logs/sed_oof_v21_convnext_tiny_retry_20260511T034634Z.log`.
+- Early validation: fold0 completed successfully with macro AUC `0.605954` over 99 valid classes after 5 epochs (`train_loss=0.06477`, `val_loss=0.08419`); fold1 started and GPU0 was active (~2.3GB, high utilization). This is a real model-zoo OOF artifact in progress, not a public micro-sweep.
+- Next step: let pid 5006 finish folds 1-2 and aggregate `artifacts/sed_oof/zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5/oof_summary.json`; then compare with prior RegNet/NFNet/B0 OOF and only consider packaging/blending if correlation/diversity justifies it.
+
+
+## 2026-05-11 04:48 UTC - ConvNeXt OOF weak; scale B3 pseudo-label student
+
+- Status check: public best remains v517=0.930. Latest submissions unchanged: v526 completed with hidden runtime timeout/no score; v522=0.927, v521=0.928, v520=0.928, v519=0.929. v510/v527/v531 kernels are all COMPLETE/no failure. Queue monitor pid 71865 remains alive and sleeping on daily cap before v527, then v531.
+- ConvNeXt Spec D result: trainer retry pid 5006 finished all 3 OOF folds for `zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5`. Fold AUCs were 0.605954 / 0.609649 / 0.575837, but aggregated OOF macro AUC was only `0.537610` over 100 valid classes. Artifact: `artifacts/sed_oof/zoo-convnext-tiny-balanced-oof-v21-10s-160-100cls-lr1e4-ep5/oof_predictions.npz`. Interpretation: no-pseudo ConvNeXt is too weak; do not package or submit this lane.
+- Follow-up track: Spec B/D pseudo-label model-zoo scale from existing smoke. Created `configs/birdclef/pl_r2_b3_v508_soft_p100_5s_pretrained_lr1e4_ep20_bestval.json` by scaling the B3 smoke from 256 rows / 3 epochs to all 792 rows / 20 epochs while keeping 5s/160mel, ImageNet-pretrained EfficientNet-B3, LR 1e-4, soft v508 teacher targets, and best-val-AUC restore.
+- Launched on trainer GPU1, pid 4079, log `~/birdclef-2026/logs/pl_r2_b3_v508_soft_p100_5s_pretrained_lr1e4_ep20_bestval_20260511T044449Z.log`; completed in 81.491s. Result: best val AUC `0.983658`, final all-row macro AUC `0.981388` over 75 valid classes, teacher AUC `0.991149`, final teacher corr `0.972191`, TorchScript `41.995 MB`.
+- Blend recheck against teacher/student artifacts: `artifacts/blend_grids/student_teacher_blend_recheck_20260511.json`. B3 did not improve the teacher even at tiny weights; best B3 blend was weight 0.01 with delta `-0.00000167`. The only local positive remains B0 ep12 at weight 0.15 (`+0.000224`), already represented publicly by v519 which scored only 0.929. Interpretation: do not create a B3 public sidecar; current pseudo-student family is too teacher-correlated/weak for LB gain.
+- Next step: keep queue focused on v527 then v531. For training, pivot away from teacher-distilled students unless using a genuinely different teacher/source; candidate next work is OOF-teacher pseudo-label generation or an export/runtime optimization path, not another B0/B3/ConvNeXt sidecar.
+
+
+## 2026-05-11 05:55 UTC - ONNX export path for v29 SED and v532 kernel
+
+- Status check: public best remains v517=0.930. Latest submissions unchanged: v526 completed with hidden runtime timeout/no score; v522=0.927, v521=0.928, v520=0.928, v519=0.929. v510/v527/v531 are COMPLETE/no failure. Queue was still capped before v527.
+- Track: Spec A/G inference export/runtime optimization after v526 hidden timeout. Hypothesis: TorchScript NFNet v29 is too slow for hidden code rerun, but ONNX Runtime can make the full 3-fold v29 sidecar feasible.
+- Implemented reusable export smoke `scripts/birdclef_torchscript_onnx_smoke.py`. It loads a bundle manifest, selects one TorchScript model, traces a clip-logits-only wrapper for legacy ONNX export, checks the ONNX graph, and benchmarks PyTorch vs ONNX Runtime when available. Py_compile passed locally and on trainer.
+- Smoke result on trainer for v29 fold0: direct new dynamo exporter failed on TorchScript/NFNet (`Cannot call numel() on tensor with symbolic sizes/strides` / nested ScriptModule trace issue), but legacy export after tracing the clip-only wrapper succeeded. ONNX graph checked cleanly; max abs diff ~`1e-5`, cosine ~`1.0`. ONNX Runtime was ~0.14s per 4-window batch versus TorchScript ~0.14s per clip, about 4x faster for clip logits.
+- Exported all three v29 folds to ONNX clip-logit models and packaged `artifacts/sed_bundles/sed-nfnet-v29-20s128-broad181-onnx-v1.zip` (468.4 MB). Each ONNX is ~168.753 MB with ORT cosine ~1.0. Uploaded private Kaggle dataset `yourslewis/bc26-sed-nfnet-v29-20s128-onnx-v1` (`https://www.kaggle.com/datasets/yourslewis/bc26-sed-nfnet-v29-20s128-onnx-v1`).
+- Created/pushed real Kaggle kernel `yourslewis/bc26-v532-v517-plus-v29-onnx3-blend-005`, version 1. It copies the v517/v528 axis but uses the ONNX v29 dataset, `REAL_SED_BLEND_WEIGHT=0.05`, `REAL_SED_MAX_MODELS=3`, `REAL_SED_TIME_BUFFER_SEC=30*60`, `REAL_SED_EST_SEC_PER_FILE_PER_MODEL=1.00`, and SED ONNX inference via the existing Kaggle onnxruntime wheel. Push returned no invalid sources. Status after push/poll: RUNNING/no failure.
+- Queue update: added v532 after v531 in focus priority and restarted monitor old pid 71865 -> new pid 3175, log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log`. It hit daily cap at v527 and sleeps until next UTC reset. Queue order: v527, v531, v532. Timeout-prone TorchScript v528/v529 remain held.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217. Do not merge without Wenhao approval.
+- Next step: recheck v532 completion/output log. At reset, submit v527, v531, then v532 if complete. If v532 completes and scores/ties without hidden timeout, use ONNX for any future real SED sidecar; if it times out or scores below v517, stop public SED packaging until a new low-correlation model signal exists.
+
+
+## 2026-05-11 06:45 UTC - v532 ONNX3 kernel verified complete
+
+- Status check: public best remains v517=0.930. Latest submissions unchanged: v526 completed with hidden runtime timeout/no score; v522=0.927, v521=0.928, v520=0.928, v519=0.929. No duplicate submissions added.
+- Kernel status: v510/v527/v531/v532 are all COMPLETE/no failure. v532 output contains `submission.csv`.
+- v532 output verification: Kaggle log found the ONNX v29 manifest under `yourslewis/bc26-sed-nfnet-v29-20s128-onnx-v1`, loaded 3/3 real SED ONNX models, inferred all 20 public dry-run files, applied real SED blend weight 0.05, applied taxon max gate floor0.30 alpha0.50, wrote submission shape `(240,235)`, and finished in 453.6s / 7.6 min. SED runtime was 276.1s for 20 files; this is much slower than the isolated ORT synthetic benchmark but still far faster/safer than the TorchScript hidden-timeout path and leaves ~82 min remaining on public run.
+- Queue: monitor pid 3175 is alive, log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log`, sleeping after daily-cap response before v527. Current reset order remains v527 -> v531 -> v532. Full TorchScript v528/v529 stay held.
+- Decision: no more public SED variants before v531/v532 scores. If v532 scores/ties and avoids hidden timeout, ONNX becomes the only allowed packaging path for future real SED sidecars; if v532 times out or scores below v517, stop public SED packaging until a new low-correlation model signal exists.
+- Branch/PR: `feature/focus-only-queue-guard`, PR #217. Do not merge without Wenhao approval.
