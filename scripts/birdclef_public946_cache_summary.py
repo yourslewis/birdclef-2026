@@ -68,11 +68,22 @@ def topk_row_recall(score_mat: np.ndarray, true_mat: np.ndarray, k: int) -> floa
 
 def summarize_stream(df: pd.DataFrame, labels_wide: pd.DataFrame | None) -> dict[str, Any]:
     columns = [c for c in df.columns if c != "row_id"]
+    values = df[columns].to_numpy(np.float32) if columns else np.zeros((len(df), 0), dtype=np.float32)
     info: dict[str, Any] = {
         "shape": list(df.shape),
         "row_head": df["row_id"].head(3).tolist() if "row_id" in df.columns else [],
         "col_head": df.columns[:6].tolist(),
     }
+    if values.size:
+        info["prob_stats"] = {
+            "min": float(values.min()),
+            "max": float(values.max()),
+            "mean": float(values.mean()),
+            "p95": float(np.quantile(values, 0.95)),
+            "p99": float(np.quantile(values, 0.99)),
+        }
+        info["positive_counts"] = {str(t): int((values > t).sum()) for t in (0.9, 0.95, 0.98)}
+        info["positive_rows"] = {str(t): int(((values > t).any(axis=1)).sum()) for t in (0.9, 0.95, 0.98)}
     if labels_wide is None or "row_id" not in df.columns:
         return info
     merged = df.merge(labels_wide, on="row_id", suffixes=("_pred", "_true"))
@@ -98,6 +109,44 @@ def summarize_stream(df: pd.DataFrame, labels_wide: pd.DataFrame | None) -> dict
     return info
 
 
+
+def public946_rankblend(proto: pd.DataFrame, sed: pd.DataFrame) -> pd.DataFrame:
+    """Reconstruct the public replay train-row rank blend before dry-run sample alignment."""
+    cols = [c for c in proto.columns if c != "row_id"]
+    sed = sed.set_index("row_id").loc[proto["row_id"]].reset_index()
+    eps = 1e-5
+    p_proto = np.clip(proto[cols].to_numpy(np.float32), eps, 1.0 - eps)
+    p_sed = np.clip(sed[cols].to_numpy(np.float32), eps, 1.0 - eps)
+    rank_proto = pd.DataFrame(p_proto).rank(axis=0, pct=True).to_numpy(np.float32)
+    rank_sed = pd.DataFrame(p_sed).rank(axis=0, pct=True).to_numpy(np.float32)
+    pred = rank_proto * 0.60 + rank_sed * 0.40
+
+    fake_only = (p_proto > 0.50) & (p_sed < 0.05)
+    pred = np.where(fake_only, (1.0 - 0.08) * pred + 0.08 * rank_proto, pred)
+
+    row_ids = proto["row_id"].astype(str).to_numpy()
+    file_ids = np.array(["_".join(r.split("_")[:-1]) for r in row_ids])
+    offs = np.arange(-3, 4, dtype=np.float32)
+    proto_kernel = (1.0 + (offs / 1.20) ** 2 / 2.0) ** (-1.5)
+    proto_kernel = (proto_kernel / proto_kernel.sum()).astype(np.float32)
+    pa_ctx = p_proto.copy()
+    for fid in pd.unique(file_ids):
+        m = file_ids == fid
+        x = p_proto[m]
+        if len(x) > 1:
+            xp = np.pad(x, ((3, 3), (0, 0)), mode="edge")
+            pa_ctx[m] = sum(proto_kernel[i] * xp[i : i + len(x)] for i in range(7))
+    xctx = pd.DataFrame(pa_ctx).rank(axis=0, pct=True).to_numpy(np.float32)
+    proto_cont = (xctx > 0.88) & (rank_proto > 0.75) & (p_sed < 0.12) & (~fake_only)
+    pred = np.where(proto_cont, (1.0 - 0.15) * pred + 0.15 * np.maximum(rank_proto, xctx), pred)
+
+    sed_only = (rank_sed > 0.95) & (rank_proto < 0.80) & (~fake_only) & (~proto_cont)
+    pred = np.where(sed_only, (1.0 - 0.12) * pred + 0.12 * rank_sed, pred)
+
+    out = proto[["row_id"]].copy()
+    out[cols] = pred.astype(np.float32)
+    return out
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pred-dir", type=Path, required=True)
@@ -114,6 +163,9 @@ def main() -> None:
 
     if not streams:
         raise FileNotFoundError(f"No expected public946 CSVs found in {args.pred_dir}")
+
+    if "proto" in streams and "sed" in streams and len(streams["proto"]) == len(streams["sed"]):
+        streams["rankblend"] = public946_rankblend(streams["proto"], streams["sed"])
 
     # Use the first intermediate stream as canonical labels/row source.
     first_df = next(iter(streams.values()))
@@ -143,6 +195,22 @@ def main() -> None:
     npz_path = args.output_dir / "predictions.npz"
     np.savez_compressed(npz_path, **arrays)
     summary["output_npz"] = str(npz_path)
+
+    compatible: dict[str, str] = {}
+    for name in streams:
+        row_key = f"{name}_row_ids"
+        prob_key = f"{name}_probs"
+        if row_key in arrays and prob_key in arrays and len(arrays[row_key]) > 3:
+            compat_path = args.output_dir / f"teacher_{name}.npz"
+            np.savez_compressed(
+                compat_path,
+                row_ids=arrays[row_key],
+                labels=arrays["labels"],
+                probs=arrays[prob_key],
+            )
+            compatible[name] = str(compat_path)
+    summary["compatible_teacher_npz"] = compatible
+
     summary_path = args.output_dir / "summary.json"
     summary_path.write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
