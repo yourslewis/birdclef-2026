@@ -2,6 +2,7 @@
 
 Status: active planning spec  
 Owner branch: `feature/v539-public946-replay` / PR #223  
+Companion triage: `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md`  
 Current scored anchor: **v539 = 0.943 public LB**  
 Pending anchor candidates: **v541** complete/queued, **v542** complete/queued  
 Deprecated premise: the old 0.927 plateau is no longer the search target.
@@ -83,13 +84,15 @@ Public kernels inspected/found:
    - Submit only after v541/v542 scores.
 
 2. **Public946 + V5/CLAP** — best diversity bet.
-   - Use `needless090` fork as source.
+   - Use `needless090` fork as source; see companion diversity triage doc.
    - Required gate: log must show V5 sessions loaded and CLAP coverage; must not silently skip into plain 2-way public946.
+   - Attach/validate the extra `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe` sources before queueing.
    - Abort if projected hidden runtime exceeds safe budget.
 
 3. **Public946 + BirdNET/custom EffNet** — diversity with higher fragility.
-   - Use `raunakdey07` fork as source.
+   - Use `raunakdey07` fork as source; see companion diversity triage doc.
    - Required gate: BirdNET TFLite and custom EffNet source mount resolve; output rows align; wall time stays safe.
+   - Resolve exact BirdNET model and custom EffNet notebook/model source refs before queueing.
 
 4. **Public946 + internal 0.930 streams** — private robustness only.
    - Initial weights: public `0.98` + internal `0.02`, public `0.95` + internal `0.05`.
