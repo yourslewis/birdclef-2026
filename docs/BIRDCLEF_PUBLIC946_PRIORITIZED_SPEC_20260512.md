@@ -3,6 +3,7 @@
 Status: active planning spec  
 Owner branch: `feature/v539-public946-replay` / PR #223  
 Companion triage: `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md`  
+BirdNET fallback plan: `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md`  
 Current scored anchor: **v539 = 0.943 public LB**  
 Pending anchor candidates: **v541** complete/queued, **v542** complete/queued  
 Deprecated premise: the old 0.927 plateau is no longer the search target.
@@ -158,7 +159,7 @@ Run small smoke first, then scale only if the smoke passes.
 2. Do not add another submission candidate until v541/v542 scores unless a queued candidate fails or the monitor dies.
 3. Nina notebook mining is complete enough for now: Model_61/62 is effectively a 50/50-ish public rank-blend idea, not a new stream. Hold any `v543` until v541/v542 scores.
 4. Public946 NFNet/V2S smokes are complete; keep `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate.
-5. If v541/v542 both miss, choose between one clean public weight test and one source-clean BirdNET-only 3-way rank-blend candidate; V5/CLAP remains blocked until source refs are resolvable.
+5. If v541/v542 both miss, choose between one clean public weight test and one source-clean BirdNET-only 3-way rank-blend candidate; V5/CLAP remains blocked until source refs are resolvable. Use `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md` for the BirdNET port recipe if selected.
 6. Update this spec after v541 and v542 scores land.
 
 ---

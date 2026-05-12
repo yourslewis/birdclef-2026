@@ -1754,3 +1754,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - CSV sanity via pandas venv: `submission.csv` `(240,235)`, no NaNs, min `0.00375`, max `1.0`, mean `0.501526`; `submission_protossm.csv` `(240,235)`, no NaNs; `submission_sed.csv` `(240,235)`, no NaNs. Proto/SED dry-run corr `0.405286`; v542 final corr vs Proto `0.475426`, vs SED `0.236754`, confirming the final output is not a trivial copy of either stream.
 - v541 sanity retained: final dry-run aligned sample shape `(3,235)` and proto/SED full diagnostic files `(240,235)`, no NaNs. This is expected because v541 aligns public dry-run `submission.csv` to sample submission while v542 preserves full train rows for validation.
 - Updated prioritized spec checklist: both v541/v542 complete+verified; hold queue; if both miss, choose one clean public weight test vs source-clean BirdNET-only 3-way; V5/CLAP remains blocked until source refs resolve.
+
+## 2026-05-12 10:58 UTC - Cap hold; prepared BirdNET-only 3-way port plan
+
+- Status check: current scored best remains `v539 = 0.943`; latest visible submissions unchanged. v541/v542/v510/v538 kernels are COMPLETE/no failure. Monitor pid `95675` is alive and sleeping on daily cap after attempting v541; log still shows `Submission allowance (5)` and a 72120s sleep from 03:48 UTC. No duplicate submissions added.
+- Spec read: current addendum deprecates 0.927 plateau and says to hold new candidates until v541/v542 score unless a candidate fails.
+- Track: P0 hold + P2 preparation only; no Kaggle push/queue.
+- Prepared `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md` as the next source-clean diversity fallback if v541/v542 miss and V5/CLAP remains blocked.
+  - Base: fork v542 into a later `v543-public946-birdnet3` candidate only after scores land.
+  - Metadata addition: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3` alongside Perch v2.
+  - Insert BirdNET inference after `submission_sed.csv`, before final rank blend.
+  - Use central 3s of each 5s/48k BirdNET window; write `submission_birdnet.csv`; fail loudly if model/labels missing in final candidate.
+  - First blend recommendation: conservative rank blend `52% Proto / 38% SED / 10% BirdNET`, keeping v542 post-blend gates unchanged. Rationale: BirdNET is true acoustic diversity but label mapping is sparse/brittle; public reference used 15% BirdNET with custom EffNet, so 10% is safer for first source-clean slot.
+  - Validation gates: BirdNET mapped class count, TFLite interpreter init, row alignment across proto/sed/birdnet/final, `(240,235)` dry-run no NaNs, explicit 3-way log, runtime safe.
+- Linked the BirdNET plan from the prioritized spec. This is preparation only; no candidate will be queued before v541/v542 scores.
