@@ -26,6 +26,7 @@ Deprecated premise: the old 0.927 plateau is no longer the search target.
    - Purpose: restore public 0.946 postprocess paths omitted by v539.
 2. `v542` — Afr1ste updated public946 V8 replay.
    - Status: COMPLETE and verified; queued after v541.
+   - Verification refresh 2026-05-12 09:55 UTC: output files present; SED folds loaded; standard 60/40 rank blend executed; sonotype mirroring applied to 10 columns; rare thresholding applied to 44 species; full dry-run `submission.csv` shape `(240,235)` with no NaNs; runtime about 528s.
    - Purpose: controlled port of `afr1ste/birdclef-2026-0-946-updated-perch-sed`, which documents 0.946 V8 and 50/50 rank-blend ablations.
 3. `v538` — old OOF-teacher B0 sidecar diagnostic.
    - Keep queued only after the public946 candidates; do not spend fresh work here unless it unexpectedly helps.
@@ -151,17 +152,14 @@ Run small smoke first, then scale only if the smoke passes.
 
 ## 2. Concrete next-run checklist
 
-1. Poll `v542` until COMPLETE/ERROR.
-   - If COMPLETE, verify output files/log:
-     - SED folds loaded.
-     - rank blend executed.
-     - sonotype/rare paths executed.
-     - output row/column shape sane.
-   - Keep queue order: `v541 -> v542 -> v538`.
-2. Do not add another submission candidate until v541/v542 scores unless v542 fails.
+1. Keep queue order: `v541 -> v542 -> v538`.
+   - `v541` and `v542` are both COMPLETE/no failure and verified.
+   - Monitor pid `95675` is alive and sleeping on the daily cap after attempting `v541`.
+2. Do not add another submission candidate until v541/v542 scores unless a queued candidate fails or the monitor dies.
 3. Nina notebook mining is complete enough for now: Model_61/62 is effectively a 50/50-ish public rank-blend idea, not a new stream. Hold any `v543` until v541/v542 scores.
 4. Public946 NFNet/V2S smokes are complete; keep `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate.
-5. Update this spec after v541 and v542 scores land.
+5. If v541/v542 both miss, choose between one clean public weight test and one source-clean BirdNET-only 3-way rank-blend candidate; V5/CLAP remains blocked until source refs are resolvable.
+6. Update this spec after v541 and v542 scores land.
 
 ---
 

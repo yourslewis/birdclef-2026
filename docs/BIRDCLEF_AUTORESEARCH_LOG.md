@@ -1742,3 +1742,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - Raunak 4-way embedded JSON includes BirdNET model source and a custom EffNet notebook-output `kernelVersion` source `317846744`, but `GetKernel` for `raunakdey07/offline-training-efficientnet-b0-focal-recording` returns 403. Full EffNet 4-way remains blocked.
   - Found `claudedevore/birdclef-2026-r0946-birdnet-3way-submit` as a safer public reference: metadata includes BirdNET + normal public946 sources and skips unavailable EffNet. Saved ignored local audit artifact under `artifacts/public_kernels_20260511/birdclef-2026-r0946-birdnet-3way-submit.*`. Caveat: fetched snapshot has repeated EffNet-skip cells and no clean final blend cell in extracted source, so a repo port should extract only the BirdNET inference block and write our own explicit 3-way rank blend.
 - Updated `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md` and prioritized spec. New source-clean fallback after v541/v542: if V5/CLAP remains blocked, prefer a minimal BirdNET-only 3-way candidate over the 4-way EffNet path.
+
+## 2026-05-12 09:58 UTC - Queue hold + v542 output revalidation
+
+- Status check: current scored best remains `v539 = 0.943`. Latest visible submissions are unchanged from UTC cap: v539 scored 0.943; v527/v531/v537 scored 0.930; v532 timed out. v541/v542/v510/v538 kernels are all COMPLETE/no failure.
+- Queue: monitor pid `95675` alive. Latest log `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log` shows v541 submit attempt hit daily allowance with ~20h remaining; no duplicate submissions added.
+- Track: P0 queue/verification hold; no new candidate because spec says not to add submissions before v541/v542 scores.
+- v542 revalidation:
+  - output files present under `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/`: `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_meta.parquet`, `session_output_response.txt`.
+  - log confirms ONNX Runtime install, ONNX Perch, SED folds loaded, SED processing complete, standard 2-way 60/40 rank blend, sonotype mirroring on 10 columns, adaptive rare thresholding on 44 species, full train-row dry-run output, and total runtime about 528s.
+  - CSV sanity via pandas venv: `submission.csv` `(240,235)`, no NaNs, min `0.00375`, max `1.0`, mean `0.501526`; `submission_protossm.csv` `(240,235)`, no NaNs; `submission_sed.csv` `(240,235)`, no NaNs. Proto/SED dry-run corr `0.405286`; v542 final corr vs Proto `0.475426`, vs SED `0.236754`, confirming the final output is not a trivial copy of either stream.
+- v541 sanity retained: final dry-run aligned sample shape `(3,235)` and proto/SED full diagnostic files `(240,235)`, no NaNs. This is expected because v541 aligns public dry-run `submission.csv` to sample submission while v542 preserves full train rows for validation.
+- Updated prioritized spec checklist: both v541/v542 complete+verified; hold queue; if both miss, choose one clean public weight test vs source-clean BirdNET-only 3-way; V5/CLAP remains blocked until source refs resolve.
