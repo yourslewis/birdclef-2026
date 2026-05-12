@@ -1768,3 +1768,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - First blend recommendation: conservative rank blend `52% Proto / 38% SED / 10% BirdNET`, keeping v542 post-blend gates unchanged. Rationale: BirdNET is true acoustic diversity but label mapping is sparse/brittle; public reference used 15% BirdNET with custom EffNet, so 10% is safer for first source-clean slot.
   - Validation gates: BirdNET mapped class count, TFLite interpreter init, row alignment across proto/sed/birdnet/final, `(240,235)` dry-run no NaNs, explicit 3-way log, runtime safe.
 - Linked the BirdNET plan from the prioritized spec. This is preparation only; no candidate will be queued before v541/v542 scores.
+
+## 2026-05-12 11:50 UTC - Queue hold recheck; monitor ETA validated
+
+- Status check: public LB best remains `v539 = 0.943`; no new scored rows since the 2026-05-12 UTC cap set. Latest visible: v539 0.943, v527/v531/v537 0.930, v532 timeout, v526 timeout, v522 0.927, v521 0.928.
+- Kernel status: v541, v542, v510, and v538 are all COMPLETE/no failure.
+- Queue: monitor pid `95675` remains alive (`STAT SN`, elapsed ~7h58m). Latest log is still `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log`; it skipped already-submitted rows through v539, attempted v541, hit daily cap, and slept `72120s`.
+- ETA check: log mtime/sleep imply wake around `2026-05-12T23:50:02Z`, roughly 10 minutes before UTC reset. This should let it retry v541 promptly without restart. No action needed and no duplicate submission added.
+- Decision: continue strict hold. Do not push/queue BirdNET3 or public-weight v543 until v541/v542 scores land; BirdNET3 plan remains prepared only.
