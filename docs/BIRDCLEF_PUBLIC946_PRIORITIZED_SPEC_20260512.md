@@ -83,16 +83,17 @@ Public kernels inspected/found:
    - Rank-space blend or direct average only if outputs differ materially.
    - Submit only after v541/v542 scores.
 
-2. **Public946 + V5/CLAP** — best diversity bet.
+2. **Public946 + V5/CLAP** — best diversity if sources are resolvable.
    - Use `needless090` fork as source; see companion diversity triage doc.
    - Required gate: log must show V5 sessions loaded and CLAP coverage; must not silently skip into plain 2-way public946.
-   - Attach/validate the extra `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe` sources before queueing.
+   - Current audit: the extra V5/CLAP sources show as blank dataset refs in `GetKernel`; likely numeric datasetVersion IDs are visible in notebook JSON, but Bearer dataset lookup for likely slugs returns 403. Do not queue until source refs are resolved or recreated.
    - Abort if projected hidden runtime exceeds safe budget.
 
-3. **Public946 + BirdNET/custom EffNet** — diversity with higher fragility.
-   - Use `raunakdey07` fork as source; see companion diversity triage doc.
-   - Required gate: BirdNET TFLite and custom EffNet source mount resolve; output rows align; wall time stays safe.
-   - Resolve exact BirdNET model and custom EffNet notebook/model source refs before queueing.
+3. **Public946 + BirdNET/custom EffNet** — BirdNET-only path now cleaner than full 4-way.
+   - Use `raunakdey07` fork for the 4-way idea and `claudedevore/birdclef-2026-r0946-birdnet-3way-submit` for a cleaner BirdNET-only reference; see companion diversity triage doc.
+   - BirdNET source is resolved: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`.
+   - Custom EffNet source remains blocked by 403 notebook-output lookup; do not require it for the first source-clean BirdNET candidate.
+   - Required gate: BirdNET TFLite and label mapping resolve; `submission_birdnet.csv` aligns; explicit 3-way rank blend is written; wall time stays safe.
 
 4. **Public946 + internal 0.930 streams** — private robustness only.
    - Initial weights: public `0.98` + internal `0.02`, public `0.95` + internal `0.05`.

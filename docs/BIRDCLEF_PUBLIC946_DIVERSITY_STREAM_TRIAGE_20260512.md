@@ -81,9 +81,24 @@ If CLAP is missing, it falls back to about:
 - SED `0.40`
 - V5 `0.15`
 
+### Source availability audit — 2026-05-12 08:55 UTC
+
+Kaggle kernel metadata for `needless090/birdclef-2026-perch-sed-lb-0-946-clap` exposes the extra inputs only as blank dataset refs via `GetKernel`:
+
+- dataset refs: `""`, `""`, `tuckerarrants/bc2026-distilled-sed-public`, `tuckerarrants/perch-v2-no-dft-onnx`, `rishikeshjani/perch-onnx-for-birdclef-2026`
+- model refs: `google/bird-vocalization-classifier/TensorFlow2/perch_v2_cpu/1`
+- kernel refs: `ashok205/tf-wheels`
+
+The embedded notebook JSON has numeric source IDs for the blank extras:
+
+- datasetVersion `sourceId=16013757`, `datasetId=10267502`, `databundleVersionId=16978012`
+- datasetVersion `sourceId=16003884`, `datasetId=10025194`, `databundleVersionId=16967278`
+
+Attempts to resolve likely slugs `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe` with Bearer Dataset API returned `403 Forbidden`; public dataset search returned no matching rows. Interpretation: the code path is visible, but the extra V5/CLAP inputs are not currently attachable by clean public slug from our account. A repo-owned port should not be queued until source refs are resolved or replaced by our own equivalent datasets.
+
 ### Risks
 
-- The downloaded metadata includes blank dataset sources for the extra V5/CLAP datasets. A repo-owned port must explicitly attach the actual datasets; otherwise the code silently skips into plain public946/V5-missing fallback.
+- The extra V5/CLAP datasets are not currently attachable by clean public slug; otherwise the code silently skips into plain public946/V5-missing fallback.
 - CLAP may only cover part of hidden test due dynamic abort; code saves `clap_filemask.npy` and applies CLAP only for covered files.
 - Hidden test runtime risk is real. The CLAP budget is 45 minutes on top of public946 and V5.
 
@@ -106,10 +121,12 @@ High after `v541/v542` score if both do not settle the 0.946 anchor. This is the
 
 ---
 
-## Candidate B — BirdNET / custom EffNet public fork
+## Candidate B — BirdNET / custom EffNet public forks
 
-Source: `raunakdey07/birdclef-2026-birdnet-4-way-rank-blend`  
-Local source: `artifacts/public_kernels_20260511/birdclef-2026-birdnet-4-way-rank-blend.py`
+Primary source: `raunakdey07/birdclef-2026-birdnet-4-way-rank-blend`  
+Safer reproducible source: `claudedevore/birdclef-2026-r0946-birdnet-3way-submit`  
+Local source: `artifacts/public_kernels_20260511/birdclef-2026-birdnet-4-way-rank-blend.py`  
+Local audit source: `artifacts/public_kernels_20260511/birdclef-2026-r0946-birdnet-3way-submit.py` (ignored artifact)
 
 ### What it adds
 
@@ -138,27 +155,55 @@ If either extra stream is missing, the fork falls back to standard:
 - Proto rank: `0.60`
 - SED rank: `0.40`
 
+### Source availability audit — 2026-05-12 09:05 UTC
+
+BirdNET itself is now resolved as an attachable Kaggle model source:
+
+- `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`
+- model API confirms version `3`, instance `birdnet_global_6k_v2.4_model_fp32-1`, framework `MODEL_FRAMEWORK_TF_LITE`, about `51.99 MB` uncompressed.
+- Expected model path matches code:
+  `/kaggle/input/models/shadiakiki1/birdnet-analyzer/tflite/birdnet_global_6k_v2.4_model_fp32-1/3/BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite`
+
+The custom EffNet branch is not cleanly reproducible yet:
+
+- Raunak 4-way notebook embedded JSON includes kernelVersion source `317846744`, corresponding to the referenced notebook-output path.
+- `GetKernel` for `raunakdey07/offline-training-efficientnet-b0-focal-recording` returned `403 Forbidden`.
+- Public kernel search finds related forks but not a clean attachable source ref for the EfficientNet ONNX.
+
+A useful public fork exists:
+
+- `claudedevore/birdclef-2026-r0946-birdnet-3way-submit`
+- metadata includes BirdNET model source plus the usual public946 inputs.
+- it explicitly skips the unavailable custom EfficientNet branch and runs a reproducible Proto + SED + BirdNET path.
+- caveat: the fetched notebook snapshot appears to contain repeated “EffNet skipped” cells and did not expose a clean final blend cell in the extracted source, so do not port blindly; extract only the BirdNET inference block and write our own final blend.
+
 ### Risks
 
-- The public metadata inspected locally does **not** list the BirdNET model source or custom EfficientNet notebook source, despite the code referencing `/kaggle/input/models/...` and `/kaggle/input/notebooks/...` paths. A repo-owned port must resolve exact attachable source refs first.
 - BirdNET label mapping into the 234 BirdCLEF target labels may be brittle; we need log confirmation and row/column checks.
-- Runtime may be heavier than V5-only, because it runs public946 + BirdNET TFLite + custom EffNet ONNX.
+- BirdNET alone is attachable, but custom EffNet is blocked by a 403 notebook-output source.
+- Runtime is probably safer than CLAP: the ClaudeDevore snapshot shows BirdNET inference around 17 seconds on dry-run public execution after the main public946 branches, but hidden runtime still needs validation.
+- Do not import the ClaudeDevore notebook wholesale; build a minimal repo-owned BirdNET block and explicit 3-way rank blend.
 
 ### Required validation before queueing
 
-Do not queue a BirdNET/EffNet candidate unless dry-run confirms:
+For a BirdNET-only 3-way candidate, dry-run must confirm:
 
 - BirdNET TFLite source exists and interpreter initializes.
 - BirdNET label file is found.
-- `submission_birdnet.csv` is written and aligned.
+- mapping count from BirdNET scientific names into 234 targets is printed.
+- `submission_birdnet.csv` is written and row-aligned with `submission_protossm.csv`.
+- final blend uses explicit 3-way weights, not fallback 2-way.
+- wall time is comfortably under CPU budget.
+
+For a full BirdNET/EffNet 4-way candidate, additionally require:
+
 - custom EffNet ONNX source exists and loads.
 - `submission_effnet.csv` is written and aligned.
 - final blend uses 4-way weights, not fallback 2-way.
-- wall time is comfortably under CPU budget.
 
 ### Priority
 
-Medium. It is a real diversity candidate, but source attachment and runtime are riskier than V5/CLAP.
+Medium-high for **BirdNET-only 3-way** if v541/v542 do not settle the anchor and V5/CLAP remains source-blocked. Medium/low for full BirdNET+EffNet 4-way until the custom EffNet output source is resolvable.
 
 ---
 
@@ -184,9 +229,13 @@ Interpretation: the clean extractable Nina idea is not a distinct model stream; 
 
 1. If either `v541` or `v542` scores `>=0.946`:
    - Make it the canonical public946 anchor.
-   - Next submit should be a genuinely distinct diversity stream only if validation is clean; prefer V5/CLAP over BirdNET.
+   - Next submit should be a genuinely distinct diversity stream only if validation is clean.
 2. If both land around `0.943`:
-   - Consider exactly one `v543` simple weight test (`50/50` or `40/60`) **or** a V5-only/CLAP-clean port if source mounts validate.
-3. If either public candidate underperforms v539:
+   - Consider exactly one `v543` simple weight test (`50/50` or `40/60`) **or** a diversity stream.
+3. Diversity stream ordering after this source audit:
+   - V5/CLAP only if hidden dataset refs are resolved or recreated.
+   - Otherwise prefer a minimal BirdNET-only 3-way rank-blend candidate using the resolved `shadiakiki1/birdnet-analyzer/TfLite/.../3` model source.
+   - Defer custom EffNet 4-way until the 403 notebook-output source is resolved.
+4. If either public candidate underperforms v539:
    - Keep v539 as anchor.
-   - Stop public postprocess forks and prioritize V5/CLAP source validation or private-robustness student sidecar.
+   - Stop public postprocess forks and prioritize source-clean BirdNET or private-robustness student sidecar.
