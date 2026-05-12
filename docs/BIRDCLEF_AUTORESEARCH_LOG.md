@@ -1776,3 +1776,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue: monitor pid `95675` remains alive (`STAT SN`, elapsed ~7h58m). Latest log is still `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log`; it skipped already-submitted rows through v539, attempted v541, hit daily cap, and slept `72120s`.
 - ETA check: log mtime/sleep imply wake around `2026-05-12T23:50:02Z`, roughly 10 minutes before UTC reset. This should let it retry v541 promptly without restart. No action needed and no duplicate submission added.
 - Decision: continue strict hold. Do not push/queue BirdNET3 or public-weight v543 until v541/v542 scores land; BirdNET3 plan remains prepared only.
+
+## 2026-05-12 12:55 UTC - Queue hold; v510 output reverified via Kaggle API
+
+- Status check: public LB best remains `v539 = 0.943`; no new scored submissions since the 2026-05-12 UTC cap. Latest visible remains v539 0.943; v527/v531/v537 0.930; v532 and v526 timed out; v522 0.927; v521 0.928.
+- Kernel status: v541, v542, v510, and v538 are all COMPLETE/no failure.
+- Queue: monitor pid `95675` alive and still sleeping on the daily-cap backoff before v541; latest log remains `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log` with cap sleep `72120s`. No restart and no duplicate submissions.
+- v510 recheck (requested legacy A+G diagnostic): `ApiListKernelSessionOutput` for `yourslewis/bc26-v510-real-sed-bundle-blend-005` confirms `submission.csv` exists. Log confirms real SED bundle path was active: manifest found at `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1`, loaded `6/6` TorchScript models, real SED runtime `214.4s`, applied blend weight `0.05`, saved `submission.csv (240,235)`, wall time `370.6s`, and v510 already scored a safe 0.927 tie. No v510 fix needed.
+- Decision: strict hold continues. Do not push/queue BirdNET3 or public-weight v543 before v541/v542 scores land.
