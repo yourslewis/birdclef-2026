@@ -1809,3 +1809,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue script validation: `python3 -m py_compile scripts/submit_pending_birdclef_queue.py` passed. Relevant pending entries are ordered `v541 -> v542 -> ... -> v538`, with focus priority `... v539, v541, v542, v527, v531, v532, v537, v538`.
 - Duplicate guard: Bearer submission list with page size 200 shows zero submitted descriptions for v541/v542/v538, so the monitor has not submitted them yet and adding another monitor would risk duplication. No restart performed.
 - Decision: strict hold continues. Next real action is monitor retry near UTC reset; do not queue BirdNET3/public-weight v543 before v541/v542 scores.
+
+## 2026-05-12 PR #223 reviewability refresh
+
+- Docs-only metadata refresh after conflict resolution so GitHub branch protection sees a reviewable latest push from the PR author account, allowing the separate approver account to approve the latest commit.
