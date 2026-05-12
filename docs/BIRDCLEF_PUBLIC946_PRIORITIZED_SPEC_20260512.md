@@ -57,17 +57,17 @@ Public kernels inspected/found:
 | Ref | Priority | Reason |
 |---|---:|---|
 | `afr1ste/birdclef-2026-0-946-updated-perch-sed` | DONE as v542 | Fresh updated 0.946 Perch+SED V8 source; close to v541 but preserves full train-row dry-run output and documents ablations. |
-| `nina2025/birdclef-2026-ensemble-of-solutions-3` | High, inspect-only next | Shows 0.946 via direct ensemble of Model_61/62 and includes many public model blocks. Mine weights/ideas; avoid porting the entire kitchen-sink notebook unless sources/runtime are clean. |
+| `nina2025/birdclef-2026-ensemble-of-solutions-3` | Inspected; hold until v541/v542 score | Shows 0.946 via direct ensemble of Model_61/62. Offline reconstruction suggests the clean Model_61/62 idea is essentially a 50/50-ish public Proto/SED rank blend, not a new model stream. Avoid porting the kitchen-sink notebook unless v541/v542 miss and we need one clean v543 weight test. |
 | `needless090/birdclef-2026-perch-sed-lb-0-946-clap` | Medium-high | Adds V5 and optional CLAP streams; true acoustic diversity but runtime/coverage risk. |
 | `raunakdey07/birdclef-2026-birdnet-4-way-rank-blend` | Medium | Adds BirdNET + custom EffNet streams; potentially diverse but more model/data-source brittleness. |
 | `mtoshidesu/testbirdclef-2026-ensemble-of-solutions-3` | Low/observe | Fork of Nina; only useful if it exposes a cleaner variant. |
 
-**Nina mining plan:**
+**Nina mining result:**
 
-1. Extract only the small, testable idea first: Model_61/Model_62 use two 0.946 variants with xSED weights around `0.54/0.46` and `0.46/0.54`, then direct-blend them.
-2. Check whether this reduces to approximately a 50/50 public rank blend. Afr1ste notes 50/50 tied 0.946, while 70/30 and 80/20 fell to 0.944/0.942.
-3. If v541/v542 do not reach 0.946, package one clean `v543` that tests the best Nina/Afr1ste weight insight without importing unrelated models.
-4. Only port the full Nina ensemble if it contains a genuinely new high-signal stream and can run under the code-competition CPU budget.
+1. Extracted the small testable idea: Model_61/Model_62 use two 0.946 variants with xSED weights around `0.54/0.46` and `0.46/0.54`, then direct-blend them.
+2. Offline reconstruction with `scripts/birdclef_public946_weight_grid.py` on v542 dry-run rows shows the Model_61/62 direct proxy behaves almost like a 50/50 Proto/SED rank blend (`corr=0.993` vs v542 60/40) rather than a genuinely distinct stream.
+3. On dry-run labels, SED-heavy weights look best (`proto0.40/sed0.60` AUC `0.994484`; 50/50/Nina proxy around `0.99362`; v542 60/40 AUC `0.992525`), but this likely reflects train-label leakage because public ablations say 50/50 tied 0.946 while 70/30 and 80/20 were lower.
+4. If v541/v542 do not reach 0.946, package at most one clean `v543` weight test (`50/50` or SED-heavy `40/60`) without importing unrelated Nina model blocks. Do not port the full Nina notebook unless it contains a genuinely new high-signal stream and can run under the code-competition CPU budget.
 
 ---
 
@@ -155,10 +155,8 @@ Run small smoke first, then scale only if the smoke passes.
      - output row/column shape sane.
    - Keep queue order: `v541 -> v542 -> v538`.
 2. Do not add another submission candidate until v541/v542 scores unless v542 fails.
-3. Inspect Nina notebook narrowly:
-   - extract Model_61/62 definitions and final direct/rank ensemble math.
-   - decide if there is a clean `v543` or if it is redundant with v541/v542.
-4. Start a public946 NFNet or EfficientNetV2-S smoke as a background GPU job only after confirming no urgent Kaggle failure needs attention.
+3. Nina notebook mining is complete enough for now: Model_61/62 is effectively a 50/50-ish public rank-blend idea, not a new stream. Hold any `v543` until v541/v542 scores.
+4. Public946 NFNet/V2S smokes are complete; keep `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate.
 5. Update this spec after v541 and v542 scores land.
 
 ---

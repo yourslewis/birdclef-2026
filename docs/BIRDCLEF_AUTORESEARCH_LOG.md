@@ -1704,3 +1704,19 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - rankblend->NFNet 5s power0.85: best val `0.844561`, final `0.851504`, corr `0.715902`, MAE `0.15129`; worse than power1.0.
   - rankblend->NFNet 5s power1.15: best val `0.853424`, final `0.851591`, corr `0.702949`, MAE `0.14768`; slightly lower final AUC than power1.0 despite lower corr.
 - Decision: keep the already-scaled `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate. Do not scale V2S, 10s, or power variants before anchor scores. Next best training action after v541/v542 score is either (a) package the 95/5 public946+NFNet private-robustness sidecar if anchor results justify, or (b) try a genuinely different V5/CLAP/BirdNET public stream.
+
+## 2026-05-12 06:55 UTC - Nina Model_61/62 public ensemble mining; no v543 before scores
+
+- Status: current scored best remains `v539 = 0.943`. `v541` and `v542` remain COMPLETE/verified and queued behind daily cap, with monitor pid `95675` sleeping after attempting v541. No duplicate submissions added; v510 remains complete/scored 0.927 and healthy.
+- Track: P1 open-solution mining without adding a new submission before v541/v542 scores.
+- Added `scripts/birdclef_public946_weight_grid.py`, an offline diagnostic that reconstructs public946 Proto/SED rank-blend variants with public gates (fake-only rescue, proto continuity, SED-only rescue, sonotype mirroring, rare-taxon suppression), evaluates label-overlap AUC/top-k, and reports correlations.
+- Ran it on v542 dry-run outputs (`artifacts/kaggle_outputs/v542-afr1ste-updated-public946/`) with train labels/taxonomy. Output: `artifacts/public946/v542_weight_grid/summary.json`.
+- Results on 190 overlap rows / 42 valid classes:
+  - `proto0.40_sed0.60`: AUC `0.994484`, top3 `0.6526`.
+  - `proto0.46_sed0.54`: AUC `0.993964`, top3 `0.6579`.
+  - Nina `Model_61/62` direct proxy (`0.54/0.46` + `0.46/0.54` average): AUC `0.993627`, top3 `0.6474`.
+  - exact `50/50`: AUC `0.993616`, top3 `0.6474`.
+  - v542-style `60/40`: AUC `0.992525`, top3 `0.6263`.
+  - `70/30`: AUC `0.991446`; `80/20`: AUC `0.989805`.
+- Correlation vs v542 60/40 is extremely high for the Nina/50-50 family: `0.9974` for 54/46, `0.9930` for Nina direct proxy, `0.9930` for exact 50/50, `0.9863` for 46/54.
+- Interpretation: Nina Model_61/62's clean extractable idea is effectively a 50/50-ish public Proto/SED rank-blend, not a genuinely new model stream. Local dry-run labels favor more SED-heavy blends, but this likely reflects train-label leakage because Afr1ste's public ablations note 50/50 tied 0.946 while Proto-heavy 70/30 and 80/20 fell to 0.944/0.942. Decision: do not create v543 before v541/v542 scores. If both miss 0.946, the only clean v543 worth considering is a 50/50 or 40/60 weight test, not a full Nina kitchen-sink port.
