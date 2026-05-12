@@ -1508,6 +1508,23 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Decision: Do not package/submit this hard-conf student. Keep the v517-gated cache helper as reusable infrastructure; next hard-label attempt, if any, should add real supervised examples or class-balanced negative mining rather than pure sparse hard-conf distillation.
 - Branch/PR: `feature/v533-v2s-pseudolabel-student`, PR #218. No merge without Wenhao approval.
 
+## 2026-05-11 11:50 UTC - v517 hard-conf real-clip mix smoke killed
+
+- Status check: Current public best remains v517=0.930; cron prompt's 0.927 plateau is stale. Latest submissions remain v526 hidden runtime timeout/no score, v522=0.927, v521=0.928, v520=0.928, v519=0.929. Required kernel checks via Bearer API: v510/v527/v531/v532 are all COMPLETE/no failure. Active monitor pid 3175/log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log` is alive and sleeping on daily cap before v527; reset order remains v527 -> v531 -> v532. No duplicate submissions added.
+- Track: Spec B pseudo-label/noisy-student follow-up after the v517 taxon-gated hard-confidence cache. Hypothesis: the pure sparse hard-conf B0 student was low-correlation but too weak; adding a small amount of real supervised `train.csv` clip examples might anchor the student without collapsing it into the teacher.
+- Implemented smoke configs:
+  - `configs/birdclef/pl_r2_b0_v517_hard_p95n05_realclip_w01_smoke.json`: v517 gated cache, hard_conf p95/n05, EfficientNet-B0 10s/160-mel, lr=1e-3, 256 pseudo rows, 128 real clips capped at 4/class, real clip weight 0.10, 3 epochs.
+  - `configs/birdclef/pl_r2_b0_v517_hard_p95n05_realclip_w002_smoke.json`: same but real clip weight 0.02.
+  - `configs/birdclef/pl_r2_b0_v517_hard_p95n05_realclip_w002_lr3e4_smoke.json`: same as w0.02 but lr=3e-4.
+- Commands launched on trainer (`192.168.0.10`, GPU1) with `scripts/birdclef_pseudolabel_student_train.py`; logs under `~/birdclef-2026/logs/pl_r2_b0_v517_hard_p95n05_realclip_*_smoke_20260511T114*.log`.
+- Smoke results:
+  - w0.10/lr1e-3: used 121/128 real clips; best val AUC `0.527373`; final all-row student AUC `0.529729`; final corr to teacher `0.007961`; MAE `0.489442`.
+  - w0.02/lr1e-3: used 121/128 real clips; best val AUC `0.604746`; final all-row student AUC `0.585193`; final corr to teacher about `0.279`; MAE `0.520911`.
+  - w0.02/lr3e-4: used 121/128 real clips; best val AUC `0.521979`; final all-row student AUC `0.511207`; final corr to teacher `0.342117`; MAE `0.188411`.
+- Interpretation/kill decision: Real-clip anchoring in this naive form makes the already-weak hard-conf student worse than the previous full pure hard-conf run (`0.663124` final all-row AUC and tiny +0.000091 teacher blend). Do not scale to all rows or package a public sidecar. The issue is likely objective mismatch/class imbalance: random real clips with one-hot labels do not align with the row-level teacher-cache soundscape task.
+- Validation: `python3 -m json.tool` passed for all three configs; `python3 -m py_compile` passed for `scripts/birdclef_pseudolabel_student_train.py` and `scripts/birdclef_apply_taxon_gate_teacher_cache.py`.
+- Branch/PR: `feature/v534-v517-hard-supervised-mix`. Next step is to push this as a negative-result PR/log update, then pivot away from naive real-clip mixing. Better next candidates are OOF-teacher cache generation, class-balanced negative mining, or SED ONNX queue scoring for v531/v532 rather than more v508/v517-distilled sidecars.
+
 ## 2026-05-11 12:58 UTC - v517 hard-conf class-balanced negative mining
 
 - Status check: Current public best remains v517=0.930; cron prompt's 0.927 plateau is stale. Latest submissions remain v526 hidden runtime timeout/no score, v522=0.927, v521=0.928, v520=0.928, v519=0.929. Active queue monitor pid 3175/log `logs/submit_pending_birdclef_queue_20260511T055130Z_focus_v532_onnx.log` is alive and sleeping on daily cap before v527; reset order remains v527 -> v531 -> v532. No duplicate submissions added.
