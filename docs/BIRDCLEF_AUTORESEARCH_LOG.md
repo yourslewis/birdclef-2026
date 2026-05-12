@@ -1599,3 +1599,213 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue update: Added v538 to `scripts/submit_pending_birdclef_queue.py` after v537 and restarted the monitor old pid 8011 -> pid 15457, log `logs/submit_pending_birdclef_queue_20260511T184542Z_focus_v538.log`. It hit daily cap before v527 with 5.2h remaining. Reset order is now v527 -> v531 -> v532 -> v537 -> v538.
 - Decision: Wait for the capped reset rather than pushing more public kernels. The next actionable work is monitoring scores/hidden-runtime outcomes for the five queued candidates; only continue OOF-teacher blend weighting if v537/v538 tie or improve v517, otherwise pivot back to a genuinely different teacher/source.
 
+## 2026-05-11 19:40 UTC - v539 public946 replay baseline pushed
+
+- Track: Public approach reprioritization P0. Hypothesis: the public distilled SED + Perch/ProtoSSM rank-blend stack around 0.946 should replace v517=0.930 as the immediate baseline/teacher if it reproduces in our controlled workflow.
+- Branch: `feature/v539-public946-replay`.
+- Implementation: Created `kaggle-kernels/v539-public946-replay/` as a repo-owned controlled port of public robust source `yaroslavkholmirzayev/0-946-replay-with-robust-inputs`. The script includes a header documenting the source and objective. Metadata attaches `tuckerarrants/bc2026-distilled-sed-public`, `jaejohn/perch-meta`, `rishikeshjani/perch-onnx-for-birdclef-2026`, `ashok205/tf-wheels`, and the Perch v2 Kaggle model.
+- Validation before push: `python3 -m py_compile kaggle-kernels/v539-public946-replay/script.py` passed. Public source was previously inspected and uses ONNX Perch + distilled SED rank blending with Proto rescue, temporal continuity rescue, SED local-spike rescue, sonotype mirroring, and rare taxon suppression.
+- Kaggle push: real private kernel `yourslewis/bc26-v539-public946-replay-baseline`, version 1, pushed successfully via Bearer API v1 with no invalid data/kernel/model sources. URL: https://www.kaggle.com/code/yourslewis/bc26-v539-public946-replay-baseline
+- Status after initial polling: RUNNING, no output files/log yet. Do not queue for submission until it reaches COMPLETE and `submission.csv` is verified. Current capped queue remains v527 -> v531 -> v532 -> v537 -> v538.
+- Next step: poll v539 completion/output. If complete and runtime-safe, add v539 ahead of further experimental sidecars at the next available submission opportunity and use its output as `public946` teacher-cache seed.
+
+## 2026-05-11 19:50 UTC - v539 public946 replay verified complete and prioritized in queue
+
+- Status check: Current public best remains v517=0.930. Latest submissions unchanged: v526 hidden runtime timeout/no score, v522=0.927, v521=0.928, v520=0.928, v519=0.929. v510/v527/v531/v532/v537/v538/v539 are COMPLETE. No duplicate submissions added.
+- Track: Public approach reprioritization P0. v539 is now the highest-priority candidate because it reproduces the public ~0.946 Perch/ProtoSSM + distilled SED rank-blend stack in our repo-owned Kaggle workflow.
+- v539 verification: Kaggle output files include `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`. Log confirms SED dir `/kaggle/input/datasets/tuckerarrants/bc2026-distilled-sed-public`, loaded `sed_fold0.onnx` through `sed_fold4.onnx`, SED inference completed for 20 public files in 68.9s, saved `submission_sed.csv` `(240,235)`, executed standard 2-way rank blend (60% Proto / 40% SED), and completed successfully. Public dry-run final `submission.csv` is aligned to `sample_submission.csv` `(3,235)`, which matches the public replay behavior; hidden code submission should rerun on real test soundscapes.
+- Queue update: Inserted v539 into `scripts/submit_pending_birdclef_queue.py` immediately after already-submitted v526 and before v527/v531/v532/v537/v538. Restarted monitor old pid 15457 -> pid 27404, log `logs/submit_pending_birdclef_queue_20260511T194723Z_focus_v539_public946.log`. It attempted v539, hit daily cap with 4.2h remaining, and will retry after UTC reset. Effective reset order: v539 -> v527 -> v531 -> v532 -> v537 -> v538 (v538 likely spills to next day if all earlier submissions succeed).
+- Branch/PR: `feature/v539-public946-replay`, PR #223. Next step after score: if v539 >=0.940, make it the new teacher/cache anchor; if it lands far below public claim, inspect hidden/public behavior, data-source versions, and row alignment before continuing public946 derivatives.
+
+## 2026-05-11 21:50 UTC - v540 public946 teacher-cache66 launched
+
+- Status check: Current public best remains v517=0.930. Latest submissions unchanged; v539 is COMPLETE and active monitor pid 27404/log `logs/submit_pending_birdclef_queue_20260511T194723Z_focus_v539_public946.log` is sleeping on daily cap after attempting v539. Effective reset order remains v539 -> v527 -> v531 -> v532 -> v537 -> v538. No duplicate submissions added.
+- Track: Public approach reprioritization P1 teacher-cache preparation while waiting for submission cap reset. Hypothesis: if v539 reproduces the public ~0.946 stack, a larger dry-run teacher cache should replace the v508 teacher cache as the next pseudo-label/student anchor.
+- Downloaded v539 public dry-run outputs to `artifacts/public946/v539_outputs/`: `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`.
+- Added `scripts/birdclef_public946_cache_summary.py`, which converts public946 output CSVs into a compact NPZ and JSON diagnostics, preserving proto/SED/final streams and evaluating overlaps with labeled train soundscape rows.
+- Ran the summary on v539 outputs with labels `/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv`; artifact: `artifacts/pseudolabels/public946-v539-dryrun-cache-v1/predictions.npz` and `summary.json`. v539 intermediate streams are 240x235; 190 rows overlap labels, 42 valid AUC classes. SED stream macro AUC is 0.995976 on this small overlap, much stronger than Proto 0.978480, confirming the public distilled SED artifact is highly informative on dry-run train rows. Final `submission.csv` is sample-aligned 3x235 by design and not useful as a teacher cache.
+- Created and pushed real Kaggle kernel `yourslewis/bc26-v540-public946-teacher-cache66`, version 1. v540 is copied from v539 but forces `dryrun_n_files=66` in submit/dry-run mode so intermediate `submission_protossm.csv` and `submission_sed.csv` should cover 792 rows, matching the existing v508 teacher-cache66 scale. v540 is **not** queued for code submission; it is an artifact-generation kernel only.
+- Initial v540 status after push: RUNNING/no failure. Next step: poll v540, download intermediate outputs when complete, build the full 792-row public946 cache, then train the first public946 student only after v539 LB score confirms the public stack transfers.
+
+## 2026-05-11 22:50 UTC - v540 full public946 teacher cache built
+
+- Status check: Current public best remains v517=0.930. Latest submissions unchanged; v539 public946 replay is COMPLETE and the active monitor pid 27404/log `logs/submit_pending_birdclef_queue_20260511T194723Z_focus_v539_public946.log` is sleeping on daily cap after attempting v539. No duplicate submissions added.
+- v540 artifact kernel completed successfully. Kaggle outputs include `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`. Log confirms `submission_protossm.csv` `(792,235)`, SED dataset `tuckerarrants/bc2026-distilled-sed-public`, 5 ONNX SED folds loaded, SED inference for 66 train files in 161.2s, `submission_sed.csv` `(792,235)`, and standard 60% Proto / 40% SED rank blend executed. Final `submission.csv` remains sample-aligned `(3,235)` by dry-run design and is not the teacher artifact.
+- Downloaded v540 outputs to `artifacts/public946/v540_outputs/` and built full cache `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/` with `scripts/birdclef_public946_cache_summary.py`.
+- Enhanced the summary script to reconstruct the pre-sample-align public946 rank blend for train rows and to emit student-compatible teacher NPZs: `teacher_proto.npz`, `teacher_sed.npz`, `teacher_rankblend.npz` with keys `row_ids`, `labels`, `probs`.
+- v540 cache diagnostics versus local train soundscape labels (`739` matched positive rows, `75` valid classes): Proto stream macro AUC `0.987485`, top1/top3/top5/top10 row recall `0.754/0.858/0.897/0.939`; public SED stream macro AUC `0.997067`, top1/top3/top5/top10 `0.982/0.995/0.999/1.000`; reconstructed rankblend macro AUC `0.994834`, top1/top3/top5/top10 `0.419/0.687/0.797/0.917`. Interpretation: the public distilled SED stream is an exceptionally strong direct teacher on labeled train soundscapes; rankblend optimizes per-class ranking but is less useful as a BCE-style top-k target because it is rank-uniform around mean 0.5.
+- Decision: hold student training until v539 LB score arrives. If v539 scores near public946, first student should likely use `teacher_sed.npz` as the soft/event-local teacher, with `teacher_rankblend.npz` reserved for rank/blend diagnostics rather than direct BCE training.
+
+## 2026-05-11 23:50 UTC - public946 SED teacher B0 smoke completed
+
+- Status check: Current public best remains v517=0.930. Latest submissions unchanged; active monitor pid 27404/log `logs/submit_pending_birdclef_queue_20260511T194723Z_focus_v539_public946.log` is still sleeping on daily cap after attempting v539. v539/v540/v527/v531/v532/v537/v538 are COMPLETE. No duplicate submissions added.
+- Track: Public approach P1 smoke while waiting for v539 score. Hypothesis: the v540 public distilled SED teacher is a much stronger direct pseudo-label source than v508/v517 and should be tested with a small B0 sanity student before any full training.
+- Added config `configs/birdclef/pl_public946_sed_b0_5s_lr3e4_smoke.json`. It trains EfficientNet-B0, 5s/160mel, external XC B0 encoder init, teacher `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_sed.npz`, soft BCE, teacher power 1.0, no mixup, LR 3e-4, 256 rows, 3 epochs, restore best val AUC.
+- Launched on trainer GPU0 with `CUDA_VISIBLE_DEVICES=0 ~/kaggle_envs/s6e3/bin/python scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_sed_b0_5s_lr3e4_smoke.json`; log `~/birdclef-2026/logs/pl_public946_sed_b0_5s_lr3e4_smoke_20260511T234552Z.log`. Runtime ~4.2s after feature decode; copied artifacts back locally under `artifacts/pseudolabels/students/pl-public946-sed-b0-5s-lr3e4-smoke/`.
+- Result: best epoch 3, val student macro AUC `0.891356` over 35 classes vs teacher `0.994754`; final all-row student macro AUC `0.818694` over 42 classes vs teacher `0.995378`; student-teacher corr `0.4796`, MAE `0.3790`; TorchScript size 15.391 MB. The curve improved each epoch, but 3-epoch/256-row student is far below teacher and not a public packaging candidate.
+- Decision: Do not submit/package this smoke. If v539 scores near public946, next step should be a full 792-row longer B0 public946-SED student or a stronger NFNet/V2S student, but only after v539 LB confirms transfer. The smoke shows the teacher is learnable but needs more capacity/epochs or a harder target formulation.
+
+## 2026-05-12 00:05 UTC - reset submissions: v539 public946 first, v538 capped
+
+- Queue monitor pid 27404/log `logs/submit_pending_birdclef_queue_20260511T194723Z_focus_v539_public946.log` woke after UTC reset and submitted five kernels under the daily cap: v539 public946 replay baseline (ref 52559109), v527 taxon gate alpha 0.375 (ref 52559133), v531 timeout-safe single-model v29 blend 0.02 (ref 52559147), v532 ONNX3 v29 blend 0.05 (ref 52559170), and v537 OOF-teacher B0 blend 0.02 (ref 52559190). All are PENDING score at log time.
+- v538 OOF-teacher B0 blend 0.05 was next in queue but hit the daily submission cap with 23h remaining and the monitor is sleeping for the next reset. No duplicate submissions were added.
+- Current best before these pending scores remains v517=0.930. The first score to watch is v539; if v539 lands >=0.940, make public946 the new teacher/cache anchor and continue with the public946 SED teacher student lane. If v539 fails/times out or scores near 0.930, inspect hidden behavior and row alignment before launching larger public946-derived students.
+
+## 2026-05-12 00:55 UTC - full public946 SED B0 student scaled while v539 pending
+
+- Status check: v539/v527/v531/v532/v537 remain PENDING score after reset submissions; current scored best remains v517=0.930. Monitor pid 27404 is sleeping on cap before v538 for the next UTC reset. No duplicate submissions added.
+- Track: Public approach P1 student preparation. The small 256-row smoke was not packageable but improved each epoch, so scaled the same setup to the full 792-row v540 public SED teacher cache while waiting for v539 LB.
+- Added `configs/birdclef/pl_public946_sed_b0_5s_lr3e4_ep20_bestval.json`: EfficientNet-B0, 5s/160mel, external XC B0 encoder init, teacher `teacher_sed.npz`, soft BCE, power 1.0, no mixup, LR 3e-4, all rows, 20 epochs, restore best val AUC.
+- Launched on trainer GPU1: `CUDA_VISIBLE_DEVICES=1 ~/kaggle_envs/s6e3/bin/python scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_sed_b0_5s_lr3e4_ep20_bestval.json`; log `~/birdclef-2026/logs/pl_public946_sed_b0_5s_lr3e4_ep20_bestval_20260512T004530Z.log`. Copied artifacts back locally under `artifacts/pseudolabels/students/pl-public946-sed-b0-5s-lr3e4-ep20-bestval/`.
+- Result: best epoch 20, best val student macro AUC `0.988504` over 61 classes vs teacher `0.996585`; final all-row student macro AUC `0.976669` over 75 classes vs teacher `0.996743`; student-teacher corr `0.977457`, MAE `0.005771`; TorchScript size 15.391 MB, runtime 29.5s.
+- Interpretation: the full B0 student is technically strong and much better than the smoke, but still materially below the public SED teacher. It is not a public packaging candidate until v539 score lands and a blend check shows it adds diversity; likely next better route is stronger/capacity-diverse student (NFNet/V2S/ConvNeXt) or use SED teacher as distillation target for a compact sidecar only if it improves a public946 blend.
+
+## 2026-05-12 01:50 UTC - v539 scores 0.943; v541 mirror/rare public946 follow-up queued
+
+- Status: v539 public946 replay scored `0.943`, a large jump over the old v517/v527/v531/v537 `0.930` plateau and the earlier 0.927 family. v527/v531/v537 also tied `0.930`; v532 timed out. Daily cap is exhausted after v539/v527/v531/v532/v537, and v538 remains unsubmitted.
+- Track: P0 public946 baseline reproduction / focused follow-up. Since v539 was below the public 0.946 target but clearly valid, inspected the stronger public source `lb-score-0-946.py`. Difference from v539 lane: it keeps post-blend sonotype mirroring and adaptive rare-taxon thresholding.
+- Implemented `kaggle-kernels/v541-public946-mirror-rare/` by wrapping the public 0.946 stack in a repo-owned kernel with the same validated data sources as v539 plus the mirror/rare postprocess enabled.
+- Validation before push: local `python3 -m py_compile kaggle-kernels/v541-public946-mirror-rare/script.py` passed; source contains SED/Proto rank blend plus `Sonotype mirroring` and `Adaptive thresholding` code paths.
+- Pushed real Kaggle kernel `yourslewis/bc26-v541-public946-mirror-rare`, version 1, via Bearer API v1; push returned kernel id `118866025`, no invalid data/kernel/model sources.
+- Queue: updated `scripts/submit_pending_birdclef_queue.py` to include v541 immediately after v539 and before old/internal sidecars. Killed stale monitor pid `27404` and started refreshed monitor pid `78746`, log `logs/submit_pending_birdclef_queue_20260512T014825Z_focus_v541_public946.log`. It skips submitted focus kernels, sees v541 RUNNING, and sleeps in 10-min checks. Once v541 completes it will submit v541 first after the daily cap resets, then v538.
+- Next step: monitor v541 completion/runtime/log path; if it scores >=0.943 and approaches 0.946, make it the new anchor and run one public946+internal minority blend. If it fails/times out, inspect whether ONNX/TF path, mirroring/rare taxon metadata, or extra source/version mismatch is responsible.
+
+## 2026-05-12 02:55 UTC - v541 completed and verified; queued on cap
+
+- Status: current best remains `v539 = 0.943`. Latest scored submissions: v539 `0.943`; v527/v531/v537 `0.930`; v532 hidden-timeout/no score. v510 remains COMPLETE/scored `0.927` from prior runs, with no open mount/TorchScript/output issue.
+- v541 kernel status: `yourslewis/bc26-v541-public946-mirror-rare` version 1 is COMPLETE with no failure message. Monitor pid `78746` attempted to submit it but hit the daily 5-submission cap and is sleeping ~22h; v541 remains first pending submission, before v538.
+- v541 output verification: downloaded session output metadata/CSVs to ignored artifact dir `artifacts/kaggle_outputs/v541-public946-mirror-rare/`. Log confirms `USE_ONNX=True`, SED dir `tuckerarrants/bc2026-distilled-sed-public`, folds `sed_fold0.onnx`..`sed_fold4.onnx` loaded, SED output `(240,235)`, executed 2-way rank blend `60% Proto / 40% SED`, `Sonotype mirroring applied to 10 columns`, `Adaptive thresholding applied to 44 rare species`, and dry-run final `submission.csv` shape `(3,235)`. Total Kaggle session wall time to ready was ~423s / 7.1 min.
+- CSV validation: `submission_protossm.csv` `(240,235)`, `submission_sed.csv` `(240,235)`, final `submission.csv` `(3,235)` sample-aligned by code-competition dry-run behavior.
+- P1 cache/diagnostics: ran `scripts/birdclef_public946_cache_summary.py` on v541 dry-run outputs. Artifact dir `artifacts/pseudolabels/public946-v541-dryrun-cache-v1/` includes `teacher_proto.npz`, `teacher_sed.npz`, and `teacher_rankblend.npz`. On 190 label-overlap rows / 42 valid AUC classes: proto AUC `0.983987`, SED AUC `0.995976`, reconstructed rankblend AUC `0.992734`; top3 row recall proto `0.6263`, SED `0.9895`, rankblend `0.6421`.
+- Interpretation: v541 is runtime-safe and faithfully executes the extra public 0.946 mirror/rare paths that v539 omitted. It should consume the next daily slot. The dry-run diagnostics again show the public SED stream is the dominant train-row teacher, while rankblend is more leaderboard-oriented than local label-AUC optimized.
+- Next step: leave monitor running until v541 submits/scores. If v541 >= v539, make v541 the public946 anchor. If v541 falls, keep v539 as anchor and avoid more public postprocess forks until an internal minority blend or stronger student has validation.
+
+## 2026-05-12 03:55 UTC - prioritized public946 spec written; v542 pushed/running
+
+- Status: current scored best remains `v539 = 0.943`; `v541` is complete/verified and first pending behind daily cap; `v542` is RUNNING with no failure message and no output yet. Refreshed monitor pid `95675`, log `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log`, attempted `v541` and hit daily cap, so queue order remains `v541 -> v542 -> v538` once reset/complete allows.
+- Open-solution mining: pulled and converted public kernels `afr1ste/birdclef-2026-0-946-updated-perch-sed` and `nina2025/birdclef-2026-ensemble-of-solutions-3` into `artifacts/public_kernels_20260512/` for inspection. Afr1ste v3 is a clean updated public946 V8 source; Nina documents 0.946 via Model_61/62 direct ensemble but is a large kitchen-sink notebook.
+- Implemented/pushed `v542` as a controlled repo-owned port of Afr1ste updated public946: `yourslewis/bc26-v542-afr1ste-updated-public946`, version 1, kernel id `118877746`; push had no invalid sources. Added it to queue immediately after v541.
+- Wrote planning spec `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md` and linked it from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`. The spec prioritizes scoring v541/v542, mining Nina narrowly, public-public ensembles, public946+V5/CLAP/BirdNET only after anchor score, and public946-teacher NFNet/EfficientNetV2-S AutoResearch.
+- Next step: poll v542 completion/output. If valid, leave it queued after v541. Do not add another public fork until v541/v542 scores unless v542 fails.
+
+## 2026-05-12 05:00 UTC - v542 verified; public946 NFNet/V2S AutoResearch smokes and full NFNet scale
+
+- Status: current scored best remains `v539 = 0.943`. `v541` COMPLETE/verified and first pending after daily cap; monitor pid `95675` sleeping after cap. `v542` (`yourslewis/bc26-v542-afr1ste-updated-public946`, v1) completed with no failure message and should stay queued after v541.
+- v542 verification: downloaded session output to `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/` (ignored artifact dir). CSV shapes: `submission.csv` `(240,235)`, `submission_protossm.csv` `(240,235)`, `submission_sed.csv` `(240,235)`. Log confirms ONNX Perch (`USE_ONNX=True`), distilled SED processing complete, 60/40 rank blend executed, sonotype mirroring applied to 10 cols, adaptive thresholding applied to 44 rare species, and full dry-run train row_ids kept. Runtime to final output ~519s / 8.6 min.
+- v542 dry-run cache diagnostics (`artifacts/pseudolabels/public946-v542-dryrun-cache-v1/`): on 190 overlap rows / 42 valid classes, proto AUC `0.984068`, SED AUC `0.995976`, final AUC `0.992525`, reconstructed rankblend AUC `0.992525`. This matches the expected public946 behavior and provides a cleaner full-train-row final dry-run output than v541.
+- Added AutoResearch configs:
+  - `pl_public946_sed_nfnet_5s_lr1e4_smoke.json` — eca_nfnet_l0, SED teacher, 5s/160mel, BCE, power1.0, max_rows256, ep3.
+  - `pl_public946_sed_v2s_5s_lr1e4_smoke.json` — efficientnetv2_rw_s, SED teacher, pretrained, 5s/160mel, max_rows256, ep3.
+  - `pl_public946_rankblend_nfnet_5s_lr1e4_smoke.json` — eca_nfnet_l0, rankblend teacher, 5s/160mel, max_rows256, ep3.
+  - `pl_public946_rankblend_nfnet_5s_lr1e4_ep20_bestval.json` — scaled winner candidate, all 792 rows, ep20, restore best val AUC.
+- Execution: initial NFNet smoke accidentally targeted busy GPU0 and OOMed because unrelated process pid `512484` held ~15.7GB. Relaunched smokes on free GPU1 in sequential wrapper `logs/pl_public946_gpu1_smokes_20260512T044736Z.log`; all completed.
+- Smoke results:
+  - SED->NFNet smoke: best val AUC `0.707440`, final all-row AUC `0.720263`, teacher AUC `0.995378`, corr `0.632919`, MAE `0.01272`, runtime 8.8s. SED target is too sparse/difficult for short NFNet smoke.
+  - SED->V2S smoke: best val AUC `0.792906`, final all-row AUC `0.773891`, teacher AUC `0.995378`, corr `0.289202`, MAE `0.06159`, runtime 7.1s. Low correlation but weak standalone; possible diversity later, not first scale.
+  - Rankblend->NFNet smoke: best val AUC `0.852589`, final all-row AUC `0.853951`, teacher AUC `0.990095`, corr `0.711918`, MAE `0.14460`, runtime 8.2s. Best smoke, selected for scale.
+- Full rankblend->NFNet scale: launched `pl_public946_rankblend_nfnet_5s_lr1e4_ep20_bestval` on GPU1, log `logs/pl_public946_rankblend_nfnet_ep20_20260512T044954Z.log`. Completed in 100.4s; best epoch 20, best val AUC `0.981990` over 61 classes; final all-row student AUC `0.984806` over 75 classes vs teacher `0.994567`; student-teacher corr `0.924409`, MAE `0.07138`; TorchScript size 89.872MB.
+- Blend diagnostic on 739 matched labeled rows / 75 valid classes: rankblend teacher AUC `0.994834`, full NFNet student AUC `0.985062`, corr `0.95677`. Best linear blend is teacher `0.95` + student `0.05` -> `0.994903` (+0.000069); best rank blend also student weight `0.05` -> `0.994887` (+0.000053). This is a small but real local blend lift; do not spend a submission slot until v541/v542 scores, but it is a viable private-robustness sidecar candidate at 2-5% weight.
+- Next step: keep queue untouched until v541/v542 scores. For training, the next meaningful smoke is either full-scale V2S only if diversity is desired, or a rankblend->NFNet variant with 10s crop / power0.85 after anchor scoring.
+
+## 2026-05-12 05:55 UTC - public946 rankblend student follow-up smokes; no new scale
+
+- Status: current scored best remains `v539 = 0.943`. `v541` and `v542` are both COMPLETE/verified and queued behind daily cap (`v541 -> v542 -> v538`). Monitor pid `95675` remains alive/sleeping after cap. v510 remains complete/scored 0.927 with no active failure.
+- Ran additional public946 rankblend student smokes on free GPU1, respecting the rule not to add submission candidates before v541/v542 score. Added configs:
+  - `pl_public946_rankblend_v2s_5s_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_10s_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_5s_power085_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_5s_power115_lr1e4_smoke.json`
+- Results vs previous best smoke (`rankblend->NFNet 5s power1.0`: final AUC `0.853951`, corr `0.711918`):
+  - rankblend->V2S 5s power1.0: best val `0.838204`, final `0.835216`, corr `0.585914`, MAE `0.18511`; lower AUC despite lower corr, do not scale now.
+  - rankblend->NFNet 10s power1.0: best val `0.844647`, final `0.847622`, corr `0.712828`, MAE `0.14399`; worse than 5s, so 10s crop not worth scaling.
+  - rankblend->NFNet 5s power0.85: best val `0.844561`, final `0.851504`, corr `0.715902`, MAE `0.15129`; worse than power1.0.
+  - rankblend->NFNet 5s power1.15: best val `0.853424`, final `0.851591`, corr `0.702949`, MAE `0.14768`; slightly lower final AUC than power1.0 despite lower corr.
+- Decision: keep the already-scaled `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate. Do not scale V2S, 10s, or power variants before anchor scores. Next best training action after v541/v542 score is either (a) package the 95/5 public946+NFNet private-robustness sidecar if anchor results justify, or (b) try a genuinely different V5/CLAP/BirdNET public stream.
+
+## 2026-05-12 06:55 UTC - Nina Model_61/62 public ensemble mining; no v543 before scores
+
+- Status: current scored best remains `v539 = 0.943`. `v541` and `v542` remain COMPLETE/verified and queued behind daily cap, with monitor pid `95675` sleeping after attempting v541. No duplicate submissions added; v510 remains complete/scored 0.927 and healthy.
+- Track: P1 open-solution mining without adding a new submission before v541/v542 scores.
+- Added `scripts/birdclef_public946_weight_grid.py`, an offline diagnostic that reconstructs public946 Proto/SED rank-blend variants with public gates (fake-only rescue, proto continuity, SED-only rescue, sonotype mirroring, rare-taxon suppression), evaluates label-overlap AUC/top-k, and reports correlations.
+- Ran it on v542 dry-run outputs (`artifacts/kaggle_outputs/v542-afr1ste-updated-public946/`) with train labels/taxonomy. Output: `artifacts/public946/v542_weight_grid/summary.json`.
+- Results on 190 overlap rows / 42 valid classes:
+  - `proto0.40_sed0.60`: AUC `0.994484`, top3 `0.6526`.
+  - `proto0.46_sed0.54`: AUC `0.993964`, top3 `0.6579`.
+  - Nina `Model_61/62` direct proxy (`0.54/0.46` + `0.46/0.54` average): AUC `0.993627`, top3 `0.6474`.
+  - exact `50/50`: AUC `0.993616`, top3 `0.6474`.
+  - v542-style `60/40`: AUC `0.992525`, top3 `0.6263`.
+  - `70/30`: AUC `0.991446`; `80/20`: AUC `0.989805`.
+- Correlation vs v542 60/40 is extremely high for the Nina/50-50 family: `0.9974` for 54/46, `0.9930` for Nina direct proxy, `0.9930` for exact 50/50, `0.9863` for 46/54.
+- Interpretation: Nina Model_61/62's clean extractable idea is effectively a 50/50-ish public Proto/SED rank-blend, not a genuinely new model stream. Local dry-run labels favor more SED-heavy blends, but this likely reflects train-label leakage because Afr1ste's public ablations note 50/50 tied 0.946 while Proto-heavy 70/30 and 80/20 fell to 0.944/0.942. Decision: do not create v543 before v541/v542 scores. If both miss 0.946, the only clean v543 worth considering is a 50/50 or 40/60 weight test, not a full Nina kitchen-sink port.
+
+## 2026-05-12 07:55 UTC - V5/CLAP and BirdNET diversity-stream triage; queue hold
+
+- Status: current scored best remains `v539 = 0.943`. `v541` and `v542` are still COMPLETE/verified and queued behind daily cap. Monitor pid `95675` remains alive/sleeping after attempting v541; no duplicate submissions were added.
+- Track: P2 diversity-stream preparation without creating a new submission candidate before v541/v542 scores.
+- Wrote `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md` and linked it from the prioritized spec. It triages the two genuinely distinct public-stream families:
+  - `needless090/birdclef-2026-perch-sed-lb-0-946-clap`: V5 ONNX trio/quintet plus optional CLAP probe. Observed expected V5 files (`v5_cluster_aware.onnx`, `v5_focal.onnx`, `v5_pseudo2.onnx`, `v5_pseudo.onnx`, `v5_external.onnx`), CLAP probe files (`clap_probe_W.npy`, `clap_probe_b.npy`, `clap_probe_fitmask.npy`), weights `V5_W=0.15`, `CLAP_W=0.10`, CLAP dynamic budget `45*60` sec. Risk: downloaded metadata has blank dataset sources for V5/CLAP, so a repo port must explicitly attach/validate `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe`; otherwise it silently degrades to plain public946.
+  - `raunakdey07/birdclef-2026-birdnet-4-way-rank-blend`: adds BirdNET 6K TFLite and custom EffNet ONNX with intended 4-way weights Proto `0.40`, SED `0.30`, BirdNET `0.15`, EffNet `0.15`. Risk: local metadata does not list the BirdNET model or custom EffNet notebook/model source despite code paths under `/kaggle/input/models/...` and `/kaggle/input/notebooks/...`; exact attachable refs must be resolved before any port.
+- Decision: no new kernel push/queue this run. After v541/v542 scores, prefer V5/CLAP source validation as the first distinct diversity-stream candidate; BirdNET/EffNet remains second due source/runtime fragility. Nina remains held as a high-correlation weight perturbation, not a new stream.
+
+## 2026-05-12 09:15 UTC - Source audit for public946 diversity streams; no new queue
+
+- Status check: current scored best remains `v539 = 0.943`. Latest visible submissions are still v539/v527/v531/v532/v537 from the 2026-05-12 UTC cap; v541 and v542 kernels are COMPLETE/no failure but not yet submitted due daily cap. Monitor pid `95675` is alive; latest log shows it attempted v541 and slept after `Submission allowance (5)` with ~20h remaining. No duplicate submissions added.
+- Track: P2 source-clean diversity prep while holding new submissions until v541/v542 score.
+- V5/CLAP source audit:
+  - `GetKernel` for `needless090/birdclef-2026-perch-sed-lb-0-946-clap` returns two blank dataset refs plus public946 refs. Embedded notebook JSON exposes numeric datasetVersion IDs `16013757`/`16003884` (datasetIds `10267502`/`10025194`) for the V5/CLAP extras.
+  - Bearer Dataset API lookups for likely slugs `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe` returned 403; public dataset search returned no rows. Conclusion: V5/CLAP remains source-blocked unless we can resolve numeric sources or recreate equivalent datasets. Do not queue a V5/CLAP candidate yet.
+- BirdNET/EffNet source audit:
+  - BirdNET model is source-clean and attachable: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`; model API confirms TFLite instance v3 (~52MB).
+  - Raunak 4-way embedded JSON includes BirdNET model source and a custom EffNet notebook-output `kernelVersion` source `317846744`, but `GetKernel` for `raunakdey07/offline-training-efficientnet-b0-focal-recording` returns 403. Full EffNet 4-way remains blocked.
+  - Found `claudedevore/birdclef-2026-r0946-birdnet-3way-submit` as a safer public reference: metadata includes BirdNET + normal public946 sources and skips unavailable EffNet. Saved ignored local audit artifact under `artifacts/public_kernels_20260511/birdclef-2026-r0946-birdnet-3way-submit.*`. Caveat: fetched snapshot has repeated EffNet-skip cells and no clean final blend cell in extracted source, so a repo port should extract only the BirdNET inference block and write our own explicit 3-way rank blend.
+- Updated `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md` and prioritized spec. New source-clean fallback after v541/v542: if V5/CLAP remains blocked, prefer a minimal BirdNET-only 3-way candidate over the 4-way EffNet path.
+
+## 2026-05-12 09:58 UTC - Queue hold + v542 output revalidation
+
+- Status check: current scored best remains `v539 = 0.943`. Latest visible submissions are unchanged from UTC cap: v539 scored 0.943; v527/v531/v537 scored 0.930; v532 timed out. v541/v542/v510/v538 kernels are all COMPLETE/no failure.
+- Queue: monitor pid `95675` alive. Latest log `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log` shows v541 submit attempt hit daily allowance with ~20h remaining; no duplicate submissions added.
+- Track: P0 queue/verification hold; no new candidate because spec says not to add submissions before v541/v542 scores.
+- v542 revalidation:
+  - output files present under `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/`: `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_meta.parquet`, `session_output_response.txt`.
+  - log confirms ONNX Runtime install, ONNX Perch, SED folds loaded, SED processing complete, standard 2-way 60/40 rank blend, sonotype mirroring on 10 columns, adaptive rare thresholding on 44 species, full train-row dry-run output, and total runtime about 528s.
+  - CSV sanity via pandas venv: `submission.csv` `(240,235)`, no NaNs, min `0.00375`, max `1.0`, mean `0.501526`; `submission_protossm.csv` `(240,235)`, no NaNs; `submission_sed.csv` `(240,235)`, no NaNs. Proto/SED dry-run corr `0.405286`; v542 final corr vs Proto `0.475426`, vs SED `0.236754`, confirming the final output is not a trivial copy of either stream.
+- v541 sanity retained: final dry-run aligned sample shape `(3,235)` and proto/SED full diagnostic files `(240,235)`, no NaNs. This is expected because v541 aligns public dry-run `submission.csv` to sample submission while v542 preserves full train rows for validation.
+- Updated prioritized spec checklist: both v541/v542 complete+verified; hold queue; if both miss, choose one clean public weight test vs source-clean BirdNET-only 3-way; V5/CLAP remains blocked until source refs resolve.
+
+## 2026-05-12 10:58 UTC - Cap hold; prepared BirdNET-only 3-way port plan
+
+- Status check: current scored best remains `v539 = 0.943`; latest visible submissions unchanged. v541/v542/v510/v538 kernels are COMPLETE/no failure. Monitor pid `95675` is alive and sleeping on daily cap after attempting v541; log still shows `Submission allowance (5)` and a 72120s sleep from 03:48 UTC. No duplicate submissions added.
+- Spec read: current addendum deprecates 0.927 plateau and says to hold new candidates until v541/v542 score unless a candidate fails.
+- Track: P0 hold + P2 preparation only; no Kaggle push/queue.
+- Prepared `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md` as the next source-clean diversity fallback if v541/v542 miss and V5/CLAP remains blocked.
+  - Base: fork v542 into a later `v543-public946-birdnet3` candidate only after scores land.
+  - Metadata addition: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3` alongside Perch v2.
+  - Insert BirdNET inference after `submission_sed.csv`, before final rank blend.
+  - Use central 3s of each 5s/48k BirdNET window; write `submission_birdnet.csv`; fail loudly if model/labels missing in final candidate.
+  - First blend recommendation: conservative rank blend `52% Proto / 38% SED / 10% BirdNET`, keeping v542 post-blend gates unchanged. Rationale: BirdNET is true acoustic diversity but label mapping is sparse/brittle; public reference used 15% BirdNET with custom EffNet, so 10% is safer for first source-clean slot.
+  - Validation gates: BirdNET mapped class count, TFLite interpreter init, row alignment across proto/sed/birdnet/final, `(240,235)` dry-run no NaNs, explicit 3-way log, runtime safe.
+- Linked the BirdNET plan from the prioritized spec. This is preparation only; no candidate will be queued before v541/v542 scores.
+
+## 2026-05-12 11:50 UTC - Queue hold recheck; monitor ETA validated
+
+- Status check: public LB best remains `v539 = 0.943`; no new scored rows since the 2026-05-12 UTC cap set. Latest visible: v539 0.943, v527/v531/v537 0.930, v532 timeout, v526 timeout, v522 0.927, v521 0.928.
+- Kernel status: v541, v542, v510, and v538 are all COMPLETE/no failure.
+- Queue: monitor pid `95675` remains alive (`STAT SN`, elapsed ~7h58m). Latest log is still `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log`; it skipped already-submitted rows through v539, attempted v541, hit daily cap, and slept `72120s`.
+- ETA check: log mtime/sleep imply wake around `2026-05-12T23:50:02Z`, roughly 10 minutes before UTC reset. This should let it retry v541 promptly without restart. No action needed and no duplicate submission added.
+- Decision: continue strict hold. Do not push/queue BirdNET3 or public-weight v543 until v541/v542 scores land; BirdNET3 plan remains prepared only.
+
+## 2026-05-12 12:55 UTC - Queue hold; v510 output reverified via Kaggle API
+
+- Status check: public LB best remains `v539 = 0.943`; no new scored submissions since the 2026-05-12 UTC cap. Latest visible remains v539 0.943; v527/v531/v537 0.930; v532 and v526 timed out; v522 0.927; v521 0.928.
+- Kernel status: v541, v542, v510, and v538 are all COMPLETE/no failure.
+- Queue: monitor pid `95675` alive and still sleeping on the daily-cap backoff before v541; latest log remains `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log` with cap sleep `72120s`. No restart and no duplicate submissions.
+- v510 recheck (requested legacy A+G diagnostic): `ApiListKernelSessionOutput` for `yourslewis/bc26-v510-real-sed-bundle-blend-005` confirms `submission.csv` exists. Log confirms real SED bundle path was active: manifest found at `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1`, loaded `6/6` TorchScript models, real SED runtime `214.4s`, applied blend weight `0.05`, saved `submission.csv (240,235)`, wall time `370.6s`, and v510 already scored a safe 0.927 tie. No v510 fix needed.
+- Decision: strict hold continues. Do not push/queue BirdNET3 or public-weight v543 before v541/v542 scores land.
+
+## 2026-05-12 13:50 UTC - Queue script order guard revalidated
+
+- Status check: public LB best remains `v539 = 0.943`; latest visible submissions unchanged. v541/v542/v510/v538 kernels are all COMPLETE/no failure.
+- Queue monitor: pid `95675` alive (`STAT SN`, elapsed ~9h57m) and still sleeping on cap before v541. Latest log unchanged: skipped through v539, attempted v541, hit daily allowance, slept `72120s`.
+- Queue script validation: `python3 -m py_compile scripts/submit_pending_birdclef_queue.py` passed. Relevant pending entries are ordered `v541 -> v542 -> ... -> v538`, with focus priority `... v539, v541, v542, v527, v531, v532, v537, v538`.
+- Duplicate guard: Bearer submission list with page size 200 shows zero submitted descriptions for v541/v542/v538, so the monitor has not submitted them yet and adding another monitor would risk duplication. No restart performed.
+- Decision: strict hold continues. Next real action is monitor retry near UTC reset; do not queue BirdNET3/public-weight v543 before v541/v542 scores.
