@@ -1784,3 +1784,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Queue: monitor pid `95675` alive and still sleeping on the daily-cap backoff before v541; latest log remains `logs/submit_pending_birdclef_queue_20260512T034801Z_focus_v542_public946.log` with cap sleep `72120s`. No restart and no duplicate submissions.
 - v510 recheck (requested legacy A+G diagnostic): `ApiListKernelSessionOutput` for `yourslewis/bc26-v510-real-sed-bundle-blend-005` confirms `submission.csv` exists. Log confirms real SED bundle path was active: manifest found at `yourslewis/bc26-sed-nfnet-v13v15-bundle-v1`, loaded `6/6` TorchScript models, real SED runtime `214.4s`, applied blend weight `0.05`, saved `submission.csv (240,235)`, wall time `370.6s`, and v510 already scored a safe 0.927 tie. No v510 fix needed.
 - Decision: strict hold continues. Do not push/queue BirdNET3 or public-weight v543 before v541/v542 scores land.
+
+## 2026-05-12 13:50 UTC - Queue script order guard revalidated
+
+- Status check: public LB best remains `v539 = 0.943`; latest visible submissions unchanged. v541/v542/v510/v538 kernels are all COMPLETE/no failure.
+- Queue monitor: pid `95675` alive (`STAT SN`, elapsed ~9h57m) and still sleeping on cap before v541. Latest log unchanged: skipped through v539, attempted v541, hit daily allowance, slept `72120s`.
+- Queue script validation: `python3 -m py_compile scripts/submit_pending_birdclef_queue.py` passed. Relevant pending entries are ordered `v541 -> v542 -> ... -> v538`, with focus priority `... v539, v541, v542, v527, v531, v532, v537, v538`.
+- Duplicate guard: Bearer submission list with page size 200 shows zero submitted descriptions for v541/v542/v538, so the monitor has not submitted them yet and adding another monitor would risk duplication. No restart performed.
+- Decision: strict hold continues. Next real action is monitor retry near UTC reset; do not queue BirdNET3/public-weight v543 before v541/v542 scores.
