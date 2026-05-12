@@ -9,9 +9,10 @@ Problem: the current inference/post-processing family is saturated around 0.926-
 
 A new public/shared approach scan found a much stronger public frontier around **0.946 LB**, centered on public distilled SED + Perch/ProtoSSM rank blending.  Treat the older 0.927 plateau language in this document as stale.
 
-Read the addendum before choosing new work:
+Read the addenda before choosing new work:
 
 - `docs/BIRDCLEF_PUBLIC_APPROACH_REEVAL_20260511.md`
+- `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md` — current v539/v541/v542 priority, open-solution mining, ensemble policy, and public946 AutoResearch plan.
 
 Updated priority order:
 

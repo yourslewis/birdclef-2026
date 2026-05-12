@@ -72,6 +72,7 @@ PENDING=[
     {"name":"v526","kernel":"yourslewis/bc26-v526-v516-plus-v23d-sed-blend-005","version":version,"message":"v526: Spec A/E v516 taxon gate + v23d 20s128 NFNet low-corr bundle blend weight 0.05"},
     {"name":"v539","kernel":"yourslewis/bc26-v539-public946-replay-baseline","version":version,"message":"v539: Public946 replay baseline - Perch ProtoSSM plus distilled SED rank blend"},
     {"name":"v541","kernel":"yourslewis/bc26-v541-public946-mirror-rare","version":version,"message":"v541: Public946 replay with sonotype mirroring + rare-taxon adaptive thresholding"},
+    {"name":"v542","kernel":"yourslewis/bc26-v542-afr1ste-updated-public946","version":version,"message":"v542: Afr1ste updated public946 V8 Perch+SED replay"},
     {"name":"v527","kernel":"yourslewis/bc26-v527-taxon-max-gate-a0375","version":version,"message":"v527: Spec E softer taxon max gate floor0.30 alpha0.375 + v508 axis"},
     {"name":"v531","kernel":"yourslewis/bc26-v531-v517-plus-v29-fast1-sed-blend-002","version":version,"message":"v531: Spec A/G v517 taxon gate + timeout-safe single-model v29 NFNet blend weight 0.02"},
     {"name":"v532","kernel":"yourslewis/bc26-v532-v517-plus-v29-onnx3-blend-005","version":version,"message":"v532: Spec A/G v517 taxon gate + ONNX3 v29 NFNet blend weight 0.05"},
@@ -227,7 +228,7 @@ PENDING=[
 # previous monitor run submitted v516, then burned the remaining daily slots on
 # old v247-v250 because the historical list still appeared before the new block.
 # Sorting here preserves the legacy backlog but guarantees current focus candidates are next, while holding timeout-prone SED variants after v526 timeout.
-FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", "v520", "v521", "v522", "v526", "v539", "v541", "v527", "v531", "v532", "v537", "v538"]
+FOCUS_PRIORITY_NAMES = ["v516", "v517", "v523", "v524", "v525", "v518", "v519", "v520", "v521", "v522", "v526", "v539", "v541", "v542", "v527", "v531", "v532", "v537", "v538"]
 FOCUS_PRIORITY = {name: i for i, name in enumerate(FOCUS_PRIORITY_NAMES)}
 PENDING.sort(key=lambda item: (FOCUS_PRIORITY.get(item["name"], len(FOCUS_PRIORITY) + 1), item["name"]))
 
