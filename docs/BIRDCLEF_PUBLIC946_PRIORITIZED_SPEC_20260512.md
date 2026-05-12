@@ -3,7 +3,7 @@
 Status: active planning spec  
 Owner branch: `feature/v539-public946-replay` / PR #223  
 Current scored anchor: **v539 = 0.943 public LB**  
-Pending anchor candidates: **v541** complete/queued, **v542** running at creation time  
+Pending anchor candidates: **v541** complete/queued, **v542** complete/queued  
 Deprecated premise: the old 0.927 plateau is no longer the search target.
 
 ---
@@ -24,7 +24,7 @@ Deprecated premise: the old 0.927 plateau is no longer the search target.
    - Status: COMPLETE, verified, waiting for daily cap reset.
    - Purpose: restore public 0.946 postprocess paths omitted by v539.
 2. `v542` — Afr1ste updated public946 V8 replay.
-   - Status at spec creation: pushed as `yourslewis/bc26-v542-afr1ste-updated-public946`, version 1, running.
+   - Status: COMPLETE and verified; queued after v541.
    - Purpose: controlled port of `afr1ste/birdclef-2026-0-946-updated-perch-sed`, which documents 0.946 V8 and 50/50 rank-blend ablations.
 3. `v538` — old OOF-teacher B0 sidecar diagnostic.
    - Keep queued only after the public946 candidates; do not spend fresh work here unless it unexpectedly helps.

@@ -1689,3 +1689,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Full rankblend->NFNet scale: launched `pl_public946_rankblend_nfnet_5s_lr1e4_ep20_bestval` on GPU1, log `logs/pl_public946_rankblend_nfnet_ep20_20260512T044954Z.log`. Completed in 100.4s; best epoch 20, best val AUC `0.981990` over 61 classes; final all-row student AUC `0.984806` over 75 classes vs teacher `0.994567`; student-teacher corr `0.924409`, MAE `0.07138`; TorchScript size 89.872MB.
 - Blend diagnostic on 739 matched labeled rows / 75 valid classes: rankblend teacher AUC `0.994834`, full NFNet student AUC `0.985062`, corr `0.95677`. Best linear blend is teacher `0.95` + student `0.05` -> `0.994903` (+0.000069); best rank blend also student weight `0.05` -> `0.994887` (+0.000053). This is a small but real local blend lift; do not spend a submission slot until v541/v542 scores, but it is a viable private-robustness sidecar candidate at 2-5% weight.
 - Next step: keep queue untouched until v541/v542 scores. For training, the next meaningful smoke is either full-scale V2S only if diversity is desired, or a rankblend->NFNet variant with 10s crop / power0.85 after anchor scoring.
+
+## 2026-05-12 05:55 UTC - public946 rankblend student follow-up smokes; no new scale
+
+- Status: current scored best remains `v539 = 0.943`. `v541` and `v542` are both COMPLETE/verified and queued behind daily cap (`v541 -> v542 -> v538`). Monitor pid `95675` remains alive/sleeping after cap. v510 remains complete/scored 0.927 with no active failure.
+- Ran additional public946 rankblend student smokes on free GPU1, respecting the rule not to add submission candidates before v541/v542 score. Added configs:
+  - `pl_public946_rankblend_v2s_5s_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_10s_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_5s_power085_lr1e4_smoke.json`
+  - `pl_public946_rankblend_nfnet_5s_power115_lr1e4_smoke.json`
+- Results vs previous best smoke (`rankblend->NFNet 5s power1.0`: final AUC `0.853951`, corr `0.711918`):
+  - rankblend->V2S 5s power1.0: best val `0.838204`, final `0.835216`, corr `0.585914`, MAE `0.18511`; lower AUC despite lower corr, do not scale now.
+  - rankblend->NFNet 10s power1.0: best val `0.844647`, final `0.847622`, corr `0.712828`, MAE `0.14399`; worse than 5s, so 10s crop not worth scaling.
+  - rankblend->NFNet 5s power0.85: best val `0.844561`, final `0.851504`, corr `0.715902`, MAE `0.15129`; worse than power1.0.
+  - rankblend->NFNet 5s power1.15: best val `0.853424`, final `0.851591`, corr `0.702949`, MAE `0.14768`; slightly lower final AUC than power1.0 despite lower corr.
+- Decision: keep the already-scaled `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate. Do not scale V2S, 10s, or power variants before anchor scores. Next best training action after v541/v542 score is either (a) package the 95/5 public946+NFNet private-robustness sidecar if anchor results justify, or (b) try a genuinely different V5/CLAP/BirdNET public stream.
