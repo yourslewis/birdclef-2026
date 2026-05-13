@@ -8,7 +8,7 @@ Current scored anchor: `v541`/`v542`/`v543`/`v544` = **0.946 public LB**.
 
 | Candidate | Readiness | Upside | Risk | Required next gate |
 |---|---:|---:|---:|---|
-| Lower CLAP `0.01`/`0.02` | Conditional | Medium if `v545` improves | Medium; CLAP local overlap is weak | Only consider if `v545 > 0.946`; run lower-weight local grid from downloaded v545 outputs |
+| Lower CLAP `0.005`/`0.01`/`0.02` | Conditional | Medium only if `v545` improves | Medium; CLAP local overlap is weak | 2026-05-13 grid found standalone CLAP poor (`corr=-0.028`, `macro_auc=0.455`) and only `0.005` gives a tiny dry-run AUC bump; do not submit CLAP-only if `v545` ties/drops |
 | Public946 + CV9245 `0.02`/`0.05` | High prep | Medium-high | Medium runtime/model-source complexity | Implement dry-run, write `submission_cv9245_cnnonly_sharedperch.csv`, then sidecar grid |
 | Public946 + train-audio-head `0.03`/`0.05` | High prep | Medium | Low runtime, medium hidden-fit uncertainty | Implement dry-run, write `submission_train_audio_head.csv`, then sidecar grid |
 | Tuned public946 gates | High prep | Low-medium | Overfit risk to tiny dry-run label overlap | Use full-sweep config only if no distinct sidecar passes gates |
@@ -19,7 +19,7 @@ Current scored anchor: `v541`/`v542`/`v543`/`v544` = **0.946 public LB**.
 ### If `v545 > 0.946`
 
 1. Treat CLAP as live signal, but do **not** widen it.
-2. Compare lower CLAP weights (`0.01`, `0.02`) against CV9245 and train-audio-head dry-run gates.
+2. Compare very small CLAP weights (`0.005`, `0.01`, `0.02`) against CV9245 and train-audio-head dry-run gates.
 3. Prefer the candidate with the best risk-adjusted sidecar metrics and bounded displacement from v542/v545.
 
 ### If `v545 = 0.946`

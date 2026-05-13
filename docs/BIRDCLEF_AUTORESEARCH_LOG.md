@@ -154,6 +154,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_V546_DECISION_MATRIX_20260513.md`, ranking lower-CLAP, CV9245, train-audio-head, tuned gates, and BirdNET stop conditions by v545 outcome.
 - **Decision:** no Kaggle push before v545 scores. If v545 ties/drops, the leading next slot should be a source-clean train-audio-head or CV9245 dry-run with sidecar-grid evidence; if v545 improves, compare smaller CLAP (`0.01`/`0.02`) against those sidecars before choosing v546.
 
+### v545 CLAP sidecar lower-weight gate — 2026-05-13 23:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; no `v545` submission is visible yet. `v545` kernel remains COMPLETE/no failure, output files are present, and guarded submit monitor pid `86320` is alive/sleeping after daily cap. `v510` remains COMPLETE/no failure with real SED manifest, `6/6` TorchScript models loaded, blend `0.05`, and wall time `370.6s`.
+- **Track:** P2/F public946 + CLAP sidecar gate while waiting for the cap reset; no Kaggle push.
+- **Command:** ran `scripts/birdclef_public946_sidecar_weight_grid.py` with v542 `submission.csv` as anchor and v545 `submission_clap_onnx.csv` as the sidecar, labels `/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv`, weights `0,0.005,0.01,0.02,0.03,0.05,0.075,0.10`.
+- **Artifact:** ignored local JSON `artifacts/blend_grids/v545_clap_sidecar_weight_grid_20260513T2345Z.json`.
+- **Result:** CLAP standalone is anti/near-uncorrelated with the anchor (`corr=-0.028`, `macro_auc=0.455`, `top3=0.121`). The only dry-run AUC improvement is tiny at `0.005` (`0.992549` vs anchor `0.992525`, top3 lower `0.511` vs `0.521`); `0.01+` drops AUC and `0.05` drops to `0.989306`.
+- **Decision:** if `v545` ties/drops, do not spend v546 on another CLAP-only weight. If `v545` unexpectedly improves, only consider a very small `0.005`/`0.01` follow-up after comparing against CV9245/train-audio-head gates.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
