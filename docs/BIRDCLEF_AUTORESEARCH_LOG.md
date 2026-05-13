@@ -2,6 +2,16 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 06:55 UTC — `public946-live-status-and-clap-int8-audit`
+
+- **Track:** P2 public946 diversity-stream triage while `v544` score is pending; no new submission slot consumed.
+- **Live LB/submission state:** latest Bearer API poll shows `v541=0.946`, `v542=0.946`, `v543=0.946`, `v538=0.930`, and `v544` ref `52603058` still pending/no publicScore field. The five 2026-05-13 UTC submissions are `v541`, `v542`, `v538`, `v543`, and `v544`, so the daily code-submission allowance is effectively consumed.
+- **Queue/monitor state:** no persistent `submit_pending_birdclef_queue.py` process is active. Latest focus queue log ended with `All pending kernels are already submitted.` The queue script still lists older pending definitions, but focus priority stops at already-submitted v538; do not restart it until a new unsubmitted completed kernel is intentionally added.
+- **Failure diagnosis:** `v510` remains COMPLETE with `submission.csv`. Kaggle log reconfirmed real SED manifest found, 6/6 TorchScript models loaded, real SED runtime `214.4s`, blend weight `0.05` applied, output `(240,235)`, wall time `370.6s`; no dataset-mount, zip, TorchScript, timeout, row/column, memory, ffmpeg, TF/XLA-fatal, onnxruntime, invalid-source, or silent-skip failure was found. `v544` is COMPLETE with `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, and `submission_sed.csv`; log confirms BirdNET mapped `157/234`, BirdNET runtime `16.6s`, and explicit `56/39/5` 3-way blend.
+- **Spec decision:** do not queue another BirdNET weight before `v544` scores. Since `needless090` V5/CLAP remains source-blocked, audited a separate source-resolved CLAP INT8 route from `xiyuetong/birdclef2026-ensemble-v2`.
+- **CLAP INT8 audit:** Bearer Dataset API confirms public dataset `habedi/birdclef-2026-clap-int8-bundle` with `clap_audio_int8.onnx`, `probe_weights.npz`, `mel_filters_slaney.npy`, and `probe_config.json`. Kernel metadata for `xiyuetong/birdclef2026-ensemble-v2` attaches this dataset plus the standard public946 inputs. Extracted source cached locally at ignored artifact `artifacts/public_kernels_20260513/birdclef2026-ensemble-v2.py` and contains a fast `submission_clap_onnx.csv` path.
+- **Next step:** after `v544` score lands, if no improvement, prepare `v545` as a source-clean public946 + CLAP-ONNX minority stream from the `v542` anchor with conservative CLAP rank weight `0.03`-`0.05`; require CLAP session load, row alignment, no NaNs, non-fallback final blend log, safe wall time, and bounded correlation/MAE vs `v542` before using a submission slot.
+
 ## 2026-05-13 05:56 UTC — `v544-public946-birdnet05`
 
 - **Track:** P2 BirdNET minority-stream follow-up after `v543` tied the 0.946 anchor.
