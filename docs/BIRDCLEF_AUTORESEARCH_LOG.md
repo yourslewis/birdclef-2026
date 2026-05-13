@@ -2,6 +2,41 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
+
+- **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
+- **Hypothesis:** After `v541`/`v542` locked the 0.946 public946 anchor, the existing `rankblend->NFNet 5s power1.0 ep20` student should only consume a submission slot if it adds enough local diversity over the public946 teacher.
+- **Branch/PR:** `feature/v541-v542-public946-anchor-lock`, PR #225.
+- **Data/artifacts used:**
+  - Teacher cache: `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_rankblend.npz`.
+  - Student predictions: `artifacts/pseudolabels/students/pl-public946-rankblend-nfnet-5s-lr1e4-ep20-bestval/student_predictions.npz`.
+  - Anchor dry-run caches: `artifacts/pseudolabels/public946-v541-dryrun-cache-v1/` and `artifacts/pseudolabels/public946-v542-dryrun-cache-v1/`.
+- **Command:** inline Python diagnostic using the Mac Kaggle venv; output JSON `artifacts/blend_grids/public946_anchor_student_gate_20260513.json`.
+- **Result:** on 792 teacher rows / 75 valid classes, public946 teacher AUC `0.994567`, NFNet student AUC `0.984806`, student-teacher corr `0.924409`, MAE `0.07138`. Best linear blend was teacher `0.95` + student `0.05`, AUC `0.994637`, delta `+0.0000699` vs teacher.
+- **Anchor comparison:** v541 rankblend vs v542 rankblend on 240 common rows has corr `0.999277`, MAE `0.00332`; v542 final vs v542 rankblend corr `0.997630`, MAE `0.00485`. The 0.946 anchors are essentially the same signal family.
+- **Decision:** do **not** make the NFNet sidecar the default next Kaggle slot. It remains a 2-5% public946+student minority fallback with tiny local lift. Prefer source-clean BirdNET or resolved V5/CLAP for the next true diversity slot; if those source gates fail, package the 95/5 NFNet sidecar as the safer fallback.
+
+## 2026-05-13 01:45 UTC — `public946-anchor-lock-v541-v542`
+
+- **Track:** P0 public946 anchor reproduction and lock.
+- **Hypothesis:** Restoring the missing public 0.946 postprocess details and independently replaying the updated Afr1ste public946 V8 stack should lift the repo-owned public946 baseline above `v539` (0.943) and lock a new canonical anchor.
+- **Branch/PR:** `feature/v541-v542-public946-anchor-lock` (documentation/update PR for the score lock).
+- **Kaggle candidates and refs:**
+  - `v541` / `yourslewis/bc26-v541-public946-mirror-rare`, ref `52594869`.
+  - `v542` / `yourslewis/bc26-v542-afr1ste-updated-public946`, ref `52594882`.
+  - trailing diagnostic `v538` / `yourslewis/bc26-v538-v517-plus-oofteacher-b0-blend-005`, ref `52594896`.
+- **Config/hyperparameters:**
+  - `v541`: public946 Perch/ProtoSSM + distilled SED rank blend with sonotype mirroring and rare-taxon adaptive thresholding.
+  - `v542`: Afr1ste updated public946 V8 replay, standard 60/40 rank blend, sonotype mirroring on 10 columns, rare thresholding on 44 species.
+  - `v538`: old v517 taxon gate + fold-aware OOF-teacher B0 sidecar blend weight 0.05 diagnostic.
+- **Validation before submission:** v541/v542 kernels COMPLETE/no failure; v542 output verification showed SED folds loaded, full dry-run `submission.csv` shape `(240,235)`, no NaNs, and runtime about 528s.
+- **LB result:**
+  - `v541`: **0.946 public LB**.
+  - `v542`: **0.946 public LB**.
+  - `v538`: `0.930 public LB`.
+- **Interpretation:** `v541` is now the canonical repo-owned public946 anchor; `v542` independently confirms the 0.946 public frontier. `v539` (0.943) is superseded, and old internal 0.930-axis sidecars should remain diagnostics only.
+- **Next step:** Do not queue a plain public weight clone next. Prefer distinct-signal work gated by local diagnostics: public946 teacher cache/student sidecar, source-clean BirdNET-only 3-way rank blend, or V5/CLAP only after source refs are resolved.
+
 ## 2026-05-06 06:50 UTC — `sed-b0-5s-attn-v1-smoke`
 
 - **Track:** A+G Real SED frame/event smoke + export/inference packaging

@@ -1,11 +1,12 @@
 # BirdCLEF 2026 Public946 Prioritized Spec — 2026-05-12
 
-Status: active planning spec  
-Owner branch: `feature/v539-public946-replay` / PR #223  
-Companion triage: `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md`  
-BirdNET fallback plan: `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md`  
-Current scored anchor: **v539 = 0.943 public LB**  
-Pending anchor candidates: **v541** complete/queued, **v542** complete/queued  
+Status: active execution spec
+Merged spec branch: `feature/v539-public946-replay-resolved` / PR #224
+Current update branch: `feature/v541-v542-public946-anchor-lock`
+Companion triage: `docs/BIRDCLEF_PUBLIC946_DIVERSITY_STREAM_TRIAGE_20260512.md`
+BirdNET fallback plan: `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md`
+Canonical scored anchor: **v541 = 0.946 public LB**
+Independent confirmation: **v542 = 0.946 public LB**
 Deprecated premise: the old 0.927 plateau is no longer the search target.
 
 ---
@@ -16,40 +17,40 @@ Deprecated premise: the old 0.927 plateau is no longer the search target.
 
 | Candidate | Public LB | Interpretation |
 |---|---:|---|
-| `v539` public946 replay baseline | **0.943** | New repo-owned anchor; validates public Perch/ProtoSSM + distilled SED rank-blend transfer. |
-| `v527`, `v531`, `v537`, `v517` | 0.930 | Old internal tier; useful only as low-weight private-diversity diagnostics. |
+| `v541` public946 mirror/rare replay | **0.946** | Canonical repo-owned public946 anchor; restores sonotype mirroring and rare-taxon thresholding omitted by v539. |
+| `v542` Afr1ste updated public946 V8 replay | **0.946** | Independent confirmation of the public946 Perch+SED V8 stack; preserves full train-row dry-run output and documented ablations. |
+| `v539` public946 replay baseline | 0.943 | Validated baseline transfer, but superseded by v541/v542. |
+| `v527`, `v531`, `v537`, `v538`, `v517` | 0.930 | Old internal tier; useful only as low-weight private-diversity diagnostics. |
 | `v532`, `v526` | timeout / no score | Do not extend these runtime-risky lanes unless a clear fix is needed. |
 
-### Live queue
+### Queue state after 2026-05-13 UTC reset
 
 1. `v541` — public946 replay with sonotype mirroring + rare-taxon adaptive thresholding.
-   - Status: COMPLETE, verified, waiting for daily cap reset.
-   - Purpose: restore public 0.946 postprocess paths omitted by v539.
+   - Status: COMPLETE/scored `0.946`, ref `52594869`.
+   - Purpose: canonical public946 anchor.
 2. `v542` — Afr1ste updated public946 V8 replay.
-   - Status: COMPLETE and verified; queued after v541.
+   - Status: COMPLETE/scored `0.946`, ref `52594882`.
    - Verification refresh 2026-05-12 09:55 UTC: output files present; SED folds loaded; standard 60/40 rank blend executed; sonotype mirroring applied to 10 columns; rare thresholding applied to 44 species; full dry-run `submission.csv` shape `(240,235)` with no NaNs; runtime about 528s.
-   - Purpose: controlled port of `afr1ste/birdclef-2026-0-946-updated-perch-sed`, which documents 0.946 V8 and 50/50 rank-blend ablations.
+   - Purpose: independent confirmation of `afr1ste/birdclef-2026-0-946-updated-perch-sed`, which documents 0.946 V8 and 50/50 rank-blend ablations.
 3. `v538` — old OOF-teacher B0 sidecar diagnostic.
-   - Keep queued only after the public946 candidates; do not spend fresh work here unless it unexpectedly helps.
+   - Status: COMPLETE/scored `0.930`, ref `52594896`.
+   - Interpretation: confirms the old internal OOF-teacher sidecar remains a 0.930-tier diagnostic, not a new anchor.
 
 ---
 
 ## 1. Priority order
 
-### P0 — Score and lock the public946 anchor
+### P0 — Score and lock the public946 anchor — DONE
 
-**Goal:** determine whether v539, v541, or v542 should be the canonical public946 anchor.
+**Result:** `v541` and `v542` both scored **0.946 public LB** after the 2026-05-13 UTC reset. Treat `v541` as the canonical repo-owned public946 anchor and `v542` as independent confirmation.
 
-**Actions:**
+**Locked decisions:**
 
-1. Let the monitor submit `v541` first at the next UTC reset.
-2. Verify `v542` completion and output. If valid, keep it queued immediately after `v541`.
-3. After both score, pick anchor by this rule:
-   - If either scores `>=0.946`, make it canonical.
-   - If both score around `0.943`, keep the higher of v539/v541/v542.
-   - If v541/v542 underperform v539, freeze public-postprocess forks and move to ensemble/student work.
+1. Supersede `v539` (0.943) with `v541`/`v542` (0.946).
+2. Do not spend a slot on the previously discussed clean `v543` public weight test unless later diagnostics show a clearly distinct public-public blend.
+3. Freeze old 0.930-axis internal sidecars as diagnostics only; `v538` scored 0.930 and did not create a new anchor.
 
-**Do not:** submit more public946 micro-forks before v541/v542 scores unless a pushed kernel fails and needs a minimal replacement.
+**Next:** move from anchor reproduction to distinct-signal work: teacher-cache/student experiments, carefully gated BirdNET/V5/CLAP diversity, or locally justified public-public blend diagnostics.
 
 ---
 
@@ -59,8 +60,8 @@ Public kernels inspected/found:
 
 | Ref | Priority | Reason |
 |---|---:|---|
-| `afr1ste/birdclef-2026-0-946-updated-perch-sed` | DONE as v542 | Fresh updated 0.946 Perch+SED V8 source; close to v541 but preserves full train-row dry-run output and documents ablations. |
-| `nina2025/birdclef-2026-ensemble-of-solutions-3` | Inspected; hold until v541/v542 score | Shows 0.946 via direct ensemble of Model_61/62. Offline reconstruction suggests the clean Model_61/62 idea is essentially a 50/50-ish public Proto/SED rank blend, not a new model stream. Avoid porting the kitchen-sink notebook unless v541/v542 miss and we need one clean v543 weight test. |
+| `afr1ste/birdclef-2026-0-946-updated-perch-sed` | DONE as v542; scored 0.946 | Fresh updated 0.946 Perch+SED V8 source; confirms the public946 anchor. |
+| `nina2025/birdclef-2026-ensemble-of-solutions-3` | Inspected; no immediate slot | Shows 0.946 via direct ensemble of Model_61/62. Offline reconstruction suggests the clean Model_61/62 idea is essentially a 50/50-ish public Proto/SED rank blend, not a new model stream. Since v541/v542 reached 0.946, do not spend the next slot on a plain public weight clone unless diagnostics show material divergence. |
 | `needless090/birdclef-2026-perch-sed-lb-0-946-clap` | Medium-high | Adds V5 and optional CLAP streams; true acoustic diversity but runtime/coverage risk. |
 | `raunakdey07/birdclef-2026-birdnet-4-way-rank-blend` | Medium | Adds BirdNET + custom EffNet streams; potentially diverse but more model/data-source brittleness. |
 | `mtoshidesu/testbirdclef-2026-ensemble-of-solutions-3` | Low/observe | Fork of Nina; only useful if it exposes a cleaner variant. |
@@ -70,7 +71,7 @@ Public kernels inspected/found:
 1. Extracted the small testable idea: Model_61/Model_62 use two 0.946 variants with xSED weights around `0.54/0.46` and `0.46/0.54`, then direct-blend them.
 2. Offline reconstruction with `scripts/birdclef_public946_weight_grid.py` on v542 dry-run rows shows the Model_61/62 direct proxy behaves almost like a 50/50 Proto/SED rank blend (`corr=0.993` vs v542 60/40) rather than a genuinely distinct stream.
 3. On dry-run labels, SED-heavy weights look best (`proto0.40/sed0.60` AUC `0.994484`; 50/50/Nina proxy around `0.99362`; v542 60/40 AUC `0.992525`), but this likely reflects train-label leakage because public ablations say 50/50 tied 0.946 while 70/30 and 80/20 were lower.
-4. If v541/v542 do not reach 0.946, package at most one clean `v543` weight test (`50/50` or SED-heavy `40/60`) without importing unrelated Nina model blocks. Do not port the full Nina notebook unless it contains a genuinely new high-signal stream and can run under the code-competition CPU budget.
+4. Since v541/v542 reached 0.946, do **not** package the simple Nina-style `v543` weight test as the next submission. Keep it as a fallback diagnostic only if future public-public output comparisons show material divergence without added runtime risk.
 
 ---
 
@@ -80,10 +81,10 @@ Public kernels inspected/found:
 
 #### Candidate ensemble families
 
-1. **Public-public blend** — highest near-term chance.
-   - `v539/v541/v542` variants.
-   - Rank-space blend or direct average only if outputs differ materially.
-   - Submit only after v541/v542 scores.
+1. **Public-public blend** — diagnostic only unless outputs differ materially.
+   - `v541/v542` are both 0.946; `v539` is 0.943 and may add only minor postprocess diversity.
+   - Rank-space blend or direct average only if offline output comparison shows nontrivial divergence and no runtime/submission-risk increase.
+   - Do not spend the next slot on a public-public clone by default; prefer distinct signal.
 
 2. **Public946 + V5/CLAP** — best diversity if sources are resolvable.
    - Use `needless090` fork as source; see companion diversity triage doc.
@@ -153,14 +154,14 @@ Run small smoke first, then scale only if the smoke passes.
 
 ## 2. Concrete next-run checklist
 
-1. Keep queue order: `v541 -> v542 -> v538`.
-   - `v541` and `v542` are both COMPLETE/no failure and verified.
-   - Monitor pid `95675` is alive and sleeping on the daily cap after attempting `v541`.
-2. Do not add another submission candidate until v541/v542 scores unless a queued candidate fails or the monitor dies.
-3. Nina notebook mining is complete enough for now: Model_61/62 is effectively a 50/50-ish public rank-blend idea, not a new stream. Hold any `v543` until v541/v542 scores.
-4. Public946 NFNet/V2S smokes are complete; keep `rankblend->NFNet 5s power1.0 ep20` as the only current student sidecar candidate.
-5. If v541/v542 both miss, choose between one clean public weight test and one source-clean BirdNET-only 3-way rank-blend candidate; V5/CLAP remains blocked until source refs are resolvable. Use `docs/BIRDCLEF_PUBLIC946_BIRDNET3_PORT_PLAN_20260512.md` for the BirdNET port recipe if selected.
-6. Update this spec after v541 and v542 scores land.
+1. Treat `v541`/`v542` at 0.946 as the locked public946 anchor pair.
+2. Do not queue a plain public weight clone next; the simple Nina/50-50 idea is now a fallback diagnostic, not the main path.
+3. Prefer one of these distinct-signal next moves:
+   - build/refresh a public946 teacher cache from v541/v542 outputs and run the next student-diversity smoke (`rankblend->NFNet 5s power1.0 ep20` remains the current sidecar candidate),
+   - source-clean BirdNET-only 3-way rank-blend if model/label mapping and wall-time gates pass,
+   - V5/CLAP only if its blocked source refs are resolved or recreated.
+4. If spending a Kaggle slot, require a pre-submit gate: output alignment, no silent fallback, and clear distinction from v541/v542.
+5. Keep old 0.930 internal streams as minority diagnostics only; `v538` scored 0.930 and should not be extended directly.
 
 ---
 
@@ -168,10 +169,9 @@ Run small smoke first, then scale only if the smoke passes.
 
 Daily slots are now valuable. Use this ordering until updated:
 
-1. `v541` — already complete, first pending.
-2. `v542` — if complete and verified.
-3. One genuinely distinct public ensemble fork (`v543`) only after v541/v542 results.
-4. One public946+student/internal minority blend only after local diagnostics.
-5. Old internal sidecars (`v538`, etc.) last.
+1. One genuinely distinct public946 diversity candidate only after local gates pass (BirdNET-only 3-way or resolved V5/CLAP, not a silent 2-way fallback).
+2. One public946+student/internal minority blend only after local diagnostics show useful divergence.
+3. Public-public weight clone (`v543`-style 50/50 or 40/60) only as a fallback if output comparisons justify it.
+4. Old internal sidecars (`v538`, etc.) last.
 
 No more old 0.930-axis micro-sweeps unless they are explicitly tied to public946 as a minority stream.
