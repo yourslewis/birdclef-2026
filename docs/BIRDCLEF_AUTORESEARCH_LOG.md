@@ -14,6 +14,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Validation:** static Python compile passed for the push script and Kaggle script. Required Kaggle dry-run gates after push: CLAP ONNX session loads, `submission_clap_onnx.csv` exists and row-aligns with Proto/SED, final log says explicit v545 3-way CLAP blend, final `submission.csv` has no NaNs and shape `(240,235)`, wall time remains safe.
 - **Next step:** push real Kaggle kernel `yourslewis/bc26-v545-public946-clap-int8`, monitor to COMPLETE/ERROR, then submit only after dry-run gates pass and daily cap allows.
 
+### v545 v1 failure + v2 mount-search fix — 2026-05-13 08:52 UTC
+
+- **v1 result:** Kaggle kernel `yourslewis/bc26-v545-public946-clap-int8`, version 1, failed before final blend. Failure was intentional hard-stop: `FileNotFoundError: CLAP ONNX model not found: /kaggle/input/birdclef-2026-clap-int8-bundle/clap_audio_int8.onnx`. Partial outputs contained `submission_protossm.csv` and `submission_sed.csv`, confirming the public946 base ran before the CLAP mount check.
+- **Root cause:** dataset source attached, but Kaggle mounted it at a non-flat path rather than the public notebook's `/kaggle/input/birdclef-2026-clap-int8-bundle` path. This mirrors the earlier v510 real-SED mount-path class of failures.
+- **Fix:** updated v545 to check both flat and `/kaggle/input/datasets/habedi/...` paths, then recursively search `/kaggle/input/**/clap_audio_int8.onnx` and print candidates. Still hard-fails if no CLAP model is found; no silent public946 fallback.
+- **Validation:** `python3 -m py_compile` passed after the fix. Next step: push v545 version 2 and re-monitor for CLAP session load, `submission_clap_onnx.csv`, explicit `57/38/5` blend, and final `submission.csv`.
+
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.

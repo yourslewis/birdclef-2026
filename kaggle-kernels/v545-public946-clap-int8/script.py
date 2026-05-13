@@ -2175,12 +2175,28 @@ print("Distilled SED Processing Complete.")
 
 # %% cell v545_clap_int8
 print("Starting v545 CLAP INT8 ONNX side stream...")
-_CLAP_ONNX_DIR = Path("/kaggle/input/birdclef-2026-clap-int8-bundle")
-_clap_onnx_model = _CLAP_ONNX_DIR / "clap_audio_int8.onnx"
+_CLAP_ONNX_CANDIDATES = [
+    Path("/kaggle/input/birdclef-2026-clap-int8-bundle/clap_audio_int8.onnx"),
+    Path("/kaggle/input/datasets/habedi/birdclef-2026-clap-int8-bundle/clap_audio_int8.onnx"),
+]
+_CLAP_ONNX_DIR = None
+_clap_onnx_model = None
+for _cand in _CLAP_ONNX_CANDIDATES:
+    if _cand.exists():
+        _clap_onnx_model = _cand
+        _CLAP_ONNX_DIR = _cand.parent
+        break
+if _clap_onnx_model is None:
+    _hits = sorted(Path("/kaggle/input").rglob("clap_audio_int8.onnx"))
+    print("CLAP ONNX recursive candidates:", [str(x) for x in _hits[:10]])
+    if _hits:
+        _clap_onnx_model = _hits[0]
+        _CLAP_ONNX_DIR = _clap_onnx_model.parent
 _clap_ok = False
 
-if not _clap_onnx_model.exists():
-    raise FileNotFoundError(f"CLAP ONNX model not found: {_clap_onnx_model}")
+if _clap_onnx_model is None or not _clap_onnx_model.exists():
+    raise FileNotFoundError("CLAP ONNX model not found under /kaggle/input")
+print(f"Using CLAP INT8 bundle dir: {_CLAP_ONNX_DIR}")
 if not _ONNX_AVAILABLE:
     raise RuntimeError("onnxruntime is not available; cannot run v545 CLAP INT8 stream")
 
