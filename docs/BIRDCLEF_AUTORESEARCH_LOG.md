@@ -42,6 +42,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Spec read:** active spec now treats the old 0.927 language as stale and prioritizes distinct signal over public946 copies. Because `v545` is unscored and capped, the safe action remains monitoring + preparation rather than pushing `v546`.
 - **Next gate:** hold all new Kaggle pushes until v545 scores. If v545 drops/ties, run a local output/correlation gate for source-clean public946+CV9245 (`0.02`/`0.05`) or train-audio-head 5% before spending the next daily slot; if v545 unexpectedly improves, consider only a lower CLAP weight (`0.01`/`0.02`) follow-up.
 
+### Public946 sidecar gate utility smoke — 2026-05-13 13:45 UTC
+
+- **Track:** P2/P3 preparation while `v545` is capped and unscored; no new Kaggle kernel or submission was pushed.
+- **Implementation:** added reusable pre-submit diagnostic `scripts/birdclef_public946_sidecar_weight_grid.py`. It row-aligns a public946 anchor CSV with any candidate sidecar CSV, rank-blends a short sidecar-weight grid, and reports label-overlap AUC plus correlation/MAE/max-abs versus the anchor. This is the intended local gate before a future source-clean CV9245 or train-audio-head candidate consumes a daily slot.
+- **Smoke command/artifact:** ran the utility on the known v542 anchor plus the v545 CLAP side stream as a validation case; ignored output `artifacts/blend_grids/public946_sidecar_gate_clap_smoke_20260513.json`.
+- **Smoke result:** anchor-only `sidecar_0.0000` was best on the available dry-run label overlap (`190` matched rows / `42` valid classes) with macro AUC `0.992525`; CLAP sidecar standalone macro AUC `0.455042`, corr vs anchor `-0.02796`. Increasing CLAP weight monotonically reduced local AUC through the tested `0.10` weight, consistent with the earlier v545 CLAP-specific diagnostic.
+- **Validation:** `python3 -m py_compile scripts/birdclef_public946_sidecar_weight_grid.py` passed and the smoke run completed.
+- **Next:** keep `v545` as the only queued CLAP probe. After v545 scores, use this utility for `public946+CV9245` (`0.02`/`0.05`) or train-audio-head 5% local gates before any `v546` Kaggle push.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
