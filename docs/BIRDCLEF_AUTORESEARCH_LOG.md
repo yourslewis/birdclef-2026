@@ -21,6 +21,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Fix:** updated v545 to check both flat and `/kaggle/input/datasets/habedi/...` paths, then recursively search `/kaggle/input/**/clap_audio_int8.onnx` and print candidates. Still hard-fails if no CLAP model is found; no silent public946 fallback.
 - **Validation:** `python3 -m py_compile` passed after the fix. Pushed v545 version 2 via Bearer API; push returned no invalid data/competition/kernel/model sources. v545 v2 is COMPLETE/no failure. Kaggle log confirms CLAP bundle resolved at `/kaggle/input/datasets/habedi/birdclef-2026-clap-int8-bundle`, CLAP processed `20/20` dry-run files in `55.6s`, wrote `submission_clap_onnx.csv (240,235)`, and executed explicit `57/38/5` Proto/SED/CLAP blend with sonotype mirroring and rare thresholding. Downloaded outputs to ignored artifact `artifacts/kaggle_outputs/v545-public946-clap-int8/`; final `submission.csv` shape `(240,235)`, no NaNs; CLAP CSV no NaNs; v545 vs v542 final corr `0.998122`, MAE `0.01546`, max abs `0.08383`. Guarded submit monitor `logs/submit_v545_when_ready_20260513T085043Z.log` (pid `68912`) attempted submission and hit daily cap with ~14h remaining; it is sleeping and will retry.
 
+### v545 CLAP weight-grid diagnostic while capped — 2026-05-13 10:45 UTC
+
+- **Command/artifact:** ran local CLAP weight grid from downloaded v545 Proto/SED/CLAP outputs plus v542 final output; JSON artifact `artifacts/blend_grids/public946_clap_int8_weight_grid_20260513.json` (ignored).
+- **Grid:** kept the public946 Proto/SED ratio fixed at 60/40 among the non-CLAP mass and swept CLAP rank weight `0.00, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.075, 0.10, 0.125, 0.15`; applied the same fake-only/proto-continuity/SED-spike/mirror/rare gates as v545.
+- **Result:** on the dry-run labeled overlap (`240` rows, `42` valid classes), pure public946 `w=0.00` had local AUC `0.990665`; submitted v545 `w=0.05` had `0.988749`, corr vs v542 `0.998122`, MAE `0.01546`; CLAP standalone AUC was weak (`0.448223`) but very low-correlation (`corr=0.0098`).
+- **Decision:** this diagnostic argues against widening CLAP before leaderboard feedback. Keep v545 as the single queued CLAP probe. If it drops below 0.946, kill CLAP INT8 for public slots; if it ties, do not spend a slot on higher CLAP weights; if it unexpectedly improves, consider a smaller `0.01`-`0.02` CLAP follow-up rather than increasing weight.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
