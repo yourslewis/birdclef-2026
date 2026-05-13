@@ -2,6 +2,16 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 04:44 UTC — `public946-birdnet-weight-grid-hold`
+
+- **Track:** P2 BirdNET minority-stream hyperparameter gate while `v543` score is pending.
+- **Hypothesis:** If `v543` 10% BirdNET ties/improves the 0.946 anchor, the safest follow-up is likely a smaller BirdNET minority weight that preserves more of the validated `v542` public946 signal.
+- **Branch/PR:** `feature/v543-public946-birdnet3`, PR #226.
+- **Data/artifacts used:** downloaded Kaggle outputs under `artifacts/kaggle_outputs/v543-public946-birdnet3/` plus `v542` final dry-run output; local train-soundscape labels for overlap scoring.
+- **Command:** inline Python grid over BirdNET weights using the exact v542/v543 final postprocess sequence; output JSON `artifacts/blend_grids/public946_birdnet_weight_grid_20260513.json`.
+- **Grid:** keeping the v543 schedule `proto=0.60-0.80*w_bn`, `sed=0.40-0.20*w_bn`, best local overlap AUC was at `w_bn=0.05` (`proto=0.56`, `sed=0.39`, AUC `0.992617`, corr vs v542 `0.999884`, MAE `0.01083`). The submitted `w_bn=0.10` had AUC `0.992540`, corr `0.999558`, MAE `0.02166`.
+- **Decision:** do not submit another BirdNET variant while ref `52600158` is score-pending. If `v543` ties/improves 0.946, package `v544` as the smaller 5% BirdNET candidate; if `v543` drops, stop BirdNET and pivot to V5/CLAP source resolution or public946 teacher/student work.
+
 ## 2026-05-13 04:10 UTC — `v543-public946-birdnet3`
 
 - **Track:** P2 distinct public946 diversity stream: source-clean BirdNET 6K 3-way rank blend after `v541`/`v542` anchor lock.

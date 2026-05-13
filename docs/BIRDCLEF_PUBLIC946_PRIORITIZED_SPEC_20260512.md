@@ -99,6 +99,7 @@ Public kernels inspected/found:
 
 3. **Public946 + BirdNET/custom EffNet** — BirdNET-only path now cleaner than full 4-way.
    - Current candidate: `v543` (`yourslewis/bc26-v543-public946-birdnet-3way`) uses Proto `0.52` / SED `0.38` / BirdNET `0.10`; kernel COMPLETE and submitted, score pending.
+   - Follow-up gate: local weight grid favors a smaller 5% BirdNET variant (`proto=0.56`, `sed=0.39`, `birdnet=0.05`; overlap AUC `0.992617`, corr vs v542 `0.999884`) over the submitted 10% candidate. Package this as `v544` only if `v543` ties/improves 0.946; otherwise stop BirdNET.
    - Use `raunakdey07` fork for the 4-way idea and `claudedevore/birdclef-2026-r0946-birdnet-3way-submit` for a cleaner BirdNET-only reference; see companion diversity triage doc.
    - BirdNET source is resolved: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`.
    - Custom EffNet source remains blocked by 403 notebook-output lookup; do not require it for the first source-clean BirdNET candidate.
