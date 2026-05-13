@@ -2,6 +2,18 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 04:10 UTC — `v543-public946-birdnet3`
+
+- **Track:** P2 distinct public946 diversity stream: source-clean BirdNET 6K 3-way rank blend after `v541`/`v542` anchor lock.
+- **Hypothesis:** A conservative BirdNET-only stream from the public BirdNET 4-way family may add acoustic diversity to the 0.946 Perch/ProtoSSM + distilled SED anchor without relying on the blocked custom EffNet notebook-output source.
+- **Branch:** `feature/v543-public946-birdnet3`.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v543-public946-birdnet-3way`, version 1, ref URL from push `https://www.kaggle.com/code/yourslewis/bc26-v543-public946-birdnet-3way`; push returned no invalid data/kernel/model sources.
+- **Config/hyperparameters:** forked `v542` and inserted BirdNET TFLite stream from model source `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`; final rank blend is Proto `0.52` + SED `0.38` + BirdNET `0.10`; kept sonotype mirroring and rare-taxon adaptive thresholding. Custom EffNet remains intentionally skipped because its notebook-output source is not available.
+- **Kaggle validation:** kernel status COMPLETE/no failure. Output files include `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, and `submission_sed.csv`; log confirms BirdNET model resolved, `157/234` labels mapped, BirdNET runtime `15.6s`, 3-way rank blend executed, sonotype mirroring applied to 10 columns, rare thresholding applied to 44 species, and total notebook wall time about `546s`.
+- **Dry-run gates:** downloaded outputs to `artifacts/kaggle_outputs/v543-public946-birdnet3/`; final `submission.csv` shape `(240,235)`, no NaNs, train-overlap `190` rows / `42` valid AUC classes. Local overlap AUC: v543 final `0.992540` vs v542 final `0.992525`; BirdNET standalone is weak locally (`0.501832`) but low-correlation with v542 (`corr=0.0196`). v543 final vs v542 final corr `0.999558`, MAE `0.02166`. Validation summary: `artifacts/kaggle_outputs/v543-public946-birdnet3/validation_summary.json`.
+- **Submission:** submitted code competition kernel version 1 as ref `52600158` with description `v543: Public946 v542 plus source-clean BirdNET 6K 3-way rank blend 52/38/10`. Status was still pending/no public score at the last poll.
+- **Next step:** Monitor ref `52600158`. If it ties/improves 0.946, keep BirdNET as a minority public946 diversity stream and optionally test a smaller `0.05` BirdNET weight; if it drops, stop BirdNET and pivot to V5/CLAP source resolution or public946 teacher/student work.
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
