@@ -35,6 +35,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Findings:** `chaneyma/birdclef-2026-cv9245-moe-artifacts` is public/attachable and contains four MoE fold weights plus `pantanal_infer_only_submission.py`, `student_cnn...pt`, and `student_crnn...pt` (~69 MB total). `tsubasatech/birdclef-2026-snowflake-sed` is public/attachable and contains ConvNeXt-Tiny and EfficientNetV2-M SED ONNX files (~328 MB). Zeyad's two-branch public fork uses CV9245 with `CV9245_RANK_WEIGHT=0.05` and optional BirdNET `0.025`, but also attaches CLAP/Snowflake sources that must be source-cleaned before any repo candidate. Henry's train-audio-head fork adds a public train-audio-head rank voter at 5% and claims hidden tie-break improvement while displaying 0.946. Meenal's improved fork is essentially a heavier BirdNET branch (`20%`) and is deprioritized because our BirdNET 10%/5% probes only tied.
 - **Decision:** Do not push a v546 while v545 is unscored/capped. If v545 drops/ties and no better LB signal appears, the next source-clean AutoResearch candidate should be a minimal public946 + CV9245 sidecar (likely `0.02`-`0.05` rank weight) or the train-audio-head 5% fork after local output/correlation gates. Avoid Meenal/BirdNET widening.
 
+### v545 cap hold recheck + next-candidate gate — 2026-05-13 12:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` is COMPLETE/no failure with `submission.csv`, `submission_clap_onnx.csv`, `submission_protossm.csv`, and `submission_sed.csv`. `v510` is still COMPLETE/no failure with `submission.csv`; log confirms real SED manifest found, `6/6` TorchScript models loaded, `REAL_SED_BLEND_WEIGHT=0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `68912` remains alive. It attempted `bc26-v545-public946-clap-int8` version 2 and hit the daily 5-submission cap; no duplicate submission or queue restart was made.
+- **Spec read:** active spec now treats the old 0.927 language as stale and prioritizes distinct signal over public946 copies. Because `v545` is unscored and capped, the safe action remains monitoring + preparation rather than pushing `v546`.
+- **Next gate:** hold all new Kaggle pushes until v545 scores. If v545 drops/ties, run a local output/correlation gate for source-clean public946+CV9245 (`0.02`/`0.05`) or train-audio-head 5% before spending the next daily slot; if v545 unexpectedly improves, consider only a lower CLAP weight (`0.01`/`0.02`) follow-up.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
