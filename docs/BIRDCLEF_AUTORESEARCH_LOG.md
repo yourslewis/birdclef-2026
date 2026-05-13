@@ -2,6 +2,27 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 01:45 UTC — `public946-anchor-lock-v541-v542`
+
+- **Track:** P0 public946 anchor reproduction and lock.
+- **Hypothesis:** Restoring the missing public 0.946 postprocess details and independently replaying the updated Afr1ste public946 V8 stack should lift the repo-owned public946 baseline above `v539` (0.943) and lock a new canonical anchor.
+- **Branch/PR:** `feature/v541-v542-public946-anchor-lock` (documentation/update PR for the score lock).
+- **Kaggle candidates and refs:**
+  - `v541` / `yourslewis/bc26-v541-public946-mirror-rare`, ref `52594869`.
+  - `v542` / `yourslewis/bc26-v542-afr1ste-updated-public946`, ref `52594882`.
+  - trailing diagnostic `v538` / `yourslewis/bc26-v538-v517-plus-oofteacher-b0-blend-005`, ref `52594896`.
+- **Config/hyperparameters:**
+  - `v541`: public946 Perch/ProtoSSM + distilled SED rank blend with sonotype mirroring and rare-taxon adaptive thresholding.
+  - `v542`: Afr1ste updated public946 V8 replay, standard 60/40 rank blend, sonotype mirroring on 10 columns, rare thresholding on 44 species.
+  - `v538`: old v517 taxon gate + fold-aware OOF-teacher B0 sidecar blend weight 0.05 diagnostic.
+- **Validation before submission:** v541/v542 kernels COMPLETE/no failure; v542 output verification showed SED folds loaded, full dry-run `submission.csv` shape `(240,235)`, no NaNs, and runtime about 528s.
+- **LB result:**
+  - `v541`: **0.946 public LB**.
+  - `v542`: **0.946 public LB**.
+  - `v538`: `0.930 public LB`.
+- **Interpretation:** `v541` is now the canonical repo-owned public946 anchor; `v542` independently confirms the 0.946 public frontier. `v539` (0.943) is superseded, and old internal 0.930-axis sidecars should remain diagnostics only.
+- **Next step:** Do not queue a plain public weight clone next. Prefer distinct-signal work gated by local diagnostics: public946 teacher cache/student sidecar, source-clean BirdNET-only 3-way rank blend, or V5/CLAP only after source refs are resolved.
+
 ## 2026-05-06 06:50 UTC — `sed-b0-5s-attn-v1-smoke`
 
 - **Track:** A+G Real SED frame/event smoke + export/inference packaging

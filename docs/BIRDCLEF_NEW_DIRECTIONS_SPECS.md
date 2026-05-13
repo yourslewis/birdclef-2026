@@ -1,13 +1,15 @@
 # BirdCLEF 2026 New Directions Spec Pack
 
-Status: draft v1  
-Anchor: current stable public LB best = **0.927** from `v268`, `v367`, `v368`, and `v501`-`v504`  
+Status: draft v1
+Anchor: current stable public LB best = **0.927** from `v268`, `v367`, `v368`, and `v501`-`v504`
 Problem: the current inference/post-processing family is saturated around 0.926-0.927. The next meaningful jump likely requires new model signal, not more single-parameter post-process sweeps.
 
 
 ## 2026-05-11 Public Approach Reprioritization
 
 A new public/shared approach scan found a much stronger public frontier around **0.946 LB**, centered on public distilled SED + Perch/ProtoSSM rank blending.  Treat the older 0.927 plateau language in this document as stale.
+
+**2026-05-13 update:** repo-owned ports `v541` and `v542` both scored **0.946 public LB**.  Treat `v541` as the canonical public946 anchor and `v542` as independent confirmation; `v539` (0.943) is superseded.
 
 Read the addenda before choosing new work:
 
