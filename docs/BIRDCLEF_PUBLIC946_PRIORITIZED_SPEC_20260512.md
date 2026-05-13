@@ -19,7 +19,8 @@ Deprecated premise: the old 0.927 plateau is no longer the search target.
 |---|---:|---|
 | `v541` public946 mirror/rare replay | **0.946** | Canonical repo-owned public946 anchor; restores sonotype mirroring and rare-taxon thresholding omitted by v539. |
 | `v542` Afr1ste updated public946 V8 replay | **0.946** | Independent confirmation of the public946 Perch+SED V8 stack; preserves full train-row dry-run output and documented ablations. |
-| `v543` public946 + BirdNET 3-way | pending | Source-clean BirdNET 6K minority stream: Proto/SED/BirdNET rank blend 52/38/10; submitted ref `52600158`. |
+| `v543` public946 + BirdNET 3-way | 0.946 | Source-clean BirdNET 6K minority stream: Proto/SED/BirdNET rank blend 52/38/10; tied the anchor, ref `52600158`. |
+| `v544` public946 + BirdNET 5% | pending | Safer follow-up from local grid: Proto/SED/BirdNET rank blend 56/39/5; submitted ref `52603058`. |
 | `v539` public946 replay baseline | 0.943 | Validated baseline transfer, but superseded by v541/v542. |
 | `v527`, `v531`, `v537`, `v538`, `v517` | 0.930 | Old internal tier; useful only as low-weight private-diversity diagnostics. |
 | `v532`, `v526` | timeout / no score | Do not extend these runtime-risky lanes unless a clear fix is needed. |
@@ -37,9 +38,13 @@ Deprecated premise: the old 0.927 plateau is no longer the search target.
    - Status: COMPLETE/scored `0.930`, ref `52594896`.
    - Interpretation: confirms the old internal OOF-teacher sidecar remains a 0.930-tier diagnostic, not a new anchor.
 4. `v543` — public946 + source-clean BirdNET 6K 3-way rank blend.
-   - Status: kernel COMPLETE/no failure and submitted as ref `52600158`; score pending at last poll.
+   - Status: COMPLETE/scored `0.946`, ref `52600158`.
    - Verification refresh 2026-05-13 04:10 UTC: BirdNET model source resolved, `157/234` labels mapped, `submission_birdnet.csv` written, final `submission.csv` shape `(240,235)` with no NaNs, 3-way blend `52/38/10`, runtime about `546s`.
-   - Purpose: first true public946 distinct acoustic stream after the anchor lock; stop if it drops below the 0.946 anchor.
+   - Interpretation: safe tie, but not an improvement.
+5. `v544` — public946 + source-clean BirdNET 5% 3-way rank blend.
+   - Status: kernel COMPLETE/no failure and submitted as ref `52603058`; score pending at first post-submit poll.
+   - Verification refresh 2026-05-13 05:56 UTC: output files present, final `submission.csv` shape `(240,235)` with no NaNs, 3-way blend `56/39/5`, runtime about `556s`.
+   - Purpose: smaller BirdNET perturbation selected from local grid after v543 tied the anchor.
 
 ---
 
@@ -98,8 +103,8 @@ Public kernels inspected/found:
    - Abort if projected hidden runtime exceeds safe budget.
 
 3. **Public946 + BirdNET/custom EffNet** — BirdNET-only path now cleaner than full 4-way.
-   - Current candidate: `v543` (`yourslewis/bc26-v543-public946-birdnet-3way`) uses Proto `0.52` / SED `0.38` / BirdNET `0.10`; kernel COMPLETE and submitted, score pending.
-   - Follow-up gate: local weight grid favors a smaller 5% BirdNET variant (`proto=0.56`, `sed=0.39`, `birdnet=0.05`; overlap AUC `0.992617`, corr vs v542 `0.999884`) over the submitted 10% candidate. Package this as `v544` only if `v543` ties/improves 0.946; otherwise stop BirdNET.
+   - `v543` (`yourslewis/bc26-v543-public946-birdnet-3way`) used Proto `0.52` / SED `0.38` / BirdNET `0.10` and tied 0.946.
+   - Current candidate: `v544` (`yourslewis/bc26-v544-public946-birdnet-5pct`) uses the local-grid-favored smaller BirdNET perturbation: Proto `0.56` / SED `0.39` / BirdNET `0.05`; kernel COMPLETE and submitted, score pending.
    - Use `raunakdey07` fork for the 4-way idea and `claudedevore/birdclef-2026-r0946-birdnet-3way-submit` for a cleaner BirdNET-only reference; see companion diversity triage doc.
    - BirdNET source is resolved: `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`.
    - Custom EffNet source remains blocked by 403 notebook-output lookup; do not require it for the first source-clean BirdNET candidate.

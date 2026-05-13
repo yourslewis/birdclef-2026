@@ -2,6 +2,18 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 05:56 UTC — `v544-public946-birdnet05`
+
+- **Track:** P2 BirdNET minority-stream follow-up after `v543` tied the 0.946 anchor.
+- **Hypothesis:** Since `v543` (10% BirdNET) tied `v541/v542` at 0.946 but local grid preferred a smaller BirdNET perturbation, a 5% BirdNET stream may keep the 0.946 floor while adding slightly safer distinct signal.
+- **Branch/PR:** `feature/v543-public946-birdnet3`, PR #226.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v544-public946-birdnet-5pct`, version 1; push returned no invalid data/kernel/model sources.
+- **Config/hyperparameters:** forked `v543`; changed final rank blend from Proto/SED/BirdNET `0.52/0.38/0.10` to `0.56/0.39/0.05`; kept BirdNET model source `shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3`, sonotype mirroring, and rare-taxon adaptive thresholding.
+- **Kaggle validation:** kernel COMPLETE/no failure. Output files include `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, and `submission_sed.csv`; log confirms BirdNET runtime `16.6s`, 5% 3-way rank blend executed, sonotype mirroring applied to 10 columns, rare thresholding applied to 44 species, and notebook wall time about `556s`.
+- **Dry-run gates:** downloaded outputs to `artifacts/kaggle_outputs/v544-public946-birdnet05/`; final `submission.csv` shape `(240,235)`, no NaNs. v544 vs v542 final corr `0.999884`, MAE `0.01083`; v544 vs v543 final corr `0.999864`, MAE `0.01082`. Validation summary: `artifacts/kaggle_outputs/v544-public946-birdnet05/validation_summary.json`.
+- **Submission:** submitted code competition kernel version 1 as ref `52603058` with description `v544: Public946 v542 plus source-clean BirdNET 6K 3-way rank blend 56/39/5`. Score was pending at the first post-submit poll.
+- **Next step:** Monitor ref `52603058`. If it ties/improves 0.946, stop BirdNET widening and pivot to V5/CLAP source resolution or public946 teacher/student work; if it drops, stop BirdNET and do not queue further weights.
+
 ## 2026-05-13 04:44 UTC — `public946-birdnet-weight-grid-hold`
 
 - **Track:** P2 BirdNET minority-stream hyperparameter gate while `v543` score is pending.
