@@ -106,6 +106,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Submission:** submitted code competition kernel version 1 as ref `52600158` with description `v543: Public946 v542 plus source-clean BirdNET 6K 3-way rank blend 52/38/10`. Status was still pending/no public score at the last poll.
 - **Next step:** Monitor ref `52600158`. If it ties/improves 0.946, keep BirdNET as a minority public946 diversity stream and optionally test a smaller `0.05` BirdNET weight; if it drops, stop BirdNET and pivot to V5/CLAP source resolution or public946 teacher/student work.
 
+### Public946 gate AutoResearch full sweep + cap monitor refresh — 2026-05-13 15:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with `submission.csv`; log still confirms real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue fix:** the restarted `v545` monitor pid `22153` had already exited/staled. Rechecked recent 200 submissions (`v545` absent), then restarted guarded monitor as pid `35141`, log `logs/submit_v545_when_ready_20260513T154642Z_restart2.log`. It immediately re-hit the daily cap with `8.2h` remaining and is sleeping; no duplicate submission was created.
+- **Full AutoResearch result:** the background public946 gate sweep completed successfully. Artifact `artifacts/blend_grids/public946_gate_autoresearch_v542_full_20260513.json` contains `3646` trials on v542 dry-run Proto/SED outputs with `190` matched rows / `42` valid classes. Baseline macro AUC `0.992525`. Best configs reached macro AUC `0.993325` (`+0.000800`) with the same stable pattern: `proto_weight=0.56`, lighter fake-only boost `0.04`, lighter Proto-continuity boost `0.10`, lighter SED-spike boost `0.08`, and `ctx_thr=0.90`. Corr vs v542 final was about `0.9946`-`0.9951`, MAE `0.0118`-`0.0127`, max abs `0.3530`.
+- **Interpretation:** the full sweep reinforces the earlier smoke signal that a tuned public946-gate candidate may be worth one slot after v545 scores, but only as one of the ranked candidates against CV9245/train-audio-head. Do not submit a pure gate-tuned v546 while `v545` is pending.
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
