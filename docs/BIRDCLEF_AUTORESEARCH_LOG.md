@@ -2,6 +2,66 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 07:55 UTC — `v545-public946-clap-int8`
+
+- **Track:** P2 public946 AutoResearch distinct-signal layer; CLAP INT8 side stream on top of the confirmed 0.946 public946 anchor.
+- **Hypothesis:** `v543` and `v544` showed BirdNET is safe but did not beat 0.946, so the next useful experiment should add a different acoustic representation. A small CLAP INT8 rank stream may add complementary audio-semantic signal while preserving the `v542` public946 floor.
+- **Branch/PR:** `feature/v545-public946-clap-int8` (fresh worktree from `origin/main`; PR pending at implementation time).
+- **Base:** forked `kaggle-kernels/v542-afr1ste-updated-public946/`, which is the confirmed 0.946 Afr1ste updated public946 V8 replay.
+- **New source:** public dataset `habedi/birdclef-2026-clap-int8-bundle`, previously verified attachable by Bearer Dataset API. It provides `clap_audio_int8.onnx`, `probe_weights.npz`, `mel_filters_slaney.npy`, and `probe_config.json`.
+- **Config/hyperparameters:** final rank blend changed from Proto/SED `0.60/0.40` to Proto/SED/CLAP `0.57/0.38/0.05`; CLAP side stream has hard no-fallback gates, writes `submission_clap_onnx.csv`, requires finite nonzero predictions, and uses a 45-minute hidden-test budget.
+- **Implementation files:** `kaggle-kernels/v545-public946-clap-int8/`, `scripts/push_v545.py`.
+- **Validation:** static Python compile passed for the push script and Kaggle script. Required Kaggle dry-run gates after push: CLAP ONNX session loads, `submission_clap_onnx.csv` exists and row-aligns with Proto/SED, final log says explicit v545 3-way CLAP blend, final `submission.csv` has no NaNs and shape `(240,235)`, wall time remains safe.
+- **Next step:** push real Kaggle kernel `yourslewis/bc26-v545-public946-clap-int8`, monitor to COMPLETE/ERROR, then submit only after dry-run gates pass and daily cap allows.
+
+### v545 v1 failure + v2 mount-search fix — 2026-05-13 08:52 UTC
+
+- **v1 result:** Kaggle kernel `yourslewis/bc26-v545-public946-clap-int8`, version 1, failed before final blend. Failure was intentional hard-stop: `FileNotFoundError: CLAP ONNX model not found: /kaggle/input/birdclef-2026-clap-int8-bundle/clap_audio_int8.onnx`. Partial outputs contained `submission_protossm.csv` and `submission_sed.csv`, confirming the public946 base ran before the CLAP mount check.
+- **Root cause:** dataset source attached, but Kaggle mounted it at a non-flat path rather than the public notebook's `/kaggle/input/birdclef-2026-clap-int8-bundle` path. This mirrors the earlier v510 real-SED mount-path class of failures.
+- **Fix:** updated v545 to check both flat and `/kaggle/input/datasets/habedi/...` paths, then recursively search `/kaggle/input/**/clap_audio_int8.onnx` and print candidates. Still hard-fails if no CLAP model is found; no silent public946 fallback.
+- **Validation:** `python3 -m py_compile` passed after the fix. Pushed v545 version 2 via Bearer API; push returned no invalid data/competition/kernel/model sources. v545 v2 is COMPLETE/no failure. Kaggle log confirms CLAP bundle resolved at `/kaggle/input/datasets/habedi/birdclef-2026-clap-int8-bundle`, CLAP processed `20/20` dry-run files in `55.6s`, wrote `submission_clap_onnx.csv (240,235)`, and executed explicit `57/38/5` Proto/SED/CLAP blend with sonotype mirroring and rare thresholding. Downloaded outputs to ignored artifact `artifacts/kaggle_outputs/v545-public946-clap-int8/`; final `submission.csv` shape `(240,235)`, no NaNs; CLAP CSV no NaNs; v545 vs v542 final corr `0.998122`, MAE `0.01546`, max abs `0.08383`. Guarded submit monitor `logs/submit_v545_when_ready_20260513T085043Z.log` (pid `68912`) attempted submission and hit daily cap with ~14h remaining; it is sleeping and will retry.
+
+### v545 CLAP weight-grid diagnostic while capped — 2026-05-13 10:45 UTC
+
+- **Command/artifact:** ran local CLAP weight grid from downloaded v545 Proto/SED/CLAP outputs plus v542 final output; JSON artifact `artifacts/blend_grids/public946_clap_int8_weight_grid_20260513.json` (ignored).
+- **Grid:** kept the public946 Proto/SED ratio fixed at 60/40 among the non-CLAP mass and swept CLAP rank weight `0.00, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.075, 0.10, 0.125, 0.15`; applied the same fake-only/proto-continuity/SED-spike/mirror/rare gates as v545.
+- **Result:** on the dry-run labeled overlap (`240` rows, `42` valid classes), pure public946 `w=0.00` had local AUC `0.990665`; submitted v545 `w=0.05` had `0.988749`, corr vs v542 `0.998122`, MAE `0.01546`; CLAP standalone AUC was weak (`0.448223`) but very low-correlation (`corr=0.0098`).
+- **Decision:** this diagnostic argues against widening CLAP before leaderboard feedback. Keep v545 as the single queued CLAP probe. If it drops below 0.946, kill CLAP INT8 for public slots; if it ties, do not spend a slot on higher CLAP weights; if it unexpectedly improves, consider a smaller `0.01`-`0.02` CLAP follow-up rather than increasing weight.
+
+### Public946 next-sidecar source audit while v545 capped — 2026-05-13 11:45 UTC
+
+- **Track:** P2/D next distinct-signal preparation while v545 is complete but blocked by daily cap. No new Kaggle kernel/submission was added.
+- **Command/artifact:** Bearer API source audit for `zeyadmohamadezzat/birdclef-2026-two-branch-perch-sed-sidecar`, `meenalsinha/birdclef-2026-improved`, and `henryszy/bc2026-raunak0946-direct-v44`; ignored JSON artifact `artifacts/public946_sidecar_source_audit_20260513.json`.
+- **Findings:** `chaneyma/birdclef-2026-cv9245-moe-artifacts` is public/attachable and contains four MoE fold weights plus `pantanal_infer_only_submission.py`, `student_cnn...pt`, and `student_crnn...pt` (~69 MB total). `tsubasatech/birdclef-2026-snowflake-sed` is public/attachable and contains ConvNeXt-Tiny and EfficientNetV2-M SED ONNX files (~328 MB). Zeyad's two-branch public fork uses CV9245 with `CV9245_RANK_WEIGHT=0.05` and optional BirdNET `0.025`, but also attaches CLAP/Snowflake sources that must be source-cleaned before any repo candidate. Henry's train-audio-head fork adds a public train-audio-head rank voter at 5% and claims hidden tie-break improvement while displaying 0.946. Meenal's improved fork is essentially a heavier BirdNET branch (`20%`) and is deprioritized because our BirdNET 10%/5% probes only tied.
+- **Decision:** Do not push a v546 while v545 is unscored/capped. If v545 drops/ties and no better LB signal appears, the next source-clean AutoResearch candidate should be a minimal public946 + CV9245 sidecar (likely `0.02`-`0.05` rank weight) or the train-audio-head 5% fork after local output/correlation gates. Avoid Meenal/BirdNET widening.
+
+### v545 cap hold recheck + next-candidate gate — 2026-05-13 12:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` is COMPLETE/no failure with `submission.csv`, `submission_clap_onnx.csv`, `submission_protossm.csv`, and `submission_sed.csv`. `v510` is still COMPLETE/no failure with `submission.csv`; log confirms real SED manifest found, `6/6` TorchScript models loaded, `REAL_SED_BLEND_WEIGHT=0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `68912` remains alive. It attempted `bc26-v545-public946-clap-int8` version 2 and hit the daily 5-submission cap; no duplicate submission or queue restart was made.
+- **Spec read:** active spec now treats the old 0.927 language as stale and prioritizes distinct signal over public946 copies. Because `v545` is unscored and capped, the safe action remains monitoring + preparation rather than pushing `v546`.
+- **Next gate:** hold all new Kaggle pushes until v545 scores. If v545 drops/ties, run a local output/correlation gate for source-clean public946+CV9245 (`0.02`/`0.05`) or train-audio-head 5% before spending the next daily slot; if v545 unexpectedly improves, consider only a lower CLAP weight (`0.01`/`0.02`) follow-up.
+
+### Public946 sidecar gate utility smoke — 2026-05-13 13:45 UTC
+
+- **Track:** P2/P3 preparation while `v545` is capped and unscored; no new Kaggle kernel or submission was pushed.
+- **Implementation:** added reusable pre-submit diagnostic `scripts/birdclef_public946_sidecar_weight_grid.py`. It row-aligns a public946 anchor CSV with any candidate sidecar CSV, rank-blends a short sidecar-weight grid, and reports label-overlap AUC plus correlation/MAE/max-abs versus the anchor. This is the intended local gate before a future source-clean CV9245 or train-audio-head candidate consumes a daily slot.
+- **Smoke command/artifact:** ran the utility on the known v542 anchor plus the v545 CLAP side stream as a validation case; ignored output `artifacts/blend_grids/public946_sidecar_gate_clap_smoke_20260513.json`.
+- **Smoke result:** anchor-only `sidecar_0.0000` was best on the available dry-run label overlap (`190` matched rows / `42` valid classes) with macro AUC `0.992525`; CLAP sidecar standalone macro AUC `0.455042`, corr vs anchor `-0.02796`. Increasing CLAP weight monotonically reduced local AUC through the tested `0.10` weight, consistent with the earlier v545 CLAP-specific diagnostic.
+- **Validation:** `python3 -m py_compile scripts/birdclef_public946_sidecar_weight_grid.py` passed and the smoke run completed.
+- **Next:** keep `v545` as the only queued CLAP probe. After v545 scores, use this utility for `public946+CV9245` (`0.02`/`0.05`) or train-audio-head 5% local gates before any `v546` Kaggle push.
+
+### Public946 gate AutoResearch scaffold + v545 monitor restart — 2026-05-13 14:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` is COMPLETE/no failure with CLAP side output and final `submission.csv`. `v510` remains COMPLETE/no failure; log still confirms real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue fix:** stale `v545` monitor pid `68912` had exited after the cap sleep. Rechecked recent submissions (`v545` absent), then restarted guarded monitor as pid `22153`, log `logs/submit_v545_when_ready_20260513T144650Z_restart.log`. It immediately re-hit the daily cap with `9.2h` remaining and is sleeping; no duplicate submission was created.
+- **Track:** Spec F/P2 AutoResearch parameter tuning around the locked public946 anchor, while avoiding a new Kaggle push until `v545` scores.
+- **Implementation:** added `scripts/birdclef_public946_gate_autoresearch.py`, a reusable random/grid search over public946 rank-blend gate parameters: Proto/SED weight, fake-only boost, Proto continuity threshold/boost, SED-only spike threshold/boost, and rare-taxon scale. It reports label-overlap macro AUC/top-k, delta vs baseline, correlation/MAE/max-abs vs a reference submission, and writes the top candidate CSV if requested.
+- **Smoke command/artifacts:** ran 601 deterministic trials on v542 dry-run Proto/SED outputs with train-soundscape labels and v542 final as reference. Outputs: `artifacts/blend_grids/public946_gate_autoresearch_v542_smoke_20260513.json` and top CSV `artifacts/blend_grids/public946_gate_autoresearch_v542_top_20260513.csv` (ignored).
+- **Smoke result:** baseline reconstruction macro AUC `0.992525` on `190` matched rows / `42` valid classes. Best sampled config improved local AUC to `0.993314` (`+0.000789`), with `proto_weight=0.56`, lighter fake/proto/sed boosts (`fake_boost=0.04`, `ctx_boost=0.10`, `sed_boost=0.08`), corr vs v542 final `0.99465`, MAE `0.01242`. This is only a local gate signal, not enough to submit while `v545` is pending, but it supports the owner's point that AutoResearch-style tuning can find a few `0.00x` candidates.
+- **Validation:** `python3 -m py_compile scripts/birdclef_public946_gate_autoresearch.py` passed; quickcheck rerun completed with warnings suppressed.
+- **Next:** after v545 scores, use this harness plus the sidecar-weight gate to rank one candidate from: tuned public946 gates, public946+CV9245, and public946+train-audio-head. Submit only the best distinct/safe candidate rather than several adjacent parameter variants.
+
 ## 2026-05-13 06:55 UTC — `public946-live-status-and-clap-int8-audit`
 
 - **Track:** P2 public946 diversity-stream triage while `v544` score is pending; no new submission slot consumed.
