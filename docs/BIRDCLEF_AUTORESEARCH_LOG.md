@@ -106,6 +106,30 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Submission:** submitted code competition kernel version 1 as ref `52600158` with description `v543: Public946 v542 plus source-clean BirdNET 6K 3-way rank blend 52/38/10`. Status was still pending/no public score at the last poll.
 - **Next step:** Monitor ref `52600158`. If it ties/improves 0.946, keep BirdNET as a minority public946 diversity stream and optionally test a smaller `0.05` BirdNET weight; if it drops, stop BirdNET and pivot to V5/CLAP source resolution or public946 teacher/student work.
 
+### Public946 gate AutoResearch full sweep + cap monitor refresh — 2026-05-13 15:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with `submission.csv`; log still confirms real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue fix:** the restarted `v545` monitor pid `22153` had already exited/staled. Rechecked recent 200 submissions (`v545` absent), then restarted guarded monitor as pid `35141`, log `logs/submit_v545_when_ready_20260513T154642Z_restart2.log`. It immediately re-hit the daily cap with `8.2h` remaining and is sleeping; no duplicate submission was created.
+- **Full AutoResearch result:** the background public946 gate sweep completed successfully. Artifact `artifacts/blend_grids/public946_gate_autoresearch_v542_full_20260513.json` contains `3646` trials on v542 dry-run Proto/SED outputs with `190` matched rows / `42` valid classes. Baseline macro AUC `0.992525`. Best configs reached macro AUC `0.993325` (`+0.000800`) with the same stable pattern: `proto_weight=0.56`, lighter fake-only boost `0.04`, lighter Proto-continuity boost `0.10`, lighter SED-spike boost `0.08`, and `ctx_thr=0.90`. Corr vs v542 final was about `0.9946`-`0.9951`, MAE `0.0118`-`0.0127`, max abs `0.3530`.
+- **Interpretation:** the full sweep reinforces the earlier smoke signal that a tuned public946-gate candidate may be worth one slot after v545 scores, but only as one of the ranked candidates against CV9245/train-audio-head. Do not submit a pure gate-tuned v546 while `v545` is pending.
+
+### v545 cap hold + public946 spec refresh — 2026-05-13 16:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure with CLAP side output and final `submission.csv`, but is still unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `35141` is alive and sleeping after a cap response with ~`8.2h` remaining from the 15:46 UTC restart. No duplicate submission exists in recent submissions.
+- **Spec maintenance:** refreshed `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md` so `v544` is no longer marked pending. Both BirdNET weights (`v543` 10% and `v544` 5%) tied 0.946; BirdNET alone is now a safe-tie diversity stream, not the next breakthrough lane.
+- **Decision:** continue holding new Kaggle pushes until `v545` scores. Next v546 decision should rank the full-sweep tuned public946-gate candidate against CV9245 and train-audio-head sidecars, not another BirdNET-only variant.
+
+### CV9245 sidecar port preflight while v545 capped — 2026-05-13 17:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `35141` is alive and sleeping after the cap response; no duplicate `v545` submission exists.
+- **Track:** P2 next distinct-signal preparation while waiting for v545 score.
+- **CV9245 preflight:** downloaded and statically inspected public dataset files `README.md` and `pantanal_infer_only_submission.py` from `chaneyma/birdclef-2026-cv9245-moe-artifacts`; ignored local copies are under `artifacts/public946_cv9245_audit_20260513/`. The script exposes `ProtoSSM`, `StudentCNN`, `StudentCRNN`, `build_training_priors`, `prior_logits_from_tables`, and `postprocess_probs_filewise`, matching Zeyad's shared-Perch integration pattern.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_CV9245_PORT_PLAN_20260513.md` with source audit, integration pattern, candidate rank weights (`0.02`/`0.05`), runtime/failure gates, and the post-v545 decision rule.
+- **Decision:** no Kaggle push until v545 scores. If v545 ties/drops, implement source-clean public946+CV9245 as the leading v546 candidate and gate it against the tuned public946-gate candidate and train-audio-head before spending a slot.
+
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
