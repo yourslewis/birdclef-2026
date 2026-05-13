@@ -28,6 +28,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Result:** on the dry-run labeled overlap (`240` rows, `42` valid classes), pure public946 `w=0.00` had local AUC `0.990665`; submitted v545 `w=0.05` had `0.988749`, corr vs v542 `0.998122`, MAE `0.01546`; CLAP standalone AUC was weak (`0.448223`) but very low-correlation (`corr=0.0098`).
 - **Decision:** this diagnostic argues against widening CLAP before leaderboard feedback. Keep v545 as the single queued CLAP probe. If it drops below 0.946, kill CLAP INT8 for public slots; if it ties, do not spend a slot on higher CLAP weights; if it unexpectedly improves, consider a smaller `0.01`-`0.02` CLAP follow-up rather than increasing weight.
 
+### Public946 next-sidecar source audit while v545 capped — 2026-05-13 11:45 UTC
+
+- **Track:** P2/D next distinct-signal preparation while v545 is complete but blocked by daily cap. No new Kaggle kernel/submission was added.
+- **Command/artifact:** Bearer API source audit for `zeyadmohamadezzat/birdclef-2026-two-branch-perch-sed-sidecar`, `meenalsinha/birdclef-2026-improved`, and `henryszy/bc2026-raunak0946-direct-v44`; ignored JSON artifact `artifacts/public946_sidecar_source_audit_20260513.json`.
+- **Findings:** `chaneyma/birdclef-2026-cv9245-moe-artifacts` is public/attachable and contains four MoE fold weights plus `pantanal_infer_only_submission.py`, `student_cnn...pt`, and `student_crnn...pt` (~69 MB total). `tsubasatech/birdclef-2026-snowflake-sed` is public/attachable and contains ConvNeXt-Tiny and EfficientNetV2-M SED ONNX files (~328 MB). Zeyad's two-branch public fork uses CV9245 with `CV9245_RANK_WEIGHT=0.05` and optional BirdNET `0.025`, but also attaches CLAP/Snowflake sources that must be source-cleaned before any repo candidate. Henry's train-audio-head fork adds a public train-audio-head rank voter at 5% and claims hidden tie-break improvement while displaying 0.946. Meenal's improved fork is essentially a heavier BirdNET branch (`20%`) and is deprioritized because our BirdNET 10%/5% probes only tied.
+- **Decision:** Do not push a v546 while v545 is unscored/capped. If v545 drops/ties and no better LB signal appears, the next source-clean AutoResearch candidate should be a minimal public946 + CV9245 sidecar (likely `0.02`-`0.05` rank weight) or the train-audio-head 5% fork after local output/correlation gates. Avoid Meenal/BirdNET widening.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
