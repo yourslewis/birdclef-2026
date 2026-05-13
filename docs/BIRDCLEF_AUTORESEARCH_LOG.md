@@ -2,6 +2,20 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
+
+- **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
+- **Hypothesis:** After `v541`/`v542` locked the 0.946 public946 anchor, the existing `rankblend->NFNet 5s power1.0 ep20` student should only consume a submission slot if it adds enough local diversity over the public946 teacher.
+- **Branch/PR:** `feature/v541-v542-public946-anchor-lock`, PR #225.
+- **Data/artifacts used:**
+  - Teacher cache: `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_rankblend.npz`.
+  - Student predictions: `artifacts/pseudolabels/students/pl-public946-rankblend-nfnet-5s-lr1e4-ep20-bestval/student_predictions.npz`.
+  - Anchor dry-run caches: `artifacts/pseudolabels/public946-v541-dryrun-cache-v1/` and `artifacts/pseudolabels/public946-v542-dryrun-cache-v1/`.
+- **Command:** inline Python diagnostic using the Mac Kaggle venv; output JSON `artifacts/blend_grids/public946_anchor_student_gate_20260513.json`.
+- **Result:** on 792 teacher rows / 75 valid classes, public946 teacher AUC `0.994567`, NFNet student AUC `0.984806`, student-teacher corr `0.924409`, MAE `0.07138`. Best linear blend was teacher `0.95` + student `0.05`, AUC `0.994637`, delta `+0.0000699` vs teacher.
+- **Anchor comparison:** v541 rankblend vs v542 rankblend on 240 common rows has corr `0.999277`, MAE `0.00332`; v542 final vs v542 rankblend corr `0.997630`, MAE `0.00485`. The 0.946 anchors are essentially the same signal family.
+- **Decision:** do **not** make the NFNet sidecar the default next Kaggle slot. It remains a 2-5% public946+student minority fallback with tiny local lift. Prefer source-clean BirdNET or resolved V5/CLAP for the next true diversity slot; if those source gates fail, package the 95/5 NFNet sidecar as the safer fallback.
+
 ## 2026-05-13 01:45 UTC — `public946-anchor-lock-v541-v542`
 
 - **Track:** P0 public946 anchor reproduction and lock.
