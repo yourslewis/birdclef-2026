@@ -96,6 +96,17 @@ The embedded notebook JSON has numeric source IDs for the blank extras:
 
 Attempts to resolve likely slugs `needless090/birdclef2026-sed-v5-trio` and `needless090/birdclef2026-clap-probe` with Bearer Dataset API returned `403 Forbidden`; public dataset search returned no matching rows. Interpretation: the code path is visible, but the extra V5/CLAP inputs are not currently attachable by clean public slug from our account. A repo-owned port should not be queued until source refs are resolved or replaced by our own equivalent datasets.
 
+#### Addendum — source-resolved CLAP INT8 alternative (2026-05-13 06:55 UTC)
+
+A separate public fork, `xiyuetong/birdclef2026-ensemble-v2`, uses an attachable low-runtime CLAP ONNX side stream instead of the blocked `needless090` CLAP probe dataset:
+
+- Kernel metadata resolves dataset sources including `habedi/birdclef-2026-clap-int8-bundle`, `tuckerarrants/bc2026-distilled-sed-public`, `backtracking/birdclef2026-pseudo-cache-v1`, `jaejohn/perch-meta`, `tuckerarrants/perch-v2-no-dft-onnx`, and `rishikeshjani/perch-onnx-for-birdclef-2026`.
+- Bearer Dataset API confirms `habedi/birdclef-2026-clap-int8-bundle` is public/attachable and contains `clap_audio_int8.onnx`, `probe_weights.npz`, `mel_filters_slaney.npy`, and `probe_config.json`.
+- Extracted source is cached locally under ignored artifacts as `artifacts/public_kernels_20260513/birdclef2026-ensemble-v2.py` for audit.
+- The CLAP ONNX code writes `submission_clap_onnx.csv` and uses a small CPU budget (`_BUDGET = 180` seconds in the public dry-run snapshot), making it a safer next CLAP smoke than the blocked HuggingFace CLAP path.
+
+Next actionable candidate after `v544` scores: prepare a source-clean public946 + CLAP-ONNX minority-stream kernel (e.g. `v545`) using `v542`/`v541` as anchor and a conservative CLAP rank weight (`0.03`-`0.05`). Required gate before any submission slot: CLAP ONNX session loads, `submission_clap_onnx.csv` row-aligns with Proto/SED outputs, final blend logs an explicit non-fallback CLAP path, no NaNs, wall time remains comfortably below hidden CPU budget, and output correlation/MAE vs `v542` shows a real but bounded perturbation.
+
 ### Risks
 
 - The extra V5/CLAP datasets are not currently attachable by clean public slug; otherwise the code silently skips into plain public946/V5-missing fallback.
