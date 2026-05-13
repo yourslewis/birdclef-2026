@@ -51,6 +51,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Validation:** `python3 -m py_compile scripts/birdclef_public946_sidecar_weight_grid.py` passed and the smoke run completed.
 - **Next:** keep `v545` as the only queued CLAP probe. After v545 scores, use this utility for `public946+CV9245` (`0.02`/`0.05`) or train-audio-head 5% local gates before any `v546` Kaggle push.
 
+### Public946 gate AutoResearch scaffold + v545 monitor restart — 2026-05-13 14:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` is COMPLETE/no failure with CLAP side output and final `submission.csv`. `v510` remains COMPLETE/no failure; log still confirms real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue fix:** stale `v545` monitor pid `68912` had exited after the cap sleep. Rechecked recent submissions (`v545` absent), then restarted guarded monitor as pid `22153`, log `logs/submit_v545_when_ready_20260513T144650Z_restart.log`. It immediately re-hit the daily cap with `9.2h` remaining and is sleeping; no duplicate submission was created.
+- **Track:** Spec F/P2 AutoResearch parameter tuning around the locked public946 anchor, while avoiding a new Kaggle push until `v545` scores.
+- **Implementation:** added `scripts/birdclef_public946_gate_autoresearch.py`, a reusable random/grid search over public946 rank-blend gate parameters: Proto/SED weight, fake-only boost, Proto continuity threshold/boost, SED-only spike threshold/boost, and rare-taxon scale. It reports label-overlap macro AUC/top-k, delta vs baseline, correlation/MAE/max-abs vs a reference submission, and writes the top candidate CSV if requested.
+- **Smoke command/artifacts:** ran 601 deterministic trials on v542 dry-run Proto/SED outputs with train-soundscape labels and v542 final as reference. Outputs: `artifacts/blend_grids/public946_gate_autoresearch_v542_smoke_20260513.json` and top CSV `artifacts/blend_grids/public946_gate_autoresearch_v542_top_20260513.csv` (ignored).
+- **Smoke result:** baseline reconstruction macro AUC `0.992525` on `190` matched rows / `42` valid classes. Best sampled config improved local AUC to `0.993314` (`+0.000789`), with `proto_weight=0.56`, lighter fake/proto/sed boosts (`fake_boost=0.04`, `ctx_boost=0.10`, `sed_boost=0.08`), corr vs v542 final `0.99465`, MAE `0.01242`. This is only a local gate signal, not enough to submit while `v545` is pending, but it supports the owner's point that AutoResearch-style tuning can find a few `0.00x` candidates.
+- **Validation:** `python3 -m py_compile scripts/birdclef_public946_gate_autoresearch.py` passed; quickcheck rerun completed with warnings suppressed.
+- **Next:** after v545 scores, use this harness plus the sidecar-weight gate to rank one candidate from: tuned public946 gates, public946+CV9245, and public946+train-audio-head. Submit only the best distinct/safe candidate rather than several adjacent parameter variants.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
