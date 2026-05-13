@@ -81,6 +81,11 @@ python scripts/birdclef_public946_sidecar_weight_grid.py \
   --output-json artifacts/blend_grids/public946_train_audio_head_weight_grid_20260513.json
 ```
 
+
+## Local gate prerequisite
+
+A local sidecar grid needs row-aligned `submission_train_audio_head.csv`. The current downloaded public946 artifacts preserve train-cache `perch_arrays.npz` but not the dry-run `emb_te` matrix used for `submission.csv`, so the head CSV cannot be reconstructed exactly from existing local files alone. The v546 implementation should therefore write `submission_train_audio_head.csv` during the Kaggle dry-run, download it, and then run `scripts/birdclef_public946_sidecar_weight_grid.py` before submission.
+
 ## Runtime and failure gates
 
 Required before submission:

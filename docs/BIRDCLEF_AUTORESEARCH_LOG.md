@@ -138,6 +138,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_TRAIN_AUDIO_HEAD_PLAN_20260513.md` with source audit, integration pattern, candidate weights (`0.03`/`0.05`), runtime/failure gates, and post-v545 decision rule.
 - **Decision:** no Kaggle push until v545 scores. If v545 ties/drops, rank train-audio-head against CV9245 and tuned public946 gates before spending the v546 slot.
 
+### Train-audio-head local gate prerequisite check — 2026-05-13 20:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `86320` is alive and sleeping after a cap response with about `4.2h` remaining from the 19:46 UTC restart. No duplicate `v545` submission exists.
+- **Train-audio-head gate check:** inspected available local public946 artifacts. `artifacts/public946_train_audio_head_audit_20260513/head_weights_train_audio.npz` is present and valid, but the downloaded public946 artifacts only preserve the train-cache `perch_arrays.npz`, not the dry-run `emb_te` matrix that produced `submission.csv`. Therefore an exact local train-audio-head sidecar CSV cannot be reconstructed from current artifacts alone.
+- **Plan update:** updated `docs/BIRDCLEF_PUBLIC946_TRAIN_AUDIO_HEAD_PLAN_20260513.md` to require the v546 train-head implementation to write `submission_train_audio_head.csv` during Kaggle dry-run, download it, then run `scripts/birdclef_public946_sidecar_weight_grid.py` before submission.
+- **Decision:** no Kaggle push until v545 scores. This keeps train-audio-head ready but prevents a false local gate based on mismatched train-cache embeddings.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
