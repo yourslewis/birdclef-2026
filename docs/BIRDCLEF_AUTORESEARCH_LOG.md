@@ -2,6 +2,18 @@
 
 This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
 
+## 2026-05-13 07:55 UTC — `v545-public946-clap-int8`
+
+- **Track:** P2 public946 AutoResearch distinct-signal layer; CLAP INT8 side stream on top of the confirmed 0.946 public946 anchor.
+- **Hypothesis:** `v543` and `v544` showed BirdNET is safe but did not beat 0.946, so the next useful experiment should add a different acoustic representation. A small CLAP INT8 rank stream may add complementary audio-semantic signal while preserving the `v542` public946 floor.
+- **Branch/PR:** `feature/v545-public946-clap-int8` (fresh worktree from `origin/main`; PR pending at implementation time).
+- **Base:** forked `kaggle-kernels/v542-afr1ste-updated-public946/`, which is the confirmed 0.946 Afr1ste updated public946 V8 replay.
+- **New source:** public dataset `habedi/birdclef-2026-clap-int8-bundle`, previously verified attachable by Bearer Dataset API. It provides `clap_audio_int8.onnx`, `probe_weights.npz`, `mel_filters_slaney.npy`, and `probe_config.json`.
+- **Config/hyperparameters:** final rank blend changed from Proto/SED `0.60/0.40` to Proto/SED/CLAP `0.57/0.38/0.05`; CLAP side stream has hard no-fallback gates, writes `submission_clap_onnx.csv`, requires finite nonzero predictions, and uses a 45-minute hidden-test budget.
+- **Implementation files:** `kaggle-kernels/v545-public946-clap-int8/`, `scripts/push_v545.py`.
+- **Validation:** static Python compile passed for the push script and Kaggle script. Required Kaggle dry-run gates after push: CLAP ONNX session loads, `submission_clap_onnx.csv` exists and row-aligns with Proto/SED, final log says explicit v545 3-way CLAP blend, final `submission.csv` has no NaNs and shape `(240,235)`, wall time remains safe.
+- **Next step:** push real Kaggle kernel `yourslewis/bc26-v545-public946-clap-int8`, monitor to COMPLETE/ERROR, then submit only after dry-run gates pass and daily cap allows.
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
