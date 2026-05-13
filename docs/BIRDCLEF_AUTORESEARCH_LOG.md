@@ -146,6 +146,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Plan update:** updated `docs/BIRDCLEF_PUBLIC946_TRAIN_AUDIO_HEAD_PLAN_20260513.md` to require the v546 train-head implementation to write `submission_train_audio_head.csv` during Kaggle dry-run, download it, then run `scripts/birdclef_public946_sidecar_weight_grid.py` before submission.
 - **Decision:** no Kaggle push until v545 scores. This keeps train-audio-head ready but prevents a false local gate based on mismatched train-cache embeddings.
 
+### v546 decision matrix while v545 capped — 2026-05-13 21:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure and unsubmitted behind the daily cap; no `v545` submission is visible in recent submissions. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `86320` is alive and sleeping after the 19:46 UTC cap response; no duplicate submission exists.
+- **Track:** P2/F pre-submit planning while waiting for v545 score.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_V546_DECISION_MATRIX_20260513.md`, ranking lower-CLAP, CV9245, train-audio-head, tuned gates, and BirdNET stop conditions by v545 outcome.
+- **Decision:** no Kaggle push before v545 scores. If v545 ties/drops, the leading next slot should be a source-clean train-audio-head or CV9245 dry-run with sidecar-grid evidence; if v545 improves, compare smaller CLAP (`0.01`/`0.02`) against those sidecars before choosing v546.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
