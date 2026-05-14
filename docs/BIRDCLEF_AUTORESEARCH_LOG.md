@@ -276,6 +276,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v557 clipped low-displacement gate-retune candidate launched — 2026-05-14 20:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
+- **v556 result:** `yourslewis/bc26-v556-public946-gate-retune-alpha010` version 1 completed successfully and validated `(240,235)` outputs. Gate artifact: `artifacts/blend_grids/v556_public946_gate_retune_alpha010_final_vs_baseline_20260514T200307Z.json`. It matched the small AUC/top3 lift (`0.992630` vs baseline `0.992525`, top3 `0.637` vs `0.621`) but a few cells still had large movement (`corr=0.99595`, `MAE=0.00349`, `max_abs=0.38941`), so v556 is not a clean fallback as-is.
+- **Post-gate diagnosis:** v556 alpha is correctly ~0.10 for ~98.3% of moved cells; the problem is outlier cells where small baseline/retune denominator differences create large max movement. Clipping observed v556 deltas to `±0.02` preserves the same dry-run AUC/top3 lift while reducing displacement to `corr=0.99993`, `MAE=0.00136`, `max_abs=0.0200`.
+- **Implementation:** added `kaggle-kernels/v557-public946-gateretune-a010clip002/` and `scripts/push_v557.py`. v557 uses the same retuned branch and alpha `0.10` as v556, but applies `np.clip(retune_delta, -0.02, 0.02)` before adding it to the reconstructed v542 baseline.
+- **Validation:** `python3 -m py_compile scripts/push_v557.py kaggle-kernels/v557-public946-gateretune-a010clip002/script.py` passed. Pushed real private Kaggle kernel `yourslewis/bc26-v557-public946-gate-retune-alpha010-clip002`, version 1; no invalid data/competition/kernel/model sources.
+- **Monitor:** started no-submit monitor pid `48210`, log `logs/monitor_v557_gate_retune_20260514T205329Z.log`, with `KERNEL_SLUG=bc26-v557-public946-gate-retune-alpha010-clip002` and `OUTPUT_NAME=v557-public946-gate-retune-alpha010-clip002`. Initial status RUNNING/no failure.
+- **Decision:** keep v551 as the only next-reset submit monitor. If v551 ties/drops and v557 dry-run gate confirms the clipped displacement, v557 is safer than v554/v555/v556 for a later slot.
+
+
 ### v556 low-displacement gate-retune candidate launched — 2026-05-14 19:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap. No duplicate submissions were created.
