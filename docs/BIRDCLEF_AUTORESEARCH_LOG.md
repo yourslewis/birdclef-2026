@@ -254,6 +254,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Scaled run `pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval` completed on GPU1 in `55.5s`: best val AUC `0.985183` at epoch 20 over 61 classes; final all-row student AUC `0.987875` over 75 classes vs teacher `0.994567`; student-teacher corr `0.943076`, MAE `0.061591`; TorchScript size `112.355 MB`.
 - Blend diagnostic on server artifact `artifacts/pseudolabels/students/pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval/blend_grid.json`: best rank blend teacher+student is student weight `0.075`, AUC `0.994618` (+`0.000051` vs teacher); best probability blend is student weight `0.02`, AUC `0.994609` (+`0.000042`). This is a viable private-robustness sidecar but smaller than v551's immediate next-slot priority; do not package/submit until v551 score lands.
 
+### v552 ConvNeXt student Kaggle candidate pushed — 2026-05-14 13:55 UTC
+
+- Status before push: best remains **0.946**; v551 guarded submit monitor pid `53054` remains alive/sleeping after daily cap; v510 remains COMPLETE with `submission.csv`.
+- Packaged the scaled public946 ConvNeXt-tiny student into private Kaggle dataset `yourslewis/bc26-public946-convnext-tiny-student-v1` (version 1, READY). Dataset contains `model_torchscript.pt` and `sed_bundle_manifest.json`; zip size `99.4 MB`, SHA256 `f68e56748adf9fae818b265cadb7adb28085dfa7aa773ab0e9e1c5bc1ceca45b`.
+- Added/pushed kernel `yourslewis/bc26-v552-public946-convnext-student-r075`, version 1. It forks v542 public946, runs the ConvNeXt student TorchScript sidecar to write `submission_convnext_student.csv`, then applies a conservative post-gate per-class rank blend `STUDENT_RANK_BLEND=0.075`. Kaggle push succeeded with no invalid data/kernel/model sources.
+- Started a no-submit gate monitor via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v552_convnext_gate_*.log`). Do **not** submit v552 while v551 is queued for next reset; gate it offline first and wait for v551 score.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
