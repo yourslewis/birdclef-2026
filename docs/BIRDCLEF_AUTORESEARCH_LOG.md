@@ -245,6 +245,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Gate output: `artifacts/blend_grids/v551_clap_sidecar_weight_grid_20260514T114751Z.json`. v542 anchor macro AUC `0.992525`; CLAP standalone rank is bad (`0.455042`, corr `-0.028`), but tiny blends are slightly positive at 0.25%-0.5%: `0.0025 -> 0.992538`, `0.005 -> 0.992549`; 1%+ degrades.
 - Decision: `v551` is the single next-slot candidate, not a widened CLAP lane. Started guarded submit script `scripts/submit_v551_when_ready.py`; it exits on duplicate descriptions, requires `submission.csv`, and backs off on daily cap. Current UTC cap is still 5/5, so it should sleep until reset if the submit attempt hits allowance.
 
+### public946 ConvNeXt-tiny rankblend student smoke + scale — 2026-05-14 12:55 UTC
+
+- Status before training: public LB best remains **0.946**; v551 is COMPLETE/gated and guarded submit monitor pid `53054` is sleeping after daily cap. v510 remains COMPLETE with `submission.csv`.
+- Track: **B/D** public946 pseudo-label/noisy-student + model-zoo diversity. Hypothesis: ConvNeXt-tiny trained on the public946 rankblend teacher may provide a less-correlated student sidecar than the prior NFNet student while keeping enough AUC for a tiny teacher blend.
+- Added configs: `configs/birdclef/pl_public946_rankblend_convnext_tiny_5s_lr3e4_smoke.json` and `configs/birdclef/pl_public946_rankblend_convnext_tiny_5s_lr3e4_ep20_bestval.json`.
+- Smoke run on GPU server `192.168.0.10`, GPU1, config `pl_public946_rankblend_convnext_tiny_5s_lr3e4_smoke`: max_rows 256, 5s/160mel, ConvNeXt-tiny, lr 3e-4, ep3, soft public946 rankblend teacher. It completed in `9.7s`: final AUC `0.882870` over 42 valid classes, teacher AUC `0.990095`, corr `0.737764`, MAE `0.134967`. This beat the earlier public946 rankblend NFNet smoke (`0.853951`) and V2S smoke (`0.835216`), so it passed the scale gate.
+- Scaled run `pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval` completed on GPU1 in `55.5s`: best val AUC `0.985183` at epoch 20 over 61 classes; final all-row student AUC `0.987875` over 75 classes vs teacher `0.994567`; student-teacher corr `0.943076`, MAE `0.061591`; TorchScript size `112.355 MB`.
+- Blend diagnostic on server artifact `artifacts/pseudolabels/students/pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval/blend_grid.json`: best rank blend teacher+student is student weight `0.075`, AUC `0.994618` (+`0.000051` vs teacher); best probability blend is student weight `0.02`, AUC `0.994609` (+`0.000042`). This is a viable private-robustness sidecar but smaller than v551's immediate next-slot priority; do not package/submit until v551 score lands.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
