@@ -29,3 +29,10 @@ Status: planning while UTC submission cap is exhausted and guarded `v551` monito
    - a source-clean **public946 gate-retune candidate** from the full gate sweep, with conservative displacement/rare-taxon safeguards; or
    - a much tighter **Snowflake agreement-gated candidate** that reduces displacement, uses the exact mapped/proxy mask, and is compared against the gate-retune before any Kaggle slot.
 4. Avoid another single-family CV9245/BirdNET/CLAP weight sweep unless a leaderboard result changes the evidence.
+
+## 2026-05-14 18:55 UTC update
+
+- `v554` completed and validated but is too aggressive for an automatic slot: local AUC `0.993325` vs baseline `0.992525`, but `corr=0.99418`, `MAE=0.01273`, `max_abs=0.41676`.
+- `v555` alpha-0.33 completed and validated, but real-run displacement is still higher than desired: local AUC `0.992915`, `corr=0.99577`, `MAE=0.00585`, `max_abs=0.39640`.
+- Observed-delta backoff suggests a possible future `alpha=0.10` candidate: local AUC `0.992630`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`.
+- Recommendation remains: keep `v551` as next reset submission; if it ties/drops, prefer a lower-alpha gate retune (`~0.10`) over v554/v555 as-is.

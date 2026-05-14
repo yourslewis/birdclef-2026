@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v555 completed; hold as research-only, prefer lower-alpha if needed — 2026-05-14 18:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.
+- **v555 result:** `yourslewis/bc26-v555-public946-gate-retune-alpha033` version 1 completed successfully. No-submit monitor downloaded `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`; all validate `(240,235)` with no NaNs. Gate artifact from the generic monitor: `artifacts/blend_grids/v554_gate_retune_final_vs_baseline_20260514T180412Z.json`.
+- **v555 gate:** baseline macro AUC `0.992525`; v555 final macro AUC `0.992915` (`+0.000391`), top3 `0.637` vs `0.621`, top5 unchanged `0.747`. However real-run displacement is higher than the prior offline interpolation estimate: `corr=0.99577`, `MAE=0.00585`, `max_abs=0.39640`. This means v555 still moves a few cells too aggressively and should **not** displace v551 or be auto-submitted.
+- **Post-gate diagnosis:** Scaling the observed v555 delta back to alpha-equivalents shows `alpha≈0.10` would keep most of the useful local lift with lower displacement: macro AUC `0.992630` (`+0.000106`), top3 `0.637`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`. `alpha=0.05` is even safer (`corr=0.99990`, `max_abs=0.0601`) but only a tiny AUC lift.
+- **Code hygiene:** fixed `scripts/monitor_v554_gate_retune.py` so future gate artifacts use the `OUTPUT_NAME` prefix instead of always `v554_*`.
+- **Decision:** keep `v551` as the only next-reset submission. If `v551` ties/drops and we still want a gate-retune slot, prepare a lower-alpha candidate (likely `v556 alpha=0.10`) rather than submitting v554/v555 as-is. No new Kaggle submission monitor was started.
+
+
 ### v554 completed; v555 conservative gate-retune interpolation launched — 2026-05-14 17:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.

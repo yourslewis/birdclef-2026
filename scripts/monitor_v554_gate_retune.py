@@ -154,7 +154,8 @@ def run_gate() -> Path:
         "max_abs_vs_baseline": float(np.max(np.abs(base_values - final_values))),
     }
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    out = GRID_DIR / f"v554_gate_retune_final_vs_baseline_{stamp}.json"
+    safe_name = OUTPUT_NAME.replace("/", "_").replace("-", "_")
+    out = GRID_DIR / f"{safe_name}_final_vs_baseline_{stamp}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, indent=2) + "\n")
     log(f"gate written: {out}")
