@@ -231,6 +231,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Gate result vs v542 public946 anchor on train-soundscape overlap: anchor/weight 0 macro AUC `0.992525`; Snowflake standalone rank macro AUC `0.735086` and low correlation vs anchor `0.3728`. Tiny blends did **not** improve macro AUC: 0.25%/0.5% `0.992502`, 1% `0.992476`, 2% `0.992103`, 5% `0.990878`.
 - Decision: hold v550 for now; do **not** spend a capped competition slot on Snowflake standalone/1% unless a later ensemble policy values its top-k behavior despite AUC degradation. Next better action is a different source-clean sidecar or teacher/student route, not submitting v550 automatically.
 
+### v551 tiny CLAP sidecar candidate prepared — 2026-05-14 11:20 UTC
+
+- Ran a local multi-sidecar gate over v542 anchor plus CLAP, CV9245, train-audio-head, and Snowflake sidecars: `artifacts/blend_grids/v551_multisidecar_snowflake_combo_grid_20260514T1115Z.json` (ignored artifact, local only).
+- Best overlap macro AUC was a tiny CLAP sidecar: v542 + `0.5%` CLAP rank (`0.992549`) vs v542 anchor `0.992525`. CV9245/head did not improve macro AUC further in the tested small-weight grid; Snowflake was not selected.
+- Prepared `v551` as a conservative follow-up to failed v545 5% CLAP: it runs the same source-clean CLAP INT8 side stream but keeps the public946 Proto/SED gates intact and applies `CLAP_RANK_BLEND=0.005` after the gates.
+- Validation: `python3 -m py_compile kaggle-kernels/v551-public946-clap-int8-w0005/script.py scripts/push_v551.py` passed. Push pending/attempted after this log entry; do not submit under current UTC cap.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
