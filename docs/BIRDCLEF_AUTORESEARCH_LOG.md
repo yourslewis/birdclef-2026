@@ -276,6 +276,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v554 public946 gate-retune dry-run candidate — 2026-05-14 16:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is still COMPLETE/no failure with `submission.csv`. `v551` monitor pid `96890` remains alive and sleeping after daily cap; no duplicate v551 submission is visible.
+- **Track:** F/P2 public946 AutoResearch gate retuning after multiple distinct sidecars tied but did not move displayed 0.946. This is explicitly a **no-submit dry-run candidate** while v551 is queued for the next reset.
+- **Hypothesis:** The full public946 gate sweep found a stronger local configuration (`proto_weight=0.56`, lighter fake/proto/SED boosts, rare scale `0.85`) with overlap AUC `0.993325` vs baseline `0.992525`, but it needs a real Kaggle dry-run to verify runtime/output and avoid editing only local CSVs.
+- **Implementation:** added `kaggle-kernels/v554-public946-gateretune-pw056/` from v542 with final blend constants `V554_PROTO_WEIGHT=0.56`, `V554_FAKE_BOOST=0.04`, `V554_CTX_THR=0.90`, `V554_CTX_BOOST=0.10`, `V554_SED_RANK_THR=0.93`, `V554_SED_BOOST=0.08`, `V554_RARE_SCALE=0.85`. Added `scripts/push_v554.py` and no-submit monitor `scripts/monitor_v554_gate_retune.py`.
+- **Validation:** `python3 -m py_compile scripts/push_v554.py scripts/monitor_v554_gate_retune.py kaggle-kernels/v554-public946-gateretune-pw056/script.py` passed. Pushed real private Kaggle kernel via Bearer API; Kaggle created `yourslewis/bc26-v554-public946-gate-retune-pw056`, version 1, with no invalid data/competition/kernel/model sources.
+- **Monitor:** started no-submit monitor pid `8418`, log `logs/monitor_v554_gate_retune_20260514T165341Z.log`. Initial status is RUNNING/no failure. The monitor will download `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`, then compare v554 final against reconstructed v542 baseline on train-soundscape overlap without submitting.
+- **Decision:** keep v551 as the only live next-reset submission. v554 is preparation for the *following* slot only if its Kaggle dry-run completes and v551 fails to improve.
+
+
 ### v553 completed + Task239 Snowflake agreement-gate research pass — 2026-05-14 16:05 UTC
 
 - **Status check:** latest Bearer API submissions show `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, and `v545=0.944`; current best remains **0.946 public LB**. Kernels `v551`, `v552`, and `v553` are all COMPLETE/no failure with `submission.csv` present. UTC daily cap remains exhausted; guarded `v551` submit monitor pid `96890` is alive and sleeping after Kaggle returned `5/5` allowance used with about `8.1h` until reset. No duplicate v551 submission is visible.
