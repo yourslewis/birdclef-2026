@@ -1,5 +1,5 @@
 {
-  "id": "yourslewis/bc26-v547-public946-cv9245",
+  "id": "yourslewis/bc26-v547-public946-cv9245-sidecar",
   "title": "BC26 v547 Public946 CV9245 Sidecar",
   "code_file": "script.py",
   "language": "python",
@@ -23,5 +23,6 @@
   ],
   "model_sources": [
     "google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1"
-  ]
+  ],
+  "id_no": 119211047
 }
