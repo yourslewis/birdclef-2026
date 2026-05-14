@@ -209,6 +209,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v549-public946-cv9245-w001`, version 1; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `14.2s`, final CV9245 rank blend `0.01`, mirroring 10 columns, rare thresholding 44 species.
 - **Submission:** submitted v549 code submission ref `52644106`, description `v549: Public946 v542 plus source-clean CV9245 sidecar rank blend 1%`; score pending. This used the final known UTC submission slot (`5/5`).
 
+### v549 pending and daily quota exhausted; next-after-CV9245 plan — 2026-05-14 09:45 UTC
+
+- **Status check:** latest submissions show `v549` pending, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. UTC daily submissions are now `5/5`, so no further competition submission is possible this UTC day without hitting cap.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Decision:** hold all further submissions until next UTC reset and v549 score. Do not spend more effort on CV9245-only weights unless v549 improves; if v549 ties/drops, move to a new sidecar family.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_NEXT_AFTER_CV9245_20260514.md`. Priority after v549: (1) wait for score, (2) build source-clean Snowflake SED dry-run and gate `submission_snowflake_sed.csv`, (3) test tiny combined hidden-diversity blends only after component outputs exist, (4) use public946 gate retune only as fallback.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
