@@ -276,6 +276,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v554 completed; v555 conservative gate-retune interpolation launched — 2026-05-14 17:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.
+- **v554 result:** `yourslewis/bc26-v554-public946-gate-retune-pw056` version 1 completed successfully. No-submit monitor downloaded `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`; all validate as `(240,235)` with no NaNs. Gate artifact: `artifacts/blend_grids/v554_gate_retune_final_vs_baseline_20260514T170417Z.json`.
+- **v554 gate:** v542 baseline reconstruction macro AUC `0.992525`; v554 final macro AUC `0.993325` (`+0.000800`), top3 `0.647` vs `0.621`, top5 `0.753` vs `0.747`. Risk: displacement is large (`corr=0.99418`, `MAE=0.01273`, `max_abs=0.41676`), so v554 should not be auto-submitted immediately after v551.
+- **Risk-control sweep:** interpolating fully postprocessed v542 baseline with v554 final showed alpha `0.33` gives macro AUC `0.992915` (`+0.000391`) with much lower displacement (`corr=0.99937`, `MAE=0.00420`, `max_abs=0.1375`), preserving the top-k lift without the full retune jump.
+- **Implementation:** added conservative no-submit candidate `kaggle-kernels/v555-public946-gateretune-a033/` plus `scripts/push_v555.py`. v555 reconstructs the standard v542 final blend, applies the v554 retune, then writes `submission.csv` as `0.67 * baseline + 0.33 * retune` after both branches' mirror/rare postprocess.
+- **Kaggle push/monitor:** pushed real private Kaggle kernel `yourslewis/bc26-v555-public946-gate-retune-alpha033`, version 1; no invalid sources. Initial status RUNNING/no failure. Started no-submit monitor pid `17827`, log `logs/monitor_v555_gate_retune_20260514T175337Z.log`, using the generic gate-retune monitor with `KERNEL_SLUG=bc26-v555-public946-gate-retune-alpha033` and `OUTPUT_NAME=v555-public946-gate-retune-alpha033`.
+- **Decision:** keep v551 as the only next-reset submission. v555 is the preferred *prepared* gate-retune candidate over v554 if v551 ties/drops and the v555 real dry-run gate matches the offline interpolation result.
+
+
 ### v554 public946 gate-retune dry-run candidate — 2026-05-14 16:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is still COMPLETE/no failure with `submission.csv`. `v551` monitor pid `96890` remains alive and sleeping after daily cap; no duplicate v551 submission is visible.
