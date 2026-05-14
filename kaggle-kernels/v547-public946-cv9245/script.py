@@ -2314,12 +2314,15 @@ EPS = 1e-5
 
 df_proto = pd.read_csv(PROTOSSM_CSV)
 df_sed   = pd.read_csv(SED_CSV)
+df_cv9245 = pd.read_csv(CV9245_CSV)
 
 cols = [c for c in df_proto.columns if c != "row_id"]
 
 df_sed = df_sed.set_index("row_id").loc[df_proto["row_id"]].reset_index()
+df_cv9245 = df_cv9245.set_index("row_id").loc[df_proto["row_id"]].reset_index()
 p_proto = np.clip(df_proto[cols].to_numpy(np.float32), EPS, 1.0 - EPS)
 p_sed   = np.clip(df_sed[cols].to_numpy(np.float32), EPS, 1.0 - EPS)
+p_cv9245 = np.clip(df_cv9245[cols].to_numpy(np.float32), EPS, 1.0 - EPS)
 
 rank_proto = pd.DataFrame(p_proto).rank(axis=0, pct=True).to_numpy(np.float32)
 rank_sed   = pd.DataFrame(p_sed).rank(axis=0, pct=True).to_numpy(np.float32)
