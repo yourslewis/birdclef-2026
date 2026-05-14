@@ -170,6 +170,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
 - **Decision:** keep the no-new-Kaggle-push gate until `v545` receives a public score. If `v545` ties/drops, v546 should pivot away from CLAP-only to source-clean train-audio-head or CV9245 dry-run plus sidecar-grid evidence. If it improves, compare tiny CLAP `0.005`/`0.01` with those candidates before spending another slot.
 
+### v545 dropped; v546 train-audio-head dry-run and submission — 2026-05-14 02:45 UTC
+
+- **Status check:** `v545` scored `0.944`, below the locked `0.946` public946 anchor, so CLAP-only follow-ups are stopped for public slots. Latest scored: `v545=0.944`, `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**.
+- **v510 check:** remains COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** P2 public946 + train-audio-head sidecar after CLAP drop.
+- **Implementation:** added `kaggle-kernels/v546-public946-train-audio-head/` and `scripts/push_v546.py` on PR #229. The kernel forks v542, attaches `konbu17/bird26-train-audio-head-v1`, locates `head_weights_train_audio.npz`, hard-fails on missing/misaligned `emb_te`, applies a 5% class-masked head rank blend to `202/234` trained classes, writes `submission_train_audio_head.csv`, then writes final `submission.csv`.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v546-public946-train-audio-head`, version 1; push returned no invalid dataset/competition/kernel/model sources. Kernel COMPLETE/no failure and outputs include `submission.csv`, `submission_train_audio_head.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, and `perch_meta.parquet`. Log confirms `trained_classes=202/234`, `head_prob_range=(0.000001,0.999939)`, `head_prob_mean=0.094336`, and `submission_train_audio_head.csv (240, 235)`.
+- **Gate artifacts:** downloaded CSV outputs to ignored `artifacts/kaggle_outputs/v546-public946-train-audio-head/`. Ran `scripts/birdclef_public946_sidecar_weight_grid.py`; JSON artifacts `artifacts/blend_grids/v546_train_audio_head_sidecar_weight_grid_20260514T0245Z.json` and `artifacts/blend_grids/v546_train_audio_head_final_vs_v542_20260514T0245Z.json`. The final-vs-v542 check shows high correlation (`corr=0.9984`), low displacement (`MAE=0.0112`, `max_abs=0.0833`), no NaNs, but lower dry-run macro AUC (`0.991756` vs anchor `0.992525`); sidecar reblend at 0.25 gives tiny AUC +0.0000006 and top3 +1.05pp. Because train-soundscape dry-run is leakage-prone and the audited source claims a hidden tie-break gain while public display stays 0.946, this is a bounded-risk slot after CLAP failed.
+- **Submission:** submitted v546 code submission ref `52633928`, description `v546: Public946 v542 plus source-clean train-audio-head rank blend 5% trained classes`; score pending.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 

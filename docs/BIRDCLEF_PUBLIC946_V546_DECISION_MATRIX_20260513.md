@@ -1,12 +1,16 @@
 # BirdCLEF 2026 v546 Decision Matrix — 2026-05-13
 
-Status: prepared while `v545` is complete but waiting behind the Kaggle daily cap. **Do not push `v546` until `v545` scores.**
+Status: updated after `v545` scored `0.944`; `v546` train-audio-head has been pushed/submitted and is pending score.
 
 Current scored anchor: `v541`/`v542`/`v543`/`v544` = **0.946 public LB**.
 
 ## v545 submission status update — 2026-05-14 00:45 UTC
 
 `v545` was submitted successfully after the UTC cap reset (ref `52630458`) and is pending score. Keep the decision matrix gated on that score; do not push `v546` until the `v545` public result is visible.
+
+## v545 score and v546 action — 2026-05-14 02:45 UTC
+
+`v545` scored `0.944`, so CLAP-only follow-ups are stopped. The train-audio-head candidate was implemented as `yourslewis/bc26-v546-public946-train-audio-head`, completed successfully, passed shape/no-NaN/source hard gates, and was submitted as ref `52633928` with score pending.
 
 ## Candidate summary
 
