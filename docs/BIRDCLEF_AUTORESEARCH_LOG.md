@@ -191,6 +191,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Gate artifacts:** downloaded outputs to ignored `artifacts/kaggle_outputs/v547-public946-cv9245-sidecar/`. Sidecar grid JSON `artifacts/blend_grids/v547_cv9245_sidecar_weight_grid_20260514T0645Z.json`: CV9245 standalone is low-corr/different (`corr=0.6699`, `macro_auc=0.9657`), while 2% blend has `corr=0.999888`, `MAE=0.00362`, `max_abs=0.01917`, top3 `0.5421` vs anchor `0.5211`, top5 `0.6579` vs anchor `0.6316`, and only tiny AUC drop (`0.992509` vs `0.992525`). Final-vs-v542 JSON `artifacts/blend_grids/v547_cv9245_final_vs_v542_20260514T0645Z.json`: final `submission.csv` has `corr=0.999727`, `MAE=0.00436`, `max_abs=0.0500`, `macro_auc=0.992546` vs anchor `0.992525`, no NaNs.
 - **Submission:** submitted v547 code submission ref `52639661`, description `v547: Public946 v542 plus source-clean CV9245 sidecar rank blend 2%`; score pending.
 
+### v548 CV9245 0.5% low-displacement follow-up — 2026-05-14 08:20 UTC
+
+- **Status check:** `v547` CV9245 2% scored `0.946`, tying the public946 anchor. Current best remains **0.946 public LB**. `v546` train-audio-head also tied `0.946`; `v545` CLAP dropped to `0.944`. UTC daily submissions before v548: `3/5`, so two slots remained.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** P2/F AutoResearch ensemble weight optimization after v547 tied.
+- **Implementation:** added `kaggle-kernels/v548-public946-cv9245-w0005/` and `scripts/push_v548.py` on PR #229. It reuses the source-clean v547 CV9245 sidecar but lowers `CV9245_RANK_BLEND` from `0.02` to `0.005` to reduce anchor displacement.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v548-public946-cv9245-w0005`, version 1; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, and `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `13.1s`, final CV9245 rank blend `0.005`, mirroring 10 columns, rare thresholding 44 species.
+- **Gate basis:** prior combo/grid artifact `artifacts/blend_grids/v548_head_cv9245_combo_grid_20260514T0700Z.json` and v547 sidecar grid show the 0.5% CV9245 blend is the lowest-displacement safe follow-up (`corr=0.999993`, `MAE=0.000906`, `max_abs=0.00479`, dry-run macro AUC `0.992505` vs anchor `0.992525`, top3 `0.5368` vs anchor `0.5211`).
+- **Submission:** submitted v548 code submission ref `52642350`, description `v548: Public946 v542 plus source-clean CV9245 sidecar rank blend 0.5%`; score pending.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
