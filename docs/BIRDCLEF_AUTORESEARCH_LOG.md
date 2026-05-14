@@ -236,7 +236,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Ran a local multi-sidecar gate over v542 anchor plus CLAP, CV9245, train-audio-head, and Snowflake sidecars: `artifacts/blend_grids/v551_multisidecar_snowflake_combo_grid_20260514T1115Z.json` (ignored artifact, local only).
 - Best overlap macro AUC was a tiny CLAP sidecar: v542 + `0.5%` CLAP rank (`0.992549`) vs v542 anchor `0.992525`. CV9245/head did not improve macro AUC further in the tested small-weight grid; Snowflake was not selected.
 - Prepared `v551` as a conservative follow-up to failed v545 5% CLAP: it runs the same source-clean CLAP INT8 side stream but keeps the public946 Proto/SED gates intact and applies `CLAP_RANK_BLEND=0.005` after the gates.
-- Validation: `python3 -m py_compile kaggle-kernels/v551-public946-clap-int8-w0005/script.py scripts/push_v551.py` passed. Push pending/attempted after this log entry; do not submit under current UTC cap.
+- Validation: `python3 -m py_compile kaggle-kernels/v551-public946-clap-int8-w0005/script.py scripts/push_v551.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v551-public946-clap-int8-w0005`, version 1, with no invalid data/kernel/model sources. v551 is RUNNING/no failure; no-submit gate monitor started via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v551_clap_gate_*.log`). Do not submit under current UTC cap.
 
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
