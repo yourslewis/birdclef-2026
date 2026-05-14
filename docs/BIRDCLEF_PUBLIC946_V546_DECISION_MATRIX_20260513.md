@@ -4,6 +4,10 @@ Status: prepared while `v545` is complete but waiting behind the Kaggle daily ca
 
 Current scored anchor: `v541`/`v542`/`v543`/`v544` = **0.946 public LB**.
 
+## v545 submission status update — 2026-05-14 00:45 UTC
+
+`v545` was submitted successfully after the UTC cap reset (ref `52630458`) and is pending score. Keep the decision matrix gated on that score; do not push `v546` until the `v545` public result is visible.
+
 ## Candidate summary
 
 | Candidate | Readiness | Upside | Risk | Required next gate |

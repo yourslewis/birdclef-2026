@@ -163,6 +163,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Result:** CLAP standalone is anti/near-uncorrelated with the anchor (`corr=-0.028`, `macro_auc=0.455`, `top3=0.121`). The only dry-run AUC improvement is tiny at `0.005` (`0.992549` vs anchor `0.992525`, top3 lower `0.511` vs `0.521`); `0.01+` drops AUC and `0.05` drops to `0.989306`.
 - **Decision:** if `v545` ties/drops, do not spend v546 on another CLAP-only weight. If `v545` unexpectedly improves, only consider a very small `0.005`/`0.01` follow-up after comparing against CV9245/train-audio-head gates.
 
+### v545 submitted after UTC reset; pending score — 2026-05-14 00:45 UTC
+
+- **Status check:** the cap-reset monitor submitted `v545` at `2026-05-14T00:00:25.983Z`, ref `52630458`, description `v545: Public946 v542 plus source-clean CLAP INT8 ONNX 3-way rank blend 57/38/5`. It is visible in the submissions list but has no public score/status yet. Latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**.
+- **Monitor:** `logs/submit_v545_when_ready_20260513T194622Z_restart3.log` shows the retry succeeded with `Submission result: {"message": "", "ref": 52630458}`. The monitor process has exited after the successful submission; no duplicate `v545` submission is visible.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Decision:** keep the no-new-Kaggle-push gate until `v545` receives a public score. If `v545` ties/drops, v546 should pivot away from CLAP-only to source-clean train-audio-head or CV9245 dry-run plus sidecar-grid evidence. If it improves, compare tiny CLAP `0.005`/`0.01` with those candidates before spending another slot.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
