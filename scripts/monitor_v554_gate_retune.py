@@ -147,7 +147,7 @@ def run_gate() -> Path:
         "matched_rows": int(present.sum()),
         "valid_auc_classes": int(len(valid_cols)),
         "baseline": base_metrics,
-        "v554_final": final_metrics,
+        "candidate_final": final_metrics,
         "delta_auc_vs_baseline": float(final_metrics["macro_auc"] - base_metrics["macro_auc"]),
         "corr_vs_baseline": float(np.corrcoef(base_values.ravel(), final_values.ravel())[0, 1]),
         "mae_vs_baseline": float(np.mean(np.abs(base_values - final_values))),

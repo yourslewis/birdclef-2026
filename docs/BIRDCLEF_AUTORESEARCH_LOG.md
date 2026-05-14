@@ -276,6 +276,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v556 low-displacement gate-retune candidate launched — 2026-05-14 19:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap. No duplicate submissions were created.
+- **Track:** F/P2 public946 gate-retune preparation while capped, using the v555 post-gate diagnosis.
+- **Hypothesis:** A lower interpolation alpha should capture a small but real local top-k/AUC lift from the v554/v555 retuned gates while keeping anchor displacement much lower. Observed-delta backoff from v555 estimated alpha `0.10` at macro AUC `0.992630` (`+0.000106`), top3 `0.637` vs baseline `0.621`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`.
+- **Implementation:** added `kaggle-kernels/v556-public946-gateretune-a010/` and `scripts/push_v556.py`. v556 forks v555 but sets `V556_FULL_RETUNE_ALPHA=0.10`, i.e. `0.90 * reconstructed v542 baseline + 0.10 * retuned final` after both full postprocess paths.
+- **Validation:** `python3 -m py_compile scripts/push_v556.py scripts/monitor_v554_gate_retune.py kaggle-kernels/v556-public946-gateretune-a010/script.py` passed. Also updated `scripts/monitor_v554_gate_retune.py` to write `candidate_final` in future JSON artifacts instead of the stale `v554_final` key.
+- **Kaggle push/monitor:** pushed real private Kaggle kernel `yourslewis/bc26-v556-public946-gate-retune-alpha010`, version 1; no invalid data/competition/kernel/model sources. Initial status RUNNING/no failure. Started no-submit monitor pid `38739`, log `logs/monitor_v556_gate_retune_20260514T195228Z.log`, with `KERNEL_SLUG=bc26-v556-public946-gate-retune-alpha010` and `OUTPUT_NAME=v556-public946-gate-retune-alpha010`.
+- **Decision:** keep v551 as the only next-reset submit monitor. v556 is a prepared fallback candidate only if v551 ties/drops and v556 dry-run gates pass; no competition submission was attempted.
+
+
 ### v555 completed; hold as research-only, prefer lower-alpha if needed — 2026-05-14 18:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.
