@@ -261,6 +261,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added/pushed kernel `yourslewis/bc26-v552-public946-convnext-student-r075`, version 1. It forks v542 public946, runs the ConvNeXt student TorchScript sidecar to write `submission_convnext_student.csv`, then applies a conservative post-gate per-class rank blend `STUDENT_RANK_BLEND=0.075`. Kaggle push succeeded with no invalid data/kernel/model sources.
 - Started a no-submit gate monitor via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v552_convnext_gate_*.log`). Do **not** submit v552 while v551 is queued for next reset; gate it offline first and wait for v551 score.
 
+### v552 ConvNeXt student completed + no-submit gate — 2026-05-14 14:55 UTC
+
+- `v552` completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v552-public946-convnext-student-rank075/`: `submission.csv`, `submission_convnext_student.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240,235)` with no NaNs.
+- Gate output: `artifacts/blend_grids/v552_convnext_student_sidecar_weight_grid_20260514T140456Z.json`. ConvNeXt student standalone rank is reasonably competitive but weaker than anchor on the train-soundscape overlap: standalone macro AUC `0.979342`, corr vs anchor `0.904834`.
+- Blends vs v542 anchor macro AUC `0.992525`: 2% `0.992502`, 5% `0.992430`, 7.5% `0.992354`, 10% `0.992341`, 15% `0.992014`. Top-k row recall increases at larger weights, but macro AUC consistently degrades.
+- Decision: **hold/no-submit v552**. Keep the packaged ConvNeXt student as an artifact/private-robustness option only; do not spend a competition slot before v551 scores. The live submit monitor remains only `v551` pid `53054`, sleeping after daily cap.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
