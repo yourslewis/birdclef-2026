@@ -2,8 +2,9 @@
 """Monitor v554 public946 gate-retune dry-run without submitting.
 
 Waits for the private Kaggle kernel to finish, downloads output CSVs, validates
-shape/NaNs, and compares the v554 final submission against a reconstructed v542
-baseline from the same ProtoSSM/SED dry-run outputs.
+shape/NaNs, and compares the candidate final submission against an actual v542
+baseline CSV when available. It falls back to a reconstructed v542 baseline from
+the same ProtoSSM/SED dry-run outputs.
 """
 from __future__ import annotations
 
@@ -43,6 +44,7 @@ OUT_DIR = REPO / "artifacts" / "kaggle_outputs" / OUTPUT_NAME
 GRID_DIR = REPO / "artifacts" / "blend_grids"
 LABELS_CSV = Path(os.environ.get("LABELS_CSV", "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv"))
 TAXONOMY_CSV = Path(os.environ.get("TAXONOMY_CSV", "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/taxonomy.csv"))
+BASE_CSV = Path(os.environ.get("BASE_CSV", str(REPO / "artifacts" / "kaggle_outputs" / "v542-afr1ste-updated-public946" / "submission.csv")))
 FILES_TO_DOWNLOAD = ("submission.csv", "submission_protossm.csv", "submission_sed.csv")
 
 
@@ -132,7 +134,17 @@ def run_gate() -> Path:
     cols = [c for c in proto.columns if c != "row_id"]
     final = final.set_index("row_id").loc[proto["row_id"]].reset_index()
     tax_df = pd.read_csv(TAXONOMY_CSV).set_index("primary_label") if TAXONOMY_CSV.exists() else None
-    baseline = apply_config(proto, sed, cols, tax_df, GateConfig())
+    baseline_source = "reconstructed_v542"
+    if BASE_CSV.exists():
+        baseline = pd.read_csv(BASE_CSV).set_index("row_id").loc[proto["row_id"]].reset_index()
+        missing = [c for c in cols if c not in baseline.columns]
+        if missing:
+            raise ValueError(f"BASE_CSV missing {len(missing)} columns; first={missing[:5]}")
+        baseline_source = str(BASE_CSV)
+        log(f"using actual baseline CSV: {BASE_CSV}")
+    else:
+        baseline = apply_config(proto, sed, cols, tax_df, GateConfig())
+        log("actual baseline CSV missing; using reconstructed v542 baseline")
     present, valid_idx, valid_cols, y_true = _metric_setup(LABELS_CSV, proto["row_id"], cols)
     base_values = baseline[cols].to_numpy(np.float32)
     final_values = final[cols].to_numpy(np.float32)
@@ -144,6 +156,7 @@ def run_gate() -> Path:
         "output_dir": str(OUT_DIR),
         "labels_csv": str(LABELS_CSV),
         "taxonomy_csv": str(TAXONOMY_CSV),
+        "baseline_source": baseline_source,
         "matched_rows": int(present.sum()),
         "valid_auc_classes": int(len(valid_cols)),
         "baseline": base_metrics,

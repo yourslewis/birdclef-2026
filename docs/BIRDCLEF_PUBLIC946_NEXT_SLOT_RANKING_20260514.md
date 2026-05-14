@@ -36,3 +36,9 @@ Status: planning while UTC submission cap is exhausted and guarded `v551` monito
 - `v555` alpha-0.33 completed and validated, but real-run displacement is still higher than desired: local AUC `0.992915`, `corr=0.99577`, `MAE=0.00585`, `max_abs=0.39640`.
 - Observed-delta backoff suggests a possible future `alpha=0.10` candidate: local AUC `0.992630`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`.
 - Recommendation remains: keep `v551` as next reset submission; if it ties/drops, prefer a lower-alpha gate retune (`~0.10`) over v554/v555 as-is.
+
+## 2026-05-14 22:55 UTC update
+
+- `v558` is now the preferred gate-retune fallback if `v551` ties/drops. It compares cleanly against the actual downloaded v542 final: local AUC `0.992630` vs `0.992525`, top3 `0.637` vs `0.626`, `corr=0.999982`, `MAE=0.001067`, `max_abs=0.016018`.
+- The earlier high-displacement readings for v556-v558 came from comparing against a reconstructed baseline that diverged from actual v542 on a few cells. The monitor now prefers actual v542 `submission.csv` when available.
+- Submission priority remains: let v551 run first at reset; only consider v558 afterward if v551 ties/drops.

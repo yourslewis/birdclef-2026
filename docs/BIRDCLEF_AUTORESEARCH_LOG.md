@@ -276,6 +276,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v558 confirmed clean against actual v542 baseline — 2026-05-14 22:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
+- **v558 result:** `yourslewis/bc26-v558-gateretune-a010-clip002` version 1 completed and validated `(240,235)` outputs. The first generic gate artifact using reconstructed baseline still showed the same misleading high displacement as v556/v557, so the actual v542 output was downloaded from Kaggle to `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/` and used as the true comparison baseline.
+- **Monitor fix:** updated `scripts/monitor_v554_gate_retune.py` to prefer `BASE_CSV` / actual downloaded v542 `submission.csv` when available, falling back to reconstructed baseline only if the actual CSV is missing. Re-ran the monitor for v558 with the actual baseline.
+- **Actual-baseline gate:** `artifacts/blend_grids/v558_gateretune_a010_clip002_final_vs_baseline_20260514T225302Z.json` shows baseline macro AUC `0.992525`; v558 macro AUC `0.992630` (`+0.000106`); top3 `0.637` vs baseline `0.626`; top5 unchanged `0.747`; displacement is low (`corr=0.999982`, `MAE=0.001067`, `max_abs=0.016018`). This confirms v558 is the cleanest prepared gate-retune fallback.
+- **Decision:** keep `v551` as the only next-reset submit monitor. If v551 ties/drops and a postprocess fallback is needed, v558 is safer than v554/v555/v556/v557. Do not submit v554-v557.
+
+
 ### v557 completed but baseline mismatch persists; v558 exact-base clip launched — 2026-05-14 21:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
