@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v553 completed + Task239 Snowflake agreement-gate research pass — 2026-05-14 16:05 UTC
+
+- **Status check:** latest Bearer API submissions show `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, and `v545=0.944`; current best remains **0.946 public LB**. Kernels `v551`, `v552`, and `v553` are all COMPLETE/no failure with `submission.csv` present. UTC daily cap remains exhausted; guarded `v551` submit monitor pid `96890` is alive and sleeping after Kaggle returned `5/5` allowance used with about `8.1h` until reset. No duplicate v551 submission is visible.
+- **v553 gate result:** downloaded/monitored v553 outputs via `logs/monitor_v553_taxon_gate_20260514T152721Z.log`; no-submit gate `artifacts/blend_grids/v553_convnext_taxon_sidecar_gate_20260514T153755Z.json` shows taxon-gated ConvNeXt sidecar is still negative vs public946 anchor on overlap: anchor `0.992525`; 0.25%-2% blends `0.992502`; 5% `0.992430`. Decision: **hold/no-submit v553**.
+- **Research source:** audited cached public kernels from the 2026-05-14 scan, especially `ttyn4519__perch-task239-task233-snowflake-agree-w003`, which adds a Snowflake SED sidecar only where base V8, filemax-scaled SED, and Snowflake ranks all agree (`min_rank≈0.70`, `max_gap≈0.20`) instead of naive global Snowflake blending.
+- **Offline grid:** ran an inline Task239-style agreement-gate sweep using v550 dry-run outputs (`submission_protossm.csv`, `submission_sed.csv`, `submission_snowflake_sed.csv`) and local train-soundscape labels. Artifact: `artifacts/blend_grids/v554_task239_snowflake_agree_grid_20260514T1605Z.json`.
+- **Grid result:** reconstructed V8 anchor macro AUC `0.992525`. Best agreement-gated Snowflake variant was `p125=0.000`, `snow=0.030`, `min_rank=0.70`, `gap=0.20`, macro AUC `0.992567` (`+0.000043`), but displacement is large (`corr=0.9882`, `MAE=0.0439`) and top-k recall drops sharply vs the reconstructed anchor (`top5 0.632` vs `0.747`). This is not strong enough to supersede `v551` or justify a blind next-day slot.
+- **Decision:** next reset candidate remains **v551 tiny CLAP 0.5%** because it has the best bounded local lift (`0.992549`) among completed candidates and a live guarded submit monitor. The next research idea to implement, if v551 ties/drops, is not another single sidecar sweep; it should be either (a) a source-clean **agreement-gated Snowflake** candidate with much tighter displacement gates and exact mapped/proxy mask, or (b) a **public946 gate-retune** candidate from the full sweep (`proto_weight≈0.56`, lighter fake/proto/sed boosts) compared directly against v551/v552/v553. Do not submit v552/v553 automatically.
+
+
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
 - **Track:** P2/P3 public946 distinct-signal gate after anchor lock.
