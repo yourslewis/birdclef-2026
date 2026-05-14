@@ -32,19 +32,25 @@ from kagglesdk.kernels.types.kernels_api_service import (
     ApiListKernelFilesRequest,
 )
 
-OWNER = "yourslewis"
-SLUG = "bc26-v550-public946-snowflake-sed-w001"
-VERSION = 1
+OWNER = os.environ.get("KERNEL_OWNER", "yourslewis")
+SLUG = os.environ.get("KERNEL_SLUG", "bc26-v550-public946-snowflake-sed-w001")
+VERSION = int(os.environ.get("KERNEL_VERSION", "1"))
 REPO = Path(__file__).resolve().parents[1]
-OUT_DIR = REPO / "artifacts" / "kaggle_outputs" / "v550-public946-snowflake-sed-w001"
-BASE_CSV = Path("/Users/yourslewis/Documents/birdclef-2026/artifacts/kaggle_outputs/v542-afr1ste-updated-public946/submission.csv")
-LABELS_CSV = Path("/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv")
+OUTPUT_NAME = os.environ.get("OUTPUT_NAME", "v550-public946-snowflake-sed-w001")
+OUT_DIR = REPO / "artifacts" / "kaggle_outputs" / OUTPUT_NAME
+BASE_CSV = Path(os.environ.get("BASE_CSV", "/Users/yourslewis/Documents/birdclef-2026/artifacts/kaggle_outputs/v542-afr1ste-updated-public946/submission.csv"))
+LABELS_CSV = Path(os.environ.get("LABELS_CSV", "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv"))
 GRID_DIR = REPO / "artifacts" / "blend_grids"
-FILES_TO_DOWNLOAD = (
-    "submission.csv",
-    "submission_snowflake_sed.csv",
-    "submission_sed.csv",
-    "submission_protossm.csv",
+SIDECAR_FILE = os.environ.get("SIDECAR_FILE", "submission_snowflake_sed.csv")
+GRID_PREFIX = os.environ.get("GRID_PREFIX", "v550_snowflake_sidecar_weight_grid")
+GRID_WEIGHTS = os.environ.get("GRID_WEIGHTS", "0,0.0025,0.005,0.01,0.02,0.03,0.05")
+FILES_TO_DOWNLOAD = tuple(
+    f.strip()
+    for f in os.environ.get(
+        "FILES_TO_DOWNLOAD",
+        f"submission.csv,{SIDECAR_FILE},submission_sed.csv,submission_protossm.csv",
+    ).split(",")
+    if f.strip()
 )
 
 
@@ -117,11 +123,11 @@ def validate_csv(path: Path, expected_rows: int | None = None, expected_cols: in
 def run_gate() -> Path:
     if not BASE_CSV.exists():
         raise FileNotFoundError(f"base v542 CSV missing: {BASE_CSV}")
-    sidecar_csv = OUT_DIR / "submission_snowflake_sed.csv"
+    sidecar_csv = OUT_DIR / SIDECAR_FILE
     if not sidecar_csv.exists():
         raise FileNotFoundError(f"sidecar CSV missing: {sidecar_csv}")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    out_json = GRID_DIR / f"v550_snowflake_sidecar_weight_grid_{stamp}.json"
+    out_json = GRID_DIR / f"{GRID_PREFIX}_{stamp}.json"
     cmd = [
         sys.executable,
         str(REPO / "scripts" / "birdclef_public946_sidecar_weight_grid.py"),
@@ -130,7 +136,7 @@ def run_gate() -> Path:
         "--sidecar-csv",
         str(sidecar_csv),
         "--weights",
-        "0,0.0025,0.005,0.01,0.02,0.03,0.05",
+        GRID_WEIGHTS,
         "--output-json",
         str(out_json),
     ]
@@ -157,11 +163,11 @@ def main() -> None:
             for file_path in FILES_TO_DOWNLOAD:
                 download_file(client, file_path)
             rows, cols = validate_csv(OUT_DIR / "submission.csv")
-            validate_csv(OUT_DIR / "submission_snowflake_sed.csv", rows, cols)
+            validate_csv(OUT_DIR / SIDECAR_FILE, rows, cols)
             validate_csv(OUT_DIR / "submission_sed.csv", rows, cols)
             validate_csv(OUT_DIR / "submission_protossm.csv", rows, cols)
             run_gate()
-            log("v550 dry-run gate complete; no competition submission made")
+            log(f"{OUTPUT_NAME} dry-run gate complete; no competition submission made")
             return
         if status in {"ERROR", "FAILED", "CANCELED", "CANCELLED"}:
             raise RuntimeError(f"kernel ended unsuccessfully: {status}")
