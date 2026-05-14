@@ -216,6 +216,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Decision:** hold all further submissions until next UTC reset and v549 score. Do not spend more effort on CV9245-only weights unless v549 improves; if v549 ties/drops, move to a new sidecar family.
 - **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_NEXT_AFTER_CV9245_20260514.md`. Priority after v549: (1) wait for score, (2) build source-clean Snowflake SED dry-run and gate `submission_snowflake_sed.csv`, (3) test tiny combined hidden-diversity blends only after component outputs exist, (4) use public946 gate retune only as fallback.
 
+### v550 Snowflake SED sidecar pushed for dry-run gate — 2026-05-14 10:55 UTC
+
+- **Status check:** `v549` scored `0.946`, tying v548/v547/v546; current best remains **0.946 public LB**. UTC submissions are `5/5`, so no new competition submission was attempted.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** public946 new sidecar signal after CV9245-only bracket exhausted. Implemented `v550` from `v542` with Tsubasa Kanno's public Snowflake SED dataset (`tsubasatech/birdclef-2026-snowflake-sed`), loading `sed_convnext-tiny_fold0.onnx` and `sed_tf-efficientnetv2-m_fold0.onnx`, writing `submission_snowflake_sed.csv`, and applying conservative `SNOWFLAKE_RANK_BLEND=0.01` to final `submission.csv`.
+- **Validation before push:** `python3 -m py_compile kaggle-kernels/v550-public946-snowflake-sed-w001/script.py scripts/push_v550.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v550-public946-snowflake-sed-w001`, version 1, with no invalid data/kernel/model sources.
+- **Monitor state:** v550 is RUNNING/no failure at log time. Do not submit it under current UTC cap; after dry-run completion, download outputs and run `scripts/birdclef_public946_sidecar_weight_grid.py` on `submission_snowflake_sed.csv` vs v542 before choosing any next-day slot.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 

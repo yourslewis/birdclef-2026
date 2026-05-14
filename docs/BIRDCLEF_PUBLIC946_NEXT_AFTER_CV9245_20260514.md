@@ -9,8 +9,9 @@ Status: active planning after UTC daily quota was exhausted by `v545`-`v549`.
 - `v546` train-audio-head 5% tied `0.946`.
 - `v547` CV9245 2% tied `0.946`.
 - `v548` CV9245 0.5% tied `0.946`.
-- `v549` CV9245 1% is submitted and pending at this planning point.
+- `v549` CV9245 1% tied `0.946`; CV9245-only bracketing is exhausted for display-score purposes.
 - UTC submissions used: `5/5`.
+- `v550` Snowflake SED 1% dry-run candidate is pushed/running; not submitted.
 
 ## Interpretation
 
