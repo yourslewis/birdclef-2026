@@ -92,6 +92,10 @@ Implemented as `yourslewis/bc26-v547-public946-cv9245-sidecar`, version 3. Versi
 
 `v547` scored `0.946` (tie), so a lower-displacement CV9245 follow-up was created as `yourslewis/bc26-v548-public946-cv9245-w0005`, version 1. It keeps the same source-clean CV9245 sidecar and changes only the final rank blend from `0.02` to `0.005`. The kernel completed successfully and was submitted as ref `52642350`; score pending.
 
+## v549 bracket follow-up — 2026-05-14 09:25 UTC
+
+`v548` scored `0.946` (tie). With one UTC submission slot left, a bracket candidate `yourslewis/bc26-v549-public946-cv9245-w001` was prepared and completed successfully using `CV9245_RANK_BLEND=0.01`, exactly between the tied 0.5% and 2% CV9245 weights. Submitted ref `52644106`; score pending.
+
 ## Decision rule after v545
 
 - If `v545 > 0.946`: do not immediately use CV9245; compare lower CLAP (`0.01`/`0.02`) against CV9245 gate outputs first.

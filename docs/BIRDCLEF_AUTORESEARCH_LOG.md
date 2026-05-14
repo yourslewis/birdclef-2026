@@ -201,6 +201,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Gate basis:** prior combo/grid artifact `artifacts/blend_grids/v548_head_cv9245_combo_grid_20260514T0700Z.json` and v547 sidecar grid show the 0.5% CV9245 blend is the lowest-displacement safe follow-up (`corr=0.999993`, `MAE=0.000906`, `max_abs=0.00479`, dry-run macro AUC `0.992505` vs anchor `0.992525`, top3 `0.5368` vs anchor `0.5211`).
 - **Submission:** submitted v548 code submission ref `52642350`, description `v548: Public946 v542 plus source-clean CV9245 sidecar rank blend 0.5%`; score pending.
 
+### v549 CV9245 1% bracket candidate and final slot — 2026-05-14 09:25 UTC
+
+- **Status check:** `v548` CV9245 0.5% scored `0.946`, tying the public946 anchor. Current best remains **0.946 public LB**. UTC daily submissions before v549: `4/5`, so one slot remained.
+- **Track:** P2/F AutoResearch ensemble weight bracket after both CV9245 2% (`v547`) and 0.5% (`v548`) tied.
+- **Implementation:** added `kaggle-kernels/v549-public946-cv9245-w001/` and `scripts/push_v549.py` on PR #229. It reuses the v547/v548 source-clean CV9245 sidecar and sets final `CV9245_RANK_BLEND=0.01`, exactly between the tied 0.5% and 2% runs.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v549-public946-cv9245-w001`, version 1; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `14.2s`, final CV9245 rank blend `0.01`, mirroring 10 columns, rare thresholding 44 species.
+- **Submission:** submitted v549 code submission ref `52644106`, description `v549: Public946 v542 plus source-clean CV9245 sidecar rank blend 1%`; score pending. This used the final known UTC submission slot (`5/5`).
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
