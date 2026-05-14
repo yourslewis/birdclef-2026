@@ -11,7 +11,7 @@ Status: active planning after UTC daily quota was exhausted by `v545`-`v549`.
 - `v548` CV9245 0.5% tied `0.946`.
 - `v549` CV9245 1% tied `0.946`; CV9245-only bracketing is exhausted for display-score purposes.
 - UTC submissions used: `5/5`.
-- `v550` Snowflake SED 1% dry-run candidate is pushed/running; not submitted.
+- `v550` Snowflake SED 1% dry-run candidate completed and was gated offline; hold/no-submit because sidecar blends reduced overlap macro AUC vs v542 anchor.
 
 ## Interpretation
 

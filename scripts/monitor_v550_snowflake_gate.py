@@ -16,7 +16,13 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-import pandas as pd
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    fallback = Path("/Users/yourslewis/.openclaw/workspace-don/kaggle/playground-series-s6e3/.venv/bin/python")
+    if fallback.exists() and Path(sys.executable) != fallback:
+        os.execv(str(fallback), [str(fallback), *sys.argv])
+    raise
 
 from kagglesdk.kaggle_http_client import KaggleHttpClient
 from kagglesdk.kernels.services.kernels_api_service import KernelsApiClient

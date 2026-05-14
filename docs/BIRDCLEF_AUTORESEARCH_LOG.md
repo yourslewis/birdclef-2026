@@ -224,6 +224,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Validation before push:** `python3 -m py_compile kaggle-kernels/v550-public946-snowflake-sed-w001/script.py scripts/push_v550.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v550-public946-snowflake-sed-w001`, version 1, with no invalid data/kernel/model sources.
 - **Monitor state:** v550 is RUNNING/no failure at log time. Do not submit it under current UTC cap; after dry-run completion, download outputs and run `scripts/birdclef_public946_sidecar_weight_grid.py` on `submission_snowflake_sed.csv` vs v542 before choosing any next-day slot.
 
+### v550 Snowflake SED dry-run gate complete — 2026-05-14 11:10 UTC
+
+- `v550` Kaggle kernel completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v550-public946-snowflake-sed-w001/`: `submission.csv`, `submission_snowflake_sed.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240, 235)` with no NaNs.
+- Ran the no-submit gate monitor `scripts/monitor_v550_snowflake_gate.py`; output grid: `artifacts/blend_grids/v550_snowflake_sidecar_weight_grid_20260514T110730Z.json`.
+- Gate result vs v542 public946 anchor on train-soundscape overlap: anchor/weight 0 macro AUC `0.992525`; Snowflake standalone rank macro AUC `0.735086` and low correlation vs anchor `0.3728`. Tiny blends did **not** improve macro AUC: 0.25%/0.5% `0.992502`, 1% `0.992476`, 2% `0.992103`, 5% `0.990878`.
+- Decision: hold v550 for now; do **not** spend a capped competition slot on Snowflake standalone/1% unless a later ensemble policy values its top-k behavior despite AUC degradation. Next better action is a different source-clean sidecar or teacher/student route, not submitting v550 automatically.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
