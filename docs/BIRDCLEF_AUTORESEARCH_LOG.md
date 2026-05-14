@@ -238,6 +238,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Prepared `v551` as a conservative follow-up to failed v545 5% CLAP: it runs the same source-clean CLAP INT8 side stream but keeps the public946 Proto/SED gates intact and applies `CLAP_RANK_BLEND=0.005` after the gates.
 - Validation: `python3 -m py_compile kaggle-kernels/v551-public946-clap-int8-w0005/script.py scripts/push_v551.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v551-public946-clap-int8-w0005`, version 1, with no invalid data/kernel/model sources. v551 is RUNNING/no failure; no-submit gate monitor started via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v551_clap_gate_*.log`). Do not submit under current UTC cap.
 
+### v551 complete + gated; guarded submit monitor started — 2026-05-14 11:50 UTC
+
+- `v551` completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v551-public946-clap-int8-w0005/`: `submission.csv`, `submission_clap_onnx.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240, 235)` with no NaNs.
+- The first v551 no-submit monitor died on a transient Kaggle `RemoteDisconnected`; hardened `scripts/monitor_v550_snowflake_gate.py` with retry wrappers for status/list/download and reran the gate successfully.
+- Gate output: `artifacts/blend_grids/v551_clap_sidecar_weight_grid_20260514T114751Z.json`. v542 anchor macro AUC `0.992525`; CLAP standalone rank is bad (`0.455042`, corr `-0.028`), but tiny blends are slightly positive at 0.25%-0.5%: `0.0025 -> 0.992538`, `0.005 -> 0.992549`; 1%+ degrades.
+- Decision: `v551` is the single next-slot candidate, not a widened CLAP lane. Started guarded submit script `scripts/submit_v551_when_ready.py`; it exits on duplicate descriptions, requires `submission.csv`, and backs off on daily cap. Current UTC cap is still 5/5, so it should sleep until reset if the submit attempt hits allowance.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 

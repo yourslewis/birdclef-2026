@@ -68,11 +68,25 @@ def make_client() -> KernelsApiClient:
     return KernelsApiClient(KaggleHttpClient(api_token=token))
 
 
+def call_with_retries(label: str, fn, attempts: int = 4, sleep_s: int = 30):
+    last_exc: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            return fn()
+        except Exception as exc:  # Kaggle occasionally closes idle connections.
+            last_exc = exc
+            if attempt == attempts:
+                break
+            log(f"{label} failed on attempt {attempt}/{attempts}: {exc!r}; retrying in {sleep_s}s")
+            time.sleep(sleep_s)
+    raise RuntimeError(f"{label} failed after {attempts} attempts") from last_exc
+
+
 def kernel_status(client: KernelsApiClient) -> str:
     req = ApiGetKernelSessionStatusRequest()
     req.user_name = OWNER
     req.kernel_slug = SLUG
-    status = client.get_kernel_session_status(req).to_dict()
+    status = call_with_retries("get_kernel_session_status", lambda: client.get_kernel_session_status(req)).to_dict()
     log(f"status={status}")
     failure = status.get("failureMessage")
     if failure:
@@ -85,7 +99,7 @@ def list_files(client: KernelsApiClient) -> list[str]:
     req.user_name = OWNER
     req.kernel_slug = SLUG
     req.page_size = 100
-    resp = client.list_kernel_files(req)
+    resp = call_with_retries("list_kernel_files", lambda: client.list_kernel_files(req))
     files = [getattr(x, "name", "") for x in (resp.files or [])]
     log(f"files={files}")
     return files
@@ -98,7 +112,7 @@ def download_file(client: KernelsApiClient, file_path: str) -> Path:
     req.kernel_slug = SLUG
     req.version_number = VERSION
     req.file_path = file_path
-    resp = client.download_kernel_output(req)
+    resp = call_with_retries(f"download_kernel_output:{file_path}", lambda: client.download_kernel_output(req))
     resp.raise_for_status()
     out = OUT_DIR / Path(file_path).name
     out.write_bytes(resp.content)
