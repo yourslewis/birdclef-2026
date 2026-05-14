@@ -2200,7 +2200,8 @@ if not _cv_cnn_hits:
     raise FileNotFoundError("CV9245 student CNN weight not found")
 
 _cv_prior_tables, _cv_site_to_idx = _cv.build_training_priors(BASE, PRIMARY_LABELS)
-_cv_n_sites = max(32, max(_cv_site_to_idx.values(), default=0) + 1)
+_cv_n_sites = max(_cv_site_to_idx.values(), default=0) + 1
+print(f"CV9245 n_sites={_cv_n_sites}")
 _cv_fold_models = []
 for _fold_path in _cv_fold_hits:
     _m = _cv.ProtoSSM(n_classes=N_CLASSES, d_model=320, n_sites=_cv_n_sites).to("cpu")
