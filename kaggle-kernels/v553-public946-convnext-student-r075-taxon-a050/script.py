@@ -2164,17 +2164,17 @@ sed_sub.to_csv("submission_sed.csv", index=False)
 print("Distilled SED Processing Complete.")
 
 # %% markdown
-# ## v552 ConvNeXt-tiny public946 student sidecar
+# ## v553 ConvNeXt-tiny public946 student sidecar + taxon max gate
 #
 # Source-clean v552 addition: load a private TorchScript ConvNeXt-tiny student
 # trained from the public946 rankblend teacher and write `submission_convnext_student.csv`.
 # The final blend applies this side stream as a conservative per-class rank sidecar.
 
 # %% cell v552_convnext_student_sidecar
-print("Starting v552 ConvNeXt-tiny public946 student sidecar...")
+print("Starting v553 ConvNeXt-tiny public946 student sidecar + taxon max gate...")
 STUDENT_CSV = "submission_convnext_student.csv"
 STUDENT_RANK_BLEND = 0.075
-APPLY_TAXON_MAX_GATE = False
+APPLY_TAXON_MAX_GATE = True
 TAXON_MAX_GATE_FLOOR = 0.30
 TAXON_MAX_GATE_ALPHA = 0.50
 STUDENT_DATASET_SLUG = "bc26-public946-convnext-tiny-student-v1"

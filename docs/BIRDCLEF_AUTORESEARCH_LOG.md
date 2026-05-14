@@ -268,6 +268,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Blends vs v542 anchor macro AUC `0.992525`: 2% `0.992502`, 5% `0.992430`, 7.5% `0.992354`, 10% `0.992341`, 15% `0.992014`. Top-k row recall increases at larger weights, but macro AUC consistently degrades.
 - Decision: **hold/no-submit v552**. Keep the packaged ConvNeXt student as an artifact/private-robustness option only; do not spend a competition slot before v551 scores. The live submit monitor remains only `v551` pid `53054`, sleeping after daily cap.
 
+### v553 taxon max gate option added for public946/ConvNeXt testing — 2026-05-14 15:30 UTC
+
+- Added a reusable v517-style taxon max gate option to `scripts/birdclef_public946_weight_grid.py` via `--taxon-gate`, `--taxon-floors`, and `--taxon-alphas`, so public946 Proto/SED rank-blend variants can be swept with the same taxon evidence gate that previously lifted the v508 axis.
+- Local dry-run grid: `artifacts/blend_grids/public946_taxon_gate_option_grid_20260514.json` over floors `0.20,0.30,0.40` and alphas `0.375,0.50,0.75`. On train-soundscape overlap the taxon gate is not additive to public946: for the v542-weight `0.60/0.40` blend, best taxon variant was `0.992376` vs base `0.992525` (`-0.000149`); all tested Proto weights were slightly negative. This is only a public/train-overlap gate, not final LB proof.
+- Added optional constants to the v552 final blend (`APPLY_TAXON_MAX_GATE`, `TAXON_MAX_GATE_FLOOR=0.30`, `TAXON_MAX_GATE_ALPHA=0.50`) and created a live test fork `v553` with the gate enabled.
+- Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 
