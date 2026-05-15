@@ -238,3 +238,33 @@ Blend gate (`blend_gate.json`):
 - Blending into rankblend improves rankblend but remains far below the blended teacher.
 
 Decision: do not submit/package yet. This is the best student artifact so far, but the local lift over the blended teacher is only `+0.000028`, too small for a fresh Kaggle slot after repeated public946 ties. Next step should be either a second seed/fold robustness check or a different learner/curriculum using the same blended teacher.
+
+
+## 2026-05-15 08:55 UTC blended-teacher B0 second-seed robustness
+
+Ran the planned second-seed robustness check before considering any packaging.
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_seed43_20260515.json`.
+
+- Same target: `teacher_sed85_rankblend15.npz`
+- Same B0 + external-pretrain init, 792 rows, 20 epochs
+- Seed: `43`
+- Runtime: `21.506s`
+- Best val AUC: `0.994676` over 62 classes
+- Final student AUC: `0.991832` over 75 classes
+- Teacher AUC: `0.997018`
+- Student/teacher corr: `0.97008`
+- Student/teacher MAE: `0.01643`
+- TorchScript: `15.391 MB`
+
+Robust blend gate: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b0-5s-ep20-seed43-20260515/robust_blend_gate.json`.
+
+- Seed42 standalone: `0.992137`
+- Seed43 standalone: `0.991832`
+- Two-seed student ensemble standalone: `0.993027`
+- Teacher baseline: `0.997018`
+- Best blend remains seed42 at `w=0.01`: `0.997046`
+- Two-seed ensemble best: `w=0.05`: `0.997041`
+- Seed43 best: `w=0.005`: `0.997038`
+
+Interpretation: the student signal is reproducible and ensemble improves standalone, but the actual lift over the blended teacher remains only `+0.00002` to `+0.00003`, with near-perfect correlation after blending. This is robust but too small for a Kaggle slot. Keep as a reusable artifact; do not package or submit unless a later independent validation/private proxy strengthens it.

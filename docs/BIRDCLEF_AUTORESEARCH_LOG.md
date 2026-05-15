@@ -276,6 +276,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B blended-teacher B0 second-seed robustness — 2026-05-15 08:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Run:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_seed43_20260515.json` and ran same B0 + external-pretrain setup against `teacher_sed85_rankblend15.npz`, 792 rows / 20 epochs, seed `43`. Completed on CUDA in `21.506s`.
+- **Metrics:** seed43 final student AUC `0.991832` over 75 classes vs blended teacher `0.997018`; best val AUC `0.994676`; corr `0.97008`, MAE `0.01643`, TorchScript `15.391 MB`.
+- **Robust blend gate:** seed42 standalone `0.992137`, seed43 `0.991832`, two-seed ensemble `0.993027`, teacher `0.997018`. Best blend is still seed42 at `w=0.01`: `0.997046`; two-seed ensemble best `w=0.05`: `0.997041`; seed43 best `w=0.005`: `0.997038`.
+- **Decision:** robust signal but too small and too correlated after blending for a Kaggle slot. Keep artifacts; do not package/submit unless later independent validation/private proxy strengthens the case.
+
+
 ### Spec B blended-teacher B0 smoke + scale — 2026-05-15 07:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
