@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B public946 SED teacher cache + hard-confidence smoke — 2026-05-15 04:05 UTC
+
+- **Status check:** current public best remains **0.946**. Latest scored submissions remain `v558=0.946`, `v551=0.946`, `v549/v548/v547/v546=0.946`; no Kaggle slot used this run. `v510` remains COMPLETE/no failure.
+- **Chosen track:** Spec B pseudo-label/noisy-student, because public946 retunes are stopped after repeated ties/drops.
+- **Teacher cache:** generated cache from `artifacts/kaggle_outputs/v542-afr1ste-updated-public946` into `artifacts/public946_teacher_cache_v542_20260515T0355Z/`. `teacher_sed.npz` is the cleanest seed: labeled-overlap macro AUC `0.995976`, row top1/top3/top5 recall `0.978947/0.989474/0.994737`. `teacher_rankblend.npz` has macro AUC `0.992525` but very dense hard positives and much worse top-k row recall.
+- **Threshold sweep:** `artifacts/pseudolabel_thresholds/public946_v542_sed_threshold_sweep_20260515T0355Z.json` recommends SED hard-confidence positives at `power=1.0`, `positive_threshold=0.8`; overlap precision `97/97 = 1.0`, `66` positive rows, `8` positive classes. Use `negative_threshold=0.005` as the practical smoke/default (mask fraction `0.779`) or `0.001` as more conservative.
+- **Smoke train/export:** added config `configs/birdclef/pl_public946_sed_hardconf_smoke8_20260515.json` and ran `scripts/birdclef_pseudolabel_student_train.py` on `max_rows=8`, one epoch, hard-conf p0.8/n0.005. It completed on CPU in `4.777s`, exported TorchScript `0.184 MB`, and wrote `artifacts/pseudolabels/students/pl-public946-sed-hardconf-smoke8-20260515/metrics.json`. Actual backbone was `tiny_cnn_sed` fallback, so this validates plumbing only; next quality run should use GPU/server/timm environment.
+- **Plan doc:** added `docs/BIRDCLEF_PUBLIC946_PSEUDOLABEL_TEACHER_20260515.md`. Do not submit a student kernel until a full/OOF artifact shows competitive diagnostics and lower correlation to public946.
+
+
 ### v558 tied; stop public946 retune lane — 2026-05-15 02:55 UTC
 
 - **Status check:** `v558` completed with public score **0.946**, tying but not improving the public946 anchor. `v551` also tied **0.946**. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`.
