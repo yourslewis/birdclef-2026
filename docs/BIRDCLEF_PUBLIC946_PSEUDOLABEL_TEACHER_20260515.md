@@ -501,3 +501,18 @@ Blend gate:
 - larger weights flatten/drop
 
 Decision: kill XC-initialized V2S for packaging. It improved the smoke but underperformed direct V2S at full scale and has weaker blend lift. After v560 dropped to 0.945, do not spend another slot on V2S/public946 micro-sidecars.
+
+## 2026-05-15 17:05 UTC v560 stop rule + NFNet smoke blocked
+
+`v560` scored `0.945`, confirming that the small direct-V2S sidecar did not translate from local/dry-run gate to public LB. Treat this as a stop rule for more public946 micro-sidecar submissions.
+
+Attempted next model-zoo pivot:
+
+- config: `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json`
+- backbone: `eca_nfnet_l0`
+- target: `teacher_sed85_rankblend15.npz`
+- setup: 5s/160 mel, lr `1e-4`, 256 rows / 3 epochs, soft BCE, seed `45`
+
+Result: **blocked/incomplete**. The foreground SSH/CUDA smoke launch produced no first-epoch output within the cron window, and independent SSH checks to `192.168.0.10` timed out during banner exchange. The local blocking session was killed. Do not interpret this as model failure; it is a trainer reachability/runtime issue.
+
+Next action: verify trainer reachability/process state first. If healthy, rerun NFNet as a durable `nohup` job with log monitoring; otherwise skip until host recovers.
