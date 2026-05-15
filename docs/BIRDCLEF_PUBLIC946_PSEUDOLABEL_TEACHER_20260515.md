@@ -368,3 +368,30 @@ Best pair blend:
 - corr vs teacher: `0.98262`
 
 Decision: this is the best local sidecar signal found so far and materially better than the B0 blended-teacher seed lift, but still extremely small and based on 792 labeled train-soundscape rows. Do not spend an immediate Kaggle slot without packaging/runtime verification. Next actionable packaging candidate, if a slot is needed: source-clean two-student sidecar with V2S weight `0.06` and B0 soft-anchor weight `0.04` blended into the public946 anchor.
+
+## 2026-05-15 13:20 UTC v559 stricter public946 dry-run gate
+
+The existing student-pool audit found a best 792-row blended-teacher pair of V2S `0.06` + B0 soft-anchor `0.04`, but this does not directly match the public946 Kaggle final rank/gate path. Ran a stricter v542 dry-run overlap gate before packaging.
+
+Added reusable script:
+
+- `scripts/birdclef_public946_multi_sidecar_weight_grid.py`
+
+Inputs:
+
+- base: `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/submission.csv`
+- sidecar V2S CSV materialized from `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval/student_predictions.npz`
+- sidecar B0 soft-anchor CSV materialized from `pl-r1-b0-v508-soft-anchor-p98n05-lr3e4-ep12/student_predictions.npz`
+
+Gate artifact:
+
+- `artifacts/blend_grids/v559_v2s_b0_multi_sidecar_gate_20260515T1315Z.json`
+
+Results on 190 matched dry-run rows / 42 valid classes:
+
+- v542 rank anchor: `0.992524901`
+- best V2S+B0 row: V2S `0.005` + B0 soft-anchor `0.010`, AUC `0.992560140`, lift `+0.000035240`, top5 recall `0.6526` vs base `0.6316`, MAE `0.00297`
+- B0-only `0.020`: AUC `0.992553682`, lift `+0.000028781`
+- the previous 792-row pair weights (`0.06/0.04`) are not supported by this stricter gate
+
+Decision: hold/no package for now. This is directionally positive but too small to spend a blind submission slot after public946 sidecars repeatedly tied. If a future slot needs a prepared candidate, use a tiny rank sidecar around V2S `0.005` + B0 soft-anchor `0.010` rather than the larger 6%/4% pair.
