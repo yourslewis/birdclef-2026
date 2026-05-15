@@ -276,6 +276,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v551 submitted at UTC reset; hold for score — 2026-05-15 00:05 UTC
+
+- **Status check:** immediately before reset, latest scored submissions remained `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains the clean prepared fallback, but no fallback submission was attempted.
+- **Submit monitor:** guarded `scripts/submit_v551_when_ready.py` pid `96890` woke after UTC reset, rechecked `v551` COMPLETE + `submission.csv`, and submitted exactly once. Log `logs/submit_v551_when_ready_restart_20260514T155229Z.log` reports `Submission result: {"message": "", "ref": 52663601}`.
+- **Visible submission:** `v551: Public946 v542 plus source-clean CLAP INT8 ONNX tiny rank sidecar 0.5%` is now visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet.
+- **Decision:** wait for v551 public score before spending any more daily slots. If v551 improves, bracket tiny CLAP only after comparing against v558. If v551 ties/drops, prefer prepared v558 over v554-v557 for a retune fallback, but do not submit automatically until the score is known.
+
+
 ### v558 confirmed clean against actual v542 baseline — 2026-05-14 22:55 UTC
 
 - **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
