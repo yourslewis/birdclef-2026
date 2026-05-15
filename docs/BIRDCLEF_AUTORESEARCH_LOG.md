@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v558 conditional submit monitor prepared while v551 pending — 2026-05-15 00:55 UTC
+
+- **Status check:** `v551` is visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet. Current best remains **0.946 public LB** from `v541/v542/v543/v544/v546-v549`. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
+- **Track:** guarded fallback orchestration while waiting for v551 score; no extra competition submission was made in this run.
+- **Implementation:** added `scripts/submit_v558_if_v551_ties_or_drops.py`. It polls submissions, exits without submitting if `v551` improves above `0.946`, and submits `v558` only if `v551` completes with score `<=0.946` or error/no-score. It also guards against duplicate v558 descriptions and requires the v558 kernel to be COMPLETE with `submission.csv`.
+- **Validation:** `python3 -m py_compile scripts/submit_v558_if_v551_ties_or_drops.py` passed.
+- **Monitor:** started pid `84410`, log `logs/submit_v558_if_v551_ties_or_drops_20260515T005238Z.log`. Initial check saw `v551` PENDING and slept; no v558 submission attempted.
+- **Decision:** continue holding until v551 scores. This monitor is the only conditional fallback path; do not manually submit v558 unless the monitor fails.
+
+
 ### v551 submitted at UTC reset; hold for score — 2026-05-15 00:05 UTC
 
 - **Status check:** immediately before reset, latest scored submissions remained `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains the clean prepared fallback, but no fallback submission was attempted.
