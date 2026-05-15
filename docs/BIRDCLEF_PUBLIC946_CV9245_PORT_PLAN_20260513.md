@@ -84,6 +84,18 @@ Required Kaggle log gates before submission:
 - No silent fallback to plain public946.
 - Wall time remains comfortably below hidden-test budget. Zeyad's public path uses `CV9245_START_CUTOFF_MIN=65` and batch size 4; keep the same or stricter guard.
 
+## Execution update — 2026-05-14 06:45 UTC
+
+Implemented as `yourslewis/bc26-v547-public946-cv9245-sidecar`, version 3. Version 1 exposed the correct artifact availability but failed on CV9245 `site_emb.weight` shape (`10` trained sites vs padded `32`); version 2 completed the sidecar and exposed a final-blend CSV load bug; version 3 completed successfully. The completed dry-run wrote `submission_cv9245_cnnonly_sharedperch.csv` and final `submission.csv` with no NaNs. Gate metrics support the conservative 2% blend: final-vs-v542 `corr=0.999727`, `MAE=0.00436`, `max_abs=0.0500`, and dry-run macro AUC `0.992546` vs anchor `0.992525`. Submitted ref `52639661`; score pending.
+
+## v548 low-weight follow-up — 2026-05-14 08:20 UTC
+
+`v547` scored `0.946` (tie), so a lower-displacement CV9245 follow-up was created as `yourslewis/bc26-v548-public946-cv9245-w0005`, version 1. It keeps the same source-clean CV9245 sidecar and changes only the final rank blend from `0.02` to `0.005`. The kernel completed successfully and was submitted as ref `52642350`; score pending.
+
+## v549 bracket follow-up — 2026-05-14 09:25 UTC
+
+`v548` scored `0.946` (tie). With one UTC submission slot left, a bracket candidate `yourslewis/bc26-v549-public946-cv9245-w001` was prepared and completed successfully using `CV9245_RANK_BLEND=0.01`, exactly between the tied 0.5% and 2% CV9245 weights. Submitted ref `52644106`; score pending.
+
 ## Decision rule after v545
 
 - If `v545 > 0.946`: do not immediately use CV9245; compare lower CLAP (`0.01`/`0.02`) against CV9245 gate outputs first.

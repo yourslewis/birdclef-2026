@@ -129,6 +129,356 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_CV9245_PORT_PLAN_20260513.md` with source audit, integration pattern, candidate rank weights (`0.02`/`0.05`), runtime/failure gates, and the post-v545 decision rule.
 - **Decision:** no Kaggle push until v545 scores. If v545 ties/drops, implement source-clean public946+CV9245 as the leading v546 candidate and gate it against the tuned public946-gate candidate and train-audio-head before spending a slot.
 
+### Train-audio-head sidecar preflight while v545 capped — 2026-05-13 19:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue fix:** guarded `v545` monitor pid `35141` had staled/exited. Rechecked recent 200 submissions (`v545` absent), then restarted guarded monitor as pid `86320`, log `logs/submit_v545_when_ready_20260513T194622Z_restart3.log`; it immediately re-hit daily cap with about `4.2h` remaining and is sleeping. No duplicate submission was created.
+- **Track:** P2 next distinct-signal preparation while waiting for v545 score.
+- **Train-audio-head preflight:** audited Henry's `bc2026-raunak0946-direct-v44` train-audio-head branch and public dataset `konbu17/bird26-train-audio-head-v1`. Dataset is public/attachable and contains `head_weights_train_audio.npz` (~1.44 MB). Ignored local copy: `artifacts/public946_train_audio_head_audit_20260513/head_weights_train_audio.npz`. NPZ keys/shapes: `W (234,1536) float32`, `b (234,) float32`, `trained_mask (234,) bool`, `feature_dim=1536`, `notes`.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_TRAIN_AUDIO_HEAD_PLAN_20260513.md` with source audit, integration pattern, candidate weights (`0.03`/`0.05`), runtime/failure gates, and post-v545 decision rule.
+- **Decision:** no Kaggle push until v545 scores. If v545 ties/drops, rank train-audio-head against CV9245 and tuned public946 gates before spending the v546 slot.
+
+### Train-audio-head local gate prerequisite check — 2026-05-13 20:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure but unsubmitted behind the daily cap. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `86320` is alive and sleeping after a cap response with about `4.2h` remaining from the 19:46 UTC restart. No duplicate `v545` submission exists.
+- **Train-audio-head gate check:** inspected available local public946 artifacts. `artifacts/public946_train_audio_head_audit_20260513/head_weights_train_audio.npz` is present and valid, but the downloaded public946 artifacts only preserve the train-cache `perch_arrays.npz`, not the dry-run `emb_te` matrix that produced `submission.csv`. Therefore an exact local train-audio-head sidecar CSV cannot be reconstructed from current artifacts alone.
+- **Plan update:** updated `docs/BIRDCLEF_PUBLIC946_TRAIN_AUDIO_HEAD_PLAN_20260513.md` to require the v546 train-head implementation to write `submission_train_audio_head.csv` during Kaggle dry-run, download it, then run `scripts/birdclef_public946_sidecar_weight_grid.py` before submission.
+- **Decision:** no Kaggle push until v545 scores. This keeps train-audio-head ready but prevents a false local gate based on mismatched train-cache embeddings.
+
+### v546 decision matrix while v545 capped — 2026-05-13 21:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**. `v545` remains COMPLETE/no failure and unsubmitted behind the daily cap; no `v545` submission is visible in recent submissions. `v510` remains COMPLETE/no failure with real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Queue/monitor:** guarded `v545` submit monitor pid `86320` is alive and sleeping after the 19:46 UTC cap response; no duplicate submission exists.
+- **Track:** P2/F pre-submit planning while waiting for v545 score.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_V546_DECISION_MATRIX_20260513.md`, ranking lower-CLAP, CV9245, train-audio-head, tuned gates, and BirdNET stop conditions by v545 outcome.
+- **Decision:** no Kaggle push before v545 scores. If v545 ties/drops, the leading next slot should be a source-clean train-audio-head or CV9245 dry-run with sidecar-grid evidence; if v545 improves, compare smaller CLAP (`0.01`/`0.02`) against those sidecars before choosing v546.
+
+### v545 CLAP sidecar lower-weight gate — 2026-05-13 23:45 UTC
+
+- **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; no `v545` submission is visible yet. `v545` kernel remains COMPLETE/no failure, output files are present, and guarded submit monitor pid `86320` is alive/sleeping after daily cap. `v510` remains COMPLETE/no failure with real SED manifest, `6/6` TorchScript models loaded, blend `0.05`, and wall time `370.6s`.
+- **Track:** P2/F public946 + CLAP sidecar gate while waiting for the cap reset; no Kaggle push.
+- **Command:** ran `scripts/birdclef_public946_sidecar_weight_grid.py` with v542 `submission.csv` as anchor and v545 `submission_clap_onnx.csv` as the sidecar, labels `/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv`, weights `0,0.005,0.01,0.02,0.03,0.05,0.075,0.10`.
+- **Artifact:** ignored local JSON `artifacts/blend_grids/v545_clap_sidecar_weight_grid_20260513T2345Z.json`.
+- **Result:** CLAP standalone is anti/near-uncorrelated with the anchor (`corr=-0.028`, `macro_auc=0.455`, `top3=0.121`). The only dry-run AUC improvement is tiny at `0.005` (`0.992549` vs anchor `0.992525`, top3 lower `0.511` vs `0.521`); `0.01+` drops AUC and `0.05` drops to `0.989306`.
+- **Decision:** if `v545` ties/drops, do not spend v546 on another CLAP-only weight. If `v545` unexpectedly improves, only consider a very small `0.005`/`0.01` follow-up after comparing against CV9245/train-audio-head gates.
+
+### v545 submitted after UTC reset; pending score — 2026-05-14 00:45 UTC
+
+- **Status check:** the cap-reset monitor submitted `v545` at `2026-05-14T00:00:25.983Z`, ref `52630458`, description `v545: Public946 v542 plus source-clean CLAP INT8 ONNX 3-way rank blend 57/38/5`. It is visible in the submissions list but has no public score/status yet. Latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**.
+- **Monitor:** `logs/submit_v545_when_ready_20260513T194622Z_restart3.log` shows the retry succeeded with `Submission result: {"message": "", "ref": 52630458}`. The monitor process has exited after the successful submission; no duplicate `v545` submission is visible.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05` applied, and wall time `370.6s`.
+- **Decision:** keep the no-new-Kaggle-push gate until `v545` receives a public score. If `v545` ties/drops, v546 should pivot away from CLAP-only to source-clean train-audio-head or CV9245 dry-run plus sidecar-grid evidence. If it improves, compare tiny CLAP `0.005`/`0.01` with those candidates before spending another slot.
+
+### v545 dropped; v546 train-audio-head dry-run and submission — 2026-05-14 02:45 UTC
+
+- **Status check:** `v545` scored `0.944`, below the locked `0.946` public946 anchor, so CLAP-only follow-ups are stopped for public slots. Latest scored: `v545=0.944`, `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; current best remains **0.946 public LB**.
+- **v510 check:** remains COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** P2 public946 + train-audio-head sidecar after CLAP drop.
+- **Implementation:** added `kaggle-kernels/v546-public946-train-audio-head/` and `scripts/push_v546.py` on PR #229. The kernel forks v542, attaches `konbu17/bird26-train-audio-head-v1`, locates `head_weights_train_audio.npz`, hard-fails on missing/misaligned `emb_te`, applies a 5% class-masked head rank blend to `202/234` trained classes, writes `submission_train_audio_head.csv`, then writes final `submission.csv`.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v546-public946-train-audio-head`, version 1; push returned no invalid dataset/competition/kernel/model sources. Kernel COMPLETE/no failure and outputs include `submission.csv`, `submission_train_audio_head.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, and `perch_meta.parquet`. Log confirms `trained_classes=202/234`, `head_prob_range=(0.000001,0.999939)`, `head_prob_mean=0.094336`, and `submission_train_audio_head.csv (240, 235)`.
+- **Gate artifacts:** downloaded CSV outputs to ignored `artifacts/kaggle_outputs/v546-public946-train-audio-head/`. Ran `scripts/birdclef_public946_sidecar_weight_grid.py`; JSON artifacts `artifacts/blend_grids/v546_train_audio_head_sidecar_weight_grid_20260514T0245Z.json` and `artifacts/blend_grids/v546_train_audio_head_final_vs_v542_20260514T0245Z.json`. The final-vs-v542 check shows high correlation (`corr=0.9984`), low displacement (`MAE=0.0112`, `max_abs=0.0833`), no NaNs, but lower dry-run macro AUC (`0.991756` vs anchor `0.992525`); sidecar reblend at 0.25 gives tiny AUC +0.0000006 and top3 +1.05pp. Because train-soundscape dry-run is leakage-prone and the audited source claims a hidden tie-break gain while public display stays 0.946, this is a bounded-risk slot after CLAP failed.
+- **Submission:** submitted v546 code submission ref `52633928`, description `v546: Public946 v542 plus source-clean train-audio-head rank blend 5% trained classes`; score pending.
+
+### v547 CV9245 AutoResearch sidecar, fixes, gate, and submission — 2026-05-14 06:45 UTC
+
+- **Status check:** current best remains **0.946 public LB**. `v546` train-audio-head scored `0.946` (safe tie), `v545` CLAP scored `0.944` (drop), and `v544`/`v543`/`v542`/`v541` remain `0.946`. UTC daily submissions used before v547: `2/5`, so three slots remained.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** P2/F AutoResearch ensemble tuning around public946 after CLAP dropped and train-audio-head tied.
+- **Implementation:** added `kaggle-kernels/v547-public946-cv9245/` and `scripts/push_v547.py` on PR #229. Kernel forks v542, attaches `chaneyma/birdclef-2026-cv9245-moe-artifacts`, imports `pantanal_infer_only_submission.py`, reuses public946 `sc_te`/`emb_te`, loads four CV9245 MoE folds plus student CNN, uses `CV9245_PRIOR_SCALE=0.45`, `CV9245_CNN_WEIGHT=0.20`, and final `CV9245_RANK_BLEND=0.02`. It writes `submission_cv9245_cnnonly_sharedperch.csv` and final `submission.csv`; missing/misaligned sources hard-fail.
+- **Fixes:** version 1 failed on `site_emb.weight` shape mismatch because the exported folds expect `n_sites=10`; fixed by using the exact CV9245 training site count. Version 2 completed the sidecar but failed final blend because `p_cv9245` was not loaded/aligned; fixed in version 3 by reading `submission_cv9245_cnnonly_sharedperch.csv` before ranking.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v547-public946-cv9245-sidecar`, version 3; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `13.7s`, applied final CV9245 rank blend `0.02`, mirroring 10 columns, rare thresholding 44 species.
+- **Gate artifacts:** downloaded outputs to ignored `artifacts/kaggle_outputs/v547-public946-cv9245-sidecar/`. Sidecar grid JSON `artifacts/blend_grids/v547_cv9245_sidecar_weight_grid_20260514T0645Z.json`: CV9245 standalone is low-corr/different (`corr=0.6699`, `macro_auc=0.9657`), while 2% blend has `corr=0.999888`, `MAE=0.00362`, `max_abs=0.01917`, top3 `0.5421` vs anchor `0.5211`, top5 `0.6579` vs anchor `0.6316`, and only tiny AUC drop (`0.992509` vs `0.992525`). Final-vs-v542 JSON `artifacts/blend_grids/v547_cv9245_final_vs_v542_20260514T0645Z.json`: final `submission.csv` has `corr=0.999727`, `MAE=0.00436`, `max_abs=0.0500`, `macro_auc=0.992546` vs anchor `0.992525`, no NaNs.
+- **Submission:** submitted v547 code submission ref `52639661`, description `v547: Public946 v542 plus source-clean CV9245 sidecar rank blend 2%`; score pending.
+
+### v548 CV9245 0.5% low-displacement follow-up — 2026-05-14 08:20 UTC
+
+- **Status check:** `v547` CV9245 2% scored `0.946`, tying the public946 anchor. Current best remains **0.946 public LB**. `v546` train-audio-head also tied `0.946`; `v545` CLAP dropped to `0.944`. UTC daily submissions before v548: `3/5`, so two slots remained.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** P2/F AutoResearch ensemble weight optimization after v547 tied.
+- **Implementation:** added `kaggle-kernels/v548-public946-cv9245-w0005/` and `scripts/push_v548.py` on PR #229. It reuses the source-clean v547 CV9245 sidecar but lowers `CV9245_RANK_BLEND` from `0.02` to `0.005` to reduce anchor displacement.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v548-public946-cv9245-w0005`, version 1; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, and `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `13.1s`, final CV9245 rank blend `0.005`, mirroring 10 columns, rare thresholding 44 species.
+- **Gate basis:** prior combo/grid artifact `artifacts/blend_grids/v548_head_cv9245_combo_grid_20260514T0700Z.json` and v547 sidecar grid show the 0.5% CV9245 blend is the lowest-displacement safe follow-up (`corr=0.999993`, `MAE=0.000906`, `max_abs=0.00479`, dry-run macro AUC `0.992505` vs anchor `0.992525`, top3 `0.5368` vs anchor `0.5211`).
+- **Submission:** submitted v548 code submission ref `52642350`, description `v548: Public946 v542 plus source-clean CV9245 sidecar rank blend 0.5%`; score pending.
+
+### v549 CV9245 1% bracket candidate and final slot — 2026-05-14 09:25 UTC
+
+- **Status check:** `v548` CV9245 0.5% scored `0.946`, tying the public946 anchor. Current best remains **0.946 public LB**. UTC daily submissions before v549: `4/5`, so one slot remained.
+- **Track:** P2/F AutoResearch ensemble weight bracket after both CV9245 2% (`v547`) and 0.5% (`v548`) tied.
+- **Implementation:** added `kaggle-kernels/v549-public946-cv9245-w001/` and `scripts/push_v549.py` on PR #229. It reuses the v547/v548 source-clean CV9245 sidecar and sets final `CV9245_RANK_BLEND=0.01`, exactly between the tied 0.5% and 2% runs.
+- **Kernel:** pushed real Kaggle kernel `yourslewis/bc26-v549-public946-cv9245-w001`, version 1; COMPLETE/no failure. Outputs include `submission.csv`, `submission_cv9245_cnnonly_sharedperch.csv`, `submission_protossm.csv`, `submission_sed.csv`, `perch_arrays.npz`, `perch_meta.parquet`. Log confirms CV9245 artifacts found, `n_sites=10`, sidecar `(240,235)`, prob range `(0.000001,0.963308)`, mean `0.028908`, sidecar runtime `14.2s`, final CV9245 rank blend `0.01`, mirroring 10 columns, rare thresholding 44 species.
+- **Submission:** submitted v549 code submission ref `52644106`, description `v549: Public946 v542 plus source-clean CV9245 sidecar rank blend 1%`; score pending. This used the final known UTC submission slot (`5/5`).
+
+### v549 pending and daily quota exhausted; next-after-CV9245 plan — 2026-05-14 09:45 UTC
+
+- **Status check:** latest submissions show `v549` pending, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. UTC daily submissions are now `5/5`, so no further competition submission is possible this UTC day without hitting cap.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Decision:** hold all further submissions until next UTC reset and v549 score. Do not spend more effort on CV9245-only weights unless v549 improves; if v549 ties/drops, move to a new sidecar family.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_NEXT_AFTER_CV9245_20260514.md`. Priority after v549: (1) wait for score, (2) build source-clean Snowflake SED dry-run and gate `submission_snowflake_sed.csv`, (3) test tiny combined hidden-diversity blends only after component outputs exist, (4) use public946 gate retune only as fallback.
+
+### v550 Snowflake SED sidecar pushed for dry-run gate — 2026-05-14 10:55 UTC
+
+- **Status check:** `v549` scored `0.946`, tying v548/v547/v546; current best remains **0.946 public LB**. UTC submissions are `5/5`, so no new competition submission was attempted.
+- **v510 check:** still COMPLETE/no failure; `submission.csv` exists and logs confirm real SED manifest found, `6/6` TorchScript models loaded, blend `0.05`, wall time `370.6s`.
+- **Track:** public946 new sidecar signal after CV9245-only bracket exhausted. Implemented `v550` from `v542` with Tsubasa Kanno's public Snowflake SED dataset (`tsubasatech/birdclef-2026-snowflake-sed`), loading `sed_convnext-tiny_fold0.onnx` and `sed_tf-efficientnetv2-m_fold0.onnx`, writing `submission_snowflake_sed.csv`, and applying conservative `SNOWFLAKE_RANK_BLEND=0.01` to final `submission.csv`.
+- **Validation before push:** `python3 -m py_compile kaggle-kernels/v550-public946-snowflake-sed-w001/script.py scripts/push_v550.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v550-public946-snowflake-sed-w001`, version 1, with no invalid data/kernel/model sources.
+- **Monitor state:** v550 is RUNNING/no failure at log time. Do not submit it under current UTC cap; after dry-run completion, download outputs and run `scripts/birdclef_public946_sidecar_weight_grid.py` on `submission_snowflake_sed.csv` vs v542 before choosing any next-day slot.
+
+### v550 Snowflake SED dry-run gate complete — 2026-05-14 11:10 UTC
+
+- `v550` Kaggle kernel completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v550-public946-snowflake-sed-w001/`: `submission.csv`, `submission_snowflake_sed.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240, 235)` with no NaNs.
+- Ran the no-submit gate monitor `scripts/monitor_v550_snowflake_gate.py`; output grid: `artifacts/blend_grids/v550_snowflake_sidecar_weight_grid_20260514T110730Z.json`.
+- Gate result vs v542 public946 anchor on train-soundscape overlap: anchor/weight 0 macro AUC `0.992525`; Snowflake standalone rank macro AUC `0.735086` and low correlation vs anchor `0.3728`. Tiny blends did **not** improve macro AUC: 0.25%/0.5% `0.992502`, 1% `0.992476`, 2% `0.992103`, 5% `0.990878`.
+- Decision: hold v550 for now; do **not** spend a capped competition slot on Snowflake standalone/1% unless a later ensemble policy values its top-k behavior despite AUC degradation. Next better action is a different source-clean sidecar or teacher/student route, not submitting v550 automatically.
+
+### v551 tiny CLAP sidecar candidate prepared — 2026-05-14 11:20 UTC
+
+- Ran a local multi-sidecar gate over v542 anchor plus CLAP, CV9245, train-audio-head, and Snowflake sidecars: `artifacts/blend_grids/v551_multisidecar_snowflake_combo_grid_20260514T1115Z.json` (ignored artifact, local only).
+- Best overlap macro AUC was a tiny CLAP sidecar: v542 + `0.5%` CLAP rank (`0.992549`) vs v542 anchor `0.992525`. CV9245/head did not improve macro AUC further in the tested small-weight grid; Snowflake was not selected.
+- Prepared `v551` as a conservative follow-up to failed v545 5% CLAP: it runs the same source-clean CLAP INT8 side stream but keeps the public946 Proto/SED gates intact and applies `CLAP_RANK_BLEND=0.005` after the gates.
+- Validation: `python3 -m py_compile kaggle-kernels/v551-public946-clap-int8-w0005/script.py scripts/push_v551.py` passed. Kaggle push succeeded as private kernel `yourslewis/bc26-v551-public946-clap-int8-w0005`, version 1, with no invalid data/kernel/model sources. v551 is RUNNING/no failure; no-submit gate monitor started via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v551_clap_gate_*.log`). Do not submit under current UTC cap.
+
+### v551 complete + gated; guarded submit monitor started — 2026-05-14 11:50 UTC
+
+- `v551` completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v551-public946-clap-int8-w0005/`: `submission.csv`, `submission_clap_onnx.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240, 235)` with no NaNs.
+- The first v551 no-submit monitor died on a transient Kaggle `RemoteDisconnected`; hardened `scripts/monitor_v550_snowflake_gate.py` with retry wrappers for status/list/download and reran the gate successfully.
+- Gate output: `artifacts/blend_grids/v551_clap_sidecar_weight_grid_20260514T114751Z.json`. v542 anchor macro AUC `0.992525`; CLAP standalone rank is bad (`0.455042`, corr `-0.028`), but tiny blends are slightly positive at 0.25%-0.5%: `0.0025 -> 0.992538`, `0.005 -> 0.992549`; 1%+ degrades.
+- Decision: `v551` is the single next-slot candidate, not a widened CLAP lane. Started guarded submit script `scripts/submit_v551_when_ready.py`; it exits on duplicate descriptions, requires `submission.csv`, and backs off on daily cap. Current UTC cap is still 5/5, so it should sleep until reset if the submit attempt hits allowance.
+
+### public946 ConvNeXt-tiny rankblend student smoke + scale — 2026-05-14 12:55 UTC
+
+- Status before training: public LB best remains **0.946**; v551 is COMPLETE/gated and guarded submit monitor pid `53054` is sleeping after daily cap. v510 remains COMPLETE with `submission.csv`.
+- Track: **B/D** public946 pseudo-label/noisy-student + model-zoo diversity. Hypothesis: ConvNeXt-tiny trained on the public946 rankblend teacher may provide a less-correlated student sidecar than the prior NFNet student while keeping enough AUC for a tiny teacher blend.
+- Added configs: `configs/birdclef/pl_public946_rankblend_convnext_tiny_5s_lr3e4_smoke.json` and `configs/birdclef/pl_public946_rankblend_convnext_tiny_5s_lr3e4_ep20_bestval.json`.
+- Smoke run on GPU server `192.168.0.10`, GPU1, config `pl_public946_rankblend_convnext_tiny_5s_lr3e4_smoke`: max_rows 256, 5s/160mel, ConvNeXt-tiny, lr 3e-4, ep3, soft public946 rankblend teacher. It completed in `9.7s`: final AUC `0.882870` over 42 valid classes, teacher AUC `0.990095`, corr `0.737764`, MAE `0.134967`. This beat the earlier public946 rankblend NFNet smoke (`0.853951`) and V2S smoke (`0.835216`), so it passed the scale gate.
+- Scaled run `pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval` completed on GPU1 in `55.5s`: best val AUC `0.985183` at epoch 20 over 61 classes; final all-row student AUC `0.987875` over 75 classes vs teacher `0.994567`; student-teacher corr `0.943076`, MAE `0.061591`; TorchScript size `112.355 MB`.
+- Blend diagnostic on server artifact `artifacts/pseudolabels/students/pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval/blend_grid.json`: best rank blend teacher+student is student weight `0.075`, AUC `0.994618` (+`0.000051` vs teacher); best probability blend is student weight `0.02`, AUC `0.994609` (+`0.000042`). This is a viable private-robustness sidecar but smaller than v551's immediate next-slot priority; do not package/submit until v551 score lands.
+
+### v552 ConvNeXt student Kaggle candidate pushed — 2026-05-14 13:55 UTC
+
+- Status before push: best remains **0.946**; v551 guarded submit monitor pid `53054` remains alive/sleeping after daily cap; v510 remains COMPLETE with `submission.csv`.
+- Packaged the scaled public946 ConvNeXt-tiny student into private Kaggle dataset `yourslewis/bc26-public946-convnext-tiny-student-v1` (version 1, READY). Dataset contains `model_torchscript.pt` and `sed_bundle_manifest.json`; zip size `99.4 MB`, SHA256 `f68e56748adf9fae818b265cadb7adb28085dfa7aa773ab0e9e1c5bc1ceca45b`.
+- Added/pushed kernel `yourslewis/bc26-v552-public946-convnext-student-r075`, version 1. It forks v542 public946, runs the ConvNeXt student TorchScript sidecar to write `submission_convnext_student.csv`, then applies a conservative post-gate per-class rank blend `STUDENT_RANK_BLEND=0.075`. Kaggle push succeeded with no invalid data/kernel/model sources.
+- Started a no-submit gate monitor via generalized `scripts/monitor_v550_snowflake_gate.py` (`logs/monitor_v552_convnext_gate_*.log`). Do **not** submit v552 while v551 is queued for next reset; gate it offline first and wait for v551 score.
+
+### v552 ConvNeXt student completed + no-submit gate — 2026-05-14 14:55 UTC
+
+- `v552` completed successfully with no failure message. Downloaded outputs to `artifacts/kaggle_outputs/v552-public946-convnext-student-rank075/`: `submission.csv`, `submission_convnext_student.csv`, `submission_sed.csv`, and `submission_protossm.csv`, all validated as `(240,235)` with no NaNs.
+- Gate output: `artifacts/blend_grids/v552_convnext_student_sidecar_weight_grid_20260514T140456Z.json`. ConvNeXt student standalone rank is reasonably competitive but weaker than anchor on the train-soundscape overlap: standalone macro AUC `0.979342`, corr vs anchor `0.904834`.
+- Blends vs v542 anchor macro AUC `0.992525`: 2% `0.992502`, 5% `0.992430`, 7.5% `0.992354`, 10% `0.992341`, 15% `0.992014`. Top-k row recall increases at larger weights, but macro AUC consistently degrades.
+- Decision: **hold/no-submit v552**. Keep the packaged ConvNeXt student as an artifact/private-robustness option only; do not spend a competition slot before v551 scores. The live submit monitor remains only `v551` pid `53054`, sleeping after daily cap.
+
+### v553 taxon max gate option added for public946/ConvNeXt testing — 2026-05-14 15:30 UTC
+
+- Added a reusable v517-style taxon max gate option to `scripts/birdclef_public946_weight_grid.py` via `--taxon-gate`, `--taxon-floors`, and `--taxon-alphas`, so public946 Proto/SED rank-blend variants can be swept with the same taxon evidence gate that previously lifted the v508 axis.
+- Local dry-run grid: `artifacts/blend_grids/public946_taxon_gate_option_grid_20260514.json` over floors `0.20,0.30,0.40` and alphas `0.375,0.50,0.75`. On train-soundscape overlap the taxon gate is not additive to public946: for the v542-weight `0.60/0.40` blend, best taxon variant was `0.992376` vs base `0.992525` (`-0.000149`); all tested Proto weights were slightly negative. This is only a public/train-overlap gate, not final LB proof.
+- Added optional constants to the v552 final blend (`APPLY_TAXON_MAX_GATE`, `TAXON_MAX_GATE_FLOOR=0.30`, `TAXON_MAX_GATE_ALPHA=0.50`) and created a live test fork `v553` with the gate enabled.
+- Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
+
+
+### Spec B existing student-pool blend audit — 2026-05-15 12:10 UTC
+
+- **Status check:** current public best remains **0.946**. Latest submissions `v558/v551/v549/v548/v547` all scored `0.946`; `v510` kernel COMPLETE/no failure. No Kaggle submission used.
+- **Hypothesis:** before training another adjacent blended-teacher student, search existing aligned student artifacts for lower-correlation blend signal against `teacher_sed85_rankblend15.npz`.
+- **Implementation:** added `scripts/birdclef_student_pool_blend_audit.py`, which scans `student_predictions.npz` artifacts, verifies row/label alignment, computes standalone AUC/correlation, and sweeps small teacher+student blend weights.
+- **Audit:** trainer artifact `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260515T1155Z.json`; scanned `82` student files, `33` aligned. Teacher baseline `0.997018454` over 75 valid classes.
+- **Best single sidecar:** `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval` (`efficientnetv2_rw_s`, TorchScript `88.739 MB`) standalone AUC `0.983987`, corr vs teacher `0.3752`; best blend teacher `0.95` + V2S `0.05` = `0.997187110`, lift `+0.000168656`.
+- **Pair sweep:** trainer artifact `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_pair_sweep_20260515T1205Z.json`. Best blend: teacher `0.90` + V2S v508 `0.06` + B0 soft-anchor v508 `0.04` = `0.997228528`, lift `+0.000210074`, corr `0.98262`.
+- **Decision:** best local sidecar signal so far, but still tiny and only validated on 792 labeled train-soundscape rows. Do not spend an immediate slot without packaging/runtime verification. Next candidate if a slot is available: source-clean two-student sidecar using V2S `0.06` + B0 soft-anchor `0.04` into the public946 anchor.
+
+
+### Spec B blended-teacher B0 Soft-AUC curriculum — 2026-05-15 10:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Smoke:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_smoke_20260515.json` using B0 + external-pretrain init, 256 rows / 3 epochs, `loss_name=bce_soft_auc`, `auc_loss_weight=0.005`. Completed CUDA in `6.161s`; final AUC `0.916208` over 42 classes vs teacher `0.995304`; best val `0.931595`, corr `0.56944`. It beat B0+BCE smoke `0.900997`, so scaled.
+- **Scale:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_ep20_20260515.json` and ran all 792 rows / 20 epochs. Completed CUDA in `47.366s`; best val AUC `0.992015`; final student AUC `0.989343` over 75 classes vs blended teacher `0.997018`; corr `0.96012`, MAE `0.02010`, TorchScript `15.391 MB`.
+- **Blend gate:** no lift. Best checked weight `0.0025` gives AUC `0.9970182`, essentially equal/slightly below teacher `0.99701845`; larger weights drop.
+- **Decision:** kill Soft-AUC curriculum for this target. It passed smoke but underperformed B0+BCE at scale (`0.989343` vs `0.992137/0.991832`) and gives no blend lift. Do not package/submit.
+
+
+### Spec B blended-teacher RegNetY learner pivot — 2026-05-15 09:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Run:** added `configs/birdclef/pl_public946_sed85_rankblend15_regnety008_5s_smoke_20260515.json` and ran RegNetY-008 (`pretrained=true`, lr `1e-4`) against `teacher_sed85_rankblend15.npz`, 256 rows / 3 epochs. Completed on CUDA in `6.152s`, TorchScript `23.42 MB`.
+- **Metrics:** final student AUC `0.891280` over 42 classes vs teacher `0.995304`; best val AUC `0.906245`; corr `0.71449`, MAE `0.04140`.
+- **Decision:** kill direct RegNetY scaling for this target. It did not beat the blended-teacher B0 smoke (`0.900997`) and is below the B0 scaled path; do not package/submit.
+
+
+### Spec B blended-teacher B0 second-seed robustness — 2026-05-15 08:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Run:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_seed43_20260515.json` and ran same B0 + external-pretrain setup against `teacher_sed85_rankblend15.npz`, 792 rows / 20 epochs, seed `43`. Completed on CUDA in `21.506s`.
+- **Metrics:** seed43 final student AUC `0.991832` over 75 classes vs blended teacher `0.997018`; best val AUC `0.994676`; corr `0.97008`, MAE `0.01643`, TorchScript `15.391 MB`.
+- **Robust blend gate:** seed42 standalone `0.992137`, seed43 `0.991832`, two-seed ensemble `0.993027`, teacher `0.997018`. Best blend is still seed42 at `w=0.01`: `0.997046`; two-seed ensemble best `w=0.05`: `0.997041`; seed43 best `w=0.005`: `0.997038`.
+- **Decision:** robust signal but too small and too correlated after blending for a Kaggle slot. Keep artifacts; do not package/submit unless later independent validation/private proxy strengthens the case.
+
+
+### Spec B blended-teacher B0 smoke + scale — 2026-05-15 07:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **B0 smoke:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_smoke_20260515.json` and ran B0 + external-pretrain init on 256 rows / 3 epochs against `teacher_sed85_rankblend15.npz`. It completed on CUDA in `4.845s`, final AUC `0.900997` over 42 classes vs teacher `0.995304`, corr `0.56112`. This beat old B0 SED smoke `0.818694` and old ConvNeXt rankblend smoke `0.882870`, so it passed scale gate.
+- **B0 scale:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_20260515.json` and ran all 792 rows / 20 epochs. Completed on CUDA in `21.326s`; best val AUC `0.992890`; final student AUC `0.992137` over 75 classes vs blended teacher `0.997018`; corr `0.96336`, MAE `0.01921`, TorchScript `15.391 MB`.
+- **Blend gate:** copied metrics and `blend_gate.json`. Best local blend into blended teacher is `student_weight=0.01`: AUC `0.997046` vs teacher baseline `0.997018` (+`0.000028`). This also improves SED teacher at `w=0.10` (`0.996870` vs `0.996743`), but lift is tiny.
+- **Decision:** no packaging/submission yet. This is the best student artifact so far, but local gain is too small after repeated public946 ties. Next useful action is robustness (second seed/fold) or a different learner/curriculum against the blended teacher, not Kaggle quota.
+
+
+### Spec B 792-row public946 student ensemble audit + blended-teacher smoke — 2026-05-15 06:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Audit:** compared existing 792-row public946 students on trainer. B0 SED student AUC `0.976669` vs teacher `0.996743`; ConvNeXt rankblend student `0.987875` vs teacher `0.994567`; NFNet rankblend student `0.984806` vs teacher `0.994567`. Student blends did not provide enough lift to package.
+- **Teacher blend finding:** teacher-level blend was stronger: `0.85 * teacher_sed + 0.15 * teacher_rankblend` reached macro AUC `0.997018` over 75 classes, beating SED teacher `0.996743` and rankblend teacher `0.994567`. Added `scripts/birdclef_blend_teacher_npz.py` and created trainer artifact `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_sed85_rankblend15.npz` plus summary.
+- **Smoke:** added `configs/birdclef/pl_public946_sed85_rankblend15_convnext_tiny_5s_smoke_20260515.json` and ran ConvNeXt-tiny 256-row/3-epoch smoke on blended teacher. It completed on CUDA in `10.04s`, but final student AUC was only `0.799819` over 42 classes vs teacher `0.995304`, corr `0.42485`, MAE `0.04334`.
+- **Decision:** kill direct blended-teacher ConvNeXt scaling. The blended teacher cache is useful for future target design, but this learner/curriculum is worse than the prior public946 rankblend ConvNeXt smoke (`0.882870`) and should not be packaged or submitted.
+
+
+### Spec B public946 SED soft-anchor supervised pivot — 2026-05-15 05:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Chosen track:** Spec B target-design pivot after hard-conf B0 was low-correlation but too weak.
+- **Partial-supervision run:** added/reran `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_b0_5s_ep12_20260515.json` on GPU. Soft-anchor target (`p>=0.8`, `p<=0.005`, soft weight 0.5) + intended 160 supervised clips from `data/train.csv`. Only `38/160` supervised clips loaded because the remote train-audio mirror is partial and sampling happened before path filtering. Final AUC `0.911316`, best val AUC `0.903733`, corr `0.869918`, no blend lift.
+- **Existing-audio manifest fix:** built `artifacts/pseudolabels/manifests/train_existing_audio_manifest_20260515.csv` on trainer from `3388` existing audio files across `206` classes; reran `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_existing160_b0_5s_ep12_20260515.json`. This used `160/160` supervised clips, zero missing paths.
+- **Existing160 result:** final student AUC `0.936198` over 42 classes, best val AUC `0.926750` over 34 classes, student-teacher corr `0.908199`, MAE `0.046395`, TorchScript `15.391 MB`, runtime `12.469s`.
+- **Blend gate:** `blend_gate.json` shows no useful local lift: SED teacher baseline `0.995316`; student blend ties only at `w=0.005` and drops at `w>=0.01`; rankblend blends all drop. Decision: no packaging/submission. Reuse the path-filtered manifest, but next work needs a larger/stronger teacher cache or model-family change.
+
+
+### Spec B public946 SED hard-confidence B0 full diagnostic — 2026-05-15 04:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Environment check:** local Mac venv has Torch CPU but no `timm`; GPU server `192.168.0.10` has CUDA + `timm`. Synced updated training scripts, `teacher_sed.npz`, and new config to `~/birdclef-2026` on the GPU server.
+- **Config:** added `configs/birdclef/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.json`: EfficientNet-B0, external-pretrain init, all 240 v542 teacher rows, hard-conf `positive_threshold=0.8`, `negative_threshold=0.005`, pos cap 3/row, neg cap 64/row, 20 epochs, best-val restore.
+- **Run:** `CUDA_VISIBLE_DEVICES=1 python scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.json`; log `logs/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.log`. Completed on CUDA in `8.866s`, exported TorchScript `15.391 MB`.
+- **Metrics:** final student AUC `0.750030` over 42 valid classes vs teacher `0.995316`; best val AUC `0.812170`; student-teacher corr `0.172628`, MAE `0.384736`; target mask fraction `0.2752`, positives/negatives `97/15360`.
+- **Blend gate:** copied predictions back and wrote `blend_gate.json`. Tiny blend into SED teacher has only microscopic local lift (`w=0.01`: `0.995331` vs teacher `0.995316`); blend into rankblend does not improve. Decision: do not package/submit this hard-conf student. Next Spec B step should alter target design (soft-anchor + supervised mix or larger 792-row teacher cache) rather than scaling this exact recipe.
+
+
+### Spec B public946 SED teacher cache + hard-confidence smoke — 2026-05-15 04:05 UTC
+
+- **Status check:** current public best remains **0.946**. Latest scored submissions remain `v558=0.946`, `v551=0.946`, `v549/v548/v547/v546=0.946`; no Kaggle slot used this run. `v510` remains COMPLETE/no failure.
+- **Chosen track:** Spec B pseudo-label/noisy-student, because public946 retunes are stopped after repeated ties/drops.
+- **Teacher cache:** generated cache from `artifacts/kaggle_outputs/v542-afr1ste-updated-public946` into `artifacts/public946_teacher_cache_v542_20260515T0355Z/`. `teacher_sed.npz` is the cleanest seed: labeled-overlap macro AUC `0.995976`, row top1/top3/top5 recall `0.978947/0.989474/0.994737`. `teacher_rankblend.npz` has macro AUC `0.992525` but very dense hard positives and much worse top-k row recall.
+- **Threshold sweep:** `artifacts/pseudolabel_thresholds/public946_v542_sed_threshold_sweep_20260515T0355Z.json` recommends SED hard-confidence positives at `power=1.0`, `positive_threshold=0.8`; overlap precision `97/97 = 1.0`, `66` positive rows, `8` positive classes. Use `negative_threshold=0.005` as the practical smoke/default (mask fraction `0.779`) or `0.001` as more conservative.
+- **Smoke train/export:** added config `configs/birdclef/pl_public946_sed_hardconf_smoke8_20260515.json` and ran `scripts/birdclef_pseudolabel_student_train.py` on `max_rows=8`, one epoch, hard-conf p0.8/n0.005. It completed on CPU in `4.777s`, exported TorchScript `0.184 MB`, and wrote `artifacts/pseudolabels/students/pl-public946-sed-hardconf-smoke8-20260515/metrics.json`. Actual backbone was `tiny_cnn_sed` fallback, so this validates plumbing only; next quality run should use GPU/server/timm environment.
+- **Plan doc:** added `docs/BIRDCLEF_PUBLIC946_PSEUDOLABEL_TEACHER_20260515.md`. Do not submit a student kernel until a full/OOF artifact shows competitive diagnostics and lower correlation to public946.
+
+
+### v558 tied; stop public946 retune lane — 2026-05-15 02:55 UTC
+
+- **Status check:** `v558` completed with public score **0.946**, tying but not improving the public946 anchor. `v551` also tied **0.946**. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`.
+- **Interpretation:** Low-displacement public946 retunes/sidecars have repeatedly tied (`v543/v544/v546/v547/v548/v549/v551/v558`) or dropped (`v545`). The train-soundscape overlap gates are now mostly useful as rejection filters, not as enough evidence to spend more slots on same-family variants.
+- **Research check:** a fresh web search surfaced the same Nina public946 ONNX+Perch+Proto+SED notebook as the high-signal result, not a new distinct source. Local artifact audit shows no remaining source-clean sidecar with both local lift and new-signal evidence strong enough to justify another immediate slot.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_STOP_RETUNE_NEXT_SIGNAL_20260515.md` documenting the stop rule: no more public946-only postprocess retunes or single-family low-weight brackets unless a new source/model/OFF artifact changes the evidence. Do not submit `v554`-`v557`; `v558` already tested the safest clipped formulation and tied.
+- **Decision:** hold remaining UTC daily submissions. Next work should pivot to genuinely new signal: source-clean model-family audit, public946 teacher/noisy-student OOF artifacts, or real SED/student training artifacts with runtime headroom.
+
+
+### v551 tied; conditional monitor submitted v558 — 2026-05-15 01:55 UTC
+
+- **Status check:** `v551` completed with public score **0.946**, tying but not improving the public946 anchor. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
+- **Conditional monitor:** `scripts/submit_v558_if_v551_ties_or_drops.py` saw v551 score `0.946` (`<=0.946` threshold), verified v558 COMPLETE + `submission.csv`, and submitted exactly once. Log `logs/submit_v558_if_v551_ties_or_drops_20260515T005238Z.log` reports `Submission result: {"message": "", "ref": 52665049}`.
+- **Visible submission:** `v558: Public946 v542 plus exact-base clipped gate retune alpha0.10 maxabs0.02` is visible at `2026-05-15 01:12:41.840 UTC`, status PENDING, no public score yet.
+- **Decision:** hold all further submissions until v558 scores. Do not submit v554-v557. If v558 ties/drops, the public946 postprocess-retune lane should pause and the next slot should return to genuinely new signal or a fresh evidence source.
+
+
+### v558 conditional submit monitor prepared while v551 pending — 2026-05-15 00:55 UTC
+
+- **Status check:** `v551` is visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet. Current best remains **0.946 public LB** from `v541/v542/v543/v544/v546-v549`. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
+- **Track:** guarded fallback orchestration while waiting for v551 score; no extra competition submission was made in this run.
+- **Implementation:** added `scripts/submit_v558_if_v551_ties_or_drops.py`. It polls submissions, exits without submitting if `v551` improves above `0.946`, and submits `v558` only if `v551` completes with score `<=0.946` or error/no-score. It also guards against duplicate v558 descriptions and requires the v558 kernel to be COMPLETE with `submission.csv`.
+- **Validation:** `python3 -m py_compile scripts/submit_v558_if_v551_ties_or_drops.py` passed.
+- **Monitor:** started pid `84410`, log `logs/submit_v558_if_v551_ties_or_drops_20260515T005238Z.log`. Initial check saw `v551` PENDING and slept; no v558 submission attempted.
+- **Decision:** continue holding until v551 scores. This monitor is the only conditional fallback path; do not manually submit v558 unless the monitor fails.
+
+
+### v551 submitted at UTC reset; hold for score — 2026-05-15 00:05 UTC
+
+- **Status check:** immediately before reset, latest scored submissions remained `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains the clean prepared fallback, but no fallback submission was attempted.
+- **Submit monitor:** guarded `scripts/submit_v551_when_ready.py` pid `96890` woke after UTC reset, rechecked `v551` COMPLETE + `submission.csv`, and submitted exactly once. Log `logs/submit_v551_when_ready_restart_20260514T155229Z.log` reports `Submission result: {"message": "", "ref": 52663601}`.
+- **Visible submission:** `v551: Public946 v542 plus source-clean CLAP INT8 ONNX tiny rank sidecar 0.5%` is now visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet.
+- **Decision:** wait for v551 public score before spending any more daily slots. If v551 improves, bracket tiny CLAP only after comparing against v558. If v551 ties/drops, prefer prepared v558 over v554-v557 for a retune fallback, but do not submit automatically until the score is known.
+
+
+### v558 confirmed clean against actual v542 baseline — 2026-05-14 22:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
+- **v558 result:** `yourslewis/bc26-v558-gateretune-a010-clip002` version 1 completed and validated `(240,235)` outputs. The first generic gate artifact using reconstructed baseline still showed the same misleading high displacement as v556/v557, so the actual v542 output was downloaded from Kaggle to `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/` and used as the true comparison baseline.
+- **Monitor fix:** updated `scripts/monitor_v554_gate_retune.py` to prefer `BASE_CSV` / actual downloaded v542 `submission.csv` when available, falling back to reconstructed baseline only if the actual CSV is missing. Re-ran the monitor for v558 with the actual baseline.
+- **Actual-baseline gate:** `artifacts/blend_grids/v558_gateretune_a010_clip002_final_vs_baseline_20260514T225302Z.json` shows baseline macro AUC `0.992525`; v558 macro AUC `0.992630` (`+0.000106`); top3 `0.637` vs baseline `0.626`; top5 unchanged `0.747`; displacement is low (`corr=0.999982`, `MAE=0.001067`, `max_abs=0.016018`). This confirms v558 is the cleanest prepared gate-retune fallback.
+- **Decision:** keep `v551` as the only next-reset submit monitor. If v551 ties/drops and a postprocess fallback is needed, v558 is safer than v554/v555/v556/v557. Do not submit v554-v557.
+
+
+### v557 completed but baseline mismatch persists; v558 exact-base clip launched — 2026-05-14 21:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
+- **v557 result:** `yourslewis/bc26-v557-public946-gate-retune-alpha010-clip002` version 1 completed and validated `(240,235)` outputs. Gate artifact: `artifacts/blend_grids/v557_public946_gate_retune_alpha010_clip002_final_vs_baseline_20260514T210406Z.json`. It preserved AUC/top3 lift (`0.992630` vs baseline `0.992525`, top3 `0.637` vs `0.621`) but still showed high displacement (`corr=0.99595`, `MAE=0.00349`, `max_abs=0.38941`).
+- **Diagnosis:** v557 final is effectively identical to v556; clipping applied relative to the kernel's internal reconstructed baseline, but that baseline diverges from the monitor's v542 reconstruction on a small number of cells. Therefore v557 is **not** a clean fallback.
+- **Implementation:** added `kaggle-kernels/v558-public946-gateretune-a010clip002-exactbase/` and `scripts/push_v558.py`. v558 starts from the exact standard v542 `sub` generated by the kernel, stores those values, computes the retuned branch separately, then adds `clip(0.10 * (retune - exact_base), -0.02, 0.02)` to that exact base. This should make the max delta cap meaningful relative to the final submitted baseline.
+- **Validation/push:** `python3 -m py_compile scripts/push_v558.py kaggle-kernels/v558-public946-gateretune-a010clip002-exactbase/script.py` passed. First push failed only because Kaggle title exceeded 50 chars; shortened title and retried successfully. Real private Kaggle kernel is `yourslewis/bc26-v558-gateretune-a010-clip002`, version 1, no invalid sources.
+- **Monitor:** an initial monitor used the pre-normalization slug and got 403; killed it and restarted with the actual slug. Active no-submit monitor pid `57008`, log `logs/monitor_v558_gate_retune_20260514T215319Z.log`, initial status RUNNING/no failure.
+- **Decision:** keep v551 as the only next-reset submit monitor. v558 is only a prepared fallback if it completes and its gate confirms low displacement; do not submit v556/v557.
+
+
+### v557 clipped low-displacement gate-retune candidate launched — 2026-05-14 20:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is alive/sleeping after daily cap. No duplicate submissions were created.
+- **v556 result:** `yourslewis/bc26-v556-public946-gate-retune-alpha010` version 1 completed successfully and validated `(240,235)` outputs. Gate artifact: `artifacts/blend_grids/v556_public946_gate_retune_alpha010_final_vs_baseline_20260514T200307Z.json`. It matched the small AUC/top3 lift (`0.992630` vs baseline `0.992525`, top3 `0.637` vs `0.621`) but a few cells still had large movement (`corr=0.99595`, `MAE=0.00349`, `max_abs=0.38941`), so v556 is not a clean fallback as-is.
+- **Post-gate diagnosis:** v556 alpha is correctly ~0.10 for ~98.3% of moved cells; the problem is outlier cells where small baseline/retune denominator differences create large max movement. Clipping observed v556 deltas to `±0.02` preserves the same dry-run AUC/top3 lift while reducing displacement to `corr=0.99993`, `MAE=0.00136`, `max_abs=0.0200`.
+- **Implementation:** added `kaggle-kernels/v557-public946-gateretune-a010clip002/` and `scripts/push_v557.py`. v557 uses the same retuned branch and alpha `0.10` as v556, but applies `np.clip(retune_delta, -0.02, 0.02)` before adding it to the reconstructed v542 baseline.
+- **Validation:** `python3 -m py_compile scripts/push_v557.py kaggle-kernels/v557-public946-gateretune-a010clip002/script.py` passed. Pushed real private Kaggle kernel `yourslewis/bc26-v557-public946-gate-retune-alpha010-clip002`, version 1; no invalid data/competition/kernel/model sources.
+- **Monitor:** started no-submit monitor pid `48210`, log `logs/monitor_v557_gate_retune_20260514T205329Z.log`, with `KERNEL_SLUG=bc26-v557-public946-gate-retune-alpha010-clip002` and `OUTPUT_NAME=v557-public946-gate-retune-alpha010-clip002`. Initial status RUNNING/no failure.
+- **Decision:** keep v551 as the only next-reset submit monitor. If v551 ties/drops and v557 dry-run gate confirms the clipped displacement, v557 is safer than v554/v555/v556 for a later slot.
+
+
+### v556 low-displacement gate-retune candidate launched — 2026-05-14 19:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap. No duplicate submissions were created.
+- **Track:** F/P2 public946 gate-retune preparation while capped, using the v555 post-gate diagnosis.
+- **Hypothesis:** A lower interpolation alpha should capture a small but real local top-k/AUC lift from the v554/v555 retuned gates while keeping anchor displacement much lower. Observed-delta backoff from v555 estimated alpha `0.10` at macro AUC `0.992630` (`+0.000106`), top3 `0.637` vs baseline `0.621`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`.
+- **Implementation:** added `kaggle-kernels/v556-public946-gateretune-a010/` and `scripts/push_v556.py`. v556 forks v555 but sets `V556_FULL_RETUNE_ALPHA=0.10`, i.e. `0.90 * reconstructed v542 baseline + 0.10 * retuned final` after both full postprocess paths.
+- **Validation:** `python3 -m py_compile scripts/push_v556.py scripts/monitor_v554_gate_retune.py kaggle-kernels/v556-public946-gateretune-a010/script.py` passed. Also updated `scripts/monitor_v554_gate_retune.py` to write `candidate_final` in future JSON artifacts instead of the stale `v554_final` key.
+- **Kaggle push/monitor:** pushed real private Kaggle kernel `yourslewis/bc26-v556-public946-gate-retune-alpha010`, version 1; no invalid data/competition/kernel/model sources. Initial status RUNNING/no failure. Started no-submit monitor pid `38739`, log `logs/monitor_v556_gate_retune_20260514T195228Z.log`, with `KERNEL_SLUG=bc26-v556-public946-gate-retune-alpha010` and `OUTPUT_NAME=v556-public946-gate-retune-alpha010`.
+- **Decision:** keep v551 as the only next-reset submit monitor. v556 is a prepared fallback candidate only if v551 ties/drops and v556 dry-run gates pass; no competition submission was attempted.
+
+
+### v555 completed; hold as research-only, prefer lower-alpha if needed — 2026-05-14 18:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.
+- **v555 result:** `yourslewis/bc26-v555-public946-gate-retune-alpha033` version 1 completed successfully. No-submit monitor downloaded `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`; all validate `(240,235)` with no NaNs. Gate artifact from the generic monitor: `artifacts/blend_grids/v554_gate_retune_final_vs_baseline_20260514T180412Z.json`.
+- **v555 gate:** baseline macro AUC `0.992525`; v555 final macro AUC `0.992915` (`+0.000391`), top3 `0.637` vs `0.621`, top5 unchanged `0.747`. However real-run displacement is higher than the prior offline interpolation estimate: `corr=0.99577`, `MAE=0.00585`, `max_abs=0.39640`. This means v555 still moves a few cells too aggressively and should **not** displace v551 or be auto-submitted.
+- **Post-gate diagnosis:** Scaling the observed v555 delta back to alpha-equivalents shows `alpha≈0.10` would keep most of the useful local lift with lower displacement: macro AUC `0.992630` (`+0.000106`), top3 `0.637`, `corr=0.99961`, `MAE=0.00177`, `max_abs=0.12012`. `alpha=0.05` is even safer (`corr=0.99990`, `max_abs=0.0601`) but only a tiny AUC lift.
+- **Code hygiene:** fixed `scripts/monitor_v554_gate_retune.py` so future gate artifacts use the `OUTPUT_NAME` prefix instead of always `v554_*`.
+- **Decision:** keep `v551` as the only next-reset submission. If `v551` ties/drops and we still want a gate-retune slot, prepare a lower-alpha candidate (likely `v556 alpha=0.10`) rather than submitting v554/v555 as-is. No new Kaggle submission monitor was started.
+
+
+### v554 completed; v555 conservative gate-retune interpolation launched — 2026-05-14 17:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is COMPLETE/no failure with `submission.csv`. `v551` remains COMPLETE and guarded submit monitor pid `96890` is still alive/sleeping after daily cap.
+- **v554 result:** `yourslewis/bc26-v554-public946-gate-retune-pw056` version 1 completed successfully. No-submit monitor downloaded `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`; all validate as `(240,235)` with no NaNs. Gate artifact: `artifacts/blend_grids/v554_gate_retune_final_vs_baseline_20260514T170417Z.json`.
+- **v554 gate:** v542 baseline reconstruction macro AUC `0.992525`; v554 final macro AUC `0.993325` (`+0.000800`), top3 `0.647` vs `0.621`, top5 `0.753` vs `0.747`. Risk: displacement is large (`corr=0.99418`, `MAE=0.01273`, `max_abs=0.41676`), so v554 should not be auto-submitted immediately after v551.
+- **Risk-control sweep:** interpolating fully postprocessed v542 baseline with v554 final showed alpha `0.33` gives macro AUC `0.992915` (`+0.000391`) with much lower displacement (`corr=0.99937`, `MAE=0.00420`, `max_abs=0.1375`), preserving the top-k lift without the full retune jump.
+- **Implementation:** added conservative no-submit candidate `kaggle-kernels/v555-public946-gateretune-a033/` plus `scripts/push_v555.py`. v555 reconstructs the standard v542 final blend, applies the v554 retune, then writes `submission.csv` as `0.67 * baseline + 0.33 * retune` after both branches' mirror/rare postprocess.
+- **Kaggle push/monitor:** pushed real private Kaggle kernel `yourslewis/bc26-v555-public946-gate-retune-alpha033`, version 1; no invalid sources. Initial status RUNNING/no failure. Started no-submit monitor pid `17827`, log `logs/monitor_v555_gate_retune_20260514T175337Z.log`, using the generic gate-retune monitor with `KERNEL_SLUG=bc26-v555-public946-gate-retune-alpha033` and `OUTPUT_NAME=v555-public946-gate-retune-alpha033`.
+- **Decision:** keep v551 as the only next-reset submission. v555 is the preferred *prepared* gate-retune candidate over v554 if v551 ties/drops and the v555 real dry-run gate matches the offline interpolation result.
+
+
+### v554 public946 gate-retune dry-run candidate — 2026-05-14 16:55 UTC
+
+- **Status check:** latest Bearer API submissions remain `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, `v545=0.944`; current best remains **0.946 public LB**. `v510` is still COMPLETE/no failure with `submission.csv`. `v551` monitor pid `96890` remains alive and sleeping after daily cap; no duplicate v551 submission is visible.
+- **Track:** F/P2 public946 AutoResearch gate retuning after multiple distinct sidecars tied but did not move displayed 0.946. This is explicitly a **no-submit dry-run candidate** while v551 is queued for the next reset.
+- **Hypothesis:** The full public946 gate sweep found a stronger local configuration (`proto_weight=0.56`, lighter fake/proto/SED boosts, rare scale `0.85`) with overlap AUC `0.993325` vs baseline `0.992525`, but it needs a real Kaggle dry-run to verify runtime/output and avoid editing only local CSVs.
+- **Implementation:** added `kaggle-kernels/v554-public946-gateretune-pw056/` from v542 with final blend constants `V554_PROTO_WEIGHT=0.56`, `V554_FAKE_BOOST=0.04`, `V554_CTX_THR=0.90`, `V554_CTX_BOOST=0.10`, `V554_SED_RANK_THR=0.93`, `V554_SED_BOOST=0.08`, `V554_RARE_SCALE=0.85`. Added `scripts/push_v554.py` and no-submit monitor `scripts/monitor_v554_gate_retune.py`.
+- **Validation:** `python3 -m py_compile scripts/push_v554.py scripts/monitor_v554_gate_retune.py kaggle-kernels/v554-public946-gateretune-pw056/script.py` passed. Pushed real private Kaggle kernel via Bearer API; Kaggle created `yourslewis/bc26-v554-public946-gate-retune-pw056`, version 1, with no invalid data/competition/kernel/model sources.
+- **Monitor:** started no-submit monitor pid `8418`, log `logs/monitor_v554_gate_retune_20260514T165341Z.log`. Initial status is RUNNING/no failure. The monitor will download `submission.csv`, `submission_protossm.csv`, and `submission_sed.csv`, then compare v554 final against reconstructed v542 baseline on train-soundscape overlap without submitting.
+- **Decision:** keep v551 as the only live next-reset submission. v554 is preparation for the *following* slot only if its Kaggle dry-run completes and v551 fails to improve.
+
+
+### v553 completed + Task239 Snowflake agreement-gate research pass — 2026-05-14 16:05 UTC
+
+- **Status check:** latest Bearer API submissions show `v549=0.946`, `v548=0.946`, `v547=0.946`, `v546=0.946`, and `v545=0.944`; current best remains **0.946 public LB**. Kernels `v551`, `v552`, and `v553` are all COMPLETE/no failure with `submission.csv` present. UTC daily cap remains exhausted; guarded `v551` submit monitor pid `96890` is alive and sleeping after Kaggle returned `5/5` allowance used with about `8.1h` until reset. No duplicate v551 submission is visible.
+- **v553 gate result:** downloaded/monitored v553 outputs via `logs/monitor_v553_taxon_gate_20260514T152721Z.log`; no-submit gate `artifacts/blend_grids/v553_convnext_taxon_sidecar_gate_20260514T153755Z.json` shows taxon-gated ConvNeXt sidecar is still negative vs public946 anchor on overlap: anchor `0.992525`; 0.25%-2% blends `0.992502`; 5% `0.992430`. Decision: **hold/no-submit v553**.
+- **Research source:** audited cached public kernels from the 2026-05-14 scan, especially `ttyn4519__perch-task239-task233-snowflake-agree-w003`, which adds a Snowflake SED sidecar only where base V8, filemax-scaled SED, and Snowflake ranks all agree (`min_rank≈0.70`, `max_gap≈0.20`) instead of naive global Snowflake blending.
+- **Offline grid:** ran an inline Task239-style agreement-gate sweep using v550 dry-run outputs (`submission_protossm.csv`, `submission_sed.csv`, `submission_snowflake_sed.csv`) and local train-soundscape labels. Artifact: `artifacts/blend_grids/v554_task239_snowflake_agree_grid_20260514T1605Z.json`.
+- **Grid result:** reconstructed V8 anchor macro AUC `0.992525`. Best agreement-gated Snowflake variant was `p125=0.000`, `snow=0.030`, `min_rank=0.70`, `gap=0.20`, macro AUC `0.992567` (`+0.000043`), but displacement is large (`corr=0.9882`, `MAE=0.0439`) and top-k recall drops sharply vs the reconstructed anchor (`top5 0.632` vs `0.747`). This is not strong enough to supersede `v551` or justify a blind next-day slot.
+- **Decision:** next reset candidate remains **v551 tiny CLAP 0.5%** because it has the best bounded local lift (`0.992549`) among completed candidates and a live guarded submit monitor. The next research idea to implement, if v551 ties/drops, is not another single sidecar sweep; it should be either (a) a source-clean **agreement-gated Snowflake** candidate with much tighter displacement gates and exact mapped/proxy mask, or (b) a **public946 gate-retune** candidate from the full sweep (`proto_weight≈0.56`, lighter fake/proto/sed boosts) compared directly against v551/v552/v553. Do not submit v552/v553 automatically.
+
 
 ## 2026-05-13 02:45 UTC — `public946-anchor-student-sidecar-gate`
 

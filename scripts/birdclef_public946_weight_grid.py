@@ -29,12 +29,39 @@ MIRROR_PAIRS = (
 )
 
 
+def apply_taxon_max_gate(
+    df: pd.DataFrame,
+    labels: list[str],
+    taxonomy_csv: Path | None,
+    *,
+    floor: float = 0.30,
+    alpha: float = 0.50,
+) -> pd.DataFrame:
+    """Apply the v517-style row-wise taxon max gate to a prediction frame."""
+    if alpha <= 0 or taxonomy_csv is None or not taxonomy_csv.exists():
+        return df
+    tax = pd.read_csv(taxonomy_csv).set_index("primary_label")
+    out = df.copy()
+    values = out[labels].to_numpy(np.float32).copy()
+    for class_name in sorted(set(str(x) for x in tax["class_name"].dropna().tolist())):
+        idx = [i for i, label in enumerate(labels) if label in tax.index and str(tax.loc[label, "class_name"]) == class_name]
+        if not idx:
+            continue
+        evidence = values[:, idx].max(axis=1, keepdims=True)
+        mult = np.maximum(float(floor), evidence) ** float(alpha)
+        values[:, idx] *= mult
+    out[labels] = np.clip(values, 0.0, 1.0).astype(np.float32)
+    return out
+
+
 def rank_blend_postprocess(
     proto: pd.DataFrame,
     sed: pd.DataFrame,
     proto_weight: float,
     taxonomy_csv: Path | None = None,
     apply_postprocess: bool = True,
+    taxon_gate_floor: float | None = None,
+    taxon_gate_alpha: float | None = None,
 ) -> pd.DataFrame:
     """Reconstruct a public946-style rank blend for a chosen Proto weight."""
     cols = [c for c in proto.columns if c != "row_id"]
@@ -90,6 +117,15 @@ def rank_blend_postprocess(
                     vals = out.iloc[:, col_idx].to_numpy(np.float32)
                     thr = vals.mean() + 0.05
                     out.iloc[:, col_idx] = np.where(vals < thr, vals * 0.9, vals)
+
+    if taxon_gate_floor is not None and taxon_gate_alpha is not None:
+        out = apply_taxon_max_gate(
+            out,
+            cols,
+            taxonomy_csv,
+            floor=float(taxon_gate_floor),
+            alpha=float(taxon_gate_alpha),
+        )
     return out
 
 
@@ -124,6 +160,9 @@ def main() -> None:
     ap.add_argument("--labels-csv", type=Path, required=True)
     ap.add_argument("--taxonomy-csv", type=Path)
     ap.add_argument("--output-json", type=Path, required=True)
+    ap.add_argument("--taxon-gate", action="store_true", help="Also test v517-style taxon max gates on the public946 blend")
+    ap.add_argument("--taxon-floors", default="0.30", help="Comma-separated floor values for --taxon-gate")
+    ap.add_argument("--taxon-alphas", default="0.50", help="Comma-separated alpha values for --taxon-gate")
     args = ap.parse_args()
 
     proto = pd.read_csv(args.pred_dir / "submission_protossm.csv")
@@ -132,8 +171,23 @@ def main() -> None:
     labels_wide = load_long_labels(args.labels_csv, cols)
 
     variants: dict[str, pd.DataFrame] = {}
-    for w in (0.80, 0.70, 0.60, 0.54, 0.50, 0.46, 0.40):
+    base_weights = (0.80, 0.70, 0.60, 0.54, 0.50, 0.46, 0.40)
+    for w in base_weights:
         variants[f"proto{w:.2f}_sed{1-w:.2f}"] = rank_blend_postprocess(proto, sed, w, args.taxonomy_csv)
+    if args.taxon_gate:
+        floors = [float(x) for x in args.taxon_floors.split(",") if x.strip()]
+        alphas = [float(x) for x in args.taxon_alphas.split(",") if x.strip()]
+        for w in base_weights:
+            for floor in floors:
+                for alpha in alphas:
+                    variants[f"proto{w:.2f}_taxon_f{floor:.2f}_a{alpha:.3f}"] = rank_blend_postprocess(
+                        proto,
+                        sed,
+                        w,
+                        args.taxonomy_csv,
+                        taxon_gate_floor=floor,
+                        taxon_gate_alpha=alpha,
+                    )
     # Nina Model_61/62 direct ensemble proxy: average of 54/46 and 46/54 after gates.
     variants["nina_m61_m62_direct_50_50_proxy"] = variants["proto0.54_sed0.46"].copy()
     pred_cols = [c for c in variants["nina_m61_m62_direct_50_50_proxy"].columns if c != "row_id"]

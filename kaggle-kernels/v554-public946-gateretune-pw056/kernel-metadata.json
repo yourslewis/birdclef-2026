@@ -1,0 +1,26 @@
+{
+  "id": "yourslewis/bc26-v554-public946-gateretune-pw056",
+  "title": "BC26 v554 Public946 Gate Retune PW056",
+  "code_file": "script.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "birdclef-2026"
+  ],
+  "dataset_sources": [
+    "tuckerarrants/bc2026-distilled-sed-public",
+    "jaejohn/perch-meta",
+    "tuckerarrants/perch-v2-no-dft-onnx",
+    "rishikeshjani/perch-onnx-for-birdclef-2026"
+  ],
+  "kernel_sources": [
+    "ashok205/tf-wheels"
+  ],
+  "model_sources": [
+    "google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1"
+  ]
+}
