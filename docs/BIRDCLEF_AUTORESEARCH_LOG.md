@@ -276,6 +276,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B blended-teacher RegNetY learner pivot — 2026-05-15 09:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Run:** added `configs/birdclef/pl_public946_sed85_rankblend15_regnety008_5s_smoke_20260515.json` and ran RegNetY-008 (`pretrained=true`, lr `1e-4`) against `teacher_sed85_rankblend15.npz`, 256 rows / 3 epochs. Completed on CUDA in `6.152s`, TorchScript `23.42 MB`.
+- **Metrics:** final student AUC `0.891280` over 42 classes vs teacher `0.995304`; best val AUC `0.906245`; corr `0.71449`, MAE `0.04140`.
+- **Decision:** kill direct RegNetY scaling for this target. It did not beat the blended-teacher B0 smoke (`0.900997`) and is below the B0 scaled path; do not package/submit.
+
+
 ### Spec B blended-teacher B0 second-seed robustness — 2026-05-15 08:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.

@@ -268,3 +268,29 @@ Robust blend gate: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend
 - Seed43 best: `w=0.005`: `0.997038`
 
 Interpretation: the student signal is reproducible and ensemble improves standalone, but the actual lift over the blended teacher remains only `+0.00002` to `+0.00003`, with near-perfect correlation after blending. This is robust but too small for a Kaggle slot. Keep as a reusable artifact; do not package or submit unless a later independent validation/private proxy strengthens it.
+
+
+## 2026-05-15 09:55 UTC blended-teacher RegNetY learner pivot
+
+Tested a different learner/curriculum against `teacher_sed85_rankblend15.npz` after the B0 seed check showed robust-but-tiny gains.
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_regnety008_5s_smoke_20260515.json`.
+
+- Backbone: `regnety_008`
+- Timm pretrained: `true`
+- Learning rate: `1e-4`
+- Rows/epochs: 256 rows, 3 epochs
+- Batch size: 8
+- Target: soft blended teacher
+- Runtime: `6.152s`
+- TorchScript: `23.42 MB`
+
+Metrics:
+
+- Final student AUC: `0.891280` over 42 classes
+- Teacher AUC on same rows: `0.995304`
+- Best val AUC: `0.906245` over 35 classes
+- Student/teacher corr: `0.71449`
+- Student/teacher MAE: `0.04140`
+
+Decision: kill direct RegNetY scaling for this blended teacher. It improved over several older weak smokes but did not beat the blended-teacher B0 smoke (`0.900997`) and is below the B0 scaled path. No packaging/submission.
