@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B public946 SED soft-anchor supervised pivot — 2026-05-15 05:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Chosen track:** Spec B target-design pivot after hard-conf B0 was low-correlation but too weak.
+- **Partial-supervision run:** added/reran `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_b0_5s_ep12_20260515.json` on GPU. Soft-anchor target (`p>=0.8`, `p<=0.005`, soft weight 0.5) + intended 160 supervised clips from `data/train.csv`. Only `38/160` supervised clips loaded because the remote train-audio mirror is partial and sampling happened before path filtering. Final AUC `0.911316`, best val AUC `0.903733`, corr `0.869918`, no blend lift.
+- **Existing-audio manifest fix:** built `artifacts/pseudolabels/manifests/train_existing_audio_manifest_20260515.csv` on trainer from `3388` existing audio files across `206` classes; reran `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_existing160_b0_5s_ep12_20260515.json`. This used `160/160` supervised clips, zero missing paths.
+- **Existing160 result:** final student AUC `0.936198` over 42 classes, best val AUC `0.926750` over 34 classes, student-teacher corr `0.908199`, MAE `0.046395`, TorchScript `15.391 MB`, runtime `12.469s`.
+- **Blend gate:** `blend_gate.json` shows no useful local lift: SED teacher baseline `0.995316`; student blend ties only at `w=0.005` and drops at `w>=0.01`; rankblend blends all drop. Decision: no packaging/submission. Reuse the path-filtered manifest, but next work needs a larger/stronger teacher cache or model-family change.
+
+
 ### Spec B public946 SED hard-confidence B0 full diagnostic — 2026-05-15 04:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.

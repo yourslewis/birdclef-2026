@@ -126,3 +126,39 @@ Blend gate on labeled-overlap rows:
 - Blend into rankblend does not improve local AUC.
 
 Decision: do **not** submit or package this hard-confidence student. Keep it as a low-correlation diagnostic. Next Spec B step should change the learning target (e.g. soft-anchor/high-confidence positives with supervised clip mix, or larger 792-row teacher cache) rather than scaling this exact hard-conf recipe.
+
+
+## 2026-05-15 05:55 UTC soft-anchor supervised target-design pivot
+
+After the hard-confidence B0 run proved low-correlation but too weak, tested a softer target design instead of scaling the same recipe.
+
+### Partial remote mirror run
+
+Config: `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_b0_5s_ep12_20260515.json`
+
+- Target mode: `soft_anchor`
+- Teacher: v542 `teacher_sed.npz`
+- Soft label weight: `0.5`
+- Anchors: positives `p>=0.8`, negatives `p<=0.005`
+- Supervised clip mix: intended `160` files from `data/train.csv`, max `1` per class, weight `0.75`, smoothing `0.01`
+- Result: only `38/160` supervised clips were usable because the remote train-audio mirror is partial and the original CSV sampling happened before path-existence filtering.
+- Final student AUC: `0.911316` over 42 classes
+- Best val AUC: `0.903733` over 34 classes
+- Student/teacher corr: `0.869918`, MAE `0.097020`
+- Blend gate: no useful lift into SED or rankblend teacher.
+
+### Existing-audio manifest run
+
+Built `artifacts/pseudolabels/manifests/train_existing_audio_manifest_20260515.csv` from the remote mirror: `3388` existing audio files across `206` classes. Then reran with `configs/birdclef/pl_public946_v542_sed_softanchor_supervised_existing160_b0_5s_ep12_20260515.json`.
+
+- Supervised clip mix: `160/160` usable, zero missing paths
+- Final student AUC: `0.936198` over 42 classes
+- Best val AUC: `0.926750` over 34 classes
+- Student/teacher corr: `0.908199`, MAE `0.046395`
+- TorchScript: `15.391 MB`
+- Runtime: `12.469s`
+- Blend gate:
+  - SED teacher baseline `0.995316`; student blend did not improve (`w=0.005` tie, `w>=0.01` drops)
+  - rankblend baseline `0.990665`; all student blends drop
+
+Interpretation: soft-anchor + supervised mix is a real improvement over hard-conf (`0.936` vs `0.750` all-row AUC), but still not strong or complementary enough to package. The path-filtered supervised manifest is important and should be reused. Next useful step is a larger/stronger teacher-cache or model-family run, not a Kaggle submission.
