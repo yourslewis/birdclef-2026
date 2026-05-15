@@ -516,3 +516,14 @@ Attempted next model-zoo pivot:
 Result: **blocked/incomplete**. The foreground SSH/CUDA smoke launch produced no first-epoch output within the cron window, and independent SSH checks to `192.168.0.10` timed out during banner exchange. The local blocking session was killed. Do not interpret this as model failure; it is a trainer reachability/runtime issue.
 
 Next action: verify trainer reachability/process state first. If healthy, rerun NFNet as a durable `nohup` job with log monitoring; otherwise skip until host recovers.
+
+### 2026-05-15 18:00 UTC trainer SSH diagnostics
+
+After the NFNet smoke blocker, network diagnostics show the trainer is reachable at the network layer but SSH is unhealthy:
+
+- ping `192.168.0.10`: `3/3` replies, ~1ms
+- TCP port 22: connects
+- SSH: banner/auth does not complete (`Connection timed out during banner exchange` / `Connection closed by 192.168.0.10 port 22`)
+- killed a stale local rsync from the interrupted NFNet config sync, but SSH remained blocked on retries
+
+The NFNet config and training script parse locally. No NFNet model result should be inferred until trainer SSH recovers and the smoke is rerun or verified from logs.

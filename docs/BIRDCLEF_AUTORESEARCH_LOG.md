@@ -2369,3 +2369,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Config added:** `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json`; ECA-NFNet-L0, 5s/160 mel, pretrained=false, lr `1e-4`, 256 rows / 3 epochs, soft BCE against `teacher_sed85_rankblend15.npz`, seed `45`.
 - **Run attempt:** foreground SSH/CUDA smoke launch to trainer (`192.168.0.10`) started but produced no first-epoch output within the cron window. Subsequent independent SSH checks timed out during banner exchange, suggesting trainer SSH/runtime congestion rather than a validated model result. The blocking local session was killed to avoid hanging the cron.
 - **Decision:** mark NFNet blended-teacher smoke as **blocked/incomplete**, not failed as a model. Do not scale or package. Next run should first verify trainer reachability/process state; if clean, rerun as a durable `nohup` job with log tail rather than foreground SSH, or skip NFNet if the host remains unstable.
+
+### Trainer SSH still blocked after v560 drop — 2026-05-15 18:00 UTC
+
+- Follow-up diagnostics after the NFNet foreground attempt: ICMP ping to `192.168.0.10` is healthy (`3/3`, ~1ms) and TCP port 22 accepts connections, but SSH does not complete banner/auth (`Connection timed out during banner exchange`, then `Connection closed by 192.168.0.10 port 22`).
+- Found and killed a stale local `rsync` process from the earlier interrupted NFNet config sync (`rsync -az ... pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json ...`), but SSH still timed out on three retries afterward.
+- Validated locally that the NFNet smoke config parses and `scripts/birdclef_pseudolabel_student_train.py` compiles. No model result exists yet; trainer-side process state cannot be verified until SSH recovers.
+- Decision: leave NFNet blended-teacher smoke blocked. Next safe action is host/service recovery or waiting for SSH to drain; do not launch additional remote work through hanging SSH sessions.
