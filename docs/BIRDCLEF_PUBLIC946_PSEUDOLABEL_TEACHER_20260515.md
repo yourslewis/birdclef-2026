@@ -162,3 +162,41 @@ Built `artifacts/pseudolabels/manifests/train_existing_audio_manifest_20260515.c
   - rankblend baseline `0.990665`; all student blends drop
 
 Interpretation: soft-anchor + supervised mix is a real improvement over hard-conf (`0.936` vs `0.750` all-row AUC), but still not strong or complementary enough to package. The path-filtered supervised manifest is important and should be reused. Next useful step is a larger/stronger teacher-cache or model-family run, not a Kaggle submission.
+
+
+## 2026-05-15 06:55 UTC 792-row student/teacher ensemble gate
+
+Audited the stronger existing 792-row public946 students before doing any more packaging.
+
+Inputs on trainer:
+
+- `pl-public946-sed-b0-5s-lr3e4-ep20-bestval`: B0, SED teacher, final AUC `0.976669`, teacher `0.996743`, corr `0.97746`.
+- `pl-public946-rankblend-convnext-tiny-5s-lr3e4-ep20-bestval`: ConvNeXt-tiny, rankblend teacher, final AUC `0.987875`, teacher `0.994567`, corr `0.94308`.
+- `pl-public946-rankblend-nfnet-5s-lr1e4-ep20-bestval`: NFNet-L0, rankblend teacher, final AUC `0.984806`, teacher `0.994567`, corr `0.92441`.
+
+Artifact: `artifacts/pseudolabels/audits/public946_792_student_ensemble_gate_20260515T0655Z.json`.
+
+Findings:
+
+- Student-to-teacher blends do not beat the better teacher strongly enough to justify packaging.
+- The useful signal was teacher-level, not student-level: blending `teacher_sed` with `teacher_rankblend` improved the labeled-overlap gate.
+- Best checked mixture: `0.85 * teacher_sed + 0.15 * teacher_rankblend` = macro AUC `0.997018` over 75 classes, versus SED `0.996743` and rankblend `0.994567`.
+
+Implemented utility `scripts/birdclef_blend_teacher_npz.py` and created reusable blended teacher cache on trainer:
+
+- `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_sed85_rankblend15.npz`
+- `artifacts/pseudolabels/public946-v540-teacher-cache66-v1/teacher_sed85_rankblend15_summary.json`
+
+The blended teacher has correlation `0.9248` vs SED and `0.5834` vs rankblend, and top-k recall `0.3128 / 0.7095 / 0.9223 / 0.9934` for k=1/3/5/10.
+
+### Blended-teacher ConvNeXt smoke
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_convnext_tiny_5s_smoke_20260515.json`.
+
+- ConvNeXt-tiny, 256 rows, 3 epochs, soft target from `teacher_sed85_rankblend15.npz`.
+- Completed on CUDA in `10.04s`.
+- Final student AUC: `0.799819` over 42 classes.
+- Teacher AUC on same rows: `0.995304`.
+- Corr/MAE: `0.42485` / `0.04334`.
+
+Decision: kill this blended-teacher ConvNeXt smoke. It is far worse than the earlier public946 rankblend ConvNeXt smoke (`0.882870`) and should not be scaled. The blended teacher cache remains useful as a target artifact, but it needs a different learner/initialization or more careful curriculum, not direct ConvNeXt scaling.
