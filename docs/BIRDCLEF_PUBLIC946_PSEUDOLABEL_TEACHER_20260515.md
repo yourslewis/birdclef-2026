@@ -537,3 +537,7 @@ Validation: `bash -n` passed; the config JSON parses; exercising the launcher ag
 ### 2026-05-15 20:55 UTC blocked rerun + source scan
 
 Reran the guarded NFNet launcher; trainer SSH failed fast with `Connection closed by 192.168.0.10 port 22`, so the launcher exited `75` and did not start remote work. Current scored state remains `v560=0.945` below the `0.946` plateau. A short public-source scan found only the already-known Nina public946 notebook and no distinct new source-clean artifact worth a slot. Continue to wait for trainer SSH recovery before NFNet/student OOF work, and keep the public946 micro-sidecar stop rule active.
+
+### 2026-05-15 22:00 UTC output verifier
+
+Added `scripts/birdclef_kernel_output_verify.py` so future cron passes can verify completed Kaggle kernel output files and log markers directly through the Bearer-backed Kaggle SDK. Verified `bc26-v510-real-sed-bundle-blend-005` has `submission.csv` plus real-SED blend markers, and `bc26-v560-public946-direct-v2s-r003` has the expected public946/V2S output files plus direct-student blend markers. This closes the v510/v560 output-verification loop while trainer SSH remains blocked.
