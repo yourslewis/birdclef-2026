@@ -2381,3 +2381,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 
 - Trainer remains network-reachable but SSH-unusable (`ping` and TCP 22 work; SSH closes/times out during banner/auth), so no remote GPU NFNet rerun was safe.
 - Codified the v560 lesson in `docs/BIRDCLEF_PUBLIC946_STOP_RETUNE_NEXT_SIGNAL_20260515.md` and `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md`: `v560=0.945` despite clean runtime and positive local gate means public946 micro-sidecars/low-weight trained-student perturbations should not consume more slots without materially stronger out-of-sample/OOF evidence or a genuinely new model/source.
+
+### Guarded NFNet blended-teacher smoke launcher — 2026-05-15 19:55 UTC
+
+- Trainer SSH remains unhealthy on direct preflight (`Connection timed out during banner exchange`), so no remote GPU job was launched.
+- Added `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` to make the next NFNet attempt safe and non-blocking. It checks SSH with BatchMode/ConnectTimeout first, exits `75` without launching if SSH is unhealthy, syncs the NFNet smoke config only after preflight, then launches `scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json` via remote `nohup` and prints pid/log.
+- Local validation: `bash -n` passed, config JSON parses, and the script was exercised against the current blocked trainer state; it exited `75` and did not launch remote work.

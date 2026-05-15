@@ -527,3 +527,9 @@ After the NFNet smoke blocker, network diagnostics show the trainer is reachable
 - killed a stale local rsync from the interrupted NFNet config sync, but SSH remained blocked on retries
 
 The NFNet config and training script parse locally. No NFNet model result should be inferred until trainer SSH recovers and the smoke is rerun or verified from logs.
+
+### 2026-05-15 19:55 UTC guarded NFNet launcher
+
+Trainer SSH still times out during banner exchange, so the NFNet blended-teacher smoke was not relaunched. Added `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` as the next safe launch path: it performs a short SSH preflight, refuses to launch when SSH is unhealthy, syncs the NFNet smoke config after preflight, and starts the remote training with `nohup` plus a timestamped log only when the trainer is reachable.
+
+Validation: `bash -n` passed; the config JSON parses; exercising the launcher against the current trainer state exited `75` with `[blocked] trainer SSH preflight failed; not launching remote GPU job`.
