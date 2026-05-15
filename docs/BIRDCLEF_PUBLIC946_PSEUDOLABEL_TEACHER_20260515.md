@@ -464,3 +464,40 @@ Submitted after duplicate check using new helper `scripts/submit_v560_when_ready
 - current status: PENDING score
 
 Decision: v560 earned a slot because it is a real new trained model artifact, completed cleanly, and had a stronger strict dry-run gate than v559. Await score before further public946 sidecar submissions.
+
+## 2026-05-15 15:55 UTC v560 scored 0.945 and XC-V2S branch killed
+
+`v560` scored `0.945`, below the 0.946 plateau. This refutes the direct-V2S public946 sidecar despite its positive local/dry-run gates and is a hard warning against more tiny public946 sidecar submissions.
+
+XC-initialized V2S test:
+
+- smoke config: `configs/birdclef/pl_public946_sed85_rankblend15_v2s_xc_extinit_5s_lr1e4_ep8_smoke_20260515.json`
+- scale config: `configs/birdclef/pl_public946_sed85_rankblend15_v2s_xc_extinit_5s_lr1e4_ep20_20260515.json`
+- checkpoint: `artifacts/external_pretrain/xc-v2s-q3-cap80-external-pretrain-balanced-ep12-bestloss/model_torchscript.pt`
+- 5s / 128 mel, lr `1e-4`, soft BCE, target `teacher_sed85_rankblend15.npz`
+
+Smoke result:
+
+- 256 rows / 8 epochs
+- final all-row AUC `0.949310` over 42 classes
+- best val AUC `0.931553`
+- corr `0.809742`
+- runtime `12.619s`
+- stronger than direct/ImageNet V2S 8-epoch smoke (`0.928674`), so scaled
+
+Full result:
+
+- 792 rows / 20 epochs
+- final student AUC `0.989274` over 75 classes
+- best val AUC `0.988724`
+- teacher AUC `0.997018`
+- corr `0.957270`, MAE `0.019614`
+- TorchScript `88.74 MB`, runtime `60.308s`
+
+Blend gate:
+
+- artifact: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-v2s-xc-extinit-5s-lr1e4-ep20-20260515/blend_gate.json`
+- best weight `0.0025`: AUC `0.997040669`, lift `+0.000022215`
+- larger weights flatten/drop
+
+Decision: kill XC-initialized V2S for packaging. It improved the smoke but underperformed direct V2S at full scale and has weaker blend lift. After v560 dropped to 0.945, do not spend another slot on V2S/public946 micro-sidecars.
