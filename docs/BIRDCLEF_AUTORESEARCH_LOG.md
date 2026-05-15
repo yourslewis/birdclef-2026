@@ -276,6 +276,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v558 tied; stop public946 retune lane — 2026-05-15 02:55 UTC
+
+- **Status check:** `v558` completed with public score **0.946**, tying but not improving the public946 anchor. `v551` also tied **0.946**. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`.
+- **Interpretation:** Low-displacement public946 retunes/sidecars have repeatedly tied (`v543/v544/v546/v547/v548/v549/v551/v558`) or dropped (`v545`). The train-soundscape overlap gates are now mostly useful as rejection filters, not as enough evidence to spend more slots on same-family variants.
+- **Research check:** a fresh web search surfaced the same Nina public946 ONNX+Perch+Proto+SED notebook as the high-signal result, not a new distinct source. Local artifact audit shows no remaining source-clean sidecar with both local lift and new-signal evidence strong enough to justify another immediate slot.
+- **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_STOP_RETUNE_NEXT_SIGNAL_20260515.md` documenting the stop rule: no more public946-only postprocess retunes or single-family low-weight brackets unless a new source/model/OFF artifact changes the evidence. Do not submit `v554`-`v557`; `v558` already tested the safest clipped formulation and tied.
+- **Decision:** hold remaining UTC daily submissions. Next work should pivot to genuinely new signal: source-clean model-family audit, public946 teacher/noisy-student OOF artifacts, or real SED/student training artifacts with runtime headroom.
+
+
 ### v551 tied; conditional monitor submitted v558 — 2026-05-15 01:55 UTC
 
 - **Status check:** `v551` completed with public score **0.946**, tying but not improving the public946 anchor. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.

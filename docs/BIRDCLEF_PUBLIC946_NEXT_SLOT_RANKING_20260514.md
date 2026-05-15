@@ -42,3 +42,9 @@ Status: planning while UTC submission cap is exhausted and guarded `v551` monito
 - `v558` is now the preferred gate-retune fallback if `v551` ties/drops. It compares cleanly against the actual downloaded v542 final: local AUC `0.992630` vs `0.992525`, top3 `0.637` vs `0.626`, `corr=0.999982`, `MAE=0.001067`, `max_abs=0.016018`.
 - The earlier high-displacement readings for v556-v558 came from comparing against a reconstructed baseline that diverged from actual v542 on a few cells. The monitor now prefers actual v542 `submission.csv` when available.
 - Submission priority remains: let v551 run first at reset; only consider v558 afterward if v551 ties/drops.
+
+## 2026-05-15 02:55 UTC update
+
+- `v551` tied `0.946`; `v558` also tied `0.946`.
+- Stop the public946 retune / tiny-sidecar submission lane. The safest clipped retune formulation has now been tested publicly and did not improve display score.
+- Remaining slots should be held for genuinely new signal: a new source-clean model family, public946 teacher/noisy-student OOF artifact, or real SED/student inference artifact with a clear gate.
