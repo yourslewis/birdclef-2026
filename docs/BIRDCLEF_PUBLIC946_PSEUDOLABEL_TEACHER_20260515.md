@@ -435,3 +435,32 @@ Packaging/runtime gate:
 - monitor: `logs/monitor_v560_direct_v2s_gate_20260515T135758Z.log`, submit disabled
 
 Decision: v560 is worth runtime validation but not automatic competition submission. Submit only if it completes cleanly and a later slot policy explicitly allows another tiny public946 sidecar after repeated 0.946 ties.
+
+## 2026-05-15 14:55 UTC v560 complete + submitted
+
+`v560` completed successfully and passed the no-submit output/gate monitor.
+
+Kernel:
+
+- `yourslewis/bc26-v560-public946-direct-v2s-r003`, version 1
+- status: COMPLETE, no failure message
+- output files validated: `submission.csv`, `submission_direct_v2s_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, all `(240,235)`, no NaNs
+
+Gate artifact:
+
+- `artifacts/blend_grids/v560_direct_v2s_sidecar_weight_grid_20260515T141004Z.json`
+
+Gate result:
+
+- direct-V2S standalone rank AUC `0.975319`, corr vs anchor `0.771902`
+- best sidecar `0.0300`: macro AUC `0.992606780`, lift `+0.000081879` vs v542 dry-run anchor `0.992524901`
+- top5 row recall `0.663158` vs anchor `0.631579`
+- corr `0.999816`, MAE `0.004414`
+
+Submitted after duplicate check using new helper `scripts/submit_v560_when_ready.py`:
+
+- description: `v560: Public946 v542 plus direct blended-teacher V2S student rank sidecar 3%`
+- ref: `52683717`
+- current status: PENDING score
+
+Decision: v560 earned a slot because it is a real new trained model artifact, completed cleanly, and had a stronger strict dry-run gate than v559. Await score before further public946 sidecar submissions.
