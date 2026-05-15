@@ -276,6 +276,14 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### v551 tied; conditional monitor submitted v558 — 2026-05-15 01:55 UTC
+
+- **Status check:** `v551` completed with public score **0.946**, tying but not improving the public946 anchor. Current best remains **0.946 public LB**. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
+- **Conditional monitor:** `scripts/submit_v558_if_v551_ties_or_drops.py` saw v551 score `0.946` (`<=0.946` threshold), verified v558 COMPLETE + `submission.csv`, and submitted exactly once. Log `logs/submit_v558_if_v551_ties_or_drops_20260515T005238Z.log` reports `Submission result: {"message": "", "ref": 52665049}`.
+- **Visible submission:** `v558: Public946 v542 plus exact-base clipped gate retune alpha0.10 maxabs0.02` is visible at `2026-05-15 01:12:41.840 UTC`, status PENDING, no public score yet.
+- **Decision:** hold all further submissions until v558 scores. Do not submit v554-v557. If v558 ties/drops, the public946 postprocess-retune lane should pause and the next slot should return to genuinely new signal or a fresh evidence source.
+
+
 ### v558 conditional submit monitor prepared while v551 pending — 2026-05-15 00:55 UTC
 
 - **Status check:** `v551` is visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet. Current best remains **0.946 public LB** from `v541/v542/v543/v544/v546-v549`. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
