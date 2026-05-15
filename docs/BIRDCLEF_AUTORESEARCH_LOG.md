@@ -276,6 +276,17 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B existing student-pool blend audit — 2026-05-15 12:10 UTC
+
+- **Status check:** current public best remains **0.946**. Latest submissions `v558/v551/v549/v548/v547` all scored `0.946`; `v510` kernel COMPLETE/no failure. No Kaggle submission used.
+- **Hypothesis:** before training another adjacent blended-teacher student, search existing aligned student artifacts for lower-correlation blend signal against `teacher_sed85_rankblend15.npz`.
+- **Implementation:** added `scripts/birdclef_student_pool_blend_audit.py`, which scans `student_predictions.npz` artifacts, verifies row/label alignment, computes standalone AUC/correlation, and sweeps small teacher+student blend weights.
+- **Audit:** trainer artifact `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260515T1155Z.json`; scanned `82` student files, `33` aligned. Teacher baseline `0.997018454` over 75 valid classes.
+- **Best single sidecar:** `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval` (`efficientnetv2_rw_s`, TorchScript `88.739 MB`) standalone AUC `0.983987`, corr vs teacher `0.3752`; best blend teacher `0.95` + V2S `0.05` = `0.997187110`, lift `+0.000168656`.
+- **Pair sweep:** trainer artifact `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_pair_sweep_20260515T1205Z.json`. Best blend: teacher `0.90` + V2S v508 `0.06` + B0 soft-anchor v508 `0.04` = `0.997228528`, lift `+0.000210074`, corr `0.98262`.
+- **Decision:** best local sidecar signal so far, but still tiny and only validated on 792 labeled train-soundscape rows. Do not spend an immediate slot without packaging/runtime verification. Next candidate if a slot is available: source-clean two-student sidecar using V2S `0.06` + B0 soft-anchor `0.04` into the public946 anchor.
+
+
 ### Spec B blended-teacher B0 Soft-AUC curriculum — 2026-05-15 10:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.

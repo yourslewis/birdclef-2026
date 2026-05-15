@@ -331,3 +331,40 @@ Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_ep2
 Blend gate (`blend_gate.json`): no lift over teacher. Best checked weight was `0.0025`, AUC `0.9970182`, essentially equal/slightly below the teacher baseline `0.99701845`; all larger weights drop.
 
 Decision: kill this Soft-AUC curriculum. It looked better in smoke but underperformed B0+BCE at full scale (`0.989343` vs `0.992137/0.991832`) and gives no blend lift. Do not package/submit.
+
+
+## 2026-05-15 12:10 UTC existing student-pool blend audit
+
+After the blended-teacher B0 / RegNetY / Soft-AUC lane produced only microscopic or negative lift, audited all existing aligned `student_predictions.npz` artifacts against `teacher_sed85_rankblend15.npz` before training another adjacent variant.
+
+New helper: `scripts/birdclef_student_pool_blend_audit.py`.
+
+Audit artifact on trainer:
+
+- `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260515T1155Z.json`
+- scanned `82` student prediction files
+- `33` were row/label-aligned with the 792-row public946 teacher cache
+- teacher baseline: macro AUC `0.997018454` over 75 valid classes
+
+Best single-student local blend:
+
+- `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval`
+- backbone: `efficientnetv2_rw_s`
+- export size: `88.739 MB`
+- standalone AUC: `0.983987`
+- corr vs blended teacher: `0.3752`
+- best single blend: teacher `0.95` + V2S `0.05`
+- blend AUC: `0.997187110`, lift `+0.000168656`
+
+Pair sweep artifact:
+
+- `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_pair_sweep_20260515T1205Z.json`
+
+Best pair blend:
+
+- teacher `0.90` + V2S v508 student `0.06` + B0 soft-anchor v508 student `0.04`
+- macro AUC: `0.997228528`
+- lift vs teacher: `+0.000210074`
+- corr vs teacher: `0.98262`
+
+Decision: this is the best local sidecar signal found so far and materially better than the B0 blended-teacher seed lift, but still extremely small and based on 792 labeled train-soundscape rows. Do not spend an immediate Kaggle slot without packaging/runtime verification. Next actionable packaging candidate, if a slot is needed: source-clean two-student sidecar with V2S weight `0.06` and B0 soft-anchor weight `0.04` blended into the public946 anchor.
