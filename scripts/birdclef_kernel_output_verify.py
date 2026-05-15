@@ -120,6 +120,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("slug", nargs="?", help="Kernel slug, e.g. bc26-v510-real-sed-bundle-blend-005")
     parser.add_argument("--preset", choices=sorted(PRESETS), help="Use known required files/log markers for a tracked kernel")
+    parser.add_argument("--all-presets", action="store_true", help="Verify every known preset and return nonzero if any fail")
     parser.add_argument("--owner", default="yourslewis")
     parser.add_argument("--require", action="append", default=[], help="Required output file; repeatable")
     parser.add_argument("--log-contains", action="append", default=[], help="Required substring in kernel log; repeatable")
@@ -127,6 +128,20 @@ def main() -> int:
     parser.add_argument("--page-size", type=int, default=100)
     parser.add_argument("--pretty", action="store_true")
     args = parser.parse_args()
+
+    if args.all_presets:
+        if args.slug or args.preset:
+            parser.error("--all-presets cannot be combined with slug or --preset")
+        results = []
+        for name, preset in PRESETS.items():
+            required_files = _dedupe(list(preset.get("required_files", ["submission.csv"])) + args.require)
+            required_markers = _dedupe(list(preset.get("required_log_markers", [])) + args.log_contains)
+            result = verify_kernel(args.owner, str(preset["slug"]), required_files, required_markers, args.kaggle_json, args.page_size)
+            result["preset"] = name
+            results.append(result)
+        payload = {"ok": all(item["ok"] for item in results), "results": results}
+        print(json.dumps(payload, indent=2 if args.pretty else None, sort_keys=True))
+        return 0 if payload["ok"] else 1
 
     preset = PRESETS.get(args.preset or "", {})
     slug = args.slug or preset.get("slug")

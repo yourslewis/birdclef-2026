@@ -2407,3 +2407,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Trainer SSH is still blocked: guarded NFNet launcher timed out during banner exchange and exited `75`, so no remote GPU job was launched.
 - Improved `scripts/birdclef_kernel_output_verify.py` with `--preset v510-real-sed` and `--preset v560-direct-v2s` so future cron passes can verify known kernel files/log markers without restating fragile marker strings.
 - Validation: `python3 -m py_compile scripts/birdclef_kernel_output_verify.py` passed; both preset checks returned `ok=true`. Current public score state unchanged: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`; no monitor process needed restart and no new submission was made.
+
+### All-preset kernel verifier mode while trainer SSH blocked — 2026-05-16 00:00 UTC
+
+- Trainer SSH remains blocked: guarded NFNet launcher timed out during banner exchange and exited `75`; no remote GPU job was launched.
+- Current public score state is unchanged: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`; v510/v560 kernels remain COMPLETE with no failure; no monitor process needed restart and no submission was made.
+- Improved `scripts/birdclef_kernel_output_verify.py` with `--all-presets`, which verifies every known preset in one read-only Kaggle SDK call sequence and exits nonzero if any preset fails. Validation: `python3 -m py_compile` passed and `scripts/birdclef_kernel_output_verify.py --all-presets --pretty` returned top-level `ok=true` for `v510-real-sed` and `v560-direct-v2s`.

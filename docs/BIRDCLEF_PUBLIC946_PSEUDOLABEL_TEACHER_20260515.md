@@ -545,3 +545,7 @@ Added `scripts/birdclef_kernel_output_verify.py` so future cron passes can verif
 ### 2026-05-15 23:00 UTC verifier presets
 
 Extended `scripts/birdclef_kernel_output_verify.py` with presets for `v510-real-sed` and `v560-direct-v2s`. Both presets passed against Kaggle: v510 still has `submission.csv` plus real-SED log markers, and v560 still has the expected public946/direct-V2S outputs plus sidecar log markers. Trainer SSH remains blocked, so no NFNet smoke was launched.
+
+### 2026-05-16 00:00 UTC all-preset verifier
+
+Extended `scripts/birdclef_kernel_output_verify.py` with `--all-presets` so future status passes can verify all tracked Kaggle kernel outputs in one command. Validation returned top-level `ok=true` for both `v510-real-sed` and `v560-direct-v2s`. Trainer SSH still times out during banner exchange, so no NFNet smoke was launched.
