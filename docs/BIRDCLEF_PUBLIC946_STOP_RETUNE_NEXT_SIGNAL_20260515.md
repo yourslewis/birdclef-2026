@@ -1,12 +1,13 @@
 # BirdCLEF Public946 Stop-Retune Decision — 2026-05-15
 
-Status: active after `v551` and `v558` both tied public LB `0.946`.
+Status: active and strengthened after `v560` scored `0.945` despite positive local/dry-run gates.
 
 ## Current public state
 
 - Public best remains **0.946**.
 - `v551` tiny CLAP sidecar 0.5% scored `0.946`.
 - `v558` exact-base clipped gate retune alpha0.10/maxabs0.02 scored `0.946`.
+- `v560` direct blended-teacher V2S student rank sidecar 3% scored `0.945`, despite a positive strict v542 dry-run gate (`+0.000081879` AUC on train-soundscape overlap).
 - Earlier same-family/diversity probes also tied or dropped:
   - `v546` train-audio-head 5%: `0.946`.
   - `v547/v548/v549` CV9245 2%/0.5%/1%: all `0.946`.
@@ -15,17 +16,17 @@ Status: active after `v551` and `v558` both tied public LB `0.946`.
 
 ## Interpretation
 
-The public946 anchor is extremely robust, and low-displacement sidecars are not moving the displayed public score. The available local train-soundscape overlap gates are now mostly useful for **rejecting unsafe candidates**, not for selecting further leaderboard slots. Repeated public946 postprocess/sidecar micro-variants are likely to consume daily quota without improving display score.
+The public946 anchor is extremely robust, and low-displacement sidecars are not moving the displayed public score. The available local train-soundscape overlap gates are now mostly useful for **rejecting unsafe candidates**, not for selecting further leaderboard slots. `v560` is the clearest warning case: it had clean runtime/output validation and the strongest recent local sidecar gate, but dropped publicly to `0.945`. Repeated public946 postprocess/sidecar micro-variants are likely to consume daily quota without improving display score.
 
 ## Stop rule
 
-Do **not** submit more public946-only postprocess retunes or single-family low-weight brackets unless one of these changes:
+Do **not** submit more public946-only postprocess retunes, tiny trained-student sidecars, or single-family low-weight brackets unless one of these changes:
 
 1. A new public/private score breaks the 0.946 plateau.
 2. A genuinely new prediction source appears with strong source-clean provenance and a clean low-displacement gate.
 3. A trained model produces an OOF/test prediction artifact with competitive AUC and lower correlation to public946.
 
-Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has already tested the safest clipped-retune formulation and tied.
+Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has already tested the safest clipped-retune formulation and tied. Do not submit additional V2S/public946 sidecars after `v560=0.945` unless the candidate is backed by a stronger out-of-sample/OOF gate rather than the 190-row train-soundscape overlap.
 
 ## Next actionable tracks
 

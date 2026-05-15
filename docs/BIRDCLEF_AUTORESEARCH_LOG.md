@@ -2376,3 +2376,8 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Found and killed a stale local `rsync` process from the earlier interrupted NFNet config sync (`rsync -az ... pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json ...`), but SSH still timed out on three retries afterward.
 - Validated locally that the NFNet smoke config parses and `scripts/birdclef_pseudolabel_student_train.py` compiles. No model result exists yet; trainer-side process state cannot be verified until SSH recovers.
 - Decision: leave NFNet blended-teacher smoke blocked. Next safe action is host/service recovery or waiting for SSH to drain; do not launch additional remote work through hanging SSH sessions.
+
+### Public946 micro-sidecar stop rule codified — 2026-05-15 19:00 UTC
+
+- Trainer remains network-reachable but SSH-unusable (`ping` and TCP 22 work; SSH closes/times out during banner/auth), so no remote GPU NFNet rerun was safe.
+- Codified the v560 lesson in `docs/BIRDCLEF_PUBLIC946_STOP_RETUNE_NEXT_SIGNAL_20260515.md` and `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md`: `v560=0.945` despite clean runtime and positive local gate means public946 micro-sidecars/low-weight trained-student perturbations should not consume more slots without materially stronger out-of-sample/OOF evidence or a genuinely new model/source.
