@@ -294,3 +294,40 @@ Metrics:
 - Student/teacher MAE: `0.04140`
 
 Decision: kill direct RegNetY scaling for this blended teacher. It improved over several older weak smokes but did not beat the blended-teacher B0 smoke (`0.900997`) and is below the B0 scaled path. No packaging/submission.
+
+
+## 2026-05-15 10:55 UTC blended-teacher B0 soft-AUC curriculum
+
+Tested the `bce_soft_auc` curriculum against the blended teacher after RegNetY failed and B0+BCE remained the best path.
+
+### Soft-AUC smoke
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_smoke_20260515.json`.
+
+- B0 + external-pretrain init
+- 256 rows / 3 epochs
+- Loss: `bce_soft_auc`
+- `auc_loss_weight=0.005`, `soft_auc_scale=8.0`
+- Runtime: `6.161s`
+- Final student AUC: `0.916208` over 42 classes
+- Teacher AUC: `0.995304`
+- Best val AUC: `0.931595`
+- Corr/MAE: `0.56944` / `0.29934`
+
+Smoke passed the scale gate because it beat B0+BCE smoke (`0.900997`) and RegNetY smoke (`0.891280`).
+
+### Full scale
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_ep20_20260515.json`.
+
+- 792 rows / 20 epochs
+- Runtime: `47.366s`
+- Best val AUC: `0.992015` over 61 classes
+- Final student AUC: `0.989343` over 75 classes
+- Teacher AUC: `0.997018`
+- Corr/MAE: `0.96012` / `0.02010`
+- TorchScript: `15.391 MB`
+
+Blend gate (`blend_gate.json`): no lift over teacher. Best checked weight was `0.0025`, AUC `0.9970182`, essentially equal/slightly below the teacher baseline `0.99701845`; all larger weights drop.
+
+Decision: kill this Soft-AUC curriculum. It looked better in smoke but underperformed B0+BCE at full scale (`0.989343` vs `0.992137/0.991832`) and gives no blend lift. Do not package/submit.

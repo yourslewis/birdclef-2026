@@ -276,6 +276,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B blended-teacher B0 Soft-AUC curriculum — 2026-05-15 10:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Smoke:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_smoke_20260515.json` using B0 + external-pretrain init, 256 rows / 3 epochs, `loss_name=bce_soft_auc`, `auc_loss_weight=0.005`. Completed CUDA in `6.161s`; final AUC `0.916208` over 42 classes vs teacher `0.995304`; best val `0.931595`, corr `0.56944`. It beat B0+BCE smoke `0.900997`, so scaled.
+- **Scale:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_softauc_w0005_ep20_20260515.json` and ran all 792 rows / 20 epochs. Completed CUDA in `47.366s`; best val AUC `0.992015`; final student AUC `0.989343` over 75 classes vs blended teacher `0.997018`; corr `0.96012`, MAE `0.02010`, TorchScript `15.391 MB`.
+- **Blend gate:** no lift. Best checked weight `0.0025` gives AUC `0.9970182`, essentially equal/slightly below teacher `0.99701845`; larger weights drop.
+- **Decision:** kill Soft-AUC curriculum for this target. It passed smoke but underperformed B0+BCE at scale (`0.989343` vs `0.992137/0.991832`) and gives no blend lift. Do not package/submit.
+
+
 ### Spec B blended-teacher RegNetY learner pivot — 2026-05-15 09:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
