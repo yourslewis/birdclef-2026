@@ -395,3 +395,43 @@ Results on 190 matched dry-run rows / 42 valid classes:
 - the previous 792-row pair weights (`0.06/0.04`) are not supported by this stricter gate
 
 Decision: hold/no package for now. This is directionally positive but too small to spend a blind submission slot after public946 sidecars repeatedly tied. If a future slot needs a prepared candidate, use a tiny rank sidecar around V2S `0.005` + B0 soft-anchor `0.010` rather than the larger 6%/4% pair.
+
+## 2026-05-15 14:00 UTC direct blended-teacher V2S student / v560 prep
+
+Trained EfficientNetV2-RW-S directly on `teacher_sed85_rankblend15.npz`, motivated by the earlier pool audit where an older V2S/v508 student was the strongest low-correlation sidecar.
+
+Configs:
+
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_smoke_20260515.json` — 256 rows / 3 epochs
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_ep8_smoke_20260515.json` — 256 rows / 8 epochs
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_ep20_20260515.json` — 792 rows / 20 epochs
+
+Results:
+
+- 3-epoch smoke: final AUC `0.789590`, corr `0.2969` — underfit
+- 8-epoch smoke: final AUC `0.928674`, best val `0.930854`, corr `0.6613` — slow-starter pass
+- full 20-epoch: final AUC `0.990667`, best val `0.986623`, corr `0.956984`, MAE `0.019636`, runtime `52.827s`, TorchScript `88.74 MB`
+
+Local teacher blend gate:
+
+- artifact: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-v2s-5s-lr1e4-ep20-20260515/blend_gate.json`
+- best single blend: V2S weight `0.075`, AUC `0.997058764`, lift `+0.000040310`
+- pair with B0 seeds did not materially improve: max lift `+0.000040688`
+
+Strict v542 dry-run gate:
+
+- artifact: `artifacts/blend_grids/v560_direct_v2s_official_gate_20260515T1410Z.json`
+- direct-V2S standalone rank AUC `0.975338`, corr vs anchor `0.7719`
+- best sidecar: weight `0.03`, AUC `0.992606780`, lift `+0.000081879` vs v542 dry-run anchor `0.992524901`, top5 recall `0.6632` vs base `0.6316`, MAE `0.00441`
+
+Packaging/runtime gate:
+
+- private dataset: `yourslewis/bc26-public946-direct-v2s-student-v1`
+- zip size: `78 MB`
+- SHA256: `3f536693807a0b239cb63d5a0879833f0dcf033345f3130c1a9ffd17e124b104`
+- no-submit kernel: `yourslewis/bc26-v560-public946-direct-v2s-r003`, version 1
+- kernel applies `STUDENT_RANK_BLEND=0.03`
+- status after push: RUNNING/no failure
+- monitor: `logs/monitor_v560_direct_v2s_gate_20260515T135758Z.log`, submit disabled
+
+Decision: v560 is worth runtime validation but not automatic competition submission. Submit only if it completes cleanly and a later slot policy explicitly allows another tiny public946 sidecar after repeated 0.946 ties.
