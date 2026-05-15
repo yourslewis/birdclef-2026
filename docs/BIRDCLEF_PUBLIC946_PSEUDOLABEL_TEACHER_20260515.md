@@ -200,3 +200,41 @@ Config: `configs/birdclef/pl_public946_sed85_rankblend15_convnext_tiny_5s_smoke_
 - Corr/MAE: `0.42485` / `0.04334`.
 
 Decision: kill this blended-teacher ConvNeXt smoke. It is far worse than the earlier public946 rankblend ConvNeXt smoke (`0.882870`) and should not be scaled. The blended teacher cache remains useful as a target artifact, but it needs a different learner/initialization or more careful curriculum, not direct ConvNeXt scaling.
+
+
+## 2026-05-15 07:55 UTC blended-teacher B0 smoke + scale
+
+After the direct blended-teacher ConvNeXt smoke failed, ran an EfficientNet-B0 control against the same `teacher_sed85_rankblend15.npz` target.
+
+### B0 smoke
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_smoke_20260515.json`.
+
+- B0 + external-pretrain init, 256 rows, 3 epochs, soft target from `teacher_sed85_rankblend15.npz`.
+- Completed on CUDA in `4.845s`.
+- Final student AUC: `0.900997` over 42 classes.
+- Teacher AUC: `0.995304`.
+- Corr/MAE: `0.56112` / `0.30058`.
+- Scale gate: passed because it beat both the old B0 SED smoke (`0.818694`) and old ConvNeXt rankblend smoke (`0.882870`).
+
+### B0 full 792-row scale
+
+Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_20260515.json`.
+
+- 792 rows, 20 epochs, best-val restore.
+- Completed on CUDA in `21.326s`.
+- Best val AUC: `0.992890` over 61 classes.
+- Final student AUC: `0.992137` over 75 classes.
+- Teacher AUC: `0.997018` over 75 classes.
+- Corr/MAE: `0.96336` / `0.01921`.
+- TorchScript: `15.391 MB`.
+
+Blend gate (`blend_gate.json`):
+
+- Blending the B0 student into the blended teacher gives a tiny local lift:
+  - teacher baseline: `0.997018`
+  - best observed: `student_weight=0.01` -> `0.997046`
+- Blending into SED teacher also improves SED (`0.996870` at `w=0.10` vs `0.996743`), but remains below blended-teacher+student.
+- Blending into rankblend improves rankblend but remains far below the blended teacher.
+
+Decision: do not submit/package yet. This is the best student artifact so far, but the local lift over the blended teacher is only `+0.000028`, too small for a fresh Kaggle slot after repeated public946 ties. Next step should be either a second seed/fold robustness check or a different learner/curriculum using the same blended teacher.

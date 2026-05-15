@@ -276,6 +276,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B blended-teacher B0 smoke + scale — 2026-05-15 07:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **B0 smoke:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_smoke_20260515.json` and ran B0 + external-pretrain init on 256 rows / 3 epochs against `teacher_sed85_rankblend15.npz`. It completed on CUDA in `4.845s`, final AUC `0.900997` over 42 classes vs teacher `0.995304`, corr `0.56112`. This beat old B0 SED smoke `0.818694` and old ConvNeXt rankblend smoke `0.882870`, so it passed scale gate.
+- **B0 scale:** added `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_ep20_20260515.json` and ran all 792 rows / 20 epochs. Completed on CUDA in `21.326s`; best val AUC `0.992890`; final student AUC `0.992137` over 75 classes vs blended teacher `0.997018`; corr `0.96336`, MAE `0.01921`, TorchScript `15.391 MB`.
+- **Blend gate:** copied metrics and `blend_gate.json`. Best local blend into blended teacher is `student_weight=0.01`: AUC `0.997046` vs teacher baseline `0.997018` (+`0.000028`). This also improves SED teacher at `w=0.10` (`0.996870` vs `0.996743`), but lift is tiny.
+- **Decision:** no packaging/submission yet. This is the best student artifact so far, but local gain is too small after repeated public946 ties. Next useful action is robustness (second seed/fold) or a different learner/curriculum against the blended teacher, not Kaggle quota.
+
+
 ### Spec B 792-row public946 student ensemble audit + blended-teacher smoke — 2026-05-15 06:55 UTC
 
 - **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
