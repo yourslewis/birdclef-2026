@@ -2387,3 +2387,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Trainer SSH remains unhealthy on direct preflight (`Connection timed out during banner exchange`), so no remote GPU job was launched.
 - Added `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` to make the next NFNet attempt safe and non-blocking. It checks SSH with BatchMode/ConnectTimeout first, exits `75` without launching if SSH is unhealthy, syncs the NFNet smoke config only after preflight, then launches `scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json` via remote `nohup` and prints pid/log.
 - Local validation: `bash -n` passed, config JSON parses, and the script was exercised against the current blocked trainer state; it exited `75` and did not launch remote work.
+
+### Status/source-mining pass while trainer SSH blocked — 2026-05-15 20:55 UTC
+
+- Current public best remains **0.946**. Latest submissions: `v560=0.945`, `v558=0.946`, `v551=0.946`, `v549=0.946`, `v548=0.946`. `v510` and `v560` Kaggle kernels are COMPLETE with no failure message.
+- Queue/process check found no active pending-submission monitor requiring restart; no duplicate submissions were added.
+- Exercised `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` again. Trainer SSH failed fast (`Connection closed by 192.168.0.10 port 22`), launcher exited `75`, and no remote GPU job was launched.
+- Non-GPU pivot: searched for newer public BirdCLEF 2026 Perch/ProtoSSM/SED/CV9245 sources. Search only surfaced the already-known Nina `birdclef-2026-onnx-perch-proto-sed` notebook and no distinct new Kaggle dataset/artifact source. Keep public946 micro-sidecars stopped; next useful work still depends on trainer recovery for NFNet/student OOF or a genuinely new source appearing.

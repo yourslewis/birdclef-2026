@@ -533,3 +533,7 @@ The NFNet config and training script parse locally. No NFNet model result should
 Trainer SSH still times out during banner exchange, so the NFNet blended-teacher smoke was not relaunched. Added `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` as the next safe launch path: it performs a short SSH preflight, refuses to launch when SSH is unhealthy, syncs the NFNet smoke config after preflight, and starts the remote training with `nohup` plus a timestamped log only when the trainer is reachable.
 
 Validation: `bash -n` passed; the config JSON parses; exercising the launcher against the current trainer state exited `75` with `[blocked] trainer SSH preflight failed; not launching remote GPU job`.
+
+### 2026-05-15 20:55 UTC blocked rerun + source scan
+
+Reran the guarded NFNet launcher; trainer SSH failed fast with `Connection closed by 192.168.0.10 port 22`, so the launcher exited `75` and did not start remote work. Current scored state remains `v560=0.945` below the `0.946` plateau. A short public-source scan found only the already-known Nina public946 notebook and no distinct new source-clean artifact worth a slot. Continue to wait for trainer SSH recovery before NFNet/student OOF work, and keep the public946 micro-sidecar stop rule active.
