@@ -79,3 +79,50 @@ Continue Spec B, but do not submit anything yet. Next step should be a full 240-
 - negative cap kept moderate to avoid all-negative domination
 
 Only consider a Kaggle candidate after a trained student artifact produces competitive OOF/holdout diagnostics and lower correlation to public946.
+
+## 2026-05-15 04:55 UTC full 240-row GPU diagnostic
+
+Added and ran `configs/birdclef/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.json` on GPU server `192.168.0.10` with CUDA/timm available.
+
+Config highlights:
+
+- Teacher: `artifacts/public946_teacher_cache_v542_20260515T0355Z/teacher_sed.npz`
+- Backbone: `efficientnet_b0`
+- Initial checkpoint: `artifacts/external_pretrain/xc-b0-q3-cap80-external-pretrain-balanced-ep6/model_torchscript.pt`
+- Rows: all `240` v542 train-soundscape dry-run rows
+- Target mode: `hard_conf`
+- Positive threshold: `0.8`
+- Negative threshold: `0.005`
+- Caps: max positives per row `3`, max negatives per row `64`
+- Epochs: `20`, restore best by val AUC
+
+Result artifact paths:
+
+- Remote/local metrics: `artifacts/pseudolabels/students/pl-public946-v542-sed-hardconf-b0-5s-ep20-20260515/metrics.json`
+- Remote/local predictions: `artifacts/pseudolabels/students/pl-public946-v542-sed-hardconf-b0-5s-ep20-20260515/student_predictions.npz`
+- Blend gate: `artifacts/pseudolabels/students/pl-public946-v542-sed-hardconf-b0-5s-ep20-20260515/blend_gate.json`
+- Log: `logs/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.log`
+
+Metrics:
+
+- status: `student_complete`
+- device: `cuda`
+- actual backbone: `efficientnet_b0`
+- rows/train/val: `240 / 192 / 48`
+- target mask fraction: `0.2752`
+- target positive/negative cells: `97 / 15360`
+- best val AUC: `0.81217` over 30 valid classes
+- final student macro AUC: `0.75003` over 42 valid classes
+- final teacher macro AUC: `0.99532` over 42 valid classes
+- student/teacher correlation: `0.17263`
+- student/teacher MAE: `0.38474`
+- TorchScript export: `15.391 MB`
+- runtime: `8.866s`
+
+Blend gate on labeled-overlap rows:
+
+- Student is too weak standalone for packaging.
+- Tiny blend into SED teacher has only microscopic local lift: best observed `student_weight=0.01` gives macro AUC `0.995331` vs SED teacher `0.995316`.
+- Blend into rankblend does not improve local AUC.
+
+Decision: do **not** submit or package this hard-confidence student. Keep it as a low-correlation diagnostic. Next Spec B step should change the learning target (e.g. soft-anchor/high-confidence positives with supervised clip mix, or larger 792-row teacher cache) rather than scaling this exact hard-conf recipe.

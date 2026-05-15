@@ -276,6 +276,16 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Pushed private Kaggle kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, with no invalid data/kernel/model sources. Started a no-submit monitor `logs/monitor_v553_taxon_gate_*.log`; v553 is for output/gate validation only and should not displace the guarded v551 submit candidate.
 
 
+### Spec B public946 SED hard-confidence B0 full diagnostic — 2026-05-15 04:55 UTC
+
+- **Status check:** current public best remains **0.946**; latest submissions `v558/v551/v549/v548/v547` all scored `0.946`. No Kaggle submission used. `v510` remains COMPLETE/no failure.
+- **Environment check:** local Mac venv has Torch CPU but no `timm`; GPU server `192.168.0.10` has CUDA + `timm`. Synced updated training scripts, `teacher_sed.npz`, and new config to `~/birdclef-2026` on the GPU server.
+- **Config:** added `configs/birdclef/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.json`: EfficientNet-B0, external-pretrain init, all 240 v542 teacher rows, hard-conf `positive_threshold=0.8`, `negative_threshold=0.005`, pos cap 3/row, neg cap 64/row, 20 epochs, best-val restore.
+- **Run:** `CUDA_VISIBLE_DEVICES=1 python scripts/birdclef_pseudolabel_student_train.py --config configs/birdclef/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.json`; log `logs/pl_public946_v542_sed_hardconf_b0_5s_ep20_20260515.log`. Completed on CUDA in `8.866s`, exported TorchScript `15.391 MB`.
+- **Metrics:** final student AUC `0.750030` over 42 valid classes vs teacher `0.995316`; best val AUC `0.812170`; student-teacher corr `0.172628`, MAE `0.384736`; target mask fraction `0.2752`, positives/negatives `97/15360`.
+- **Blend gate:** copied predictions back and wrote `blend_gate.json`. Tiny blend into SED teacher has only microscopic local lift (`w=0.01`: `0.995331` vs teacher `0.995316`); blend into rankblend does not improve. Decision: do not package/submit this hard-conf student. Next Spec B step should alter target design (soft-anchor + supervised mix or larger 792-row teacher cache) rather than scaling this exact recipe.
+
+
 ### Spec B public946 SED teacher cache + hard-confidence smoke — 2026-05-15 04:05 UTC
 
 - **Status check:** current public best remains **0.946**. Latest scored submissions remain `v558=0.946`, `v551=0.946`, `v549/v548/v547/v546=0.946`; no Kaggle slot used this run. `v510` remains COMPLETE/no failure.
