@@ -2401,3 +2401,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added read-only verifier `scripts/birdclef_kernel_output_verify.py` for Bearer-backed Kaggle SDK output checks. It checks latest kernel status, output file names, and required log markers without downloading large outputs.
 - Validation: `python3 -m py_compile scripts/birdclef_kernel_output_verify.py` passed. Verifier confirmed `bc26-v510-real-sed-bundle-blend-005` is COMPLETE, has `submission.csv`, and log markers `Applied real SED bundle blend` / `submission.csv saved`. It also confirmed `bc26-v560-public946-direct-v2s-r003` is COMPLETE with `submission.csv`, `submission_direct_v2s_student.csv`, `submission_sed.csv`, and `submission_protossm.csv`, plus direct-V2S sidecar log markers.
 - Current public score state is unchanged: best `0.946`; latest scored `v560=0.945`, `v558/v551/v549/v548=0.946`. No new submissions or queue changes.
+
+### Kernel verifier presets while trainer SSH blocked — 2026-05-15 23:00 UTC
+
+- Trainer SSH is still blocked: guarded NFNet launcher timed out during banner exchange and exited `75`, so no remote GPU job was launched.
+- Improved `scripts/birdclef_kernel_output_verify.py` with `--preset v510-real-sed` and `--preset v560-direct-v2s` so future cron passes can verify known kernel files/log markers without restating fragile marker strings.
+- Validation: `python3 -m py_compile scripts/birdclef_kernel_output_verify.py` passed; both preset checks returned `ok=true`. Current public score state unchanged: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`; no monitor process needed restart and no new submission was made.

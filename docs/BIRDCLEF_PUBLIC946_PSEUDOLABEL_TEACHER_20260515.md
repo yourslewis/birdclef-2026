@@ -541,3 +541,7 @@ Reran the guarded NFNet launcher; trainer SSH failed fast with `Connection close
 ### 2026-05-15 22:00 UTC output verifier
 
 Added `scripts/birdclef_kernel_output_verify.py` so future cron passes can verify completed Kaggle kernel output files and log markers directly through the Bearer-backed Kaggle SDK. Verified `bc26-v510-real-sed-bundle-blend-005` has `submission.csv` plus real-SED blend markers, and `bc26-v560-public946-direct-v2s-r003` has the expected public946/V2S output files plus direct-student blend markers. This closes the v510/v560 output-verification loop while trainer SSH remains blocked.
+
+### 2026-05-15 23:00 UTC verifier presets
+
+Extended `scripts/birdclef_kernel_output_verify.py` with presets for `v510-real-sed` and `v560-direct-v2s`. Both presets passed against Kaggle: v510 still has `submission.csv` plus real-SED log markers, and v560 still has the expected public946/direct-V2S outputs plus sidecar log markers. Trainer SSH remains blocked, so no NFNet smoke was launched.

@@ -10,8 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import sys
-from pathlib import Path
 from typing import Any
 
 from kagglesdk.kaggle_http_client import KaggleHttpClient
@@ -20,6 +18,38 @@ from kagglesdk.kernels.types.kernels_api_service import (
     ApiGetKernelSessionStatusRequest,
     ApiListKernelSessionOutputRequest,
 )
+
+
+PRESETS: dict[str, dict[str, list[str] | str]] = {
+    "v510-real-sed": {
+        "slug": "bc26-v510-real-sed-bundle-blend-005",
+        "required_files": ["submission.csv"],
+        "required_log_markers": ["Applied real SED bundle blend", "submission.csv saved"],
+    },
+    "v560-direct-v2s": {
+        "slug": "bc26-v560-public946-direct-v2s-r003",
+        "required_files": [
+            "submission.csv",
+            "submission_direct_v2s_student.csv",
+            "submission_sed.csv",
+            "submission_protossm.csv",
+        ],
+        "required_log_markers": [
+            "Direct V2S student sidecar complete",
+            "Applied Direct V2S student rank sidecar blend",
+        ],
+    },
+}
+
+
+def _dedupe(items: list[str]) -> list[str]:
+    seen = set()
+    out = []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            out.append(item)
+    return out
 
 
 def _get(obj: Any, *names: str, default: Any = None) -> Any:
@@ -88,16 +118,27 @@ def verify_kernel(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("slug", help="Kernel slug, e.g. bc26-v510-real-sed-bundle-blend-005")
+    parser.add_argument("slug", nargs="?", help="Kernel slug, e.g. bc26-v510-real-sed-bundle-blend-005")
+    parser.add_argument("--preset", choices=sorted(PRESETS), help="Use known required files/log markers for a tracked kernel")
     parser.add_argument("--owner", default="yourslewis")
-    parser.add_argument("--require", action="append", default=["submission.csv"], help="Required output file; repeatable")
+    parser.add_argument("--require", action="append", default=[], help="Required output file; repeatable")
     parser.add_argument("--log-contains", action="append", default=[], help="Required substring in kernel log; repeatable")
     parser.add_argument("--kaggle-json", default="~/.kaggle/kaggle.json")
     parser.add_argument("--page-size", type=int, default=100)
     parser.add_argument("--pretty", action="store_true")
     args = parser.parse_args()
 
-    result = verify_kernel(args.owner, args.slug, args.require, args.log_contains, args.kaggle_json, args.page_size)
+    preset = PRESETS.get(args.preset or "", {})
+    slug = args.slug or preset.get("slug")
+    if not slug:
+        parser.error("slug is required unless --preset supplies one")
+
+    required_files = _dedupe(list(preset.get("required_files", ["submission.csv"])) + args.require)
+    required_markers = _dedupe(list(preset.get("required_log_markers", [])) + args.log_contains)
+
+    result = verify_kernel(args.owner, str(slug), required_files, required_markers, args.kaggle_json, args.page_size)
+    if args.preset:
+        result["preset"] = args.preset
     print(json.dumps(result, indent=2 if args.pretty else None, sort_keys=True))
     return 0 if result["ok"] else 1
 
