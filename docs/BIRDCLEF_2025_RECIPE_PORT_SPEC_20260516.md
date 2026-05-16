@@ -290,6 +290,36 @@ Smoke gate:
 
 - require either competitive student AUC or a materially better diversity profile than the previous V2S/ConvNeXt sidecars.
 
+## Smoke results after PR creation — 2026-05-16 19:10 UTC
+
+These results were run after opening PR #231 to decide whether any prepared candidate is immediately submission-track-ready.
+
+### Candidate A NFNetL0 focal/BCE sqrt-class-weight smoke
+
+- Launched on trainer GPU0, pid `132168`.
+- Log: `logs/pl_public946_sed85_rankblend15_nfnetl0_focalbce_sqrtcw_5s_m160_lr1e4_ep8_smoke_20260516T1852Z.log`.
+- Result: final all-row AUC `0.885977541` over 42 classes vs teacher `0.995303584`; teacher corr `0.707264239`; runtime `9.7s`; TorchScript `89.872 MB`.
+- Decision: **fail smoke; do not scale or submit**.  This is below previous plain NFNet/ResNet18 smoke bars and looks like under-learning, not useful diversity.
+
+### Candidate B EfficientNetV2-S focal/BCE sqrt-class-weight smoke
+
+- Launched on trainer GPU0, pid `132996`.
+- Log: `logs/pl_public946_sed85_rankblend15_effv2s_focalbce_sqrtcw_5s_m160_lr3e4_ep8_smoke_20260516T1900Z.log`.
+- Result: final all-row AUC `0.714379835` over 42 classes vs teacher `0.995303584`; teacher corr `0.245783760`; runtime `10.5s`; TorchScript `81.451 MB`.
+- Decision: **fail smoke; do not scale or submit**.  The very low correlation is failure-to-learn, not a useful sidecar.
+
+### Candidate C existing external-init B0 sanity recheck
+
+- Launched existing external-init B0 public946 smoke, pid `134986`.
+- Log: `logs/pl_public946_sed85_rankblend15_b0_extinit_5s_smoke_recheck_20260516T1905Z.log`.
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_5s_smoke_20260515.json`.
+- Result: final all-row AUC `0.901693090` over 42 classes vs teacher `0.995303584`; teacher corr `0.561511425`; runtime `4.9s`; TorchScript `15.391 MB`.
+- Decision: **not submission-ready**.  Validation AUC was still rising by epoch 3, so this may justify a better external/pretrained full diagnostic later, but this short smoke does not clear a submission bar.
+
+### Submission-readiness conclusion
+
+No newly tested student candidate is ready for Kaggle submission.  The PR is still useful because it adds the reusable trainer knobs, candidate specs, and smoke configs, but the next submission should come from an already verified repo-owned public-kernel candidate or from a future external/pretraining/taxon-specialist artifact that clears full-row blend gates.
+
 ## Medium-term lane
 
 If either smoke passes:
