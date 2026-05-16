@@ -2575,3 +2575,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added lower-threshold p90/n05 smoke config `configs/birdclef/pl_public946_sed85_rankblend15_resnet18_softanchor_p90n05_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `91076`, log `logs/pl_public946_sed85_rankblend15_resnet18_softanchor_p90n05_5s_m160_lr3e4_ep8_smoke_20260516T1458Z.log`.
 - p90/n05 smoke result: final all-row AUC `0.934529682` over 42 classes vs teacher `0.995303584`, corr `0.812985036`, runtime `4.9s`, TorchScript `45.364 MB`. This is worse than plain ResNet18 ep8 smoke (`0.942631917`) with only slightly lower correlation.
 - Decision: do not scale ResNet18 soft-anchor objective. For this teacher cache, soft-anchor does not improve the diversity/accuracy tradeoff; plain soft-label ResNet18 remains the better ResNet-family diagnostic but still not slot-worthy.
+
+### ResNet18 soft-AUC objective smoke — 2026-05-16 16:00 UTC
+
+- Status check unchanged: current best remains `0.946`; daily slots are used; no active monitor/jobs at start.
+- Chosen track: Spec B/D objective diversity. Tested whether a small differentiable AUC auxiliary (`loss_name=bce_soft_auc`, `auc_loss_weight=0.005`, `soft_auc_scale=8.0`) improves the plain ResNet18 pseudo-label student tradeoff.
+- Added smoke config `configs/birdclef/pl_public946_sed85_rankblend15_resnet18_softauc_w0005_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `101216`, log `logs/pl_public946_sed85_rankblend15_resnet18_softauc_w0005_5s_m160_lr3e4_ep8_smoke_20260516T1555Z.log`.
+- Smoke result: final all-row AUC `0.936112529` over 42 classes vs teacher `0.995303584`, corr `0.798578411`, runtime `10.9s`, TorchScript `45.364 MB`. Validation epoch 7 briefly reached `0.945836880`, but final all-row score is below plain ResNet18 ep8 (`0.942631917`) and far below the ep20 diagnostic. Remote blend-audit attempt scanned the artifact but did not align the max-row smoke prediction with the full teacher (`n_aligned=0`), so it is not usable as a blend approval signal.
+- Decision: do not scale ResNet18 soft-AUC w0.005. It lowers correlation but sacrifices too much standalone accuracy in this smoke; plain soft-label ResNet18 remains the better ResNet-family diagnostic but still not slot-worthy.
