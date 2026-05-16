@@ -549,3 +549,7 @@ Extended `scripts/birdclef_kernel_output_verify.py` with presets for `v510-real-
 ### 2026-05-16 00:00 UTC all-preset verifier
 
 Extended `scripts/birdclef_kernel_output_verify.py` with `--all-presets` so future status passes can verify all tracked Kaggle kernel outputs in one command. Validation returned top-level `ok=true` for both `v510-real-sed` and `v560-direct-v2s`. Trainer SSH still times out during banner exchange, so no NFNet smoke was launched.
+
+### 2026-05-16 00:55 UTC post-reset no-slot decision
+
+After UTC reset, public state remains `v560=0.945` below the `0.946` plateau. The all-preset verifier still passes for v510/v560, but trainer SSH still times out during banner exchange, so no NFNet smoke was launched. No daily slot was used: after v560, another public946 micro-sidecar is not justified without stronger OOF/new-source evidence.

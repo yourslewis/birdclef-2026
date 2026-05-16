@@ -2413,3 +2413,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Trainer SSH remains blocked: guarded NFNet launcher timed out during banner exchange and exited `75`; no remote GPU job was launched.
 - Current public score state is unchanged: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`; v510/v560 kernels remain COMPLETE with no failure; no monitor process needed restart and no submission was made.
 - Improved `scripts/birdclef_kernel_output_verify.py` with `--all-presets`, which verifies every known preset in one read-only Kaggle SDK call sequence and exits nonzero if any preset fails. Validation: `python3 -m py_compile` passed and `scripts/birdclef_kernel_output_verify.py --all-presets --pretty` returned top-level `ok=true` for `v510-real-sed` and `v560-direct-v2s`.
+
+### Post-reset no-slot status pass while trainer SSH blocked — 2026-05-16 00:55 UTC
+
+- Current public score state is unchanged after UTC reset: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`. No new Kaggle submission was made because the v560 result strengthened the stop rule against public946 micro-sidecars, and no new OOF/source-clean artifact exists this pass.
+- `v510` and `v560` kernels remain COMPLETE with no failure messages. `scripts/birdclef_kernel_output_verify.py --all-presets --pretty` returned top-level `ok=true` for `v510-real-sed` and `v560-direct-v2s`.
+- Trainer SSH remains blocked: guarded NFNet launcher timed out during banner exchange and exited `75`, so no remote GPU job was launched. No active pending-submission monitor process needed restart.
+- Decision: keep waiting for trainer SSH recovery before NFNet/student OOF work; do not use the fresh daily slot unless a materially stronger out-of-sample/OOF signal or genuinely new source appears.
