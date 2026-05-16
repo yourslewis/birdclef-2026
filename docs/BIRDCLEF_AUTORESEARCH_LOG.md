@@ -2609,3 +2609,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
   - `configs/birdclef/pl_public946_sed85_rankblend15_effv2s_focalbce_sqrtcw_5s_m160_lr3e4_ep8_smoke_20260516.json`
 - Validation: tensor unit check for focal+BCE + sqrt class weights produced finite loss/backprop; `py_compile` passed for the changed trainer and sweep/diagnostic helpers; `git diff --check` passed. Remote timm check confirmed `eca_nfnet_l0` and `tf_efficientnetv2_s` are available in `~/kaggle_envs/s6e3`.
 - Decision: do not launch these while both GPUs are occupied by unrelated LRM jobs. Next BirdCLEF GPU window should run NFNetL0 first, then EffV2-S if NFNet is weak or slow.
+
+### Promising candidate slate spec — 2026-05-16
+
+- Added a ranked candidate slate to `docs/BIRDCLEF_2025_RECIPE_PORT_SPEC_20260516.md` based on the article scan and recent failed student-sidecar lessons.
+- Candidates:
+  1. NFNetL0 focal/BCE noisy student from public946 teacher.
+  2. EfficientNetV2-S focal/BCE noisy student from public946 teacher.
+  3. External/pretrained 2025-style CNN init followed by public946 distillation.
+  4. Non-bird / rare-taxon specialist correction model.
+  5. Real SED/MIL frame-local student rather than clip-only sidecar.
+  6. Quantile-Mix / rank+mean ensemble refresh only after a genuinely new prediction artifact exists.
+- Each candidate now has hypothesis, recipe, smoke gate, scale/submission bar, and kill rule. Recommended execution order prioritizes NFNetL0/EffV2-S when GPU is free, then external/pretraining and taxon specialist work rather than further tiny random-init retreads.
