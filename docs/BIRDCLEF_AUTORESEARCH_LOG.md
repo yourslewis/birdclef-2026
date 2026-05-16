@@ -2514,3 +2514,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submitted `v564: Public946 v542 plus ConvNeXt student rank sidecar 7.5% exploratory` from own kernel `yourslewis/bc26-v552-public946-convnext-student-r075`, version 1, ref `52702553`; status PENDING.
 - Submitted `v565: Public946 v542 plus ConvNeXt student rank 7.5% and taxon alpha0.50 exploratory` from own kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, ref `52702555`; status PENDING.
 - Current daily submissions used: v561 invalid, v562 pending, v563 pending, v564 pending, v565 pending. Next action: wait for scores/errors; if v562/v563 also invalid due direct-public 3-row outputs, stop direct-public submissions and only submit repo-owned kernels or repackaged public-source code that produces valid competition-format output.
+
+### Exploratory submission partial results — 2026-05-16 09:00 UTC
+
+- Bearer status check after using the daily exploration slots: current best remains `0.946`.
+- `v561` Lucataco direct score-desc completed with invalid-format error; do not submit direct public-output ensemble kernels unless they run full hidden inference rather than blending fixed sample outputs.
+- `v562` Yaroslav site-hour + BirdNET direct public kernel scored `0.945`, below the `0.946` anchor. This confirms the crossfit concern that the site/hour signal is not robust enough as submitted.
+- `v564` repo-owned ConvNeXt student rank 7.5% scored `0.942`, a clear drop. Kill this ConvNeXt-7.5% lane.
+- `v563` Raunak deep dynamic + BirdNET and `v565` ConvNeXt+taxon remained PENDING at latest check. No more slots available this UTC day.
+- Next reset policy: continue filling unused slots, but prioritize repo-owned/repackaged kernels with verified competition-format outputs. Avoid direct public kernels that only blend notebook outputs unless preflight proves hidden-run output format and row count are valid.

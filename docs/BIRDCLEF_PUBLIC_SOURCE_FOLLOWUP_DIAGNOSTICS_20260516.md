@@ -127,3 +127,31 @@ Best practical combination if we continue:
 4. If we want one more public-source implementation pass, port `kruzzcc/bc26-yaroslav-sitehour-bn` only as a source-read/package experiment that emits separate `submission_sitehour_prior.csv` and `submission_birdnet.csv`, then run the same script plus public-output displacement checks. Do not queue it automatically.
 
 Current best route to a real improvement remains **new independent OOF/source signal**, not another public-output overlay. The follow-up diagnostics make the public sweep useful as guardrails and code, but they do not clear the 0.95 slot bar.
+
+## Kaggle submission status check — 2026-05-16 08:18 UTC cron
+
+Bearer-auth submission list check for sweep-derived refs/rows:
+
+| row | ref from cron | Kaggle row observed | status | public score | note |
+|---|---:|---|---|---|---|
+| v561 | 52702409 | `lucataco/bc26-scoredesc-conservative-ensemble` version 319747706 | complete / invalid format | — | Direct public-kernel output produced an incorrectly formatted `submission.csv`, likely sample/test-row mismatch. |
+| v562 | 52702418 | `kruzzcc/bc26-yaroslav-sitehour-bn` version 319719207 | pending | — | No LB score yet. |
+| v563 | 52702433 | `kruzzcc/bc26-raunak-deep-dyn-bn` version 319722080 | pending | — | No LB score yet. |
+| v564 | 52702553 | `yourslewis/bc26-v552-public946-convnext-student-r075` version 319332854 | pending | — | Repo-owned verified fallback used after v561 invalid. |
+| v565 | 52702555 | `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050` version 319352841 | pending | — | Repo-owned verified fallback used after v561 invalid. |
+
+Decision: no new score beat/tie/drop conclusion yet. v561 is invalid, while v562/v563 remain pending. The daily five slots are already occupied by v561-v565, so there is no additional submission action to take from this cron. Wait for v562/v563 and v564/v565 scores before spending further slots.
+
+## Exploratory submission partial results — 2026-05-16 09:00 UTC
+
+Latest Bearer-auth status check:
+
+| row | ref | status | public score | note |
+|---|---:|---|---:|---|
+| v561 | 52702409 | complete / invalid format | — | Direct Lucataco public-output ensemble invalid; likely fixed sample-output row mismatch. |
+| v562 | 52702418 | complete | 0.945 | Yaroslav site-hour + BirdNET dropped vs 0.946 anchor. |
+| v563 | 52702433 | pending | — | Raunak deep dynamic + BirdNET still pending. |
+| v564 | 52702553 | complete | 0.942 | Own ConvNeXt student rank 7.5% dropped hard. |
+| v565 | 52702555 | pending | — | Own ConvNeXt + taxon alpha0.50 still pending. |
+
+Interpretation: direct public-source submissions can produce useful data (`v562`) but also format failures (`v561`). The site-hour/BirdNET path underperformed, matching the crossfit warning. The ConvNeXt 7.5% repo-owned student lane is killed unless `v565` unexpectedly rescues the taxon-gated version.
