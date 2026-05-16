@@ -155,3 +155,15 @@ Latest Bearer-auth status check:
 | v565 | 52702555 | pending | — | Own ConvNeXt + taxon alpha0.50 still pending. |
 
 Interpretation: direct public-source submissions can produce useful data (`v562`) but also format failures (`v561`). The site-hour/BirdNET path underperformed, matching the crossfit warning. The ConvNeXt 7.5% repo-owned student lane is killed unless `v565` unexpectedly rescues the taxon-gated version.
+
+## Exploratory submission final batch status — 2026-05-16 10:00 UTC
+
+| row | ref | status | public score | note |
+|---|---:|---|---:|---|
+| v561 | 52702409 | complete / invalid format | — | Direct Lucataco score-desc output invalid. |
+| v562 | 52702418 | complete | 0.945 | Site-hour + BirdNET dropped; crossfit warning was valid. |
+| v563 | 52702433 | complete | 0.946 | Raunak deep dynamic + BirdNET tied current best; valid direct-public datapoint. |
+| v564 | 52702553 | complete | 0.942 | ConvNeXt student 7.5% dropped hard. |
+| v565 | 52702555 | complete | 0.943 | ConvNeXt + taxon alpha0.50 also dropped. |
+
+Final interpretation: `v563` is the only useful sweep-derived submission from this batch, and it ties rather than improves. Kill site-hour, ConvNeXt-7.5%, and direct score-desc-as-public-output. Future public-source work should either repackage a valid/tied source family into a controlled repo-owned kernel or move back to new independent training/OOF signal.

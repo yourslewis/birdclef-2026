@@ -2523,3 +2523,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - `v564` repo-owned ConvNeXt student rank 7.5% scored `0.942`, a clear drop. Kill this ConvNeXt-7.5% lane.
 - `v563` Raunak deep dynamic + BirdNET and `v565` ConvNeXt+taxon remained PENDING at latest check. No more slots available this UTC day.
 - Next reset policy: continue filling unused slots, but prioritize repo-owned/repackaged kernels with verified competition-format outputs. Avoid direct public kernels that only blend notebook outputs unless preflight proves hidden-run output format and row count are valid.
+
+### Exploratory slots final scores + NFNet 10s smoke — 2026-05-16 10:00 UTC
+
+- Bearer status check: current best remains `0.946`. All daily exploratory submissions now scored/settled except no pending rows remain from v561-v565: `v561` invalid format, `v562=0.945`, `v563=0.946`, `v564=0.942`, `v565=0.943`.
+- Lessons: direct-public `v563` Raunak deep dynamic + BirdNET is valid and ties the anchor, so it is a useful frontier datapoint but not an improvement. Direct-public `v561` Lucataco score-desc is invalid-format, so public-output ensemble notebooks remain unsafe unless repackaged or preflight-proven. Site-hour/BirdNET (`v562`) dropped, matching crossfit leakage warning. ConvNeXt student sidecar 7.5% and taxon variant (`v564/v565`) both dropped; kill that lane.
+- With daily slots exhausted, continued Spec B/D model-zoo work on the trainer. Added `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_10s_m160_lr1e4_ep8_smoke_20260516.json` to test whether NFNet benefits from 10s temporal context after 5s NFNet had a tiny local blend lift.
+- Launched durable trainer job pid `35359`, log `logs/pl_public946_sed85_rankblend15_nfnet_10s_m160_lr1e4_ep8_smoke_20260516T0955Z.log`, output `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-nfnet-10s-m160-lr1e4-ep8-smoke-20260516/`.
+- Result: final all-row AUC `0.906526981` over 42 classes vs teacher `0.995303584`, corr `0.708986657`, runtime `12.4s`, TorchScript `89.872 MB`. This is worse than the earlier 5s NFNet ep8 smoke (`0.933012`) and far from scale threshold. Decision: kill NFNet 10s context variant; do not scale.
+- Next reset candidates should be distinct from the failed low-weight sidecar/ConvNeXt/NFNet10 lanes. Prefer either a repo-owned valid repackaging of a public source that already tied (`v563` family) or a new external/model-zoo training smoke with genuinely different signal.
