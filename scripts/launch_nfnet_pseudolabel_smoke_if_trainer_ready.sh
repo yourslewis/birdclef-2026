@@ -31,4 +31,5 @@ echo "[sync] config -> ${TRAINER_HOST}:${REMOTE_REPO}/${LOCAL_CONFIG}" >&2
 rsync -az -e "ssh ${SSH_OPTS[*]}" "$LOCAL_CONFIG" "$TRAINER_HOST:${REMOTE_REPO}/${LOCAL_CONFIG}"
 
 echo "[launch] starting durable NFNet smoke on ${TRAINER_HOST}" >&2
-ssh "${SSH_OPTS[@]}" "$TRAINER_HOST" "cd ${REMOTE_REPO} && mkdir -p logs && nohup env CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES_REMOTE} ${REMOTE_VENV} scripts/birdclef_pseudolabel_student_train.py --config ${REMOTE_CONFIG} > ${REMOTE_LOG} 2>&1 < /dev/null & echo \\$! ${REMOTE_LOG}"
+REMOTE_COMMAND="cd ${REMOTE_REPO} && mkdir -p logs && nohup env CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES_REMOTE} ${REMOTE_VENV} scripts/birdclef_pseudolabel_student_train.py --config ${REMOTE_CONFIG} > ${REMOTE_LOG} 2>&1 < /dev/null & pid=\$!; echo \"\${pid} ${REMOTE_LOG}\""
+ssh "${SSH_OPTS[@]}" "$TRAINER_HOST" "$REMOTE_COMMAND"

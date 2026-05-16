@@ -553,3 +553,7 @@ Extended `scripts/birdclef_kernel_output_verify.py` with `--all-presets` so futu
 ### 2026-05-16 00:55 UTC post-reset no-slot decision
 
 After UTC reset, public state remains `v560=0.945` below the `0.946` plateau. The all-preset verifier still passes for v510/v560, but trainer SSH still times out during banner exchange, so no NFNet smoke was launched. No daily slot was used: after v560, another public946 micro-sidecar is not justified without stronger OOF/new-source evidence.
+
+### 2026-05-16 02:10 UTC NFNet recovered + no-submit decision
+
+Trainer SSH recovered enough to run the guarded launcher. Fixed a launcher quoting bug around remote `$!` PID capture, then ran the NFNet blended-teacher lane: ep3 smoke AUC `0.768877`, ep8 smoke AUC `0.933012`, and full ep20 diagnostic AUC `0.988538` vs teacher `0.997018` with student/teacher corr `0.956990`. Blend audit best was teacher + NFNet at student weight `0.075`, macro AUC `0.997055577`, lift `+0.000037123`, blended corr `0.999763`. Decision: useful diagnostic artifact, but no Kaggle packaging/submission because the lift is tiny and weaker than v560's failed local gate.
