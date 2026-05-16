@@ -2558,3 +2558,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added full config `configs/birdclef/pl_public946_sed85_rankblend15_resnet18_5s_m160_lr3e4_ep20_20260516.json` and launched trainer pid `70554`, log `logs/pl_public946_sed85_rankblend15_resnet18_5s_m160_lr3e4_ep20_20260516T1258Z.log`.
 - Full result: final all-row AUC `0.988979761` over 75 classes vs teacher `0.997018454`, corr `0.973120384`, runtime `16.7s`, TorchScript `45.364 MB`. Audit `artifacts/pseudolabels/audits/public946_sed85_rankblend15_resnet18_ep20_audit_20260516T1300Z.json` found best teacher+ResNet18 blend at student weight `0.02`, AUC `0.997036531`, lift `+0.000018077`, corr `0.9999895`.
 - Decision: ResNet18 is not slot-worthy; lift is positive but far below failed v560 local signal and similar to other non-submitting tiny-lift students. Kill as a standalone public946 sidecar. Possible future use only as part of a broader multi-student distillation ensemble if combined with genuinely independent sources.
+
+### ECA-ResNet33TS pseudo-label smoke — 2026-05-16 14:00 UTC
+
+- Status check unchanged: current best remains `0.946`; daily slots are used; no active monitors/jobs at start.
+- Chosen track: Spec B/D model-zoo diversity. Tested `eca_resnet33ts` after ResNet18 had a small positive but non-slot-worthy blend lift; goal was a distinct ResNet-family student with different capacity/regularization.
+- Added smoke config `configs/birdclef/pl_public946_sed85_rankblend15_ecaresnet33ts_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `81047`, log `logs/pl_public946_sed85_rankblend15_ecaresnet33ts_5s_m160_lr3e4_ep8_smoke_20260516T1355Z.log`.
+- Smoke result: final all-row AUC `0.909891401` over 42 classes vs teacher `0.995303584`, corr `0.778228872`, runtime `6.8s`, TorchScript `75.378 MB`. It underperformed ResNet18/MobileNetV3 and is too weak to scale.
+- Decision: kill `eca_resnet33ts` for this public946 student lane. Continue only with more distinct architectures/objectives or repackaged public-source kernels after slot reset.
