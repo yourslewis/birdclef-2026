@@ -50,3 +50,7 @@ Hold remaining UTC daily submissions until the next candidate has fresh evidence
 ## 2026-05-16 bootstrap gate addendum
 
 For any future public946 sidecar candidate, the local gate should include grouped bootstrap lift stability, not only one aggregate train-soundscape AUC. The v559 V2S+B0 strict dry-run gate looked positive on mean AUC (`+0.000035240`), but 200 file-group bootstrap iterations had a negative 5th percentile lift (`-0.000071763`) and only `p_lift_gt_0=0.84`. Treat that as insufficient for a slot after `v560=0.945`. A future candidate should have materially larger mean lift and a positive grouped-bootstrap lower tail before packaging/submission.
+
+## 2026-05-16 v560 bootstrap backtest
+
+The grouped-bootstrap gate is necessary but not sufficient. Backtesting the known failed `v560` direct-V2S 3% sidecar showed positive local stability: aggregate lift `+0.000081879`, file-bootstrap q05 `+0.000017475` with `p_lift_gt_0=0.995`, and site-bootstrap q05 `+0.000023012` with `p_lift_gt_0=1.0`. Real public LB was still `0.945`. Therefore future sidecar candidates should not be submitted merely because bootstrap is positive; they need materially larger lift than v560 and/or independent OOF/new-source evidence outside the train-soundscape overlap.
