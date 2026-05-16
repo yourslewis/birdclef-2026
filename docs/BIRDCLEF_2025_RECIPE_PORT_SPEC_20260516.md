@@ -195,6 +195,8 @@ These are ordered by expected information value, not just ease.  The first two a
 
 **Hypothesis:** Current public946 already uses distilled SED output, but our trainable students are mostly clip/global distillation.  A real frame/event or MIL pooling student can learn temporal localization/residual behavior that clip-only sidecars miss.
 
+**2026-05-16 smoke update:** ran the existing external-init B0 SED/MIL pilot `sed_b0_q3cap80_ep12init_oof_10s_160_100cls_paired_smoke` on the GPU server. It completed cleanly on 300 balanced files / 100 target classes, exported TorchScript (`15.389 MB`), and validation loss improved each epoch, but holdout macro AUC was only `0.810206872` over 27 valid classes. Treat this as an operational smoke pass, not a modeling pass. Do not scale this exact short run to a Kaggle candidate; next Candidate E work needs stronger frame/local targets or a longer/full diagnostic before any submission slot.
+
 **Architecture sketch:**
 
 - backbone: B0 first for speed, then NFNetL0/EffV2-S if promising;
