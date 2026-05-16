@@ -2489,3 +2489,38 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Franksunp 5-branch CLAP/Snowflake/site-hour notebooks attach public CLAP and Snowflake datasets, but their logs show BirdNET unavailable/fallback in these runs; CLAP/Snowflake/site-hour shift the 3-row sample heavily (`MAE≈0.13-0.21`, sometimes low/negative correlation). Given our source-clean CLAP/Snowflake attempts already dropped/tied and these branches are poorly anchored on the sample, do not submit directly. At most mine the site-hour prior implementation separately.
 - `xiyuetong/birdclef2026-ensemble-v3-topn-pseudo-clap` uses pseudo-cache + CLAP and writes `submission_clap_onnx.csv`; sample displacement is small (`MAE≈0.0031`, `corr≈0.945`). Since v545/v551 CLAP already failed/tied, this is not enough for a slot without source-level evidence that the top-N pseudo logic is materially different and non-fallback.
 - Decision: no immediate Kaggle push/submission from the sweep. Best follow-up, if we continue public-source mining, is source-read/port a **non-submitting candidate** for (1) conservative score-desc rank ensemble or (2) Yaroslav/site-hour + BirdNET gating, then compare against v542/v558/v560 evidence. Avoid another BirdNET/CLAP/Snowflake global sidecar unless it has independent OOF/new-source validation or materially stronger evidence than failed v560.
+
+### 2025 top-team recipe port prep — 2026-05-16 18:05 UTC
+
+- Status check unchanged: current best remains `0.946`. Latest scored rows are `v563=0.946`, `v565=0.943`, `v564=0.942`, `v562=0.945`, and `v561` invalid format. Daily slots remain used; no new submission was possible.
+- Read current spec and article evidence. The strongest outside evidence points away from more tiny random-init sidecars and toward 2025-style SED/noisy-student recipes: eca_nfnet_l0 / EfficientNetV2-S, Focal+BCE, sqrt balancing, power-scaled pseudo-label rounds, external/pretrained data, and taxon-specialist handling.
+- Added new active prep doc `docs/BIRDCLEF_2025_RECIPE_PORT_SPEC_20260516.md` and linked it from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
+- Extended `scripts/birdclef_pseudolabel_student_train.py` to support `loss_name="focal_bce"`, `focal_gamma`, `focal_loss_weight`, and `class_weight_mode="sqrt_inv_prevalence"` / `"inv_prevalence"` with clipping and mean-normalized class weights.
+- Prepared NFNetL0 and EfficientNetV2-S focal/BCE sqrt-class-weight smoke configs for the next free GPU window.
+- Validation: tensor unit check for focal+BCE + sqrt class weights produced finite loss/backprop; `py_compile` and `git diff --check` passed. Remote timm check confirmed `eca_nfnet_l0` and `tf_efficientnetv2_s` are available in `~/kaggle_envs/s6e3`.
+
+### Promising candidate slate spec — 2026-05-16
+
+- Added a ranked candidate slate to `docs/BIRDCLEF_2025_RECIPE_PORT_SPEC_20260516.md` based on the article scan and recent failed student-sidecar lessons.
+- Candidates:
+  1. NFNetL0 focal/BCE noisy student from public946 teacher.
+  2. EfficientNetV2-S focal/BCE noisy student from public946 teacher.
+  3. External/pretrained 2025-style CNN init followed by public946 distillation.
+  4. Non-bird / rare-taxon specialist correction model.
+  5. Real SED/MIL frame-local student rather than clip-only sidecar.
+  6. Quantile-Mix / rank+mean ensemble refresh only after a genuinely new prediction artifact exists.
+- Each candidate has hypothesis, recipe, smoke gate, scale/submission bar, and kill rule. Recommended execution order prioritizes NFNetL0/EffV2-S when GPU is free, then external/pretraining and taxon specialist work rather than further tiny random-init retreads.
+
+### PR #231 opened + candidate smoke tests — 2026-05-16 19:15 UTC
+
+- Created clean PR branch `feature/2025-recipe-candidates-pr` from fresh `origin/main`; cherry-picked only the intended recipe/trainer/spec commits rather than PR'ing the long experiment branch. Opened PR #231: https://github.com/yourslewis/birdclef-2026/pull/231. GitHub reports mergeable but blocked by normal branch policy/review.
+- Candidate A NFNetL0 focal/BCE sqrt-class-weight smoke launched on trainer GPU0, pid `132168`, log `logs/pl_public946_sed85_rankblend15_nfnetl0_focalbce_sqrtcw_5s_m160_lr1e4_ep8_smoke_20260516T1852Z.log`. Result: final all-row AUC `0.885977541`, teacher AUC `0.995303584`, corr `0.707264239`, runtime `9.7s`, TorchScript `89.872 MB`. Decision: fail smoke; do not scale/submit.
+- Candidate B EfficientNetV2-S focal/BCE sqrt-class-weight smoke launched on trainer GPU0, pid `132996`, log `logs/pl_public946_sed85_rankblend15_effv2s_focalbce_sqrtcw_5s_m160_lr3e4_ep8_smoke_20260516T1900Z.log`. Result: final all-row AUC `0.714379835`, teacher AUC `0.995303584`, corr `0.245783760`, runtime `10.5s`, TorchScript `81.451 MB`. Decision: fail smoke; very low corr is failure-to-learn.
+- Candidate C existing external-init B0 sanity recheck launched pid `134986`, log `logs/pl_public946_sed85_rankblend15_b0_extinit_5s_smoke_recheck_20260516T1905Z.log`, config `pl_public946_sed85_rankblend15_b0_5s_smoke_20260515.json`. Result: AUC `0.901693090`, teacher AUC `0.995303584`, corr `0.561511425`, runtime `4.9s`, TS `15.391 MB`. Not submission-ready; val trajectory was still rising, so a better external/pretraining full diagnostic may still be worthwhile.
+- Conclusion: PR is useful as infrastructure/spec, but none of the tested candidates are ready for Kaggle submission. Next submission should use already verified repo-owned public-kernel candidates after reset or a future artifact that clears full-row blend gates.
+
+### Candidate C/D follow-up diagnostics — 2026-05-16 19:20 UTC
+
+- Ran aligned blend audit for existing full-row external-init B0 public946 student `pl-public946-sed85-rankblend15-b0-5s-ep20-20260515`: standalone AUC `0.992137465` over 75 valid classes vs teacher `0.997018454`, corr `0.963364380`, TS `15.391 MB`. Best blend was student weight `0.01`, AUC `0.997046430`, lift `+0.000027976`, corr vs teacher `0.999996273`. Decision: not slot-worthy; below failed-v560 local-lift bar.
+- Ran taxon diagnostics: submission labels are Amphibia 35 / Aves 162 / Insecta 28 / Mammalia 8 / Reptilia 1. Train audio rows are heavily Aves-skewed (34,799 Aves vs 451 Amphibia / 199 Insecta / 99 Mammalia / 1 Reptilia), while train soundscape rows are mostly multi-label (`1322/1478`) and often non-bird/mixed. This supports Candidate D as a multi-output rare/non-bird specialist, not a softmax-only taxon classifier.
+- Ran public946 taxon-gate sweep on labeled cache rows. Baseline AUC `0.997018454`; best was `mode=max`, `floor=0.30`, `alpha=0.25`, AUC `0.997043408`, lift `+0.000024954`. Stronger queued-style gates generally drop. Decision: no standalone taxon-gate submission; need learned/source-backed specialist or bounded correction with stronger evidence.
