@@ -91,9 +91,13 @@ class StudentConfig:
     supervised_weight: float = 1.0
     supervised_label_smoothing: float = 0.0
     supervised_crop_start_sec_max: float = 0.0
-    loss_name: str = "bce"  # bce | bce_soft_auc
+    loss_name: str = "bce"  # bce | bce_soft_auc | focal_bce
     auc_loss_weight: float = 0.0
     soft_auc_scale: float = 8.0
+    focal_gamma: float = 2.0
+    focal_loss_weight: float = 1.0
+    class_weight_mode: str = "none"  # none | sqrt_inv_prevalence | inv_prevalence
+    class_weight_clip: float = 5.0
 
 
 def load_config(path: Path | None) -> StudentConfig:
@@ -378,20 +382,72 @@ def build_supervised_clip_data(cfg: StudentConfig, labels: list[str]) -> tuple[t
     }
 
 
-def bce_soft_loss(
-    logits: torch.Tensor,
-    target: torch.Tensor,
+def loss_weight_matrix(
+    loss: torch.Tensor,
     mask: torch.Tensor | None = None,
     sample_weight: torch.Tensor | None = None,
+    class_weight: torch.Tensor | None = None,
 ) -> torch.Tensor:
-    loss = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
     weight = torch.ones_like(loss)
     if mask is not None:
         weight = weight * mask
     if sample_weight is not None:
         weight = weight * sample_weight.view(-1, 1)
+    if class_weight is not None:
+        weight = weight * class_weight.view(1, -1)
+    return weight
+
+
+def reduce_weighted_loss(loss: torch.Tensor, weight: torch.Tensor) -> torch.Tensor:
     denom = weight.sum().clamp_min(1.0)
     return (loss * weight).sum() / denom
+
+
+def bce_soft_loss(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+    mask: torch.Tensor | None = None,
+    sample_weight: torch.Tensor | None = None,
+    class_weight: torch.Tensor | None = None,
+) -> torch.Tensor:
+    loss = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
+    weight = loss_weight_matrix(loss, mask, sample_weight, class_weight)
+    return reduce_weighted_loss(loss, weight)
+
+
+def focal_soft_loss(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+    mask: torch.Tensor | None = None,
+    sample_weight: torch.Tensor | None = None,
+    class_weight: torch.Tensor | None = None,
+    gamma: float = 2.0,
+) -> torch.Tensor:
+    """Soft-label focal BCE for 2025-style Focal+BCE pseudo-label recipes."""
+    bce = F.binary_cross_entropy_with_logits(logits, target, reduction="none")
+    prob = torch.sigmoid(logits)
+    pt = (target * prob + (1.0 - target) * (1.0 - prob)).clamp(1e-6, 1.0 - 1e-6)
+    loss = bce * torch.pow(1.0 - pt, float(gamma))
+    weight = loss_weight_matrix(loss, mask, sample_weight, class_weight)
+    return reduce_weighted_loss(loss, weight)
+
+
+def build_class_weight(target: torch.Tensor, cfg: StudentConfig) -> torch.Tensor | None:
+    mode = str(cfg.class_weight_mode).lower()
+    if mode in {"", "none", "off", "false"}:
+        return None
+    prevalence = target.float().mean(dim=0).clamp_min(1e-5)
+    mean_prev = prevalence.mean().clamp_min(1e-5)
+    if mode == "sqrt_inv_prevalence":
+        weight = torch.sqrt(mean_prev / prevalence)
+    elif mode == "inv_prevalence":
+        weight = mean_prev / prevalence
+    else:
+        raise ValueError(f"Unsupported class_weight_mode={cfg.class_weight_mode!r}")
+    clip = float(cfg.class_weight_clip)
+    if clip > 0:
+        weight = weight.clamp(min=1.0 / clip, max=clip)
+    return weight / weight.mean().clamp_min(1e-6)
 
 
 def soft_auc_pairwise_loss(logits: torch.Tensor, target: torch.Tensor, scale: float = 8.0) -> torch.Tensor:
@@ -419,10 +475,32 @@ def soft_auc_pairwise_loss(logits: torch.Tensor, target: torch.Tensor, scale: fl
     return torch.stack(losses).mean()
 
 
-def student_loss(logits: torch.Tensor, target: torch.Tensor, mask: torch.Tensor | None, sample_weight: torch.Tensor | None, cfg: StudentConfig) -> torch.Tensor:
-    base = bce_soft_loss(logits, target, mask, sample_weight)
-    if str(cfg.loss_name).lower() == "bce_soft_auc" and float(cfg.auc_loss_weight) > 0:
-        return base + float(cfg.auc_loss_weight) * soft_auc_pairwise_loss(logits, target, cfg.soft_auc_scale)
+def student_loss(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+    mask: torch.Tensor | None,
+    sample_weight: torch.Tensor | None,
+    class_weight: torch.Tensor | None,
+    cfg: StudentConfig,
+) -> torch.Tensor:
+    base = bce_soft_loss(logits, target, mask, sample_weight, class_weight)
+    loss_name = str(cfg.loss_name).lower()
+    if loss_name == "bce_soft_auc":
+        if float(cfg.auc_loss_weight) > 0:
+            return base + float(cfg.auc_loss_weight) * soft_auc_pairwise_loss(logits, target, cfg.soft_auc_scale)
+        return base
+    if loss_name in {"focal_bce", "bce_focal"}:
+        focal = focal_soft_loss(
+            logits,
+            target,
+            mask,
+            sample_weight,
+            class_weight,
+            gamma=float(cfg.focal_gamma),
+        )
+        return base + float(cfg.focal_loss_weight) * focal
+    if loss_name != "bce":
+        raise ValueError(f"Unsupported loss_name={cfg.loss_name!r}")
     return base
 
 
@@ -518,6 +596,7 @@ def main() -> int:
         y_target = y_target_pseudo
         target_mask = target_mask_pseudo
         sample_weight = torch.ones(len(row_ids))
+    class_weight = build_class_weight(y_target, cfg)
     y_teacher = teacher_probs
     y_true = build_truth(pd.read_csv(resolve_data_path(cfg.labels_csv)), row_ids, labels)
     pseudo_train_idx, val_idx = split_indices(len(row_ids), cfg.val_fraction, cfg.seed)
@@ -549,7 +628,8 @@ def main() -> int:
                     bx, by = maybe_mixup(bx, by, cfg.mixup_alpha)
                 bm = None
             logits, _ = model(bx)
-            loss = student_loss(logits, by, bm, bw, cfg)
+            cw = class_weight.to(device) if class_weight is not None else None
+            loss = student_loss(logits, by, bm, bw, cw, cfg)
             opt.zero_grad(set_to_none=True); loss.backward(); opt.step()
             losses.append(float(loss.detach().cpu()))
         val_pred = predict_probs(model, x, val_idx, cfg.batch_size, device)
@@ -611,6 +691,16 @@ def main() -> int:
         "loss_name": str(cfg.loss_name),
         "auc_loss_weight": float(cfg.auc_loss_weight),
         "soft_auc_scale": float(cfg.soft_auc_scale),
+        "focal_gamma": float(cfg.focal_gamma),
+        "focal_loss_weight": float(cfg.focal_loss_weight),
+        "class_weight_mode": str(cfg.class_weight_mode),
+        "class_weight_clip": float(cfg.class_weight_clip),
+        "class_weight_summary": {
+            "enabled": class_weight is not None,
+            "min": float(class_weight.min()) if class_weight is not None else None,
+            "max": float(class_weight.max()) if class_weight is not None else None,
+            "mean": float(class_weight.mean()) if class_weight is not None else None,
+        },
         "target_mask_fraction": float(target_mask_np.mean()),
         "target_positive_cells": int((train_targets * target_mask_np).sum()),
         "target_negative_cells": int(((1.0 - train_targets) * target_mask_np).sum()),

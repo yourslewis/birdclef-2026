@@ -2594,3 +2594,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added `tf_efficientnet_lite0` smoke config `configs/birdclef/pl_public946_sed85_rankblend15_tfefflite0_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `114653`, log `logs/pl_public946_sed85_rankblend15_tfefflite0_5s_m160_lr3e4_ep8_smoke_20260516T1658Z.log`.
 - TF-EfficientNet-Lite0 result: final all-row AUC `0.768853290` over 42 classes vs teacher `0.995303584`, corr `0.399994080`, runtime `5.5s`, TorchScript `12.721 MB`. The low correlation is just failure-to-learn, not useful diversity; do not scale.
 - Decision: kill both RegNetY-002 and TF-EfficientNet-Lite0 for this public946 student lane. Continue with stronger/repackaged source signals or wait for reset submissions rather than adding more tiny random-init model zoo retreads.
+
+### 2025 top-team recipe port prep — 2026-05-16 18:05 UTC
+
+- Status check unchanged: current best remains `0.946`. Latest scored rows are `v563=0.946`, `v565=0.943`, `v564=0.942`, `v562=0.945`, and `v561` invalid format. Daily slots remain used; no new submission was possible.
+- Read current spec and article evidence. The strongest outside evidence points away from more tiny random-init sidecars and toward 2025-style SED/noisy-student recipes: eca_nfnet_l0 / EfficientNetV2-S, Focal+BCE, sqrt balancing, power-scaled pseudo-label rounds, external/pretrained data, and taxon-specialist handling.
+- Added new active prep doc `docs/BIRDCLEF_2025_RECIPE_PORT_SPEC_20260516.md` and linked it from `docs/BIRDCLEF_NEW_DIRECTIONS_SPECS.md`.
+- Extended `scripts/birdclef_pseudolabel_student_train.py` to support:
+  - `loss_name="focal_bce"` for BCE + soft-label focal BCE;
+  - `focal_gamma` / `focal_loss_weight`;
+  - `class_weight_mode="sqrt_inv_prevalence"` or `"inv_prevalence"` with clipping and mean-normalized class weights.
+- Prepared two next-run configs for when GPUs are free:
+  - `configs/birdclef/pl_public946_sed85_rankblend15_nfnetl0_focalbce_sqrtcw_5s_m160_lr1e4_ep8_smoke_20260516.json`
+  - `configs/birdclef/pl_public946_sed85_rankblend15_effv2s_focalbce_sqrtcw_5s_m160_lr3e4_ep8_smoke_20260516.json`
+- Validation: tensor unit check for focal+BCE + sqrt class weights produced finite loss/backprop; `py_compile` passed for the changed trainer and sweep/diagnostic helpers; `git diff --check` passed. Remote timm check confirmed `eca_nfnet_l0` and `tf_efficientnetv2_s` are available in `~/kaggle_envs/s6e3`.
+- Decision: do not launch these while both GPUs are occupied by unrelated LRM jobs. Next BirdCLEF GPU window should run NFNetL0 first, then EffV2-S if NFNet is weak or slow.

@@ -15,6 +15,7 @@ Read the addenda before choosing new work:
 
 - `docs/BIRDCLEF_PUBLIC_APPROACH_REEVAL_20260511.md`
 - `docs/BIRDCLEF_PUBLIC946_PRIORITIZED_SPEC_20260512.md` — current v539/v541/v542 priority, open-solution mining, ensemble policy, and public946 AutoResearch plan.
+- `docs/BIRDCLEF_2025_RECIPE_PORT_SPEC_20260516.md` — 2025 top-team recipe port: SED/noisy-student, Focal+BCE, sqrt balancing, eca_nfnet_l0/EffV2-S, external/pretraining lane.
 
 Updated priority order:
 
