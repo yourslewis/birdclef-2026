@@ -187,3 +187,5 @@ Daily slots are now valuable. Use this ordering until updated:
 4. Old internal sidecars (`v538`, etc.) last.
 
 No more old 0.930-axis micro-sweeps unless they are explicitly tied to public946 as a minority stream.
+
+**2026-05-15 v560 update:** `v560` (direct blended-teacher V2S rank sidecar 3%) scored `0.945` even though its strict v542 dry-run gate was locally positive. Treat this as a hard stop on public946 micro-sidecars and low-weight trained-student perturbations. A future slot should require a materially stronger out-of-sample/OOF signal, a new model family/source, or a validated full inference artifact with more than a tiny rank-blend displacement.

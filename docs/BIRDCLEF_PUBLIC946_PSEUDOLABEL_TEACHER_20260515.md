@@ -368,3 +368,196 @@ Best pair blend:
 - corr vs teacher: `0.98262`
 
 Decision: this is the best local sidecar signal found so far and materially better than the B0 blended-teacher seed lift, but still extremely small and based on 792 labeled train-soundscape rows. Do not spend an immediate Kaggle slot without packaging/runtime verification. Next actionable packaging candidate, if a slot is needed: source-clean two-student sidecar with V2S weight `0.06` and B0 soft-anchor weight `0.04` blended into the public946 anchor.
+
+## 2026-05-15 13:20 UTC v559 stricter public946 dry-run gate
+
+The existing student-pool audit found a best 792-row blended-teacher pair of V2S `0.06` + B0 soft-anchor `0.04`, but this does not directly match the public946 Kaggle final rank/gate path. Ran a stricter v542 dry-run overlap gate before packaging.
+
+Added reusable script:
+
+- `scripts/birdclef_public946_multi_sidecar_weight_grid.py`
+
+Inputs:
+
+- base: `artifacts/kaggle_outputs/v542-afr1ste-updated-public946/submission.csv`
+- sidecar V2S CSV materialized from `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval/student_predictions.npz`
+- sidecar B0 soft-anchor CSV materialized from `pl-r1-b0-v508-soft-anchor-p98n05-lr3e4-ep12/student_predictions.npz`
+
+Gate artifact:
+
+- `artifacts/blend_grids/v559_v2s_b0_multi_sidecar_gate_20260515T1315Z.json`
+
+Results on 190 matched dry-run rows / 42 valid classes:
+
+- v542 rank anchor: `0.992524901`
+- best V2S+B0 row: V2S `0.005` + B0 soft-anchor `0.010`, AUC `0.992560140`, lift `+0.000035240`, top5 recall `0.6526` vs base `0.6316`, MAE `0.00297`
+- B0-only `0.020`: AUC `0.992553682`, lift `+0.000028781`
+- the previous 792-row pair weights (`0.06/0.04`) are not supported by this stricter gate
+
+Decision: hold/no package for now. This is directionally positive but too small to spend a blind submission slot after public946 sidecars repeatedly tied. If a future slot needs a prepared candidate, use a tiny rank sidecar around V2S `0.005` + B0 soft-anchor `0.010` rather than the larger 6%/4% pair.
+
+## 2026-05-15 14:00 UTC direct blended-teacher V2S student / v560 prep
+
+Trained EfficientNetV2-RW-S directly on `teacher_sed85_rankblend15.npz`, motivated by the earlier pool audit where an older V2S/v508 student was the strongest low-correlation sidecar.
+
+Configs:
+
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_smoke_20260515.json` — 256 rows / 3 epochs
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_ep8_smoke_20260515.json` — 256 rows / 8 epochs
+- `configs/birdclef/pl_public946_sed85_rankblend15_v2s_5s_lr1e4_ep20_20260515.json` — 792 rows / 20 epochs
+
+Results:
+
+- 3-epoch smoke: final AUC `0.789590`, corr `0.2969` — underfit
+- 8-epoch smoke: final AUC `0.928674`, best val `0.930854`, corr `0.6613` — slow-starter pass
+- full 20-epoch: final AUC `0.990667`, best val `0.986623`, corr `0.956984`, MAE `0.019636`, runtime `52.827s`, TorchScript `88.74 MB`
+
+Local teacher blend gate:
+
+- artifact: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-v2s-5s-lr1e4-ep20-20260515/blend_gate.json`
+- best single blend: V2S weight `0.075`, AUC `0.997058764`, lift `+0.000040310`
+- pair with B0 seeds did not materially improve: max lift `+0.000040688`
+
+Strict v542 dry-run gate:
+
+- artifact: `artifacts/blend_grids/v560_direct_v2s_official_gate_20260515T1410Z.json`
+- direct-V2S standalone rank AUC `0.975338`, corr vs anchor `0.7719`
+- best sidecar: weight `0.03`, AUC `0.992606780`, lift `+0.000081879` vs v542 dry-run anchor `0.992524901`, top5 recall `0.6632` vs base `0.6316`, MAE `0.00441`
+
+Packaging/runtime gate:
+
+- private dataset: `yourslewis/bc26-public946-direct-v2s-student-v1`
+- zip size: `78 MB`
+- SHA256: `3f536693807a0b239cb63d5a0879833f0dcf033345f3130c1a9ffd17e124b104`
+- no-submit kernel: `yourslewis/bc26-v560-public946-direct-v2s-r003`, version 1
+- kernel applies `STUDENT_RANK_BLEND=0.03`
+- status after push: RUNNING/no failure
+- monitor: `logs/monitor_v560_direct_v2s_gate_20260515T135758Z.log`, submit disabled
+
+Decision: v560 is worth runtime validation but not automatic competition submission. Submit only if it completes cleanly and a later slot policy explicitly allows another tiny public946 sidecar after repeated 0.946 ties.
+
+## 2026-05-15 14:55 UTC v560 complete + submitted
+
+`v560` completed successfully and passed the no-submit output/gate monitor.
+
+Kernel:
+
+- `yourslewis/bc26-v560-public946-direct-v2s-r003`, version 1
+- status: COMPLETE, no failure message
+- output files validated: `submission.csv`, `submission_direct_v2s_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, all `(240,235)`, no NaNs
+
+Gate artifact:
+
+- `artifacts/blend_grids/v560_direct_v2s_sidecar_weight_grid_20260515T141004Z.json`
+
+Gate result:
+
+- direct-V2S standalone rank AUC `0.975319`, corr vs anchor `0.771902`
+- best sidecar `0.0300`: macro AUC `0.992606780`, lift `+0.000081879` vs v542 dry-run anchor `0.992524901`
+- top5 row recall `0.663158` vs anchor `0.631579`
+- corr `0.999816`, MAE `0.004414`
+
+Submitted after duplicate check using new helper `scripts/submit_v560_when_ready.py`:
+
+- description: `v560: Public946 v542 plus direct blended-teacher V2S student rank sidecar 3%`
+- ref: `52683717`
+- current status: PENDING score
+
+Decision: v560 earned a slot because it is a real new trained model artifact, completed cleanly, and had a stronger strict dry-run gate than v559. Await score before further public946 sidecar submissions.
+
+## 2026-05-15 15:55 UTC v560 scored 0.945 and XC-V2S branch killed
+
+`v560` scored `0.945`, below the 0.946 plateau. This refutes the direct-V2S public946 sidecar despite its positive local/dry-run gates and is a hard warning against more tiny public946 sidecar submissions.
+
+XC-initialized V2S test:
+
+- smoke config: `configs/birdclef/pl_public946_sed85_rankblend15_v2s_xc_extinit_5s_lr1e4_ep8_smoke_20260515.json`
+- scale config: `configs/birdclef/pl_public946_sed85_rankblend15_v2s_xc_extinit_5s_lr1e4_ep20_20260515.json`
+- checkpoint: `artifacts/external_pretrain/xc-v2s-q3-cap80-external-pretrain-balanced-ep12-bestloss/model_torchscript.pt`
+- 5s / 128 mel, lr `1e-4`, soft BCE, target `teacher_sed85_rankblend15.npz`
+
+Smoke result:
+
+- 256 rows / 8 epochs
+- final all-row AUC `0.949310` over 42 classes
+- best val AUC `0.931553`
+- corr `0.809742`
+- runtime `12.619s`
+- stronger than direct/ImageNet V2S 8-epoch smoke (`0.928674`), so scaled
+
+Full result:
+
+- 792 rows / 20 epochs
+- final student AUC `0.989274` over 75 classes
+- best val AUC `0.988724`
+- teacher AUC `0.997018`
+- corr `0.957270`, MAE `0.019614`
+- TorchScript `88.74 MB`, runtime `60.308s`
+
+Blend gate:
+
+- artifact: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-v2s-xc-extinit-5s-lr1e4-ep20-20260515/blend_gate.json`
+- best weight `0.0025`: AUC `0.997040669`, lift `+0.000022215`
+- larger weights flatten/drop
+
+Decision: kill XC-initialized V2S for packaging. It improved the smoke but underperformed direct V2S at full scale and has weaker blend lift. After v560 dropped to 0.945, do not spend another slot on V2S/public946 micro-sidecars.
+
+## 2026-05-15 17:05 UTC v560 stop rule + NFNet smoke blocked
+
+`v560` scored `0.945`, confirming that the small direct-V2S sidecar did not translate from local/dry-run gate to public LB. Treat this as a stop rule for more public946 micro-sidecar submissions.
+
+Attempted next model-zoo pivot:
+
+- config: `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_5s_lr1e4_smoke_20260515.json`
+- backbone: `eca_nfnet_l0`
+- target: `teacher_sed85_rankblend15.npz`
+- setup: 5s/160 mel, lr `1e-4`, 256 rows / 3 epochs, soft BCE, seed `45`
+
+Result: **blocked/incomplete**. The foreground SSH/CUDA smoke launch produced no first-epoch output within the cron window, and independent SSH checks to `192.168.0.10` timed out during banner exchange. The local blocking session was killed. Do not interpret this as model failure; it is a trainer reachability/runtime issue.
+
+Next action: verify trainer reachability/process state first. If healthy, rerun NFNet as a durable `nohup` job with log monitoring; otherwise skip until host recovers.
+
+### 2026-05-15 18:00 UTC trainer SSH diagnostics
+
+After the NFNet smoke blocker, network diagnostics show the trainer is reachable at the network layer but SSH is unhealthy:
+
+- ping `192.168.0.10`: `3/3` replies, ~1ms
+- TCP port 22: connects
+- SSH: banner/auth does not complete (`Connection timed out during banner exchange` / `Connection closed by 192.168.0.10 port 22`)
+- killed a stale local rsync from the interrupted NFNet config sync, but SSH remained blocked on retries
+
+The NFNet config and training script parse locally. No NFNet model result should be inferred until trainer SSH recovers and the smoke is rerun or verified from logs.
+
+### 2026-05-15 19:55 UTC guarded NFNet launcher
+
+Trainer SSH still times out during banner exchange, so the NFNet blended-teacher smoke was not relaunched. Added `scripts/launch_nfnet_pseudolabel_smoke_if_trainer_ready.sh` as the next safe launch path: it performs a short SSH preflight, refuses to launch when SSH is unhealthy, syncs the NFNet smoke config after preflight, and starts the remote training with `nohup` plus a timestamped log only when the trainer is reachable.
+
+Validation: `bash -n` passed; the config JSON parses; exercising the launcher against the current trainer state exited `75` with `[blocked] trainer SSH preflight failed; not launching remote GPU job`.
+
+### 2026-05-15 20:55 UTC blocked rerun + source scan
+
+Reran the guarded NFNet launcher; trainer SSH failed fast with `Connection closed by 192.168.0.10 port 22`, so the launcher exited `75` and did not start remote work. Current scored state remains `v560=0.945` below the `0.946` plateau. A short public-source scan found only the already-known Nina public946 notebook and no distinct new source-clean artifact worth a slot. Continue to wait for trainer SSH recovery before NFNet/student OOF work, and keep the public946 micro-sidecar stop rule active.
+
+### 2026-05-15 22:00 UTC output verifier
+
+Added `scripts/birdclef_kernel_output_verify.py` so future cron passes can verify completed Kaggle kernel output files and log markers directly through the Bearer-backed Kaggle SDK. Verified `bc26-v510-real-sed-bundle-blend-005` has `submission.csv` plus real-SED blend markers, and `bc26-v560-public946-direct-v2s-r003` has the expected public946/V2S output files plus direct-student blend markers. This closes the v510/v560 output-verification loop while trainer SSH remains blocked.
+
+### 2026-05-15 23:00 UTC verifier presets
+
+Extended `scripts/birdclef_kernel_output_verify.py` with presets for `v510-real-sed` and `v560-direct-v2s`. Both presets passed against Kaggle: v510 still has `submission.csv` plus real-SED log markers, and v560 still has the expected public946/direct-V2S outputs plus sidecar log markers. Trainer SSH remains blocked, so no NFNet smoke was launched.
+
+### 2026-05-16 00:00 UTC all-preset verifier
+
+Extended `scripts/birdclef_kernel_output_verify.py` with `--all-presets` so future status passes can verify all tracked Kaggle kernel outputs in one command. Validation returned top-level `ok=true` for both `v510-real-sed` and `v560-direct-v2s`. Trainer SSH still times out during banner exchange, so no NFNet smoke was launched.
+
+### 2026-05-16 00:55 UTC post-reset no-slot decision
+
+After UTC reset, public state remains `v560=0.945` below the `0.946` plateau. The all-preset verifier still passes for v510/v560, but trainer SSH still times out during banner exchange, so no NFNet smoke was launched. No daily slot was used: after v560, another public946 micro-sidecar is not justified without stronger OOF/new-source evidence.
+
+### 2026-05-16 02:10 UTC NFNet recovered + no-submit decision
+
+Trainer SSH recovered enough to run the guarded launcher. Fixed a launcher quoting bug around remote `$!` PID capture, then ran the NFNet blended-teacher lane: ep3 smoke AUC `0.768877`, ep8 smoke AUC `0.933012`, and full ep20 diagnostic AUC `0.988538` vs teacher `0.997018` with student/teacher corr `0.956990`. Blend audit best was teacher + NFNet at student weight `0.075`, macro AUC `0.997055577`, lift `+0.000037123`, blended corr `0.999763`. Decision: useful diagnostic artifact, but no Kaggle packaging/submission because the lift is tiny and weaker than v560's failed local gate.
+
+### 2026-05-16 03:15 UTC B3 diagnostic killed
+
+Ran the remaining EfficientNet-B3 model-zoo diagnostic against `teacher_sed85_rankblend15.npz`. B3 ep3 smoke AUC was `0.767158`, ep8 improved to `0.923309` with low corr `0.494312`, and full ep20 reached AUC `0.976570` vs teacher `0.997018` with corr `0.936009`. Blend audit best was still negative: weight `0.01`, AUC `0.997014564`, lift `-0.000003890`. Decision: kill B3 packaging/submission for this teacher.

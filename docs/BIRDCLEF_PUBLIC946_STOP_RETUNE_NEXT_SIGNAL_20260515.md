@@ -1,12 +1,13 @@
 # BirdCLEF Public946 Stop-Retune Decision — 2026-05-15
 
-Status: active after `v551` and `v558` both tied public LB `0.946`.
+Status: active and strengthened after `v560` scored `0.945` despite positive local/dry-run gates.
 
 ## Current public state
 
 - Public best remains **0.946**.
 - `v551` tiny CLAP sidecar 0.5% scored `0.946`.
 - `v558` exact-base clipped gate retune alpha0.10/maxabs0.02 scored `0.946`.
+- `v560` direct blended-teacher V2S student rank sidecar 3% scored `0.945`, despite a positive strict v542 dry-run gate (`+0.000081879` AUC on train-soundscape overlap).
 - Earlier same-family/diversity probes also tied or dropped:
   - `v546` train-audio-head 5%: `0.946`.
   - `v547/v548/v549` CV9245 2%/0.5%/1%: all `0.946`.
@@ -15,17 +16,17 @@ Status: active after `v551` and `v558` both tied public LB `0.946`.
 
 ## Interpretation
 
-The public946 anchor is extremely robust, and low-displacement sidecars are not moving the displayed public score. The available local train-soundscape overlap gates are now mostly useful for **rejecting unsafe candidates**, not for selecting further leaderboard slots. Repeated public946 postprocess/sidecar micro-variants are likely to consume daily quota without improving display score.
+The public946 anchor is extremely robust, and low-displacement sidecars are not moving the displayed public score. The available local train-soundscape overlap gates are now mostly useful for **rejecting unsafe candidates**, not for selecting further leaderboard slots. `v560` is the clearest warning case: it had clean runtime/output validation and the strongest recent local sidecar gate, but dropped publicly to `0.945`. Repeated public946 postprocess/sidecar micro-variants are likely to consume daily quota without improving display score.
 
 ## Stop rule
 
-Do **not** submit more public946-only postprocess retunes or single-family low-weight brackets unless one of these changes:
+Do **not** submit more public946-only postprocess retunes, tiny trained-student sidecars, or single-family low-weight brackets unless one of these changes:
 
 1. A new public/private score breaks the 0.946 plateau.
 2. A genuinely new prediction source appears with strong source-clean provenance and a clean low-displacement gate.
 3. A trained model produces an OOF/test prediction artifact with competitive AUC and lower correlation to public946.
 
-Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has already tested the safest clipped-retune formulation and tied.
+Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has already tested the safest clipped-retune formulation and tied. Do not submit additional V2S/public946 sidecars after `v560=0.945` unless the candidate is backed by a stronger out-of-sample/OOF gate rather than the 190-row train-soundscape overlap.
 
 ## Next actionable tracks
 
@@ -45,3 +46,19 @@ Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has alread
 ## Submission policy
 
 Hold remaining UTC daily submissions until the next candidate has fresh evidence. If forced to pick from existing candidates, prefer waiting over submitting another tied-family retune.
+
+## 2026-05-16 bootstrap gate addendum
+
+For any future public946 sidecar candidate, the local gate should include grouped bootstrap lift stability, not only one aggregate train-soundscape AUC. The v559 V2S+B0 strict dry-run gate looked positive on mean AUC (`+0.000035240`), but 200 file-group bootstrap iterations had a negative 5th percentile lift (`-0.000071763`) and only `p_lift_gt_0=0.84`. Treat that as insufficient for a slot after `v560=0.945`. A future candidate should have materially larger mean lift and a positive grouped-bootstrap lower tail before packaging/submission.
+
+## 2026-05-16 v560 bootstrap backtest
+
+The grouped-bootstrap gate is necessary but not sufficient. Backtesting the known failed `v560` direct-V2S 3% sidecar showed positive local stability: aggregate lift `+0.000081879`, file-bootstrap q05 `+0.000017475` with `p_lift_gt_0=0.995`, and site-bootstrap q05 `+0.000023012` with `p_lift_gt_0=1.0`. Real public LB was still `0.945`. Therefore future sidecar candidates should not be submitted merely because bootstrap is positive; they need materially larger lift than v560 and/or independent OOF/new-source evidence outside the train-soundscape overlap.
+
+## 2026-05-16 leave-one-group backtest
+
+Leave-one-group diagnostics confirm the same lesson as the v560 bootstrap backtest. The failed `v560` direct-V2S 3% candidate remained positive even under leave-one-site-out (`min_lift=+0.000034296` across 6 sites) while public LB still dropped to `0.945`. Grouped bootstrap and leave-one-group gates are useful rejection filters, but they cannot approve public946 micro-sidecars by themselves. Treat train-soundscape overlap as too optimistic for 0.95 slot decisions.
+
+## 2026-05-16 leave-one-file backtest
+
+Leave-one-file-out also failed as an approval gate. The known failed `v560` direct-V2S 3% candidate stayed positive across 20 valid held-out files (`min_lift=+0.000061769`, q05 `+0.000063445`, `p_lift_gt_0=1.0`) but public LB was `0.945`. This confirms the train-soundscape overlap itself is too optimistic. Use local gates only to reject bad candidates; require independent OOF/new-source evidence or qualitatively new signal before using another public slot.
