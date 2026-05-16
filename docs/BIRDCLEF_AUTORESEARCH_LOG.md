@@ -2506,3 +2506,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submitted `v562: Sweep Yaroslav site-hour prior plus BirdNET public kernel direct` from `kruzzcc/bc26-yaroslav-sitehour-bn`, version 1, ref `52702418`; status after submit: PENDING.
 - Submitted `v563: Sweep Raunak deep dynamic plus BirdNET public kernel direct` from `kruzzcc/bc26-raunak-deep-dyn-bn`, version 2, ref `52702433`; status after submit: PENDING.
 - Rationale: v561 tests conservative public rank ensemble; v562 tests site-hour/BirdNET prior path; v563 tests a deeper dynamic/BirdNET branch. These are exploratory datapoints, not high-confidence candidates. Preserve remaining daily slots until these score or until a stronger generated candidate is ready.
+
+### Daily slot fill after user exploration-policy clarification — 2026-05-16 07:55 UTC
+
+- Status check after first three exploratory direct public-kernel submissions: current public best still `0.946`; `v561` direct Lucataco score-desc completed with invalid-format error, confirming that some public sweep kernels emit the 3-row public sample output and are not valid code-submission artifacts when submitted directly. `v562` and `v563` remained PENDING at check time.
+- To keep experimenting while avoiding more direct-public invalid-format risk, used remaining slots on repo-owned completed kernels with verified `submission.csv` artifacts: `v552` and `v553`.
+- Submitted `v564: Public946 v542 plus ConvNeXt student rank sidecar 7.5% exploratory` from own kernel `yourslewis/bc26-v552-public946-convnext-student-r075`, version 1, ref `52702553`; status PENDING.
+- Submitted `v565: Public946 v542 plus ConvNeXt student rank 7.5% and taxon alpha0.50 exploratory` from own kernel `yourslewis/bc26-v553-public946-convnext-r075-taxon-a050`, version 1, ref `52702555`; status PENDING.
+- Current daily submissions used: v561 invalid, v562 pending, v563 pending, v564 pending, v565 pending. Next action: wait for scores/errors; if v562/v563 also invalid due direct-public 3-row outputs, stop direct-public submissions and only submit repo-owned kernels or repackaged public-source code that produces valid competition-format output.
