@@ -163,6 +163,8 @@ These are ordered by expected information value, not just ease.  The first two a
 
 **Hypothesis:** 2025 winner gained from a separate insect/amphibian pipeline.  Public946 may already be strong on common birds, while remaining headroom could be in insects/amphibians/mammals/reptiles or rare label groups.  A specialist correction may be safer than perturbing all 234 classes.
 
+**2026-05-16 diagnostic update:** a crossfit logistic group-presence calibrator over the same public946 predictions is not enough.  `birdclef_rare_taxon_specialist_diagnostics.py` found public946 group max evidence already beats the learned group models for Amphibia/Insecta/Mammalia/Reptilia presence, and the best bounded correction lifted macro AUC by only `+0.000013838`.  Do not submit same-prediction taxon calibration; Candidate D needs a genuinely new source/specialist model or stronger crossfit evidence.
+
 **Target scope:**
 
 - build label groups from taxonomy / competition metadata:
