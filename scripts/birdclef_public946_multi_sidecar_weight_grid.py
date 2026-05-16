@@ -65,6 +65,76 @@ def rank_values(df: pd.DataFrame, cols: list[str]) -> np.ndarray:
     return pd.DataFrame(values).rank(axis=0, pct=True).to_numpy(np.float32)
 
 
+def macro_auc_matrix(y_true: np.ndarray, y_score: np.ndarray) -> dict[str, Any]:
+    vals = []
+    for j in range(y_true.shape[1]):
+        col = y_true[:, j]
+        if col.min() == col.max():
+            continue
+        vals.append(float(roc_auc_score(col, y_score[:, j])))
+    return {"macro_auc": float(np.mean(vals)) if vals else None, "valid_classes": len(vals)}
+
+
+def group_key(row_id: str, mode: str) -> str:
+    text = str(row_id)
+    if mode == "row":
+        return text
+    if mode == "file":
+        return text.rsplit("_", 1)[0]
+    if mode == "site":
+        # Common BirdCLEF train-soundscape ids contain site tokens like S08.
+        for part in text.replace("-", "_").split("_"):
+            if len(part) >= 2 and part[0].upper() == "S" and part[1:].isdigit():
+                return part.upper()
+        return text.rsplit("_", 1)[0]
+    raise ValueError(f"unknown group mode {mode!r}")
+
+
+def bootstrap_lift_vs_base(
+    row_ids: pd.Series,
+    y_true: np.ndarray,
+    base_values: np.ndarray,
+    candidate_values: np.ndarray,
+    *,
+    group_mode: str,
+    iters: int,
+    seed: int,
+) -> dict[str, Any]:
+    groups = np.array([group_key(x, group_mode) for x in row_ids.astype(str).tolist()])
+    unique_groups = np.array(sorted(set(groups.tolist())))
+    by_group = {g: np.flatnonzero(groups == g) for g in unique_groups}
+    rng = np.random.default_rng(seed)
+    lifts = []
+    valid_iters = 0
+    for _ in range(int(iters)):
+        sampled_groups = rng.choice(unique_groups, size=len(unique_groups), replace=True)
+        idx = np.concatenate([by_group[g] for g in sampled_groups])
+        base_auc = macro_auc_matrix(y_true[idx], base_values[idx])["macro_auc"]
+        cand_auc = macro_auc_matrix(y_true[idx], candidate_values[idx])["macro_auc"]
+        if base_auc is None or cand_auc is None:
+            continue
+        lifts.append(float(cand_auc - base_auc))
+        valid_iters += 1
+    arr = np.array(lifts, dtype=np.float64)
+    if arr.size == 0:
+        return {"iters": int(iters), "valid_iters": 0, "group_mode": group_mode, "n_groups": int(len(unique_groups))}
+    return {
+        "iters": int(iters),
+        "valid_iters": int(valid_iters),
+        "group_mode": group_mode,
+        "n_groups": int(len(unique_groups)),
+        "mean_lift": float(arr.mean()),
+        "median_lift": float(np.median(arr)),
+        "p_lift_gt_0": float(np.mean(arr > 0)),
+        "q05_lift": float(np.quantile(arr, 0.05)),
+        "q25_lift": float(np.quantile(arr, 0.25)),
+        "q75_lift": float(np.quantile(arr, 0.75)),
+        "q95_lift": float(np.quantile(arr, 0.95)),
+        "min_lift": float(arr.min()),
+        "max_lift": float(arr.max()),
+    }
+
+
 def summarize(
     name: str,
     row_ids: pd.Series,
@@ -94,7 +164,7 @@ def summarize(
         if valid:
             y_true = merged[[f"{c}_true" for c in valid]].to_numpy()
             y_score = merged[[f"{c}_pred" for c in valid]].to_numpy()
-            info["macro_auc"] = float(roc_auc_score(y_true, y_score, average="macro"))
+            info.update(macro_auc_matrix(y_true, y_score))
             pred_cols = [f"{c}_pred" for c in cols if f"{c}_pred" in merged]
             true_cols = [c.replace("_pred", "_true") for c in pred_cols]
             score_mat = merged[pred_cols].to_numpy()
@@ -111,6 +181,9 @@ def main() -> None:
     ap.add_argument("--weights", action="append", required=True, help="Repeat NAME=w1,w2,...")
     ap.add_argument("--labels-csv", type=Path)
     ap.add_argument("--max-total-weight", type=float, default=0.16)
+    ap.add_argument("--bootstrap-iters", type=int, default=0, help="Bootstrap matched labeled rows by group and report candidate lift stability vs base")
+    ap.add_argument("--bootstrap-group", choices=["file", "site", "row"], default="file")
+    ap.add_argument("--bootstrap-seed", type=int, default=42)
     ap.add_argument("--output-json", type=Path, required=True)
     args = ap.parse_args()
 
@@ -127,6 +200,7 @@ def main() -> None:
     sidecar_ranks = {name: rank_values(load_sidecar(path, base, cols), cols) for name, path in named_paths.items()}
     labels_wide = load_long_labels(args.labels_csv, cols) if args.labels_csv else None
 
+    candidate_arrays: dict[str, np.ndarray] = {"base": rank_base}
     summaries: list[dict[str, Any]] = [
         summarize("base", base["row_id"], cols, rank_base, labels_wide, rank_base, {name: 0.0 for name in named_paths})
     ]
@@ -140,7 +214,32 @@ def main() -> None:
         for name, weight in weights.items():
             pred = pred + weight * sidecar_ranks[name]
         label = "_".join(f"{name}_{weight:.4f}" for name, weight in weights.items())
+        candidate_arrays[label] = pred
         summaries.append(summarize(label, base["row_id"], cols, pred, labels_wide, rank_base, weights))
+
+    if labels_wide is not None and args.bootstrap_iters > 0:
+        label_merge = base[["row_id"]].merge(labels_wide, on="row_id", how="inner")
+        matched_row_ids = label_merge["row_id"].astype(str)
+        matched_idx = base.index[base["row_id"].astype(str).isin(set(matched_row_ids))].to_numpy()
+        y_cols = [c for c in cols if c in label_merge.columns and label_merge[c].nunique() > 1]
+        if y_cols and len(matched_idx):
+            # Preserve base order for bootstrap arrays.
+            labels_by_row = labels_wide.set_index("row_id")
+            y_true = labels_by_row.loc[base.loc[matched_idx, "row_id"], y_cols].to_numpy()
+            pred_col_idx = np.array([cols.index(c) for c in y_cols], dtype=np.int64)
+            for summary in summaries:
+                if summary["name"] == "base":
+                    continue
+                arr = candidate_arrays[summary["name"]]
+                summary["bootstrap_vs_base"] = bootstrap_lift_vs_base(
+                    base.loc[matched_idx, "row_id"],
+                    y_true,
+                    rank_base[matched_idx][:, pred_col_idx],
+                    arr[matched_idx][:, pred_col_idx],
+                    group_mode=args.bootstrap_group,
+                    iters=args.bootstrap_iters,
+                    seed=args.bootstrap_seed,
+                )
 
     result = {
         "base_csv": str(args.base_csv),

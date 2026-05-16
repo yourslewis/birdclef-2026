@@ -46,3 +46,7 @@ Specifically, do not submit `v554`, `v555`, `v556`, or `v557`; `v558` has alread
 ## Submission policy
 
 Hold remaining UTC daily submissions until the next candidate has fresh evidence. If forced to pick from existing candidates, prefer waiting over submitting another tied-family retune.
+
+## 2026-05-16 bootstrap gate addendum
+
+For any future public946 sidecar candidate, the local gate should include grouped bootstrap lift stability, not only one aggregate train-soundscape AUC. The v559 V2S+B0 strict dry-run gate looked positive on mean AUC (`+0.000035240`), but 200 file-group bootstrap iterations had a negative 5th percentile lift (`-0.000071763`) and only `p_lift_gt_0=0.84`. Treat that as insufficient for a slot after `v560=0.945`. A future candidate should have materially larger mean lift and a positive grouped-bootstrap lower tail before packaging/submission.
