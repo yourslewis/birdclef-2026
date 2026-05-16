@@ -320,6 +320,23 @@ These results were run after opening PR #231 to decide whether any prepared cand
 
 No newly tested student candidate is ready for Kaggle submission.  The PR is still useful because it adds the reusable trainer knobs, candidate specs, and smoke configs, but the next submission should come from an already verified repo-owned public-kernel candidate or from a future external/pretraining/taxon-specialist artifact that clears full-row blend gates.
 
+### Candidate C/D follow-up diagnostics
+
+- Existing full-row external-init B0 public946 student (`pl-public946-sed85-rankblend15-b0-5s-ep20-20260515`) is strong standalone but too teacher-correlated for submission by itself:
+  - AUC `0.992137465` over 75 valid classes vs teacher `0.997018454`;
+  - corr `0.963364380`, TorchScript `15.391 MB`.
+  - Fresh blend audit: best student weight `0.01`, AUC `0.997046430`, lift only `+0.000027976`, corr vs teacher `0.999996273`.
+  - Decision: not slot-worthy; below failed `v560` local-lift bar.
+- Candidate D taxon diagnostics:
+  - taxonomy groups: Amphibia 35 / Aves 162 / Insecta 28 / Mammalia 8 / Reptilia 1;
+  - train audio is heavily bird-skewed: Aves 34,799 rows vs Amphibia 451 / Insecta 199 / Mammalia 99 / Reptilia 1;
+  - train soundscape rows are mostly multi-label (`1322/1478`) and heavily non-bird/mixed, supporting a multi-output specialist rather than a softmax taxon gate.
+- Public946 taxon-gate sweep on labeled cache rows:
+  - baseline AUC `0.997018454`;
+  - best local gate is very tiny: `mode=max`, `floor=0.30`, `alpha=0.25`, AUC `0.997043408`, lift `+0.000024954`;
+  - stronger queued-style gates generally drop.
+  - Decision: no standalone taxon-gate submission; Candidate D needs a learned/source-backed specialist or bounded correction with much stronger crossfit/full-row evidence.
+
 ## Medium-term lane
 
 If either smoke passes:
