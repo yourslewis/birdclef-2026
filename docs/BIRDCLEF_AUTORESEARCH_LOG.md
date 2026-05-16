@@ -2460,3 +2460,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Backtested v560 and v559 with file bootstrap plus leave-one-site-out. Artifacts: `artifacts/blend_grids/v560_direct_v2s_gate_holdout_20260516T0600Z.json` and `artifacts/blend_grids/v559_v2s_b0_multi_sidecar_gate_holdout_20260516T0600Z.json`.
 - Result: leave-one-site-out still did **not** catch the failed v560. The submitted `direct_v2s=0.03` had aggregate lift `+0.000081879`, bootstrap q05 `+0.000014389`, and leave-one-site min lift `+0.000034296` across 6 sites, yet public LB was `0.945`. v559 remained weaker under bootstrap, but some site holdouts stayed positive.
 - Interpretation: grouped bootstrap/holdout are useful rejection filters but not sufficient approval filters. The train-soundscape overlap is too optimistic for 0.95 slot decisions; future submissions need independent OOF/new-source evidence or a much larger lift than v560, not just local-group stability.
+
+### Leave-one-file gate also misses failed v560 — 2026-05-16 06:15 UTC
+
+- Added file-level holdout backtest artifacts: `artifacts/blend_grids/v560_direct_v2s_gate_leave_one_file_20260516T0610Z.json` and `artifacts/blend_grids/v559_v2s_b0_gate_leave_one_file_20260516T0610Z.json`.
+- Result: the failed v560 `direct_v2s=0.03` remained positive under leave-one-file-out too: 20 valid held-out files, min lift `+0.000061769`, q05 lift `+0.000063445`, and `p_lift_gt_0=1.0`, despite real public LB `0.945`.
+- v559 best row also remained file-holdout positive (`min_lift=+0.000010589`, `p_lift_gt_0=1.0`) even though bootstrap had already shown a negative lower tail. Therefore file/site holdout over the labeled train-soundscape overlap cannot be used as an approval gate either.
+- Updated decision rule: local train-soundscape gates may reject clearly fragile candidates, but cannot approve public946 sidecars. Next 0.95 slot candidate should come from independent OOF/new-source validation or a qualitatively different model/source, not further low-weight public946 sidecar tuning.

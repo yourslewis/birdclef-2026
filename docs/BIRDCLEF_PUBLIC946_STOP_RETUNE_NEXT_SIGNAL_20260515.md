@@ -58,3 +58,7 @@ The grouped-bootstrap gate is necessary but not sufficient. Backtesting the know
 ## 2026-05-16 leave-one-group backtest
 
 Leave-one-group diagnostics confirm the same lesson as the v560 bootstrap backtest. The failed `v560` direct-V2S 3% candidate remained positive even under leave-one-site-out (`min_lift=+0.000034296` across 6 sites) while public LB still dropped to `0.945`. Grouped bootstrap and leave-one-group gates are useful rejection filters, but they cannot approve public946 micro-sidecars by themselves. Treat train-soundscape overlap as too optimistic for 0.95 slot decisions.
+
+## 2026-05-16 leave-one-file backtest
+
+Leave-one-file-out also failed as an approval gate. The known failed `v560` direct-V2S 3% candidate stayed positive across 20 valid held-out files (`min_lift=+0.000061769`, q05 `+0.000063445`, `p_lift_gt_0=1.0`) but public LB was `0.945`. This confirms the train-soundscape overlap itself is too optimistic. Use local gates only to reject bad candidates; require independent OOF/new-source evidence or qualitatively new signal before using another public slot.
