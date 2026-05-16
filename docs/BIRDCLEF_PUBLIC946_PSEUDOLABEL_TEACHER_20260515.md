@@ -557,3 +557,7 @@ After UTC reset, public state remains `v560=0.945` below the `0.946` plateau. Th
 ### 2026-05-16 02:10 UTC NFNet recovered + no-submit decision
 
 Trainer SSH recovered enough to run the guarded launcher. Fixed a launcher quoting bug around remote `$!` PID capture, then ran the NFNet blended-teacher lane: ep3 smoke AUC `0.768877`, ep8 smoke AUC `0.933012`, and full ep20 diagnostic AUC `0.988538` vs teacher `0.997018` with student/teacher corr `0.956990`. Blend audit best was teacher + NFNet at student weight `0.075`, macro AUC `0.997055577`, lift `+0.000037123`, blended corr `0.999763`. Decision: useful diagnostic artifact, but no Kaggle packaging/submission because the lift is tiny and weaker than v560's failed local gate.
+
+### 2026-05-16 03:15 UTC B3 diagnostic killed
+
+Ran the remaining EfficientNet-B3 model-zoo diagnostic against `teacher_sed85_rankblend15.npz`. B3 ep3 smoke AUC was `0.767158`, ep8 improved to `0.923309` with low corr `0.494312`, and full ep20 reached AUC `0.976570` vs teacher `0.997018` with corr `0.936009`. Blend audit best was still negative: weight `0.01`, AUC `0.997014564`, lift `-0.000003890`. Decision: kill B3 packaging/submission for this teacher.
