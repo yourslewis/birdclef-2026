@@ -90,6 +90,25 @@ def group_key(row_id: str, mode: str) -> str:
     raise ValueError(f"unknown group mode {mode!r}")
 
 
+def lift_summary(values: np.ndarray) -> dict[str, Any]:
+    arr = np.asarray(values, dtype=np.float64)
+    arr = arr[np.isfinite(arr)]
+    if arr.size == 0:
+        return {"n": 0}
+    return {
+        "n": int(arr.size),
+        "mean_lift": float(arr.mean()),
+        "median_lift": float(np.median(arr)),
+        "p_lift_gt_0": float(np.mean(arr > 0)),
+        "q05_lift": float(np.quantile(arr, 0.05)),
+        "q25_lift": float(np.quantile(arr, 0.25)),
+        "q75_lift": float(np.quantile(arr, 0.75)),
+        "q95_lift": float(np.quantile(arr, 0.95)),
+        "min_lift": float(arr.min()),
+        "max_lift": float(arr.max()),
+    }
+
+
 def bootstrap_lift_vs_base(
     row_ids: pd.Series,
     y_true: np.ndarray,
@@ -118,21 +137,44 @@ def bootstrap_lift_vs_base(
     arr = np.array(lifts, dtype=np.float64)
     if arr.size == 0:
         return {"iters": int(iters), "valid_iters": 0, "group_mode": group_mode, "n_groups": int(len(unique_groups))}
-    return {
-        "iters": int(iters),
-        "valid_iters": int(valid_iters),
-        "group_mode": group_mode,
-        "n_groups": int(len(unique_groups)),
-        "mean_lift": float(arr.mean()),
-        "median_lift": float(np.median(arr)),
-        "p_lift_gt_0": float(np.mean(arr > 0)),
-        "q05_lift": float(np.quantile(arr, 0.05)),
-        "q25_lift": float(np.quantile(arr, 0.25)),
-        "q75_lift": float(np.quantile(arr, 0.75)),
-        "q95_lift": float(np.quantile(arr, 0.95)),
-        "min_lift": float(arr.min()),
-        "max_lift": float(arr.max()),
-    }
+    out = {"iters": int(iters), "valid_iters": int(valid_iters), "group_mode": group_mode, "n_groups": int(len(unique_groups))}
+    out.update(lift_summary(arr))
+    return out
+
+
+def leave_one_group_lift_vs_base(
+    row_ids: pd.Series,
+    y_true: np.ndarray,
+    base_values: np.ndarray,
+    candidate_values: np.ndarray,
+    *,
+    group_mode: str,
+    max_groups_detail: int = 30,
+) -> dict[str, Any]:
+    groups = np.array([group_key(x, group_mode) for x in row_ids.astype(str).tolist()])
+    unique_groups = np.array(sorted(set(groups.tolist())))
+    rows = []
+    for group in unique_groups:
+        idx = np.flatnonzero(groups != group)
+        if idx.size == 0:
+            continue
+        base_auc = macro_auc_matrix(y_true[idx], base_values[idx])["macro_auc"]
+        cand_auc = macro_auc_matrix(y_true[idx], candidate_values[idx])["macro_auc"]
+        if base_auc is None or cand_auc is None:
+            continue
+        rows.append({
+            "held_out_group": str(group),
+            "train_rows": int(idx.size),
+            "base_auc": float(base_auc),
+            "candidate_auc": float(cand_auc),
+            "lift": float(cand_auc - base_auc),
+        })
+    lifts = np.array([r["lift"] for r in rows], dtype=np.float64)
+    out = {"group_mode": group_mode, "n_groups": int(len(unique_groups)), "valid_groups": int(len(rows))}
+    out.update(lift_summary(lifts))
+    out["worst_groups"] = sorted(rows, key=lambda r: r["lift"])[:max_groups_detail]
+    out["best_groups"] = sorted(rows, key=lambda r: r["lift"], reverse=True)[:max_groups_detail]
+    return out
 
 
 def summarize(
@@ -184,6 +226,8 @@ def main() -> None:
     ap.add_argument("--bootstrap-iters", type=int, default=0, help="Bootstrap matched labeled rows by group and report candidate lift stability vs base")
     ap.add_argument("--bootstrap-group", choices=["file", "site", "row"], default="file")
     ap.add_argument("--bootstrap-seed", type=int, default=42)
+    ap.add_argument("--leave-one-group", choices=["none", "file", "site", "row"], default="none", help="Report leave-one-group-out lift stability vs base")
+    ap.add_argument("--holdout-detail", type=int, default=30, help="Number of best/worst held-out groups to include")
     ap.add_argument("--output-json", type=Path, required=True)
     args = ap.parse_args()
 
@@ -217,7 +261,7 @@ def main() -> None:
         candidate_arrays[label] = pred
         summaries.append(summarize(label, base["row_id"], cols, pred, labels_wide, rank_base, weights))
 
-    if labels_wide is not None and args.bootstrap_iters > 0:
+    if labels_wide is not None and (args.bootstrap_iters > 0 or args.leave_one_group != "none"):
         label_merge = base[["row_id"]].merge(labels_wide, on="row_id", how="inner")
         matched_row_ids = label_merge["row_id"].astype(str)
         matched_idx = base.index[base["row_id"].astype(str).isin(set(matched_row_ids))].to_numpy()
@@ -231,15 +275,25 @@ def main() -> None:
                 if summary["name"] == "base":
                     continue
                 arr = candidate_arrays[summary["name"]]
-                summary["bootstrap_vs_base"] = bootstrap_lift_vs_base(
-                    base.loc[matched_idx, "row_id"],
-                    y_true,
-                    rank_base[matched_idx][:, pred_col_idx],
-                    arr[matched_idx][:, pred_col_idx],
-                    group_mode=args.bootstrap_group,
-                    iters=args.bootstrap_iters,
-                    seed=args.bootstrap_seed,
-                )
+                if args.bootstrap_iters > 0:
+                    summary["bootstrap_vs_base"] = bootstrap_lift_vs_base(
+                        base.loc[matched_idx, "row_id"],
+                        y_true,
+                        rank_base[matched_idx][:, pred_col_idx],
+                        arr[matched_idx][:, pred_col_idx],
+                        group_mode=args.bootstrap_group,
+                        iters=args.bootstrap_iters,
+                        seed=args.bootstrap_seed,
+                    )
+                if args.leave_one_group != "none":
+                    summary["leave_one_group_vs_base"] = leave_one_group_lift_vs_base(
+                        base.loc[matched_idx, "row_id"],
+                        y_true,
+                        rank_base[matched_idx][:, pred_col_idx],
+                        arr[matched_idx][:, pred_col_idx],
+                        group_mode=args.leave_one_group,
+                        max_groups_detail=args.holdout_detail,
+                    )
 
     result = {
         "base_csv": str(args.base_csv),

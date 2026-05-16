@@ -54,3 +54,7 @@ For any future public946 sidecar candidate, the local gate should include groupe
 ## 2026-05-16 v560 bootstrap backtest
 
 The grouped-bootstrap gate is necessary but not sufficient. Backtesting the known failed `v560` direct-V2S 3% sidecar showed positive local stability: aggregate lift `+0.000081879`, file-bootstrap q05 `+0.000017475` with `p_lift_gt_0=0.995`, and site-bootstrap q05 `+0.000023012` with `p_lift_gt_0=1.0`. Real public LB was still `0.945`. Therefore future sidecar candidates should not be submitted merely because bootstrap is positive; they need materially larger lift than v560 and/or independent OOF/new-source evidence outside the train-soundscape overlap.
+
+## 2026-05-16 leave-one-group backtest
+
+Leave-one-group diagnostics confirm the same lesson as the v560 bootstrap backtest. The failed `v560` direct-V2S 3% candidate remained positive even under leave-one-site-out (`min_lift=+0.000034296` across 6 sites) while public LB still dropped to `0.945`. Grouped bootstrap and leave-one-group gates are useful rejection filters, but they cannot approve public946 micro-sidecars by themselves. Treat train-soundscape overlap as too optimistic for 0.95 slot decisions.
