@@ -2566,3 +2566,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added smoke config `configs/birdclef/pl_public946_sed85_rankblend15_ecaresnet33ts_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `81047`, log `logs/pl_public946_sed85_rankblend15_ecaresnet33ts_5s_m160_lr3e4_ep8_smoke_20260516T1355Z.log`.
 - Smoke result: final all-row AUC `0.909891401` over 42 classes vs teacher `0.995303584`, corr `0.778228872`, runtime `6.8s`, TorchScript `75.378 MB`. It underperformed ResNet18/MobileNetV3 and is too weak to scale.
 - Decision: kill `eca_resnet33ts` for this public946 student lane. Continue only with more distinct architectures/objectives or repackaged public-source kernels after slot reset.
+
+### ResNet18 soft-anchor objective smoke — 2026-05-16 15:00 UTC
+
+- Status check unchanged: current best remains `0.946`; daily slots are used; no active monitor/jobs at start.
+- Chosen track: Spec B/D objective diversity. After plain ResNet18 had a tiny positive local blend lift, tested whether `soft_anchor` targets would create more useful diversity by anchoring very confident teacher positives/negatives.
+- Added p98/n05 smoke config `configs/birdclef/pl_public946_sed85_rankblend15_resnet18_softanchor_p98n05_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `90747`, log `logs/pl_public946_sed85_rankblend15_resnet18_softanchor_p98n05_5s_m160_lr3e4_ep8_smoke_20260516T1455Z.log`. It failed before training: `soft_anchor found no positives at threshold 0.98`. This teacher cache has no p>=0.98 positives on the sampled rows.
+- Added lower-threshold p90/n05 smoke config `configs/birdclef/pl_public946_sed85_rankblend15_resnet18_softanchor_p90n05_5s_m160_lr3e4_ep8_smoke_20260516.json` and launched trainer pid `91076`, log `logs/pl_public946_sed85_rankblend15_resnet18_softanchor_p90n05_5s_m160_lr3e4_ep8_smoke_20260516T1458Z.log`.
+- p90/n05 smoke result: final all-row AUC `0.934529682` over 42 classes vs teacher `0.995303584`, corr `0.812985036`, runtime `4.9s`, TorchScript `45.364 MB`. This is worse than plain ResNet18 ep8 smoke (`0.942631917`) with only slightly lower correlation.
+- Decision: do not scale ResNet18 soft-anchor objective. For this teacher cache, soft-anchor does not improve the diversity/accuracy tradeoff; plain soft-label ResNet18 remains the better ResNet-family diagnostic but still not slot-worthy.
