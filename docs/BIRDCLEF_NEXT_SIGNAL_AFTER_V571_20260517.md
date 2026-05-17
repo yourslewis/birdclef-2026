@@ -402,3 +402,31 @@ The queued local-window GPU smokes are still waiting for a free GPU. A CPU-light
 - Local mean r1: mean `0.08918`, row-top mean `0.79646`, `>=0.95` cells `255`, mean abs delta `0.00644`
 
 Interpretation: cw0.75 is a gentler version of the previously fragile cw0.50 local-max target; local_mean is a smoothing/control target that reduces extreme confidence. Both remain worth GPU smoke-testing, but no decision should be made from distribution stats alone.
+
+## 2026-05-17 execution update: cw0.75 local-window full diagnostic
+
+The queued GPU smokes completed after the GPU freed up:
+
+- `center_localmax_mix` cw0.75 smoke: best val AUC `0.926609` over `29`, final-all AUC `0.948212` over `42`, corr `0.863944`, runtime `5.709s`.
+- `local_mean` radius1 smoke: best val AUC `0.951101` over `35`, but final-all AUC only `0.924528` over `42`, corr `0.809669`; kill this exact local-mean control.
+
+Scaled cw0.75:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_10s_m160_lr3e4_ep20_20260517.json`
+- Output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b0-centerlocalmax-r1-cw075-10s-m160-lr3e4-ep20-20260517/`
+- `792` rows
+- best epoch `15`
+- best val AUC `0.992308` over `61`
+- final-all student AUC `0.991336` over `75`
+- student/teacher corr `0.964665`
+- runtime `30.460s`, TorchScript `15.391 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_centerlocalmax_r1_cw075_10s_b0_blend_audit_20260517T2158Z.json`
+- Best tested weight `0.0025`
+- Local lift `+0.000015339`
+- Site-bootstrap p_lift_gt_0 `0.78`, q05 `-0.000028233`
+- Leave-one-site p_lift_gt_0 `0.8889`, min lift `-0.000002217` on `S09`
+
+Conclusion: cw0.75 is gentler and slightly more leave-one-site stable than cw0.50, but the additive lift is smaller and still bootstrap-fragile. It is a low-weight fallback candidate only; prefer stronger true frame/head or new-source signals for the next UTC reset.
