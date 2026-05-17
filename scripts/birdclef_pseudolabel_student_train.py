@@ -64,6 +64,9 @@ class StudentConfig:
     val_fraction: float = 0.2
     seed: int = 42
     teacher_power: float = 0.85
+    temporal_target_mode: str = "center"  # center | local_max | local_mean | center_localmax_mix
+    temporal_neighbor_radius: int = 0
+    temporal_center_weight: float = 0.5
     mixup_alpha: float = 0.2
     num_workers: int = 0
     export_onnx: bool = False
@@ -159,6 +162,47 @@ def row_stem(row_id: str) -> str:
     return str(row_id).rsplit("_", 1)[0]
 
 
+def apply_temporal_target_transform(row_ids: np.ndarray, probs: np.ndarray, cfg: StudentConfig) -> np.ndarray:
+    """Build local-window pseudo targets for SED/MIL-style diagnostics.
+
+    The default `center` behavior preserves historical clip-student training.
+    Non-center modes intentionally let a context window learn from neighboring
+    5-second teacher rows, approximating weak frame/local supervision without
+    changing the public row schema.
+    """
+    mode = str(cfg.temporal_target_mode).lower()
+    if mode in {"", "center", "none", "off"}:
+        return probs
+    radius = int(cfg.temporal_neighbor_radius)
+    if radius <= 0:
+        radius = 1
+    out = probs.copy()
+    by_stem: dict[str, list[tuple[int, int]]] = {}
+    for i, rid in enumerate(row_ids.astype(str)):
+        by_stem.setdefault(row_stem(rid), []).append((row_end_sec(rid), i))
+    for rows in by_stem.values():
+        rows = sorted(rows)
+        indices = [idx for _, idx in rows]
+        for pos, idx in enumerate(indices):
+            lo = max(0, pos - radius)
+            hi = min(len(indices), pos + radius + 1)
+            neigh = probs[indices[lo:hi]]
+            if mode == "local_max":
+                out[idx] = neigh.max(axis=0)
+            elif mode == "local_mean":
+                out[idx] = neigh.mean(axis=0)
+            elif mode == "center_localmax_mix":
+                center_weight = float(cfg.temporal_center_weight)
+                center_weight = min(max(center_weight, 0.0), 1.0)
+                out[idx] = center_weight * probs[idx] + (1.0 - center_weight) * neigh.max(axis=0)
+            else:
+                raise ValueError(
+                    f"Unsupported temporal_target_mode={cfg.temporal_target_mode!r}; "
+                    "expected center, local_max, local_mean, or center_localmax_mix"
+                )
+    return np.clip(out, 0.0, 1.0).astype(np.float32)
+
+
 def resolve_data_path(path_like: str | Path) -> Path:
     """Resolve Mac/server mirror paths without changing committed configs."""
     path = Path(path_like)
@@ -191,6 +235,7 @@ def load_pseudo_data(cfg: StudentConfig) -> tuple[np.ndarray, list[str], np.ndar
     if cfg.max_rows is not None:
         row_ids = row_ids[: cfg.max_rows]
         probs = probs[: cfg.max_rows]
+    probs = apply_temporal_target_transform(row_ids, probs, cfg)
     mode = str(cfg.target_mode).lower()
     if mode == "soft":
         # Power scaling for soft labels, clipped to preserve valid BCE targets.

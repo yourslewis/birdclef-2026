@@ -78,6 +78,100 @@ def read_metrics_summary(path: Path) -> dict[str, Any] | None:
     }
 
 
+def group_key(row_id: str, mode: str) -> str:
+    text = str(row_id)
+    if mode == "row":
+        return text
+    if mode == "file":
+        return text.rsplit("_", 1)[0]
+    if mode == "site":
+        for part in text.replace("-", "_").split("_"):
+            if len(part) >= 2 and part[0].upper() == "S" and part[1:].isdigit():
+                return part.upper()
+        return text.rsplit("_", 1)[0]
+    raise ValueError(f"unknown group mode {mode!r}")
+
+
+def lift_summary(values: list[float] | np.ndarray) -> dict[str, Any]:
+    arr = np.asarray(values, dtype=np.float64)
+    arr = arr[np.isfinite(arr)]
+    if arr.size == 0:
+        return {"n": 0}
+    return {
+        "n": int(arr.size),
+        "mean_lift": float(arr.mean()),
+        "median_lift": float(np.median(arr)),
+        "p_lift_gt_0": float(np.mean(arr > 0)),
+        "q05_lift": float(np.quantile(arr, 0.05)),
+        "q25_lift": float(np.quantile(arr, 0.25)),
+        "q75_lift": float(np.quantile(arr, 0.75)),
+        "q95_lift": float(np.quantile(arr, 0.95)),
+        "min_lift": float(arr.min()),
+        "max_lift": float(arr.max()),
+    }
+
+
+def bootstrap_lift_vs_teacher(
+    row_ids: np.ndarray,
+    y_true: np.ndarray,
+    teacher: np.ndarray,
+    candidate: np.ndarray,
+    *,
+    group_mode: str,
+    iters: int,
+    seed: int,
+) -> dict[str, Any]:
+    groups = np.array([group_key(x, group_mode) for x in row_ids.astype(str).tolist()])
+    unique_groups = np.array(sorted(set(groups.tolist())))
+    by_group = {g: np.flatnonzero(groups == g) for g in unique_groups}
+    rng = np.random.default_rng(seed)
+    lifts: list[float] = []
+    for _ in range(int(iters)):
+        sampled_groups = rng.choice(unique_groups, size=len(unique_groups), replace=True)
+        idx = np.concatenate([by_group[g] for g in sampled_groups])
+        base_auc = macro_auc(y_true[idx], teacher[idx])["macro_auc"]
+        cand_auc = macro_auc(y_true[idx], candidate[idx])["macro_auc"]
+        if base_auc is not None and cand_auc is not None:
+            lifts.append(float(cand_auc - base_auc))
+    out: dict[str, Any] = {"iters": int(iters), "valid_iters": int(len(lifts)), "group_mode": group_mode, "n_groups": int(len(unique_groups))}
+    out.update(lift_summary(lifts))
+    return out
+
+
+def leave_one_group_lift_vs_teacher(
+    row_ids: np.ndarray,
+    y_true: np.ndarray,
+    teacher: np.ndarray,
+    candidate: np.ndarray,
+    *,
+    group_mode: str,
+    max_groups_detail: int,
+) -> dict[str, Any]:
+    groups = np.array([group_key(x, group_mode) for x in row_ids.astype(str).tolist()])
+    unique_groups = np.array(sorted(set(groups.tolist())))
+    rows = []
+    for group in unique_groups:
+        idx = np.flatnonzero(groups != group)
+        if idx.size == 0:
+            continue
+        base_auc = macro_auc(y_true[idx], teacher[idx])["macro_auc"]
+        cand_auc = macro_auc(y_true[idx], candidate[idx])["macro_auc"]
+        if base_auc is None or cand_auc is None:
+            continue
+        rows.append({
+            "held_out_group": str(group),
+            "train_rows": int(idx.size),
+            "teacher_auc": float(base_auc),
+            "candidate_auc": float(cand_auc),
+            "lift": float(cand_auc - base_auc),
+        })
+    out: dict[str, Any] = {"group_mode": group_mode, "n_groups": int(len(unique_groups)), "valid_groups": int(len(rows))}
+    out.update(lift_summary([r["lift"] for r in rows]))
+    out["worst_groups"] = sorted(rows, key=lambda r: r["lift"])[:max_groups_detail]
+    out["best_groups"] = sorted(rows, key=lambda r: r["lift"], reverse=True)[:max_groups_detail]
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--teacher", type=Path, required=True)
@@ -87,6 +181,12 @@ def main() -> int:
     ap.add_argument("--pattern", default="*/student_predictions.npz")
     ap.add_argument("--weights", default="0.0025,0.005,0.01,0.02,0.05,0.075,0.10,0.15,0.20,0.30")
     ap.add_argument("--top-k", type=int, default=30)
+    ap.add_argument("--bootstrap-iters", type=int, default=0, help="Bootstrap best blend lift by group")
+    ap.add_argument("--bootstrap-group", choices=["file", "site", "row"], default="file")
+    ap.add_argument("--bootstrap-seed", type=int, default=42)
+    ap.add_argument("--leave-one-group", choices=["none", "file", "site", "row"], default="none", help="Leave-one-group-out lift stability for each best blend")
+    ap.add_argument("--holdout-detail", type=int, default=30)
+    ap.add_argument("--stability-top-n", type=int, default=0, help="Compute expensive stability only after ranking this many top blends")
     args = ap.parse_args()
 
     row_ids, labels, teacher = load_teacher(args.teacher)
@@ -132,10 +232,40 @@ def main() -> int:
             "standalone": standalone,
             "corr_student_vs_teacher": flat_corr(student, teacher),
             "best_blend": best,
+            "best_blend_stability": {},
             "top_blends": blends[:5],
         })
 
     results.sort(key=lambda row: (row["best_blend"] or {}).get("macro_auc") or -1, reverse=True)
+    if args.stability_top_n > 0 and (args.bootstrap_iters > 0 or args.leave_one_group != "none"):
+        for row in results[: args.stability_top_n]:
+            best = row.get("best_blend")
+            if best is None:
+                continue
+            z = np.load(row["path"], allow_pickle=True)
+            student = z["pred_student"].astype(np.float32)
+            best_pred = (1.0 - float(best["student_weight"])) * teacher + float(best["student_weight"]) * student
+            stability: dict[str, Any] = {}
+            if args.bootstrap_iters > 0:
+                stability["bootstrap"] = bootstrap_lift_vs_teacher(
+                    row_ids,
+                    y,
+                    teacher,
+                    best_pred,
+                    group_mode=args.bootstrap_group,
+                    iters=args.bootstrap_iters,
+                    seed=args.bootstrap_seed,
+                )
+            if args.leave_one_group != "none":
+                stability["leave_one_group"] = leave_one_group_lift_vs_teacher(
+                    row_ids,
+                    y,
+                    teacher,
+                    best_pred,
+                    group_mode=args.leave_one_group,
+                    max_groups_detail=args.holdout_detail,
+                )
+            row["best_blend_stability"] = stability
     summary = {
         "status": "student_pool_blend_audit_complete",
         "teacher": str(args.teacher),
@@ -145,6 +275,13 @@ def main() -> int:
         "n_scanned": len(results) + len(skipped),
         "n_aligned": len(results),
         "n_skipped": len(skipped),
+        "stability_args": {
+            "bootstrap_iters": int(args.bootstrap_iters),
+            "bootstrap_group": args.bootstrap_group,
+            "bootstrap_seed": int(args.bootstrap_seed),
+            "leave_one_group": args.leave_one_group,
+            "stability_top_n": int(args.stability_top_n),
+        },
         "top_by_blend": results[: args.top_k],
         "top_by_standalone": sorted(results, key=lambda row: row["standalone"].get("macro_auc") or -1, reverse=True)[: args.top_k],
         "skipped_head": skipped[: args.top_k],
