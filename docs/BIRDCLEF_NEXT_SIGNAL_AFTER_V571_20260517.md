@@ -266,3 +266,45 @@ Blend/stability audit:
 - Leave-one-site p_lift_gt_0: `0.0`; every site-held-out lift was negative.
 
 Conclusion: raw-SED 10s B0 is a strong mimic but not additive. Do not package or submit it. A true v573 needs a different frame/local target structure or model output, not merely raw SED row-level distillation.
+
+## 2026-05-17 execution update: refreshed q3 B3 external-pretrain diagnostic
+
+The B3 external-pretrain lane exposed a useful manifest hygiene issue and a marginal-but-not-submittable new-source signal.
+
+Manifest hygiene:
+
+- Older `artifacts/external_pretrain/manifest_q3_cap80/external_pretrain_manifest.csv`: `976` balanced q>=3 candidate rows but only `295` resolved to local files on trainer.
+- Refreshed `artifacts/external_pretrain/manifest_q3_cap80_20260517/external_pretrain_manifest.csv`: the same balanced cap resolves all `976` rows.
+- Future external-pretrain comparisons should use the refreshed manifest or explicitly verify resolved-file counts.
+
+B3 q3 external-pretrain runs:
+
+- `configs/birdclef/xc_b3_q3_cap80_manifest20260517_external_pretrain_balanced_ep6_20260517.json`
+  - `976` examples
+  - val macro AUC `0.650746` / `117` classes
+  - best epoch `6`
+  - runtime `37.4s`, TorchScript `41.991 MB`
+- `configs/birdclef/xc_b3_q3_cap80_manifest20260517_external_pretrain_balanced_ep18_20260517.json`
+  - val macro AUC `0.722691` / `117` classes
+  - best val loss at epoch `10`
+  - runtime `48.109s`, TorchScript `41.991 MB`
+
+Interpretation: refreshed-manifest B3 learns real external signal and is much better than the old 128-row smoke, but it still trails the existing B0 q3 ep18-bestloss checkpoint (`0.747224` over `122`). B3 is not a better external representation yet.
+
+Public946 B3-extinit distill:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b3_xc_q3_manifest20260517_extinit_5s_m128_lr1e4_ep20_20260517.json`
+- Output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b3-xc-q3-manifest20260517-extinit-5s-m128-lr1e4-ep20-20260517/`
+- Final-all student AUC `0.968505` over `75`
+- Student/teacher corr `0.936244`
+- Runtime `31.243s`, TorchScript `41.995 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_b3_xc_q3_manifest20260517_extinit_blend_audit_20260517T1125Z.json`
+- Best tested weight `0.05`
+- Local lift `+0.000045896`
+- Site-bootstrap p_lift_gt_0 `0.80`, q05 `-0.000060676`
+- Leave-one-site p_lift_gt_0 `0.8889`; worst site `S09` lift `-0.000011376`
+
+Conclusion: B3 refreshed-q3 extinit is mildly additive locally but not robust enough for a slot. Do not package/submit it yet. If the external lane continues, compare against a refreshed-manifest B0 rerun or move to a different architecture/target structure; do not assume old-manifest metrics are apples-to-apples.
