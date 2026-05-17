@@ -341,3 +341,41 @@ Blend/stability audit:
 - Site-bootstrap p_lift_gt_0 `0.78`, q05 `-0.000050795`
 
 Conclusion: B0 refreshed-q3 extinit is a safer but very small local addition. It is not strong enough to override the sidecar under-transfer lesson, but it is a reasonable low-weight fallback candidate for a future reset if no stronger frame/local or source-backed candidate is available. Preferred next work remains true frame/local SED-MIL target structure or fold/seed replication before spending a slot.
+
+## 2026-05-17 execution update: local-window SED/MIL target diagnostic
+
+To move beyond plain row-level distillation, `scripts/birdclef_pseudolabel_student_train.py` now supports local-window target transforms:
+
+- `temporal_target_mode`: `center`, `local_max`, `local_mean`, `center_localmax_mix`
+- `temporal_neighbor_radius`
+- `temporal_center_weight`
+
+The default remains `center`, preserving historical configs. Non-center modes are intended for weak SED/MIL-style diagnostics where a 10s context window learns from neighboring 5s teacher rows.
+
+Smoke:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_10s_m160_lr3e4_ep8_smoke_20260517.json`
+- B0, refreshed-q3 B0 init, 10s/160mel, center/localmax mix radius 1, center weight 0.5
+- `256` rows, `8` epochs
+- val AUC `0.953302` over `28` classes
+- final-all AUC `0.947316` over `42`
+- student/teacher corr `0.871117`
+- runtime `7.431s`
+
+Full-row:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_10s_m160_lr3e4_ep20_20260517.json`
+- Output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b0-centerlocalmax-r1-10s-m160-lr3e4-ep20-20260517/`
+- final-all student AUC `0.990436` over `75`
+- student/teacher corr `0.967644`
+- runtime `26.702s`, TorchScript `15.391 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_centerlocalmax_r1_10s_b0_blend_audit_20260517T1310Z.json`
+- Best tested weight `0.01`
+- Local lift `+0.000020186`
+- Site-bootstrap p_lift_gt_0 `0.66`, q05 `-0.000073194`
+- Leave-one-site p_lift_gt_0 `0.7778`; worst sites `S22=-0.000016085`, `S09=-0.000004629`
+
+Conclusion: the local-window target mechanism is useful and passed smoke, but this exact center/localmax-r1 B0 candidate is not robust enough for a Kaggle slot. Next variants should alter the target structure rather than submit this one: e.g. lower neighbor influence (`temporal_center_weight=0.75`), `local_mean`, or a true frame-head model.
