@@ -11,13 +11,13 @@ train-row submission output, useful for diagnostics/cache validation.
 
 # %% markdown
 # # BirdCLEF+ 2026 0.946 | Updated Perch + SED Pipeline
-# 
+#
 # **Update note.** This is an in-place update of my existing public BirdCLEF notebook. The URL slug still contains `0.941` because that was the original public version; the current notebook content documents the stronger **0.946 public LB** line validated later.
-# 
+#
 # I am updating the existing high-vote page rather than publishing a second near-duplicate notebook, so readers have one stable public reference and the vote history stays attached to the same educational resource.
-# 
+#
 # ## What changed from the original 0.941 public version
-# 
+#
 # | Area | Update |
 # |---|---|
 # | Public score anchor | Current confirmed best is `mtoshi_test_v8_v1 = 0.946` from my account. |
@@ -25,9 +25,9 @@ train-row submission output, useful for diagnostics/cache validation.
 # | Public resources | Still all-addable Kaggle inputs, with internet disabled and CPU execution. |
 # | Explanation | Adds a score card, reproducibility contract, dependency/credit table, and ablation lessons. |
 # | Practical lesson | Component-only and simple weight sweeps did not beat the original blended structure. |
-# 
+#
 # ## Score card from my account
-# 
+#
 # | Candidate | Public LB | What it tested |
 # |---|---:|---|
 # | `mtoshi_test_v8_v1` | **0.946** | Strongest confirmed Perch/ProtoSSM + distilled SED V8-style blend. |
@@ -36,9 +36,9 @@ train-row submission output, useful for diagnostics/cache validation.
 # | `mtoshi_v8_rank80p20_v1` | 0.942 | Even more ProtoSSM weight hurt further. |
 # | `mtoshi_v8_proto_only_v1` | 0.929 | Temporal Perch branch alone is not enough. |
 # | `mtoshi_v8_sed_only_v1` | 0.926 | Distilled SED branch alone is not enough. |
-# 
+#
 # ## High-level flow
-# 
+#
 # ```text
 # Kaggle public inputs
 #   |
@@ -66,9 +66,9 @@ train-row submission output, useful for diagnostics/cache validation.
 #           +-- rare-class suppression
 #           +-- submission.csv
 # ```
-# 
+#
 # ## Reading guide
-# 
+#
 # Each code cell is preceded by a compact explanation block. When you fork the notebook, start by checking the input paths, then the output shape, then whether the final `submission.csv` has the same labels and row ordering as the sample submission.
 
 # %% cell 1
@@ -117,17 +117,17 @@ plt.show()
 
 # %% markdown
 # # Method, lineage, and compliance
-# 
+#
 # This notebook is the single public continuation of the earlier 0.941 ONNX Perch Sequence + SED write-up. The code below is the stronger 0.946 V8-style line, but the educational purpose is the same: a runnable, inspectable, all-public BirdCLEF inference pipeline.
-# 
+#
 # ## Architecture in one paragraph
-# 
+#
 # The notebook first converts each soundscape into 5-second windows, then uses Perch to extract logits and dense embeddings. Lightweight in-notebook learners model temporal structure over the 12-window sequence, while a public distilled SED ensemble contributes spectrogram-local evidence. The final submission is not a raw average: predictions are rank blended, smoothed, gated for continuity, mirrored across selected sonotypes, clipped, and written in the exact sample-submission order.
-# 
+#
 # ## Public attribution chain
-# 
+#
 # Please keep this attribution if you fork or reuse the approach.
-# 
+#
 # | Component | Public source |
 # |---|---|
 # | Updated V8 direction and final recipe | m-toshi / `testbirdclef-2026-v8` style public notebook lineage |
@@ -136,9 +136,9 @@ plt.show()
 # | Perch metadata and ONNX export | Jaejohn `perch-meta`, Rishikesh Jani `perch-onnx-for-birdclef-2026` |
 # | TensorFlow wheel helper | Ashok205, `tf-wheels` |
 # | Base audio embedding model | Google Bird Vocalization Classifier, Perch v2 CPU |
-# 
+#
 # ## Reproducibility contract
-# 
+#
 # | Check | Expected result |
 # |---|---|
 # | Kaggle inputs | Competition source plus the public datasets/models listed in the sidebar. |
@@ -146,12 +146,12 @@ plt.show()
 # | GPU | Not required for this notebook version. |
 # | Public dry-run output | 240 rows x 235 columns, zero NaNs. |
 # | Formal submit output | One row per hidden test file x 12 windows, `row_id` plus 234 class columns. |
-# 
+#
 # Dry-run metrics on train soundscapes are useful for catching broken rows, NaNs, and obvious regressions. They are not a reliable leaderboard oracle; the SED-heavy dry-run proxy is especially optimistic.
 
 # %% markdown
 # ### 🔎 Offline wheel installation
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Installs ONNX Runtime and TensorFlow from attached Kaggle wheel assets. |
@@ -191,7 +191,7 @@ except ImportError:
 
 # %% markdown
 # ### 🔎 Reproducibility seed setup
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Fixes Python, NumPy, and PyTorch random seeds to make training behavior more stable. |
@@ -219,7 +219,7 @@ print("Global random seed set to 42")
 
 # %% markdown
 # ### 🔎 Execution mode selector
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Switches between training/debug behavior and submission behavior. |
@@ -228,14 +228,14 @@ print("Global random seed set to 42")
 # | **Risk / check** | Use `train` only when you want OOF evaluation and are willing to spend more runtime. |
 
 # %% cell 8
-MODE = "submit"   
- 
+MODE = "submit"
+
 assert MODE in {"train", "submit"}
 print("MODE =", MODE)
 
 # %% markdown
 # ### 🔎 Global imports, paths, constants, and configuration
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Defines the core runtime constants: audio sample rate, window size, class/window counts, paths, and model hyperparameters. |
@@ -247,7 +247,7 @@ print("MODE =", MODE)
 import os, re, gc, time, warnings
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 warnings.filterwarnings("ignore")
- 
+
 import numpy as np
 import pandas as pd
 import soundfile as sf
@@ -255,24 +255,24 @@ import tensorflow as tf
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GroupKFold
 from tqdm.auto import tqdm
- 
+
 tf.experimental.numpy.experimental_enable_numpy_behavior()
 try: tf.config.set_visible_devices([], "GPU")
 except: pass
- 
+
 _WALL_START = time.time()
- 
+
 BASE      = Path("/kaggle/input/competitions/birdclef-2026")
 MODEL_DIR = Path("/kaggle/input/models/google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1")
 WORK_DIR  = Path("/kaggle/working/cache")
 WORK_DIR.mkdir(parents=True, exist_ok=True)
- 
+
 SR             = 32_000
 WINDOW_SEC     = 5
 WINDOW_SAMPLES = SR * WINDOW_SEC
 FILE_SAMPLES   = 60 * SR
-N_WINDOWS      = 12          
- 
+N_WINDOWS      = 12
+
 CFG = {
     "batch_files": 16,
     "oof_n_splits": 5   if MODE == "train" else 3,
@@ -320,23 +320,23 @@ print(f"  n_epochs={CFG['proto_ssm_train']['n_epochs']}  "
       f"patience={CFG['proto_ssm_train']['patience']}  "
       f"oof_n_splits={CFG['proto_ssm_train']['oof_n_splits']}  "
       f"mlp_max_iter={CFG['mlp_params']['max_iter']}")
- 
+
 print("Config ready")
 print(f"  run_oof={CFG['run_oof']}  verbose={CFG['verbose']}  dryrun={CFG['dryrun_n_files']}")
 
 # %% markdown
 # ## Data and Label Setup
-# 
+#
 # The competition target has 234 scored classes. The notebook reads `taxonomy.csv` and `sample_submission.csv`, then constructs the row/column order required by Kaggle. It also parses train soundscape labels for the internal dry-run and for building sequence-model training targets.
-# 
+#
 # The hidden test set is not available during ordinary public execution. This is expected for a Kaggle code competition: the same notebook will see real `test_soundscapes` only when Kaggle reruns it as a formal competition submission.
-# 
-# 
+#
+#
 # ---
 
 # %% markdown
 # ### 🔎 Data schema and label matrix setup
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Builds the scored class list, parses soundscape filenames, groups labels, and creates the multi-label target matrix. |
@@ -348,19 +348,19 @@ print(f"  run_oof={CFG['run_oof']}  verbose={CFG['verbose']}  dryrun={CFG['dryru
 taxonomy          = pd.read_csv(BASE / "taxonomy.csv")
 sample_sub        = pd.read_csv(BASE / "sample_submission.csv")
 soundscape_labels = pd.read_csv(BASE / "train_soundscapes_labels.csv")
- 
+
 PRIMARY_LABELS = sample_sub.columns[1:].tolist()
 N_CLASSES      = len(PRIMARY_LABELS)
 label_to_idx   = {c: i for i, c in enumerate(PRIMARY_LABELS)}
- 
+
 FNAME_RE = re.compile(r"BC2026_(?:Train|Test)_(\d+)_(S\d+)_(\d{8})_(\d{6})\.ogg")
- 
+
 def parse_fname(name):
     m = FNAME_RE.match(name)
     if not m: return {"site": "unknown", "hour_utc": -1}
     _, site, _, hms = m.groups()
     return {"site": site, "hour_utc": int(hms[:2])}
- 
+
 def union_labels(series):
     out = set()
     for x in series:
@@ -369,49 +369,49 @@ def union_labels(series):
                 t = t.strip()
                 if t: out.add(t)
     return sorted(out)
- 
+
 sc = (soundscape_labels
       .groupby(["filename", "start", "end"])["primary_label"]
       .apply(union_labels)
       .reset_index(name="label_list"))
- 
+
 sc["end_sec"] = pd.to_timedelta(sc["end"]).dt.total_seconds().astype(int)
 sc["row_id"]  = sc["filename"].str.replace(".ogg", "", regex=False) + "_" + sc["end_sec"].astype(str)
- 
+
 _meta = sc["filename"].apply(parse_fname).apply(pd.Series)
 sc = pd.concat([sc, _meta], axis=1)
- 
+
 Y_SC = np.zeros((len(sc), N_CLASSES), dtype=np.uint8)
 for i, lbls in enumerate(sc["label_list"]):
     for lbl in lbls:
         if lbl in label_to_idx:
             Y_SC[i, label_to_idx[lbl]] = 1
- 
+
 windows_per_file = sc.groupby("filename").size()
 full_files = sorted(windows_per_file[windows_per_file == N_WINDOWS].index.tolist())
 sc["fully_labeled"] = sc["filename"].isin(full_files)
- 
+
 full_rows = (sc[sc["fully_labeled"]]
              .sort_values(["filename", "end_sec"])
              .reset_index(drop=False))
 Y_FULL = Y_SC[full_rows["index"].to_numpy()]
- 
+
 print(f"Classes: {N_CLASSES} | Fully-labeled files: {len(full_files)}")
 print(f"Full-file windows: {len(full_rows)} | Active classes: {int((Y_FULL.sum(0) > 0).sum())}")
 
 # %% markdown
 # ## Perch Backbone
-# 
+#
 # Perch provides strong acoustic embeddings and class logits. The notebook prefers an attached ONNX export for speed, while still keeping the Kaggle TensorFlow Perch model available. In our submitted run, ONNX Perch was used and the train cache was built in roughly 2.5 minutes.
-# 
+#
 # A useful implementation detail is the species mapping step. Most target classes map directly to Perch logits; a few unmapped targets can borrow genus-level proxy signal; the remaining unmapped species are handled by the downstream learned and prior components rather than by direct Perch logits.
-# 
-# 
+#
+#
 # ---
 
 # %% markdown
 # ### 🔎 Perch backbone loading and target-species mapping
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Loads Perch and maps BirdCLEF target species to available Perch logits. |
@@ -457,7 +457,7 @@ print(f"Mapped: {MAPPED_MASK.sum()} / {N_CLASSES} species have a Perch logit")
 
 # %% markdown
 # ### 🔎 Genus-level proxy mapping for unmapped species
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Finds fallback Perch logits for target species that lack an exact Perch class match. |
@@ -472,7 +472,7 @@ UNMAPPED_POS  = np.where(~MAPPED_MASK)[0].astype(np.int32)
 CLASS_NAME_MAP = taxonomy.set_index("primary_label")["class_name"].to_dict()
 TEXTURE_TAXA   = {"Amphibia", "Insecta"}
 
-proxy_map = {}   
+proxy_map = {}
 
 unmapped_df = (taxonomy[taxonomy["primary_label"]
                .isin([PRIMARY_LABELS[i] for i in UNMAPPED_POS])]
@@ -487,7 +487,7 @@ for _, row in unmapped_df.iterrows():
         .astype(str)
         .str.match(rf"^{_re.escape(genus)}\s", na=False)
     ]
-    
+
     if len(hits) > 0:
         proxy_map[label_to_idx[target]] = hits["bc_index"].astype(int).tolist()
 
@@ -509,17 +509,17 @@ for idx, bc_idxs in list(proxy_map.items())[:8]:
 
 # %% markdown
 # ## Window-Level Inference Cache
-# 
+#
 # The inference engine splits each 60-second soundscape into twelve 5-second windows. Caching the Perch scores and 1536-dimensional embeddings is important because later cells train several lightweight models over the same windows.
-# 
+#
 # The cache also makes the notebook easier to debug: if a later modeling cell changes, the expensive audio pass does not have to be repeated inside the same run.
-# 
-# 
+#
+#
 # ---
 
 # %% markdown
 # ### 🔎 Genus-level proxy mapping for unmapped species
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Finds fallback Perch logits for target species that lack an exact Perch class match. |
@@ -605,7 +605,7 @@ print("Perch inference engine defined")
 
 # %% markdown
 # ### 🔎 Perch cache discovery, build, and alignment
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Uses an existing public/local Perch cache when available, otherwise builds one from train soundscapes. |
@@ -737,24 +737,24 @@ print(f"sc_tr: {sc_tr.shape}  emb_tr: {emb_tr.shape}  Y_FULL_aligned: {Y_FULL_al
 
 # %% markdown
 # ## Validation and Post-Processing Helpers
-# 
+#
 # The local dry-run metric is useful for finding broken outputs, but it is not a replacement for public LB. Several SED-only candidates scored extremely high on train-soundscape dry-runs and then underperformed on the official public LB. For this reason, the dry-run is treated as a sanity check plus ranking clue, not as proof.
-# 
+#
 # The post-processing stack combines:
-# 
+#
 # - temporal smoothing across adjacent 5-second windows,
 # - site/hour priors from train soundscape metadata,
 # - file-level confidence scaling,
 # - per-taxon temperature scaling,
 # - rank-aware scaling,
 # - adaptive smoothing that reacts to prediction deltas.
-# 
-# 
+#
+#
 # ---
 
 # %% markdown
 # ### 🔎 Validation metric and temporal smoothing helpers
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Defines macro AUC, GroupKFold OOF evaluation, and simple neighbor smoothing. |
@@ -771,8 +771,8 @@ def macro_auc(y_true, y_score):
     """
     keep = y_true.sum(axis=0) > 0
     return roc_auc_score(y_true[:, keep], y_score[:, keep], average="macro")
- 
- 
+
+
 def honest_oof_auc(scores, Y, meta_df, n_splits=5, label="scores"):
     """
     GroupKFold by filename — files never split across folds.
@@ -782,17 +782,17 @@ def honest_oof_auc(scores, Y, meta_df, n_splits=5, label="scores"):
     groups = meta_df["filename"].to_numpy()
     gkf    = GroupKFold(n_splits=n_splits)
     oof    = np.zeros_like(scores, dtype=np.float32)
- 
+
     for fold, (tr_idx, va_idx) in enumerate(gkf.split(scores, groups=groups), 1):
         oof[va_idx] = scores[va_idx]
- 
+
     auc = macro_auc(Y, oof)
     print(f"[{label}] honest OOF macro-AUC: {auc:.6f}")
     return auc, oof
 
 # %% markdown
 # ### 🔎 Code Cell
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Runs one step of the BirdCLEF pipeline. |
@@ -812,8 +812,8 @@ def smooth_predictions(probs, n_windows=12, alpha=0.3):
     N, C = probs.shape
     assert N % n_windows == 0, f"Expected multiple of {n_windows}, got {N}"
     view = probs.reshape(-1, n_windows, C).copy()
-    prev_w = np.concatenate([view[:, :1, :],  view[:, :-1, :]], axis=1)  
-    next_w = np.concatenate([view[:, 1:,  :], view[:, -1:, :]], axis=1) 
+    prev_w = np.concatenate([view[:, :1, :],  view[:, :-1, :]], axis=1)
+    next_w = np.concatenate([view[:, 1:,  :], view[:, -1:, :]], axis=1)
     smoothed = (1 - alpha) * view + 0.5 * alpha * (prev_w + next_w)
     return smoothed.reshape(N, C)
 
@@ -821,16 +821,16 @@ print("Temporal smoothing helper defined")
 
 # %% markdown
 # ## Prior Probability Tables
-# 
-# This section calculates the frequency of species occurrences based on site and time of day. We construct a 3-tier prior: global frequency, independent site and hour frequencies, and a joint site-hour bucket. 
-# 
+#
+# This section calculates the frequency of species occurrences based on site and time of day. We construct a 3-tier prior: global frequency, independent site and hour frequencies, and a joint site-hour bucket.
+#
 # Because the joint site-hour combinations have fewer samples, we apply a tighter Bayesian shrinkage factor to prevent overfitting to sparse acoustic environments. These priors are converted to log-odds and added directly to the raw Perch logits.
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Site/hour prior probability tables
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Creates global, site, hour, and site-hour priors for ecological context. |
@@ -923,7 +923,7 @@ print("Prior tables defined")
 
 # %% markdown
 # ### 🔎 File-level confidence scaling
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Suppresses uncertain files by using top-k file-level confidence as a scale factor. |
@@ -935,35 +935,35 @@ print("Prior tables defined")
 def file_confidence_scale(probs, n_windows=12, top_k=2, power=0.4):
     """
     Scale each window's predictions by how confident the file is overall.
-    
+
     Steps:
     1. For each file, find the top-k highest scores across all 12 windows
     2. Compute their mean → "file confidence"
     3. Multiply every window's scores by (file_confidence ** power)
-    
+
     power=0: no effect (baseline)
     power=0.4: moderate suppression of uncertain files
-    
+
     Why top-k and not max?
     Max is noisy (one lucky spike). Top-2 mean is more robust.
     """
     N, C = probs.shape
     assert N % n_windows == 0
-    
-    view      = probs.reshape(-1, n_windows, C)       
-    sorted_v  = np.sort(view, axis=1)                 
-    top_k_mean = sorted_v[:, -top_k:, :].mean(axis=1, keepdims=True)  
-    
-    scale  = np.power(top_k_mean, power)              
-    scaled = view * scale                             
-    
+
+    view      = probs.reshape(-1, n_windows, C)
+    sorted_v  = np.sort(view, axis=1)
+    top_k_mean = sorted_v[:, -top_k:, :].mean(axis=1, keepdims=True)
+
+    scale  = np.power(top_k_mean, power)
+    scaled = view * scale
+
     return scaled.reshape(N, C)
 
 print("File-level confidence scaling defined")
 
 # %% markdown
 # ### 🔎 Taxon-aware temperature scaling
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Applies different score temperatures to texture-like taxa and event-like species. |
@@ -973,15 +973,15 @@ print("File-level confidence scaling defined")
 
 # %% cell 35
 CLASS_NAME_MAP = taxonomy.set_index("primary_label")["class_name"].to_dict()
-TEXTURE_TAXA   = {"Amphibia", "Insecta"}   
+TEXTURE_TAXA   = {"Amphibia", "Insecta"}
 
 temperatures = np.ones(N_CLASSES, dtype=np.float32)
 for ci, label in enumerate(PRIMARY_LABELS):
     cls = CLASS_NAME_MAP.get(label, "Aves")
     if cls in TEXTURE_TAXA:
-        temperatures[ci] = 0.95   
+        temperatures[ci] = 0.95
     else:
-        temperatures[ci] = 1.10   
+        temperatures[ci] = 1.10
 
 n_texture = (temperatures < 1.0).sum()
 n_event   = (temperatures > 1.0).sum()
@@ -989,17 +989,17 @@ print(f"Temperatures: {n_event} event species (T=1.10), {n_texture} texture spec
 
 # %% markdown
 # ## Lightweight Perch-Embedding Learners
-# 
+#
 # The notebook trains small models inside the inference notebook rather than relying on private checkpoints. This keeps the solution self-contained and public-input compliant.
-# 
+#
 # The MLP probe branch uses PCA-compressed Perch embeddings and only trains classes with enough positive windows. The calibration block then uses isotonic calibration and class-level threshold estimates to keep probabilities better behaved before the final blend.
-# 
-# 
+#
+#
 # ---
 
 # %% markdown
 # ### 🔎 Embedding-based MLP probe training
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Trains small per-class MLP probes using compressed Perch embeddings plus temporal score features. |
@@ -1055,7 +1055,7 @@ def train_mlp_probes(emb, scores_raw, Y, min_pos=5, pca_dim=64, alpha_blend=0.4)
     active = np.where(Y.sum(axis=0) >= min_pos)[0]
     print(f"Training MLP probes for {len(active)} species (>= {min_pos} pos windows)...")
 
-    MAX_ROWS = 3000   
+    MAX_ROWS = 3000
 
     for ci in tqdm(active, desc="MLP probes"):
         y = Y[:, ci]
@@ -1083,15 +1083,15 @@ def train_mlp_probes(emb, scores_raw, Y, min_pos=5, pca_dim=64, alpha_blend=0.4)
         y_bal = np.concatenate([y, np.ones(n_pos * repeat, dtype=y.dtype)])
 
         clf = MLPClassifier(
-            hidden_layer_sizes=(128, 64),   
+            hidden_layer_sizes=(128, 64),
             activation="relu",
-            max_iter=300,                   
+            max_iter=300,
             early_stopping=True,
             validation_fraction=0.15,
-            n_iter_no_change=15,            
+            n_iter_no_change=15,
             random_state=42,
-            learning_rate_init=5e-4,        
-            alpha=0.005,                    
+            learning_rate_init=5e-4,
+            alpha=0.005,
         )
         clf.fit(X_bal, y_bal)
         probe_models[ci] = clf
@@ -1120,7 +1120,7 @@ print("Upgraded MLP probe (pca_dim=64, hidden=(128,64), max_iter=300, min_pos=5)
 
 # %% markdown
 # ### 🔎 Vectorized MLP probe inference
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Converts many per-class MLPs into batched PyTorch matrix operations for faster inference. |
@@ -1152,9 +1152,9 @@ class VectorizedMLPProbes(nn.Module):
 
         for layer_idx in range(self.n_layers):
             W = np.stack([probe_models[c].coefs_[layer_idx]
-                          for c in self.valid_classes], axis=0)       
+                          for c in self.valid_classes], axis=0)
             b = np.stack([probe_models[c].intercepts_[layer_idx]
-                          for c in self.valid_classes], axis=0)       
+                          for c in self.valid_classes], axis=0)
             self.weights.append(nn.Parameter(
                 torch.tensor(W, dtype=torch.float32), requires_grad=False))
             self.biases.append(nn.Parameter(
@@ -1166,7 +1166,7 @@ class VectorizedMLPProbes(nn.Module):
             h = torch.bmm(h, self.weights[i]) + self.biases[i].unsqueeze(1)
             if i < self.n_layers - 1:
                 h = torch.relu(h)
-        return h.squeeze(-1)   
+        return h.squeeze(-1)
 
 def apply_mlp_probes_vectorized(emb_test, scores_test, probe_models,
                                  scaler, pca, alpha_blend=0.4):
@@ -1185,7 +1185,7 @@ def apply_mlp_probes_vectorized(emb_test, scores_test, probe_models,
     V = len(valid_classes)
     N = len(scores_test)
 
-    raw  = scores_test[:, valid_classes].T          
+    raw  = scores_test[:, valid_classes].T
     n_files = N // N_WINDOWS
     raw_view = raw.reshape(V, n_files, N_WINDOWS)
     prev = np.concatenate([raw_view[:, :, :1], raw_view[:, :, :-1]], axis=2).reshape(V, N)
@@ -1202,10 +1202,10 @@ def apply_mlp_probes_vectorized(emb_test, scores_test, probe_models,
     vec_probe = VectorizedMLPProbes(probe_models)
     vec_probe.eval()
     with torch.no_grad():
-        preds = vec_probe(torch.tensor(X_all)).numpy()   
+        preds = vec_probe(torch.tensor(X_all)).numpy()
 
     result = scores_test.copy()
-    base_valid = scores_test[:, valid_classes]           
+    base_valid = scores_test[:, valid_classes]
     result[:, valid_classes] = (
         (1.0 - alpha_blend) * base_valid +
         alpha_blend * preds.T
@@ -1216,7 +1216,7 @@ print("Vectorized MLP probe inference defined")
 
 # %% markdown
 # ### 🔎 Isotonic calibration and per-class thresholds
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Calibrates file-level probabilities and estimates per-class thresholds for sharpening. |
@@ -1227,7 +1227,7 @@ print("Vectorized MLP probe inference defined")
 # %% cell 42
 from sklearn.isotonic import IsotonicRegression
 
-def calibrate_and_optimize_thresholds(oof_probs, Y_FULL, 
+def calibrate_and_optimize_thresholds(oof_probs, Y_FULL,
                                        threshold_grid=None, n_windows=12):
     """
     For each species:
@@ -1237,13 +1237,13 @@ def calibrate_and_optimize_thresholds(oof_probs, Y_FULL,
     """
     if threshold_grid is None:
         threshold_grid = [0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
-    
+
     n_samples, n_cls = oof_probs.shape
     thresholds = np.full(n_cls, 0.5, dtype=np.float32)
     n_files    = n_samples // n_windows
     file_oof   = oof_probs.reshape(n_files, n_windows, n_cls).max(axis=1)
     file_y     = Y_FULL.reshape(n_files, n_windows, n_cls).max(axis=1)
-    
+
     n_calibrated = 0
     for c in range(n_cls):
         y_true = file_y[:, c]
@@ -1256,7 +1256,7 @@ def calibrate_and_optimize_thresholds(oof_probs, Y_FULL,
             y_cal = ir.transform(y_prob)
         except Exception:
             y_cal = y_prob
-        
+
         best_f1, best_t = 0.0, 0.5
         for t in threshold_grid:
             pred = (y_cal >= t).astype(int)
@@ -1270,7 +1270,7 @@ def calibrate_and_optimize_thresholds(oof_probs, Y_FULL,
                 best_f1, best_t = f1, t
         thresholds[c] = best_t
         n_calibrated += 1
-    
+
     print(f"Calibrated {n_calibrated} classes")
     print(f"Mean threshold: {thresholds.mean():.3f}")
     print(f"Range: [{thresholds.min():.2f}, {thresholds.max():.2f}]")
@@ -1296,7 +1296,7 @@ print("Isotonic calibration + per-class threshold optimization defined")
 
 # %% markdown
 # ### 🔎 Rank-aware scaling
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Uses file-level peak confidence to scale all windows for each species. |
@@ -1325,11 +1325,11 @@ def rank_aware_scaling(probs, n_windows=12, power=0.4):
     N, C = probs.shape
     assert N % n_windows == 0, f"Expected multiple of {n_windows}, got {N}"
 
-    view     = probs.reshape(-1, n_windows, C)              
-    file_max = view.max(axis=1, keepdims=True)              
+    view     = probs.reshape(-1, n_windows, C)
+    file_max = view.max(axis=1, keepdims=True)
 
-    scale  = np.power(file_max, power)                      
-    scaled = view * scale                                   
+    scale  = np.power(file_max, power)
+    scaled = view * scale
 
     return scaled.reshape(N, C)
 
@@ -1337,7 +1337,7 @@ print("Rank-aware scaling defined")
 
 # %% markdown
 # ### 🔎 Adaptive delta smoothing
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Smooths uncertain windows more than confident peaks, preserving sharp biological calls. |
@@ -1370,12 +1370,12 @@ def adaptive_delta_smooth(probs, n_windows=12, base_alpha=0.20):
     assert N % n_windows == 0, f"Expected multiple of {n_windows}, got {N}"
 
     result = probs.copy()
-    view   = probs.reshape(-1, n_windows, C)    
-    out    = result.reshape(-1, n_windows, C)  
+    view   = probs.reshape(-1, n_windows, C)
+    out    = result.reshape(-1, n_windows, C)
 
     for t in range(n_windows):
-        conf = view[:, t, :].max(axis=-1, keepdims=True)   
-        alpha = base_alpha * (1.0 - conf)                  
+        conf = view[:, t, :].max(axis=-1, keepdims=True)
+        alpha = base_alpha * (1.0 - conf)
         if t == 0:
             neighbor_avg = (view[:, t, :] + view[:, t+1, :]) / 2.0
         elif t == n_windows - 1:
@@ -1389,16 +1389,16 @@ print("Adaptive delta smoothing defined")
 
 # %% markdown
 # ## Sequence Modeling: LightProtoSSM with Cross-Attention
-# 
-# This section defines the core sequence learners responsible for processing the Perch embeddings. The primary model, LightProtoSSM, utilizes a selective state space architecture enhanced with multi-head cross-attention. This mechanism allows the model to actively attend to different 5-second windows across the entire soundscape, effectively separating isolated noise spikes from persistent biological calls. 
-# 
+#
+# This section defines the core sequence learners responsible for processing the Perch embeddings. The primary model, LightProtoSSM, utilizes a selective state space architecture enhanced with multi-head cross-attention. This mechanism allows the model to actively attend to different 5-second windows across the entire soundscape, effectively separating isolated noise spikes from persistent biological calls.
+#
 # Additionally, a ResidualSSM is instantiated to learn an additive correction layer. It targets the systematic errors remaining after the first-pass ensemble, acting as a final polish on the temporal probabilities. Test-Time Augmentation (TTA) is also defined here, applying circular shifts to expose different context patterns to the sequence models.
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Sequence models: ProtoSSM, TTA, and ResidualSSM
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Defines the main temporal sequence learner and the residual correction model. |
@@ -1462,11 +1462,11 @@ class LightProtoSSM(nn.Module):
         self.ssm_merge= nn.ModuleList([nn.Linear(2 * d_model, d_model) for _ in range(2)])
         self.ssm_norm = nn.ModuleList([nn.LayerNorm(d_model) for _ in range(2)])
         self.drop     = nn.Dropout(dropout)
-        
+
         if use_cross_attn:
             self.cross_attn = nn.ModuleList([nn.MultiheadAttention(d_model, num_heads=cross_attn_heads, dropout=dropout, batch_first=True) for _ in range(2)])
             self.cross_norm = nn.ModuleList([nn.LayerNorm(d_model) for _ in range(2)])
-            
+
         self.prototypes   = nn.Parameter(torch.randn(n_classes, d_model) * 0.02)
         self.proto_temp   = nn.Parameter(torch.tensor(5.0))
         self.class_bias   = nn.Parameter(torch.zeros(n_classes))
@@ -1486,7 +1486,7 @@ class LightProtoSSM(nn.Module):
         if site_ids is not None and hours is not None:
             meta = self.meta_proj(torch.cat([self.site_emb(site_ids), self.hour_emb(hours)], dim=-1))
             h = h + meta[:, None, :]
-            
+
         for i, (fwd, bwd, merge, norm) in enumerate(zip(self.ssm_fwd, self.ssm_bwd, self.ssm_merge, self.ssm_norm)):
             res = h
             h_f = fwd(h)
@@ -1496,11 +1496,11 @@ class LightProtoSSM(nn.Module):
             if self.use_cross_attn:
                 attn_out, _ = self.cross_attn[i](h, h, h)
                 h = self.cross_norm[i](h + attn_out)
-                
+
         h_n = F.normalize(h, dim=-1)
         p_n = F.normalize(self.prototypes, dim=-1)
         sim = (torch.matmul(h_n, p_n.T) * F.softplus(self.proto_temp) + self.class_bias[None, None, :])
-        
+
         if perch_logits is not None:
             alpha = torch.sigmoid(self.fusion_alpha)[None, None, :]
             out   = alpha * sim + (1 - alpha) * perch_logits
@@ -1513,34 +1513,34 @@ def train_light_proto_ssm(emb_full, scores_full, Y_full, meta_full, n_epochs=40,
     emb_f   = emb_full.reshape(n_files, N_WINDOWS, -1)
     log_f   = scores_full.reshape(n_files, N_WINDOWS, -1)
     lab_f   = Y_full.reshape(n_files, N_WINDOWS, -1).astype(np.float32)
-    
+
     fnames  = meta_full["filename"].unique()
     sites_u = sorted(meta_full["site"].unique())
     site2i  = {s: i + 1 for i, s in enumerate(sites_u)}
     site_ids = np.array([min(site2i.get(meta_full.loc[meta_full["filename"]==fn,"site"].iloc[0], 0), n_sites-1) for fn in fnames], dtype=np.int64)
     hour_ids = np.array([int(meta_full.loc[meta_full["filename"]==fn,"hour_utc"].iloc[0]) % 24 for fn in fnames], dtype=np.int64)
-    
+
     model = LightProtoSSM(n_classes=N_CLASSES, n_sites=n_sites, use_cross_attn=True, cross_attn_heads=2)
     model.init_prototypes(torch.tensor(emb_full, dtype=torch.float32), torch.tensor(Y_full, dtype=torch.float32))
-    
+
     emb_t  = torch.tensor(emb_f, dtype=torch.float32)
     log_t  = torch.tensor(log_f, dtype=torch.float32)
     lab_t  = torch.tensor(lab_f, dtype=torch.float32)
     site_t = torch.tensor(site_ids, dtype=torch.long)
     hour_t = torch.tensor(hour_ids, dtype=torch.long)
-    
+
     pos_cnt    = lab_t.sum(dim=(0, 1))
     total      = lab_t.shape[0] * lab_t.shape[1]
     pos_weight = ((total - pos_cnt) / (pos_cnt + 1)).clamp(max=25.0)
-    
+
     opt   = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-3)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=lr, epochs=n_epochs, steps_per_epoch=1, pct_start=0.1, anneal_strategy="cos")
-    
+
     best_loss, best_state, wait = float("inf"), None, 0
     swa_model = torch.optim.swa_utils.AveragedModel(model)
     swa_start = int(n_epochs * 0.65)
     swa_sched = torch.optim.swa_utils.SWALR(opt, swa_lr=4e-4)
-    
+
     for ep in range(n_epochs):
         model.train()
         out  = model(emb_t, log_t, site_ids=site_t, hours=hour_t)
@@ -1549,29 +1549,29 @@ def train_light_proto_ssm(emb_full, scores_full, Y_full, meta_full, n_epochs=40,
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
-        
+
         if ep >= swa_start:
             swa_model.update_parameters(model)
             swa_sched.step()
         else:
             sched.step()
-            
+
         if loss.item() < best_loss:
             best_loss  = loss.item()
             best_state = {k: v.clone() for k, v in model.state_dict().items()}
             wait = 0
         else:
             wait += 1
-            
+
         if wait >= patience:
             break
-            
+
     if ep >= swa_start:
         torch.optim.swa_utils.update_bn(emb_t.unsqueeze(0), swa_model)
         model = swa_model
     else:
         model.load_state_dict(best_state)
-        
+
     model.eval()
     return model, site2i
 
@@ -1580,7 +1580,7 @@ def run_tta_proto(proto_model, emb_files, sc_files, site_t, hour_t, shifts=[0, 1
     all_preds = []
     emb_t  = torch.tensor(emb_files, dtype=torch.float32)
     sc_t   = torch.tensor(sc_files,  dtype=torch.float32)
-    
+
     for shift in shifts:
         if shift == 0:
             e_shifted = emb_t
@@ -1588,15 +1588,15 @@ def run_tta_proto(proto_model, emb_files, sc_files, site_t, hour_t, shifts=[0, 1
         else:
             e_shifted = torch.roll(emb_t, shift, dims=1)
             s_shifted = torch.roll(sc_t,  shift, dims=1)
-            
+
         with torch.no_grad():
             out = proto_model(e_shifted, s_shifted, site_ids=site_t, hours=hour_t).numpy()
-            
+
         if shift != 0:
             out = np.roll(out, -shift, axis=1)
-            
+
         all_preds.append(out)
-        
+
     return np.mean(all_preds, axis=0)
 
 class ResidualSSM(nn.Module):
@@ -1624,7 +1624,7 @@ class ResidualSSM(nn.Module):
         if site_ids is not None and hours is not None:
             meta = self.meta_proj(torch.cat([self.site_emb(site_ids.clamp(0, self.site_emb.num_embeddings-1)), self.hour_emb(hours.clamp(0, 23))], dim=-1))
             h = h + meta.unsqueeze(1)
-            
+
         res = h
         h_f = self.ssm_fwd(h)
         h_b = self.ssm_bwd(h.flip(1)).flip(1)
@@ -1645,7 +1645,7 @@ def train_residual_ssm(emb_full, first_pass_flat, Y_full, site_ids, hour_ids, n_
     perm     = torch.randperm(n_files, generator=rng).numpy()
     val_i    = perm[:n_val]
     train_i  = perm[n_val:]
-    
+
     emb_t    = torch.tensor(emb_f, dtype=torch.float32)
     fp_t     = torch.tensor(fp_f, dtype=torch.float32)
     res_t    = torch.tensor(residuals, dtype=torch.float32)
@@ -1654,7 +1654,7 @@ def train_residual_ssm(emb_full, first_pass_flat, Y_full, site_ids, hour_ids, n_
     model    = ResidualSSM(n_classes=N_CLASSES)
     opt      = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-3)
     sched    = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=lr, epochs=n_epochs, steps_per_epoch=1, pct_start=0.1, anneal_strategy="cos")
-    
+
     best_loss, best_state, wait = float("inf"), None, 0
     for ep in range(n_epochs):
         model.train()
@@ -1665,22 +1665,22 @@ def train_residual_ssm(emb_full, first_pass_flat, Y_full, site_ids, hour_ids, n_
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         sched.step()
-        
+
         model.eval()
         with torch.no_grad():
             val_corr = model(emb_t[val_i], fp_t[val_i], site_ids=site_t[val_i], hours=hour_t[val_i])
             val_loss = F.mse_loss(val_corr, res_t[val_i])
-            
+
         if val_loss.item() < best_loss:
             best_loss  = val_loss.item()
             best_state = {k: v.clone() for k, v in model.state_dict().items()}
             wait = 0
         else:
             wait += 1
-            
+
         if wait >= patience:
             break
-            
+
     model.load_state_dict(best_state)
     return model, correction_weight
 
@@ -1688,7 +1688,7 @@ print("Sequence Models Initialized")
 
 # %% markdown
 # ### 🔎 Optional honest OOF baseline evaluation
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Computes raw Perch OOF AUC when `MODE == train`. |
@@ -1699,7 +1699,7 @@ print("Sequence Models Initialized")
 # %% cell 51
 baseline_auc = None
 oof_raw      = None
- 
+
 if CFG["run_oof"]:
     print("Running honest OOF evaluation on training data…")
     baseline_auc, oof_raw = honest_oof_auc(
@@ -1713,7 +1713,7 @@ else:
 
 # %% markdown
 # ### 🔎 Embedding-based MLP probe training
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Trains small per-class MLP probes using compressed Perch embeddings plus temporal score features. |
@@ -1857,14 +1857,14 @@ if CFG["run_oof"]:
 
 # %% markdown
 # ## Test or Dry-Run Inference
-# 
+#
 # In formal Kaggle reruns, `test_soundscapes` contains the hidden test audio. In normal public notebook runs, that folder is empty, so the notebook falls back to train soundscapes for shape and runtime verification.
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Test inference or public dry-run file selection
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Finds hidden test audio during Kaggle rerun, or falls back to train soundscapes for public dry-run validation. |
@@ -1875,29 +1875,29 @@ if CFG["run_oof"]:
 # %% cell 56
 test_paths = sorted((BASE / "test_soundscapes").glob("*.ogg"))
 IS_DRY_RUN = len(test_paths) == 0
- 
+
 if IS_DRY_RUN:
     n = CFG["dryrun_n_files"] or 20
     print(f"No hidden test — dry-run on {n} train files")
     test_paths = sorted((BASE / "train_soundscapes").glob("*.ogg"))[:n]
 else:
     print(f"Hidden test files: {len(test_paths)}")
- 
+
 meta_te, sc_te, emb_te = run_perch(test_paths, CFG["batch_files"], verbose=CFG["verbose"])
 print(f"Test scores: {sc_te.shape}")
 
 # %% markdown
 # ## ProtoSSM Execution & Isotonic Sharpening
-# 
-# This cell executes the full sequence modeling branch. It combines the LightProtoSSM, the MLP probes, the joint priors, and the ResidualSSM. 
-# 
+#
+# This cell executes the full sequence modeling branch. It combines the LightProtoSSM, the MLP probes, the joint priors, and the ResidualSSM.
+#
 # An important architectural note: Test-Time Augmentation (TTA) is specifically applied to the training data to generate the inputs for the `ResidualSSM`, but is intentionally omitted from the final test inference. This asymmetry shifts the calibration landscape in a way that optimizes the final probability distributions. Following adaptive delta smoothing, the pipeline applies the optimized isotonic thresholds to sharpen the final output.
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Embedding-based MLP probe training
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Trains small per-class MLP probes using compressed Perch embeddings plus temporal score features. |
@@ -2051,20 +2051,20 @@ probs = apply_per_class_thresholds(probs, PER_CLASS_THRESHOLDS)
 
 sub = pd.DataFrame(probs.astype(np.float32), columns=PRIMARY_LABELS)
 sub.insert(0, "row_id", meta_te["row_id"].values)
-sub.to_csv("submission_protossm.csv", index=False)                                                                                        
+sub.to_csv("submission_protossm.csv", index=False)
 
 print("ProtoSSM execution complete")
 
 # %% markdown
 # ## Distilled SED Branch
-# 
+#
 # The second branch evaluates mel-spectrogram visual features using Tucker Arrants' public distilled SED ONNX folds. Because the SED models lack temporal context across the 12 windows, this branch provides highly localized, complementary evidence to the broader Perch sequence model.
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Distilled SED branch execution
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Converts audio chunks to mel spectrograms and runs public distilled SED ONNX folds. |
@@ -2165,21 +2165,21 @@ print("Distilled SED Processing Complete.")
 
 # %% markdown
 # ## Rank Blend & Fat-Tail Continuity Gates
-# 
-# This final step computes a 2-way rank-based ensemble combining our sequence model (60%) and the primary distilled SED branch (40%). 
-# 
+#
+# This final step computes a 2-way rank-based ensemble combining our sequence model (60%) and the primary distilled SED branch (40%).
+#
 # We apply the following post-processing pipeline to extract maximum signal:
 # 1. **Noise Suppression:** Pure noise suppression if SED strongly disagrees with ProtoSSM.
 # 2. **Temporal Continuity:** A t-distribution kernel provides a fat-tailed 35-second context to protect continuous calls.
 # 3. **SED Spike Preservation:** Isolated SED spike preservation for brief, high-confidence visual anomalies.
 # 4. **Sonotype Mirroring:** Max-pooling across visually identical species groups (e.g., specific insects/frogs) to unify their probabilities.
 # 5. **Adaptive Thresholding:** Aggressive suppression of low-confidence noise specifically targeting rare classes (Amphibia, Mammalia, Reptilia).
-# 
+#
 # ---
 
 # %% markdown
 # ### 🔎 Final rank blend and submission creation
-# 
+#
 # | Item | Details |
 # |---|---|
 # | **Purpose** | Aligns ProtoSSM and SED outputs by row ID, rank-blends them, applies final gates, and writes `submission.csv`. |
@@ -2253,9 +2253,9 @@ sub = df_proto.copy()
 sub[cols] = pred.astype(np.float32)
 
 MIRROR_PAIRS = (
-    ("47158son15", "47158son16"), 
+    ("47158son15", "47158son16"),
     ("47158son09", "47158son12"),
-    ("47158son02", "47158son14"), 
+    ("47158son02", "47158son14"),
     ("47158son13", "47158son21", "47158son22", "47158son23")
 )
 col_to_idx = {l: i for i, l in enumerate(cols)}
@@ -2274,7 +2274,7 @@ try:
     tax_df = pd.read_csv(BASE / "taxonomy.csv").set_index("primary_label")
     rare_classes = {"Amphibia", "Mammalia", "Reptilia"}
     rare_count = 0
-    
+
     for ci, species in enumerate(cols):
         if species in tax_df.index and tax_df.loc[species, "class_name"] in rare_classes:
             col_idx = ci + 1
@@ -2323,9 +2323,9 @@ print("v571 safe xSED rank blend and post-processing complete. Ready for submiss
 
 # %% markdown
 # ## What the ablations taught
-# 
+#
 # I used the five 2026-05-10 submissions to test whether the 0.946 result was coming from one branch or from the final blend. The answer was clear:
-# 
+#
 # | Experiment | Public LB | Interpretation |
 # |---|---:|---|
 # | Original V8 blend | **0.946** | Best confirmed anchor. |
@@ -2333,12 +2333,12 @@ print("v571 safe xSED rank blend and post-processing complete. Ready for submiss
 # | 70/30 and 80/20 ProtoSSM-heavy blends | 0.944 / 0.942 | More temporal-branch weight overfits the public dry-run proxy. |
 # | ProtoSSM only | 0.929 | The Perch sequence branch needs the SED complement. |
 # | SED only | 0.926 | The SED branch alone is far too weak despite optimistic dry-run behavior. |
-# 
+#
 # For practical forking, I would therefore change the blend only when there is a genuinely new signal: a new public model family, a stronger addable checkpoint, or a validation scheme that is less tied to train-soundscape leakage. Simple weight sweeps are already mostly exhausted here.
 
 # %% markdown
 # ## Final checklist before submission
-# 
+#
 # | Check | Expected result |
 # |---|---|
 # | `submission.csv` exists | The final blend cell writes this file in `/kaggle/working`. |
@@ -2347,24 +2347,24 @@ print("v571 safe xSED rank blend and post-processing complete. Ready for submiss
 # | Value range | Prediction columns are clipped to `[0, 1]`. |
 # | NaNs | Zero NaNs. |
 # | Runtime | Submit mode skips the expensive optional OOF branch. |
-# 
+#
 # ## Debugging map
-# 
+#
 # ```text
 # Path error
 #   -> Check the attached Kaggle datasets, model source, and notebook source.
-# 
+#
 # Shape error
 #   -> Check N_WINDOWS, row_id order, and whether every file produces 12 windows.
-# 
+#
 # Cache error
 #   -> Delete /kaggle/working/cache and rebuild the local Perch cache.
-# 
+#
 # Submission error
 #   -> Compare submission.csv columns and rows with sample_submission.csv.
-# 
+#
 # Unexpected low score
 #   -> Verify that hidden test audio was mounted and that you did not submit a dry-run/debug output.
 # ```
-# 
+#
 # When reusing this notebook, please keep the public attribution chain intact and verify the final output shape before submitting.
