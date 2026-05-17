@@ -390,3 +390,15 @@ Two follow-up local-window target variants are prepared but not yet evaluated:
   - Uses `temporal_target_mode=local_mean`, radius `1`.
 
 Both use B0, refreshed-q3 B0 init, 10s/160mel, 256 rows, and 8 epochs. They were intentionally not scored: both GPUs were occupied by unrelated LRM P30 work, and CPU-only execution was too slow/heavy. Partial cw075 output reached only epoch 4 and is not evidence. Run these on GPU before making any decision.
+
+## 2026-05-17 target-transform audit while GPU monitor waits
+
+The queued local-window GPU smokes are still waiting for a free GPU. A CPU-light target distribution audit was run instead:
+
+- Output: `artifacts/pseudolabels/audits/local_window_target_transform_summary_20260517T1555Z.json`
+- Center baseline: mean `0.08917`, row-top mean `0.80162`, `>=0.95` cells `280`
+- Center/localmax r1 cw0.50: mean `0.09396`, row-top mean `0.81324`, `>=0.95` cells `317`, mean abs delta `0.00479`
+- Center/localmax r1 cw0.75: mean `0.09156`, row-top mean `0.80716`, `>=0.95` cells `296`, mean abs delta `0.00239`
+- Local mean r1: mean `0.08918`, row-top mean `0.79646`, `>=0.95` cells `255`, mean abs delta `0.00644`
+
+Interpretation: cw0.75 is a gentler version of the previously fragile cw0.50 local-max target; local_mean is a smoothing/control target that reduces extreme confidence. Both remain worth GPU smoke-testing, but no decision should be made from distribution stats alone.
