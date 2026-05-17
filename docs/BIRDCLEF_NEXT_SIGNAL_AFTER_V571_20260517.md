@@ -125,3 +125,29 @@ Do not submit if:
 ## Next concrete action
 
 Run the external manifest audit and summarize coverage. If coverage is healthy, run a short B0 external-pretrain smoke. No Kaggle submission before those gates.
+
+## 2026-05-17 execution update: manifest audit + q0 smoke
+
+Phase 1 manifest audit was run on the GPU server.
+
+High-quality q>=3 cap80 manifest:
+
+- Output: `artifacts/external_pretrain/manifest_q3_cap80_20260517/`
+- Rows: `2659` total, `2470` train, `189` val
+- Class coverage: `Aves=2605`, `Amphibia=38`, `Mammalia=16`, `Insecta=0`, `Reptilia=0`
+- Weakness: `72` target species have fewer than five available rows and `54` target species are missing after filter.
+
+Broader q>=0 cap80 manifest:
+
+- Output: `artifacts/external_pretrain/manifest_q0_cap80_20260517/`
+- Rows: `3388` total, `3050` train, `338` val
+- Class coverage: `Aves=3138`, `Amphibia=182`, `Mammalia=49`, `Insecta=18`, `Reptilia=1`
+- Weakness: still `28` missing target species, and `652` rows are unrated/zero-quality.
+
+A B0 q0/cap80 smoke was run with config `configs/birdclef/xc_b0_q0_cap80_external_pretrain_smoke_20260517.json`:
+
+- `512` manifest files, 2 epochs, pretrained EfficientNet-B0, 5s/128 mel, Focal BCE, pos_weight_sqrt
+- Output: `artifacts/external_pretrain/xc-b0-q0-cap80-external-pretrain-smoke-20260517/`
+- Result: holdout macro AUC `0.482335` over `88` valid classes, runtime `18.2s`, TorchScript `15.389 MB`
+
+Conclusion: q0 improves non-bird coverage but is too noisy/sparse to scale blindly. Do not submit or package a q0-derived external-pretrain candidate. If continuing external pretraining, prefer either existing q3 bestloss/high-quality checkpoints for bird representation or build a targeted non-bird/rare data audit instead of lowering quality globally.
