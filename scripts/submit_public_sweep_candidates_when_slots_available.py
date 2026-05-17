@@ -147,7 +147,26 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--submit", action="store_true", help="Actually submit. Default is dry-run.")
     ap.add_argument("--max-submissions", type=int, default=3, help="Maximum candidates to submit this run")
+    ap.add_argument(
+        "--labels",
+        nargs="+",
+        default=[],
+        help="Only consider these candidate labels (for targeted follow-ups, e.g. --labels v569).",
+    )
+    ap.add_argument(
+        "--skip-preflight-failures",
+        action="store_true",
+        help="Continue to lower-priority candidates if one candidate preflight fails. Default is to stop conservatively.",
+    )
     args = ap.parse_args()
+
+    label_filter = {label.lower() for label in args.labels}
+    candidates = [cand for cand in CANDIDATES if not label_filter or cand.label.lower() in label_filter]
+    if label_filter:
+        found = {cand.label.lower() for cand in candidates}
+        missing = sorted(label_filter - found)
+        if missing:
+            raise SystemExit(f"unknown candidate labels: {missing}; available={[cand.label for cand in CANDIDATES]}")
 
     competitions, kernels = make_clients()
     submissions = recent_submissions(competitions)
@@ -164,7 +183,7 @@ def main() -> int:
 
     submitted = 0
     would_submit = 0
-    for cand in CANDIDATES:
+    for cand in candidates:
         print(f"\n=== {cand.label} {cand.owner}/{cand.slug} v{cand.version}")
         print("description:", cand.description)
         if cand.description in existing_desc:
@@ -180,6 +199,9 @@ def main() -> int:
             ok, reason = candidate_complete_with_submission(kernels, cand)
         except RuntimeError as exc:
             print("preflight failed:", str(exc)[:2000])
+            if not args.skip_preflight_failures:
+                print("stop: preflight failed; use --skip-preflight-failures to continue to lower-priority candidates")
+                break
             continue
         print("preflight:", reason)
         if not ok:
