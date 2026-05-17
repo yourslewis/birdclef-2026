@@ -2564,3 +2564,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Status check after reset submissions: `v567` completed at `0.944`, below the `0.946` plateau; `v566` remains `pending` with no error. Current scored best remains `0.946` from v541/v542/v558/v563 and earlier tied public946 variants.
 - Lesson: the Mtoshi UMAP + BirdNET public-kernel direct path is not enough and is worse than the repo-owned public946 anchor. This joins v562 (`0.945`) as another drop in the direct BirdNET-family public-source lane.
 - Decision: do **not** submit `v568`/`v569`/`v570` while `v566` is still pending. Preserve the remaining three 2026-05-17 UTC slots until `v566` scores. If `v566` also drops, kill the remaining direct public BirdNET-family queue and pivot back to repo-owned/new-signal work. If `v566` ties/improves, consider one targeted follow-up (`v568`) rather than spending all remaining slots.
+
+### v566 tied 0.946; v568 submitted as single targeted follow-up — 2026-05-17 01:55 UTC
+
+- Status check: `v566` completed at `0.946`, tying the plateau; `v567` completed at `0.944`, confirming the broader direct BirdNET-family queue is mixed/risky. Current scored best remains `0.946`.
+- Because `v566` tied, used exactly one preserved slot for a targeted follow-up and continued preserving the other two slots. Ran `scripts/submit_public_sweep_candidates_when_slots_available.py --submit --max-submissions 1`; log `logs/submit_public_sweep_v568_followup_20260517T015255Z.log`.
+- Submitted `v568`: `meenalsinha/birdclef-2026-improved` version 9, description `v568: Sweep Meenal improved BirdNET public kernel direct`, Kaggle ref `52725667`. Preflight saw COMPLETE plus `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, and `submission_sed.csv`.
+- Post-submit Bearer API check showed `v568` as `pending` with no error. Decision: do not submit `v569`/`v570` unless `v568` ties/improves or new evidence appears; two slots remain preserved.
