@@ -1,6 +1,6 @@
 # BirdCLEF Repackaged Next-Candidate Plan — 2026-05-17
 
-Status: draft / no-submit prep
+Status: implemented as `v571`, submitted/pending
 Anchor: public best remains **0.946**; direct public-kernel lane is stopped after `v566` tie, `v567` drop, `v568` hidden error, and `v570` RAM failure.
 
 ## Why this exists
@@ -84,3 +84,27 @@ Kill the repackage if:
 ## Slot policy
 
 Preserve the remaining 2026-05-17 slot until a repo-owned/repackaged candidate clears the above bar. Do not spend it on another direct public notebook.
+
+## Implementation outcome — 2026-05-17 06:10 UTC
+
+Implemented as `kaggle-kernels/v571-public946-safe-xsed-rankblend/`.
+
+What changed from v542:
+
+- Metadata slug/title only.
+- Final rank blend changed from `0.60 Proto / 0.40 SED` to `0.5964 Proto / 0.4036 SED`.
+- Added a hard pre-write verifier for schema, row count, duplicate row IDs, finite `[0,1]` values, and hidden/test non-sample-shape output.
+
+Validation before submission:
+
+- Local `python3 -m py_compile` passed.
+- Static metadata checks passed: private, CPU, no internet, same data/model/kernel sources as v542.
+- Diff against v542 remained limited to slug/title plus final blend/verifier.
+- Kaggle private dry-run version 1 completed and produced `submission.csv`, `submission_sed.csv`, and `submission_protossm.csv`.
+- Downloaded dry-run `submission.csv` had `240` rows, `235` columns, finite values, min `0.0037500006`, max `1.0`.
+
+Submission:
+
+- Submitted to BirdCLEF 2026 as `v571: Public946 safe xSED-inspired Proto/SED rank blend 0.5964/0.4036`.
+- Kaggle ref: `52731029`.
+- Immediate status: `pending`, no score/error yet.
