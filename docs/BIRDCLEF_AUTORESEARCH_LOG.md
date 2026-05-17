@@ -2558,3 +2558,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submitted `v566`: `kruzzcc/bc26-nina-eos4-fixed` version 2, description `v566: Sweep Nina EoS4 fixed plus BirdNET public kernel direct`, Kaggle ref `52723318`. Preflight saw COMPLETE plus `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, `subm_3.csv`, `subm_4.csv`, and cache files.
 - Submitted `v567`: `kruzzcc/bc26-mtoshi-umap-bn-a` version 1, description `v567: Sweep Mtoshi UMAP plus BirdNET public kernel direct`, Kaggle ref `52723321`. Preflight saw COMPLETE plus `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, and cache files.
 - Post-submit Bearer API check showed both `v566` and `v567` as `pending` with no errors. Preserved three UTC-day slots for follow-up. Current scored best remains `0.946` until these score.
+
+### v567 scored 0.944; hold remaining public-sweep slots pending v566 — 2026-05-17 00:55 UTC
+
+- Status check after reset submissions: `v567` completed at `0.944`, below the `0.946` plateau; `v566` remains `pending` with no error. Current scored best remains `0.946` from v541/v542/v558/v563 and earlier tied public946 variants.
+- Lesson: the Mtoshi UMAP + BirdNET public-kernel direct path is not enough and is worse than the repo-owned public946 anchor. This joins v562 (`0.945`) as another drop in the direct BirdNET-family public-source lane.
+- Decision: do **not** submit `v568`/`v569`/`v570` while `v566` is still pending. Preserve the remaining three 2026-05-17 UTC slots until `v566` scores. If `v566` also drops, kill the remaining direct public BirdNET-family queue and pivot back to repo-owned/new-signal work. If `v566` ties/improves, consider one targeted follow-up (`v568`) rather than spending all remaining slots.
