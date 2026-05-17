@@ -308,3 +308,36 @@ Blend/stability audit:
 - Leave-one-site p_lift_gt_0 `0.8889`; worst site `S09` lift `-0.000011376`
 
 Conclusion: B3 refreshed-q3 extinit is mildly additive locally but not robust enough for a slot. Do not package/submit it yet. If the external lane continues, compare against a refreshed-manifest B0 rerun or move to a different architecture/target structure; do not assume old-manifest metrics are apples-to-apples.
+
+## 2026-05-17 execution update: refreshed q3 B0 apples-to-apples diagnostic
+
+A same-refreshed-manifest B0 check was run to compare against the B3 external-pretrain result.
+
+B0 q3 external-pretrain:
+
+- Config: `configs/birdclef/xc_b0_q3_cap80_manifest20260517_external_pretrain_balanced_ep18_20260517.json`
+- Output: `artifacts/external_pretrain/xc-b0-q3-cap80-manifest20260517-external-pretrain-balanced-ep18-20260517/`
+- `976` examples
+- val macro AUC `0.717722` over `117` classes
+- best val loss at epoch `13`
+- runtime `28.725s`, TorchScript `15.389 MB`
+
+Interpretation: on the same refreshed manifest and seed as the B3 run, B0 is slightly behind B3 (`0.722691`) but much smaller. Both refreshed seed73 runs are below the older B0 seed42 metric (`0.747224`) and should not be over-interpreted as an architecture ranking without fold/seed replication.
+
+Public946 B0-extinit distill:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_xc_q3_manifest20260517_extinit_5s_m128_lr3e4_ep20_20260517.json`
+- Output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b0-xc-q3-manifest20260517-extinit-5s-m128-lr3e4-ep20-20260517/`
+- Final-all student AUC `0.992896` over `75`
+- Student/teacher corr `0.970497`
+- Runtime `14.896s`, TorchScript `15.391 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_b0_xc_q3_manifest20260517_extinit_blend_audit_20260517T1208Z.json`
+- Best tested weight `0.01`
+- Local lift `+0.000028672`
+- Leave-one-site p_lift_gt_0 `1.0`, min lift `+0.000001733`
+- Site-bootstrap p_lift_gt_0 `0.78`, q05 `-0.000050795`
+
+Conclusion: B0 refreshed-q3 extinit is a safer but very small local addition. It is not strong enough to override the sidecar under-transfer lesson, but it is a reasonable low-weight fallback candidate for a future reset if no stronger frame/local or source-backed candidate is available. Preferred next work remains true frame/local SED-MIL target structure or fold/seed replication before spending a slot.
