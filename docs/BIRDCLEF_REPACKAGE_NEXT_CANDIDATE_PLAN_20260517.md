@@ -1,6 +1,6 @@
 # BirdCLEF Repackaged Next-Candidate Plan — 2026-05-17
 
-Status: implemented as `v571`, submitted/pending
+Status: implemented as `v571`, scored tied-best `0.946`
 Anchor: public best remains **0.946**; direct public-kernel lane is stopped after `v566` tie, `v567` drop, `v568` hidden error, and `v570` RAM failure.
 
 ## Why this exists
@@ -107,4 +107,6 @@ Submission:
 
 - Submitted to BirdCLEF 2026 as `v571: Public946 safe xSED-inspired Proto/SED rank blend 0.5964/0.4036`.
 - Kaggle ref: `52731029`.
-- Immediate status: `pending`, no score/error yet.
+- Final status: complete, public LB `0.946` tie, no error.
+
+Conclusion: v571 proved the repo-owned xSED-ratio repackage is hidden-safe, but ratio-only Proto/SED nudging does not break the plateau. Do not spend more slots on tiny Proto/SED rank-weight changes unless a genuinely different source/stacker signal is added.

@@ -353,3 +353,13 @@ If either smoke passes:
 If both fail:
 
 - Stop random-init student sidecars and move to external-data/pretraining infrastructure or taxon-specific specialist prep.
+
+## 2026-05-17 smoke/audit update
+
+The prepared 2025-style focal/BCE noisy-student smokes have now been checked on the GPU server.
+
+- Candidate A exact smoke (`pl-public946-sed85-rankblend15-nfnetl0-focalbce-sqrtcw-5s-m160-lr1e4-ep8-smoke-20260516`) completed but failed the practical gate: `best_val_auc=0.898793`, final student/teacher correlation `0.7073`. This is worse than the earlier non-focal NFNet ep8 smoke (`0.940256`) and much weaker than the ep20 non-focal NFNet artifact. Demote this exact Focal+BCE + sqrt-weight NFNetL0 recipe.
+- Candidate B exact smoke (`pl-public946-sed85-rankblend15-effv2s-focalbce-sqrtcw-5s-m160-lr3e4-ep8-smoke-20260516`) also failed: `best_val_auc=0.707770`, final student/teacher correlation `0.2458`. Do not scale this exact AdamW lr3e-4 random-init EffV2-S focal recipe.
+- A refreshed aligned student-pool audit (`artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260517T0655Z.json` on the GPU server) found the best local lift from an older pretrained V2S-v508 student at 5% weight (`+0.000168656` over teacher AUC `0.997018454`), but prior Kaggle `v560=0.945` shows V2S local lifts are not approval filters. Treat this as an offline blend-analysis clue, not an immediate submission candidate.
+
+Implication: keep the 2025 recipe lane alive, but the next version should change the source of signal (external/pretrained initialization, robust cross-site blend stability, or real SED/MIL frame-local training), not merely add Focal+BCE/sqrt class weights to random-init students.
