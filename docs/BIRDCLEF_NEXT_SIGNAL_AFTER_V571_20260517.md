@@ -379,3 +379,14 @@ Blend/stability audit:
 - Leave-one-site p_lift_gt_0 `0.7778`; worst sites `S22=-0.000016085`, `S09=-0.000004629`
 
 Conclusion: the local-window target mechanism is useful and passed smoke, but this exact center/localmax-r1 B0 candidate is not robust enough for a Kaggle slot. Next variants should alter the target structure rather than submit this one: e.g. lower neighbor influence (`temporal_center_weight=0.75`), `local_mean`, or a true frame-head model.
+
+## 2026-05-17 execution update: queued local-window variants
+
+Two follow-up local-window target variants are prepared but not yet evaluated:
+
+- `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_10s_m160_lr3e4_ep8_smoke_20260517.json`
+  - Same as the prior center/localmax-r1 smoke, but weaker neighbor influence: `temporal_center_weight=0.75`.
+- `configs/birdclef/pl_public946_sed85_rankblend15_b0_localmean_r1_10s_m160_lr3e4_ep8_smoke_20260517.json`
+  - Uses `temporal_target_mode=local_mean`, radius `1`.
+
+Both use B0, refreshed-q3 B0 init, 10s/160mel, 256 rows, and 8 epochs. They were intentionally not scored: both GPUs were occupied by unrelated LRM P30 work, and CPU-only execution was too slow/heavy. Partial cw075 output reached only epoch 4 and is not evidence. Run these on GPU before making any decision.
