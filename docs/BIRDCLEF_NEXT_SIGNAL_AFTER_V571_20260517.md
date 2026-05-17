@@ -174,3 +174,32 @@ Coverage summary:
 Interpretation: the external-pretrain bottleneck is not a general bird-representation problem; it is heavily concentrated in non-bird/rare taxa. A global q0/q>=0 pretrain mostly injects noisy/unrated non-bird labels and already failed the B0 smoke. The next credible source-signal step should therefore be targeted non-bird/rare data acquisition or specialist construction, not lower-quality global pretraining.
 
 Revised next action: build a bounded non-bird/rare specialist plan (Amphibia/Mammalia first, Insecta/Reptilia require external discovery or conservative abstention), then only train if it has enough verified examples or a reliable source-backed pseudo-label target.
+
+## 2026-05-17 execution update: student stability helper
+
+`birdclef_student_pool_blend_audit.py` now supports optional stability checks for the ranked best blends:
+
+- `--bootstrap-iters`, `--bootstrap-group`, `--bootstrap-seed`
+- `--leave-one-group`
+- `--stability-top-n` to avoid running expensive stability on every aligned artifact
+
+Site-stability audit output:
+
+- `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_site_stability_20260517T0855Z.json`
+- `108` scanned student files, `40` row/label-aligned
+- stability computed for top `8` blends with `50` site-bootstrap iterations and leave-one-site
+
+Top local-stable candidates:
+
+1. `pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval`, weight `0.05`
+   - local lift `+0.000168656`
+   - student/teacher corr `0.3752`
+   - leave-one-site `p_lift_gt_0=1.0`, min lift `+0.000063181`
+   - site-bootstrap `p_lift_gt_0=0.94`, q05 lift `-0.000020597`
+2. `pl-r1-convnext-tiny-v508-soft-p100-lr3e4-nomix-ep20-bestval`, weight `0.05`
+   - local lift `+0.000100392`
+   - student/teacher corr `0.3929`
+   - leave-one-site `p_lift_gt_0=1.0`, min lift `+0.000039548`
+   - site-bootstrap `p_lift_gt_0=0.96`, q05 lift `+0.000007196`
+
+Interpretation: cross-site stability is necessary but still not sufficient. V2S/ConvNeXt sidecar families have already under-transferred on public LB (`v560=0.945`, `v564=0.942`, `v565=0.943`), so these local-stable blends should not be submitted directly. Use this helper as a rejection/triage gate for future genuinely new-source candidates.
