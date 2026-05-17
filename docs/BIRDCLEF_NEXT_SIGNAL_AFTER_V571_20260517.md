@@ -151,3 +151,26 @@ A B0 q0/cap80 smoke was run with config `configs/birdclef/xc_b0_q0_cap80_externa
 - Result: holdout macro AUC `0.482335` over `88` valid classes, runtime `18.2s`, TorchScript `15.389 MB`
 
 Conclusion: q0 improves non-bird coverage but is too noisy/sparse to scale blindly. Do not submit or package a q0-derived external-pretrain candidate. If continuing external pretraining, prefer either existing q3 bestloss/high-quality checkpoints for bird representation or build a targeted non-bird/rare data audit instead of lowering quality globally.
+
+## 2026-05-17 execution update: rare/non-bird source audit
+
+A CPU-only rare/non-bird audit was run on the trainer and saved to ignored artifact `artifacts/external_pretrain/rare_nonbird_audit_20260517.json`.
+
+Target-species source rows by taxon:
+
+- Amphibia: `35` species, `451` total rows, `57` q>=3 rows, `49` q>=4 rows, `393` zero/unrated rows
+- Aves: `162` species, `34799` total rows, `21217` q>=3 rows, `16980` q>=4 rows, `12190` zero/unrated rows
+- Insecta: `28` species, `199` total rows, `0` q>=3 rows, `0` q>=4 rows, `199` zero/unrated rows
+- Mammalia: `8` species, `99` total rows, `21` q>=3 rows, `19` q>=4 rows, `66` zero/unrated rows
+- Reptilia: `1` species, `1` total row, `0` q>=3 rows, `0` q>=4 rows, `1` zero/unrated row
+
+Coverage summary:
+
+- `28` target species have no train rows at all.
+- `49` target species have no q>=3 rows.
+- `69` non-bird target species have fewer than five q>=3 rows.
+- Only `3` bird target species have fewer than five q>=3 rows.
+
+Interpretation: the external-pretrain bottleneck is not a general bird-representation problem; it is heavily concentrated in non-bird/rare taxa. A global q0/q>=0 pretrain mostly injects noisy/unrated non-bird labels and already failed the B0 smoke. The next credible source-signal step should therefore be targeted non-bird/rare data acquisition or specialist construction, not lower-quality global pretraining.
+
+Revised next action: build a bounded non-bird/rare specialist plan (Amphibia/Mammalia first, Insecta/Reptilia require external discovery or conservative abstention), then only train if it has enough verified examples or a reliable source-backed pseudo-label target.
