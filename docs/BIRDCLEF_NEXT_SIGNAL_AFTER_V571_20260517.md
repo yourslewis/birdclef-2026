@@ -203,3 +203,35 @@ Top local-stable candidates:
    - site-bootstrap `p_lift_gt_0=0.96`, q05 lift `+0.000007196`
 
 Interpretation: cross-site stability is necessary but still not sufficient. V2S/ConvNeXt sidecar families have already under-transferred on public LB (`v560=0.945`, `v564=0.942`, `v565=0.943`), so these local-stable blends should not be submitted directly. Use this helper as a rejection/triage gate for future genuinely new-source candidates.
+
+## 2026-05-17 execution update: reproducible rare/non-bird audit script
+
+Added `scripts/birdclef_rare_nonbird_source_audit.py` to make the rare/non-bird coverage audit reproducible. The script writes:
+
+- `rare_nonbird_source_summary.json`
+- `rare_nonbird_species_coverage.csv`
+- `rare_nonbird_species_only.csv`
+- `amphibia_mammalia_q3_existing_manifest.csv`
+
+Run on trainer:
+
+```bash
+python3 scripts/birdclef_rare_nonbird_source_audit.py \
+  --data-root /home/yourslewis/birdclef-2026/data \
+  --output-dir artifacts/external_pretrain/rare_nonbird_source_audit_20260517T0955Z
+```
+
+Key results:
+
+- `234` target species; `72` non-bird species.
+- `28` target species have no source rows at all.
+- `49` target species have no q>=3 rows.
+- `69/72` non-bird species have fewer than five q>=3 source rows and fewer than five q>=3 verified local audio rows.
+- Non-bird status counts:
+  - `needs_external_discovery=28`
+  - `source_sparse_or_low_quality=30`
+  - `trainable_low_quality_only=11`
+  - `trainable_verified_q3=3`
+- Amphibia/Mammalia q>=3 verified manifest contains only `54` rows across `21` species.
+
+Conclusion: current local source data is not enough for a reliable Amphibia/Mammalia specialist submission candidate. It is enough to define a targeted acquisition/abstention plan. Do not train/package a non-bird specialist until external discovery or source-backed pseudo-label targets improve coverage.
