@@ -235,3 +235,34 @@ Key results:
 - Amphibia/Mammalia q>=3 verified manifest contains only `54` rows across `21` species.
 
 Conclusion: current local source data is not enough for a reliable Amphibia/Mammalia specialist submission candidate. It is enough to define a targeted acquisition/abstention plan. Do not train/package a non-bird specialist until external discovery or source-backed pseudo-label targets improve coverage.
+
+## 2026-05-17 execution update: raw-SED 10s B0 diagnostic
+
+Tested the alternate real SED/MIL-ish lane by training against raw public946 SED teacher output rather than final rankblend.
+
+Configs:
+
+- `configs/birdclef/pl_public946_sedraw_b0_10s_m160_lr3e4_ep8_smoke_20260517.json`
+- `configs/birdclef/pl_public946_sedraw_b0_10s_m160_lr3e4_ep20_20260517.json`
+
+Trainer outputs:
+
+- Smoke: `artifacts/pseudolabels/students/pl-public946-sedraw-b0-10s-m160-lr3e4-ep8-smoke-20260517/`
+  - best/last val AUC `0.943722` over `30` valid classes
+  - final-all AUC `0.904111` over `42`
+  - student/teacher corr `0.8385`
+  - runtime `6.274s`
+- Full-row ep20: `artifacts/pseudolabels/students/pl-public946-sedraw-b0-10s-m160-lr3e4-ep20-20260517/`
+  - val AUC peaked around `0.993693` over `60` classes
+  - final-all AUC `0.988647` over `75`
+  - student/teacher corr `0.977247`
+  - runtime `27.642s`, TorchScript `15.391 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_sedraw_b0_10s_ep20_blend_audit_20260517T1102Z.json`
+- Best tested student weight: `0.0025`
+- Lift vs sed85/rankblend teacher: `-0.000003042`
+- Leave-one-site p_lift_gt_0: `0.0`; every site-held-out lift was negative.
+
+Conclusion: raw-SED 10s B0 is a strong mimic but not additive. Do not package or submit it. A true v573 needs a different frame/local target structure or model output, not merely raw SED row-level distillation.
