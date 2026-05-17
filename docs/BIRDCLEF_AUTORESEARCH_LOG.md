@@ -2585,3 +2585,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Status check: current scored best remains `0.946`. `v570` completed with no score and Kaggle error `Your notebook requested more memory (RAM) than is available.` `v568` remains no-score from hidden-rerun unhandled error; `v567=0.944`; `v566=0.946` tie. Four 2026-05-17 UTC submissions are visible, so likely one slot remains.
 - Added public-source follow-up stop-rule doc: `docs/BIRDCLEF_PUBLIC_SOURCE_FOLLOWUP_DIAGNOSTICS_20260517.md`. Summary: direct public-kernel lane produced one tie (`v566`), one drop (`v567`), two no-score failures (`v568` hidden error, `v570` RAM), and one preflight 404 (`v569`).
 - Decision: stop direct public-kernel submissions for this lane. Preserve the last daily slot unless a repo-owned/repackaged hidden-rerun-safe candidate or genuinely new-source candidate appears. Future public-source work should port/repackage the idea, not direct-submit public notebooks with uncertain hidden behavior.
+
+### Repo-owned repackage plan for next public-source candidate — 2026-05-17 04:55 UTC
+
+- Status check: current scored best remains `0.946`; v570 remains complete/no-score from RAM error, v568 no-score hidden error, v567 `0.944`, v566 `0.946`. Four 2026-05-17 UTC submissions are visible, so likely one slot remains. No new submission made.
+- GPUs remain busy with non-BirdCLEF work, so this pass stayed CPU/doc/prep-only and preserved the last slot.
+- Added `docs/BIRDCLEF_REPACKAGE_NEXT_CANDIDATE_PLAN_20260517.md`. It identifies the only remaining public-source idea worth further work as a repo-owned `v571` safe xSED / stacker-inspired rank blend based on the `pilkwang` safe-ensemble idea, not a direct public submission.
+- Plan: start from hidden-safe `kaggle-kernels/v542-afr1ste-updated-public946/script.py`, keep input discovery/schema/verifier/ProtoSSM/SED branches, change only the final rank-blend formula toward source-backed xSED-style weights, avoid BirdNET and output-only public predictions, and require runtime/memory/schema validation before spending the last slot.
