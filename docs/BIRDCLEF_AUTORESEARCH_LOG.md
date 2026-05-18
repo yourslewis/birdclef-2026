@@ -2875,3 +2875,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Scanned A2Prime/NFNet/EffV2S source cluster. `claudedevore/birdclef-2026-r0946-a2prime-nfnet-submit` is ERROR and lacks `submission.csv`; skip. `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` is COMPLETE, but default `submission.csv` is `base_3way`, not EffV2S; skip for direct replay unless alternate output-file submission is intentionally chosen.
 - Selected `lucataco/bc26-claude-a2prime-nfnet-fix` v2 as distinct fallback: COMPLETE/no failure; hidden default is `a2_nfnet_w03`; outputs include `submission.csv`, `submission_a2_nfnet_w03.csv`, `a2nfnet_blend_summary.csv`, `nfnet_branch_summary.csv`, `nfnet_sanity_file_summary.csv`, `submission_nfnet.csv`, and `submission_base_3way.csv`.
 - Added `scripts/submit_v581_a2prime_nfnet_when_ready.py` and started guarded monitor pid `68275`, log `logs/submit_v581_a2prime_nfnet_when_ready_20260518T2145Z.log`. It waits for v580 to complete first; if v580 improves above `0.949`, it exits so the next step can be repo-owned v580 confirmation; if v580 ties/drops/no-scores, it preflights and submits v581.
+
+### v580/v581 monitor restart and Chaney dependency map — 2026-05-18 22:50 UTC
+
+- Rechecked live Kaggle: best remains `0.949`; UTC day still capped with five visible submissions; no v580/v581 submission visible yet.
+- Found stale monitor PIDs: previous nohup pids `43469` (v580) and `68275` (v581) were no longer alive without additional log errors. Restarted as OpenClaw-managed background sessions to keep the reset queue live.
+- v580 managed session `tender-ridge` / pid `88792`: source/output preflight re-passed, submit attempt hit daily cap with `78 minutes from now`, sleeping `4800s` before retry.
+- v581 managed session `brisk-kelp` / pid `88794`: alive, waiting for v580 visibility/result before fallback action.
+- Mapped Chaney v37 likely repo-owned confirmation dependencies from source paths: `chaneyma/birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `chaneyma/bc26-gate-fake008-head0015-baseline-onnx`, `chaneyma/bc26-edits-protossm-sed-v7-all66-40x20`, `chaneyma/bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `chaneyma/bc26-probe-middle-pca128-raw085-logreg015`, plus common Perch/SED sources. If v580 improves, first follow-up is repo-owned confirmation with explicit source attachments.
