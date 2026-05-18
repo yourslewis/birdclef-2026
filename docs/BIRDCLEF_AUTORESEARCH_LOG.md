@@ -2857,3 +2857,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added `kaggle-kernels/v577-eos5-model5-rankp055/`, `scripts/push_v577.py`, and guarded `scripts/submit_v577_when_ready.py`. Validation: metadata JSON parses, notebook JSON parses/no stored outputs, top-level remains Model5-only, exactly one active `power=0.55` line is present, and scripts pass `py_compile`.
 - Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119739708`, URL `https://www.kaggle.com/code/yourslewis/bc26-v577-eos5-model5-rank-power-0-55`, with no invalid data/competition/kernel/model sources (only tag strings rejected).
 - Started guarded submit monitor pid `18325`, log `logs/submit_v577_when_ready_20260518T1845Z.log`. Initial status: v577 kernel `RUNNING`, no failure message. The monitor requires v577 output verification and `v576=0.949+`; if the daily cap is hit, it will sleep until the next slot window.
+
+### 0.96 frontier pivot + cron update — 2026-05-18
+
+- Wenhao clarified the target is now to beat **0.960**, not just improve the old `0.946`/`0.949` plateau.
+- Updated active OpenClaw cron `0f782950-bce0-4e92-aac4-4411abd667eb` from stale public946 context to `BirdCLEF 0.96 Frontier AutoResearch Loop (Don) — GPT-5.5`.
+- Cron now treats current best as `0.949` from `v574`/`v575`/`v576`, explicitly marks `0.946`/`0.927`/`0.923` context stale, and prioritizes structural public/source frontier discovery over EoS5 scalar sweeps.
+- Checked processes: no `submit_v577_when_ready.py` process remains alive, so the low-upside v577 diagnostic should not spend a slot unless manually restarted.
+- Live Kaggle check still shows latest scored rows `v576=0.949`, `v575=0.949`, `v574=0.949`, `v573=0.945`, `v572=0.946`.
+- Ran a fresh Kaggle Bearer API source scan of top visible BirdCLEF notebooks; summary artifact written under ignored `artifacts/public_kernels_20260518_frontier_refresh/`.
+- Added `docs/BIRDCLEF_096_FRONTIER_PLAN_20260518.md` with the active 0.96 plan and first scan triage. Initial high-signal follow-ups are: diff SafeAlign/S106 variants against EoS5/v576; inspect Pilkwang acoustic time-window rank fusion for portable logic; continue broader search for actual 0.96 lineage.
