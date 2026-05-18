@@ -2702,3 +2702,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### Frame-head 20s ep12/4096 result and public946 audit — 2026-05-18 10:48 UTC
+
+- Collected `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep12_4096_20260518.json` from trainer GPU1.
+- Result: completed on CUDA with `3051` examples (`2441` train / `610` val), input shape `[3051,160,1251]`, best epoch `5`, best val loss `0.052794`, holdout macro AUC `0.922414` over `179` valid classes, runtime `189.555s`, TorchScript size `15.389 MB`.
+- Built temporary single-model TorchScript bundle `artifacts/sed_bundles/framehead-20s-q3init-ep12-4096-v1` and ran teacher66 train-soundscape inference: `792` rows, `234` classes, `6.56s` total (`0.099s/file`).
+- Blend audit versus public946 teacher cache (`artifacts/pseudolabels/audits/public946_framehead20s_ep12_blend_audit_20260518T1045Z.json` on trainer): standalone train-soundscape macro AUC `0.467988` over `75` valid classes, flat corr vs teacher `0.053539`, best tiny blend weight `0.0025` with lift `-0.000001105`. Site bootstrap mean lift `-0.00000391`, p(lift>0)=`0.275`; leave-one-site mean lift `-0.000001515`.
+- Interpretation: random train-audio holdout keeps improving, but it does not transfer to labeled train soundscapes yet. Do **not** package/submit this supervised frame-head model directly. Pivot to soundscape/pseudo-label-adapted 20s training before spending Kaggle slots.
