@@ -64,3 +64,31 @@ Action:
 Caveat:
 
 - Some `datasetDataSources` are blank in Kaggle metadata, so repo-owned porting may not be immediately possible. This is a guarded direct public-code replay first. If it scores high, the next task is to identify/attach the underlying artifact datasets or reproduce the branch artifacts in repo-owned form.
+
+## 2026-05-18 21:45 UTC execution update — A2Prime/NFNet fallback prepared
+
+Live status:
+
+- Current best remains **0.949** from `v574`/`v575`/`v576`.
+- UTC day still capped with `5` visible 2026-05-18 submissions.
+- `v580` monitor is alive and sleeping after daily-cap response; it has not submitted yet.
+
+Additional source scan:
+
+- `claudedevore/birdclef-2026-r0946-a2prime-nfnet-submit`: source is useful but public kernel status is `ERROR` and lacks `submission.csv`; skip direct replay.
+- `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit`: COMPLETE, but `submission.csv` defaults to `base_3way` rather than an EffV2S candidate. Direct replay would not test the new EffV2S branch unless submitting an alternate output file; skip for now.
+- `lucataco/bc26-claude-a2prime-nfnet-fix`: COMPLETE and explicitly fixes the NFNet candidate so hidden runs default to `a2_nfnet_w03` for `submission.csv`. Outputs include `a2nfnet_blend_summary.csv`, `nfnet_branch_summary.csv`, `nfnet_sanity_file_summary.csv`, `submission_nfnet.csv`, `submission_a2_nfnet_w03.csv`, and `submission.csv`.
+
+Action:
+
+- Added guarded fallback submitter `scripts/submit_v581_a2prime_nfnet_when_ready.py`.
+- Started monitor pid `68275`, log `logs/submit_v581_a2prime_nfnet_when_ready_20260518T2145Z.log`.
+- The monitor intentionally waits for `v580` to become visible and complete before doing anything.
+- If `v580` improves above current best (`>0.949`), v581 exits to preserve slots for repo-owned v580 confirmation instead.
+- If `v580` ties/drops/no-scores, v581 preflights and submits the distinct Lucataco A2Prime/NFNet candidate as the next 0.96-relevant fallback.
+
+Rationale:
+
+- v581 is structurally distinct from the Chaney gate family and from EoS5 scalar tuning.
+- It uses a public A2Prime/NFNet branch with new `brendancarlin/birdclef2026-models` model source plus Perch/SED/BirdNET rank blending.
+- It is not auto-competing with v580 for the first reset slot; it is result-gated.
