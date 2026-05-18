@@ -2702,3 +2702,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### NFNet20 public946 pseudo-label result — 2026-05-18 12:38 UTC
+
+- Collected `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_20s_m160_lr1e4_ep20_center_20260518.json` from trainer GPU1. It is a distinct NFNet-L0, 20s/160mel, center-only soft target pivot after v573 dropped to `0.945`.
+- Training result: `792` rows, best epoch `16`, best validation AUC `0.988233` over `59` valid classes, final-all student AUC `0.990618` over `75`, teacher AUC `0.997018`, corr `0.954731`, MAE `0.019269`, runtime `238.801s`, TorchScript `89.872 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_nfnet20_center_blend_audit_20260518T1238Z.json`: best student rank weight `0.01`, local lift `+0.000007693`, standalone AUC `0.990618`, corr `0.954731`. Site bootstrap p(lift>0)=`0.9367`, mean lift `+0.000011651`; leave-one-site p(lift>0)=`1.0`, min lift `+0.000006406`.
+- Decision: stable but too small/heavy for packaging after v573. Do **not** submit. Continue distinct-model/source search; next candidate should improve evidence materially, not just produce a tiny stable local lift.

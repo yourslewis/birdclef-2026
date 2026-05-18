@@ -51,3 +51,29 @@ Runtime paths:
 - output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-nfnet-20s-m160-lr1e4-ep20-center-20260518/`
 
 Early signal at epoch 9: validation AUC `0.981810` over `59` valid classes, teacher correlation `0.900515`, MAE `0.026362`. Job still running; wait for full metrics and blend/stability audit before making any packaging decision.
+
+## Result and audit — 2026-05-18 12:38 UTC
+
+Training completed on trainer GPU1:
+
+- rows/classes: `792` rows, `234` classes
+- best epoch: `16`
+- best validation AUC: `0.988233` over `59` valid classes
+- final-all student AUC: `0.990618` over `75` valid classes
+- final-all teacher AUC: `0.997018`
+- student/teacher corr: `0.954731`
+- student/teacher MAE: `0.019269`
+- runtime: `238.801s`
+- TorchScript size: `89.872 MB`
+
+Aligned public946 blend/stability audit:
+
+- audit path on trainer: `artifacts/pseudolabels/audits/public946_nfnet20_center_blend_audit_20260518T1238Z.json`
+- standalone AUC: `0.990618`
+- corr vs teacher: `0.954731`
+- best student rank weight: `0.01`
+- local lift: `+0.000007693`
+- site-bootstrap p(lift>0): `0.9367`, mean lift `+0.000011651`
+- leave-one-site p(lift>0): `1.0`, min lift `+0.000006406`
+
+Decision: this is stable but too small and too heavy to package immediately. It is weaker than the older NFNet 5s local audit and not enough evidence after v573 proved local sidecar lift can under-transfer. Do not submit; use it as evidence for the next distinct-model context search.
