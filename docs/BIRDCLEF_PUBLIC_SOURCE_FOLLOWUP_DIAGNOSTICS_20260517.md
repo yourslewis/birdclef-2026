@@ -65,3 +65,11 @@ Guardrails before submit:
 Submission: `v574: Guarded direct Nina EoS5 public source replay after hidden-path source preflight`, ref `52780102`, pending at submit time.
 
 Stop rule remains: this is not permission to restart broad direct-public submissions. If `v574` does not beat `0.946`, future work should port only source-backed structural changes into repo-owned kernels or pivot back to new model/source signal.
+
+## 2026-05-18 update — v574 improved to 0.949; repo-owned confirmation in progress
+
+`v574` completed at **0.949**, proving the guarded Nina EoS5 source path broke the previous `0.946` plateau.
+
+Because the direct-public exception succeeded, the next action is **not** to submit more public siblings. A private repo-owned confirmation kernel was created and pushed as `yourslewis/bc26-v575-repo-owned-eos5-confirmation` (version 1). The confirmation is intentionally source-equivalent before tuning: same CPU/no-internet public sources, zero stored notebook outputs, and guarded output/log verification before competition submit.
+
+Stop rule revision: direct public EoS5 served its purpose as discovery. Future EoS5 work should be repo-owned only.

@@ -2808,3 +2808,52 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submission mechanics: initial latest-version attempt with `kernel_version=0` failed `403`; probe with `kernel_version=1` failed safely (`Did not find provided Notebook Output File`), revealing that the exact version was required. `ApiGetKernel` reported `currentVersionNumber=9`; submission with version `9` succeeded.
 - Submitted `v574: Guarded direct Nina EoS5 public source replay after hidden-path source preflight`, Kaggle ref `52780102`. Immediate Bearer API check shows `pending`, no score/error yet.
 - Caveat: despite source preflight, this is still a direct public notebook rerun rather than a fully repo-owned port. Do not queue additional direct public notebooks from the same family unless `v574` improves or yields a clear actionable lesson; if it ties/drops/fails, port only the reproducible structural idea into repo-owned code.
+
+### EoS5 repo-owned port plan prepared while v574 pending — 2026-05-18 15:45 UTC
+
+- Status check: `v574` remains pending (ref `52780102`); current public best remains `0.946`. Latest scored submissions remain `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`, `v565=0.943`, `v563=0.946`. Three 2026-05-18 UTC slots are visible (`v572`, `v573`, `v574`), so likely two remain, but I preserved them while `v574` is pending.
+- Repo/process state: branch `feature/birdclef-sedraw20-localwindow-20260518` was clean at start; no active BirdCLEF trainer or submit monitor. GPU0 is occupied by non-BirdCLEF work; GPU1 had low memory use but nonzero utilization, so I did not start another training job in this loop.
+- Source inspection: summarized pulled EoS5 source (`295478` chars / `6533` lines, SHA256 `601ff2cb291cd26f007a64cbf01468cdb5ad3a8ebf232ab74c49c77c24714e8f`). Key markers are present for `Model_2`, `Model_5`, `Karnakbayev_PowerOptimization_LB0948`, hidden `test_soundscapes/*.ogg`, dry-run-only sample alignment, and final `write_final_submission` verifier.
+- Prepared `docs/BIRDCLEF_EOS5_PORT_PLAN_20260518.md` with the post-score decision tree. If `v574` improves, port the EoS5 structural recipe into a repo-owned kernel rather than submitting siblings directly. If it ties/drops/fails, stop direct EoS-family submissions and only continue via minimal repo-owned structural deltas or a new model/source signal.
+
+### v574 scored 0.949; v575 repo-owned EoS5 confirmation pushed — 2026-05-18 15:55 UTC
+
+- Live Kaggle API check confirmed `v574: Guarded direct Nina EoS5 public source replay after hidden-path source preflight` completed at **0.949** (`ref=52780102`). This raises the current public best from `0.946` to **0.949**.
+- Latest submission context before v575: `v574=0.949`, `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`, `v565=0.943`, `v563=0.946`. Three 2026-05-18 UTC slots were visible, leaving likely two slots.
+- Followed the EoS5 port-plan trigger: prepared repo-owned confirmation kernel `kaggle-kernels/v575-eos5-repo-confirm/`, using the pulled EoS5 notebook source as a private repo-owned Kaggle notebook rather than another direct public-kernel submission. The copied notebook has 19 cells and zero stored outputs; metadata is private, CPU, no internet, and keeps the same addable competition/dataset/kernel/model sources used by the successful public EoS5 path.
+- Added guarded push/submit scripts `scripts/push_v575.py` and `scripts/submit_v575_when_ready.py`. Validation before push: kernel metadata parses as JSON, notebook JSON parses and has no outputs, and both scripts pass `py_compile`.
+- Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119729759`, URL `https://www.kaggle.com/code/yourslewis/bc26-v575-repo-owned-eos5-confirmation`, with no invalid data/competition/kernel/model sources (only tag strings were rejected as tags).
+- Started guarded submit monitor pid `95949`, log `logs/submit_v575_when_ready_20260518T1545Z.log`. Initial status: repo-owned v575 kernel `RUNNING`, no failure message. The monitor will submit only after COMPLETE status plus required output files/log markers.
+
+### v575 repo-owned EoS5 confirmation submitted — 2026-05-18 16:35 UTC
+
+- The repo-owned v575 Kaggle kernel completed successfully: `bc26-v575-repo-owned-eos5-confirmation` version `1`, COMPLETE/no failure. Output verification passed with required files: `submission.csv`, `subm_2.csv`, `subm_5.csv`, `subm_karnakbayev_power_optimization.csv`, `submission_protossm.csv`, and `submission_sed.csv`; required log markers were present.
+- Submitted `v575: Repo-owned EoS5 confirmation of v574 public949 path`, Kaggle ref `52783235`. Immediate Bearer API check shows `pending`, no score/error yet. Current public best remains **0.949** from `v574` while v575 is pending.
+- Validation caveat/fix: Kaggle nbconvert emitted a notebook-schema warning because the copied repo notebook had empty `execution_count`/`outputs` keys on markdown cells after output stripping. The kernel still ran and produced valid outputs, but I fixed the repo notebook to remove code-only fields from markdown cells for future pushes.
+
+### EoS5 ablation queue prepared while v575 pending — 2026-05-18 16:45 UTC
+
+- Status check: current best is **0.949** from `v574`; `v575` repo-owned confirmation remains pending (ref `52783235`). Latest visible submissions: `v575` pending, `v574=0.949`, `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`. Four 2026-05-18 UTC submissions are visible, so likely one slot remains.
+- Repo/process state: branch clean at start, no active BirdCLEF monitor/trainer processes; GPU1 is free and GPU0 is occupied by unrelated LRM work.
+- Chosen action: preserve the last likely slot while `v575` is pending and prepare the next repo-owned EoS5 ablation queue. Added `docs/BIRDCLEF_EOS5_ABLATION_QUEUE_20260518.md`.
+- Source inspection confirms EoS5's active `Model_5` path uses `lambda_prior=0.5`, `file_confidence_scale(top_k=2,power=0.4)`, `rank_aware_scaling(power=0.6)`, `adaptive_delta_smooth(base_alpha=0.20)`, and internal `xSED=[0.60,0.40]`. The top-level blend is `Model_2=0.0327`, `Model_5=0.9673`.
+- Next candidate order if `v575` confirms: first `v576` Model5-only (remove weak `Model_2` complement), then one-scalar candidates such as rank-aware power `0.55` or `lambda_prior=0.55`. Do not run these if `v575` fails or diverges from `v574`.
+
+### v576 Model5-only repo-owned ablation pushed while v575 pending — 2026-05-18 17:45 UTC
+
+- Status check: current best remains **0.949** from `v574`; `v575` repo-owned EoS5 confirmation remains pending (ref `52783235`). Four 2026-05-18 UTC submissions are visible (`v572`-`v575`), so likely one slot remains.
+- Decision: preserve the last likely competition slot until `v575` confirms, but prepare and run the next repo-owned kernel now. This avoids idle time without violating the v575 confirmation gate.
+- Implemented `v576` as the first planned EoS5 ablation: Model5-only / remove the weak `Model_2` complement. It copies the repo-owned v575 notebook and changes only the top-level `solutions` block to `Model_5` weight `1.0`; added a one-model fallback in the final direct combiner so the notebook can emit `submission.csv` from `subm_5.csv` without executing `Model_2`.
+- Added `kaggle-kernels/v576-eos5-model5-only/`, `scripts/push_v576.py`, and guarded `scripts/submit_v576_when_ready.py`. Validation: metadata JSON parses, notebook JSON parses with no stored outputs, notebook contains `Model_5` weight `1.0` and no `Model_2` in the top-level solutions cell, and scripts pass `py_compile`.
+- Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119735856`, URL `https://www.kaggle.com/code/yourslewis/bc26-v576-eos5-model5-only-ablation`, with no invalid data/competition/kernel/model sources (only tag strings rejected).
+- Started guarded submit monitor pid `9580`, log `logs/submit_v576_when_ready_20260518T1745Z.log`. Initial status: v576 kernel `RUNNING`, no failure message. The monitor will verify outputs and then submit only if `v575` is complete with `0.949+`; otherwise it preserves the slot.
+
+### v575/v576 confirmed 0.949; v577 rank-power 0.55 pushed for next slot/reset — 2026-05-18 18:45 UTC
+
+- Live Kaggle API check: `v575` repo-owned EoS5 confirmation completed at `0.949`, confirming the repo-owned path. The guarded `v576` Model5-only monitor then submitted and `v576` also completed at `0.949`. Current public best remains **0.949** from `v574`/`v575`/`v576`.
+- 2026-05-18 UTC now has five visible submissions (`v572`-`v576`), so the daily competition slots are full. No further competition submission was made manually this loop.
+- Lesson: removing the weak `Model_2` top-level complement did not hurt (`v576=0.949`), so the lift is indeed carried by the `Model_5` EoS5/PowerOptimization path. Future EoS tuning can use Model5-only as a cleaner base.
+- Prepared the next repo-owned ablation `v577`: copy of v576/Model5-only with exactly one active scalar change, `rank_aware_scaling(... power=0.6) -> power=0.55`, testing whether the EoS5 rank-aware scaling bump is over-aggressive.
+- Added `kaggle-kernels/v577-eos5-model5-rankp055/`, `scripts/push_v577.py`, and guarded `scripts/submit_v577_when_ready.py`. Validation: metadata JSON parses, notebook JSON parses/no stored outputs, top-level remains Model5-only, exactly one active `power=0.55` line is present, and scripts pass `py_compile`.
+- Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119739708`, URL `https://www.kaggle.com/code/yourslewis/bc26-v577-eos5-model5-rank-power-0-55`, with no invalid data/competition/kernel/model sources (only tag strings rejected).
+- Started guarded submit monitor pid `18325`, log `logs/submit_v577_when_ready_20260518T1845Z.log`. Initial status: v577 kernel `RUNNING`, no failure message. The monitor requires v577 output verification and `v576=0.949+`; if the daily cap is hit, it will sleep until the next slot window.
