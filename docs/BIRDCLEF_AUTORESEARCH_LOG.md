@@ -2702,3 +2702,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### Frame-head SED pilot configs queued for faster PR cadence — 2026-05-18 08:05 UTC
+
+- In response to Wenhao's urgency request, split the next true-new-signal work into its own small PR rather than bundling it with v572 docs.
+- Added two real SED/frame-head EfficientNet-B0 pilot configs using refreshed q3 B0 external init, balanced class sampling, focal BCE gamma `1.5`, sqrt positive weights, label smoothing `0.005`, and restore-best-by-val-loss:
+  - `configs/birdclef/sed_b0_framehead_10s_m160_q3init_ep4_20260518.json`
+  - `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep4_20260518.json`
+- Purpose: move away from public946 micro-sidecars toward actual frame/event SED signal; smoke/scale runs should report holdout AUC, TorchScript export size, and whether either model is low-correlation enough to become a future sidecar package.
