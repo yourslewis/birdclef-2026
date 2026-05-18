@@ -2702,3 +2702,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### Frame-head 20s scale config queued — 2026-05-18 08:20 UTC
+
+- Added scale config `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep8_2048_20260518.json` after the 20s/1024-file pilot beat the 10s pilot (`0.806310` vs `0.723326`).
+- This scale check uses 20s/160mel, refreshed q3 B0 init, focal BCE gamma `1.5`, sqrt positive weights, label smoothing `0.005`, `2048` max files, `160` max classes, `8` epochs, and restore-best-by-val-loss.
+- Purpose: test whether true frame-head SED signal scales before any package/submit work.
