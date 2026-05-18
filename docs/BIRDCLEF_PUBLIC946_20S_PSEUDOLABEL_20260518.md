@@ -109,3 +109,19 @@ Power0.85 audit:
 - leave-one-site min lift: `-0.000005326` on `S09`
 
 Decision: hold power0.85 as a diagnostic only. It is weaker than v573/power1.0 on both local lift and bootstrap stability, so it should not be packaged/submitted before v573 scores.
+
+## Public result and stop rule — 2026-05-18 12:25 UTC
+
+`v573` completed and scored below the plateau:
+
+- submission: `v573: Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%`
+- ref: `52773142`
+- public score: `0.945`
+- status: complete, no error
+
+Decision:
+
+- Stop spending Kaggle slots on cw-style B0 sidecar variants.
+- Do not package/submit the power0.85 follow-up.
+- Treat local train-soundscape cw/B0 sidecar audits as rejection filters only; positive local lift is not sufficient for public submission.
+- Pivot to a genuinely distinct model/source signal. The immediate follow-up lane is NFNet-L0 public946 pseudo-label distillation with 20s context and center-only targets, evaluated offline before any packaging.

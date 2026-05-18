@@ -2721,3 +2721,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Power0.85 result on trainer GPU1: `792` rows, best epoch `20`, best val AUC `0.993466` over `58` valid classes, final-all student AUC `0.991986` over `75`, teacher AUC `0.996798`, corr `0.957827`, MAE `0.043671`, runtime `64.201s`, TorchScript `15.391 MB`.
 - Blend/stability audit `artifacts/pseudolabels/audits/public946_cw075_20s_b0_power085_blend_audit_20260518T1140Z.json`: best student rank weight `0.0075`, local lift `+0.000018286`, standalone AUC `0.991986`, corr `0.955097`. Site bootstrap p(lift>0)=`0.7067`, mean lift `+0.000019431`; leave-one-site p(lift>0)=`0.8889`, min lift `-0.000005326` on S09.
 - Decision: power0.85 is a useful held diagnostic but **weaker than v573/power1.0** (`+0.000023632` lift, bootstrap p=0.8033, min site lift nearly zero). Do not package or submit power0.85 before v573 score lands.
+
+### v573 scored 0.945 — cw-style B0 sidecar stop rule triggered — 2026-05-18 12:25 UTC
+
+- Live Kaggle API check: `v573: Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%` completed with public score `0.945` (`ref=52773142`, bytes `17834452`, no error). Current public best remains `0.946` from v541/v542/v558/v566/v571/v572 family.
+- Diagnosis: the stronger local 20s B0 sidecar audit (`+0.000023632` local lift, site bootstrap p(lift>0)=`0.8033`) still failed to transfer to public LB, matching the earlier v560 lesson that local train-soundscape sidecar gates are rejection filters, not approval filters.
+- Stop rule: **do not spend more Kaggle slots on cw-style B0 sidecar variants**, including the queued power0.85 diagnostic. Treat power0.85 (`+0.000018286` local lift) as explicitly killed for public submission.
+- Pivot: next work should be a genuinely distinct model/source signal. Chosen next lane is an NFNet-L0 public946 pseudo-label student with 20s context and center-only targets (no cw/local-window B0 sidecar), evaluated offline first.
