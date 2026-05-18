@@ -444,3 +444,18 @@ After UTC reset, no 2026-05-18 competition submissions were visible. A controlle
 - Kernel push: version `1`, no invalid sources
 
 A guarded monitor is running via `scripts/submit_v572_when_ready.py` / `logs/submit_v572_when_ready_20260518T0355Z.log`. It will submit only if the kernel completes and output verification passes. Treat v572 as an exploratory datapoint, not a high-confidence improvement: local audit lift was only `+0.000015339` and bootstrap remained fragile.
+
+## 2026-05-18 execution update: v572 submitted
+
+v572 kernel version `1` completed and passed output verification:
+
+- Files: `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`
+- Required cw0.75 sidecar log markers present
+
+Submitted to BirdCLEF 2026:
+
+- Description: `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`
+- Ref: `52762124`
+- Immediate status: `pending`, no score/error yet
+
+Next action: monitor the score. If v572 ties, the local-window sidecar is hidden-safe but still not enough; if it drops, extend the micro-sidecar stop rule to this local-window B0 packaging path too.
