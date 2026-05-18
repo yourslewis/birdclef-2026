@@ -75,3 +75,37 @@ Packaged exploratory candidate:
 - final sidecar rank weight: `0.015`
 
 A guarded submit monitor is running and will submit only after the Kaggle kernel is `COMPLETE` and output verification sees `submission.csv`, `submission_cw075_20s_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, plus the required log markers.
+
+## Submission + power0.85 follow-up — 2026-05-18 11:40 UTC
+
+The guarded monitor submitted v573 after output verification:
+
+- submission: `v573: Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%`
+- ref: `52773142`
+- status at recheck: `pending`, no score/error yet
+- required files verified: `submission.csv`, `submission_cw075_20s_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`
+- kernel log markers verified for sidecar completion and final rank blend
+- public dry-run sidecar inference: `45.0s` for 20 files, shape `(240,235)`, prob range `0.013601` to `0.983358`, mean `0.094878`
+
+A held power-scaled follow-up was run without spending another Kaggle slot:
+
+- config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_20s_m160_lr3e4_ep20_power085_20260518.json`
+- change vs v573 training: `teacher_power=0.85`, seed `96`
+- best epoch: `20`
+- best val AUC: `0.993466` over `58` valid classes
+- final-all student AUC: `0.991986` over `75`
+- teacher AUC: `0.996798`
+- student/teacher corr: `0.957827`
+- runtime: `64.201s`
+- TorchScript: `15.391 MB`
+
+Power0.85 audit:
+
+- audit path on trainer: `artifacts/pseudolabels/audits/public946_cw075_20s_b0_power085_blend_audit_20260518T1140Z.json`
+- best student rank weight: `0.0075`
+- local lift: `+0.000018286`
+- site-bootstrap p(lift>0): `0.7067`
+- leave-one-site p(lift>0): `0.8889`
+- leave-one-site min lift: `-0.000005326` on `S09`
+
+Decision: hold power0.85 as a diagnostic only. It is weaker than v573/power1.0 on both local lift and bootstrap stability, so it should not be packaged/submitted before v573 scores.
