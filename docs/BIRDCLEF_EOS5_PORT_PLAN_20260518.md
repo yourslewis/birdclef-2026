@@ -112,3 +112,18 @@ A repo-owned EoS5 port must not be a blind 6.5k-line notebook dump unless there 
 ## Next action
 
 Wait for `v574` to score.  If it is still pending at the next loop, preserve at least one slot for a possible EoS5 follow-up and use implementation time for source minimization or new-model training diagnostics, not more direct public submissions.
+
+## Execution update — v574 improved and v575 confirmation started
+
+`v574` completed at **0.949**, raising the current best above the prior `0.946` plateau.
+
+Immediate follow-up:
+
+- Created repo-owned private Kaggle notebook kernel `kaggle-kernels/v575-eos5-repo-confirm/` from the pulled EoS5 source.
+- Kept the successful source recipe unchanged for confirmation; this is a provenance/ownership confirmation, not a tuning variant.
+- Kernel metadata points to `yourslewis/bc26-v575-repo-owned-eos5-confirmation`, CPU/no internet, same public data/model/kernel sources as EoS5.
+- Added `scripts/push_v575.py` and `scripts/submit_v575_when_ready.py`.
+- Pushed Kaggle version `1`: `https://www.kaggle.com/code/yourslewis/bc26-v575-repo-owned-eos5-confirmation`.
+- Submit monitor will require COMPLETE/no-failure status, expected output files, and key log markers before spending the confirmation slot.
+
+Next decision: if `v575` confirms near `0.949`, future work can safely tune/ablate EoS5 in repo-owned kernels. If it fails despite v574 scoring, diagnose notebook ownership/source drift before any EoS5 tuning.
