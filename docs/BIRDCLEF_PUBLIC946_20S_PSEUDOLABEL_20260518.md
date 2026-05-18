@@ -39,7 +39,7 @@ Before any Kaggle packaging/submission:
 2. require positive or at least clearly safer lift than the 10s cw0.75 sibling;
 3. package only at a tiny audited weight if the site/bootstrap stability is acceptable.
 
-## Result, audit, and package — 2026-05-18 11:05 UTC
+## Result, audit, and package — 2026-05-18 10:47 UTC
 
 Training completed on trainer GPU1:
 

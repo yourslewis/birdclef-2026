@@ -2703,7 +2703,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
 
-### v573 public946 cw0.75 20s B0 sidecar package + guarded monitor — 2026-05-18 11:05 UTC
+### v573 public946 cw0.75 20s B0 sidecar package + guarded monitor — 2026-05-18 10:47 UTC
 
 - After the supervised frame-head 20s train-audio model failed public946 transfer, trained the soundscape/pseudo-label-adapted 20s sibling `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_20s_m160_lr3e4_ep20_20260518.json` on trainer GPU1.
 - Training result: `792` rows (`634` train / `158` val), `234` classes, best epoch `16`, best val AUC `0.990481` over `61` valid classes, final-all student AUC `0.991183` over `75` valid classes vs teacher `0.996798`, corr vs teacher `0.965250`, MAE `0.017386`, runtime `64.705s`, TorchScript `15.391 MB`.
