@@ -2702,3 +2702,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### B3 XC-init 20s public946 pseudo-label result — 2026-05-18 12:43 UTC
+
+- After v573 scored `0.945` and NFNet20 center produced only tiny stable lift, opened PR #243 and ran `configs/birdclef/pl_public946_sed85_rankblend15_b3_xc_q3_extinit_20s_m160_lr1e4_ep20_center_20260518.json` as a distinct external-pretrained EfficientNet-B3 20s/160mel center-only public946 pseudo-label candidate.
+- Training result on trainer GPU1: `792` rows, best validation AUC `0.973045` over `59` valid classes at epoch `19`, final-all student AUC `0.972055` over `75`, teacher AUC `0.997018`, corr `0.932813`, MAE `0.021694`, runtime `111.318s`, TorchScript `41.995 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_b3_xc_q3_20s_m160_blend_audit_20260518T1242Z.json`: best student rank weight `0.005`, local lift `+0.000017820`, standalone AUC `0.972055`, corr `0.932813`. Site bootstrap p(lift>0)=`0.7667`, mean lift `+0.000021348`; leave-one-site p(lift>0)=`1.0`, min lift `+0.000000145`.
+- Decision: do **not** package/submit immediately. It is more stable than the older 5s B3 audit but lower-lift, and v573 showed a stronger local sidecar can still drop public LB. Continue searching for materially stronger distinct signals before spending another slot.

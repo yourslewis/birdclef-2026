@@ -45,3 +45,28 @@ No Kaggle packaging/submission from config alone. Require:
 2. aligned public946 blend/stability audit;
 3. evidence materially stronger than both NFNet20 and failed v573-style B0 sidecars;
 4. runtime/package feasibility.
+
+## Result and audit — 2026-05-18 12:43 UTC
+
+Training completed on trainer GPU1:
+
+- rows/classes: `792` rows, `234` classes
+- best validation AUC: `0.973045` over `59` valid classes at epoch `19`
+- final-all student AUC: `0.972055` over `75` valid classes
+- final-all teacher AUC: `0.997018`
+- student/teacher corr: `0.932813`
+- student/teacher MAE: `0.021694`
+- runtime: `111.318s`
+- TorchScript size: `41.995 MB`
+
+Aligned public946 blend/stability audit:
+
+- audit path on trainer: `artifacts/pseudolabels/audits/public946_b3_xc_q3_20s_m160_blend_audit_20260518T1242Z.json`
+- standalone AUC: `0.972055`
+- corr vs teacher: `0.932813`
+- best student rank weight: `0.005`
+- local lift: `+0.000017820`
+- site-bootstrap p(lift>0): `0.7667`, mean lift `+0.000021348`
+- leave-one-site p(lift>0): `1.0`, min lift `+0.000000145`
+
+Decision: do **not** package/submit immediately. The result is more stable than the old 5s B3 audit but has less local lift, and v573 showed even larger local lift can drop public LB. Keep as evidence that B3 external-pretrained/context variants are viable but need a stronger offline bar before another slot.
