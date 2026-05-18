@@ -2716,3 +2716,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Launched the 10s/160mel B0 frame-head pilot on trainer GPU0: `configs/birdclef/sed_b0_framehead_10s_m160_q3init_ep4_20260518.json`.
 - Result: completed on CUDA with `1024` examples (`819` train / `205` val), input shape `[1024,160,626]`, best epoch `4`, best val loss `0.082988`, holdout macro AUC `0.723326` over `94` valid classes, runtime `31.409s`, TorchScript size `15.389 MB`.
 - Interpretation: this is a real frame-head SED signal and much healthier than the earlier q0 external-pretrain smoke, but still below the stronger q3 external-pretrain/OOF baselines. Continue by launching the 20s sibling and only consider packaging if a later OOF/blend audit shows low-correlation additive value.
+
+### Frame-head 20s q3-init pilot result — 2026-05-18 08:15 UTC
+
+- Launched the 20s/160mel B0 frame-head sibling on trainer GPU0: `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep4_20260518.json`.
+- Result: completed on CUDA with `1024` examples (`819` train / `205` val), input shape `[1024,160,1251]`, best epoch `4`, best val loss `0.068910`, holdout macro AUC `0.806310` over `92` valid classes, runtime `36.574s`, TorchScript size `15.389 MB`.
+- Interpretation: 20s context is clearly stronger than 10s in this pilot (`0.8063` vs `0.7233`). Next PR should scale the 20s frame-head recipe to more files/epochs or fold-aware OOF before any packaging decision.
