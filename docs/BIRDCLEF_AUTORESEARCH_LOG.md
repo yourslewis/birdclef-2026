@@ -2709,3 +2709,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Training result on trainer GPU1: `792` rows, best validation AUC `0.973045` over `59` valid classes at epoch `19`, final-all student AUC `0.972055` over `75`, teacher AUC `0.997018`, corr `0.932813`, MAE `0.021694`, runtime `111.318s`, TorchScript `41.995 MB`.
 - Blend/stability audit `artifacts/pseudolabels/audits/public946_b3_xc_q3_20s_m160_blend_audit_20260518T1242Z.json`: best student rank weight `0.005`, local lift `+0.000017820`, standalone AUC `0.972055`, corr `0.932813`. Site bootstrap p(lift>0)=`0.7667`, mean lift `+0.000021348`; leave-one-site p(lift>0)=`1.0`, min lift `+0.000000145`.
 - Decision: do **not** package/submit immediately. It is more stable than the older 5s B3 audit but lower-lift, and v573 showed a stronger local sidecar can still drop public LB. Continue searching for materially stronger distinct signals before spending another slot.
+
+### Student-pool re-audit after NFNet20/B3XC20 — 2026-05-18 12:55 UTC
+
+- Refreshed aligned public946 student-pool audit on trainer after adding the NFNet20 and B3 XC 20s artifacts: `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260518T1250Z.json`.
+- Scan summary: `122` student prediction files scanned, `50` row/label-aligned against `teacher_sed85_rankblend15.npz`; teacher baseline remains `0.997018454` over `75` valid classes.
+- Top local sidecar remains old V2S-v508 (`pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval`): best weight `0.05`, local lift `+0.000168656`, site-bootstrap p(lift>0)=`0.9700`, leave-one-site p(lift>0)=`1.0`, min lift `+0.000063181`.
+- This does **not** authorize another V2S slot because the already-submitted V2S/public946 sidecar family dropped (`v560=0.945`). Treat this refreshed pool audit as a ranking/rejection tool only.
+- New NFNet20/B3XC20 artifacts did not displace the older top local candidates. Combined with v573, current decision remains: no more low-weight same-teacher sidecar submissions unless a candidate clears a much stronger out-of-family/offline bar or produces a genuinely new repo-owned inference artifact.
