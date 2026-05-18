@@ -97,3 +97,18 @@ Do not immediately sweep top-level blend weights. If `v576` drops, the `Model_2`
 - If `v575` scores below `0.949`: still diagnose before tuning, because the direct public source and repo-owned confirmation diverged.
 - If `v575` confirms `0.949`, use at most one same-day slot for the most interpretable ablation (`v576` Model5-only).
 - Avoid broad direct EoS public sibling submissions. Future EoS work must stay repo-owned.
+
+## Execution update — v576 pushed and guarded monitor started
+
+`v575` is still pending, so the last likely same-day slot is preserved. To avoid idle time, v576 was prepared and pushed but guarded behind the v575 confirmation condition.
+
+v576 implementation:
+
+- Repo directory: `kaggle-kernels/v576-eos5-model5-only/`
+- Kernel URL: `https://www.kaggle.com/code/yourslewis/bc26-v576-eos5-model5-only-ablation`
+- Kernel id: `119735856`, version `1`
+- Change: top-level `solutions` contains only `Model_5` with weight `1.0`.
+- Extra safety fix: final direct combiner now handles the one-model case by reading the generated `subm_5.csv` and writing `submission.csv` with `row_id` index.
+- Submit guard: `scripts/submit_v576_when_ready.py` requires v576 COMPLETE/output verification and `v575` complete with `0.949+` before submitting.
+
+This is queued as an execution-ready candidate, not yet a competition submission.

@@ -2838,3 +2838,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Chosen action: preserve the last likely slot while `v575` is pending and prepare the next repo-owned EoS5 ablation queue. Added `docs/BIRDCLEF_EOS5_ABLATION_QUEUE_20260518.md`.
 - Source inspection confirms EoS5's active `Model_5` path uses `lambda_prior=0.5`, `file_confidence_scale(top_k=2,power=0.4)`, `rank_aware_scaling(power=0.6)`, `adaptive_delta_smooth(base_alpha=0.20)`, and internal `xSED=[0.60,0.40]`. The top-level blend is `Model_2=0.0327`, `Model_5=0.9673`.
 - Next candidate order if `v575` confirms: first `v576` Model5-only (remove weak `Model_2` complement), then one-scalar candidates such as rank-aware power `0.55` or `lambda_prior=0.55`. Do not run these if `v575` fails or diverges from `v574`.
+
+### v576 Model5-only repo-owned ablation pushed while v575 pending — 2026-05-18 17:45 UTC
+
+- Status check: current best remains **0.949** from `v574`; `v575` repo-owned EoS5 confirmation remains pending (ref `52783235`). Four 2026-05-18 UTC submissions are visible (`v572`-`v575`), so likely one slot remains.
+- Decision: preserve the last likely competition slot until `v575` confirms, but prepare and run the next repo-owned kernel now. This avoids idle time without violating the v575 confirmation gate.
+- Implemented `v576` as the first planned EoS5 ablation: Model5-only / remove the weak `Model_2` complement. It copies the repo-owned v575 notebook and changes only the top-level `solutions` block to `Model_5` weight `1.0`; added a one-model fallback in the final direct combiner so the notebook can emit `submission.csv` from `subm_5.csv` without executing `Model_2`.
+- Added `kaggle-kernels/v576-eos5-model5-only/`, `scripts/push_v576.py`, and guarded `scripts/submit_v576_when_ready.py`. Validation: metadata JSON parses, notebook JSON parses with no stored outputs, notebook contains `Model_5` weight `1.0` and no `Model_2` in the top-level solutions cell, and scripts pass `py_compile`.
+- Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119735856`, URL `https://www.kaggle.com/code/yourslewis/bc26-v576-eos5-model5-only-ablation`, with no invalid data/competition/kernel/model sources (only tag strings rejected).
+- Started guarded submit monitor pid `9580`, log `logs/submit_v576_when_ready_20260518T1745Z.log`. Initial status: v576 kernel `RUNNING`, no failure message. The monitor will verify outputs and then submit only if `v575` is complete with `0.949+`; otherwise it preserves the slot.
