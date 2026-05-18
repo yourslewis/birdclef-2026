@@ -2708,3 +2708,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added scale config `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep8_2048_20260518.json` after the 20s/1024-file pilot beat the 10s pilot (`0.806310` vs `0.723326`).
 - This scale check uses 20s/160mel, refreshed q3 B0 init, focal BCE gamma `1.5`, sqrt positive weights, label smoothing `0.005`, `2048` max files, `160` max classes, `8` epochs, and restore-best-by-val-loss.
 - Purpose: test whether true frame-head SED signal scales before any package/submit work.
+
+### Frame-head 20s scale result — 2026-05-18 09:40 UTC
+
+- Collected `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep8_2048_20260518.json` from trainer GPU0.
+- Result: completed on CUDA with `2005` examples (`1604` train / `401` val), input shape `[2005,160,1251]`, best epoch `7`, best val loss `0.055458`, holdout macro AUC `0.902068` over `144` valid classes, runtime `88.874s`, TorchScript size `15.389 MB`.
+- Interpretation: this is the first strong frame-head SED scale signal in the current run and a clear improvement over the 1024-file 20s pilot (`0.806310`). Next action is to scale breadth/epochs again and then run a blend/correlation audit before packaging.
