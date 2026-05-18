@@ -2702,3 +2702,109 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v572 kernel version `1` completed successfully. Read-only verifier passed: output files included `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`, and Perch cache files; required log markers for cw0.75 sidecar completion and final rank-sidecar blend were present.
 - Submitted to BirdCLEF 2026 with description `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`. Submission ref `52762124`; immediate status `pending`, no score/error yet, `totalBytes=0` while pending.
 - Guardrail note: the background monitor `logs/submit_v572_when_ready_20260518T0355Z.log` has a duplicate-description guard and should exit on its next wake now that the submission exists.
+
+### v572 tied and cadence accelerated — 2026-05-18 08:00 UTC
+
+- Status check: `v572` completed and scored `0.946`, tying the current public best. It was hidden-safe and competition-format valid (`totalBytes=17836470`) but did not improve beyond the public946 plateau. Latest context remains `v571=0.946`, `v570` RAM no-score, `v568` hidden no-score, `v567=0.944`, `v566=0.946`.
+- Lesson: the cw0.75 local-window B0 sidecar at `0.25%` is safer than V2S/ConvNeXt drops but still not enough. Extend the micro-sidecar stop rule to this low-weight local-window B0 packaging path.
+- Wenhao requested more urgency / more PRs. Restored the BirdCLEF autonomous cron from 6-hour cadence back to hourly and changed operating style toward multiple small, reviewable PRs for distinct hypotheses while preserving output-verification before Kaggle submissions.
+### Frame-head SED pilot configs queued for faster PR cadence — 2026-05-18 08:05 UTC
+
+- In response to Wenhao's urgency request, split the next true-new-signal work into its own small PR rather than bundling it with v572 docs.
+- Added two real SED/frame-head EfficientNet-B0 pilot configs using refreshed q3 B0 external init, balanced class sampling, focal BCE gamma `1.5`, sqrt positive weights, label smoothing `0.005`, and restore-best-by-val-loss:
+  - `configs/birdclef/sed_b0_framehead_10s_m160_q3init_ep4_20260518.json`
+  - `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep4_20260518.json`
+- Purpose: move away from public946 micro-sidecars toward actual frame/event SED signal; smoke/scale runs should report holdout AUC, TorchScript export size, and whether either model is low-correlation enough to become a future sidecar package.
+
+### Frame-head 10s q3-init pilot result — 2026-05-18 08:10 UTC
+
+- Launched the 10s/160mel B0 frame-head pilot on trainer GPU0: `configs/birdclef/sed_b0_framehead_10s_m160_q3init_ep4_20260518.json`.
+- Result: completed on CUDA with `1024` examples (`819` train / `205` val), input shape `[1024,160,626]`, best epoch `4`, best val loss `0.082988`, holdout macro AUC `0.723326` over `94` valid classes, runtime `31.409s`, TorchScript size `15.389 MB`.
+- Interpretation: this is a real frame-head SED signal and much healthier than the earlier q0 external-pretrain smoke, but still below the stronger q3 external-pretrain/OOF baselines. Continue by launching the 20s sibling and only consider packaging if a later OOF/blend audit shows low-correlation additive value.
+
+### Frame-head 20s q3-init pilot result — 2026-05-18 08:15 UTC
+
+- Launched the 20s/160mel B0 frame-head sibling on trainer GPU0: `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep4_20260518.json`.
+- Result: completed on CUDA with `1024` examples (`819` train / `205` val), input shape `[1024,160,1251]`, best epoch `4`, best val loss `0.068910`, holdout macro AUC `0.806310` over `92` valid classes, runtime `36.574s`, TorchScript size `15.389 MB`.
+- Interpretation: 20s context is clearly stronger than 10s in this pilot (`0.8063` vs `0.7233`). Next PR should scale the 20s frame-head recipe to more files/epochs or fold-aware OOF before any packaging decision.
+### Frame-head 20s scale config queued — 2026-05-18 08:20 UTC
+
+- Added scale config `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep8_2048_20260518.json` after the 20s/1024-file pilot beat the 10s pilot (`0.806310` vs `0.723326`).
+- This scale check uses 20s/160mel, refreshed q3 B0 init, focal BCE gamma `1.5`, sqrt positive weights, label smoothing `0.005`, `2048` max files, `160` max classes, `8` epochs, and restore-best-by-val-loss.
+- Purpose: test whether true frame-head SED signal scales before any package/submit work.
+
+### Frame-head 20s scale result — 2026-05-18 09:40 UTC
+
+- Collected `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep8_2048_20260518.json` from trainer GPU0.
+- Result: completed on CUDA with `2005` examples (`1604` train / `401` val), input shape `[2005,160,1251]`, best epoch `7`, best val loss `0.055458`, holdout macro AUC `0.902068` over `144` valid classes, runtime `88.874s`, TorchScript size `15.389 MB`.
+- Interpretation: this is the first strong frame-head SED scale signal in the current run and a clear improvement over the 1024-file 20s pilot (`0.806310`). Next action is to scale breadth/epochs again and then run a blend/correlation audit before packaging.
+### Frame-head 20s ep12/4096 result and public946 audit — 2026-05-18 10:48 UTC
+
+- Collected `configs/birdclef/sed_b0_framehead_20s_m160_q3init_ep12_4096_20260518.json` from trainer GPU1.
+- Result: completed on CUDA with `3051` examples (`2441` train / `610` val), input shape `[3051,160,1251]`, best epoch `5`, best val loss `0.052794`, holdout macro AUC `0.922414` over `179` valid classes, runtime `189.555s`, TorchScript size `15.389 MB`.
+- Built temporary single-model TorchScript bundle `artifacts/sed_bundles/framehead-20s-q3init-ep12-4096-v1` and ran teacher66 train-soundscape inference: `792` rows, `234` classes, `6.56s` total (`0.099s/file`).
+- Blend audit versus public946 teacher cache (`artifacts/pseudolabels/audits/public946_framehead20s_ep12_blend_audit_20260518T1045Z.json` on trainer): standalone train-soundscape macro AUC `0.467988` over `75` valid classes, flat corr vs teacher `0.053539`, best tiny blend weight `0.0025` with lift `-0.000001105`. Site bootstrap mean lift `-0.00000391`, p(lift>0)=`0.275`; leave-one-site mean lift `-0.000001515`.
+- Interpretation: random train-audio holdout keeps improving, but it does not transfer to labeled train soundscapes yet. Do **not** package/submit this supervised frame-head model directly. Pivot to soundscape/pseudo-label-adapted 20s training before spending Kaggle slots.
+### v573 public946 cw0.75 20s B0 sidecar package + guarded monitor — 2026-05-18 10:47 UTC
+
+- After the supervised frame-head 20s train-audio model failed public946 transfer, trained the soundscape/pseudo-label-adapted 20s sibling `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_20s_m160_lr3e4_ep20_20260518.json` on trainer GPU1.
+- Training result: `792` rows (`634` train / `158` val), `234` classes, best epoch `16`, best val AUC `0.990481` over `61` valid classes, final-all student AUC `0.991183` over `75` valid classes vs teacher `0.996798`, corr vs teacher `0.965250`, MAE `0.017386`, runtime `64.705s`, TorchScript `15.391 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_cw075_20s_b0_blend_audit_20260518T1055Z.json`: best student rank weight `0.015`, local AUC `0.997042086`, lift `+0.000023632` vs teacher, standalone AUC `0.991183`, corr `0.963024`. Site bootstrap p(lift>0)=`0.8033`, mean lift `+0.000027692`; leave-one-site p(lift>0)=`0.8889`, min lift `-0.000000172` on S09.
+- Packaged private dataset `yourslewis/bc26-public946-cw075-20s-b0-v1` from trainer artifact `pl-public946-sed85-rankblend15-b0-centerlocalmax-r1-cw075-20s-m160-lr3e4-ep20-20260518/model_torchscript.pt`. Bundle zip SHA256 `3ab570390d1ee8cccdd154b83d66a70e6e68770488dd23d8ae94638e408fbf86`, size about `13.4 MB`, containing `sed_bundle_manifest.json` and one TorchScript model.
+- Added repo-owned kernel `kaggle-kernels/v573-public946-cw075-20s-b0-w0015/`, forked from v572, mounting the new 20s sidecar dataset, writing `submission_cw075_20s_b0_student.csv`, and applying `STUDENT_RANK_BLEND=0.015` after standard public946 gates. Metadata slug: `yourslewis/bc26-v573-public946-cw075-20s-b0-w0015`.
+- Validation before push: `python3 -m json.tool` on kernel metadata; `python3 -m py_compile` on kernel script, `scripts/submit_v573_when_ready.py`, and `scripts/push_v573.py`; `git_maint.py hygiene` clean. Bearer kernel push returned version `1`, URL `https://www.kaggle.com/code/yourslewis/bc26-v573-public946-cw075-20s-b0-w0015`, no invalid sources.
+- Started guarded submit monitor `scripts/submit_v573_when_ready.py` with pid `10368`, log `logs/submit_v573_when_ready_20260518T1105Z.log`. Initial status: kernel `RUNNING`; no v573 competition submission made yet.
+
+### v573 submitted + 20s power0.85 follow-up audit — 2026-05-18 11:40 UTC
+
+- Guarded v573 monitor completed kernel verification and submitted `v573: Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%` to BirdCLEF. Submission ref `52773142`; status at recheck: `pending`, no score/error yet, `totalBytes=0` while pending.
+- Verified v573 Kaggle output before submit: kernel COMPLETE/no failure; output files included `submission.csv`, `submission_cw075_20s_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`; required log markers for 20s B0 sidecar completion and final rank-sidecar blend were present. Kernel log showed student inference on 20 public dry-run files in `45.0s`, output shape `(240,235)`, prob range `0.013601` to `0.983358`, mean `0.094878`.
+- Prepared and ran follow-up config `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_20s_m160_lr3e4_ep20_power085_20260518.json`, which keeps the v573 20s/cw0.75 setup but changes `teacher_power=1.0 -> 0.85` and seed `95 -> 96`.
+- Power0.85 result on trainer GPU1: `792` rows, best epoch `20`, best val AUC `0.993466` over `58` valid classes, final-all student AUC `0.991986` over `75`, teacher AUC `0.996798`, corr `0.957827`, MAE `0.043671`, runtime `64.201s`, TorchScript `15.391 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_cw075_20s_b0_power085_blend_audit_20260518T1140Z.json`: best student rank weight `0.0075`, local lift `+0.000018286`, standalone AUC `0.991986`, corr `0.955097`. Site bootstrap p(lift>0)=`0.7067`, mean lift `+0.000019431`; leave-one-site p(lift>0)=`0.8889`, min lift `-0.000005326` on S09.
+- Decision: power0.85 is a useful held diagnostic but **weaker than v573/power1.0** (`+0.000023632` lift, bootstrap p=0.8033, min site lift nearly zero). Do not package or submit power0.85 before v573 score lands.
+
+### v573 scored 0.945 — cw-style B0 sidecar stop rule triggered — 2026-05-18 12:25 UTC
+
+- Live Kaggle API check: `v573: Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%` completed with public score `0.945` (`ref=52773142`, bytes `17834452`, no error). Current public best remains `0.946` from v541/v542/v558/v566/v571/v572 family.
+- Diagnosis: the stronger local 20s B0 sidecar audit (`+0.000023632` local lift, site bootstrap p(lift>0)=`0.8033`) still failed to transfer to public LB, matching the earlier v560 lesson that local train-soundscape sidecar gates are rejection filters, not approval filters.
+- Stop rule: **do not spend more Kaggle slots on cw-style B0 sidecar variants**, including the queued power0.85 diagnostic. Treat power0.85 (`+0.000018286` local lift) as explicitly killed for public submission.
+- Pivot: next work should be a genuinely distinct model/source signal. Chosen next lane is an NFNet-L0 public946 pseudo-label student with 20s context and center-only targets (no cw/local-window B0 sidecar), evaluated offline first.
+### NFNet20 public946 pseudo-label result — 2026-05-18 12:38 UTC
+
+- Collected `configs/birdclef/pl_public946_sed85_rankblend15_nfnet_20s_m160_lr1e4_ep20_center_20260518.json` from trainer GPU1. It is a distinct NFNet-L0, 20s/160mel, center-only soft target pivot after v573 dropped to `0.945`.
+- Training result: `792` rows, best epoch `16`, best validation AUC `0.988233` over `59` valid classes, final-all student AUC `0.990618` over `75`, teacher AUC `0.997018`, corr `0.954731`, MAE `0.019269`, runtime `238.801s`, TorchScript `89.872 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_nfnet20_center_blend_audit_20260518T1238Z.json`: best student rank weight `0.01`, local lift `+0.000007693`, standalone AUC `0.990618`, corr `0.954731`. Site bootstrap p(lift>0)=`0.9367`, mean lift `+0.000011651`; leave-one-site p(lift>0)=`1.0`, min lift `+0.000006406`.
+- Decision: stable but too small/heavy for packaging after v573. Do **not** submit. Continue distinct-model/source search; next candidate should improve evidence materially, not just produce a tiny stable local lift.
+### B3 XC-init 20s public946 pseudo-label result — 2026-05-18 12:43 UTC
+
+- After v573 scored `0.945` and NFNet20 center produced only tiny stable lift, opened PR #243 and ran `configs/birdclef/pl_public946_sed85_rankblend15_b3_xc_q3_extinit_20s_m160_lr1e4_ep20_center_20260518.json` as a distinct external-pretrained EfficientNet-B3 20s/160mel center-only public946 pseudo-label candidate.
+- Training result on trainer GPU1: `792` rows, best validation AUC `0.973045` over `59` valid classes at epoch `19`, final-all student AUC `0.972055` over `75`, teacher AUC `0.997018`, corr `0.932813`, MAE `0.021694`, runtime `111.318s`, TorchScript `41.995 MB`.
+- Blend/stability audit `artifacts/pseudolabels/audits/public946_b3_xc_q3_20s_m160_blend_audit_20260518T1242Z.json`: best student rank weight `0.005`, local lift `+0.000017820`, standalone AUC `0.972055`, corr `0.932813`. Site bootstrap p(lift>0)=`0.7667`, mean lift `+0.000021348`; leave-one-site p(lift>0)=`1.0`, min lift `+0.000000145`.
+- Decision: do **not** package/submit immediately. It is more stable than the older 5s B3 audit but lower-lift, and v573 showed a stronger local sidecar can still drop public LB. Continue searching for materially stronger distinct signals before spending another slot.
+
+### Student-pool re-audit after NFNet20/B3XC20 — 2026-05-18 12:55 UTC
+
+- Refreshed aligned public946 student-pool audit on trainer after adding the NFNet20 and B3 XC 20s artifacts: `artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260518T1250Z.json`.
+- Scan summary: `122` student prediction files scanned, `50` row/label-aligned against `teacher_sed85_rankblend15.npz`; teacher baseline remains `0.997018454` over `75` valid classes.
+- Top local sidecar remains old V2S-v508 (`pl-r2-v2s-v508-soft-p100-5s-pretrained-lr1e4-ep20-bestval`): best weight `0.05`, local lift `+0.000168656`, site-bootstrap p(lift>0)=`0.9700`, leave-one-site p(lift>0)=`1.0`, min lift `+0.000063181`.
+- This does **not** authorize another V2S slot because the already-submitted V2S/public946 sidecar family dropped (`v560=0.945`). Treat this refreshed pool audit as a ranking/rejection tool only.
+- New NFNet20/B3XC20 artifacts did not displace the older top local candidates. Combined with v573, current decision remains: no more low-weight same-teacher sidecar submissions unless a candidate clears a much stronger out-of-family/offline bar or produces a genuinely new repo-owned inference artifact.
+### Raw-SED 20s local-window diagnostic — 2026-05-18 13:50 UTC
+
+- Status check before work: current public best remained `0.946`; latest visible submissions unchanged with `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`, `v565=0.943`, `v563=0.946`. GPU1 idle; GPU0 occupied by unrelated LRM job. Repo hygiene clean.
+- Opened PR #244: https://github.com/yourslewis/birdclef-2026/pull/244 (`Add BirdCLEF raw SED 20s local-window diagnostic`). Added `configs/birdclef/pl_public946_sedraw_b0_centerlocalmax_r1_cw075_20s_m160_lr3e4_ep20_20260518.json` and `docs/BIRDCLEF_SEDRAW20_LOCALWINDOW_20260518.md`.
+- Hypothesis: train a compact B0 SED-head student on raw public946 SED teacher targets (`teacher_sed.npz`) with 20s context plus gentler center/localmax r1 cw0.75 target transform, instead of another final-rankblend/cw-style sidecar.
+- Trainer result on GPU1: 792 rows, best val AUC `0.991514` over 61 at epoch 19, final-all student AUC `0.991099` over 75, raw SED teacher AUC `0.996475`, corr vs raw SED teacher `0.968311`, MAE `0.004448`, runtime `65.212s`, TorchScript `15.391 MB`.
+- Audit vs sed85/rankblend public946 teacher `artifacts/pseudolabels/audits/public946_sedraw20_localwindow_blend_audit_20260518T1348Z.json`: standalone AUC `0.991099`, corr vs teacher `0.895538`, best tested weight `0.001`, lift `-0.000000961`, site-bootstrap p(lift>0)=`0.3267`, leave-one-site p(lift>0)=`0.1111`, min lift `-0.000012070`.
+- Decision: kill this exact raw-SED 20s local-window candidate; it is compact and learns raw SED well but is not additive to the public946 sed85/rankblend teacher. No Kaggle submission.
+
+### v574 guarded Nina EoS5 public-source replay submitted — 2026-05-18 14:50 UTC
+
+- Status check: current public best remains `0.946`. Latest visible submissions: `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`, `v565=0.943`, `v563=0.946`. 2026-05-18 UTC had two visible submissions before this run (`v572`, `v573`), leaving slots available.
+- Track choice: public-source mining / high-upside guarded replay rather than another public946 sidecar. Pulled and inspected `nina2025/birdclef-2026-eos-5`, a newer EoS public stack with top-level direct blend weights `Model_2=0.0327`, `Model_5=0.9673`, and source comments around a `0.949` LB component. This is distinct from the exhausted cw/V2S/ConvNeXt sidecar lanes.
+- Preflight: `nina2025/birdclef-2026-eos-5` status is `COMPLETE` with `failureMessage=null`; public output files include `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `subm_5.csv`, and `subm_2.csv`. Public output files are dry-run-sized, so I did not treat them as proof by themselves.
+- Hidden-path source guard: reviewed the pulled source under `artifacts/public_kernels_20260518/eos5/`. Required markers passed: hidden/test path checks `test_soundscapes/*.ogg`, `IS_DRY_RUN = len(test_paths) == 0`, sample alignment only under `if IS_DRY_RUN`, model branches for `Model_2` and `Model_5`, `Karnakbayev_PowerOptimization_LB0948`, and final `write_final_submission(..., "submission.csv")` verifier with unique `row_id` assertion. This makes the submission a guarded code-rerun datapoint, not a blind public-output CSV submission.
+- Submission mechanics: initial latest-version attempt with `kernel_version=0` failed `403`; probe with `kernel_version=1` failed safely (`Did not find provided Notebook Output File`), revealing that the exact version was required. `ApiGetKernel` reported `currentVersionNumber=9`; submission with version `9` succeeded.
+- Submitted `v574: Guarded direct Nina EoS5 public source replay after hidden-path source preflight`, Kaggle ref `52780102`. Immediate Bearer API check shows `pending`, no score/error yet.
+- Caveat: despite source preflight, this is still a direct public notebook rerun rather than a fully repo-owned port. Do not queue additional direct public notebooks from the same family unless `v574` improves or yields a clear actionable lesson; if it ties/drops/fails, port only the reproducible structural idea into repo-owned code.
