@@ -430,3 +430,17 @@ Blend/stability audit:
 - Leave-one-site p_lift_gt_0 `0.8889`, min lift `-0.000002217` on `S09`
 
 Conclusion: cw0.75 is gentler and slightly more leave-one-site stable than cw0.50, but the additive lift is smaller and still bootstrap-fragile. It is a low-weight fallback candidate only; prefer stronger true frame/head or new-source signals for the next UTC reset.
+
+## 2026-05-18 execution update: v572 cw0.75 package queued
+
+After UTC reset, no 2026-05-18 competition submissions were visible. A controlled repo-owned exploratory package was prepared from the cw0.75 local-window B0 diagnostic:
+
+- Private dataset: `yourslewis/bc26-public946-cw075-localwindow-b0-v1`
+- Dataset zip SHA256: `cad40dd2b6731c46116ab9827c8ffd3cfa689e64775ec2fca31f59ad73cfdf12`
+- Kernel: `yourslewis/bc26-v572-public946-cw075-b0-w00025`
+- Kernel directory: `kaggle-kernels/v572-public946-cw075-localwindow-b0-w00025/`
+- Sidecar CSV: `submission_cw075_localwindow_b0_student.csv`
+- Sidecar rank weight: `0.0025`
+- Kernel push: version `1`, no invalid sources
+
+A guarded monitor is running via `scripts/submit_v572_when_ready.py` / `logs/submit_v572_when_ready_20260518T0355Z.log`. It will submit only if the kernel completes and output verification passes. Treat v572 as an exploratory datapoint, not a high-confidence improvement: local audit lift was only `+0.000015339` and bootstrap remained fragile.
