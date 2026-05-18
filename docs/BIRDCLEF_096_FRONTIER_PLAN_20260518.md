@@ -144,3 +144,47 @@ Likely confirmation plan if `v580 > 0.949`:
 5. Push repo-owned confirmation and submit only after COMPLETE/output verification.
 
 If any Chaney artifact dataset is not attachable, fallback confirmation path is to reproduce those branch artifacts from public source where possible, but that is larger and should only happen if the direct v580 score justifies it.
+
+## 2026-05-18 23:45 UTC execution update — reset queue healthy, repo-owned v580 dependency blocker found
+
+Live status:
+
+- Current best remains **0.949** from `v574`/`v575`/`v576`.
+- 2026-05-18 UTC still has `5` visible submissions; 2026-05-19 UTC has `0` visible submissions at check time.
+- Managed monitors are alive:
+  - v580: session `tender-ridge`, pid `88792`; sleeping after daily-cap response and ready to retry near/after reset.
+  - v581: session `brisk-kelp`, pid `88794`; polling every 15 minutes and preserving slots until v580 is visible/scored.
+
+### Repo-owned v580 confirmation blocker
+
+Queried the explicit Chaney artifact dataset candidates via Kaggle Bearer API:
+
+- `chaneyma/birdclef2026-edits-protossm-sed-onnx-infer-artifacts` — `403 datasets.get denied`
+- `chaneyma/bc26-gate-fake008-head0015-baseline-onnx` — `403 datasets.get denied`
+- `chaneyma/bc26-edits-protossm-sed-v7-all66-40x20` — `403 datasets.get denied`
+- `chaneyma/bc26-edits-protossm-sed-v8-all66-synth-p010-40x20` — `403 datasets.get denied`
+- `chaneyma/bc26-probe-middle-pca128-raw085-logreg015` — `403 datasets.get denied`
+
+Public/common dependencies are attachable:
+
+- `lixin73/birdclef2026-v27-onnx-perch-meta-forum-v1-lb872` — OK
+- `jaejohn/perch-meta` — OK
+- `rishikeshjani/perch-onnx-for-birdclef-2026` — OK
+- `tuckerarrants/perch-v2-no-dft-onnx` — OK
+
+Implication:
+
+- If `v580` improves, an immediate repo-owned confirmation may be blocked by private/non-attachable Chaney artifacts.
+- Best follow-up becomes either:
+  1. reproduce the needed Chaney artifact branches in our repo-owned kernel/datasets, or
+  2. mine the public source for the minimal logic that can be applied to attachable/public artifacts.
+- Do not assume a simple v582 repo-owned replay can attach all sources.
+
+### Other frontier attachability notes
+
+Potentially attachable follow-up lanes if v580/v581 do not improve:
+
+- `lucataco/bc26-claude-a2prime-nfnet-fix` uses public/attachable `brendancarlin/birdclef2026-models` and common Perch/SED/BirdNET sources.
+- `kamongi/pantanal-distill-birdclef2026` uses attachable `konbu17/bird26-train-audio-head-v1` plus common sources, but source comments suggest public LB around `0.944`; treat as idea-mining rather than a priority slot.
+
+Action this run: no new submitters added; preserve the queue order v580 → v581.

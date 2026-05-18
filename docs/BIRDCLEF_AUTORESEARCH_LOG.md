@@ -2883,3 +2883,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v580 managed session `tender-ridge` / pid `88792`: source/output preflight re-passed, submit attempt hit daily cap with `78 minutes from now`, sleeping `4800s` before retry.
 - v581 managed session `brisk-kelp` / pid `88794`: alive, waiting for v580 visibility/result before fallback action.
 - Mapped Chaney v37 likely repo-owned confirmation dependencies from source paths: `chaneyma/birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `chaneyma/bc26-gate-fake008-head0015-baseline-onnx`, `chaneyma/bc26-edits-protossm-sed-v7-all66-40x20`, `chaneyma/bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `chaneyma/bc26-probe-middle-pca128-raw085-logreg015`, plus common Perch/SED sources. If v580 improves, first follow-up is repo-owned confirmation with explicit source attachments.
+
+### Reset queue healthy; v580 repo-owned dependency blocker found — 2026-05-18 23:45 UTC
+
+- Live Kaggle unchanged: best `0.949`; 2026-05-18 UTC visible submissions `5`, 2026-05-19 visible submissions `0` at check time.
+- Managed monitors are alive: v580 `tender-ridge` pid `88792` sleeping after cap and ready to retry; v581 `brisk-kelp` pid `88794` waiting for v580 visibility/result.
+- Checked Chaney artifact dataset attachability for possible repo-owned v580 confirmation. All key Chaney artifact datasets returned `403 datasets.get denied`: `birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `bc26-gate-fake008-head0015-baseline-onnx`, `bc26-edits-protossm-sed-v7-all66-40x20`, `bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `bc26-probe-middle-pca128-raw085-logreg015`.
+- Public/common dependencies are attachable (`lixin73`, `jaejohn`, `rishikeshjani`, `tuckerarrants`). If v580 improves, simple repo-owned replay may be blocked; follow-up likely requires reproducing Chaney artifacts or extracting portable logic. Do not promise immediate repo-owned confirmation until artifact access is solved.
+- Checked other attachability: Lucataco A2Prime/NFNet uses public `brendancarlin/birdclef2026-models`; Kamongi uses public `konbu17/bird26-train-audio-head-v1` but appears closer to `0.944`/idea-mining. No new submitter added; preserve v580 → v581 queue.
