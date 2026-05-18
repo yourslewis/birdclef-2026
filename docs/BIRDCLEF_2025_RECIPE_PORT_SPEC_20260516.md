@@ -363,3 +363,12 @@ The prepared 2025-style focal/BCE noisy-student smokes have now been checked on 
 - A refreshed aligned student-pool audit (`artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260517T0655Z.json` on the GPU server) found the best local lift from an older pretrained V2S-v508 student at 5% weight (`+0.000168656` over teacher AUC `0.997018454`), but prior Kaggle `v560=0.945` shows V2S local lifts are not approval filters. Treat this as an offline blend-analysis clue, not an immediate submission candidate.
 
 Implication: keep the 2025 recipe lane alive, but the next version should change the source of signal (external/pretrained initialization, robust cross-site blend stability, or real SED/MIL frame-local training), not merely add Focal+BCE/sqrt class weights to random-init students.
+
+## 2026-05-18 update: post-v573 sidecar caution
+
+- `v573` (`Public946 v542 plus cw0.75 20s B0 rank sidecar 1.5%`) completed at `0.945`, below the `0.946` public best, despite positive train-soundscape blend/stability gates. This reinforces that same-teacher local sidecar lifts are rejection filters, not approval filters.
+- NFNet20 center-only 20s/160mel and B3 XC-init 20s/160mel public946 students completed as distinct pseudo-label artifacts, but neither is slot-ready:
+  - NFNet20: best local lift `+0.000007693`, site-bootstrap p(lift>0)=`0.9367`, TorchScript `89.872 MB`.
+  - B3 XC 20s: best local lift `+0.000017820`, site-bootstrap p(lift>0)=`0.7667`, TorchScript `41.995 MB`.
+- Refreshed student-pool audit after these artifacts (`artifacts/pseudolabels/audits/public946_sed85_rankblend15_student_pool_audit_20260518T1250Z.json`) still ranked older V2S-v508 highest locally (`+0.000168656`, p(lift>0)=`0.9700`), but the V2S/public946 family already failed public transfer (`v560=0.945`).
+- Updated rule: avoid spending further slots on low-weight public946 sidecars unless they are tied to a genuinely new source/model artifact and clear a higher bar than same-teacher train-soundscape local lift; prioritize real SED/frame-local, external-data/pretraining, or validated public-source repackaging.

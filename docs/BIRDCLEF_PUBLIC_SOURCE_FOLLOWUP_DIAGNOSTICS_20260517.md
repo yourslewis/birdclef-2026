@@ -49,3 +49,19 @@ Do **not** submit more direct BirdNET / Mtoshi-family public notebooks just beca
 - If continuing public-source mining: port/repackage the idea rather than direct-submit the public notebook.
 - If using GPU time: prefer external/pretraining, real SED/MIL targets, or another source-backed specialist over same-teacher micro-sidecars.
 - If no GPU is available: prepare audits/specs and code hygiene; do not spend the last slot on low-confidence direct public notebooks.
+
+## 2026-05-18 update — guarded exception for Nina EoS5 (`v574`)
+
+A single guarded exception was made for `nina2025/birdclef-2026-eos-5` because it is a newer, materially different EoS public stack and 2026-05-18 UTC still had available slots after `v572`/`v573`.
+
+Guardrails before submit:
+
+- Kernel status `COMPLETE`, `failureMessage=null`.
+- Public outputs included `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `subm_5.csv`, and `subm_2.csv`.
+- Public output files were dry-run-sized, so they were **not** treated as sufficient proof.
+- Pulled source passed hidden-path source guards: it uses `test_soundscapes/*.ogg` in submit mode, only aligns to `sample_submission.csv` under `IS_DRY_RUN`, computes the `Model_2` and `Model_5` branches, and runs a final `submission.csv` verifier.
+- Submitted exact `currentVersionNumber=9` after version `0`/`1` attempts failed safely.
+
+Submission: `v574: Guarded direct Nina EoS5 public source replay after hidden-path source preflight`, ref `52780102`, pending at submit time.
+
+Stop rule remains: this is not permission to restart broad direct-public submissions. If `v574` does not beat `0.946`, future work should port only source-backed structural changes into repo-owned kernels or pivot back to new model/source signal.

@@ -62,3 +62,11 @@ Leave-one-group diagnostics confirm the same lesson as the v560 bootstrap backte
 ## 2026-05-16 leave-one-file backtest
 
 Leave-one-file-out also failed as an approval gate. The known failed `v560` direct-V2S 3% candidate stayed positive across 20 valid held-out files (`min_lift=+0.000061769`, q05 `+0.000063445`, `p_lift_gt_0=1.0`) but public LB was `0.945`. This confirms the train-soundscape overlap itself is too optimistic. Use local gates only to reject bad candidates; require independent OOF/new-source evidence or qualitatively new signal before using another public slot.
+
+## 2026-05-18 v572 local-window sidecar result
+
+`v572` (`Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`) scored `0.946`, tying the plateau. This is better than the V2S/ConvNeXt sidecar drops but still confirms that another tiny public946 sidecar did not move the displayed score.
+
+Update the stop rule accordingly: low-weight local-window B0 sidecars are now treated like CLAP/CV9245/BirdNET micro-sidecars. They may be useful as hidden-safety or packaging diagnostics, but they should not consume more Kaggle slots unless paired with a materially different frame-head/new-source signal or a much stronger out-of-sample gate.
+
+Operational cadence note: after Wenhao's 2026-05-18 urgency request, keep the autonomous loop hourly and prefer multiple small PRs for distinct hypotheses over one large bundled branch. PRs can be config/spec/diagnostic prep as long as each has a clear validation gate and no generated artifacts.
