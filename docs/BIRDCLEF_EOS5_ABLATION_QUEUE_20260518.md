@@ -112,3 +112,18 @@ v576 implementation:
 - Submit guard: `scripts/submit_v576_when_ready.py` requires v576 COMPLETE/output verification and `v575` complete with `0.949+` before submitting.
 
 This is queued as an execution-ready candidate, not yet a competition submission.
+
+## Execution update — v575/v576 confirmed, v577 pushed
+
+`v575` and `v576` both completed at **0.949**. This confirms:
+
+- the repo-owned EoS5 path reproduces the direct public `v574=0.949` result;
+- the weak `Model_2` top-level complement is not required for the 0.949 score, because `v576` Model5-only tied.
+
+Next ablation prepared:
+
+- Repo directory: `kaggle-kernels/v577-eos5-model5-rankp055/`
+- Kernel URL: `https://www.kaggle.com/code/yourslewis/bc26-v577-eos5-model5-rank-power-0-55`
+- Kernel id: `119739708`, version `1`
+- Change: Model5-only base, `rank_aware_scaling(... power=0.6) -> power=0.55` in the active Model5 test path.
+- Submit guard: `scripts/submit_v577_when_ready.py` requires v577 COMPLETE/output verification and `v576` complete with `0.949+` before submitting. Since the UTC day is currently full (`v572`-`v576`), the monitor should sleep on cap if it reaches submit before reset.
