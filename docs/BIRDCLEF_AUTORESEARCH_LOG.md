@@ -2830,3 +2830,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - The repo-owned v575 Kaggle kernel completed successfully: `bc26-v575-repo-owned-eos5-confirmation` version `1`, COMPLETE/no failure. Output verification passed with required files: `submission.csv`, `subm_2.csv`, `subm_5.csv`, `subm_karnakbayev_power_optimization.csv`, `submission_protossm.csv`, and `submission_sed.csv`; required log markers were present.
 - Submitted `v575: Repo-owned EoS5 confirmation of v574 public949 path`, Kaggle ref `52783235`. Immediate Bearer API check shows `pending`, no score/error yet. Current public best remains **0.949** from `v574` while v575 is pending.
 - Validation caveat/fix: Kaggle nbconvert emitted a notebook-schema warning because the copied repo notebook had empty `execution_count`/`outputs` keys on markdown cells after output stripping. The kernel still ran and produced valid outputs, but I fixed the repo notebook to remove code-only fields from markdown cells for future pushes.
+
+### EoS5 ablation queue prepared while v575 pending — 2026-05-18 16:45 UTC
+
+- Status check: current best is **0.949** from `v574`; `v575` repo-owned confirmation remains pending (ref `52783235`). Latest visible submissions: `v575` pending, `v574=0.949`, `v573=0.945`, `v572=0.946`, `v571=0.946`, `v570` RAM no-score, `v568` hidden-rerun no-score, `v567=0.944`, `v566=0.946`. Four 2026-05-18 UTC submissions are visible, so likely one slot remains.
+- Repo/process state: branch clean at start, no active BirdCLEF monitor/trainer processes; GPU1 is free and GPU0 is occupied by unrelated LRM work.
+- Chosen action: preserve the last likely slot while `v575` is pending and prepare the next repo-owned EoS5 ablation queue. Added `docs/BIRDCLEF_EOS5_ABLATION_QUEUE_20260518.md`.
+- Source inspection confirms EoS5's active `Model_5` path uses `lambda_prior=0.5`, `file_confidence_scale(top_k=2,power=0.4)`, `rank_aware_scaling(power=0.6)`, `adaptive_delta_smooth(base_alpha=0.20)`, and internal `xSED=[0.60,0.40]`. The top-level blend is `Model_2=0.0327`, `Model_5=0.9673`.
+- Next candidate order if `v575` confirms: first `v576` Model5-only (remove weak `Model_2` complement), then one-scalar candidates such as rank-aware power `0.55` or `lambda_prior=0.55`. Do not run these if `v575` fails or diverges from `v574`.
