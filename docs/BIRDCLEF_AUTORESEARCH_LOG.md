@@ -2824,3 +2824,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added guarded push/submit scripts `scripts/push_v575.py` and `scripts/submit_v575_when_ready.py`. Validation before push: kernel metadata parses as JSON, notebook JSON parses and has no outputs, and both scripts pass `py_compile`.
 - Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119729759`, URL `https://www.kaggle.com/code/yourslewis/bc26-v575-repo-owned-eos5-confirmation`, with no invalid data/competition/kernel/model sources (only tag strings were rejected as tags).
 - Started guarded submit monitor pid `95949`, log `logs/submit_v575_when_ready_20260518T1545Z.log`. Initial status: repo-owned v575 kernel `RUNNING`, no failure message. The monitor will submit only after COMPLETE status plus required output files/log markers.
+
+### v575 repo-owned EoS5 confirmation submitted — 2026-05-18 16:35 UTC
+
+- The repo-owned v575 Kaggle kernel completed successfully: `bc26-v575-repo-owned-eos5-confirmation` version `1`, COMPLETE/no failure. Output verification passed with required files: `submission.csv`, `subm_2.csv`, `subm_5.csv`, `subm_karnakbayev_power_optimization.csv`, `submission_protossm.csv`, and `submission_sed.csv`; required log markers were present.
+- Submitted `v575: Repo-owned EoS5 confirmation of v574 public949 path`, Kaggle ref `52783235`. Immediate Bearer API check shows `pending`, no score/error yet. Current public best remains **0.949** from `v574` while v575 is pending.
+- Validation caveat/fix: Kaggle nbconvert emitted a notebook-schema warning because the copied repo notebook had empty `execution_count`/`outputs` keys on markdown cells after output stripping. The kernel still ran and produced valid outputs, but I fixed the repo notebook to remove code-only fields from markdown cells for future pushes.

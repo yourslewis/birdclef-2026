@@ -127,3 +127,11 @@ Immediate follow-up:
 - Submit monitor will require COMPLETE/no-failure status, expected output files, and key log markers before spending the confirmation slot.
 
 Next decision: if `v575` confirms near `0.949`, future work can safely tune/ablate EoS5 in repo-owned kernels. If it fails despite v574 scoring, diagnose notebook ownership/source drift before any EoS5 tuning.
+
+## Execution update — v575 submitted
+
+The repo-owned v575 kernel completed and passed guarded output verification. It produced the expected files (`submission.csv`, `subm_2.csv`, `subm_5.csv`, `subm_karnakbayev_power_optimization.csv`, `submission_protossm.csv`, `submission_sed.csv`) with required log markers present.
+
+Submitted as `v575: Repo-owned EoS5 confirmation of v574 public949 path`, ref `52783235`; pending at submit time.
+
+Note: Kaggle emitted a notebook-schema warning during nbconvert because the first committed notebook copy had `execution_count`/`outputs` keys on markdown cells. This did not stop execution or output verification, but the repo copy has been corrected so markdown cells no longer include code-only fields.
