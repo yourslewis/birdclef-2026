@@ -379,3 +379,83 @@ Blend/stability audit:
 - Leave-one-site p_lift_gt_0 `0.7778`; worst sites `S22=-0.000016085`, `S09=-0.000004629`
 
 Conclusion: the local-window target mechanism is useful and passed smoke, but this exact center/localmax-r1 B0 candidate is not robust enough for a Kaggle slot. Next variants should alter the target structure rather than submit this one: e.g. lower neighbor influence (`temporal_center_weight=0.75`), `local_mean`, or a true frame-head model.
+
+## 2026-05-17 execution update: queued local-window variants
+
+Two follow-up local-window target variants are prepared but not yet evaluated:
+
+- `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_10s_m160_lr3e4_ep8_smoke_20260517.json`
+  - Same as the prior center/localmax-r1 smoke, but weaker neighbor influence: `temporal_center_weight=0.75`.
+- `configs/birdclef/pl_public946_sed85_rankblend15_b0_localmean_r1_10s_m160_lr3e4_ep8_smoke_20260517.json`
+  - Uses `temporal_target_mode=local_mean`, radius `1`.
+
+Both use B0, refreshed-q3 B0 init, 10s/160mel, 256 rows, and 8 epochs. They were intentionally not scored: both GPUs were occupied by unrelated LRM P30 work, and CPU-only execution was too slow/heavy. Partial cw075 output reached only epoch 4 and is not evidence. Run these on GPU before making any decision.
+
+## 2026-05-17 target-transform audit while GPU monitor waits
+
+The queued local-window GPU smokes are still waiting for a free GPU. A CPU-light target distribution audit was run instead:
+
+- Output: `artifacts/pseudolabels/audits/local_window_target_transform_summary_20260517T1555Z.json`
+- Center baseline: mean `0.08917`, row-top mean `0.80162`, `>=0.95` cells `280`
+- Center/localmax r1 cw0.50: mean `0.09396`, row-top mean `0.81324`, `>=0.95` cells `317`, mean abs delta `0.00479`
+- Center/localmax r1 cw0.75: mean `0.09156`, row-top mean `0.80716`, `>=0.95` cells `296`, mean abs delta `0.00239`
+- Local mean r1: mean `0.08918`, row-top mean `0.79646`, `>=0.95` cells `255`, mean abs delta `0.00644`
+
+Interpretation: cw0.75 is a gentler version of the previously fragile cw0.50 local-max target; local_mean is a smoothing/control target that reduces extreme confidence. Both remain worth GPU smoke-testing, but no decision should be made from distribution stats alone.
+
+## 2026-05-17 execution update: cw0.75 local-window full diagnostic
+
+The queued GPU smokes completed after the GPU freed up:
+
+- `center_localmax_mix` cw0.75 smoke: best val AUC `0.926609` over `29`, final-all AUC `0.948212` over `42`, corr `0.863944`, runtime `5.709s`.
+- `local_mean` radius1 smoke: best val AUC `0.951101` over `35`, but final-all AUC only `0.924528` over `42`, corr `0.809669`; kill this exact local-mean control.
+
+Scaled cw0.75:
+
+- Config: `configs/birdclef/pl_public946_sed85_rankblend15_b0_centerlocalmax_r1_cw075_10s_m160_lr3e4_ep20_20260517.json`
+- Output: `artifacts/pseudolabels/students/pl-public946-sed85-rankblend15-b0-centerlocalmax-r1-cw075-10s-m160-lr3e4-ep20-20260517/`
+- `792` rows
+- best epoch `15`
+- best val AUC `0.992308` over `61`
+- final-all student AUC `0.991336` over `75`
+- student/teacher corr `0.964665`
+- runtime `30.460s`, TorchScript `15.391 MB`
+
+Blend/stability audit:
+
+- Output: `artifacts/pseudolabels/audits/public946_centerlocalmax_r1_cw075_10s_b0_blend_audit_20260517T2158Z.json`
+- Best tested weight `0.0025`
+- Local lift `+0.000015339`
+- Site-bootstrap p_lift_gt_0 `0.78`, q05 `-0.000028233`
+- Leave-one-site p_lift_gt_0 `0.8889`, min lift `-0.000002217` on `S09`
+
+Conclusion: cw0.75 is gentler and slightly more leave-one-site stable than cw0.50, but the additive lift is smaller and still bootstrap-fragile. It is a low-weight fallback candidate only; prefer stronger true frame/head or new-source signals for the next UTC reset.
+
+## 2026-05-18 execution update: v572 cw0.75 package queued
+
+After UTC reset, no 2026-05-18 competition submissions were visible. A controlled repo-owned exploratory package was prepared from the cw0.75 local-window B0 diagnostic:
+
+- Private dataset: `yourslewis/bc26-public946-cw075-localwindow-b0-v1`
+- Dataset zip SHA256: `cad40dd2b6731c46116ab9827c8ffd3cfa689e64775ec2fca31f59ad73cfdf12`
+- Kernel: `yourslewis/bc26-v572-public946-cw075-b0-w00025`
+- Kernel directory: `kaggle-kernels/v572-public946-cw075-localwindow-b0-w00025/`
+- Sidecar CSV: `submission_cw075_localwindow_b0_student.csv`
+- Sidecar rank weight: `0.0025`
+- Kernel push: version `1`, no invalid sources
+
+A guarded monitor is running via `scripts/submit_v572_when_ready.py` / `logs/submit_v572_when_ready_20260518T0355Z.log`. It will submit only if the kernel completes and output verification passes. Treat v572 as an exploratory datapoint, not a high-confidence improvement: local audit lift was only `+0.000015339` and bootstrap remained fragile.
+
+## 2026-05-18 execution update: v572 submitted
+
+v572 kernel version `1` completed and passed output verification:
+
+- Files: `submission.csv`, `submission_cw075_localwindow_b0_student.csv`, `submission_sed.csv`, `submission_protossm.csv`
+- Required cw0.75 sidecar log markers present
+
+Submitted to BirdCLEF 2026:
+
+- Description: `v572: Public946 v542 plus cw0.75 local-window B0 rank sidecar 0.25%`
+- Ref: `52762124`
+- Immediate status: `pending`, no score/error yet
+
+Next action: monitor the score. If v572 ties, the local-window sidecar is hidden-safe but still not enough; if it drops, extend the micro-sidecar stop rule to this local-window B0 packaging path too.
