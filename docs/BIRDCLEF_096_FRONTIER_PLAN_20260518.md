@@ -754,3 +754,9 @@ Decision:
 
 - No Kaggle push/submission while capped.
 - Next run should first check whether EoS.6 v9 completed. If complete and output-safe before v585 submits, consider pausing/killing v585 and queueing guarded EoS.6 replay; otherwise preserve v585.
+
+## 2026-05-19 17:52 UTC heartbeat recheck — EoS.6 currently unavailable
+
+- Live LB/submission state unchanged and capped.
+- `nina2025/birdclef-2026-eos-6-silver-zone` now fails source pull/get (`404 Not Found`) and has no outputs despite stale session-status `RUNNING` response. It should not displace v585 unless it becomes pullable again and completes with valid primary `submission.csv`.
+- v585 FrankSunP remains the reset-slot owner.

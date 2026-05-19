@@ -3032,3 +3032,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 ### Public946 sidecar lesson reminder
 
 - Keep using train-soundscape/local gates only as rejection filters, not approval filters: v560 and v573 had positive local signals but dropped publicly. This is why EoS.6 needs real public-kernel completion/output schema and, ideally, direct LB evidence before it replaces the existing queue.
+
+### Heartbeat EoS.6 availability recheck — 2026-05-19 17:52 UTC
+
+- Heartbeat rechecked live submissions: state unchanged (`0.949` best; v580 `0.944`, v581 timeout, v582 `0.947`, v583 hidden error, v584 `0.942`; 2026-05-19 UTC capped at 5).
+- Rechecked `nina2025/birdclef-2026-eos-6-silver-zone`: session status API still reports `RUNNING`, but output list is empty and both `/api/v1/kernels/pull/nina2025/birdclef-2026-eos-6-silver-zone` and SDK `GetKernel` now return `404 Not Found`; fresh list search no longer finds it. Treat this as unavailable/not direct-submit-safe until it reappears with pullable source and outputs.
+- Briefly prepared an EoS.6 takeover watcher, but discarded it after the fresh `pull/get` 404 made automated takeover unsafe. v585 FrankSunP remains the only active reset-slot monitor.
+- No new submission, no push, no PR/merge action.
