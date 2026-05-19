@@ -3015,3 +3015,20 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - `samejimatink0/birdclef-2026-visual-cpu-inference` is COMPLETE with finite outputs, but primary `submission.csv` is train-row dry-run output and the source/output markers are essentially ProtoSSM/SED/BirdNET rather than a confirmed new visual path; idea-mining only.
 - `aiaiaiooo/birdclef2026` has hidden-path markers in source but no session outputs; not slot-ready.
 - Decision: keep v585 as the sole active next-reset submitter. Keep v586 EffV2S as the prepared repo-owned fallback only if v585 drops/no-scores and no genuine `0.950+` source appears. No new Kaggle push/submission was made.
+
+### Capped source scan — Nina EoS.6 appears but is still running — 2026-05-19 17:49 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949`; 2026-05-19 UTC count remains `5`/capped.
+- PR #245 is merged; PR #246 remains open/blocked. No v577/v578 scalar submitter is active.
+- `birdclef-v585-reset` is still the only active submitter and is sleeping on daily cap after successful FrankSunP v585 source/output preflight.
+- Fresh scan saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1747Z.json`.
+- New high-signal candidate: `nina2025/birdclef-2026-eos-6-silver-zone` v9, found at the top of DATE_RUN. Pulled source through Bearer API and saved audit `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1747Z_eos6/summary.json` plus parsed cells file.
+- EoS.6 v9 source is a direct EoS successor with public/attachable sources only. Its active config blends `Model_21`/`Model_73`/`Model_74` with weights `0.032/0.967/0.001`; `Model_73` and `Model_74` are Yaroslav/Karnakbayev 0.949-family branches with xSED `[0.60,0.40]` and `[0.605,0.395]`. The markdown says v7 timed out and v9 is intended to run SED once, but the active code uses `task1='run SED once'` while the early Model_1 guard checks `task`, so this still needs actual output/status validation rather than blind trust.
+- EoS.6 v9 live status at audit time was `RUNNING` with no outputs yet; therefore it is not direct-submit-safe and not ready to displace v585. If it completes before reset with valid sample-shaped `submission.csv` and no failure, it becomes a strong candidate to consider ahead of v585; if it times out/no-outputs, keep v585.
+- Also checked `damianleandrotamburi/20260329-birdclef` v70; it has no outputs and no 0.949/0.95/0.96/source-family evidence, so it is not slot-ready.
+- Web searches for explicit `0.950`/`0.951`/`0.96` BirdCLEF code claims returned no results.
+- Decision: do not submit or push anything while capped. Preserve v585 monitor for the reset slot, but put EoS.6 v9 at the top of the recheck queue for the next cron before reset.
+
+### Public946 sidecar lesson reminder
+
+- Keep using train-soundscape/local gates only as rejection filters, not approval filters: v560 and v573 had positive local signals but dropped publicly. This is why EoS.6 needs real public-kernel completion/output schema and, ideally, direct LB evidence before it replaces the existing queue.

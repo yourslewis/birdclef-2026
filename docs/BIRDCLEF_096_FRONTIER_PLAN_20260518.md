@@ -724,3 +724,33 @@ Queue decision:
 2. If v585 improves, immediately port/confirm FrankSunP repo-owned.
 3. If v585 drops/no-scores and no true `0.950+` source appears, use prepared repo-owned v586 EffV2S extraction path rather than another direct 0.949-family replay.
 4. Continue rejecting train-row/constant/empty-cell primary outputs even if side outputs look sample-shaped.
+
+## 2026-05-19 17:49 UTC queue update — EoS.6 running, recheck before reset
+
+Live state:
+
+- Latest submissions unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; target remains `0.960`.
+- 2026-05-19 UTC remains capped at `5` submissions.
+- `birdclef-v585-reset` remains alive and is the only active submitter.
+
+Fresh artifacts:
+
+- DATE_RUN scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1747Z.json`.
+- EoS.6 audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1747Z_eos6/summary.json`.
+- Parsed EoS.6 source cells: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1747Z_eos6/nina2025__birdclef-2026-eos-6-silver-zone.source.cells.py`.
+
+Candidate queue:
+
+1. `nina2025/birdclef-2026-eos-6-silver-zone` v9 — **recheck before reset**. Source is a direct EoS successor and therefore high-signal, but the public session is currently `RUNNING` with no outputs. Active config blends `Model_21`/`Model_73`/`Model_74` at `0.032/0.967/0.001`; markdown says v7 timed out and v9 tries to run SED once, but source has a possible `task1`/`task` mismatch around the early Model_1 guard. Do not submit unless COMPLETE/no failure and primary `submission.csv` is schema-safe.
+2. v585 FrankSunP 5-branch remains the current reset-slot owner unless EoS.6 completes safely first and clearly outranks it.
+3. v586 repo-owned EffV2S remains fallback only if v585 drops/no-scores and no stronger source appears.
+
+Rejected/low-priority this scan:
+
+- `damianleandrotamburi/20260329-birdclef` v70 — no outputs and no 0.949+/EoS/PowerOptimization evidence.
+- Web search found no explicit `0.950`/`0.951`/`0.96` BirdCLEF code claim.
+
+Decision:
+
+- No Kaggle push/submission while capped.
+- Next run should first check whether EoS.6 v9 completed. If complete and output-safe before v585 submits, consider pausing/killing v585 and queueing guarded EoS.6 replay; otherwise preserve v585.
