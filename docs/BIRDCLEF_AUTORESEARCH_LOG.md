@@ -3092,3 +3092,18 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - `nina2025/birdclef-2026-eos-6-sz` v10 remains invalid on primary `submission.csv` (`243` rows, train rows, empty/non-finite cells). Side `subm_73.csv` is sample-shaped but not the competition file and only captures a 0.949-family branch. Reject direct replay.
 - Public946 sidecar lesson remains explicit: local/train-soundscape gates are rejection filters, not approval filters; v560/v573 had positive local gates and still dropped.
 - Decision: keep v585 FrankSunP as reset-slot owner; no duplicate submitter and no new push/submission. If v585 drops/no-scores, use prepared repo-owned v586 EffV2S path before direct RankPower/NFNet clones.
+
+### Cron recheck — v585 still queued, 22:47 top-feed audit — 2026-05-19 22:50 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949` from v574/v575/v576; 2026-05-19 UTC count remains `5`/capped. v585 is not visible yet.
+- PR #247 remains open/blocked on branch `feature/birdclef-096-frontier-v585-hold-20260519`. No v577/v578 scalar submitter is active.
+- `birdclef-v585-reset` remains the only active submitter. FrankSunP v585 is still COMPLETE/no failure with required outputs and is sleeping on daily cap after a quota-only failed submit attempt; expected retry remains near reset, so no duplicate submitter was started.
+- Fresh DATE_RUN scan saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2247Z.json`.
+- Fresh top-feed audit saved `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2247Z_top/summary.json`.
+- `meenalsinha/birdclef-2026-improved` v23 is newly running/no outputs at audit time. Source is still scalar RankPower/lambda-prior tuning (`lambda_prior=0.60 -> 0.65`, `Model_4` 0.10 + `Model_7` 0.90 with xSED `[0.650,0.350]`), not a high-upside 0.96 structure. Do not displace v585.
+- `jguevarag/07-optimal-sed-training` v4 has no outputs and is a training notebook, not a submission candidate.
+- `pilkwang/949-birdclef-2026-acoustic-prior-field-fusion` v6 is COMPLETE/no failure and primary `submission.csv` is schema-safe/sample-shaped. Source is a well-documented EoS6/Yaroslav/Pilkwang prior-field branch with yukiZ low-weight diversity and v6 prior/scalar knobs. It is useful idea-mining/fallback, but still explicitly 0.949-family and does not outrank v585's more structurally distinct 5-branch FrankSunP hypothesis under the 0.960 target.
+- `adarsh5harma/birdclef-2026-v66-phase1-integrated` v1 has invalid primary `submission.csv` (`243` rows / train rows / empty cells) despite sample-shaped side output; reject direct replay.
+- `muhammadsaadalvi/birdclef-2026-wildsound-v8` v68 has no outputs and no high-score/source-family evidence; not slot-ready.
+- Public946/local-gate lesson remains active: train-soundscape gates are rejection filters only, not slot approvals.
+- Decision: keep v585 FrankSunP as reset-slot owner; no new push/submission and no duplicate submitter. If v585 drops/no-scores, first push/verify the prepared repo-owned v586 EffV2S extraction before direct RankPower/PriorField/NFNet clones.

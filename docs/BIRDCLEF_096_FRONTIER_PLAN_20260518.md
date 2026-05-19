@@ -872,3 +872,32 @@ Decision:
 - No new Kaggle push/submission while capped.
 - Do not start duplicate submitters.
 - Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
+
+## 2026-05-19 22:50 UTC queue update — Pilkwang prior-field safe but not enough to replace v585
+
+Live state:
+
+- Latest submissions unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; target remains `0.960`.
+- 2026-05-19 UTC remains capped at `5` submissions; v585 is not visible yet.
+- PR #247 is open/blocked; `birdclef-v585-reset` remains alive and is the only active submitter.
+
+New artifacts:
+
+- Fresh DATE_RUN scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2247Z.json`.
+- Fresh top-feed audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2247Z_top/summary.json`.
+
+Candidate decisions:
+
+1. `meenalsinha/birdclef-2026-improved` v23 — running/no outputs; source remains lambda-prior/RankPower scalar tuning, so do not replace v585.
+2. `jguevarag/07-optimal-sed-training` v4 — training notebook, no outputs; not a submission candidate.
+3. `pilkwang/949-birdclef-2026-acoustic-prior-field-fusion` v6 — schema-safe primary and useful idea-mining, but explicitly 0.949-family prior-field/RankPower; keep as fallback/analysis, not reset-slot owner under 0.960 target.
+4. `adarsh5harma/birdclef-2026-v66-phase1-integrated` v1 — invalid primary `submission.csv`; reject direct replay.
+5. `muhammadsaadalvi/birdclef-2026-wildsound-v8` v68 — no outputs; not slot-ready.
+6. v585 FrankSunP remains reset-slot owner.
+7. v586 repo-owned EffV2S remains preferred prepared fallback if v585 drops/no-scores.
+
+Decision:
+
+- No new Kaggle push/submission while capped.
+- Do not start duplicate submitters.
+- Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
