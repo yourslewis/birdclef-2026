@@ -2961,3 +2961,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 
 - Live Kaggle unchanged: v584 `0.942`, best `0.949`, 2026-05-19 count `5`/capped. The earlier `quiet-basil` v585 monitor was no longer visible/alive and no `submit_v585` process was running.
 - Restarted v585 monitor as OpenClaw session `mild-harbor` pid `38214`; preflight re-passed and submit attempt hit expected daily cap (`14 hours from now`), then slept `50520s` before retry. No other submitters active.
+
+### v585 moved to durable tmux monitor — 2026-05-19 11:45 UTC
+
+- Live Kaggle unchanged: v584 `0.942`, best `0.949`, 2026-05-19 count `5`/capped. No v585 submission visible.
+- Prior managed/nohup v585 monitors were not durable across turns (`mild-harbor` not found; PID-file process absent). Switched to detached tmux session `birdclef-v585-reset`.
+- tmux monitor re-preflighted v585 successfully, attempted submit, hit expected daily cap (`12 hours from now`), and is sleeping `43320s` before retry. Inspect with `tmux capture-pane -t birdclef-v585-reset -p | tail -80`.
+- Fresh DATE_RUN scan saved `date_run_all_20260519T1040Z.json`; no explicit 0.950+ source found, and no candidate clearly outranks FrankSunP v585 before reset.

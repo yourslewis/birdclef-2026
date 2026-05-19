@@ -533,3 +533,31 @@ Action:
 Decision:
 
 - Keep `mild-harbor` as the active reset monitor. No additional submitters should be started while it is sleeping.
+
+## 2026-05-19 11:45 UTC execution update — v585 moved to durable tmux monitor
+
+Live state:
+
+- Latest submissions unchanged: v584 scored `0.942`; current best remains `0.949`; 2026-05-19 UTC count is `5`/capped.
+- No v585 submission is visible yet.
+- The previous managed/nohup v585 monitors were not durable across turns (`mild-harbor` not found; PID-file process not alive), despite successful preflight and daily-cap sleep logs.
+
+Durability fix:
+
+- Started v585 in a detached tmux session: `birdclef-v585-reset`.
+- The tmux monitor re-ran preflight successfully and attempted submission.
+- It hit the expected Kaggle daily cap (`12 hours from now`) and is sleeping `43320s` before retry.
+- Current tmux capture shows the process is alive and sleeping on cap.
+- Use `tmux capture-pane -t birdclef-v585-reset -p | tail -80` to inspect it, and avoid starting duplicate v585 monitors while this session exists.
+
+Fresh capped-source scan:
+
+- Saved recent-date-run scan to `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1040Z.json`.
+- Web search still found no explicit external `0.950+` public-claim source.
+- New/high-signal recent entries observed: `meenalsinha/birdclef-2026-improved`, `beicicc/bc26-cocoa-v129-safe-may19`, `kojimar/0-949-lb-birdclef-2026-prior-axis-rank-fusion`, `solokop/birdclef-2026-perch-onnx`, and training-only HGNet kernels.
+- No candidate from this scan clearly outranks the already queued FrankSunP 5-branch v585 before reset.
+
+Decision:
+
+- Keep only `birdclef-v585-reset` active for reset submission.
+- Continue source mining while capped, but do not launch additional submitters unless a clearly stronger full-source 0.950+ candidate appears.
