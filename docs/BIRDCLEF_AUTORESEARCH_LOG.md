@@ -2950,3 +2950,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Fresh Kaggle DATE_RUN scan saved `date_run_all_20260519T0740Z.json`; web search found no external explicit `0.950+`/`0.951+` claims.
 - Deep-scanned next-reset candidates (`deep_scan4_nextreset_20260519T0740Z.json`). Best distinct fallback if v584 fails is `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1: COMPLETE/no failure, valid sample output, full source, 5-stream rank ensemble with ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET. Caveat: output is compressed and prior small CLAP/Snowflake sidecars did not improve.
 - Backup: `meenalsinha/birdclef-2026-improved` v20 is valid but overlaps the Visual/BirdNET family already being tested by v584. Kojimar `[0.949 LB]` and Beicicc Cocoa Karnak are valid but low-upside EoS/Karnak-family. Rabeya 0.947, aiaiaiooo, WildSound V8, Mtoshi Visual CPU are ERROR/no output. No monitor started while capped.
+
+### v584 scored 0.942; v585 next-reset monitor queued — 2026-05-19 08:50 UTC
+
+- Live Kaggle: v584 scored `0.942`, below current best `0.949`. Visual/BirdNET/Mtoshi direct replay is idea-mining only, not confirmation.
+- Added `scripts/submit_v585_franksunp_5branch_tta_fix_when_slot.py` for `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1. Preflight passed: source v1 length `103548`, COMPLETE/no failure, required outputs present. It remains the best distinct next-reset candidate: 5-stream rank ensemble (ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET), but with caveat that previous CLAP/Snowflake sidecars did not improve.
+- Started monitor `quiet-basil` pid `18696`; it attempted submission, hit daily cap (`15 hours from now`), and is sleeping `54120s` before retry. 2026-05-19 UTC count remains `5`/capped.

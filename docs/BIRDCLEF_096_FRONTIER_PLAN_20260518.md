@@ -482,3 +482,37 @@ Decision:
 - No new submission can be made while capped, and no monitor was started.
 - If v584 scores above `0.949`, next work is repo-owned Visual/BirdNET confirmation/extraction.
 - If v584 ties/drops/no-scores and no stronger source appears before next reset, first next-reset preflight should be FrankSunP 5-branch V4 TTA Fix; Meenal v20 is the backup if FrankSunP is disqualified or appears too risky.
+
+## 2026-05-19 08:50 UTC execution update — v584 dropped, v585 next-reset monitor queued
+
+Live result/state:
+
+- `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, scored **0.942**.
+- Current best remains `0.949` from v574/v575/v576.
+- 2026-05-19 UTC visible count remains `5`; day is capped.
+- No stale v577/v578 scalar submitter was alive.
+
+Lesson from v584:
+
+- The Zhaorong/Mtoshi Visual BirdNET lane is full-source and schema-safe, but the direct replay underperformed materially (`0.942`).
+- Visual/BirdNET/Mtoshi 0.949-style tweaks should now be treated as idea-mining only, not a confirmation lane.
+
+Next-reset action:
+
+- Added `scripts/submit_v585_franksunp_5branch_tta_fix_when_slot.py` for `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1.
+- Rationale: it remains the best distinct preflighted candidate after v584 dropped: full visible source, COMPLETE/no failure, valid schema, and a 5-stream rank-percentile ensemble using ProtoSSM, Tucker SED, Snowflake SED, CLAP, and BirdNET/graceful degradation.
+- Caveat remains: previous tiny CLAP/Snowflake sidecars did not improve and the public sample output is compressed, so this is a high-diversity source probe, not a high-confidence 0.960 candidate.
+
+Preflight before queueing:
+
+- Source pull OK, version `1`, source length `103548`.
+- Required markers present: `5-Branch Multistream Ensemble`, `ProtoSSM`, `Snowflake SED`, `CLAP`, `Graceful Degradation`, `test_soundscapes`, `sample_submission.csv`, `row_id`.
+- Kernel COMPLETE/no failure.
+- Required outputs present: `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, `clap_preds.npy`, `snowflake_preds.npy`, `site_hour_prior_table.pkl`, `cache/perch_arrays.npz`, `cache/perch_meta.parquet`.
+- Prior schema scan: valid sample-shaped output (`3 x 235`, unique row IDs, finite values around `[0.2707, 0.3998]`).
+
+Monitor state:
+
+- Started OpenClaw-managed background session `quiet-basil`, pid `18696`.
+- The monitor attempted submission, hit the expected Kaggle daily cap (`15 hours from now`), and is sleeping `54120s` before retry.
+- Expected behavior: submit v585 after next UTC reset unless it is already visible by then.
