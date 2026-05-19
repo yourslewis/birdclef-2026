@@ -2910,3 +2910,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Live Kaggle: v580 completed at `0.944`, below current best `0.949`. Kill Chaney v37 direct-replay lane for slots; OOF/CV/gate evidence did not transfer. Artifact access blocker remains an idea-mining issue only.
 - v581 fallback initially exited because source preflight markers were too brittle for raw notebook JSON. Relaxed source markers to semantic markers (`default_name`, `a2_nfnet_w03`, `A2NF blend complete`, diagnostics, hidden-test markers) while preserving strict output-file verification.
 - Re-ran v581 preflight: source pull OK v2, kernel COMPLETE/no failure, required outputs present. Submitted `v581: Guarded direct Lucataco A2Prime NFNet frontier replay`, ref `52793377`, pending. 2026-05-19 UTC visible count is now `2`.
+
+### v581 pending; v582 result-gated fallback staged — 2026-05-19 02:45 UTC
+
+- Live Kaggle: v581 still pending; v580 scored `0.944`; current best remains `0.949`; 2026-05-19 UTC visible count is `2`.
+- Added `scripts/submit_v582_amulopapa_yous_gate_when_ready.py`, a result-gated monitor for `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` v4. It waits while v581 is pending, exits if v581 improves above `0.949`, and only submits if v581 ties/drops/no-scores.
+- Started v582 monitor as OpenClaw session `lucky-zephyr`, pid `35622`; first poll confirms it is sleeping on pending v581.
+- Independent preflight: source pull OK v4/source length `201355`; required source markers present (`submission_youssef.csv`, `submission_gate.csv`, rank blend `0.65 * yr + 0.35 * gr`, hidden/test markers); kernel COMPLETE/no failure; required output files present. Public output schema is dry-run/sample-sized (3 rows, 235 cols), `row_id` unique, finite values in `[0,1]`.

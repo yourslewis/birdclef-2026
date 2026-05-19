@@ -251,3 +251,32 @@ Next gate:
 
 - If v581 improves above `0.949`, pursue repo-owned confirmation; this path appears more attachable than Chaney because `brendancarlin/birdclef2026-models` is public/attachable.
 - If v581 ties/drops, continue source frontier scan; current possible idea-mining candidates are Amulopapa Youssef+gate, Karnak optimized-dual, and Alexy Perch+CNN, but none should be queued before v581 scores.
+
+## 2026-05-19 02:45 UTC execution update — v581 pending; v582 fallback staged
+
+Live status:
+
+- `v581: Guarded direct Lucataco A2Prime NFNet frontier replay` remains pending, ref `52793377`.
+- Current best remains `0.949`; 2026-05-19 UTC visible count is `2` (`v580`, `v581`).
+- No stale v577/v578 scalar submitters are alive.
+
+Result-gated fallback prepared:
+
+- Added `scripts/submit_v582_amulopapa_yous_gate_when_ready.py` for `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` v4.
+- The monitor is running as managed OpenClaw session `lucky-zephyr`, pid `35622`.
+- It does **not** submit while v581 is pending.
+- If v581 scores above `0.949`, it exits so we can port/confirm v581.
+- If v581 ties/drops/no-scores, it preflights and submits v582 as a distinct Youssef+gate rank-blend source replay.
+
+Independent preflight findings:
+
+- Source pull OK, version `4`, source length `201355`.
+- Key source markers present: `submission_youssef.csv`, `submission_gate.csv`, `0.65 * yr`, `0.35 * gr`, `test_soundscapes`, `sample_submission.csv`, `submission.csv`, `row_id`.
+- Kernel status COMPLETE/no failure.
+- Output files present: `submission.csv`, `submission_youssef.csv`, `submission_gate.csv`, `submission_protossm.csv`, `submission_sed.csv`, `submission_birdnet.csv`, plus cache files.
+- Public output schema check: 3 dry-run/sample rows, 235 columns, `row_id` present/unique, finite numeric values in `[0.0, 1.0]`.
+
+Rationale:
+
+- This is more distinct than another EoS/Karnak clone: final output is a rank blend of Youssef branch and gate branch (`0.65/0.35`).
+- It is still guarded behind v581 because spending a slot before the A2Prime/NFNet result would be premature.
