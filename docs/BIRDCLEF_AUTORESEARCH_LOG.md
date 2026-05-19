@@ -154,7 +154,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Plan artifact:** added `docs/BIRDCLEF_PUBLIC946_V546_DECISION_MATRIX_20260513.md`, ranking lower-CLAP, CV9245, train-audio-head, tuned gates, and BirdNET stop conditions by v545 outcome.
 - **Decision:** no Kaggle push before v545 scores. If v545 ties/drops, the leading next slot should be a source-clean train-audio-head or CV9245 dry-run with sidecar-grid evidence; if v545 improves, compare smaller CLAP (`0.01`/`0.02`) against those sidecars before choosing v546.
 
-### v545 CLAP sidecar lower-weight gate — 2026-05-13 23:45 UTC
+### v545 CLAP sidecar lower-weight gate — 2026-05-13 23:30 UTC
 
 - **Status check:** latest scored submissions remain `v544=0.946`, `v543=0.946`, `v538=0.930`, `v542=0.946`, `v541=0.946`; no `v545` submission is visible yet. `v545` kernel remains COMPLETE/no failure, output files are present, and guarded submit monitor pid `86320` is alive/sleeping after daily cap. `v510` remains COMPLETE/no failure with real SED manifest, `6/6` TorchScript models loaded, blend `0.05`, and wall time `370.6s`.
 - **Track:** P2/F public946 + CLAP sidecar gate while waiting for the cap reset; no Kaggle push.
@@ -842,7 +842,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - It retried v505 and hit the daily submission cap again, with about `82 minutes` remaining until UTC reset at restart time.
 - Final kernel status in this run: v510 `COMPLETE`, v511 `COMPLETE`, v512 `RUNNING` with no failure message and no output log yet. Next run should verify v512 logs for `Real SED manifest candidates`, `Loading 6/6 real SED TorchScript models`, `Applied real SED bundle blend: weight=0.02`, and `submission.csv saved`.
 
-## 2026-05-06 23:45 UTC — v512 verified + prioritize real SED submissions at reset
+## 2026-05-06 23:30 UTC — v512 verified + prioritize real SED submissions at reset
 
 - **Track:** A+G Real SED frame/event Kaggle inference packaging and submission monitoring.
 - **Status checks:** Latest scored LB still unchanged: v504/v503/v502/v501 at `0.927`, v500 at `0.926`. v505-v512 kernels are all `COMPLETE` with no failure messages.
@@ -2884,7 +2884,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v581 managed session `brisk-kelp` / pid `88794`: alive, waiting for v580 visibility/result before fallback action.
 - Mapped Chaney v37 likely repo-owned confirmation dependencies from source paths: `chaneyma/birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `chaneyma/bc26-gate-fake008-head0015-baseline-onnx`, `chaneyma/bc26-edits-protossm-sed-v7-all66-40x20`, `chaneyma/bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `chaneyma/bc26-probe-middle-pca128-raw085-logreg015`, plus common Perch/SED sources. If v580 improves, first follow-up is repo-owned confirmation with explicit source attachments.
 
-### Reset queue healthy; v580 repo-owned dependency blocker found — 2026-05-18 23:45 UTC
+### Reset queue healthy; v580 repo-owned dependency blocker found — 2026-05-18 23:30 UTC
 
 - Live Kaggle unchanged: best `0.949`; 2026-05-18 UTC visible submissions `5`, 2026-05-19 visible submissions `0` at check time.
 - Managed monitors are alive: v580 `tender-ridge` pid `88792` sleeping after cap and ready to retry; v581 `brisk-kelp` pid `88794` waiting for v580 visibility/result.
@@ -3107,3 +3107,30 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - `muhammadsaadalvi/birdclef-2026-wildsound-v8` v68 has no outputs and no high-score/source-family evidence; not slot-ready.
 - Public946/local-gate lesson remains active: train-soundscape gates are rejection filters only, not slot approvals.
 - Decision: keep v585 FrankSunP as reset-slot owner; no new push/submission and no duplicate submitter. If v585 drops/no-scores, first push/verify the prepared repo-owned v586 EffV2S extraction before direct RankPower/PriorField/NFNet clones.
+
+### Broad 0.96 source-frontier audit — 2026-05-19 23:30 UTC
+
+- User requested another research round targeting `0.960` public LB. I treated this as a discovery/audit pass, not a slot burn.
+- Live state at start of pass: latest visible submissions still v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; current confirmed best remains `0.949`; 2026-05-19 UTC is capped at 5. `birdclef-v585-reset` remains alive and is the sole active reset-slot submitter.
+- PR #247 had merged into `main`; created new branch `feature/birdclef-096-broadscore-audit-20260519` for this round's notes.
+- Fresh broad Kaggle kernel search saved `artifacts/public_kernels_20260519_frontier_candidates/broad_score_search_20260519T2323Z.json`, using DATE_RUN, SCORE_DESCENDING, and VOTE_COUNT over `birdclef 2026`, `0.95`, `0.950`, `0.951`, `0.96`, `0.960`, `silver`, `bronze`, `949`, and `eos 6` queries.
+- Web search for explicit `BirdCLEF 2026 0.950/0.96 public LB notebook` found no stronger public source claim beyond Kaggle EoS.3-style pages.
+- Broad-score source audit saved `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2323Z_broadscore/summary.json`.
+- Legacy/diverse source audit saved `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2335Z_legacydiverse/summary.json`.
+
+Key audited candidates:
+
+1. `ulyanovantonamaranta/birdclef-2026-gate-fake008-head0015` v5 — COMPLETE/pullable/schema-safe primary. It is a Vyanktesh/ProtoSSM+SED family notebook with final `pc010=0.70` + `rank1_pc015_head005=0.30`, where `HEAD_RANK_BLEND=0.0500` inside the rank1 branch. Net train-audio-head contribution is about `1.5%`, similar in spirit to already-tested head-sidecar work (v573 scored `0.945`). Useful idea-mining but not enough to displace v585/v586.
+2. `cliff376/bc26-public-gate-combo-pc010-v2` v2 — COMPLETE/pullable/schema-safe primary. Same public-gate/Proto fat-tail continuity family without the dual head final average. Mostly a `0.941`/`0.945` public-gate branch; lower-upside than v585 and prepared v586.
+3. `raunakdey07/birdclef-2026-multi-model-ensemble` v9 — COMPLETE/pullable/schema-safe primary. Adds sonotype mirroring and rare-class adaptive thresholding on top of Proto/SED rank blend. Interesting postprocess ideas, but still public ProtoSSM/SED lineage and not a direct 0.950+ source.
+4. `marynaborovska/birdclef-26-two-pass-ssm-advanced-pp` v3 — source is architecturally interesting (LightProtoSSM + MLP probes + ResidualSSM + adaptive smoothing + isotonic thresholds), but current audit has no outputs, so it is not direct-submit-safe. Keep as idea-mining for future repo-owned work, not a reset-slot candidate.
+5. `aminmahmoudalifayed/birdclef-2026` v11 — not submission-safe; primary `submission.csv` is empty/invalid. Reject direct replay.
+6. `anthonytherrien/birdclef-2026-ensemble`, `beicicc/bc26-anthony-ens-safe-may19`, `kijiang/birdclef2026-v337`, `karnakbaevarthur/gated-rank-fusion-pipeline`, `nicolasschuldt/eos5-meta`, `apachikoff/birdclef-2026-eos-5`, `starsdaisuki/birdclef-2026-v130-nina-eos3`, `beicicc/bc26-v63-nina-eos5-may18`, and `adityaraghuvanshi999/birdclef-2026-safe-eos5-rank-blend-validation` are all EoS/EoS5/Karnak/RankPower-family variants around Model_2 + Model_5 / Model_10 blends. Several are schema-safe, but the source evidence explicitly documents saturation at `0.949` and weight-sweep deltas (`0.04/0.96`, `0.035/0.965`, etc.), so they should not consume a slot while chasing `0.960`.
+7. `apachikoff/birdclef-2026-v6` is schema-safe but is a `0.948`/V6/BirdNET branch already represented in the EoS/Karnak family, not a new frontier.
+
+Decision:
+
+- Keep v585 FrankSunP as reset-slot owner.
+- Do not start a duplicate submitter and do not submit/push a new Kaggle candidate while capped.
+- The best prepared fallback remains repo-owned v586 A2Prime/EffV2S extraction if v585 drops/no-scores and no stronger `0.950+` source appears.
+- New idea-mining queue from this pass: (a) Ulyanov dual gate/head blend only as a low-risk postprocess idea, (b) Raunak sonotype mirroring / rare-class thresholding as class-specific postprocess research, (c) Maryna two-pass SSM architecture as a heavier repo-owned architecture experiment. None outrank v585/v586 as next slot owner.

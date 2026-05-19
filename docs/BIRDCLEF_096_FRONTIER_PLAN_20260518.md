@@ -145,7 +145,7 @@ Likely confirmation plan if `v580 > 0.949`:
 
 If any Chaney artifact dataset is not attachable, fallback confirmation path is to reproduce those branch artifacts from public source where possible, but that is larger and should only happen if the direct v580 score justifies it.
 
-## 2026-05-18 23:45 UTC execution update — reset queue healthy, repo-owned v580 dependency blocker found
+## 2026-05-18 23:30 UTC execution update — reset queue healthy, repo-owned v580 dependency blocker found
 
 Live status:
 
@@ -901,3 +901,34 @@ Decision:
 - No new Kaggle push/submission while capped.
 - Do not start duplicate submitters.
 - Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
+
+## 2026-05-19 23:30 UTC broad-score 0.96 audit — no reset-slot replacement
+
+User requested another research round targeting `0.960`. This pass broadened beyond fresh DATE_RUN feed into Kaggle score/vote/search surfaces and older high-vote candidates.
+
+Artifacts:
+
+- Broad search: `artifacts/public_kernels_20260519_frontier_candidates/broad_score_search_20260519T2323Z.json`.
+- Broad-score audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2323Z_broadscore/summary.json`.
+- Legacy/diverse audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2335Z_legacydiverse/summary.json`.
+
+Current queue remains:
+
+1. v585 FrankSunP 5-branch V4 TTA Fix — sole reset-slot owner, monitor alive.
+2. v586 repo-owned A2Prime/EffV2S extraction — prepared fallback only if v585 drops/no-scores and no stronger true `0.950+` source appears.
+
+Candidate decisions:
+
+- `ulyanovantonamaranta/birdclef-2026-gate-fake008-head0015` — schema-safe, but mostly public ProtoSSM/SED gate family plus net ~1.5% train-audio-head rank contribution; useful idea-mining only.
+- `cliff376/bc26-public-gate-combo-pc010-v2` — schema-safe, public-gate Proto/SED variant; no evidence it clears the 0.949 plateau.
+- `raunakdey07/birdclef-2026-multi-model-ensemble` — schema-safe and has sonotype mirroring / rare-class threshold ideas, but no direct 0.950+ evidence.
+- `marynaborovska/birdclef-26-two-pass-ssm-advanced-pp` — promising source architecture, but no outputs; not direct-submit-safe.
+- `aminmahmoudalifayed/birdclef-2026` — invalid/empty primary submission; reject.
+- EoS/Karnak/RankPower legacy candidates (`anthonytherrien`, `beicicc`, `kijiang`, `karnakbaevarthur`, `nicolasschuldt/eos5-meta`, `apachikoff/eos-5`, `starsdaisuki`, `adityaraghuvanshi999`) are saturated 0.949-family scalar/blend variants and should not consume the next slot.
+
+Next action:
+
+- First check v585 visibility/score after UTC reset.
+- If v585 improves, port/confirm FrankSunP.
+- If v585 drops/no-scores, push/verify v586 EffV2S before considering any direct EoS/Karnak/RankPower replay.
+- Separately mine Raunak/Maryna ideas for future repo-owned structural work, not immediate submissions.
