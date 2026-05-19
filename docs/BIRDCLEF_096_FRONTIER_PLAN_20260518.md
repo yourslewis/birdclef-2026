@@ -787,3 +787,32 @@ Decision:
 - No new Kaggle push/submission while capped.
 - Do not start duplicate submitters.
 - Next run should check whether v585 submitted/scored; if still capped, continue source scan and keep v586 ready.
+
+## 2026-05-19 19:50 UTC queue update — v585 still best reset-slot owner
+
+Live state:
+
+- Latest submissions unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; target remains `0.960`.
+- 2026-05-19 UTC remains capped at `5` submissions.
+- PR #245 and PR #246 are merged; new work continues on branch `feature/birdclef-096-frontier-v585-hold-20260519`.
+- `birdclef-v585-reset` remains alive and is the only active submitter.
+
+New artifacts:
+
+- Fresh DATE_RUN scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1947Z.json`.
+- Fresh top-feed audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1947Z_top/summary.json`.
+
+Candidate decisions:
+
+1. `meenalsinha/birdclef-2026-improved` v22 — reject direct replay. Fresh rerun still outputs train rows for primary `submission.csv`; source is a lambda-prior scalar (`exp_067 v6_prior065`) rather than a new 0.96 structure.
+2. `nina2025/birdclef-2026-eos-6-sz` v10 — reject direct replay. Markdown now says v8 scored `0.949`, but v10 primary `submission.csv` is still invalid (`243` rows / train rows / empty cells). Side output `subm_73.csv` is sample-shaped but same 0.949-family branch.
+3. `evgendvorkin/birdclef-baseline` v33 — reject; train-row baseline output and no high-score/source evidence.
+4. `nicolasschuldt/nfnet-lprior075` v1 — keep as idea-mining/fallback only; schema-safe primary but mostly RankPower/EoS5 scalar with train-row NFNet selective intermediate.
+5. v585 FrankSunP remains reset-slot owner.
+6. v586 repo-owned EffV2S remains preferred prepared fallback if v585 drops/no-scores and no stronger 0.950+ source appears.
+
+Decision:
+
+- No new Kaggle push/submission while capped.
+- Do not start duplicate submitters.
+- Next run should check whether v585 submitted/scored; if still capped, continue source scan and keep v586 ready.
