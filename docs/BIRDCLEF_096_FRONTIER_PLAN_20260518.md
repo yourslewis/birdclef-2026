@@ -401,3 +401,36 @@ Action:
 - Added `scripts/submit_v583_s118_gated_g116_delta.py`.
 - Submitted `v583: Guarded direct S118 gated G116 delta launcher replay`, ref `52799220`, initial status pending.
 - Decision: preserve the final remaining 2026-05-19 slot until v583 scores or a stronger source appears.
+
+## 2026-05-19 06:50 UTC execution update — v583 no-score, v584 final slot submitted
+
+Live result/state:
+
+- `v583: Guarded direct S118 gated G116 delta launcher replay`, ref `52799220`, completed with **no public score**.
+- Kaggle error: hidden rerun hit an unhandled error. Root cause classification: launcher/attached-source hidden rerun failure; avoid S118/S120-style launchers for direct replay unless the real attached source is recovered and made portable.
+- Current best remains `0.949` from v574/v575/v576.
+- 2026-05-19 UTC visible count became `5` after v584; day is now capped.
+
+Final-slot scan:
+
+- Deep-scanned full-source candidates after v583 failed:
+  - `cocoaai/bc26-youssef-d2-sonomirror-birdnet` v1: COMPLETE/valid sample output; full visible source; Youssef/BirdNET sonomirror tweak.
+  - `cocoaai/bc26-youssef-e1-rare-tail-birdnet` v1: COMPLETE/valid sample output; rare-tail tweak; likely same family.
+  - `zhaorongdai/bc26-cocoa-mtoshi-visual-birdnet` v1: COMPLETE/valid sample output; full visible source; Visual/BirdNET/Mtoshi lineage with `0.949-style` prior, TTA Proto, per-class ensemble weights, BirdNET source.
+  - `mtoshidesu/birdclef-2026-visual-cpu-inference` v17: ERROR/no outputs; skip direct.
+  - `kotata0306/birdclef-2026-youssef-c2-birdnet-aves-spike` v1: COMPLETE/valid, but same Youssef/BirdNET family.
+  - `kotata0306/birdclef-2026-youssef-a1-rankblend-sedup` v1: COMPLETE/valid, but same Youssef/BirdNET family.
+
+Decision:
+
+- Use final slot on `zhaorongdai/bc26-cocoa-mtoshi-visual-birdnet` rather than another Youssef/BirdNET micro-tweak because v582 already showed Youssef+gate tops out below `0.949`, while Visual/BirdNET is the most distinct remaining full-source, schema-safe candidate.
+
+Preflight/action:
+
+- Added `scripts/submit_v584_zhaorong_visual_birdnet.py`.
+- Source pull OK, version `1`, source length `101392`.
+- Required markers present: `run_tta_proto`, `0.949-style tweak`, `lambda_prior=0.5`, `ENSEMBLE_W_PER_CLASS`, `BirdNET`, `test_soundscapes`, `sample_submission.csv`, `row_id`.
+- Kernel COMPLETE/no failure.
+- Required outputs present: `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, `cache/perch_arrays.npz`, `cache/perch_meta.parquet`.
+- Prior schema scan: valid sample-shaped output (`3 x 235`, unique row IDs, finite values in `[0.475, 0.556]`).
+- Submitted `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, initial status pending.
