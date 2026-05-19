@@ -626,3 +626,40 @@ Decision:
 - Do not spend a slot on Rajnish/Pilkwang clones, Exp019-fast clones, Yaroslav invalid output, or Chaney constant-output primary file.
 - Monitor Claude A2Prime/NFNet only for completion/output, but it needs stronger evidence and timeout mitigation before any slot.
 - If v585 fails/drops, next best work remains repo-owned extraction rather than another direct 0.949-family replay.
+
+## 2026-05-19 14:58 UTC capped scan — A2Prime/EffV2S vs NFNet fallback triage
+
+Live state:
+
+- Latest Kaggle submissions unchanged: v580 `0.944`, v581 hidden timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`.
+- Current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible count remains `5`; slots capped.
+- PR #245 is merged; active frontier PR #246 remains open, mergeable, and blocked.
+- No v577/v578 scalar submitter is active.
+- Active v585 reset monitor remains detached tmux session `birdclef-v585-reset`; process alive and sleeping on daily cap after successful FrankSunP source/output preflight.
+
+Fresh scan artifacts:
+
+- DATE_RUN scan saved: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1445Z.json`.
+- A2Prime/source-output audit saved locally: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1445Z/summary.json`.
+- External web search again found no explicit `0.950`/`0.951`/`0.96` BirdCLEF source claim.
+
+Candidate findings:
+
+- `claudedevore/birdclef-2026-r0946-a2prime-nfnet-submit` v6 has now completed with outputs. Primary `submission.csv` is sample-shaped `3 x 235`, finite, unique row IDs. It also emits full train-shaped branch files and summaries. NFNet branch is active with 5 folds CPU, but sanity top-5 hit rate is only `0.30`; Proto/NFNet rank correlation is `0.169`. Treat as source-valid but weaker than EffV2S and timeout-risk because v581 already no-scored on A2Prime/NFNet.
+- `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` v5 is COMPLETE/schema-safe. EffV2S branch has 4 folds CPU, sanity top-5 hit rate `0.55`, and very low Proto/EffV2S rank correlation `0.053`, making it a more plausible diversity extraction candidate than NFNet despite its R0946 title. It is still a public946-family candidate, so do not queue ahead of v585, but if v585 drops/no-scores and no stronger 0.950+ source appears, this is the best concrete repo-owned extraction target from the A2Prime family.
+- `rajnish1419kumar/birdclef-2026-rankpower-nfnet-selective` v1 is COMPLETE/schema-safe and combines Pilkwang 949 RankPower with a selective NFNet sidecar. Primary `submission.csv` is sample-shaped and finite, but its source is mostly Pilkwang 949 plus NFNet graft; intermediate `submission_nfnet_selective.csv` is only 36 rows on public run and starts with train IDs. Treat as idea-mining only unless source is ported and forced to hidden/test rows.
+- `aiaiaiooo/birdclef2026` v8 is RUNNING/no outputs, no attached datasets in metadata despite hidden-path markers. Monitor only; not slot-ready.
+
+Concrete fallback ranking behind v585:
+
+1. If v585 improves: port/confirm FrankSunP 5-branch repo-owned immediately.
+2. If v585 drops/no-scores and a true `0.950+` source has not appeared: extract Claude A2Prime EffV2S branch into a repo-owned, timeout-controlled variant before any direct replay. Rationale: low rank correlation (`0.053`) and better sanity hit rate (`0.55`) than NFNet.
+3. Mine Rajnish RankPower+NFNet selective only after fixing hidden/test-row selection, because its intermediate selective branch produced train-row outputs on public run.
+4. Avoid direct Yaroslav/Chaney/Rajnish-clone replays already rejected by schema or duplication checks.
+
+Decision:
+
+- Keep v585 as the sole active reset submitter.
+- No additional submission monitor launched.
+- Next meaningful non-slot work should be a repo-owned EffV2S extraction scaffold if the cap persists and no better source appears.

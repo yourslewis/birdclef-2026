@@ -2984,3 +2984,13 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Saved scan `date_run_all_20260519T1345Z.json` and audit `source_audit_20260519T1345Z/summary.json`. Web search found no explicit 0.950/0.951/0.96 source claim.
 - Audited new candidates: Rajnish RankPower Safe Candidate is a schema-safe Pilkwang 949 clone; Claude R0946 A2Prime/NFNet is RUNNING/no outputs and low priority given v581 timeout; Yaroslav v6_0949 is COMPLETE but invalid `submission.csv` (243 rows/train rows/empty numeric cells); Adkasd Exp019 Fast is schema-safe but duplicate scalar 0.949-family path; Chaney v67 has useful intermediates but primary `submission.csv` is constant `0.66666675`, so reject direct replay.
 - Decision: keep v585 as sole reset submitter and continue mining for genuinely new source/structure; no extra slots queued.
+
+### A2Prime/EffV2S vs NFNet fallback triage — 2026-05-19 14:58 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Saved scan `date_run_all_20260519T1445Z.json` and audit `source_audit_20260519T1445Z/summary.json`. Web search again found no explicit 0.950/0.951/0.96 source claim.
+- Claude A2Prime/NFNet v6 completed and is schema-safe, but NFNet sanity top-5 hit rate is `0.30` and Proto/NFNet rank correlation is `0.169`; still timeout-risk because v581 no-scored on similar lineage.
+- Claude A2Prime/EffV2S v5 is schema-safe and has stronger diversity evidence: sanity top-5 hit rate `0.55`, Proto/EffV2S rank correlation `0.053`. If v585 fails and no 0.950+ source appears, this is the best concrete repo-owned extraction target from the A2Prime family.
+- Rajnish RankPower+NFNet selective is schema-safe on primary sample `submission.csv`, but selective intermediate output has train rows / 36 rows on public run; idea-mining only unless row-selection is fixed in a repo-owned port. Aiaiaiooo is RUNNING/no outputs.
+- Decision: keep v585 as sole reset submitter; prepare EffV2S extraction next if cap persists and no stronger source appears.
