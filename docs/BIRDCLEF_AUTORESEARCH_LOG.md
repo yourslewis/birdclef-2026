@@ -2976,3 +2976,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Saved DATE_RUN scan `date_run_all_20260519T1240Z.json` and source/output audit `source_audit_20260519T1245Z/summary.json`.
 - Audited candidates: Pilkwang 949 Rank-Power Soundscape Fusion (COMPLETE/schema-safe, explicit `YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, lambda prior `0.5`, rank power `0.6`, but 0.949-family); Aditya Exp019 (COMPLETE/schema-safe, scalar explanation only); Yaroslav v6_0949 (RUNNING/no outputs, lambda prior `0.65` microblend); Shinak 260519 (COMPLETE/schema-safe, interesting joint/circular site-hour prior + TTA but no score claim); Mtoshi notebook (COMPLETE but internet-enabled/same family); HuyDo training/no output; Solokop baseline/low-upside.
 - Decision: keep only v585 active for reset. If v585 fails/drops, prefer repo-owned extraction from Pilkwang residual-diversity packaging or Shinak joint/circular prior over another broad 0.949 replay.
+
+### Fresh capped top-feed source audit — 2026-05-19 13:55 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 is merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Saved scan `date_run_all_20260519T1345Z.json` and audit `source_audit_20260519T1345Z/summary.json`. Web search found no explicit 0.950/0.951/0.96 source claim.
+- Audited new candidates: Rajnish RankPower Safe Candidate is a schema-safe Pilkwang 949 clone; Claude R0946 A2Prime/NFNet is RUNNING/no outputs and low priority given v581 timeout; Yaroslav v6_0949 is COMPLETE but invalid `submission.csv` (243 rows/train rows/empty numeric cells); Adkasd Exp019 Fast is schema-safe but duplicate scalar 0.949-family path; Chaney v67 has useful intermediates but primary `submission.csv` is constant `0.66666675`, so reject direct replay.
+- Decision: keep v585 as sole reset submitter and continue mining for genuinely new source/structure; no extra slots queued.

@@ -594,3 +594,35 @@ Decision:
 - Keep only v585 active for reset; do not start duplicate submitters while `birdclef-v585-reset` exists.
 - If v585 drops/no-scores, next useful work is not another broad 0.949 replay; extract either (a) Pilkwang's residual-diversity packaging as a repo-owned confirmation/reference, or (b) Shinak's joint/circular site-hour prior as a small reviewable repo-owned patch after correlation/schema checks.
 - Continue source monitoring for a true `0.950+` or structurally new full-source lane before spending another public slot.
+
+## 2026-05-19 13:55 UTC capped scan — fresh top-feed candidates audited
+
+Live state:
+
+- Latest Kaggle submissions unchanged: v580 `0.944`, v581 hidden timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`.
+- Current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible count remains `5`; slots capped.
+- PR #245 is merged; active frontier PR #246 remains open, mergeable, and blocked.
+- No v577/v578 scalar submitter is active.
+- Active v585 reset monitor remains detached tmux session `birdclef-v585-reset`; process alive and sleeping on daily cap after successful FrankSunP source/output preflight.
+
+Fresh scan artifacts:
+
+- DATE_RUN scan saved: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1345Z.json`.
+- Fresh top-feed source/output audit saved locally: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1345Z/summary.json`.
+- External web search found no explicit `0.950`/`0.951`/`0.96` BirdCLEF source claim.
+
+Fresh candidate findings:
+
+- `rajnish1419kumar/birdclef-2026-rankpower-safe-candidate` v1: full source, COMPLETE, schema-safe sample output; source length and outputs match Pilkwang 949 Rank-Power Soundscape Fusion. Treat as duplicate/clone of the 0.949-family reference, not a new slot.
+- `claudedevore/birdclef-2026-r0946-a2prime-nfnet-submit` v6: full source, hidden-path markers present, but RUNNING/no outputs. It is an A2Prime/NFNet R0946 lineage and v581 already timed out on a similar A2Prime/NFNet replay, so monitor only; do not queue ahead of v585.
+- `yaroslavkholmirzayev/v6-0949-replay` v8: now COMPLETE, but `submission.csv` is invalid: 243 rows including train rows, empty numeric cells (`finite_bad=56862`). Reject for direct submission until fixed at source.
+- `adkasd/birdclef-2026-exp019-fast` v2: COMPLETE/schema-safe, but another Exp019 rank-power scalar path; no new signal beyond prior 0.949-family audit.
+- `chaneyma/bc26-gate-v67-eos5-postprocess` v1: COMPLETE with many useful intermediate outputs, but primary `submission.csv` sample is constant `0.66666675` across all classes. Reject direct replay; mine only if a specific intermediate output can be source-extracted and schema-verified.
+
+Decision:
+
+- Keep v585 as the sole active reset submitter.
+- Do not spend a slot on Rajnish/Pilkwang clones, Exp019-fast clones, Yaroslav invalid output, or Chaney constant-output primary file.
+- Monitor Claude A2Prime/NFNet only for completion/output, but it needs stronger evidence and timeout mitigation before any slot.
+- If v585 fails/drops, next best work remains repo-owned extraction rather than another direct 0.949-family replay.
