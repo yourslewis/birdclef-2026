@@ -228,3 +228,26 @@ Decision:
 
 - Do not start a v582 submitter now. Preserve queue order: v580 result gate, then v581 fallback if needed.
 - Best next action remains: wait for v580 score. If v580 improves, focus on reproducing/extracting Chaney artifacts; if not, v581 proceeds.
+
+## 2026-05-19 01:50 UTC execution update — v580 dropped, v581 submitted
+
+Live result:
+
+- `v580: Guarded direct Chaney v37 Nina-style gate frontier replay` completed at **0.944**, below the current `0.949` best.
+- Lesson: Chaney v37's OOF/CV/gate stack did not transfer to public LB; kill the Chaney direct-replay lane for slots. Its artifact access blocker remains relevant only for idea-mining, not immediate confirmation.
+
+Fallback action:
+
+- The v581 guard initially exited because source marker matching was too strict for raw notebook JSON (`submission_a2_nfnet_w03.csv` is produced as an output but not present literally in source).
+- Relaxed the source markers to semantic notebook markers (`default_name`, `a2_nfnet_w03`, `A2NF blend complete`, diagnostics, hidden-test markers) while keeping concrete output-file verification strict.
+- Re-ran v581 preflight successfully:
+  - source pull OK, version `2`, source length `99456`
+  - kernel COMPLETE/no failure
+  - required output files present: `submission.csv`, `submission_a2_nfnet_w03.csv`, `a2nfnet_blend_summary.csv`, `nfnet_branch_summary.csv`, `nfnet_sanity_file_summary.csv`, `submission_nfnet.csv`, `submission_base_3way.csv`
+- Submitted `v581: Guarded direct Lucataco A2Prime NFNet frontier replay`, ref `52793377`.
+- Initial status: pending. 2026-05-19 UTC visible submission count is now `2`.
+
+Next gate:
+
+- If v581 improves above `0.949`, pursue repo-owned confirmation; this path appears more attachable than Chaney because `brendancarlin/birdclef2026-models` is public/attachable.
+- If v581 ties/drops, continue source frontier scan; current possible idea-mining candidates are Amulopapa Youssef+gate, Karnak optimized-dual, and Alexy Perch+CNN, but none should be queued before v581 scores.

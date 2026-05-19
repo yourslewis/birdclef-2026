@@ -29,8 +29,10 @@ V580_DESCRIPTION = "v580: Guarded direct Chaney v37 Nina-style gate frontier rep
 CURRENT_BEST = 0.949
 
 REQUIRED_SOURCE_MARKERS = [
-    "default_name = \"a2_nfnet_w03\" if hidden_submit",
-    "submission_a2_nfnet_w03.csv",
+    # Pull returns notebook JSON, so exact quote escaping may vary. Keep these
+    # markers semantic and verify the concrete output CSV via output_preflight.
+    "default_name",
+    "a2_nfnet_w03",
     "A2NF blend complete",
     "Final submission diagnostics",
     "test_soundscapes",

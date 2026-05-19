@@ -2904,3 +2904,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Ran another source scan for possible v582 candidates. Most new/recent hits were clones or lower-evidence: CocoaAI stars v129/v130 are EoS4/EoS3 clones; CocoaAI Karnak/Adarsh/Itshyao S103 are EoS5-like; Kospintr EfficientNet has sample/empty-output risk and should not be submitted blindly.
 - Potential later idea-mining candidates: `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` (Youssef rank + gate rank, attachable sources) and `karnakbaevarthur/optimized-dual-architecture-ensemble` (pc010/gate + taxonomy/mirror/rare lineage). Neither is strong enough to queue ahead of v580/v581.
 - Decision: no v582 submitter added. Preserve v580 -> v581 queue and wait for v580 score.
+
+### v580 dropped to 0.944; v581 submitted — 2026-05-19 01:50 UTC
+
+- Live Kaggle: v580 completed at `0.944`, below current best `0.949`. Kill Chaney v37 direct-replay lane for slots; OOF/CV/gate evidence did not transfer. Artifact access blocker remains an idea-mining issue only.
+- v581 fallback initially exited because source preflight markers were too brittle for raw notebook JSON. Relaxed source markers to semantic markers (`default_name`, `a2_nfnet_w03`, `A2NF blend complete`, diagnostics, hidden-test markers) while preserving strict output-file verification.
+- Re-ran v581 preflight: source pull OK v2, kernel COMPLETE/no failure, required outputs present. Submitted `v581: Guarded direct Lucataco A2Prime NFNet frontier replay`, ref `52793377`, pending. 2026-05-19 UTC visible count is now `2`.
