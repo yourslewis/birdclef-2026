@@ -3003,3 +3003,15 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added push helper `scripts/push_v586_a2prime_effv2s_extraction.py`; it only pushes the private kernel and does not submit. Do not run while v585 owns the reset slot.
 - Validation passed: notebook JSON parses (39 cells); metadata includes `baiyuby/birdclef2026-distill-models` and model sources; push helper and v585 submitter compile; `git diff --check` and hygiene pass.
 - Decision: keep v585 as sole reset submitter. Use v586 only if v585 drops/no-scores and no stronger 0.950+ source appears.
+
+### Capped 0.96 frontier re-scan + Yaroslav/visual audit — 2026-05-19 16:58 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible submission count remains `5`/capped. No v577/v578 scalar submitter is active.
+- Verified durable tmux monitor `birdclef-v585-reset` remains alive and sleeping on the daily cap after successful FrankSunP v585 source/output preflight; no duplicate submitter was started.
+- Saved fresh DATE_RUN scan `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1648Z.json` and source/output audit `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1649Z/summary.json`.
+- `yaroslavkholmirzayev/v6-0949-replay` reran at 16:37 UTC but is still unsafe for direct replay: primary `submission.csv` has 243 rows, includes 240 train rows, and has empty numeric cells (`finite_bad=56862`). Its sample-shaped `subm_5.csv`/`subm_karnakbayev_power_optimization.csv` are EoS5/Karnakbayev-family outputs, not a new 0.96 structure.
+- `meenalsinha/birdclef-2026-improved` reran at 16:32 UTC but primary `submission.csv` is train-row dry-run output (240 train rows), matching the prior hidden failure class; do not direct-submit.
+- `samejimatink0/birdclef-2026-visual-cpu-inference` is COMPLETE with finite outputs, but primary `submission.csv` is train-row dry-run output and the source/output markers are essentially ProtoSSM/SED/BirdNET rather than a confirmed new visual path; idea-mining only.
+- `aiaiaiooo/birdclef2026` has hidden-path markers in source but no session outputs; not slot-ready.
+- Decision: keep v585 as the sole active next-reset submitter. Keep v586 EffV2S as the prepared repo-owned fallback only if v585 drops/no-scores and no genuine `0.950+` source appears. No new Kaggle push/submission was made.

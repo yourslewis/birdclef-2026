@@ -695,3 +695,32 @@ Decision:
 - Keep v585 as the sole active reset submitter.
 - If v585 improves, abandon v586 and port/confirm FrankSunP.
 - If v585 drops/no-scores and no true `0.950+` source appears, next safe step is to run the v586 push helper, verify COMPLETE/no failure and `submission.csv`, then decide whether to submit a repo-owned EffV2S extraction candidate.
+
+## 2026-05-19 16:58 UTC capped re-scan — no source outranks v585/v586 queue
+
+Live state:
+
+- Latest Kaggle submissions remain v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`.
+- Current confirmed best remains `0.949`; target remains `0.960`.
+- 2026-05-19 UTC is capped with `5` visible submissions.
+- No v577/v578 scalar submitter is active.
+- `birdclef-v585-reset` remains the only active submitter and is sleeping on the reset slot after source/output preflight.
+
+Fresh artifacts:
+
+- DATE_RUN scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1648Z.json`.
+- Source/output audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1649Z/summary.json`.
+
+Candidate updates:
+
+- `yaroslavkholmirzayev/v6-0949-replay`: rerun did not fix direct-submission safety. Primary `submission.csv` has 243 rows, train rows, and empty numeric cells. Sample-shaped side outputs are Karnakbayev/EoS5-family and low-upside.
+- `meenalsinha/birdclef-2026-improved`: rerun still emits train-row dry-run primary output; prior direct replay already failed hidden behavior. Reject for direct slot.
+- `samejimatink0/birdclef-2026-visual-cpu-inference`: COMPLETE/finite but primary output is train-row dry-run output; title says visual but available markers look like ProtoSSM/SED/BirdNET. Mine only if source reveals a portable distinct branch.
+- `aiaiaiooo/birdclef2026`: source has hidden-path markers but no outputs; not preflight-safe.
+
+Queue decision:
+
+1. Preserve v585 FrankSunP 5-branch as the sole reset submitter.
+2. If v585 improves, immediately port/confirm FrankSunP repo-owned.
+3. If v585 drops/no-scores and no true `0.950+` source appears, use prepared repo-owned v586 EffV2S extraction path rather than another direct 0.949-family replay.
+4. Continue rejecting train-row/constant/empty-cell primary outputs even if side outputs look sample-shaped.
