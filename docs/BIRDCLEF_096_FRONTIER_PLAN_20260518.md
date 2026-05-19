@@ -663,3 +663,35 @@ Decision:
 - Keep v585 as the sole active reset submitter.
 - No additional submission monitor launched.
 - Next meaningful non-slot work should be a repo-owned EffV2S extraction scaffold if the cap persists and no better source appears.
+
+## 2026-05-19 15:58 UTC repo-owned EffV2S fallback scaffold prepared
+
+Live state:
+
+- Latest Kaggle submissions unchanged: v580 `0.944`, v581 hidden timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`.
+- Current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible count remains `5`; slots capped.
+- PR #245 is merged; active frontier PR #246 remains open, mergeable, and blocked.
+- No v577/v578 scalar submitter is active.
+- Active v585 reset monitor remains detached tmux session `birdclef-v585-reset`; process alive and sleeping on daily cap after successful FrankSunP source/output preflight.
+
+Action taken while capped:
+
+- Prepared repo-owned fallback scaffold `kaggle-kernels/v586-a2prime-effv2s-extraction/` from `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` v5.
+- Added metadata for private repo-owned Kaggle kernel `yourslewis/bc26-v586-a2prime-effv2s-extraction` with internet disabled and the same required dataset/kernel/model sources.
+- Inserted a leading notebook policy cell documenting that this is fallback-only after v585 result, and why EffV2S outranks NFNet as the A2Prime extraction candidate.
+- Added push helper `scripts/push_v586_a2prime_effv2s_extraction.py`. This only pushes the private kernel; it does not submit. Do not run while `birdclef-v585-reset` exists and owns the next reset slot.
+
+Validation:
+
+- Notebook JSON parses; generated notebook has 39 cells.
+- Metadata validation passed; expected EffV2S dataset source `baiyuby/birdclef2026-distill-models` and model sources are present.
+- Push helper compiles.
+- v585 submitter still compiles.
+- `git diff --check` and `git_maint.py hygiene` passed.
+
+Decision:
+
+- Keep v585 as the sole active reset submitter.
+- If v585 improves, abandon v586 and port/confirm FrankSunP.
+- If v585 drops/no-scores and no true `0.950+` source appears, next safe step is to run the v586 push helper, verify COMPLETE/no failure and `submission.csv`, then decide whether to submit a repo-owned EffV2S extraction candidate.

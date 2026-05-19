@@ -1,0 +1,40 @@
+{
+  "id": "yourslewis/bc26-v586-a2prime-effv2s-extraction",
+  "title": "BC26 v586 A2Prime EffV2S extraction",
+  "code_file": "a2prime-effv2s-extraction.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [
+    "birdclef-2026",
+    "v586",
+    "a2prime",
+    "effv2s",
+    "fallback"
+  ],
+  "dataset_sources": [
+    "tuckerarrants/bc2026-distilled-sed-public",
+    "baiyuby/birdclef2026-distill-models",
+    "jaejohn/perch-meta",
+    "tuckerarrants/perch-v2-no-dft-onnx",
+    "rishikeshjani/perch-onnx-for-birdclef-2026"
+  ],
+  "kernel_sources": [
+    "ashok205/tf-wheels"
+  ],
+  "competition_sources": [
+    "birdclef-2026"
+  ],
+  "model_sources": [
+    "shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3",
+    "google/bird-vocalization-classifier/TensorFlow2/perch_v2_cpu/1"
+  ],
+  "docker_image_pinning_type": "PIN_CURRENT_IMAGE",
+  "source_ref": "claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit",
+  "source_version": 5,
+  "audit_artifact": "artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1445Z/summary.json",
+  "slot_policy": "fallback-only-after-v585-result"
+}

@@ -2994,3 +2994,12 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Claude A2Prime/EffV2S v5 is schema-safe and has stronger diversity evidence: sanity top-5 hit rate `0.55`, Proto/EffV2S rank correlation `0.053`. If v585 fails and no 0.950+ source appears, this is the best concrete repo-owned extraction target from the A2Prime family.
 - Rajnish RankPower+NFNet selective is schema-safe on primary sample `submission.csv`, but selective intermediate output has train rows / 36 rows on public run; idea-mining only unless row-selection is fixed in a repo-owned port. Aiaiaiooo is RUNNING/no outputs.
 - Decision: keep v585 as sole reset submitter; prepare EffV2S extraction next if cap persists and no stronger source appears.
+
+### Repo-owned EffV2S fallback scaffold prepared — 2026-05-19 15:58 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Prepared repo-owned fallback scaffold `kaggle-kernels/v586-a2prime-effv2s-extraction/` from `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` v5, with private kernel metadata `yourslewis/bc26-v586-a2prime-effv2s-extraction`, internet disabled, and matching dataset/kernel/model sources.
+- Added push helper `scripts/push_v586_a2prime_effv2s_extraction.py`; it only pushes the private kernel and does not submit. Do not run while v585 owns the reset slot.
+- Validation passed: notebook JSON parses (39 cells); metadata includes `baiyuby/birdclef2026-distill-models` and model sources; push helper and v585 submitter compile; `git diff --check` and hygiene pass.
+- Decision: keep v585 as sole reset submitter. Use v586 only if v585 drops/no-scores and no stronger 0.950+ source appears.
