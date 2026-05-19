@@ -844,3 +844,31 @@ Decision:
 - No new Kaggle push/submission while capped.
 - Do not start duplicate submitters.
 - Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
+
+## 2026-05-19 21:50 UTC queue update — still no source to displace v585
+
+Live state:
+
+- Latest submissions unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; target remains `0.960`.
+- 2026-05-19 UTC remains capped at `5` submissions; v585 is not visible yet.
+- PR #247 is open/blocked; `birdclef-v585-reset` remains alive and is the only active submitter.
+
+New artifacts:
+
+- Fresh DATE_RUN scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2147Z.json`.
+- Fresh top-feed audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2147Z_top/summary.json`.
+
+Candidate decisions:
+
+1. `huydo170302/dsai1-internship-birdclef-2026` v8 — reject; EDA/training baseline, no outputs, no submission path, no high-score evidence.
+2. `evgendvorkin/birdclef-baseline` v34 — reject; train-row primary output and no high-score/source evidence.
+3. `meenalsinha/birdclef-2026-improved` v22 — reject; train-row-only outputs and scalar lambda-prior lane.
+4. `nina2025/birdclef-2026-eos-6-sz` v10 — reject; invalid primary `submission.csv`; side output not acceptable as configured competition file.
+5. v585 FrankSunP remains reset-slot owner.
+6. v586 repo-owned EffV2S remains preferred prepared fallback if v585 drops/no-scores.
+
+Decision:
+
+- No new Kaggle push/submission while capped.
+- Do not start duplicate submitters.
+- Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
