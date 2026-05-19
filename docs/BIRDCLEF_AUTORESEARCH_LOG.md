@@ -2897,3 +2897,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Heartbeat check: managed v580 session `tender-ridge` woke after cap, re-ran source/output preflight, and successfully submitted `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`, ref `52790976`.
 - Live Kaggle: v580 is visible with status `pending`; current best remains `0.949` until it scores. 2026-05-19 UTC visible count is `1`.
 - Managed v581 session `brisk-kelp` remains alive and is waiting for v580 to complete before fallback action. If v580 improves, stop v581 and solve Chaney artifact reproduction/portable extraction; if v580 ties/drops/no-scores, let v581 proceed.
+
+### v580 pending; v582 source scan while waiting — 2026-05-19 00:45 UTC
+
+- Live Kaggle: v580 is visible/pending, ref `52790976`; current confirmed best remains `0.949`; 2026-05-19 UTC visible count is `1`. v580 submit process exited after success, so `tender-ridge` is gone by design. v581 `brisk-kelp` remains alive and waits for v580 completion.
+- Ran another source scan for possible v582 candidates. Most new/recent hits were clones or lower-evidence: CocoaAI stars v129/v130 are EoS4/EoS3 clones; CocoaAI Karnak/Adarsh/Itshyao S103 are EoS5-like; Kospintr EfficientNet has sample/empty-output risk and should not be submitted blindly.
+- Potential later idea-mining candidates: `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` (Youssef rank + gate rank, attachable sources) and `karnakbaevarthur/optimized-dual-architecture-ensemble` (pc010/gate + taxonomy/mirror/rare lineage). Neither is strong enough to queue ahead of v580/v581.
+- Decision: no v582 submitter added. Preserve v580 -> v581 queue and wait for v580 score.

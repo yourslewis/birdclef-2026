@@ -202,3 +202,29 @@ Next decision gate:
 
 - If `v580 > 0.949`: stop v581 and work on Chaney artifact reproduction / portable logic extraction, because direct repo-owned replay is blocked by private Chaney artifacts.
 - If `v580 <= 0.949` or no-scores: allow v581 A2Prime/NFNet fallback to proceed.
+
+## 2026-05-19 00:45 UTC execution update — v580 pending, v582 scan while waiting
+
+Live status:
+
+- `v580` is visible and pending: ref `52790976`, description `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`.
+- Current confirmed best remains **0.949** until v580 scores.
+- 2026-05-19 UTC visible submission count is `1`.
+- `v581` fallback monitor remains alive and correctly waits for v580 to complete before acting.
+- v580 submit process exited after successful submission, so `tender-ridge` is gone by design.
+
+Additional source scan for a possible v582 queue item:
+
+- `cocoaai/bc26-stars-v129-exp019-eos4-birdnet`: EoS4/Model7 clone around `0.948`; not distinct enough after EoS5/v580.
+- `cocoaai/bc26-stars-v130-nina-eos3-birdnet`: EoS3-like `Model_3/Model_10` clone; not a high-upside new lineage.
+- `cocoaai/bc26-karnak-advance-ensemble-patched`: EoS5-like `Model_2/Model_5` blend; already covered by v574-v576.
+- `adarsh5harma/birdclef-2026-v63-nina-eos5-fork` and `itshyao/birdclef-2026-s103-public-eos5-0949`: EoS5-like `0.04/0.96` top-level blend; same conclusion as SafeAlign/S106.
+- `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517`: COMPLETE with `submission.csv`; public/attachable sources include `konbu17/bird26-train-audio-head-v1`; final blend is `0.65 * Youssef rank + 0.35 * gate rank`. It is a plausible idea-mining fallback but probably overlaps public946/gate-sidecar lanes; do not queue before v580/v581 results.
+- `karnakbaevarthur/optimized-dual-architecture-ensemble`: COMPLETE with `submission.csv`; attachable sources; appears to be pc010/gate + taxonomy/mirror/rare postprocess lineage. Candidate for later source extraction, but not stronger than current v580/v581 queue.
+- `cocoaai/bc26-alexy-ensemble-perch-cnn`: COMPLETE with `submission.csv`, uses `alexycactus/birdclef-2026-cnn-fold-checkpoints`; source reports OOF AUC diagnostics and Perch+CNN ensemble. Interesting model-zoo idea, but no visible strong LB claim; hold for later.
+- `kospintr/birdclef-efficientnet-perch-distill-mixup`: COMPLETE but sample/empty-output risk when no hidden test (`submission_df` starts from sample columns and only fills if `test_audio_full_paths`); do not submit blindly.
+
+Decision:
+
+- Do not start a v582 submitter now. Preserve queue order: v580 result gate, then v581 fallback if needed.
+- Best next action remains: wait for v580 score. If v580 improves, focus on reproducing/extracting Chaney artifacts; if not, v581 proceeds.
