@@ -358,3 +358,46 @@ Decision:
 
 - Do not queue v583 while v582 is pending. The best preflighted candidates are either EoS5-family 0.949 variants or direct-unsafe.
 - If v582 ties/drops/no-scores, the least-bad direct fallback is currently `beicicc/bc26-karnak-gated-safe-may19` or `beicicc/bc26-v65-karnak-safe-may19`, but their expected upside is low. Prefer another broad source scan / Rabeya completion check before spending a slot unless the day is near expiry.
+
+## 2026-05-19 05:50 UTC execution update — v582 dropped, v583 S118 submitted
+
+Live result/state:
+
+- `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, scored **0.947**.
+- Current best remains `0.949` from v574/v575/v576.
+- 2026-05-19 UTC visible count before v583 was `3`; after v583 submission it is `4`.
+- No stale v577/v578 scalar or v58x submitter process was alive.
+
+Lesson from v582:
+
+- Amulopapa Youssef+gate `0.65/0.35` rank blend is valid and scored above older public946 lines, but it did not beat EoS5/Model5 `0.949`.
+- Treat Youssef+gate rank blend as useful idea-mining, not a confirmation lane.
+
+Broader scan after v582:
+
+- Recent Kaggle `DATE_RUN` pages show the newest cluster: Mtoshi/Zhaorong visual BirdNET, Beicicc Anthony/safe/gated EoS5-family variants, Itshyao S118/S120 launchers, JGuevara TTA, CocoaAI Youssef D2/E1, Apachikoff V6, Karnak advance.
+- Web search did not surface external explicit `0.95+` claims.
+- Rabeya V4 became inaccessible via pull/session/output (`403`) despite appearing in list search, so it is not usable now.
+- Beicicc safe/gated kernels are valid but EoS5-family Model2/Model5 variants; expected upside is low.
+- Zhaorong/Mtoshi Visual BirdNET and CocoaAI Youssef D2/E1 are valid and idea-mining-worthy, but lack strong public-score evidence; hold for later.
+- JGuevara TTA emits a zero-valued fallback `submission.csv`; do not direct-submit.
+
+New selected candidate:
+
+- `itshyao/birdclef-2026-s118-gated-g116-delta-launcher` v2.
+- Reason: more structurally distinct than the Beicicc EoS5-weight variants; outputs include `submission_g116_hgnet_b1_all5_s118.csv`, suggesting a G116/HGNet delta branch blended into the EoS/PowerOptimization family.
+- Caveat: source is a public launcher that executes attached `s118_source.ipynb`; repo-owned confirmation may require recovering/porting the attached source dataset. This is a guarded direct replay, not a portable port.
+
+Preflight:
+
+- Source pull OK, version `2`, launcher source length `1165`.
+- Required launcher source markers present: `s118_source.ipynb`, `Executing source notebook`, `run source cell`, `S118 launcher complete`.
+- Kernel COMPLETE/no failure.
+- Output files present: `submission.csv`, `submission_g116_hgnet_b1_all5_s118.csv`, `subm_5.csv`, `submission_protossm.csv`, `submission_sed.csv`, `v17_logs.json`.
+- Prior schema scan showed valid sample-shaped output: `3 x 235`, unique row IDs, finite values in `[0.473, 0.546]`.
+
+Action:
+
+- Added `scripts/submit_v583_s118_gated_g116_delta.py`.
+- Submitted `v583: Guarded direct S118 gated G116 delta launcher replay`, ref `52799220`, initial status pending.
+- Decision: preserve the final remaining 2026-05-19 slot until v583 scores or a stronger source appears.

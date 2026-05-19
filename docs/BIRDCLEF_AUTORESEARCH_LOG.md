@@ -2930,3 +2930,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Ran Kaggle `list_kernels` searches across recent/date-run BirdCLEF kernels and score claims `0.951`–`0.955`; no explicit >0.949 public claim surfaced.
 - Deep-scanned May 19 candidates. Beicicc `bc26-v65-karnak-safe-may19` and `bc26-karnak-gated-safe-may19` are COMPLETE with valid sample-shaped outputs, but they are EoS5-family Model2/Model5 blends (`0.03/0.97`, `0.0321/0.9679`) with Model5 `0.949`, so low expected upside. Beicicc ungated, Anthony ensemble are direct-unsafe (train-row outputs). Mtoshi V6 is ERROR/no outputs. Mtoshi S106 is EoS5/SafeAlign-like. CocoaAI Mtoshi Visual BirdNET is valid and idea-mining-worthy, but lacks strong score evidence. Rabeya V4 was RUNNING/no outputs.
 - Decision: do not queue v583 while v582 is pending; preserve remaining slots. If v582 fails, recheck Rabeya and broader source search before falling back to Beicicc safe/gated EoS5-family variants.
+
+### v582 scored 0.947; v583 S118 submitted — 2026-05-19 05:50 UTC
+
+- Live Kaggle: v582 scored `0.947`, below current best `0.949`; current best remains v574/v575/v576. Youssef+gate rank blend is not a confirmation lane.
+- Broadened recent source scan. Rabeya V4 is now inaccessible (`403`). Beicicc safe/gated are valid but EoS5-family low-upside. Zhaorong/Mtoshi Visual BirdNET and CocoaAI Youssef D2/E1 are valid idea-mining candidates but lack strong score evidence. JGuevara TTA outputs a zero fallback; skip.
+- Selected distinct Itshyao S118 gated G116 delta launcher as v583 because it includes `submission_g116_hgnet_b1_all5_s118.csv` and is more structurally different than Beicicc EoS5-weight variants. Caveat: visible source is a launcher around attached `s118_source.ipynb`, so direct replay is not immediately repo-portable.
+- Added `scripts/submit_v583_s118_gated_g116_delta.py`; preflight passed (source v2, COMPLETE/no failure, required outputs present, prior schema valid). Submitted `v583: Guarded direct S118 gated G116 delta launcher replay`, ref `52799220`, pending. 2026-05-19 visible count now `4`; preserve final slot.
