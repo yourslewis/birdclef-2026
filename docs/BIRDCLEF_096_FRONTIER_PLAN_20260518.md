@@ -188,3 +188,17 @@ Potentially attachable follow-up lanes if v580/v581 do not improve:
 - `kamongi/pantanal-distill-birdclef2026` uses attachable `konbu17/bird26-train-audio-head-v1` plus common sources, but source comments suggest public LB around `0.944`; treat as idea-mining rather than a priority slot.
 
 Action this run: no new submitters added; preserve the queue order v580 → v581.
+
+## Heartbeat update — v580 submitted after UTC reset — 2026-05-19 00:05 UTC
+
+- Managed v580 session `tender-ridge` woke after the UTC reset, re-ran source/output preflight, and successfully submitted.
+- Submission: `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`
+- Kaggle ref: `52790976`
+- Initial status: `pending`, no score yet.
+- 2026-05-19 UTC visible submission count is now `1`.
+- Managed v581 session `brisk-kelp` remains alive and is correctly waiting for v580 to become complete before taking any fallback action.
+
+Next decision gate:
+
+- If `v580 > 0.949`: stop v581 and work on Chaney artifact reproduction / portable logic extraction, because direct repo-owned replay is blocked by private Chaney artifacts.
+- If `v580 <= 0.949` or no-scores: allow v581 A2Prime/NFNet fallback to proceed.

@@ -2891,3 +2891,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Checked Chaney artifact dataset attachability for possible repo-owned v580 confirmation. All key Chaney artifact datasets returned `403 datasets.get denied`: `birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `bc26-gate-fake008-head0015-baseline-onnx`, `bc26-edits-protossm-sed-v7-all66-40x20`, `bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `bc26-probe-middle-pca128-raw085-logreg015`.
 - Public/common dependencies are attachable (`lixin73`, `jaejohn`, `rishikeshjani`, `tuckerarrants`). If v580 improves, simple repo-owned replay may be blocked; follow-up likely requires reproducing Chaney artifacts or extracting portable logic. Do not promise immediate repo-owned confirmation until artifact access is solved.
 - Checked other attachability: Lucataco A2Prime/NFNet uses public `brendancarlin/birdclef2026-models`; Kamongi uses public `konbu17/bird26-train-audio-head-v1` but appears closer to `0.944`/idea-mining. No new submitter added; preserve v580 → v581 queue.
+
+### v580 submitted after UTC reset — 2026-05-19 00:05 UTC
+
+- Heartbeat check: managed v580 session `tender-ridge` woke after cap, re-ran source/output preflight, and successfully submitted `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`, ref `52790976`.
+- Live Kaggle: v580 is visible with status `pending`; current best remains `0.949` until it scores. 2026-05-19 UTC visible count is `1`.
+- Managed v581 session `brisk-kelp` remains alive and is waiting for v580 to complete before fallback action. If v580 improves, stop v581 and solve Chaney artifact reproduction/portable extraction; if v580 ties/drops/no-scores, let v581 proceed.
