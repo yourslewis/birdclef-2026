@@ -280,3 +280,36 @@ Rationale:
 
 - This is more distinct than another EoS/Karnak clone: final output is a rank blend of Youssef branch and gate branch (`0.65/0.35`).
 - It is still guarded behind v581 because spending a slot before the A2Prime/NFNet result would be premature.
+
+## 2026-05-19 03:50 UTC execution update — v581 timeout, v582 submitted, v583 scan
+
+Live result/state:
+
+- `v581: Guarded direct Lucataco A2Prime NFNet frontier replay`, ref `52793377`, completed with **no public score**.
+- Kaggle error: `Your submission notebook exceeded the allowed runtime.`
+- Root cause classification: hidden runtime timeout, not source/output schema failure. Public output schema from the source run was valid sample-sized output (`3 x 235`, unique `row_id`, finite values), but hidden execution exceeded the competition runtime limit.
+- `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, was submitted by the gated monitor after v581 no-scored. Current status: pending.
+- 2026-05-19 UTC visible count is now `3`.
+
+v582 monitor behavior:
+
+- OpenClaw session `lucky-zephyr` exited successfully after submission.
+- Re-preflight before submission passed: source pull v4, kernel COMPLETE/no failure, required output files present.
+
+Next-candidate scan while v582 is pending:
+
+- `karnakbaevarthur/optimized-dual-architecture-ensemble` v3:
+  - Pull OK, source length `124390`.
+  - Sources: distilled SED public, train-audio-head, perch-meta, perch ONNX, tf-wheels, Perch model.
+  - Kernel COMPLETE/no failure.
+  - Outputs: `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, cache files.
+  - Public output schema valid sample-sized output: `3 x 235`, unique `row_id`, finite values in `[0.226, 0.361]`.
+  - Possible v583 fallback if v582 ties/drops/no-scores, but lower confidence because it looks closer to known Perch/SED/taxon/gate lineage than a true 0.96 successor.
+- `cocoaai/bc26-alexy-ensemble-perch-cnn` v1:
+  - Pull OK, source length `37597`; kernel COMPLETE/no failure.
+  - Distinct CNN/Perch idea, but direct output is unsafe for competition replay: `submission.csv` has `192` rows with `BC2026_Train_*` row IDs, not sample/hidden-test-shaped rows.
+  - Do not submit direct. Only idea-mine/port if later needed.
+
+Decision:
+
+- Do not queue v583 while v582 is pending. Preserve the remaining two 2026-05-19 slots for v582 result-driven action.

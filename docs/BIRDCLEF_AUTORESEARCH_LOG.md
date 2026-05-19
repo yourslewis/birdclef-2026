@@ -2917,3 +2917,9 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added `scripts/submit_v582_amulopapa_yous_gate_when_ready.py`, a result-gated monitor for `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` v4. It waits while v581 is pending, exits if v581 improves above `0.949`, and only submits if v581 ties/drops/no-scores.
 - Started v582 monitor as OpenClaw session `lucky-zephyr`, pid `35622`; first poll confirms it is sleeping on pending v581.
 - Independent preflight: source pull OK v4/source length `201355`; required source markers present (`submission_youssef.csv`, `submission_gate.csv`, rank blend `0.65 * yr + 0.35 * gr`, hidden/test markers); kernel COMPLETE/no failure; required output files present. Public output schema is dry-run/sample-sized (3 rows, 235 cols), `row_id` unique, finite values in `[0,1]`.
+
+### v581 hidden timeout; v582 submitted; v583 scan — 2026-05-19 03:50 UTC
+
+- Live Kaggle: v581 completed with no public score. Error description: hidden submission notebook exceeded allowed runtime. Public source-run output schema was valid (`3 x 235`, unique `row_id`, finite), so root cause is runtime timeout, not format.
+- v582 gated monitor `lucky-zephyr` observed v581 no-score, re-preflighted Amulopapa Youssef+gate v4 successfully, and submitted `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, pending. 2026-05-19 UTC visible count now `3`.
+- Next scan while v582 pending: Karnak optimized-dual v3 is a possible but lower-confidence v583 fallback (COMPLETE, valid sample-sized output, known Perch/SED/taxon/gate-ish lineage). Alexy Perch+CNN is direct-unsafe because `submission.csv` has 192 `BC2026_Train_*` rows; do not direct-submit.
