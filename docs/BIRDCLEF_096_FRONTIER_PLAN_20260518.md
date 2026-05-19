@@ -696,7 +696,7 @@ Decision:
 - If v585 improves, abandon v586 and port/confirm FrankSunP.
 - If v585 drops/no-scores and no true `0.950+` source appears, next safe step is to run the v586 push helper, verify COMPLETE/no failure and `submission.csv`, then decide whether to submit a repo-owned EffV2S extraction candidate.
 
-## 2026-05-19 16:58 UTC capped re-scan — no source outranks v585/v586 queue
+## 2026-05-19 16:50 UTC capped re-scan — no source outranks v585/v586 queue
 
 Live state:
 

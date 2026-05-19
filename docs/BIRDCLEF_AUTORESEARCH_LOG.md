@@ -3004,7 +3004,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Validation passed: notebook JSON parses (39 cells); metadata includes `baiyuby/birdclef2026-distill-models` and model sources; push helper and v585 submitter compile; `git diff --check` and hygiene pass.
 - Decision: keep v585 as sole reset submitter. Use v586 only if v585 drops/no-scores and no stronger 0.950+ source appears.
 
-### Capped 0.96 frontier re-scan + Yaroslav/visual audit — 2026-05-19 16:58 UTC
+### Capped 0.96 frontier re-scan + Yaroslav/visual audit — 2026-05-19 16:50 UTC
 
 - Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
 - 2026-05-19 UTC visible submission count remains `5`/capped. No v577/v578 scalar submitter is active.
