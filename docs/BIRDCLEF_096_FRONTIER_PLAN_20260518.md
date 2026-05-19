@@ -313,3 +313,48 @@ Next-candidate scan while v582 is pending:
 Decision:
 
 - Do not queue v583 while v582 is pending. Preserve the remaining two 2026-05-19 slots for v582 result-driven action.
+
+## 2026-05-19 04:45 UTC execution update — v582 still pending, v583 source scan held
+
+Live state:
+
+- `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, remains pending.
+- Current confirmed best remains `0.949`; 2026-05-19 UTC visible count remains `3`.
+- No active v577/v578/v58x submitter processes are alive; v582 monitor exited successfully after submission.
+- PR #246 remains open, mergeable, and blocked. Working tree was clean at loop start.
+
+Kaggle API source search:
+
+- Searched competition kernels via `list_kernels` for recent/date-run candidates around `0.95`, `0.96`, `EoS`, `SafeAlign`, `PowerOptimization`, `gate rank fusion`, `Perch CNN`, `NFNet`, and score-claim strings `0.951`–`0.955`.
+- No explicit `0.951`–`0.955` kernel claims surfaced.
+- New/recent May 19 cluster is mostly Beicicc/Karnak safe/gated variants and Rabeya V4 pipeline.
+
+Deep scan findings:
+
+- `beicicc/bc26-v65-karnak-safe-may19` v1:
+  - COMPLETE/no failure, valid sample-shaped output (`3 x 235`, unique row IDs, finite values).
+  - Top-level solution is still Model2/Model5 direct blend: `Model_2=0.03`, `Model_5=0.97`, `LB 0.949` on Model5.
+  - This is an EoS5-family safety/weight tweak, not a distinct 0.96 hypothesis. Hold; do not submit before v582 result.
+- `beicicc/bc26-karnak-gated-safe-may19` v1:
+  - COMPLETE/no failure, valid sample-shaped output (`3 x 235`).
+  - Top-level solution is `Model_2=0.0321`, `Model_5=0.9679`, with markdown claiming Model5 `0.949+` and 5 gates.
+  - Also EoS5-family; hold.
+- `beicicc/bc26-v65-karnak-gated-may19` v1:
+  - COMPLETE but direct output unsafe: `243` rows with `240` train row IDs and non-finite parse in downloaded `submission.csv`.
+  - Do not direct-submit.
+- `mtoshidesu/testbirdclef-2026-v6` v3:
+  - Status ERROR/no outputs; skip direct.
+- `mtoshidesu/test-s106-eos5-sa2-may18` v1:
+  - COMPLETE/valid sample-shaped output, but it is S106/EoS5-like `0.04/0.96`; already covered by earlier SafeAlign/S106 triage and v576 lesson.
+- `cocoaai/bc26-mtoshi-visual-birdnet` v1:
+  - COMPLETE/valid sample-shaped output; uses `mtoshidesu/birdclef-flow-diagram` plus BirdNET/Perch sources.
+  - Interesting visual/BirdNET idea-mining lane, but no strong score claim and output distribution resembles conservative sample-run blending. Hold; possible idea extraction only.
+- `rabeya100x/birdclef-2026-v4-pipeline` v5:
+  - Source pull OK and structurally resembles the visual/BirdNET/Perch family, but kernel was RUNNING with no outputs at scan time. Recheck later; do not submit yet.
+- `anthonytherrien/birdclef-2026-ensemble` v2:
+  - COMPLETE but direct output unsafe: `243` rows with `240` train row IDs and non-finite parse; do not direct-submit.
+
+Decision:
+
+- Do not queue v583 while v582 is pending. The best preflighted candidates are either EoS5-family 0.949 variants or direct-unsafe.
+- If v582 ties/drops/no-scores, the least-bad direct fallback is currently `beicicc/bc26-karnak-gated-safe-may19` or `beicicc/bc26-v65-karnak-safe-may19`, but their expected upside is low. Prefer another broad source scan / Rabeya completion check before spending a slot unless the day is near expiry.

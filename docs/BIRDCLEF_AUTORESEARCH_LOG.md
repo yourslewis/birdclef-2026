@@ -2923,3 +2923,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Live Kaggle: v581 completed with no public score. Error description: hidden submission notebook exceeded allowed runtime. Public source-run output schema was valid (`3 x 235`, unique `row_id`, finite), so root cause is runtime timeout, not format.
 - v582 gated monitor `lucky-zephyr` observed v581 no-score, re-preflighted Amulopapa Youssef+gate v4 successfully, and submitted `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, pending. 2026-05-19 UTC visible count now `3`.
 - Next scan while v582 pending: Karnak optimized-dual v3 is a possible but lower-confidence v583 fallback (COMPLETE, valid sample-sized output, known Perch/SED/taxon/gate-ish lineage). Alexy Perch+CNN is direct-unsafe because `submission.csv` has 192 `BC2026_Train_*` rows; do not direct-submit.
+
+### v582 pending; v583 source scan held — 2026-05-19 04:45 UTC
+
+- Live Kaggle: v582 remains pending; current best stays `0.949`; 2026-05-19 visible count remains `3`. No active submitter processes are alive.
+- Ran Kaggle `list_kernels` searches across recent/date-run BirdCLEF kernels and score claims `0.951`–`0.955`; no explicit >0.949 public claim surfaced.
+- Deep-scanned May 19 candidates. Beicicc `bc26-v65-karnak-safe-may19` and `bc26-karnak-gated-safe-may19` are COMPLETE with valid sample-shaped outputs, but they are EoS5-family Model2/Model5 blends (`0.03/0.97`, `0.0321/0.9679`) with Model5 `0.949`, so low expected upside. Beicicc ungated, Anthony ensemble are direct-unsafe (train-row outputs). Mtoshi V6 is ERROR/no outputs. Mtoshi S106 is EoS5/SafeAlign-like. CocoaAI Mtoshi Visual BirdNET is valid and idea-mining-worthy, but lacks strong score evidence. Rabeya V4 was RUNNING/no outputs.
+- Decision: do not queue v583 while v582 is pending; preserve remaining slots. If v582 fails, recheck Rabeya and broader source search before falling back to Beicicc safe/gated EoS5-family variants.
