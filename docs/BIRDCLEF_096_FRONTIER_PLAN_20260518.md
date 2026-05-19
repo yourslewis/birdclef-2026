@@ -516,3 +516,20 @@ Monitor state:
 - Started OpenClaw-managed background session `quiet-basil`, pid `18696`.
 - The monitor attempted submission, hit the expected Kaggle daily cap (`15 hours from now`), and is sleeping `54120s` before retry.
 - Expected behavior: submit v585 after next UTC reset unless it is already visible by then.
+
+## 2026-05-19 09:45 UTC execution update — v585 monitor restarted
+
+Live state:
+
+- Latest submissions unchanged: v584 scored `0.942`; current best remains `0.949`; 2026-05-19 UTC count remains `5`/capped.
+- The previously reported `quiet-basil` v585 monitor was no longer visible/alive at this check, and no `submit_v585` process was running.
+
+Action:
+
+- Restarted the v585 FrankSunP monitor as OpenClaw-managed session `mild-harbor`, pid `38214`.
+- It re-ran full preflight successfully: source v1, kernel COMPLETE/no failure, all required output files present.
+- It attempted submission and hit the expected daily cap (`14 hours from now`), then slept `50520s` before retry.
+
+Decision:
+
+- Keep `mild-harbor` as the active reset monitor. No additional submitters should be started while it is sleeping.

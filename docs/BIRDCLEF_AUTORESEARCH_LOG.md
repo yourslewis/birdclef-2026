@@ -2956,3 +2956,8 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Live Kaggle: v584 scored `0.942`, below current best `0.949`. Visual/BirdNET/Mtoshi direct replay is idea-mining only, not confirmation.
 - Added `scripts/submit_v585_franksunp_5branch_tta_fix_when_slot.py` for `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1. Preflight passed: source v1 length `103548`, COMPLETE/no failure, required outputs present. It remains the best distinct next-reset candidate: 5-stream rank ensemble (ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET), but with caveat that previous CLAP/Snowflake sidecars did not improve.
 - Started monitor `quiet-basil` pid `18696`; it attempted submission, hit daily cap (`15 hours from now`), and is sleeping `54120s` before retry. 2026-05-19 UTC count remains `5`/capped.
+
+### v585 monitor restarted — 2026-05-19 09:45 UTC
+
+- Live Kaggle unchanged: v584 `0.942`, best `0.949`, 2026-05-19 count `5`/capped. The earlier `quiet-basil` v585 monitor was no longer visible/alive and no `submit_v585` process was running.
+- Restarted v585 monitor as OpenClaw session `mild-harbor` pid `38214`; preflight re-passed and submit attempt hit expected daily cap (`14 hours from now`), then slept `50520s` before retry. No other submitters active.
