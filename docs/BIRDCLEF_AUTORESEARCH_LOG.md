@@ -2857,3 +2857,197 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Added `kaggle-kernels/v577-eos5-model5-rankp055/`, `scripts/push_v577.py`, and guarded `scripts/submit_v577_when_ready.py`. Validation: metadata JSON parses, notebook JSON parses/no stored outputs, top-level remains Model5-only, exactly one active `power=0.55` line is present, and scripts pass `py_compile`.
 - Pushed Kaggle kernel with Bearer API v1. Kaggle returned version `1`, kernel id `119739708`, URL `https://www.kaggle.com/code/yourslewis/bc26-v577-eos5-model5-rank-power-0-55`, with no invalid data/competition/kernel/model sources (only tag strings rejected).
 - Started guarded submit monitor pid `18325`, log `logs/submit_v577_when_ready_20260518T1845Z.log`. Initial status: v577 kernel `RUNNING`, no failure message. The monitor requires v577 output verification and `v576=0.949+`; if the daily cap is hit, it will sleep until the next slot window.
+
+### 0.96 frontier source work: SafeAlign/Pilkwang triage, Chaney v37 queued — 2026-05-18 20:55 UTC
+
+- Live Kaggle: current best remains `0.949` from `v574`/`v575`/`v576`; 2026-05-18 UTC visible count is `5`, so submissions are capped. No stale v577/v578 scalar monitor was alive.
+- PR #245 was already merged, so new work moved to fresh branch `feature/birdclef-096-frontier-chaney-v37-20260518` from updated `origin/main`.
+- SafeAlign/S106 diff result: `itshyao/birdclef-2026-s106-eos5-0949-safealign2` / `beicicc/bc26-s106-eos5-sa2-may18` are EoS5-like with `Model_2=0.04`, `Model_5=0.96` plus a robust final blend/row-id guard. Not slot-worthy for 0.960 because `v576` Model5-only already tied `0.949`.
+- Pilkwang result: `pilkwang/birdclef-26-acoustic-time-window-rank-fusion` is a clean older `Karnakbayev_PowerOptimization_LB0948` single branch using EoS4-style `lambda_prior=0.4` and rank-aware power `0.5`; EoS5 already improved this to `0.5/0.6`. Skip direct slot.
+- Selected higher-upside frontier candidate: `chaneyma/bc26-gate-v37-ninastyle-branch` v1. Rationale: structurally distinct Nina-style gate/branch stack, source comments/logs cite OOF/CV around `0.967`, COMPLETE/no failure, competition-format outputs. It is more 0.96-relevant than v577 scalar tuning.
+- Added guarded submitter `scripts/submit_v580_chaney_v37_when_slot.py`. Preflight passed: Kaggle source pull v1, required source markers, dry-run fallback guard, kernel COMPLETE, output files include `submission.csv`, `v37_ninastyle_branch_shared_blend_summary.json`, `submission_imaad0946.csv`, `submission_sed.csv`.
+- Started monitor pid `43469`, log `logs/submit_v580_chaney_v37_when_slot_20260518T2055Z.log`. It attempted submit as `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`, hit daily cap (`3.3 hours from now`), and is sleeping `12000s` before retry.
+- Caveat: Kaggle metadata includes blank datasetDataSources for some Chaney artifact inputs; repo-owned confirmation may require identifying/attaching the underlying artifact datasets or reproducing the branches if v580 scores high.
+
+### A2Prime/NFNet fallback prepared behind v580 result — 2026-05-18 21:45 UTC
+
+- Rechecked live status: best remains `0.949`; 2026-05-18 UTC still has 5 visible submissions; `v580` monitor pid `43469` remains alive and sleeping after cap, no submission visible yet.
+- Scanned A2Prime/NFNet/EffV2S source cluster. `claudedevore/birdclef-2026-r0946-a2prime-nfnet-submit` is ERROR and lacks `submission.csv`; skip. `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` is COMPLETE, but default `submission.csv` is `base_3way`, not EffV2S; skip for direct replay unless alternate output-file submission is intentionally chosen.
+- Selected `lucataco/bc26-claude-a2prime-nfnet-fix` v2 as distinct fallback: COMPLETE/no failure; hidden default is `a2_nfnet_w03`; outputs include `submission.csv`, `submission_a2_nfnet_w03.csv`, `a2nfnet_blend_summary.csv`, `nfnet_branch_summary.csv`, `nfnet_sanity_file_summary.csv`, `submission_nfnet.csv`, and `submission_base_3way.csv`.
+- Added `scripts/submit_v581_a2prime_nfnet_when_ready.py` and started guarded monitor pid `68275`, log `logs/submit_v581_a2prime_nfnet_when_ready_20260518T2145Z.log`. It waits for v580 to complete first; if v580 improves above `0.949`, it exits so the next step can be repo-owned v580 confirmation; if v580 ties/drops/no-scores, it preflights and submits v581.
+
+### v580/v581 monitor restart and Chaney dependency map — 2026-05-18 22:50 UTC
+
+- Rechecked live Kaggle: best remains `0.949`; UTC day still capped with five visible submissions; no v580/v581 submission visible yet.
+- Found stale monitor PIDs: previous nohup pids `43469` (v580) and `68275` (v581) were no longer alive without additional log errors. Restarted as OpenClaw-managed background sessions to keep the reset queue live.
+- v580 managed session `tender-ridge` / pid `88792`: source/output preflight re-passed, submit attempt hit daily cap with `78 minutes from now`, sleeping `4800s` before retry.
+- v581 managed session `brisk-kelp` / pid `88794`: alive, waiting for v580 visibility/result before fallback action.
+- Mapped Chaney v37 likely repo-owned confirmation dependencies from source paths: `chaneyma/birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `chaneyma/bc26-gate-fake008-head0015-baseline-onnx`, `chaneyma/bc26-edits-protossm-sed-v7-all66-40x20`, `chaneyma/bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `chaneyma/bc26-probe-middle-pca128-raw085-logreg015`, plus common Perch/SED sources. If v580 improves, first follow-up is repo-owned confirmation with explicit source attachments.
+
+### Reset queue healthy; v580 repo-owned dependency blocker found — 2026-05-18 23:45 UTC
+
+- Live Kaggle unchanged: best `0.949`; 2026-05-18 UTC visible submissions `5`, 2026-05-19 visible submissions `0` at check time.
+- Managed monitors are alive: v580 `tender-ridge` pid `88792` sleeping after cap and ready to retry; v581 `brisk-kelp` pid `88794` waiting for v580 visibility/result.
+- Checked Chaney artifact dataset attachability for possible repo-owned v580 confirmation. All key Chaney artifact datasets returned `403 datasets.get denied`: `birdclef2026-edits-protossm-sed-onnx-infer-artifacts`, `bc26-gate-fake008-head0015-baseline-onnx`, `bc26-edits-protossm-sed-v7-all66-40x20`, `bc26-edits-protossm-sed-v8-all66-synth-p010-40x20`, `bc26-probe-middle-pca128-raw085-logreg015`.
+- Public/common dependencies are attachable (`lixin73`, `jaejohn`, `rishikeshjani`, `tuckerarrants`). If v580 improves, simple repo-owned replay may be blocked; follow-up likely requires reproducing Chaney artifacts or extracting portable logic. Do not promise immediate repo-owned confirmation until artifact access is solved.
+- Checked other attachability: Lucataco A2Prime/NFNet uses public `brendancarlin/birdclef2026-models`; Kamongi uses public `konbu17/bird26-train-audio-head-v1` but appears closer to `0.944`/idea-mining. No new submitter added; preserve v580 → v581 queue.
+
+### v580 submitted after UTC reset — 2026-05-19 00:05 UTC
+
+- Heartbeat check: managed v580 session `tender-ridge` woke after cap, re-ran source/output preflight, and successfully submitted `v580: Guarded direct Chaney v37 Nina-style gate frontier replay`, ref `52790976`.
+- Live Kaggle: v580 is visible with status `pending`; current best remains `0.949` until it scores. 2026-05-19 UTC visible count is `1`.
+- Managed v581 session `brisk-kelp` remains alive and is waiting for v580 to complete before fallback action. If v580 improves, stop v581 and solve Chaney artifact reproduction/portable extraction; if v580 ties/drops/no-scores, let v581 proceed.
+
+### v580 pending; v582 source scan while waiting — 2026-05-19 00:45 UTC
+
+- Live Kaggle: v580 is visible/pending, ref `52790976`; current confirmed best remains `0.949`; 2026-05-19 UTC visible count is `1`. v580 submit process exited after success, so `tender-ridge` is gone by design. v581 `brisk-kelp` remains alive and waits for v580 completion.
+- Ran another source scan for possible v582 candidates. Most new/recent hits were clones or lower-evidence: CocoaAI stars v129/v130 are EoS4/EoS3 clones; CocoaAI Karnak/Adarsh/Itshyao S103 are EoS5-like; Kospintr EfficientNet has sample/empty-output risk and should not be submitted blindly.
+- Potential later idea-mining candidates: `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` (Youssef rank + gate rank, attachable sources) and `karnakbaevarthur/optimized-dual-architecture-ensemble` (pc010/gate + taxonomy/mirror/rare lineage). Neither is strong enough to queue ahead of v580/v581.
+- Decision: no v582 submitter added. Preserve v580 -> v581 queue and wait for v580 score.
+
+### v580 dropped to 0.944; v581 submitted — 2026-05-19 01:50 UTC
+
+- Live Kaggle: v580 completed at `0.944`, below current best `0.949`. Kill Chaney v37 direct-replay lane for slots; OOF/CV/gate evidence did not transfer. Artifact access blocker remains an idea-mining issue only.
+- v581 fallback initially exited because source preflight markers were too brittle for raw notebook JSON. Relaxed source markers to semantic markers (`default_name`, `a2_nfnet_w03`, `A2NF blend complete`, diagnostics, hidden-test markers) while preserving strict output-file verification.
+- Re-ran v581 preflight: source pull OK v2, kernel COMPLETE/no failure, required outputs present. Submitted `v581: Guarded direct Lucataco A2Prime NFNet frontier replay`, ref `52793377`, pending. 2026-05-19 UTC visible count is now `2`.
+
+### v581 pending; v582 result-gated fallback staged — 2026-05-19 02:45 UTC
+
+- Live Kaggle: v581 still pending; v580 scored `0.944`; current best remains `0.949`; 2026-05-19 UTC visible count is `2`.
+- Added `scripts/submit_v582_amulopapa_yous_gate_when_ready.py`, a result-gated monitor for `amulopapa67/bc26-full-yous-gate-rb035-nb-20260517` v4. It waits while v581 is pending, exits if v581 improves above `0.949`, and only submits if v581 ties/drops/no-scores.
+- Started v582 monitor as OpenClaw session `lucky-zephyr`, pid `35622`; first poll confirms it is sleeping on pending v581.
+- Independent preflight: source pull OK v4/source length `201355`; required source markers present (`submission_youssef.csv`, `submission_gate.csv`, rank blend `0.65 * yr + 0.35 * gr`, hidden/test markers); kernel COMPLETE/no failure; required output files present. Public output schema is dry-run/sample-sized (3 rows, 235 cols), `row_id` unique, finite values in `[0,1]`.
+
+### v581 hidden timeout; v582 submitted; v583 scan — 2026-05-19 03:50 UTC
+
+- Live Kaggle: v581 completed with no public score. Error description: hidden submission notebook exceeded allowed runtime. Public source-run output schema was valid (`3 x 235`, unique `row_id`, finite), so root cause is runtime timeout, not format.
+- v582 gated monitor `lucky-zephyr` observed v581 no-score, re-preflighted Amulopapa Youssef+gate v4 successfully, and submitted `v582: Guarded direct Amulopapa Youssef gate rb035 frontier replay`, ref `52796003`, pending. 2026-05-19 UTC visible count now `3`.
+- Next scan while v582 pending: Karnak optimized-dual v3 is a possible but lower-confidence v583 fallback (COMPLETE, valid sample-sized output, known Perch/SED/taxon/gate-ish lineage). Alexy Perch+CNN is direct-unsafe because `submission.csv` has 192 `BC2026_Train_*` rows; do not direct-submit.
+
+### v582 pending; v583 source scan held — 2026-05-19 04:45 UTC
+
+- Live Kaggle: v582 remains pending; current best stays `0.949`; 2026-05-19 visible count remains `3`. No active submitter processes are alive.
+- Ran Kaggle `list_kernels` searches across recent/date-run BirdCLEF kernels and score claims `0.951`–`0.955`; no explicit >0.949 public claim surfaced.
+- Deep-scanned May 19 candidates. Beicicc `bc26-v65-karnak-safe-may19` and `bc26-karnak-gated-safe-may19` are COMPLETE with valid sample-shaped outputs, but they are EoS5-family Model2/Model5 blends (`0.03/0.97`, `0.0321/0.9679`) with Model5 `0.949`, so low expected upside. Beicicc ungated, Anthony ensemble are direct-unsafe (train-row outputs). Mtoshi V6 is ERROR/no outputs. Mtoshi S106 is EoS5/SafeAlign-like. CocoaAI Mtoshi Visual BirdNET is valid and idea-mining-worthy, but lacks strong score evidence. Rabeya V4 was RUNNING/no outputs.
+- Decision: do not queue v583 while v582 is pending; preserve remaining slots. If v582 fails, recheck Rabeya and broader source search before falling back to Beicicc safe/gated EoS5-family variants.
+
+### v582 scored 0.947; v583 S118 submitted — 2026-05-19 05:50 UTC
+
+- Live Kaggle: v582 scored `0.947`, below current best `0.949`; current best remains v574/v575/v576. Youssef+gate rank blend is not a confirmation lane.
+- Broadened recent source scan. Rabeya V4 is now inaccessible (`403`). Beicicc safe/gated are valid but EoS5-family low-upside. Zhaorong/Mtoshi Visual BirdNET and CocoaAI Youssef D2/E1 are valid idea-mining candidates but lack strong score evidence. JGuevara TTA outputs a zero fallback; skip.
+- Selected distinct Itshyao S118 gated G116 delta launcher as v583 because it includes `submission_g116_hgnet_b1_all5_s118.csv` and is more structurally different than Beicicc EoS5-weight variants. Caveat: visible source is a launcher around attached `s118_source.ipynb`, so direct replay is not immediately repo-portable.
+- Added `scripts/submit_v583_s118_gated_g116_delta.py`; preflight passed (source v2, COMPLETE/no failure, required outputs present, prior schema valid). Submitted `v583: Guarded direct S118 gated G116 delta launcher replay`, ref `52799220`, pending. 2026-05-19 visible count now `4`; preserve final slot.
+
+### v583 no-scored; v584 final slot submitted — 2026-05-19 06:50 UTC
+
+- Live Kaggle: v583 completed with no score due hidden unhandled error. Classify S118 as launcher/attached-source hidden failure; avoid S118/S120-style launchers unless source is recovered/ported.
+- Final-slot scan found full-source valid candidates: CocoaAI Youssef D2 sonomirror, CocoaAI Youssef E1 rare-tail, Kotata Youssef C2/A1 variants, and Zhaorong Mtoshi Visual BirdNET. Mtoshi Visual CPU source itself is ERROR/no outputs.
+- Selected `zhaorongdai/bc26-cocoa-mtoshi-visual-birdnet` v1 for v584 as the most distinct remaining full-source, schema-safe candidate: Visual/BirdNET/Mtoshi lineage with TTA Proto, `0.949-style` prior, per-class ensemble weights, and BirdNET branch. Added `scripts/submit_v584_zhaorong_visual_birdnet.py`; preflight passed; submitted `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, pending. 2026-05-19 UTC visible count is now `5`; day capped.
+
+### v584 pending; capped next-reset scan — 2026-05-19 07:45 UTC
+
+- Live Kaggle: v584 remains pending; current best remains `0.949`; 2026-05-19 UTC visible count is `5`/capped. No active v577/v578/v58x submitters.
+- Fresh Kaggle DATE_RUN scan saved `date_run_all_20260519T0740Z.json`; web search found no external explicit `0.950+`/`0.951+` claims.
+- Deep-scanned next-reset candidates (`deep_scan4_nextreset_20260519T0740Z.json`). Best distinct fallback if v584 fails is `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1: COMPLETE/no failure, valid sample output, full source, 5-stream rank ensemble with ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET. Caveat: output is compressed and prior small CLAP/Snowflake sidecars did not improve.
+- Backup: `meenalsinha/birdclef-2026-improved` v20 is valid but overlaps the Visual/BirdNET family already being tested by v584. Kojimar `[0.949 LB]` and Beicicc Cocoa Karnak are valid but low-upside EoS/Karnak-family. Rabeya 0.947, aiaiaiooo, WildSound V8, Mtoshi Visual CPU are ERROR/no output. No monitor started while capped.
+
+### v584 scored 0.942; v585 next-reset monitor queued — 2026-05-19 08:50 UTC
+
+- Live Kaggle: v584 scored `0.942`, below current best `0.949`. Visual/BirdNET/Mtoshi direct replay is idea-mining only, not confirmation.
+- Added `scripts/submit_v585_franksunp_5branch_tta_fix_when_slot.py` for `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1. Preflight passed: source v1 length `103548`, COMPLETE/no failure, required outputs present. It remains the best distinct next-reset candidate: 5-stream rank ensemble (ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET), but with caveat that previous CLAP/Snowflake sidecars did not improve.
+- Started monitor `quiet-basil` pid `18696`; it attempted submission, hit daily cap (`15 hours from now`), and is sleeping `54120s` before retry. 2026-05-19 UTC count remains `5`/capped.
+
+### v585 monitor restarted — 2026-05-19 09:45 UTC
+
+- Live Kaggle unchanged: v584 `0.942`, best `0.949`, 2026-05-19 count `5`/capped. The earlier `quiet-basil` v585 monitor was no longer visible/alive and no `submit_v585` process was running.
+- Restarted v585 monitor as OpenClaw session `mild-harbor` pid `38214`; preflight re-passed and submit attempt hit expected daily cap (`14 hours from now`), then slept `50520s` before retry. No other submitters active.
+
+### v585 moved to durable tmux monitor — 2026-05-19 11:45 UTC
+
+- Live Kaggle unchanged: v584 `0.942`, best `0.949`, 2026-05-19 count `5`/capped. No v585 submission visible.
+- Prior managed/nohup v585 monitors were not durable across turns (`mild-harbor` not found; PID-file process absent). Switched to detached tmux session `birdclef-v585-reset`.
+- tmux monitor re-preflighted v585 successfully, attempted submit, hit expected daily cap (`12 hours from now`), and is sleeping `43320s` before retry. Inspect with `tmux capture-pane -t birdclef-v585-reset -p | tail -80`.
+- Fresh DATE_RUN scan saved `date_run_all_20260519T1040Z.json`; no explicit 0.950+ source found, and no candidate clearly outranks FrankSunP v585 before reset.
+
+### Capped 0.96 frontier source audit — 2026-05-19 12:52 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 is merged; active PR #246 is open/mergeable/blocked. No v577/v578 scalar submitter is active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP source/output preflight; no duplicate submitter started.
+- Saved DATE_RUN scan `date_run_all_20260519T1240Z.json` and source/output audit `source_audit_20260519T1245Z/summary.json`.
+- Audited candidates: Pilkwang 949 Rank-Power Soundscape Fusion (COMPLETE/schema-safe, explicit `YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, lambda prior `0.5`, rank power `0.6`, but 0.949-family); Aditya Exp019 (COMPLETE/schema-safe, scalar explanation only); Yaroslav v6_0949 (RUNNING/no outputs, lambda prior `0.65` microblend); Shinak 260519 (COMPLETE/schema-safe, interesting joint/circular site-hour prior + TTA but no score claim); Mtoshi notebook (COMPLETE but internet-enabled/same family); HuyDo training/no output; Solokop baseline/low-upside.
+- Decision: keep only v585 active for reset. If v585 fails/drops, prefer repo-owned extraction from Pilkwang residual-diversity packaging or Shinak joint/circular prior over another broad 0.949 replay.
+
+### Fresh capped top-feed source audit — 2026-05-19 13:55 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 is merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Saved scan `date_run_all_20260519T1345Z.json` and audit `source_audit_20260519T1345Z/summary.json`. Web search found no explicit 0.950/0.951/0.96 source claim.
+- Audited new candidates: Rajnish RankPower Safe Candidate is a schema-safe Pilkwang 949 clone; Claude R0946 A2Prime/NFNet is RUNNING/no outputs and low priority given v581 timeout; Yaroslav v6_0949 is COMPLETE but invalid `submission.csv` (243 rows/train rows/empty numeric cells); Adkasd Exp019 Fast is schema-safe but duplicate scalar 0.949-family path; Chaney v67 has useful intermediates but primary `submission.csv` is constant `0.66666675`, so reject direct replay.
+- Decision: keep v585 as sole reset submitter and continue mining for genuinely new source/structure; no extra slots queued.
+
+### A2Prime/EffV2S vs NFNet fallback triage — 2026-05-19 14:58 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Saved scan `date_run_all_20260519T1445Z.json` and audit `source_audit_20260519T1445Z/summary.json`. Web search again found no explicit 0.950/0.951/0.96 source claim.
+- Claude A2Prime/NFNet v6 completed and is schema-safe, but NFNet sanity top-5 hit rate is `0.30` and Proto/NFNet rank correlation is `0.169`; still timeout-risk because v581 no-scored on similar lineage.
+- Claude A2Prime/EffV2S v5 is schema-safe and has stronger diversity evidence: sanity top-5 hit rate `0.55`, Proto/EffV2S rank correlation `0.053`. If v585 fails and no 0.950+ source appears, this is the best concrete repo-owned extraction target from the A2Prime family.
+- Rajnish RankPower+NFNet selective is schema-safe on primary sample `submission.csv`, but selective intermediate output has train rows / 36 rows on public run; idea-mining only unless row-selection is fixed in a repo-owned port. Aiaiaiooo is RUNNING/no outputs.
+- Decision: keep v585 as sole reset submitter; prepare EffV2S extraction next if cap persists and no stronger source appears.
+
+### Repo-owned EffV2S fallback scaffold prepared — 2026-05-19 15:58 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 merged; PR #246 open/mergeable/blocked. No v577/v578 scalar submitter active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP preflight; no duplicate submitter started.
+- Prepared repo-owned fallback scaffold `kaggle-kernels/v586-a2prime-effv2s-extraction/` from `claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit` v5, with private kernel metadata `yourslewis/bc26-v586-a2prime-effv2s-extraction`, internet disabled, and matching dataset/kernel/model sources.
+- Added push helper `scripts/push_v586_a2prime_effv2s_extraction.py`; it only pushes the private kernel and does not submit. Do not run while v585 owns the reset slot.
+- Validation passed: notebook JSON parses (39 cells); metadata includes `baiyuby/birdclef2026-distill-models` and model sources; push helper and v585 submitter compile; `git diff --check` and hygiene pass.
+- Decision: keep v585 as sole reset submitter. Use v586 only if v585 drops/no-scores and no stronger 0.950+ source appears.
+
+### Capped 0.96 frontier re-scan + Yaroslav/visual audit — 2026-05-19 16:50 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible submission count remains `5`/capped. No v577/v578 scalar submitter is active.
+- Verified durable tmux monitor `birdclef-v585-reset` remains alive and sleeping on the daily cap after successful FrankSunP v585 source/output preflight; no duplicate submitter was started.
+- Saved fresh DATE_RUN scan `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1648Z.json` and source/output audit `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1649Z/summary.json`.
+- `yaroslavkholmirzayev/v6-0949-replay` reran at 16:37 UTC but is still unsafe for direct replay: primary `submission.csv` has 243 rows, includes 240 train rows, and has empty numeric cells (`finite_bad=56862`). Its sample-shaped `subm_5.csv`/`subm_karnakbayev_power_optimization.csv` are EoS5/Karnakbayev-family outputs, not a new 0.96 structure.
+- `meenalsinha/birdclef-2026-improved` reran at 16:32 UTC but primary `submission.csv` is train-row dry-run output (240 train rows), matching the prior hidden failure class; do not direct-submit.
+- `samejimatink0/birdclef-2026-visual-cpu-inference` is COMPLETE with finite outputs, but primary `submission.csv` is train-row dry-run output and the source/output markers are essentially ProtoSSM/SED/BirdNET rather than a confirmed new visual path; idea-mining only.
+- `aiaiaiooo/birdclef2026` has hidden-path markers in source but no session outputs; not slot-ready.
+- Decision: keep v585 as the sole active next-reset submitter. Keep v586 EffV2S as the prepared repo-owned fallback only if v585 drops/no-scores and no genuine `0.950+` source appears. No new Kaggle push/submission was made.
+
+### Capped source scan — Nina EoS.6 appears but is still running — 2026-05-19 17:49 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949`; 2026-05-19 UTC count remains `5`/capped.
+- PR #245 is merged; PR #246 remains open/blocked. No v577/v578 scalar submitter is active.
+- `birdclef-v585-reset` is still the only active submitter and is sleeping on daily cap after successful FrankSunP v585 source/output preflight.
+- Fresh scan saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1747Z.json`.
+- New high-signal candidate: `nina2025/birdclef-2026-eos-6-silver-zone` v9, found at the top of DATE_RUN. Pulled source through Bearer API and saved audit `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1747Z_eos6/summary.json` plus parsed cells file.
+- EoS.6 v9 source is a direct EoS successor with public/attachable sources only. Its active config blends `Model_21`/`Model_73`/`Model_74` with weights `0.032/0.967/0.001`; `Model_73` and `Model_74` are Yaroslav/Karnakbayev 0.949-family branches with xSED `[0.60,0.40]` and `[0.605,0.395]`. The markdown says v7 timed out and v9 is intended to run SED once, but the active code uses `task1='run SED once'` while the early Model_1 guard checks `task`, so this still needs actual output/status validation rather than blind trust.
+- EoS.6 v9 live status at audit time was `RUNNING` with no outputs yet; therefore it is not direct-submit-safe and not ready to displace v585. If it completes before reset with valid sample-shaped `submission.csv` and no failure, it becomes a strong candidate to consider ahead of v585; if it times out/no-outputs, keep v585.
+- Also checked `damianleandrotamburi/20260329-birdclef` v70; it has no outputs and no 0.949/0.95/0.96/source-family evidence, so it is not slot-ready.
+- Web searches for explicit `0.950`/`0.951`/`0.96` BirdCLEF code claims returned no results.
+- Decision: do not submit or push anything while capped. Preserve v585 monitor for the reset slot, but put EoS.6 v9 at the top of the recheck queue for the next cron before reset.
+
+### Public946 sidecar lesson reminder
+
+- Keep using train-soundscape/local gates only as rejection filters, not approval filters: v560 and v573 had positive local signals but dropped publicly. This is why EoS.6 needs real public-kernel completion/output schema and, ideally, direct LB evidence before it replaces the existing queue.
+
+### Heartbeat EoS.6 availability recheck — 2026-05-19 17:52 UTC
+
+- Heartbeat rechecked live submissions: state unchanged (`0.949` best; v580 `0.944`, v581 timeout, v582 `0.947`, v583 hidden error, v584 `0.942`; 2026-05-19 UTC capped at 5).
+- Rechecked `nina2025/birdclef-2026-eos-6-silver-zone`: session status API still reports `RUNNING`, but output list is empty and both `/api/v1/kernels/pull/nina2025/birdclef-2026-eos-6-silver-zone` and SDK `GetKernel` now return `404 Not Found`; fresh list search no longer finds it. Treat this as unavailable/not direct-submit-safe until it reappears with pullable source and outputs.
+- Briefly prepared an EoS.6 takeover watcher, but discarded it after the fresh `pull/get` 404 made automated takeover unsafe. v585 FrankSunP remains the only active reset-slot monitor.
+- No new submission, no push, no PR/merge action.
+
+### Cron recheck — EoS.6 invalid primary, NFNet lprior075 triage — 2026-05-19 18:50 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`; current confirmed best remains `0.949` from v574/v575/v576; 2026-05-19 UTC count remains `5`/capped.
+- PR #245 is merged; PR #246 remains open/blocked. No v577/v578 scalar submitter is active.
+- `birdclef-v585-reset` remains the only active submitter. FrankSunP v585 preflight is still valid: public kernel COMPLETE/no failure and required outputs include `submission.csv`, ProtoSSM/SED/BirdNET branch CSVs, CLAP/Snowflake arrays, and site-hour prior/cache files. It is sleeping on the daily cap and has not submitted yet.
+- Rechecked Nina EoS.6 under its current visible slug `nina2025/birdclef-2026-eos-6-sz`. It is now COMPLETE/no failure and pullable as version 9, but primary `submission.csv` is invalid: `243` rows, `240` train rows, and `56862` empty/non-finite numeric cells. Sample-shaped side outputs `subm_73.csv`/`subm_74.csv` are valid, but the competition submission target is the invalid primary file. Reject direct replay and do not displace v585.
+- Saved EoS.6 output schema audit: `artifacts/public_kernels_20260519_frontier_candidates/eos6_outputs_20260519T1847Z/summary.json`.
+- Fresh DATE_RUN scan saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1847Z.json`.
+- Audited new top candidate `nicolasschuldt/nfnet-lprior075` v1; saved `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1847Z_new/summary.json`. It is COMPLETE/no failure, pullable, and primary `submission.csv` is sample-shaped/finite. However, source is still EoS5/RankPower-family with `RUN_MODE="eos5_locked"`, `YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, `lambda_prior=0.75`, plus small NFNet selective graft (`NFNET_BLEND_W=0.035`, `NFNET_SPIKE_W=0.080`). The selective NFNet intermediate output is train-row-only on public sample. Treat as idea-mining/fallback, not high-upside enough to replace v585 or the prepared repo-owned v586 EffV2S fallback.
+- Public946 sidecar lesson remains active: train-soundscape/local gates are rejection filters only. v560/v573 had positive local gates but dropped publicly, so no source gets a slot unless primary output is hidden/test safe and the hypothesis is distinct enough.
+- Decision: keep v585 as reset-slot owner; do not launch duplicate submitters. If v585 drops/no-scores, prefer prepared repo-owned v586 EffV2S extraction before spending a direct slot on another RankPower/NFNet scalar-family clone.
