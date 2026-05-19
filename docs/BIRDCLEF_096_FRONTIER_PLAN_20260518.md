@@ -434,3 +434,51 @@ Preflight/action:
 - Required outputs present: `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, `cache/perch_arrays.npz`, `cache/perch_meta.parquet`.
 - Prior schema scan: valid sample-shaped output (`3 x 235`, unique row IDs, finite values in `[0.475, 0.556]`).
 - Submitted `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, initial status pending.
+
+## 2026-05-19 07:45 UTC execution update — v584 pending, day capped, next-reset queue ranked
+
+Live state:
+
+- `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, remains pending.
+- Current best remains `0.949` from v574/v575/v576.
+- 2026-05-19 UTC visible count remains `5`; day is capped.
+- No stale v577/v578/v58x submitter process is alive.
+- PR #246 is open, mergeable, and blocked; working tree was clean before this log update.
+
+Fresh source search while capped:
+
+- Re-ran Kaggle DATE_RUN list over recent BirdCLEF kernels and saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T0740Z.json`.
+- Web search found no external explicit `0.950+` / `0.951+` claims.
+- Deep-scanned promising next-reset candidates and saved `artifacts/public_kernels_20260519_frontier_candidates/deep_scan4_nextreset_20260519T0740Z.json`.
+
+Next-reset candidate ranking if v584 does not improve:
+
+1. `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1 — **best distinct next-reset candidate so far**
+   - COMPLETE/no failure; full visible source; output schema valid (`3 x 235`, unique row IDs, finite values).
+   - Structurally distinct 5-stream rank-percentile ensemble: ProtoSSM, Tucker SED, Snowflake SED, CLAP, plus BirdNET branch / graceful degradation.
+   - Sources include public CLAP INT8 and Snowflake SED bundles plus common Perch/SED sources.
+   - Caveat: prior tiny CLAP/Snowflake-ish sidecars did not improve, and sample output distribution is compressed (`~0.27-0.40`), so submit only if v584 fails and no stronger 0.950+ source appears before reset.
+2. `meenalsinha/birdclef-2026-improved` v20 — valid but likely close to v584/Visual-BirdNET family
+   - COMPLETE/no failure; valid sample output.
+   - Has TTA Proto including temporal flip, residual SSM, MLP probe improvements.
+   - Similar visual/BirdNET/0.949-style lineage; hold until v584 score because v584 already covers much of this family.
+3. `kojimar/0-949-lb-birdclef-2026-prior-axis-rank-fusion` v1 — valid but low-upside
+   - COMPLETE/no failure; valid sample output.
+   - Explicit `[0.949 LB]` title but source shows a clean Karnakbayev PowerOptimization LB0.948 direct branch, not an obvious 0.960 structural jump.
+4. `beicicc/bc26-cocoa-karnak-safe-may19` v1 — valid but EoS5-family low-upside
+   - COMPLETE/no failure; valid sample output.
+   - Model2/Model5 EoS-family blend; likely already covered by v574-v576.
+
+Rejected / not next-reset direct candidates:
+
+- `rabeya100x/birdclef-2026-0-947-lb`: status ERROR/no outputs.
+- `aiaiaiooo/birdclef2026`: status ERROR/no `submission.csv`; training artifacts only.
+- `muhammadsaadalvi/birdclef-2026-wildsound-v8`: status ERROR/no outputs.
+- `mtoshidesu/birdclef-2026-visual-cpu-inference`: still ERROR/no outputs despite latest run.
+- S118/S120 launchers: avoid due v583 hidden unhandled error unless attached source can be recovered/ported.
+
+Decision:
+
+- No new submission can be made while capped, and no monitor was started.
+- If v584 scores above `0.949`, next work is repo-owned Visual/BirdNET confirmation/extraction.
+- If v584 ties/drops/no-scores and no stronger source appears before next reset, first next-reset preflight should be FrankSunP 5-branch V4 TTA Fix; Meenal v20 is the backup if FrankSunP is disqualified or appears too risky.

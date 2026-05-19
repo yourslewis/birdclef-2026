@@ -2943,3 +2943,10 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Live Kaggle: v583 completed with no score due hidden unhandled error. Classify S118 as launcher/attached-source hidden failure; avoid S118/S120-style launchers unless source is recovered/ported.
 - Final-slot scan found full-source valid candidates: CocoaAI Youssef D2 sonomirror, CocoaAI Youssef E1 rare-tail, Kotata Youssef C2/A1 variants, and Zhaorong Mtoshi Visual BirdNET. Mtoshi Visual CPU source itself is ERROR/no outputs.
 - Selected `zhaorongdai/bc26-cocoa-mtoshi-visual-birdnet` v1 for v584 as the most distinct remaining full-source, schema-safe candidate: Visual/BirdNET/Mtoshi lineage with TTA Proto, `0.949-style` prior, per-class ensemble weights, and BirdNET branch. Added `scripts/submit_v584_zhaorong_visual_birdnet.py`; preflight passed; submitted `v584: Guarded direct Zhaorong Mtoshi Visual BirdNET replay`, ref `52800792`, pending. 2026-05-19 UTC visible count is now `5`; day capped.
+
+### v584 pending; capped next-reset scan — 2026-05-19 07:45 UTC
+
+- Live Kaggle: v584 remains pending; current best remains `0.949`; 2026-05-19 UTC visible count is `5`/capped. No active v577/v578/v58x submitters.
+- Fresh Kaggle DATE_RUN scan saved `date_run_all_20260519T0740Z.json`; web search found no external explicit `0.950+`/`0.951+` claims.
+- Deep-scanned next-reset candidates (`deep_scan4_nextreset_20260519T0740Z.json`). Best distinct fallback if v584 fails is `franksunp/birdclef-2026-5-branch-v4-tta-fix` v1: COMPLETE/no failure, valid sample output, full source, 5-stream rank ensemble with ProtoSSM/Tucker SED/Snowflake/CLAP/BirdNET. Caveat: output is compressed and prior small CLAP/Snowflake sidecars did not improve.
+- Backup: `meenalsinha/birdclef-2026-improved` v20 is valid but overlaps the Visual/BirdNET family already being tested by v584. Kojimar `[0.949 LB]` and Beicicc Cocoa Karnak are valid but low-upside EoS/Karnak-family. Rabeya 0.947, aiaiaiooo, WildSound V8, Mtoshi Visual CPU are ERROR/no output. No monitor started while capped.
