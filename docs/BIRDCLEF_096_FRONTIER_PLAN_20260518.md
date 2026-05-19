@@ -561,3 +561,36 @@ Decision:
 
 - Keep only `birdclef-v585-reset` active for reset submission.
 - Continue source mining while capped, but do not launch additional submitters unless a clearly stronger full-source 0.950+ candidate appears.
+
+## 2026-05-19 12:52 UTC capped source audit — no duplicate submitter
+
+Live state:
+
+- Latest submissions unchanged: v580 `0.944`, v581 hidden timeout/no score, v582 `0.947`, v583 hidden unhandled error/no score, v584 `0.942`.
+- Current confirmed best remains `0.949` from v574/v575/v576; target remains `0.960`.
+- 2026-05-19 UTC visible count is `5`; slots capped.
+- PR #245 is merged; active frontier PR is #246 (`MERGEABLE`, `BLOCKED`, open).
+- No v577/v578 scalar submitter is active.
+- Active v585 reset monitor remains detached tmux session `birdclef-v585-reset`, process alive, sleeping on daily cap after successful FrankSunP source/output preflight.
+
+Fresh scan/audit artifacts:
+
+- DATE_RUN scan saved: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T1240Z.json` (100 recent kernels).
+- Source/output audit saved locally: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1245Z/summary.json`.
+- Downloaded and schema-checked sample `submission.csv` outputs for Pilkwang 949, Aditya Exp019, and Shinak 260519; all are sample-shaped `3 x 235`, finite, unique row IDs.
+
+Candidate findings:
+
+- `pilkwang/949-birdclef-2026-rank-power-soundscape-fusion` v5: full source, COMPLETE/no failure, schema-safe output. It explicitly packages an `eos5_locked` blend: small yukiZ residual (`YUKIZ_BLEND_WEIGHT=0.0264`) + dominant rank-power branch (`PROTO_RANK_WEIGHT=0.600`, prior lambda `0.5`, rank-aware power `0.6`). Good explanation/source-extraction reference, but it claims/ties `0.949` and is close to the EoS5/PowerOptimization family, so it does not outrank v585 for the next slot.
+- `adityaraghuvanshi999/birdclef-2026-exp019-rank-power-safe-validation` v1: full source, COMPLETE, schema-safe. It is mostly a transparent scalar explanation of Exp019 (`lambda_prior=0.5`, rank-aware power `0.6`) and explicitly says future work needs less-correlated branches. Treat as documentation/evidence, not a new slot.
+- `yaroslavkholmirzayev/v6-0949-replay` v8: full source but currently RUNNING/no outputs. It is a `lambda_prior=0.65` microblend against an existing `0.949` axis, so monitor later but do not queue ahead of v585.
+- `shinak0502/birdclef-260519` v2: full source, COMPLETE, schema-safe, no score claim; interesting upgraded joint site-hour/circular-hour prior plus TTA path, but it lacks FrankSunP's CLAP/Snowflake/BirdNET extra branches and has weaker score evidence.
+- `mtoshidesu/notebookc6e90ae327` v1: full source and COMPLETE, but internet-enabled and same PowerOptimization-family sources; use for idea mining only unless repackaged and verified offline.
+- `huydo170302/dsai1-internship-birdclef-2026`: training/no output, not submission-safe.
+- `solokop/birdclef-2026-perch-onnx`: valid but baseline/low-upside.
+
+Decision:
+
+- Keep only v585 active for reset; do not start duplicate submitters while `birdclef-v585-reset` exists.
+- If v585 drops/no-scores, next useful work is not another broad 0.949 replay; extract either (a) Pilkwang's residual-diversity packaging as a repo-owned confirmation/reference, or (b) Shinak's joint/circular site-hour prior as a small reviewable repo-owned patch after correlation/schema checks.
+- Continue source monitoring for a true `0.950+` or structurally new full-source lane before spending another public slot.

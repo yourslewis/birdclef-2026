@@ -2968,3 +2968,11 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Prior managed/nohup v585 monitors were not durable across turns (`mild-harbor` not found; PID-file process absent). Switched to detached tmux session `birdclef-v585-reset`.
 - tmux monitor re-preflighted v585 successfully, attempted submit, hit expected daily cap (`12 hours from now`), and is sleeping `43320s` before retry. Inspect with `tmux capture-pane -t birdclef-v585-reset -p | tail -80`.
 - Fresh DATE_RUN scan saved `date_run_all_20260519T1040Z.json`; no explicit 0.950+ source found, and no candidate clearly outranks FrankSunP v585 before reset.
+
+### Capped 0.96 frontier source audit — 2026-05-19 12:52 UTC
+
+- Live Kaggle unchanged: v580 `0.944`, v581 timeout/no score, v582 `0.947`, v583 hidden error/no score, v584 `0.942`; best remains `0.949`; 2026-05-19 count `5`/capped. PR #245 is merged; active PR #246 is open/mergeable/blocked. No v577/v578 scalar submitter is active.
+- Verified `birdclef-v585-reset` tmux monitor remains alive and sleeping on cap after successful FrankSunP source/output preflight; no duplicate submitter started.
+- Saved DATE_RUN scan `date_run_all_20260519T1240Z.json` and source/output audit `source_audit_20260519T1245Z/summary.json`.
+- Audited candidates: Pilkwang 949 Rank-Power Soundscape Fusion (COMPLETE/schema-safe, explicit `YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, lambda prior `0.5`, rank power `0.6`, but 0.949-family); Aditya Exp019 (COMPLETE/schema-safe, scalar explanation only); Yaroslav v6_0949 (RUNNING/no outputs, lambda prior `0.65` microblend); Shinak 260519 (COMPLETE/schema-safe, interesting joint/circular site-hour prior + TTA but no score claim); Mtoshi notebook (COMPLETE but internet-enabled/same family); HuyDo training/no output; Solokop baseline/low-upside.
+- Decision: keep only v585 active for reset. If v585 fails/drops, prefer repo-owned extraction from Pilkwang residual-diversity packaging or Shinak joint/circular prior over another broad 0.949 replay.
