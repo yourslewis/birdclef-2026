@@ -3287,3 +3287,14 @@ Decision:
   - Qiuzi `hgnetv2-b0-training-distill` v15 was RUNNING with no outputs at audit time. Continue to wait for complete artifacts before considering HGNet distill.
   - `evgendvorkin/birdclef-baseline` v34 COMPLETE but primary output is `240x235` train/fallback-shaped with many zeros; reject.
 - **Decision:** no queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first prepared next-reset backup diagnostic. Continue scanning for true new non-saturated 0.95/0.96 source; do not submit Meenal/Samejima/Visual/BirdNET/debug baseline outputs.
+
+## 2026-05-20 12:48 UTC — v591 Qiuzi HGNet distill sidecar validation
+
+- **Track:** 0.96 frontier source scan + repo-owned high-upside extraction while daily submissions are capped.
+- **Live status:** latest 2026-05-20 submissions are capped at `5/5`: v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`. Current best remains `0.949`. No stale v577/v578/v590 submitter is active.
+- **Source scan artifacts:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1248Z.json`; `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1248Z_top/summary.json`.
+- **Key finding:** `qiuzilang/hgnetv2-b0-training-distill` completed all four HGNetV2-B0 folds and exposes `best_model_fold0.pt` ... `best_model_fold3.pt`, validation prediction arrays, and `result_df_fold*.csv`. Downloaded fold result CSVs to `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1248Z_top/qiuzilang_distill_outputs/`.
+- **Validation evidence:** fold best val scores are `0.9651087`, `0.9701546`, `0.9669707`, `0.9729050`; final kernel log reports `auc for raw pred : 0.9583789191588714` and `auc for rank pred: 0.9672700848733766`. This is stronger evidence than the previous cancelled/partial HGNet lead and structurally distinct from EoS/RankPower/S114 sidecars.
+- **Implementation:** added `kaggle-kernels/v591-public946-hgnet-distill-w0025/` and `scripts/push_v591_public946_hgnet_distill.py`. The kernel forks v542 public946, attaches Qiuzi's training output as a kernel source, runs guarded 4-fold HGNetV2-B0 inference, writes `submission_hgnet.csv`, and blends HGNet at `0.025` rank weight with the existing Proto/SED anchor.
+- **Kaggle push:** private kernel `yourslewis/bc26-v591-public946-hgnet-distill-w0025`, version 1, pushed successfully with no invalid sources. Status is RUNNING at log time; no leaderboard submission was attempted because slots are capped.
+- **Next gate:** monitor v591. If COMPLETE with finite `submission.csv` and `submission_hgnet.csv`, make it the next-reset candidate ahead of v590. If it fails due mount/dependency/runtime, diagnose and either patch v591 or fall back to v590 Zeyad/Rajnish.

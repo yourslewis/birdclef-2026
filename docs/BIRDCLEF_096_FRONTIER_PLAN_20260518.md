@@ -1059,3 +1059,17 @@ Queue remains unchanged:
 - Fresh artifacts: `scan_20260520T1148Z.json`, `source_audit_20260520T1148Z_top/summary.json`.
 - Fresh top-feed triage: Haridoss custom model is running/no submission artifact and no high-LB evidence; Meenal v23 and Samejima Visual v7 produce train/fallback-shaped `240x235` primary outputs; Jacques minimal is constant-probability baseline; Evgendvorkin baseline is `240x235` with many zeros; Qiuzi distill still running/no outputs.
 - Queue unchanged: true new 0.95/0.96 source if found; otherwise v590 Zeyad/Rajnish; then Henry NFNet v82/v81/v80; then Pilkwang v11 last-resort saturated fallback.
+
+## 2026-05-20 12:48 UTC update — Qiuzi HGNet distill promoted to v591 validation run
+
+- Slots still capped `5/5`; best remains `0.949`; no v577/v578/v590 submitter active; PR #249 open/BLOCKED at check time.
+- Fresh artifacts: `scan_20260520T1248Z.json`, `source_audit_20260520T1248Z_top/summary.json`, and downloaded Qiuzi result CSVs under `source_audit_20260520T1248Z_top/qiuzilang_distill_outputs/`.
+- Fresh top-feed triage:
+  - `haridoss31/birdclef-my-model` v42 is ERROR; markers suggest custom/Perch/BirdNET/distill code but no usable `submission.csv` output.
+  - `mtoshidesu/notebookc6e90ae327` v6 is ERROR; saturated Karnakbayev/PowerOptimization lineage, no usable direct output.
+  - `henryszy/bc2026-rankpower-nfnet-v83` is schema-safe and complete, but still 0.949 RankPower/NFNet-family; keep behind new-model lanes.
+  - `qiuzilang/hgnetv2-b0-training-distill` is now COMPLETE with all four fold weights and validation outputs. Best fold val scores: fold0 `0.9651087`, fold1 `0.9701546`, fold2 `0.9669707`, fold3 `0.9729050`; final logged OOF AUC: raw `0.9583789`, rank `0.9672701`.
+- Decision: promote Qiuzi HGNet from recipe-only to the first real non-saturated model-zoo lead. It is not direct-submit-safe by itself because it is training-only, but complete fold artifacts can be consumed as a kernel source.
+- Implementation: prepared `kaggle-kernels/v591-public946-hgnet-distill-w0025/` by forking the public946 v542 anchor, attaching `qiuzilang/hgnetv2-b0-training-distill`, adding a guarded 4-fold HGNetV2-B0 inference sidecar that writes `submission_hgnet.csv`, and blending it conservatively as a `2.5%` rank sidecar (`Proto=0.585`, `SED=0.390`, `HGNet=0.025`).
+- Pushed private Kaggle validation kernel `yourslewis/bc26-v591-public946-hgnet-distill-w0025` version 1 via Bearer API. Push returned no invalid competition/data/kernel/model sources. Kernel is RUNNING at log time; no submission attempted while capped.
+- Queue update: if v591 completes with valid `submission.csv`/`submission_hgnet.csv`, it should displace v590 as the next-reset structural diagnostic. If v591 fails (mount/timm/runtime), preserve v590 Zeyad/Rajnish as backup and fix v591 only if the failure is straightforward.
