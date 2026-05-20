@@ -3212,3 +3212,9 @@ Decision:
   - Kijiang v340/v341, Yash/Pilkwang prior-field, Nina EoS6, and related forks are saturated EoS/Karnak/PowerOptimization/PriorField variants, not worth displacing new structural work.
   - Samejima Visual CPU is still the weak Visual/BirdNET family; prior direct visual submissions dropped below the plateau.
 - **Decision:** no more submissions today. If v589 ties/drops, pivot next reset away from S114+G-sidecar siblings and toward a repo-owned HGNet training/inference sidecar investigation using Qiuzi artifacts or other non-saturated model-zoo diversity sources.
+
+### v589 result — 2026-05-20 05:50 UTC
+
+- v589 (`52838266`, Itshyao S124 S114+G124 F1 rankblend) scored `0.949`, tying the plateau but not improving. Current best remains `0.949`.
+- Final 2026-05-20 result set: v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`.
+- Decision confirmed: stop spending slots on S114+G-sidecar siblings (G116/G123/G124 delta/rankblend) unless a future variant has independent evidence above `0.949`; pivot next reset to new non-saturated sources/training lanes, with Qiuzi HGNet training artifacts as the most interesting fresh lead.

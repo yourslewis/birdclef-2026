@@ -1004,3 +1004,8 @@ Queue remains unchanged:
 - Fresh scan/audit: `scan_20260520T0547Z.json`, `source_audit_20260520T0547Z_top/summary.json`.
 - Best next non-saturated lead: Qiuzi `hgnetv2-b0-training-e2c7fc`, which completed fold artifacts and logged rank-pred validation AUC `0.9586928494392578`. It is not direct-submit-safe because it is training-only, but it may support a repo-owned HGNet sidecar/inference candidate next reset.
 - Deprioritize further S114+G116/G123/G124 siblings unless v589 improves; v587/v588 tied and S123/S124-style variants are likely plateau-safe rather than lift-producing.
+
+### v589 result — 2026-05-20 05:50 UTC
+
+- v589 S124 G124 rankblend scored `0.949`, tie only. Daily 5/5 set is complete: `0.922`, `0.941`, `0.949`, `0.949`, `0.949`.
+- Stop S114+G-sidecar sibling submissions for now. Next reset should focus on new non-saturated training/source directions, especially Qiuzi HGNet artifacts or another independently validated model-zoo sidecar.
