@@ -991,3 +991,9 @@ Queue remains unchanged:
 - v587 Itshyao S121 S114+G116 protected delta remains pending, ref `52835586`.
 - v588 Itshyao S122 S114+G123 EfficientNetV2-B0 protected delta submitted, ref `52836864`.
 - 2026-05-20 slots used: `4/5`; reserve final slot pending scores or a genuinely stronger source. Fresh 03:47 scan did not surface a stronger non-saturated candidate besides the S122 sibling; EoS6/Kijiang/Pilkwang/Rikuter remain 0.949-family, Samejima remains Visual/BirdNET family.
+
+## 2026-05-20 04:50 UTC update — capped after v589 final-slot S124 rankblend
+
+- Results landed: v586 A2Prime/EffV2S w08 `0.941` (reject lane), v587 S121/G116 `0.949` tie, v588 S122/G123 `0.949` tie. Best remains `0.949`.
+- Final 2026-05-20 slot used on v589 Itshyao S124 S114+G124 rankblend, ref `52838266`, pending. This is the last S114+G-sidecar sibling worth trying today because it changes from delta to protected rank blending with a G124 EfficientNetV2-S 2025-pretrained pseudo sidecar.
+- Daily cap now `5/5`. If v589 ties/drops, deprioritize S114+G116/G123/G124 sidecar siblings and resume 0.96 source search / training-lane prep for next reset.
