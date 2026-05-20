@@ -1158,3 +1158,9 @@ Queue remains unchanged:
   - `kospintr/birdclef-efficientnet-perch-distill-mixup` v26: CANCEL_ACKNOWLEDGED/partial, no reliable submission output; not slot-ready.
   - `scenerysunfireink/birdclef-2026-perch-v2-full-v2` v1: invalid output shape (`119988x235`) and score range includes `-1000`; reject direct.
 - Decision: no candidate found above v592. Keep v592 as sole reset-slot owner. The two-pass SSM audit reinforces that schema-safe/public-looking outputs still need local rejection gates before slot ownership.
+
+## 2026-05-20 17:54 UTC verification
+
+- Rechecked status after the 17:48 two-pass audit: still capped `5/5`, best `0.949`, v592 reset submitter PID `13173` alive.
+- Additional lightweight queries for `0.95`, `0.96`, EoS6, SafeAlign, RankPower/NFNet, HGNet, and two-pass SSM did not reveal a candidate beyond the already-audited Scenery/Nina/S124/RankPower/Samejima families.
+- Keep v592 as the only reset-slot owner.

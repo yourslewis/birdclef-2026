@@ -3344,3 +3344,10 @@ Decision:
 - **Candidate audit:** Tulay EfficientNet weights ERROR/no outputs; Scenery EoS6 invalid primary; Deepanshu constant baseline; Karnak S124/G124 reverse-engineered no outputs; Kospintr EfficientNet+Perch Distill+MixUp cancelled/partial; Scenery Perch V2 Full invalid `119988x235` output with `-1000` values.
 - **Two-pass SSM gate:** `scenerysunfireink/birdclef-2026-two-pass-ssm` is schema-safe (`240x235`) and distinct-sounding, so ran local sidecar gate. Artifact: `artifacts/blend_grids/scenery_two_pass_sidecar_weight_grid_20260520T1748Z.json`. Standalone rank AUC `0.97745`, corr vs v542 anchor `0.8884`; every blend weight reduced macro AUC vs base `0.9925249` (0.025 `0.9924122`, 0.05 `0.9922645`, 0.10 `0.9917289`). Do not let it displace v592.
 - **Decision:** keep v592 as sole reset-slot owner; no new push/submission; no duplicate submitter.
+
+## 2026-05-20 17:54 UTC — post-audit verification, still capped
+
+- Rechecked Kaggle submissions: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; 2026-05-20 UTC remains capped at `5/5`.
+- Rechecked repo/PR/process state: branch clean before this log update; PR #249 open/BLOCKED; v592 reset submitter PID `13173` remains the only visible v59x submitter and is sleeping toward reset.
+- Ran an additional lightweight fresh source query across `0.95`, `0.96`, EoS6, SafeAlign, RankPower/NFNet, HGNet, and two-pass SSM terms. It returned the same already-audited Scenery two-pass/EoS6, Nina EoS6, S124/G124, RankPower/NFNet, Samejima/TY0912 HGNet, and saturated EoS/SafeAlign family; no new credible slot displacer.
+- Decision unchanged: preserve v592 as sole reset-slot owner; no new submission while capped.
