@@ -1009,3 +1009,12 @@ Queue remains unchanged:
 
 - v589 S124 G124 rankblend scored `0.949`, tie only. Daily 5/5 set is complete: `0.922`, `0.941`, `0.949`, `0.949`, `0.949`.
 - Stop S114+G-sidecar sibling submissions for now. Next reset should focus on new non-saturated training/source directions, especially Qiuzi HGNet artifacts or another independently validated model-zoo sidecar.
+
+## 2026-05-20 06:47 UTC update — HGNet downgraded to source recipe, no ready slot candidate
+
+- Slots remain capped `5/5`; v589 scored `0.949`. Confirmed current best `0.949`.
+- Fresh scan/audit paths: `scan_20260520T0647Z.json`, `source_audit_20260520T0647Z_top/summary.json`, `hgnet_lead_20260520T0647Z/`.
+- Qiuzi HGNet is promising as a **recipe** (fold0 best validation AUC `0.96378`, HGNetV2-B0, EMA, mixup, train-audio + train-soundscape labels), but not a ready submission because the session is `CANCEL_ACKNOWLEDGED` and only fold0 output URL is exposed.
+- Samejima HGNet inference is sample-invalid/all-NaN in dry-run and has unresolved weights-dataset availability. Patch/resolution required before any direct or repo-owned submission.
+- OmModi dual-resolution EffV2/temporal-transformer notebook rejected: epoch-1 checkpoint AUC `0.5124`, all-zero fallback output.
+- Next reset candidate queue: (1) continue source frontier scan for a genuinely new >0.949 public lineage; (2) resolve HGNet weights/data availability and build a sample-safe repo-owned inference only if complete artifacts are available; (3) only then consider a guarded HGNet/EoS blend as a structural diagnostic.
