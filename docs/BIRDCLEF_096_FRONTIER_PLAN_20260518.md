@@ -1027,3 +1027,11 @@ Queue remains unchanged:
 - Qiuzi `hgnetv2-b0-training-distill` is not a candidate: cancelled after epoch 0 with val_score `0.54157`, no submission artifact.
 - Henry `bc2026-rankpower-nfnet-v80` is schema-valid and hidden-path plausible, with a complete `submission.csv` and NFNet safety check. However, source self-identifies as EoS5/Sunderekkiz/Pilkwang rank-power 0.949-family (`YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`), so it is a backup/diagnostic next-reset candidate only.
 - Candidate queue: (1) continue fresh source scan for non-saturated 0.95/0.96 claims; (2) resolve HGNet complete artifact/inference path; (3) if no stronger lane exists near reset, consider Henry v80 guarded direct replay as one low-upside structural diagnostic rather than more S114+G siblings.
+
+## 2026-05-20 08:48 UTC update — v590 backup prepared, still capped
+
+- Slots remain capped `5/5`; best unchanged at `0.949`; PR #249 open/BLOCKED.
+- Fresh artifacts: `scan_20260520T0848Z.json`, `source_audit_20260520T0848Z_top/summary.json`.
+- Top-feed triage: aiaiaiooo all-zero fallback, Mtoshi notebook ERROR, Qiuzi distill COMPLETE/no outputs, Mtoshi S124 duplicate running, PriorField/EoS6/Kijiang safe writers saturated; Claude V6 replay invalid 243-row/all-NaN output.
+- Prepared next-reset backup script `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py` for Rajnish/Zeyad Proto Temporal Safe. Preflight-only passed (source v1, COMPLETE, required outputs, finite 3x235 sample-shaped `submission.csv`).
+- Candidate queue now: (1) continue source scan for true non-saturated 0.95/0.96 claim; (2) resolve HGNet complete artifacts/inference; (3) if no stronger lane appears by reset, v590 Zeyad Proto Temporal Safe is the best backup diagnostic; (4) Henry NFNet v80 is second backup; avoid more S114+G siblings.
