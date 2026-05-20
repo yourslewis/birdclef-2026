@@ -1035,3 +1035,11 @@ Queue remains unchanged:
 - Top-feed triage: aiaiaiooo all-zero fallback, Mtoshi notebook ERROR, Qiuzi distill COMPLETE/no outputs, Mtoshi S124 duplicate running, PriorField/EoS6/Kijiang safe writers saturated; Claude V6 replay invalid 243-row/all-NaN output.
 - Prepared next-reset backup script `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py` for Rajnish/Zeyad Proto Temporal Safe. Preflight-only passed (source v1, COMPLETE, required outputs, finite 3x235 sample-shaped `submission.csv`).
 - Candidate queue now: (1) continue source scan for true non-saturated 0.95/0.96 claim; (2) resolve HGNet complete artifacts/inference; (3) if no stronger lane appears by reset, v590 Zeyad Proto Temporal Safe is the best backup diagnostic; (4) Henry NFNet v80 is second backup; avoid more S114+G siblings.
+
+## 2026-05-20 09:48 UTC update — v590 still leads backup queue
+
+- Slots capped `5/5`; best unchanged `0.949`; PR #249 open/BLOCKED.
+- Fresh artifacts: `scan_20260520T0948Z.json`, `source_audit_20260520T0948Z_top/summary.json`.
+- New audit did not find a stronger 0.96 lane: Bugra HDMR has no outputs; Henry v81/v82 are valid but low-upside NFNet parameter siblings; Nina EoS6 v12 primary output invalid (243 rows/all NaN); Mtoshi S124 is a duplicate tied lane; Pilkwang PriorField remains saturated.
+- Original Zeyad v4 matches the prepared Rajnish safe-writer v590 branch set and validates the candidate lineage. Keep `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py` as first backup at reset only if no stronger source appears.
+- Backup order: v590 Zeyad/Rajnish Proto Temporal Safe; Henry v82/v81/v80 NFNet diagnostics; then no-submit/continue scanning rather than more S114+G or PriorField/EoS6 replays.
