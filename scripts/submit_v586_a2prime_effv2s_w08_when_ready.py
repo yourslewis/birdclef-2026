@@ -1,9 +1,7 @@
 """Cap-aware submitter for repo-owned v586 A2Prime/EffV2S w08 extraction.
 
 v585 FrankSunP scored 0.922, so this fallback is now the next distinct
-0.96-relevant hypothesis. The pushed Kaggle kernel emits multiple CSVs; this
-submitter intentionally submits the EffV2S blend artifact rather than the
-notebook's conservative base_3way submission.csv.
+0.96-relevant hypothesis. The pushed Kaggle kernel emits multiple CSVs; version 2 makes the EffV2S w08 blend the notebook's submission.csv because BirdCLEF only accepts that filename for code submissions.
 """
 from __future__ import annotations
 
@@ -31,8 +29,8 @@ from kagglesdk.kernels.types.kernels_api_service import (
 COMPETITION = "birdclef-2026"
 KERNEL_OWNER = "yourslewis"
 KERNEL_SLUG = "bc26-v586-a2prime-effv2s-extraction-r2"
-KERNEL_VERSION = 1
-FILE_NAME = "submission_a2_effv2s_w08.csv"
+KERNEL_VERSION = 2
+FILE_NAME = "submission.csv"
 DESCRIPTION = "v586: Repo-owned A2Prime EffV2S rank blend w08 after v585 drop"
 LOG_PATH = Path("logs/v586_a2prime_effv2s_w08_preflight.txt")
 

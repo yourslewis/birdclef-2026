@@ -978,3 +978,9 @@ Queue remains unchanged:
 - Active slot candidate is repo-owned `yourslewis/bc26-v586-a2prime-effv2s-extraction-r2` v1, specifically alternate output `submission_a2_effv2s_w08.csv` (not default `submission.csv`, which is `base_3way`).
 - Guarded monitor: `scripts/submit_v586_a2prime_effv2s_w08_when_ready.py`, log `logs/v586_a2prime_effv2s_w08_submitter.log`, PID `96513` at launch. It waits for COMPLETE and validates output/summary before submit.
 - Fresh source queue notes from `source_audit_20260520T0158Z_top/summary.json`: Samejima Visual CPU remains visual/BirdNET idea-mining; Pilkwang/Adarsh prior-field forks are `0.949` RankPower-family; Mtoshi V6 is ERROR. None outrank v586.
+
+## 2026-05-20 02:55 UTC update — v586 filename fix, v587 S121 pending
+
+- v586 r2 v1 completed but alternate-output submission failed because BirdCLEF requires `submission.csv`. Notebook patched so `a2_effv2s_w08` becomes `submission.csv`; r2 version 2 pushed and monitor PID `12539` is waiting for COMPLETE/output preflight.
+- v587 direct replay submitted: `itshyao/birdclef-2026-s121-s114-g116-f1-delta` v1, ref `52835586`, pending. Rationale: protected HGNet/G116 delta sidecar on S114 anchor is a more structural candidate than fresh RankPower/PriorField clones; public dry-run has row-id fallback and S121 final diagnostics.
+- Fresh 02:47 scan rejects/queues: Mtoshi v4 now COMPLETE but still Karnak/RankPower/visual family; Koushik Pantanal ERROR; Qiuzi HGNet training artifacts only; Rikuter v6/prior-field reproductions are 0.949 family. Continue scanning for true non-saturated structural sources.
