@@ -1183,3 +1183,12 @@ Queue remains unchanged:
 - Compared decoded current source against the previously audited/source-preflighted artifact from `source_audit_20260520T0547Z_top/itshyao__birdclef-2026-s124-s114-g124-f1-rankblend.source.txt`: exact decoded SHA match `c5aed8358ce6ba4b8772c1649bed9475151adff011d07617a8ba2b6f223a62f9` and same `6819` decoded lines. No source change despite v2 metadata.
 - Current session output COMPLETE/no failure with outputs including `submission.csv`, `submission_g124_effv2s_fold1_s124.csv`, Proto/SED/Karnak branch files, and `v17_logs.json`; primary `submission.csv` is sample/dry-run shaped `3x235`, finite, min/max `0.47687027/0.5553993`, no NaNs/zeros. Log says `S124 dry-run/mismatch: keeping S114 anchor submission.csv`.
 - Existing guarded direct replay v589 already submitted this source and scored `0.949` (`52838266`). Decision: do not let this displace v592; do not resubmit unless the author posts a genuinely changed version or independent >0.949 evidence appears.
+
+## 2026-05-20 19:08 UTC update — user reports Itshyao v2 is 0.952; reset slot moved to v593
+
+- User reported the Itshyao S124/S114/G124 rankblend post is `0.952`. This is independent >0.949 evidence and overrides the previous saturated-family rejection.
+- Key correction: our existing v589 submitter was hard-pinned to Kaggle kernel version `1` and scored `0.949`. Current metadata exposes version `2`. Source text appears decoded-identical, but version-specific Kaggle scoring/output can still differ; with a reported `0.952`, v2 deserves the next slot.
+- Prepared guarded submitter `scripts/submit_v593_itshyao_s124_g124_rankblend_v2_when_ready.py` for `itshyao/birdclef-2026-s124-s114-g124-f1-rankblend` version `2`, description `v593: Guarded direct Itshyao S124 S114 plus G124 F1 rankblend v2 0952 lead`.
+- Preflight-only passed while capped: visible UTC submissions today `5`; source pull version `2`, decoded length `309836`; kernel COMPLETE/no failure; required outputs present; primary `submission.csv` finite `3x235`, min/max `0.47687027/0.5553993`, no zeros/NaNs; required log marker present.
+- Killed old v592 reset submitter PID `13173` to preserve the reset slot. Started v593 reset submitter PID `96527`, log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward `2026-05-21T00:05Z`.
+- New queue: v593 Itshyao v2 first at reset; v592 HGNet 10% demoted to next candidate if v593 ties/drops/no-scores.

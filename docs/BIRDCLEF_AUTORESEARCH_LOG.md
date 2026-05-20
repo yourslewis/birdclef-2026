@@ -3369,3 +3369,12 @@ Decision:
 - Current metadata says version `2`, but decoded source exactly matches the artifact audited before v589 (`6819` decoded lines, SHA `c5aed8358ce6ba4b8772c1649bed9475151adff011d07617a8ba2b6f223a62f9`).
 - Session output is COMPLETE/no failure; primary `submission.csv` is finite `3x235` dry-run/sample shape, min/max `0.47687027/0.5553993`, no NaNs/zeros. Log notes `S124 dry-run/mismatch: keeping S114 anchor submission.csv`.
 - Existing v589 guarded direct replay of this source scored `0.949`, tying but not improving. Decision: no resubmission; v592 remains sole reset-slot owner.
+
+## 2026-05-20 19:08 UTC — v593 Itshyao v2 0.952 lead takes reset slot
+
+- User clarified/reported score `0.952` for `itshyao/birdclef-2026-s124-s114-g124-f1-rankblend`.
+- Important correction: v589 submitted kernel version `1` and scored `0.949`; current Kaggle metadata is version `2`. Although decoded source matches previous source, the reported `0.952` is independent evidence and justifies one guarded v2 replay.
+- Added `scripts/submit_v593_itshyao_s124_g124_rankblend_v2_when_ready.py` pinned to version `2` with duplicate, source, status, output, and cap checks.
+- Preflight-only result: cap `5/5`, source version `2` OK, COMPLETE/no failure, required outputs present, `submission.csv` finite `3x235` min/max `0.47687027/0.5553993`, no NaNs/zeros.
+- Killed v592 reset submitter PID `13173`; started v593 reset submitter PID `96527` with log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward reset.
+- Queue: v593 first; v592 HGNet sidecar demoted to backup if v593 does not improve.
