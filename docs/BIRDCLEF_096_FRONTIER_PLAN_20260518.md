@@ -946,3 +946,28 @@ Queue policy now:
 1. Do not submit more until v585 result is known, unless explicitly instructed.
 2. If v585 improves, port/confirm FrankSunP repo-owned.
 3. If v585 drops/no-scores, use prepared repo-owned v586 A2Prime/EffV2S extraction before EoS/Karnak/RankPower direct clones.
+
+## 2026-05-20 00:48 UTC — v585 pending; Zeyad schema-safe but 0.949-family
+
+Live state:
+
+- v585 ref `52831360` remains pending/no score.
+- Current confirmed best remains `0.949`.
+- 2026-05-20 UTC count is `1`; no active submitter processes.
+
+Artifacts:
+
+- Fresh scan: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0047Z.json`.
+- Fresh audit: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T0047Z_top/summary.json`.
+
+Candidate decisions:
+
+1. `mtoshidesu/notebookc6e90ae327` v3 — pullable but outputless; not direct-submit-safe.
+2. `zeyadmohamadezzat/birdclef-2026-proto-fusion-and-temporal-flip` v3 — schema-safe primary output, but source is explicitly consolidated `0.949` exp019/EoS4/Karnakbayev PowerOptimization with small BirdNET/public-CNN branches (`0.04/0.04`). Keep as idea-mining only.
+3. `meenalsinha/birdclef-2026-improved` v23 — outputs exist but primary `submission.csv` is train-row dry-run output; reject direct replay.
+
+Queue remains unchanged:
+
+- Wait for v585 result.
+- If v585 improves, port/confirm FrankSunP.
+- If v585 drops/no-scores, push/verify prepared repo-owned v586 A2Prime/EffV2S before direct EoS/Karnak/RankPower-family clones.

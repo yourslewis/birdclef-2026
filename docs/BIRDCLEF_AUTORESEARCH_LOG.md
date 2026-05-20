@@ -378,7 +378,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - **Decision:** hold all further submissions until v558 scores. Do not submit v554-v557. If v558 ties/drops, the public946 postprocess-retune lane should pause and the next slot should return to genuinely new signal or a fresh evidence source.
 
 
-### v558 conditional submit monitor prepared while v551 pending — 2026-05-15 00:55 UTC
+### v558 conditional submit monitor prepared while v551 pending — 2026-05-15 00:48 UTC
 
 - **Status check:** `v551` is visible at `2026-05-15 00:00:33.863 UTC`, status PENDING, no public score yet. Current best remains **0.946 public LB** from `v541/v542/v543/v544/v546-v549`. `v510` remains COMPLETE/no failure with `submission.csv`. `v558` remains COMPLETE/no failure with clean actual-v542 gate evidence.
 - **Track:** guarded fallback orchestration while waiting for v551 score; no extra competition submission was made in this run.
@@ -2164,7 +2164,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - v538 OOF-teacher B0 blend 0.05 was next in queue but hit the daily submission cap with 23h remaining and the monitor is sleeping for the next reset. No duplicate submissions were added.
 - Current best before these pending scores remains v517=0.930. The first score to watch is v539; if v539 lands >=0.940, make public946 the new teacher/cache anchor and continue with the public946 SED teacher student lane. If v539 fails/times out or scores near 0.930, inspect hidden behavior and row alignment before launching larger public946-derived students.
 
-## 2026-05-12 00:55 UTC - full public946 SED B0 student scaled while v539 pending
+## 2026-05-12 00:48 UTC - full public946 SED B0 student scaled while v539 pending
 
 - Status check: v539/v527/v531/v532/v537 remain PENDING score after reset submissions; current scored best remains v517=0.930. Monitor pid 27404 is sleeping on cap before v538 for the next UTC reset. No duplicate submissions added.
 - Track: Public approach P1 student preparation. The small 256-row smoke was not packageable but improved each epoch, so scaled the same setup to the full 792-row v540 public SED teacher cache while waiting for v539 LB.
@@ -2414,7 +2414,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Current public score state is unchanged: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`; v510/v560 kernels remain COMPLETE with no failure; no monitor process needed restart and no submission was made.
 - Improved `scripts/birdclef_kernel_output_verify.py` with `--all-presets`, which verifies every known preset in one read-only Kaggle SDK call sequence and exits nonzero if any preset fails. Validation: `python3 -m py_compile` passed and `scripts/birdclef_kernel_output_verify.py --all-presets --pretty` returned top-level `ok=true` for `v510-real-sed` and `v560-direct-v2s`.
 
-### Post-reset no-slot status pass while trainer SSH blocked — 2026-05-16 00:55 UTC
+### Post-reset no-slot status pass while trainer SSH blocked — 2026-05-16 00:48 UTC
 
 - Current public score state is unchanged after UTC reset: best `0.946`, latest `v560=0.945`, `v558/v551/v549/v548=0.946`. No new Kaggle submission was made because the v560 result strengthened the stop rule against public946 micro-sidecars, and no new OOF/source-clean artifact exists this pass.
 - `v510` and `v560` kernels remain COMPLETE with no failure messages. `scripts/birdclef_kernel_output_verify.py --all-presets --pretty` returned top-level `ok=true` for `v510-real-sed` and `v560-direct-v2s`.
@@ -2559,7 +2559,7 @@ This log tracks spec-driven implementation/tuning work from `docs/BIRDCLEF_NEW_D
 - Submitted `v567`: `kruzzcc/bc26-mtoshi-umap-bn-a` version 1, description `v567: Sweep Mtoshi UMAP plus BirdNET public kernel direct`, Kaggle ref `52723321`. Preflight saw COMPLETE plus `submission.csv`, `submission_birdnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, and cache files.
 - Post-submit Bearer API check showed both `v566` and `v567` as `pending` with no errors. Preserved three UTC-day slots for follow-up. Current scored best remains `0.946` until these score.
 
-### v567 scored 0.944; hold remaining public-sweep slots pending v566 — 2026-05-17 00:55 UTC
+### v567 scored 0.944; hold remaining public-sweep slots pending v566 — 2026-05-17 00:48 UTC
 
 - Status check after reset submissions: `v567` completed at `0.944`, below the `0.946` plateau; `v566` remains `pending` with no error. Current scored best remains `0.946` from v541/v542/v558/v563 and earlier tied public946 variants.
 - Lesson: the Mtoshi UMAP + BirdNET public-kernel direct path is not enough and is worse than the repo-owned public946 anchor. This joins v562 (`0.945`) as another drop in the direct BirdNET-family public-source lane.
@@ -3149,3 +3149,19 @@ Decision:
 - Wait for v585 score/status.
 - If v585 improves materially, immediately port/confirm FrankSunP as repo-owned.
 - If v585 drops/no-scores, first push/verify the prepared repo-owned v586 A2Prime/EffV2S extraction, then decide whether to submit it.
+
+### v585 pending, fresh post-reset source scan — 2026-05-20 00:48 UTC
+
+- v585 remains visible and pending: ref `52831360`, description `v585: Guarded direct FrankSunP 5-branch V4 TTA Fix replay`, date `2026-05-20T00:01:09.75Z`, status `pending`, no score/error yet. Current confirmed best remains `0.949`; 2026-05-20 UTC count is `1`.
+- No v577/v578/v585 submitter processes remain active. PR #248 remains open/blocked; no merge performed.
+- Fresh scan saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0047Z.json`.
+- Fresh top-source audit saved `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T0047Z_top/summary.json`.
+- `mtoshidesu/notebookc6e90ae327` v3: pullable, but no outputs yet. Source is documentation/executable scaffold around `Model_7` final power-optimized path (`LB 0.948`) and true-OOF validation warnings. Not direct-submit-safe while outputless.
+- `zeyadmohamadezzat/birdclef-2026-proto-fusion-and-temporal-flip` v3: COMPLETE/pullable/schema-safe primary `submission.csv`. Source explicitly says it is a consolidated `0.949` inference script from exp019/EoS4/Karnakbayev PowerOptimization, with final preset `proto=0.56`, `sed=0.36`, `birdnet=0.04`, `cnn=0.04`; side outputs are train-row/constant dry-run artifacts. Useful as idea-mining for BirdNET/public-CNN fail-closed branch structure, but still 0.949-family and not enough to displace v585 pending or prepared v586 EffV2S.
+- `meenalsinha/birdclef-2026-improved` v23: now has outputs, but primary `submission.csv` is train-row dry-run output (`240` train rows), not competition-safe. Source remains v6_prior065 / scalar lambda-prior tuning (`lambda_prior=0.60 -> 0.65`, Model_4 0.10 + Model_7 0.90). Reject direct replay.
+
+Decision:
+
+- Do not spend another 2026-05-20 slot while v585 is pending.
+- If v585 improves, port/confirm FrankSunP.
+- If v585 drops/no-scores, prepared repo-owned v586 A2Prime/EffV2S still outranks the newly audited Zeyad/Mtoshi/Meenal paths because it is a more structurally distinct extraction target.
