@@ -1175,3 +1175,11 @@ Queue remains unchanged:
 - Only genuinely new dateRun item since the 17:48 audit was `tulayppppp/my-efficientnet-b0-weights` rerun at 18:45Z. Audit result: version 23 still RUNNING/no outputs, and source is not competition-safe: it writes generic `bird_i` dynamic columns, uses dummy/fallback row handling, can emit an empty `submission.csv`, and loads a generic EfficientNet baseline rather than a verified 235-class BirdCLEF submission pipeline. Reject as a slot displacer.
 - Other fresh scan rows are the already-audited Scenery EoS6/two-pass SSM, Nina EoS6, S124/G124, RankPower/NFNet, Samejima/TY0912 HGNet, SafeAlign, and acoustic-prior/EoS families; no new credible 0.96 candidate surfaced.
 - Decision: keep v592 as sole reset-slot owner; do not spend a slot on Tulay EfficientNet or scalar EoS5 tweaks.
+
+## 2026-05-20 19:04 UTC direct user lead — Itshyao S124/S114/G124 rankblend checked
+
+- User flagged `https://www.kaggle.com/code/itshyao/birdclef-2026-s124-s114-g124-f1-rankblend` as a new post.
+- Pulled current Kaggle source via API: metadata reports current version `2`, title `BirdCLEF 2026 S124 S114 G124 F1 RankBlend`; artifact saved at `artifacts/public_kernels_20260520_frontier_candidates/itshyao_s124_s114_g124_rankblend_latest/`.
+- Compared decoded current source against the previously audited/source-preflighted artifact from `source_audit_20260520T0547Z_top/itshyao__birdclef-2026-s124-s114-g124-f1-rankblend.source.txt`: exact decoded SHA match `c5aed8358ce6ba4b8772c1649bed9475151adff011d07617a8ba2b6f223a62f9` and same `6819` decoded lines. No source change despite v2 metadata.
+- Current session output COMPLETE/no failure with outputs including `submission.csv`, `submission_g124_effv2s_fold1_s124.csv`, Proto/SED/Karnak branch files, and `v17_logs.json`; primary `submission.csv` is sample/dry-run shaped `3x235`, finite, min/max `0.47687027/0.5553993`, no NaNs/zeros. Log says `S124 dry-run/mismatch: keeping S114 anchor submission.csv`.
+- Existing guarded direct replay v589 already submitted this source and scored `0.949` (`52838266`). Decision: do not let this displace v592; do not resubmit unless the author posts a genuinely changed version or independent >0.949 evidence appears.

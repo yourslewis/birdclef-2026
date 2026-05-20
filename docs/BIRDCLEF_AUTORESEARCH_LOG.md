@@ -3361,3 +3361,11 @@ Decision:
 - **Tulay EfficientNet:** `tulayppppp/my-efficientnet-b0-weights` reran at 18:45Z, but audit shows v23 RUNNING/no outputs and source is unsafe/non-competitive: generic dynamic `bird_i` columns, dummy/fallback rows, potential empty `submission.csv`, and generic EfficientNet baseline load. Reject as reset-slot displacer.
 - **Other scan rows:** Scenery/Nina EoS6/two-pass, S124/G124, RankPower/NFNet, Samejima HGNet, SafeAlign, and acoustic-prior rows are previously audited/saturated; no new credible source above v592.
 - **Decision:** preserve v592 as only reset-slot owner.
+
+## 2026-05-20 19:04 UTC — user lead Itshyao S124/S114/G124 rankblend audited
+
+- User flagged `itshyao/birdclef-2026-s124-s114-g124-f1-rankblend` as new.
+- Pulled current source via Kaggle API and saved under `artifacts/public_kernels_20260520_frontier_candidates/itshyao_s124_s114_g124_rankblend_latest/`.
+- Current metadata says version `2`, but decoded source exactly matches the artifact audited before v589 (`6819` decoded lines, SHA `c5aed8358ce6ba4b8772c1649bed9475151adff011d07617a8ba2b6f223a62f9`).
+- Session output is COMPLETE/no failure; primary `submission.csv` is finite `3x235` dry-run/sample shape, min/max `0.47687027/0.5553993`, no NaNs/zeros. Log notes `S124 dry-run/mismatch: keeping S114 anchor submission.csv`.
+- Existing v589 guarded direct replay of this source scored `0.949`, tying but not improving. Decision: no resubmission; v592 remains sole reset-slot owner.
