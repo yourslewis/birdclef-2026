@@ -1206,3 +1206,16 @@ Queue remains unchanged:
   - `haivan11/birdclef-2026-prior-field-fusion-vi`: COMPLETE with finite `3x235` output and BirdNET/Yaroslav/yukiZ branch files, but it is a clean fork of Pilkwang/Yaroslav prior-field 0.949-family; dry-run BirdNET row-id mismatch keeps anchor. Backup only, below v593 and v592.
   - `tulayppppp/my-efficientnet-b0-weights`: v27 ERROR/no outputs; source still generic/dynamic/fallback EfficientNet, not competition-safe.
 - Decision: keep v593 Itshyao v2 as reset owner; v592 HGNet remains backup if v593 ties/drops/no-scores.
+
+## 2026-05-20 22:00 UTC update — capped; v593 still reset owner, fresh top-feed rejected
+
+- Live submission state unchanged: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; repo-confirmed best remains `0.949`; 2026-05-20 cap remains `5/5`; no 2026-05-21 submissions visible yet.
+- v593 Itshyao v2 reset submitter remains healthy as PID `96527`, sleeping toward `2026-05-21T00:05Z`. Old v592 PID `13173` is not running. No v577/v578 scalar submitter found.
+- PR #249 remains open/BLOCKED; PR #245 remains merged.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2200Z.json`.
+- Fresh audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2200Z_top/summary.json`.
+- Fresh top-feed audit:
+  - `muhammadsaadalvi/birdclef-2026-wildsound-v8`: v69 ERROR/no outputs; training/preprocessing path fails on missing `/kaggle/input/birdclef-2026/train_metadata.csv`; not slot-ready despite distinct WildSound-ish direction.
+  - `juanpp11/birdclef2026-seguda-parte`: v4 ERROR/no outputs; local/offline EfficientNet weight path notebook, no validated `submission.csv`; not slot-ready.
+  - `tulayppppp/my-efficientnet-b0-weights`: v28 ERROR/no outputs; still generic/dynamic/fallback EfficientNet and not competition-safe.
+- Decision: no candidate displaces v593. Keep v593 first at reset; v592 HGNet remains backup if v593 ties/drops/no-scores.

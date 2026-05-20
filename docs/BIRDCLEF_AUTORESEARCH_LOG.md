@@ -3387,3 +3387,12 @@ Decision:
 - **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2000Z_top/summary.json`.
 - **New lead audit:** `karnakbaevarthur/s124-g124-reverse-engineered` explicitly cites Itshyao S124/G124 LB `0.952`, but has no output files; code-mining only. `haivan11/birdclef-2026-prior-field-fusion-vi` is output-valid but saturated PriorField/Yaroslav/BirdNET family; not above v593. Tulay EfficientNet v27 ERROR/no outputs and still unsafe.
 - **Decision:** keep v593 first; v592 HGNet backup.
+
+## 2026-05-20 22:00 UTC — capped scan, v593 still healthy
+
+- **Live status:** v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; repo-confirmed best remains `0.949`; 2026-05-20 cap `5/5`; no 2026-05-21 submissions visible yet.
+- **Reset owner:** v593 Itshyao S124/S114/G124 v2 PID `96527` still alive and sleeping toward reset; v592 PID `13173` stopped; no stale v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2200Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2200Z_top/summary.json`.
+- **Fresh audit:** Muhammad WildSound v8 is ERROR/no outputs due missing train metadata path; Juanpp segunda parte is ERROR/no outputs and local/offline-weight style; Tulay EfficientNet v28 remains ERROR/no outputs and unsafe/generic. None displaces v593.
+- **Decision:** keep v593 first; v592 HGNet backup.
