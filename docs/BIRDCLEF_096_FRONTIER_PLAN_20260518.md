@@ -1192,3 +1192,17 @@ Queue remains unchanged:
 - Preflight-only passed while capped: visible UTC submissions today `5`; source pull version `2`, decoded length `309836`; kernel COMPLETE/no failure; required outputs present; primary `submission.csv` finite `3x235`, min/max `0.47687027/0.5553993`, no zeros/NaNs; required log marker present.
 - Killed old v592 reset submitter PID `13173` to preserve the reset slot. Started v593 reset submitter PID `96527`, log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward `2026-05-21T00:05Z`.
 - New queue: v593 Itshyao v2 first at reset; v592 HGNet 10% demoted to next candidate if v593 ties/drops/no-scores.
+
+## 2026-05-20 20:00 UTC update — capped; v593 reset owner healthy, 0.952/Karnak lead audited
+
+- Live submission state unchanged: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current repo-confirmed best remains `0.949`; 2026-05-20 UTC cap remains `5/5`.
+- External/user-reported best lead is now Itshyao S124/S114/G124 v2 at `0.952`, but our own direct replay score is not confirmed yet; v593 remains queued for the reset slot.
+- v593 reset submitter remains alive: PID `96527`, log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward `2026-05-21T00:05Z`. Old v592 PID `13173` is not running. No stale v577/v578 scalar submitter found.
+- PR #249 remains open with merge-state fetch `UNKNOWN`; PR #245 is merged.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2000Z.json`.
+- Fresh audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2000Z_top/summary.json`.
+- Audited new/changed 20:00 leads:
+  - `karnakbaevarthur/s124-g124-reverse-engineered`: appears in `0.952` search and explicitly describes reverse-engineering Itshyao S124/G124 LB `0.952`, but it is a training/recipe notebook with no output files/session submission artifact. Not slot-ready; useful as code-mining only after v593.
+  - `haivan11/birdclef-2026-prior-field-fusion-vi`: COMPLETE with finite `3x235` output and BirdNET/Yaroslav/yukiZ branch files, but it is a clean fork of Pilkwang/Yaroslav prior-field 0.949-family; dry-run BirdNET row-id mismatch keeps anchor. Backup only, below v593 and v592.
+  - `tulayppppp/my-efficientnet-b0-weights`: v27 ERROR/no outputs; source still generic/dynamic/fallback EfficientNet, not competition-safe.
+- Decision: keep v593 Itshyao v2 as reset owner; v592 HGNet remains backup if v593 ties/drops/no-scores.

@@ -3378,3 +3378,12 @@ Decision:
 - Preflight-only result: cap `5/5`, source version `2` OK, COMPLETE/no failure, required outputs present, `submission.csv` finite `3x235` min/max `0.47687027/0.5553993`, no NaNs/zeros.
 - Killed v592 reset submitter PID `13173`; started v593 reset submitter PID `96527` with log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward reset.
 - Queue: v593 first; v592 HGNet sidecar demoted to backup if v593 does not improve.
+
+## 2026-05-20 20:00 UTC — capped scan, v593 healthy
+
+- **Live status:** v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; repo-confirmed best remains `0.949`; daily cap `5/5`.
+- **Reset owner:** v593 Itshyao S124/S114/G124 v2 remains alive as PID `96527`, sleeping toward reset; v592 PID `13173` is stopped. No v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2000Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2000Z_top/summary.json`.
+- **New lead audit:** `karnakbaevarthur/s124-g124-reverse-engineered` explicitly cites Itshyao S124/G124 LB `0.952`, but has no output files; code-mining only. `haivan11/birdclef-2026-prior-field-fusion-vi` is output-valid but saturated PriorField/Yaroslav/BirdNET family; not above v593. Tulay EfficientNet v27 ERROR/no outputs and still unsafe.
+- **Decision:** keep v593 first; v592 HGNet backup.
