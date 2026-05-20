@@ -1110,3 +1110,21 @@ Queue remains unchanged:
   - `thbdh5765/birdclef-2026-s124-s114-g124-f1-rankblend-fork` v1: S124/G124 fork duplicate/sibling; v589 already tied only, so reject.
 - Decision: no source found to displace v592. Keep v592 HGNet 10% as next-reset owner.
 - Action: parked a guarded reset submitter for v592. PID `13173`, log `logs/v592_hgnet_w010_reset_submitter_20260520.log`, nohup log `logs/v592_hgnet_w010_reset_nohup_20260520.out`; it sleeps until ~`2026-05-21T00:05:00Z` and then runs `scripts/submit_v592_public946_hgnet_w010_when_ready.py` once. The submitter itself rechecks duplicate submissions, source, COMPLETE status, outputs, final CSV, and daily cap before submitting.
+
+## 2026-05-20 15:48 UTC update — capped, v592 submitter healthy, Samejima OpenVINO lead not ready
+
+- Live state unchanged: latest 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; daily cap remains `5/5`.
+- Guarded v592 reset submitter remains alive: PID `13173`, sleeping until about `2026-05-21T00:05:00Z`; log target `logs/v592_hgnet_w010_reset_submitter_20260520.log`. It has not attempted submission yet.
+- Branch clean at start; PR #249 still open with GitHub merge state `UNKNOWN` in this fetch.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1548Z.json`.
+- Fresh source audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1548Z_top/summary.json`.
+- Fresh top-feed decisions:
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v25: now ERROR, but file list exposes fold `.pt` and OpenVINO `.xml/.bin` artifacts. Useful future acceleration/export lead for our HGNet lane, but not slot-ready.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` v3: COMPLETE but primary `submission.csv` is invalid/all-NaN (`3x235`, 702 NaNs); do not direct-submit.
+  - `deepanshus167/bird-claasifier-comp` v14: constant probability baseline; reject.
+  - `nina2025/birdclef-2026-eos-6-sz` v15: primary output remains invalid (`243x235`, all NaN numeric parse); reject direct replay.
+  - `mtoshidesu/notebookc6e90ae327` v9: schema-safe sample output but saturated Karnak/PowerOptimization family; does not displace v592.
+  - `anthonytherrien/birdclef-2026-s124-s114-g124-f1-blend` v1: S124/G124 sibling/duplicate after v589 tied only; reject.
+  - `scenerysunfireink/birdclef-2026-v6-fork-model-7-single` v1: Model_7/Karnak-style branch, schema-safe sample output but saturated family; no slot before HGNet.
+- Decision: no candidate found above v592. Keep v592 as reset-slot owner. Samejima OpenVINO is worth mining only after v592 result or if hidden runtime becomes the blocker.
+- Reminder/lesson: positive local train-soundscape sidecar gates remain rejection filters, not approval filters; v560/v573 proved locally positive sidecars can public-drop. v592 is allowed because it is a structurally distinct complete HGNet model-zoo artifact, not another micro scalar/sidecar sweep.

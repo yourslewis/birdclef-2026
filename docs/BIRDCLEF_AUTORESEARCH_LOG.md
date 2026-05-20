@@ -3319,3 +3319,12 @@ Decision:
 - **Decision:** no stronger 0.96-relevant source displaced v592. v592 remains first reset-slot candidate.
 - **Action:** started a reset submitter: PID `13173`, log `logs/v592_hgnet_w010_reset_submitter_20260520.log`, nohup log `logs/v592_hgnet_w010_reset_nohup_20260520.out`. It sleeps until about `2026-05-21T00:05:00Z`, then runs `scripts/submit_v592_public946_hgnet_w010_when_ready.py`; the script revalidates source/version, kernel COMPLETE/no failure, required outputs, CSV stats, duplicate description, and daily cap before submitting.
 - **Next gate:** if v592 submits and improves, immediately preserve/confirm the HGNet path and consider OpenVINO acceleration via Samejima artifacts. If it ties/drops, keep HGNet as a structural diagnostic but continue frontier scan before using further slots.
+
+## 2026-05-20 15:48 UTC — capped source scan; v592 still first reset candidate
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`.
+- **Submitter health:** v592 reset submitter PID `13173` is alive and sleeping toward ~`2026-05-21T00:05:00Z`. No duplicate v592 submitter started.
+- **Fresh scan/audit:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1548Z.json` and `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1548Z_top/summary.json`.
+- **Candidate decisions:** Samejima HGNet training v25 exposes OpenVINO artifacts but is ERROR; Samejima HGNet inference v3 outputs all-NaN primary `submission.csv`; Deepanshu is constant baseline; Nina EoS6 v15 primary remains invalid/all-NaN; Mtoshi v9 and Scenery Model_7 are saturated Karnak/PowerOptimization; Anthony S124/G124 is a duplicate of tied v589 family.
+- **Decision:** keep v592 as the reset-slot owner. No new submission or kernel push. Samejima OpenVINO is logged as a possible future acceleration path if v592 hidden runtime is problematic or if HGNet improves.
+- **Transfer lesson maintained:** local train-soundscape sidecar gates are rejection filters, not approval filters. The v592 exception is justified by complete, structurally distinct HGNet artifacts and low-correlation sidecar evidence, not just a tiny local gain.
