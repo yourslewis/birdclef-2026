@@ -145,7 +145,7 @@ Likely confirmation plan if `v580 > 0.949`:
 
 If any Chaney artifact dataset is not attachable, fallback confirmation path is to reproduce those branch artifacts from public source where possible, but that is larger and should only happen if the direct v580 score justifies it.
 
-## 2026-05-18 23:45 UTC execution update — reset queue healthy, repo-owned v580 dependency blocker found
+## 2026-05-18 23:30 UTC execution update — reset queue healthy, repo-owned v580 dependency blocker found
 
 Live status:
 
@@ -901,3 +901,120 @@ Decision:
 - No new Kaggle push/submission while capped.
 - Do not start duplicate submitters.
 - Next run should check whether v585 submitted/scored after UTC reset; if still pending/capped, continue source scan.
+
+## 2026-05-19 23:30 UTC broad-score 0.96 audit — no reset-slot replacement
+
+User requested another research round targeting `0.960`. This pass broadened beyond fresh DATE_RUN feed into Kaggle score/vote/search surfaces and older high-vote candidates.
+
+Artifacts:
+
+- Broad search: `artifacts/public_kernels_20260519_frontier_candidates/broad_score_search_20260519T2323Z.json`.
+- Broad-score audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2323Z_broadscore/summary.json`.
+- Legacy/diverse audit: `artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T2335Z_legacydiverse/summary.json`.
+
+Current queue remains:
+
+1. v585 FrankSunP 5-branch V4 TTA Fix — sole reset-slot owner, monitor alive.
+2. v586 repo-owned A2Prime/EffV2S extraction — prepared fallback only if v585 drops/no-scores and no stronger true `0.950+` source appears.
+
+Candidate decisions:
+
+- `ulyanovantonamaranta/birdclef-2026-gate-fake008-head0015` — schema-safe, but mostly public ProtoSSM/SED gate family plus net ~1.5% train-audio-head rank contribution; useful idea-mining only.
+- `cliff376/bc26-public-gate-combo-pc010-v2` — schema-safe, public-gate Proto/SED variant; no evidence it clears the 0.949 plateau.
+- `raunakdey07/birdclef-2026-multi-model-ensemble` — schema-safe and has sonotype mirroring / rare-class threshold ideas, but no direct 0.950+ evidence.
+- `marynaborovska/birdclef-26-two-pass-ssm-advanced-pp` — promising source architecture, but no outputs; not direct-submit-safe.
+- `aminmahmoudalifayed/birdclef-2026` — invalid/empty primary submission; reject.
+- EoS/Karnak/RankPower legacy candidates (`anthonytherrien`, `beicicc`, `kijiang`, `karnakbaevarthur`, `nicolasschuldt/eos5-meta`, `apachikoff/eos-5`, `starsdaisuki`, `adityaraghuvanshi999`) are saturated 0.949-family scalar/blend variants and should not consume the next slot.
+
+Next action:
+
+- First check v585 visibility/score after UTC reset.
+- If v585 improves, port/confirm FrankSunP.
+- If v585 drops/no-scores, push/verify v586 EffV2S before considering any direct EoS/Karnak/RankPower replay.
+- Separately mine Raunak/Maryna ideas for future repo-owned structural work, not immediate submissions.
+
+## 2026-05-20 00:06 UTC — v585 submitted, wait for score before next slot
+
+- v585 FrankSunP 5-branch V4 TTA Fix submitted after reset: ref `52831360`, date `2026-05-20T00:01:09.75Z`, status `pending`.
+- 2026-05-20 UTC has `1` visible submission so far.
+- `birdclef-v585-reset` exited after the successful submission.
+- Current confirmed best remains `0.949` until v585 scores.
+- Fresh pre-reset scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2347Z.json`; no newly surfaced candidate outranks the existing v585/v586 queue.
+
+Queue policy now:
+
+1. Do not submit more until v585 result is known, unless explicitly instructed.
+2. If v585 improves, port/confirm FrankSunP repo-owned.
+3. If v585 drops/no-scores, use prepared repo-owned v586 A2Prime/EffV2S extraction before EoS/Karnak/RankPower direct clones.
+
+## 2026-05-20 00:48 UTC — v585 pending; Zeyad schema-safe but 0.949-family
+
+Live state:
+
+- v585 ref `52831360` remains pending/no score.
+- Current confirmed best remains `0.949`.
+- 2026-05-20 UTC count is `1`; no active submitter processes.
+
+Artifacts:
+
+- Fresh scan: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0047Z.json`.
+- Fresh audit: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T0047Z_top/summary.json`.
+
+Candidate decisions:
+
+1. `mtoshidesu/notebookc6e90ae327` v3 — pullable but outputless; not direct-submit-safe.
+2. `zeyadmohamadezzat/birdclef-2026-proto-fusion-and-temporal-flip` v3 — schema-safe primary output, but source is explicitly consolidated `0.949` exp019/EoS4/Karnakbayev PowerOptimization with small BirdNET/public-CNN branches (`0.04/0.04`). Keep as idea-mining only.
+3. `meenalsinha/birdclef-2026-improved` v23 — outputs exist but primary `submission.csv` is train-row dry-run output; reject direct replay.
+
+Queue remains unchanged:
+
+- Wait for v585 result.
+- If v585 improves, port/confirm FrankSunP.
+- If v585 drops/no-scores, push/verify prepared repo-owned v586 A2Prime/EffV2S before direct EoS/Karnak/RankPower-family clones.
+
+## 2026-05-20 02:05 UTC update — v585 rejected, v586 EffV2S active fallback
+
+- v585 FrankSunP 5-branch V4 TTA Fix replay scored `0.922`; reject this lane and do not port/confirm.
+- Active slot candidate is repo-owned `yourslewis/bc26-v586-a2prime-effv2s-extraction-r2` v1, specifically alternate output `submission_a2_effv2s_w08.csv` (not default `submission.csv`, which is `base_3way`).
+- Guarded monitor: `scripts/submit_v586_a2prime_effv2s_w08_when_ready.py`, log `logs/v586_a2prime_effv2s_w08_submitter.log`, PID `96513` at launch. It waits for COMPLETE and validates output/summary before submit.
+- Fresh source queue notes from `source_audit_20260520T0158Z_top/summary.json`: Samejima Visual CPU remains visual/BirdNET idea-mining; Pilkwang/Adarsh prior-field forks are `0.949` RankPower-family; Mtoshi V6 is ERROR. None outrank v586.
+
+## 2026-05-20 02:55 UTC update — v586 filename fix, v587 S121 pending
+
+- v586 r2 v1 completed but alternate-output submission failed because BirdCLEF requires `submission.csv`. Notebook patched so `a2_effv2s_w08` becomes `submission.csv`; r2 version 2 pushed and monitor PID `12539` is waiting for COMPLETE/output preflight.
+- v587 direct replay submitted: `itshyao/birdclef-2026-s121-s114-g116-f1-delta` v1, ref `52835586`, pending. Rationale: protected HGNet/G116 delta sidecar on S114 anchor is a more structural candidate than fresh RankPower/PriorField clones; public dry-run has row-id fallback and S121 final diagnostics.
+- Fresh 02:47 scan rejects/queues: Mtoshi v4 now COMPLETE but still Karnak/RankPower/visual family; Koushik Pantanal ERROR; Qiuzi HGNet training artifacts only; Rikuter v6/prior-field reproductions are 0.949 family. Continue scanning for true non-saturated structural sources.
+
+## 2026-05-20 03:50 UTC update — v586/v587/v588 pending, reserve final slot
+
+- v586 repo-owned A2Prime/EffV2S w08 submitted as ref `52835975` after r2 v2 completed and made w08 the normal `submission.csv`.
+- v587 Itshyao S121 S114+G116 protected delta remains pending, ref `52835586`.
+- v588 Itshyao S122 S114+G123 EfficientNetV2-B0 protected delta submitted, ref `52836864`.
+- 2026-05-20 slots used: `4/5`; reserve final slot pending scores or a genuinely stronger source. Fresh 03:47 scan did not surface a stronger non-saturated candidate besides the S122 sibling; EoS6/Kijiang/Pilkwang/Rikuter remain 0.949-family, Samejima remains Visual/BirdNET family.
+
+## 2026-05-20 04:50 UTC update — capped after v589 final-slot S124 rankblend
+
+- Results landed: v586 A2Prime/EffV2S w08 `0.941` (reject lane), v587 S121/G116 `0.949` tie, v588 S122/G123 `0.949` tie. Best remains `0.949`.
+- Final 2026-05-20 slot used on v589 Itshyao S124 S114+G124 rankblend, ref `52838266`, pending. This is the last S114+G-sidecar sibling worth trying today because it changes from delta to protected rank blending with a G124 EfficientNetV2-S 2025-pretrained pseudo sidecar.
+- Daily cap now `5/5`. If v589 ties/drops, deprioritize S114+G116/G123/G124 sidecar siblings and resume 0.96 source search / training-lane prep for next reset.
+
+## 2026-05-20 05:55 UTC update — capped; next lead is HGNet training artifact
+
+- v589 remains pending and daily slots are `5/5`; no active submit monitors.
+- Fresh scan/audit: `scan_20260520T0547Z.json`, `source_audit_20260520T0547Z_top/summary.json`.
+- Best next non-saturated lead: Qiuzi `hgnetv2-b0-training-e2c7fc`, which completed fold artifacts and logged rank-pred validation AUC `0.9586928494392578`. It is not direct-submit-safe because it is training-only, but it may support a repo-owned HGNet sidecar/inference candidate next reset.
+- Deprioritize further S114+G116/G123/G124 siblings unless v589 improves; v587/v588 tied and S123/S124-style variants are likely plateau-safe rather than lift-producing.
+
+### v589 result — 2026-05-20 05:50 UTC
+
+- v589 S124 G124 rankblend scored `0.949`, tie only. Daily 5/5 set is complete: `0.922`, `0.941`, `0.949`, `0.949`, `0.949`.
+- Stop S114+G-sidecar sibling submissions for now. Next reset should focus on new non-saturated training/source directions, especially Qiuzi HGNet artifacts or another independently validated model-zoo sidecar.
+
+## 2026-05-20 06:47 UTC update — HGNet downgraded to source recipe, no ready slot candidate
+
+- Slots remain capped `5/5`; v589 scored `0.949`. Confirmed current best `0.949`.
+- Fresh scan/audit paths: `scan_20260520T0647Z.json`, `source_audit_20260520T0647Z_top/summary.json`, `hgnet_lead_20260520T0647Z/`.
+- Qiuzi HGNet is promising as a **recipe** (fold0 best validation AUC `0.96378`, HGNetV2-B0, EMA, mixup, train-audio + train-soundscape labels), but not a ready submission because the session is `CANCEL_ACKNOWLEDGED` and only fold0 output URL is exposed.
+- Samejima HGNet inference is sample-invalid/all-NaN in dry-run and has unresolved weights-dataset availability. Patch/resolution required before any direct or repo-owned submission.
+- OmModi dual-resolution EffV2/temporal-transformer notebook rejected: epoch-1 checkpoint AUC `0.5124`, all-zero fallback output.
+- Next reset candidate queue: (1) continue source frontier scan for a genuinely new >0.949 public lineage; (2) resolve HGNet weights/data availability and build a sample-safe repo-owned inference only if complete artifacts are available; (3) only then consider a guarded HGNet/EoS blend as a structural diagnostic.
