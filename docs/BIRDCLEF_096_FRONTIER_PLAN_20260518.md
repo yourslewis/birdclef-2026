@@ -1094,3 +1094,19 @@ Queue remains unchanged:
 - Added and pushed private validation kernel `yourslewis/bc26-v592-public946-hgnet-distill-w010` v1. It completed successfully in ~562s with final `submission.csv` shape `240x235`, no NaNs, min/max `0.0065000006/1.0`; `submission_hgnet.csv` valid, min/max `3.39e-07/0.9477211`.
 - Added guarded submitter `scripts/submit_v592_public946_hgnet_w010_when_ready.py`; preflight-only passed (source version 1, COMPLETE/no failure, required outputs, valid final CSV). It did not submit because the day is capped.
 - Queue update: v592 HGNet 10% is now the preferred next-reset candidate. v591/v4 is conservative fallback; v590 Zeyad/Rajnish is demoted behind HGNet unless later evidence invalidates HGNet transfer/runtime.
+
+## 2026-05-20 14:48 UTC update — v592 remains reset-slot owner; submitter parked
+
+- Live state unchanged: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; 2026-05-20 daily submissions remain `5/5`; no stale v577/v578/v590/v591/v592 submitter was active at check start.
+- PR #249 remains open/BLOCKED or UNKNOWN/BLOCKED depending on GitHub merge-state fetch; branch clean before this log update.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1448Z.json`.
+- Fresh source audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1448Z_top/summary.json`.
+- Fresh top-feed decisions:
+  - `mtoshidesu/notebookc6e90ae327` v8: schema-safe sample output (`3x235`) but still saturated Karnak/PowerOptimization family.
+  - `jacqueszhelinzhang/birdclef26-perch-minimal` v22: constant probability baseline (`3x235`, all `0.0042735`); reject.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v23: still RUNNING; file list exposes PyTorch and OpenVINO fold artifacts, but downloadable session outputs/log unavailable in this audit. Track as future HGNet acceleration/export lead, not a current slot displacer.
+  - `sclim2022080004/iter7-protossm-mlp` v5: schema-safe (`240x235`) but source self-identifies as 0.949 community/ProtoSSM+MLP SED-free subset; idea-mining only.
+  - `abhiiiish/birdclef-26-nb-training` v2: training artifact notebook only, no submission output; possible future model-artifact idea but not slot-ready.
+  - `thbdh5765/birdclef-2026-s124-s114-g124-f1-rankblend-fork` v1: S124/G124 fork duplicate/sibling; v589 already tied only, so reject.
+- Decision: no source found to displace v592. Keep v592 HGNet 10% as next-reset owner.
+- Action: parked a guarded reset submitter for v592. PID `13173`, log `logs/v592_hgnet_w010_reset_submitter_20260520.log`, nohup log `logs/v592_hgnet_w010_reset_nohup_20260520.out`; it sleeps until ~`2026-05-21T00:05:00Z` and then runs `scripts/submit_v592_public946_hgnet_w010_when_ready.py` once. The submitter itself rechecks duplicate submissions, source, COMPLETE status, outputs, final CSV, and daily cap before submitting.
