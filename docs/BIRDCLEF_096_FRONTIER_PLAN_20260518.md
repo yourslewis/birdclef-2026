@@ -1141,3 +1141,20 @@ Queue remains unchanged:
   - New/recent top-feed items are mostly EoS6/Karnak/RankPower/S124 siblings or constant/baseline notebooks; none exceeds the validated repo-owned v592 HGNet candidate.
   - No explicit new `0.950+`/`0.96` source claim surfaced in the search buckets.
 - Decision: keep v592 as the sole reset-slot owner. Do not start extra submitters. Samejima OpenVINO remains future acceleration work, especially if v592 hidden runtime becomes the blocker.
+
+## 2026-05-20 17:48 UTC update — capped; fresh two-pass SSM rejected by local gate
+
+- Live state unchanged: latest 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; daily cap remains `5/5`.
+- Guarded v592 reset submitter remains alive: PID `13173`, sleeping toward about `2026-05-21T00:05:00Z`; no duplicate submitter started and no submission attempted while capped.
+- PR #249 remains open/BLOCKED; branch was clean before this log update.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1748Z.json`.
+- Fresh source audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1748Z_top/summary.json`.
+- Fresh top-feed decisions:
+  - `tulayppppp/my-efficientnet-b0-weights` v20: ERROR/no outputs; weight/training notebook, not slot-ready.
+  - `scenerysunfireink/birdclef-2026-eos-6` v1: primary `submission.csv` invalid (`243x235`, all NaN numeric parse); reject direct replay.
+  - `deepanshus167/bird-claasifier-comp` v17: constant baseline (`3x235`, all same probability); reject.
+  - `scenerysunfireink/birdclef-2026-two-pass-ssm` v1: schema-safe `240x235` and structurally named two-pass SSM, but local gate is weak. Artifact `artifacts/blend_grids/scenery_two_pass_sidecar_weight_grid_20260520T1748Z.json`: standalone rank AUC `0.97745`, corr vs v542 anchor `0.8884`; every tested blend weight reduced macro AUC vs base `0.9925249` (0.025 -> `0.9924122`, 0.10 -> `0.9917289`). Reject as reset-slot displacer.
+  - `karnakbaevarthur/s124-g124-reverse-engineered` v2: no outputs; S124/G124 duplicate family; reject.
+  - `kospintr/birdclef-efficientnet-perch-distill-mixup` v26: CANCEL_ACKNOWLEDGED/partial, no reliable submission output; not slot-ready.
+  - `scenerysunfireink/birdclef-2026-perch-v2-full-v2` v1: invalid output shape (`119988x235`) and score range includes `-1000`; reject direct.
+- Decision: no candidate found above v592. Keep v592 as sole reset-slot owner. The two-pass SSM audit reinforces that schema-safe/public-looking outputs still need local rejection gates before slot ownership.

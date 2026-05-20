@@ -3336,3 +3336,11 @@ Decision:
 - **Fresh scan:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1648Z.json`.
 - **Candidate decisions:** the newest DATE_RUN feed did not reveal a stronger candidate than v592. Samejima HGNet remains an OpenVINO/artifact lead but not a validated submission; current inference primary output was invalid in the prior audit. EoS6/Karnak/RankPower/S124-family reruns are saturated or invalid; constant/baseline notebooks remain rejected.
 - **Decision:** preserve v592 as the only reset-slot owner. No new Kaggle push/submission. Continue scanning until reset; if no stronger source appears, allow the parked submitter to fire.
+
+## 2026-05-20 17:48 UTC — two-pass SSM audited, v592 still owner
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; v592 reset submitter PID `13173` remains alive and sleeping toward reset.
+- **Fresh scan/audit:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1748Z.json` and `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1748Z_top/summary.json`.
+- **Candidate audit:** Tulay EfficientNet weights ERROR/no outputs; Scenery EoS6 invalid primary; Deepanshu constant baseline; Karnak S124/G124 reverse-engineered no outputs; Kospintr EfficientNet+Perch Distill+MixUp cancelled/partial; Scenery Perch V2 Full invalid `119988x235` output with `-1000` values.
+- **Two-pass SSM gate:** `scenerysunfireink/birdclef-2026-two-pass-ssm` is schema-safe (`240x235`) and distinct-sounding, so ran local sidecar gate. Artifact: `artifacts/blend_grids/scenery_two_pass_sidecar_weight_grid_20260520T1748Z.json`. Standalone rank AUC `0.97745`, corr vs v542 anchor `0.8884`; every blend weight reduced macro AUC vs base `0.9925249` (0.025 `0.9924122`, 0.05 `0.9922645`, 0.10 `0.9917289`). Do not let it displace v592.
+- **Decision:** keep v592 as sole reset-slot owner; no new push/submission; no duplicate submitter.
