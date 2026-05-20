@@ -1128,3 +1128,16 @@ Queue remains unchanged:
   - `scenerysunfireink/birdclef-2026-v6-fork-model-7-single` v1: Model_7/Karnak-style branch, schema-safe sample output but saturated family; no slot before HGNet.
 - Decision: no candidate found above v592. Keep v592 as reset-slot owner. Samejima OpenVINO is worth mining only after v592 result or if hidden runtime becomes the blocker.
 - Reminder/lesson: positive local train-soundscape sidecar gates remain rejection filters, not approval filters; v560/v573 proved locally positive sidecars can public-drop. v592 is allowed because it is a structurally distinct complete HGNet model-zoo artifact, not another micro scalar/sidecar sweep.
+
+## 2026-05-20 16:48 UTC update — capped; v592 reset submitter still healthy
+
+- Live state unchanged: latest 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; daily cap remains `5/5`.
+- Guarded v592 reset submitter remains alive: PID `13173`, sleeping until about `2026-05-21T00:05:00Z`; no duplicate submitter started and no submission attempted while capped.
+- PR #249 remains open with GitHub merge state `UNKNOWN` in this fetch; branch was clean before this log update.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1648Z.json`.
+- Fresh top-feed/source conclusions from scan and prior audit:
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` reran again, but latest checked public state remains not slot-ready: training artifact/OpenVINO lead only; not a validated competition submission.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` remains invalid/all-NaN on primary output from the 15:48 audit.
+  - New/recent top-feed items are mostly EoS6/Karnak/RankPower/S124 siblings or constant/baseline notebooks; none exceeds the validated repo-owned v592 HGNet candidate.
+  - No explicit new `0.950+`/`0.96` source claim surfaced in the search buckets.
+- Decision: keep v592 as the sole reset-slot owner. Do not start extra submitters. Samejima OpenVINO remains future acceleration work, especially if v592 hidden runtime becomes the blocker.

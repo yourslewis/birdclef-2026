@@ -3328,3 +3328,11 @@ Decision:
 - **Candidate decisions:** Samejima HGNet training v25 exposes OpenVINO artifacts but is ERROR; Samejima HGNet inference v3 outputs all-NaN primary `submission.csv`; Deepanshu is constant baseline; Nina EoS6 v15 primary remains invalid/all-NaN; Mtoshi v9 and Scenery Model_7 are saturated Karnak/PowerOptimization; Anthony S124/G124 is a duplicate of tied v589 family.
 - **Decision:** keep v592 as the reset-slot owner. No new submission or kernel push. Samejima OpenVINO is logged as a possible future acceleration path if v592 hidden runtime is problematic or if HGNet improves.
 - **Transfer lesson maintained:** local train-soundscape sidecar gates are rejection filters, not approval filters. The v592 exception is justified by complete, structurally distinct HGNet artifacts and low-correlation sidecar evidence, not just a tiny local gain.
+
+## 2026-05-20 16:48 UTC — capped re-scan; no source displaces v592
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; latest scored rows unchanged (`v585=0.922`, `v586=0.941`, `v587/v588/v589=0.949`).
+- **Submitter health:** v592 reset submitter PID `13173` is still alive, sleeping toward ~`2026-05-21T00:05:00Z`; no duplicate submitter started.
+- **Fresh scan:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1648Z.json`.
+- **Candidate decisions:** the newest DATE_RUN feed did not reveal a stronger candidate than v592. Samejima HGNet remains an OpenVINO/artifact lead but not a validated submission; current inference primary output was invalid in the prior audit. EoS6/Karnak/RankPower/S124-family reruns are saturated or invalid; constant/baseline notebooks remain rejected.
+- **Decision:** preserve v592 as the only reset-slot owner. No new Kaggle push/submission. Continue scanning until reset; if no stronger source appears, allow the parked submitter to fire.
