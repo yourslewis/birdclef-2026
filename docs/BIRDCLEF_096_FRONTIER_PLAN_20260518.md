@@ -984,3 +984,10 @@ Queue remains unchanged:
 - v586 r2 v1 completed but alternate-output submission failed because BirdCLEF requires `submission.csv`. Notebook patched so `a2_effv2s_w08` becomes `submission.csv`; r2 version 2 pushed and monitor PID `12539` is waiting for COMPLETE/output preflight.
 - v587 direct replay submitted: `itshyao/birdclef-2026-s121-s114-g116-f1-delta` v1, ref `52835586`, pending. Rationale: protected HGNet/G116 delta sidecar on S114 anchor is a more structural candidate than fresh RankPower/PriorField clones; public dry-run has row-id fallback and S121 final diagnostics.
 - Fresh 02:47 scan rejects/queues: Mtoshi v4 now COMPLETE but still Karnak/RankPower/visual family; Koushik Pantanal ERROR; Qiuzi HGNet training artifacts only; Rikuter v6/prior-field reproductions are 0.949 family. Continue scanning for true non-saturated structural sources.
+
+## 2026-05-20 03:50 UTC update — v586/v587/v588 pending, reserve final slot
+
+- v586 repo-owned A2Prime/EffV2S w08 submitted as ref `52835975` after r2 v2 completed and made w08 the normal `submission.csv`.
+- v587 Itshyao S121 S114+G116 protected delta remains pending, ref `52835586`.
+- v588 Itshyao S122 S114+G123 EfficientNetV2-B0 protected delta submitted, ref `52836864`.
+- 2026-05-20 slots used: `4/5`; reserve final slot pending scores or a genuinely stronger source. Fresh 03:47 scan did not surface a stronger non-saturated candidate besides the S122 sibling; EoS6/Kijiang/Pilkwang/Rikuter remain 0.949-family, Samejima remains Visual/BirdNET family.
