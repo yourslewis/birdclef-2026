@@ -932,3 +932,17 @@ Next action:
 - If v585 improves, port/confirm FrankSunP.
 - If v585 drops/no-scores, push/verify v586 EffV2S before considering any direct EoS/Karnak/RankPower replay.
 - Separately mine Raunak/Maryna ideas for future repo-owned structural work, not immediate submissions.
+
+## 2026-05-20 00:06 UTC — v585 submitted, wait for score before next slot
+
+- v585 FrankSunP 5-branch V4 TTA Fix submitted after reset: ref `52831360`, date `2026-05-20T00:01:09.75Z`, status `pending`.
+- 2026-05-20 UTC has `1` visible submission so far.
+- `birdclef-v585-reset` exited after the successful submission.
+- Current confirmed best remains `0.949` until v585 scores.
+- Fresh pre-reset scan: `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2347Z.json`; no newly surfaced candidate outranks the existing v585/v586 queue.
+
+Queue policy now:
+
+1. Do not submit more until v585 result is known, unless explicitly instructed.
+2. If v585 improves, port/confirm FrankSunP repo-owned.
+3. If v585 drops/no-scores, use prepared repo-owned v586 A2Prime/EffV2S extraction before EoS/Karnak/RankPower direct clones.

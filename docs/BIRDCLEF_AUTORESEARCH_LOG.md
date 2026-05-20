@@ -3134,3 +3134,18 @@ Decision:
 - Do not start a duplicate submitter and do not submit/push a new Kaggle candidate while capped.
 - The best prepared fallback remains repo-owned v586 A2Prime/EffV2S extraction if v585 drops/no-scores and no stronger `0.950+` source appears.
 - New idea-mining queue from this pass: (a) Ulyanov dual gate/head blend only as a low-risk postprocess idea, (b) Raunak sonotype mirroring / rare-class thresholding as class-specific postprocess research, (c) Maryna two-pass SSM architecture as a heavier repo-owned architecture experiment. None outrank v585/v586 as next slot owner.
+
+### v585 submitted after UTC reset — 2026-05-20 00:06 UTC
+
+- Held the run through the reset window because `birdclef-v585-reset` retried at 2026-05-19 23:47 UTC and Kaggle reported the cap would clear in 14 minutes.
+- v585 submitted successfully at reset: ref `52831360`, description `v585: Guarded direct FrankSunP 5-branch V4 TTA Fix replay`, date `2026-05-20T00:01:09.75Z`, status `pending`, file `submission.csv`.
+- Current confirmed best remains `0.949` from v574/v575/v576 until v585 scores. Do not submit v586 or any other 2026-05-20 slot before v585 result unless Wenhao explicitly asks; v585 is the active high-upside result gate.
+- The `birdclef-v585-reset` tmux session exited after submission; no stale v577/v578 scalar submitters were visible.
+- Fresh pre-reset DATE_RUN scan saved `artifacts/public_kernels_20260519_frontier_candidates/date_run_all_20260519T2347Z.json`; it found no new candidate beyond already-audited Meenal/Pilkwang/JGuevara/Adarsh/WildSound/Nina/NFNet family.
+- PR #248 remains open/blocked with the broad 0.96 source audit notes; no merge performed.
+
+Decision:
+
+- Wait for v585 score/status.
+- If v585 improves materially, immediately port/confirm FrankSunP as repo-owned.
+- If v585 drops/no-scores, first push/verify the prepared repo-owned v586 A2Prime/EffV2S extraction, then decide whether to submit it.
