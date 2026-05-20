@@ -1052,3 +1052,10 @@ Queue remains unchanged:
 - Pilkwang PriorField v11 fixed sample output validity (`3x235`, finite, min `0.46079`, max `0.53817`) and includes BirdNET v24 side output, but it is still saturated 0.949 PriorField/EoS6/Karnak-family. It does not displace v590.
 - Nina EoS6 v12 remains invalid primary output (`243x235`, all NaN).
 - Queue unchanged: (1) true new 0.95/0.96 source if found, (2) v590 Zeyad/Rajnish Proto Temporal Safe as first backup diagnostic, (3) Henry NFNet v82/v81/v80, (4) Pilkwang v11/PriorField only as last-resort valid saturated fallback.
+
+## 2026-05-20 11:48 UTC update — no new candidate above v590
+
+- Slots still capped `5/5`; best remains `0.949`; no active submitter.
+- Fresh artifacts: `scan_20260520T1148Z.json`, `source_audit_20260520T1148Z_top/summary.json`.
+- Fresh top-feed triage: Haridoss custom model is running/no submission artifact and no high-LB evidence; Meenal v23 and Samejima Visual v7 produce train/fallback-shaped `240x235` primary outputs; Jacques minimal is constant-probability baseline; Evgendvorkin baseline is `240x235` with many zeros; Qiuzi distill still running/no outputs.
+- Queue unchanged: true new 0.95/0.96 source if found; otherwise v590 Zeyad/Rajnish; then Henry NFNet v82/v81/v80; then Pilkwang v11 last-resort saturated fallback.

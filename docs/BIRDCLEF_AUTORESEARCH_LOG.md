@@ -3274,3 +3274,16 @@ Decision:
 - **Nina EoS6:** v12 still invalid primary output (`243x235`, all NaN values). Continue rejecting direct EoS6 primary-output submissions.
 - **Other scan items:** no new non-saturated 0.95/0.96 claim; Henry v80/v81/v82 and S124/PriorField/EoS6 remain backup/diagnostic families.
 - **Decision:** no candidate queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first reset backup; Pilkwang v11 becomes a later valid-but-saturated fallback behind v590 and Henry NFNet only if a slot would otherwise idle.
+
+## 2026-05-20 11:48 UTC / 2026-05-20 PDT — capped scan; fresh top-feed mostly invalid/debug outputs
+
+- **Status:** latest submissions unchanged; current best remains `0.949`; 2026-05-20 UTC count remains `5/5`. PR #249 open with flaky UNKNOWN/BLOCKED merge state; no active submitter or v577/v578 process.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1148Z.json`; audited new top-feed notebooks in `source_audit_20260520T1148Z_top/summary.json`.
+- **New top-feed findings:**
+  - `haridoss31/birdclef-my-model` v37 was RUNNING at audit time with `native_resnet_fold_0.pth` and `submission.csv` listed but no downloadable submission output yet. Source is a custom EfficientNet/OpenVINO training/inference notebook with target comments around `0.85+` macro ROC-AUC and no high-LB evidence. Monitor only; not slot-ready.
+  - `meenalsinha/birdclef-2026-improved` v23 COMPLETE but primary `submission.csv` is `240x235` train/fallback-shaped, not sample-shaped. Reject for direct submit; same visual/BirdNET family has already failed/dropped in previous attempts.
+  - `jacqueszhelinzhang/birdclef26-perch-minimal` v21 COMPLETE with valid `3x235` shape but constant probabilities (`min=max=0.0042735`); baseline/debug only.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference` v7 COMPLETE but primary output is `240x235` train/fallback-shaped. Reject for direct submit; visual/BirdNET lane remains weak/idea-mining.
+  - Qiuzi `hgnetv2-b0-training-distill` v15 was RUNNING with no outputs at audit time. Continue to wait for complete artifacts before considering HGNet distill.
+  - `evgendvorkin/birdclef-baseline` v34 COMPLETE but primary output is `240x235` train/fallback-shaped with many zeros; reject.
+- **Decision:** no queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first prepared next-reset backup diagnostic. Continue scanning for true new non-saturated 0.95/0.96 source; do not submit Meenal/Samejima/Visual/BirdNET/debug baseline outputs.
