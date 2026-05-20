@@ -1018,3 +1018,12 @@ Queue remains unchanged:
 - Samejima HGNet inference is sample-invalid/all-NaN in dry-run and has unresolved weights-dataset availability. Patch/resolution required before any direct or repo-owned submission.
 - OmModi dual-resolution EffV2/temporal-transformer notebook rejected: epoch-1 checkpoint AUC `0.5124`, all-zero fallback output.
 - Next reset candidate queue: (1) continue source frontier scan for a genuinely new >0.949 public lineage; (2) resolve HGNet weights/data availability and build a sample-safe repo-owned inference only if complete artifacts are available; (3) only then consider a guarded HGNet/EoS blend as a structural diagnostic.
+
+## 2026-05-20 07:47 UTC update — new branch after PR #248 merge
+
+- PR #248 merged; continuing on `feature/birdclef-096-hgnet-nfnet-triage-20260520`.
+- Slots remain capped `5/5`; current best unchanged at `0.949`.
+- Fresh artifacts: `scan_20260520T0747Z.json`, `source_audit_20260520T0747Z_top/summary.json`.
+- Qiuzi `hgnetv2-b0-training-distill` is not a candidate: cancelled after epoch 0 with val_score `0.54157`, no submission artifact.
+- Henry `bc2026-rankpower-nfnet-v80` is schema-valid and hidden-path plausible, with a complete `submission.csv` and NFNet safety check. However, source self-identifies as EoS5/Sunderekkiz/Pilkwang rank-power 0.949-family (`YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`), so it is a backup/diagnostic next-reset candidate only.
+- Candidate queue: (1) continue fresh source scan for non-saturated 0.95/0.96 claims; (2) resolve HGNet complete artifact/inference path; (3) if no stronger lane exists near reset, consider Henry v80 guarded direct replay as one low-upside structural diagnostic rather than more S114+G siblings.
