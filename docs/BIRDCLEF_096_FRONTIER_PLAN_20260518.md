@@ -1073,3 +1073,24 @@ Queue remains unchanged:
 - Implementation: prepared `kaggle-kernels/v591-public946-hgnet-distill-w0025/` by forking the public946 v542 anchor, attaching `qiuzilang/hgnetv2-b0-training-distill`, adding a guarded 4-fold HGNetV2-B0 inference sidecar that writes `submission_hgnet.csv`, and blending it conservatively as a `2.5%` rank sidecar (`Proto=0.585`, `SED=0.390`, `HGNet=0.025`).
 - Pushed private Kaggle validation kernel `yourslewis/bc26-v591-public946-hgnet-distill-w0025` version 1 via Bearer API. Push returned no invalid competition/data/kernel/model sources. Kernel is RUNNING at log time; no submission attempted while capped.
 - Queue update: if v591 completes with valid `submission.csv`/`submission_hgnet.csv`, it should displace v590 as the next-reset structural diagnostic. If v591 fails (mount/timm/runtime), preserve v590 Zeyad/Rajnish as backup and fix v591 only if the failure is straightforward.
+
+## 2026-05-20 13:48 UTC update — v591 fixed, v592 HGNet 10% promoted
+
+- Slots remain capped `5/5`; latest 2026-05-20 submissions are v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`; best remains `0.949`; no stale v577/v578/v590 submitter active; PR #249 remains open/BLOCKED.
+- Fresh scan/audit artifacts: `scan_20260520T1348Z.json` and `source_audit_20260520T1348Z_top/summary.json`.
+- Fresh source decisions:
+  - `meenalsinha/birdclef-2026-improved` v23 is now schema-safe (`240x235`) but remains BirdNET/Prior/RankPower-family; not enough to displace HGNet.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` exposes fold/OpenVINO-looking HGNet artifacts in file listing but current session outputs were not downloadable at audit time; watch later as a possible faster HGNet inference/export lead.
+  - `sclim2022080004/iter7-protossm-mlp` is schema-safe but explicitly SED-free 0.949/ProtoSSM+MLP lineage; hold as idea-mining only.
+  - `mtoshidesu/notebookc6e90ae327` v7 is schema-safe but saturated Karnak/PowerOptimization family.
+  - Nina EoS6 v14 primary `submission.csv` remains invalid (`243x235`, all NaN numeric parse).
+- v591 validation/fixes:
+  - v591 v1 failed on Kaggle CUDA during torchaudio STFT (`cudaErrorNoKernelImageForDevice`).
+  - v591 v2 moved preprocessing to CPU but HGNet model itself still failed on Kaggle CUDA with the same error.
+  - v591 v3 forced HGNet CPU-only and completed, but local validation caught a bug: `submission_hgnet.csv` was constant across rows because row-id parsing used the second-to-last token as end second and silently zero-filled missing dry-run audio.
+  - v591 v4 fixed row-id parsing (`end_sec = final token`) and removed the zero fallback. It completed successfully in ~524s, wrote valid `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, and `submission_sed.csv`; final CSV shape `240x235`, no NaNs, min/max `0.0053125/1.0`; HGNet min/max `3.39e-07/0.9477211`.
+- Local sidecar gate for fixed v591/v4: `artifacts/blend_grids/v591_hgnet_sidecar_weight_grid_20260520T1348Z_v4.json`. HGNet standalone rank sidecar has macro AUC `0.9956425` on the train-soundscape overlap with corr vs anchor `0.4808`. Blend grid: base `0.9925249`; HGNet `0.025` -> `0.9927187`; HGNet `0.10` -> `0.9932913`, top3 recall `0.6211` vs base `0.5211`.
+- Decision: promote a higher-upside 10% HGNet variant rather than spending the next slot on conservative 2.5% HGNet or saturated v590.
+- Added and pushed private validation kernel `yourslewis/bc26-v592-public946-hgnet-distill-w010` v1. It completed successfully in ~562s with final `submission.csv` shape `240x235`, no NaNs, min/max `0.0065000006/1.0`; `submission_hgnet.csv` valid, min/max `3.39e-07/0.9477211`.
+- Added guarded submitter `scripts/submit_v592_public946_hgnet_w010_when_ready.py`; preflight-only passed (source version 1, COMPLETE/no failure, required outputs, valid final CSV). It did not submit because the day is capped.
+- Queue update: v592 HGNet 10% is now the preferred next-reset candidate. v591/v4 is conservative fallback; v590 Zeyad/Rajnish is demoted behind HGNet unless later evidence invalidates HGNet transfer/runtime.

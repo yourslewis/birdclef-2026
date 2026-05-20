@@ -2232,7 +2232,7 @@ HGNET_OUT_CSV = 'submission_hgnet.csv'
 # runtime is too high, the next path is OpenVINO/ONNX export rather than a slot.
 HGNET_DEVICE = torch.device('cpu')
 HGNET_PREPROCESS_DEVICE = torch.device('cpu')
-print(f'v591 HGNet sidecar using weights from {HGNET_WEIGHT_DIR}; model_device={HGNET_DEVICE}; preprocess_device={HGNET_PREPROCESS_DEVICE}')
+print(f'v592 HGNet sidecar using weights from {HGNET_WEIGHT_DIR}; model_device={HGNET_DEVICE}; preprocess_device={HGNET_PREPROCESS_DEVICE}')
 
 class HGNetLogMelSpectrogramTransform(nn.Module):
     def __init__(self):
@@ -2391,7 +2391,7 @@ if float(np.max(_hgnet_probs) - np.min(_hgnet_probs)) <= 1e-8:
 _hgnet_sub = _hgnet_target.copy()
 _hgnet_sub[_hgnet_cols] = _hgnet_probs
 _hgnet_sub.to_csv(HGNET_OUT_CSV, index=False)
-print(f'v591 wrote {HGNET_OUT_CSV}: shape={_hgnet_sub.shape}, min={float(_hgnet_probs.min()):.6f}, max={float(_hgnet_probs.max()):.6f}')
+print(f'v592 wrote {HGNET_OUT_CSV}: shape={_hgnet_sub.shape}, min={float(_hgnet_probs.min()):.6f}, max={float(_hgnet_probs.max()):.6f}')
 del _waves, _fold_probs, _hgnet_probs, _hgnet_sub, _lms
 gc.collect()
 if torch.cuda.is_available():
@@ -2422,9 +2422,9 @@ rank_proto = pd.DataFrame(p_proto).rank(axis=0, pct=True).to_numpy(np.float32)
 rank_sed   = pd.DataFrame(p_sed).rank(axis=0, pct=True).to_numpy(np.float32)
 
 HGNET_CSV = "submission_hgnet.csv"
-HGNET_RANK_WEIGHT = 0.025
+HGNET_RANK_WEIGHT = 0.10
 if not os.path.exists(HGNET_CSV):
-    raise FileNotFoundError(f"Expected v591 HGNet sidecar output {HGNET_CSV}")
+    raise FileNotFoundError(f"Expected v592 HGNet sidecar output {HGNET_CSV}")
 df_hgnet = pd.read_csv(HGNET_CSV)
 df_hgnet = df_hgnet.set_index("row_id").loc[df_proto["row_id"]].reset_index()
 p_hgnet = np.clip(df_hgnet[cols].to_numpy(np.float32), EPS, 1.0 - EPS)
@@ -2433,7 +2433,7 @@ rank_hgnet = pd.DataFrame(p_hgnet).rank(axis=0, pct=True).to_numpy(np.float32)
 base_mass = 1.0 - HGNET_RANK_WEIGHT
 proto_w = 0.60 * base_mass
 sed_w = 0.40 * base_mass
-print(f"Executing v591 3-way rank blend: Proto={proto_w:.4f} SED={sed_w:.4f} HGNet={HGNET_RANK_WEIGHT:.4f}")
+print(f"Executing v592 3-way rank blend: Proto={proto_w:.4f} SED={sed_w:.4f} HGNet={HGNET_RANK_WEIGHT:.4f}")
 pred = (rank_proto * proto_w) + (rank_sed * sed_w) + (rank_hgnet * HGNET_RANK_WEIGHT)
 
 row_ids = df_proto["row_id"].astype(str).to_numpy()

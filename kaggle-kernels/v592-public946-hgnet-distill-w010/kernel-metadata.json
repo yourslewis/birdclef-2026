@@ -1,6 +1,6 @@
 {
-  "id": "yourslewis/bc26-v591-public946-hgnet-w0025",
-  "title": "BC26 v591 Public946 HGNet Distill W0025",
+  "id": "yourslewis/bc26-v592-public946-hgnet-w010",
+  "title": "BC26 v592 Public946 HGNet Distill W010",
   "code_file": "script.py",
   "language": "python",
   "kernel_type": "script",
@@ -24,6 +24,5 @@
   ],
   "model_sources": [
     "google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1"
-  ],
-  "id_no": 119961348
+  ]
 }
