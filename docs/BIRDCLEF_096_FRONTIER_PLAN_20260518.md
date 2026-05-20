@@ -1164,3 +1164,14 @@ Queue remains unchanged:
 - Rechecked status after the 17:48 two-pass audit: still capped `5/5`, best `0.949`, v592 reset submitter PID `13173` alive.
 - Additional lightweight queries for `0.95`, `0.96`, EoS6, SafeAlign, RankPower/NFNet, HGNet, and two-pass SSM did not reveal a candidate beyond the already-audited Scenery/Nina/S124/RankPower/Samejima families.
 - Keep v592 as the only reset-slot owner.
+
+## 2026-05-20 18:48 UTC update — capped; Tulay EfficientNet rerun rejected by source audit
+
+- Live state unchanged: latest 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; daily cap remains `5/5`.
+- Guarded v592 reset submitter remains alive as PID `13173`; log is still empty because the process is sleeping until the reset window. No v577/v578 scalar submitter and no duplicate v59x submitter found.
+- PR #249 remains open with merge-state fetch returning `UNKNOWN`; branch was clean before this log update.
+- Fresh scan artifact: `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1848Z.json`.
+- New source audit artifact: `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1848Z_new/summary.json`.
+- Only genuinely new dateRun item since the 17:48 audit was `tulayppppp/my-efficientnet-b0-weights` rerun at 18:45Z. Audit result: version 23 still RUNNING/no outputs, and source is not competition-safe: it writes generic `bird_i` dynamic columns, uses dummy/fallback row handling, can emit an empty `submission.csv`, and loads a generic EfficientNet baseline rather than a verified 235-class BirdCLEF submission pipeline. Reject as a slot displacer.
+- Other fresh scan rows are the already-audited Scenery EoS6/two-pass SSM, Nina EoS6, S124/G124, RankPower/NFNet, Samejima/TY0912 HGNet, SafeAlign, and acoustic-prior/EoS families; no new credible 0.96 candidate surfaced.
+- Decision: keep v592 as sole reset-slot owner; do not spend a slot on Tulay EfficientNet or scalar EoS5 tweaks.

@@ -3351,3 +3351,13 @@ Decision:
 - Rechecked repo/PR/process state: branch clean before this log update; PR #249 open/BLOCKED; v592 reset submitter PID `13173` remains the only visible v59x submitter and is sleeping toward reset.
 - Ran an additional lightweight fresh source query across `0.95`, `0.96`, EoS6, SafeAlign, RankPower/NFNet, HGNet, and two-pass SSM terms. It returned the same already-audited Scenery two-pass/EoS6, Nina EoS6, S124/G124, RankPower/NFNet, Samejima/TY0912 HGNet, and saturated EoS/SafeAlign family; no new credible slot displacer.
 - Decision unchanged: preserve v592 as sole reset-slot owner; no new submission while capped.
+
+## 2026-05-20 18:48 UTC — capped source scan, Tulay EfficientNet rejected
+
+- **Live status:** best `0.949`; 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; cap `5/5`.
+- **Process/PR:** v592 reset submitter PID `13173` alive and sleeping toward reset; no v577/v578 scalar submitter and no duplicate v59x submitter visible. PR #249 open; merge-state fetch returned `UNKNOWN`.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1848Z.json`.
+- **New audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1848Z_new/summary.json`.
+- **Tulay EfficientNet:** `tulayppppp/my-efficientnet-b0-weights` reran at 18:45Z, but audit shows v23 RUNNING/no outputs and source is unsafe/non-competitive: generic dynamic `bird_i` columns, dummy/fallback rows, potential empty `submission.csv`, and generic EfficientNet baseline load. Reject as reset-slot displacer.
+- **Other scan rows:** Scenery/Nina EoS6/two-pass, S124/G124, RankPower/NFNet, Samejima HGNet, SafeAlign, and acoustic-prior rows are previously audited/saturated; no new credible source above v592.
+- **Decision:** preserve v592 as only reset-slot owner.
