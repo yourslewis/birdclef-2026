@@ -1043,3 +1043,12 @@ Queue remains unchanged:
 - New audit did not find a stronger 0.96 lane: Bugra HDMR has no outputs; Henry v81/v82 are valid but low-upside NFNet parameter siblings; Nina EoS6 v12 primary output invalid (243 rows/all NaN); Mtoshi S124 is a duplicate tied lane; Pilkwang PriorField remains saturated.
 - Original Zeyad v4 matches the prepared Rajnish safe-writer v590 branch set and validates the candidate lineage. Keep `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py` as first backup at reset only if no stronger source appears.
 - Backup order: v590 Zeyad/Rajnish Proto Temporal Safe; Henry v82/v81/v80 NFNet diagnostics; then no-submit/continue scanning rather than more S114+G or PriorField/EoS6 replays.
+
+## 2026-05-20 10:48 UTC update — no queue change
+
+- Slots still capped `5/5`; best remains `0.949`; no active submitter.
+- Fresh artifacts: `scan_20260520T1048Z.json`, `source_audit_20260520T1048Z_top/summary.json`.
+- Re-ran v590 preflight-only: still passes and correctly does not submit while capped.
+- Pilkwang PriorField v11 fixed sample output validity (`3x235`, finite, min `0.46079`, max `0.53817`) and includes BirdNET v24 side output, but it is still saturated 0.949 PriorField/EoS6/Karnak-family. It does not displace v590.
+- Nina EoS6 v12 remains invalid primary output (`243x235`, all NaN).
+- Queue unchanged: (1) true new 0.95/0.96 source if found, (2) v590 Zeyad/Rajnish Proto Temporal Safe as first backup diagnostic, (3) Henry NFNet v82/v81/v80, (4) Pilkwang v11/PriorField only as last-resort valid saturated fallback.

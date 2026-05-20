@@ -3264,3 +3264,13 @@ Decision:
   - Mtoshi S124 test COMPLETE with valid 3x235 output but is a duplicate of already-submitted/tied S124/G124 rankblend lane.
   - Original Zeyad `birdclef-2026-proto-fusion-and-temporal-flip` v4 is equivalent to the Rajnish safe writer behind prepared v590: COMPLETE, finite 3x235 output, same BirdNET/centroid/public-CNN/Proto/SED branch set.
 - **Decision:** v590 Rajnish/Zeyad Proto Temporal Safe remains the best prepared next-reset backup diagnostic. Do not replace it with Henry v81/v82 or S124/PriorField/EoS6 reruns. Still prioritize true non-saturated 0.95/0.96 source discovery if one appears before reset.
+
+## 2026-05-20 10:48 UTC / 2026-05-20 PDT — capped scan; Pilkwang v11 fixed output but still saturated
+
+- **Status:** latest submissions unchanged; current best remains `0.949`; 2026-05-20 UTC slots are still `5/5`. PR #249 remains open, merge state currently UNKNOWN/BLOCKED-flaky; no active submitter or v577/v578 process.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1048Z.json`; audited refreshed high-rank items in `source_audit_20260520T1048Z_top/summary.json`.
+- **v590 preflight recheck:** `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py --preflight-only` still passes. Source v1 length `106762`, kernel COMPLETE/no failure, required outputs present, finite `3x235` sample submission, min `0.47687027`, max `0.556084`, zeros `0`; script correctly refuses to submit while the visible UTC count is `5`.
+- **Pilkwang PriorField refresh:** `pilkwang/949-birdclef-2026-acoustic-prior-field-fusion` v11 is now COMPLETE with finite sample-shaped `submission.csv` (`3x235`, min `0.460793537150703`, max `0.5381690938702316`) and adds `subm_birdnet_v24.csv`. This fixes output validity vs some prior unsafe wrappers, but it remains the known 0.949 PriorField/EoS6/Karnak lane, not a new 0.96-first source. Keep below v590 in backup order.
+- **Nina EoS6:** v12 still invalid primary output (`243x235`, all NaN values). Continue rejecting direct EoS6 primary-output submissions.
+- **Other scan items:** no new non-saturated 0.95/0.96 claim; Henry v80/v81/v82 and S124/PriorField/EoS6 remain backup/diagnostic families.
+- **Decision:** no candidate queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first reset backup; Pilkwang v11 becomes a later valid-but-saturated fallback behind v590 and Henry NFNet only if a slot would otherwise idle.
