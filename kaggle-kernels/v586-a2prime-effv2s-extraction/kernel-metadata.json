@@ -1,6 +1,6 @@
 {
-  "id": "yourslewis/bc26-v586-a2prime-effv2s-extraction",
-  "title": "BC26 v586 A2Prime EffV2S extraction",
+  "id": "yourslewis/bc26-v586-a2prime-effv2s-extraction-r2",
+  "title": "BC26 v586 A2Prime EffV2S extraction r2",
   "code_file": "a2prime-effv2s-extraction.ipynb",
   "language": "python",
   "kernel_type": "notebook",
@@ -32,7 +32,6 @@
     "shadiakiki1/birdnet-analyzer/TfLite/birdnet_global_6k_v2.4_model_fp32-1/3",
     "google/bird-vocalization-classifier/TensorFlow2/perch_v2_cpu/1"
   ],
-  "docker_image_pinning_type": "PIN_CURRENT_IMAGE",
   "source_ref": "claudedevore/birdclef-2026-r0946-a2prime-effv2s-submit",
   "source_version": 5,
   "audit_artifact": "artifacts/public_kernels_20260519_frontier_candidates/source_audit_20260519T1445Z/summary.json",

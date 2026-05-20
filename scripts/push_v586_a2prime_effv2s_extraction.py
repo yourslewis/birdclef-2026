@@ -36,8 +36,9 @@ def main() -> None:
         "kernelDataSources": meta.get("kernel_sources", []),
         "modelDataSources": meta.get("model_sources", []),
         "categoryIds": meta.get("keywords", []),
-        "dockerImagePinningType": meta.get("docker_image_pinning_type"),
     }
+    if meta.get("docker_image_pinning_type"):
+        payload["dockerImagePinningType"] = meta["docker_image_pinning_type"]
     print("Pushing v586 A2Prime EffV2S extraction notebook...")
     resp = requests.post(
         "https://www.kaggle.com/api/v1/kernels/push",
@@ -52,6 +53,9 @@ def main() -> None:
     print("Kernel push status:", resp.status_code)
     print("Kernel push result:", resp.text)
     resp.raise_for_status()
+    data = resp.json()
+    if data.get("hasError") or data.get("error") or data.get("errorNullable"):
+        raise SystemExit(f"Kernel push failed: {data}")
 
 
 if __name__ == "__main__":

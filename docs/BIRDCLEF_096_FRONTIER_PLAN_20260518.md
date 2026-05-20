@@ -971,3 +971,10 @@ Queue remains unchanged:
 - Wait for v585 result.
 - If v585 improves, port/confirm FrankSunP.
 - If v585 drops/no-scores, push/verify prepared repo-owned v586 A2Prime/EffV2S before direct EoS/Karnak/RankPower-family clones.
+
+## 2026-05-20 02:05 UTC update — v585 rejected, v586 EffV2S active fallback
+
+- v585 FrankSunP 5-branch V4 TTA Fix replay scored `0.922`; reject this lane and do not port/confirm.
+- Active slot candidate is repo-owned `yourslewis/bc26-v586-a2prime-effv2s-extraction-r2` v1, specifically alternate output `submission_a2_effv2s_w08.csv` (not default `submission.csv`, which is `base_3way`).
+- Guarded monitor: `scripts/submit_v586_a2prime_effv2s_w08_when_ready.py`, log `logs/v586_a2prime_effv2s_w08_submitter.log`, PID `96513` at launch. It waits for COMPLETE and validates output/summary before submit.
+- Fresh source queue notes from `source_audit_20260520T0158Z_top/summary.json`: Samejima Visual CPU remains visual/BirdNET idea-mining; Pilkwang/Adarsh prior-field forks are `0.949` RankPower-family; Mtoshi V6 is ERROR. None outrank v586.
