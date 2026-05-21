@@ -1310,3 +1310,10 @@ Queue remains unchanged:
   2. Mine Haivan blindspot/NFNet025 code for a repo-owned, protected-delta utility; do not direct-submit blindly because prior BirdNET/NFNet/public946 sidecars underperformed.
   3. Keep Meenal v24 and Henry/Cheny NFNet as fallback idea sources, not first-slot reset owners.
   4. Reject Kijiang v348-v351 until malformed/NaN `submission.csv` issue is fixed; reject Cheny/Alrickh exp070 family after v595 `0.899`.
+
+## 2026-05-21 12:00 UTC update — no reset owner yet
+
+- Cap still `5/5`; best still `0.949`.
+- Fresh scan/audit: `scan_20260521T1200Z.json` and `source_audit_20260521T1200Z_fresh/summary.json`.
+- No first-slot reset owner selected. The newest valid notebooks are mostly saturated Visual/BirdNET/PriorField/NFNet/Karnak variants; Samejima HGNet inference v6 remains invalid with NaN output; Aiaiaiooo output is all zeros.
+- Candidate watchlist for next reset: fixed Samejima HGNet/OpenVINO, genuinely new complete 0.95+ source, or repo-owned protected-delta extraction from Haivan BSF/NFNet/FrogPrior only if validation strengthens.

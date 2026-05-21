@@ -3499,3 +3499,19 @@ Decision:
 - **Heartbeat scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/heartbeat_scan_20260521T1023Z.json`; fresh source audit wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1023Z_heartbeat/summary.json`.
 - **New since 10:00:** Haivan `public0952-perch-probe-vi`, `lambda075-blindspot-nfnet025-vi`, `lambda075-blindspot-force-vi`; `mlclsumit/notebook2e815ef354`.
 - **Audit decisions:** Haivan public0952 Perch probe is valid `240x235` but same family as v595 `0.899`; do not submit. Haivan blindspot/NFNet and blindspot-force are COMPLETE/schema-valid but are PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; idea-mining only, not reset owner without stronger evidence. MLCLSumit is a generic training notebook/no Kaggle output/status and not competition-submit ready.
+
+## 2026-05-21 12:00 UTC — capped scan, no reset-worthy candidate yet
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. No stale v577/v578 scalar submitter visible. PR #250 open; PR #245 merged.
+- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1200Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1200Z_fresh/summary.json`.
+- **Fresh feed decisions:**
+  - `meenalsinha/birdclef-2026-improved` v24: COMPLETE and valid `240x235`, but overlaps Visual/BirdNET/PriorField/Karnak family; previous direct visual/BirdNET replay v584 scored `0.942`, so not a first reset-slot owner.
+  - `chenyfdws/bc26-exp083-birdnet-sitehour-safe` and `exp082-raunak-v7-safe`: COMPLETE/schema-valid dry-run but logs include public/dry-run fallback/error markers and both are older 0.941/0.947-style Perch/BirdNET/site-hour lanes; idea-mining only.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` v6: COMPLETE but `submission.csv` still all NaN/bad values (`3x235`, 702 bad); reject until row-id/merge path fixed.
+  - `chenyfdws/bc26-exp081-scenery-v6-model7-safe` and `exp079-pilkwang-time-window-rank-fusion-safe`: COMPLETE/schema-valid but saturated Model7/Karnak/Pilkwang `0.948` family; not above plateau.
+  - `chenyfdws/bc26-exp080-karnak-dual-arch-safe`: COMPLETE/schema-valid but low-scale output (`0.226-0.361`) and saturated Karnak/dual-arch lineage; not reset owner.
+  - `chenyfdws/bc26-exp078-sameji-visual-cpu-safe`: valid `240x235` but same Sameji/Visual/BirdNET family already shown weak; idea-mining only.
+  - `aiaiaiooo/birdclef2026`: COMPLETE but all-zero `3x235` submission; reject.
+  - `haivan11/birdclef-2026-bsf-nfnet-frogprior-vi` / `bsf-nfnet025-vi` and `starsdaisuki/v132-nfnet-lprior075`: COMPLETE/schema-valid but remain PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; use for code mining, not direct reset slot without new evidence.
+- **Decision:** no new submitter or Kaggle push while capped. Preserve next reset for either (a) a genuinely new complete/source-safe candidate, (b) a fixed Samejima/HGNet OpenVINO output, or (c) a repo-owned protected-delta extraction if stronger validation appears.
