@@ -3529,3 +3529,17 @@ Decision:
   - `meenalsinha/birdclef-2026-improved` v25 remains COMPLETE/valid `240x235`, but is still Visual/BirdNET/PriorField/Karnak family and not a first reset-slot owner after v584 `0.942`.
   - `lamidoahmad/birdclef-2026` is generic training/no output; not submit-ready.
 - **Decision:** no reset owner selected. Best next actionable path is still to wait for Samejima HGNet/OpenVINO training to COMPLETE or for a genuinely new source-safe candidate; otherwise next reset should not be spent on repeated Perch-probe/Public0952 or Visual/BirdNET clones.
+
+## 2026-05-21 16:02 UTC — capped scan, Samejima HGNet errored but artifacts exist
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #250 open; PR #245 merged. No stale v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1602Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1602Z_fresh/summary.json`.
+- **Key change:** `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v41 moved from RUNNING to ERROR. The error is `ValueError: continuous-multioutput format is not supported` in scoring/metric calculation, but output artifacts exist: `best_model_fold0-3.pt`, `best_val_pred_fold0-3.npy`, `result_df_fold0-3.csv`. Kernel file listing also exposes OpenVINO `.xml/.bin` for 256x256 and 256x512, but session output list does not currently expose those XML/BIN files. This remains a useful artifact-mining lead, not a direct submission.
+- **Fresh audit decisions:**
+  - `nicolasschuldt/nfnet-aves-lprior075` v2: COMPLETE/schema-valid dry-run `3x235`; attaches `samuelzxu/bc26-birdaves-onnx` and NFNet/Aves sidecars. Still EoS5/rank-power/NFNet residual family and not strong enough to own reset without evidence; code-mining/fallback only.
+  - `anthonytherrien/birdclef-2026-blend-2`: COMPLETE but `submission.csv` malformed/NaN (`243x235`, 56862 bad); reject.
+  - `abhiiiish/birdclef-26-nb-v4`: COMPLETE/schema-valid `3x235`, but fallback-to-train dry run, private/custom model dataset, very low max `0.245`, no public evidence; not reset owner.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference` v10: COMPLETE/valid `240x235`, but BirdNET branch logs unavailable/all-zero and visual family already dropped (v584 `0.942`); reject direct submit.
+  - `deepanshus167` / `mlclsumit`: generic training/no output; reject.
+- **Decision:** no submitter prepared. If slots reset before a stronger source arrives, best work is artifact mining: try to adapt Samejima HGNet PT outputs or inspect whether OpenVINO files can be pulled from kernel files; otherwise keep waiting for a genuinely new complete/source-safe candidate.

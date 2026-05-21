@@ -1325,3 +1325,11 @@ Queue remains unchanged:
 - Samejima HGNet training v41 remains the main watch item: file listing exposes fold checkpoints plus OpenVINO `.xml/.bin`, but session is still RUNNING/no usable output submission. Wait for COMPLETE/downloadable outputs before any port.
 - Reject repeated Public0952/Perch-probe clones after v595 `0.899`; reject visual/BirdNET explanatory copies after v584 `0.942`; reject generic training notebooks without `submission.csv`.
 - No submitter prepared for reset yet.
+
+## 2026-05-21 16:02 UTC update — Samejima HGNet errored, artifact-mining lead
+
+- Cap remains `5/5`; best remains `0.949`.
+- Fresh scan/audit: `scan_20260521T1602Z.json` and `source_audit_20260521T1602Z_fresh/summary.json`.
+- Samejima HGNet training v41 errored during metric calculation (`continuous-multioutput format is not supported`) but yielded PT fold checkpoints, val preds, and result CSV outputs; kernel file listing also shows OpenVINO XML/BIN assets. This is now artifact-mining material, not a direct slot candidate.
+- New feed rejected/held: Nicolas NFNet Aves LPrior075 is schema-valid but saturated NFNet/rank-power family; Anthony Blend 2 malformed/NaN; Abhiiiish low-scale fallback custom model; Samejima Visual valid but visual/BirdNET weak; generic training notebooks no outputs.
+- No reset submitter selected yet.
