@@ -3473,3 +3473,22 @@ Decision:
 - **v597 preflight:** added `scripts/submit_v597_itshyao_s128_s124v2_g127_top2_rankblend_when_ready.py`. Source preflight passed version `1` with required S128/G127 markers; kernel COMPLETE/no failure; outputs present: `submission.csv`, `submission_g124_effv2s_fold1_s124.csv`, `submission_g127_effb0ns_softce_top2_s128.csv`, `submission_protossm.csv`, `submission_sed.csv`, `subm_karnakbayev_power_optimization.csv`, `v17_logs.json`. Public dry-run final `submission.csv` is valid `3x235`, no bad values, min/max `0.47687027/0.5553993`.
 - **Submission:** submitted v597 ref `52878057` at `2026-05-21T08:06:06.807Z`, description `v597: Guarded direct Itshyao S128 S124v2 plus G127 top2 rankblend`; status pending immediately after submit. UTC cap now `5/5`.
 - **Decision:** no more slots today. If v597 ties/drops, stop direct Itshyao S124/S128 fork spending and move to repo-owned rank/protected-delta utility or new training/source discovery after reset.
+
+## 2026-05-21 10:00 UTC — v597 tied; cap used, fresh scan/audit completed
+
+- **Score update:** v597 ref `52878057` scored `0.949`, tying the plateau. Itshyao S128/S124v2/G127 is valid but did not break above the current best. Stop spending direct Itshyao S124/S128 fork slots unless a genuinely new public score/source appears.
+- **Current LB/submission state:** best remains `0.949`; 2026-05-21 UTC cap is `5/5`: v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`.
+- **Repo/process state:** branch `feature/birdclef-v596-hgnet-stream-20260521` is synced with origin; PR #250 open/BLOCKED; PR #245 merged. No stale v577/v578 scalar submitter visible.
+- **Fresh source scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1000Z.json`.
+- **Fresh focused audit:** wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1000Z_fresh/summary.json`.
+- **Audit decisions while capped:**
+  - `alrickh/bc26-exp070-public0952-may22`: COMPLETE, valid `240x235`, but same Cheny/Perch-prior-probe family as v595 (`0.899`); reject direct submit.
+  - `haivan11/birdclef-2026-lambda075-blindspot-vi`: COMPLETE/schema-valid, adds blindspot alpha boosts over saturated PriorField/BirdNET; idea-mining only until reset because direct BirdNET/PriorField side lanes have repeatedly underperformed.
+  - `haivan11/birdclef-2026-lambda075-nfnet025-vi`: COMPLETE/schema-valid, adds conservative NFNet sidecar; idea-mining/fallback only because NFNet/public946 sidecars have repeatedly failed transfer without stronger evidence.
+  - `scenerysunfireink/birdclef-2026-perch-v2-full-v2`: RUNNING/no outputs; source admits partial Perch processing/slow path, not slot-ready.
+  - `chenyfdws/bc26-exp075-kijiang-v351-genus-safealign`: COMPLETE but final dry-run `submission.csv` is constant `0.5`; reject.
+  - `meenalsinha/birdclef-2026-improved` v24: COMPLETE valid `240x235`; overlaps Visual/BirdNET/PriorField family that already dropped (v584 `0.942`) and not a first reset-slot owner.
+  - `chenyfdws/bc26-exp076-henry-rankpower-nfnet-v86`: COMPLETE/schema-valid; duplicate Henry rankpower/NFNet residual family, no new evidence beyond saturated `0.949` line.
+  - `kijiang` v348-v351: COMPLETE but downloaded `submission.csv` is malformed/NaN (`243x235`, 56862 bad values); reject.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING/no outputs; keep watching as possible future OpenVINO/HGNet artifact.
+- **Decision:** no submitter prepared for reset yet. Next useful work is to continue source discovery and/or extract a repo-owned utility from the safer concepts (blindspot/NFNet/protected-delta) only if stronger validation appears.

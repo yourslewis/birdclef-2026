@@ -1299,3 +1299,14 @@ Queue remains unchanged:
 - Preflight summary: source markers and outputs passed; public dry-run final CSV valid `3x235`, no NaNs/infs, min/max `0.47687027/0.5553993`. Public dry-run keeps anchor on row mismatch, but hidden scoring should exercise the sidecar when sample/test row IDs align.
 - Submitted v597 ref `52878057`; pending. 2026-05-21 UTC cap now `5/5`.
 - Next after result: if v597 improves, immediately repo-port/confirm the S128/G127 path. If it ties/drops, stop direct S124/S128 fork spending and pursue a repo-owned extracted utility or new independent model/source lane.
+
+## 2026-05-21 10:00 UTC update — S128/G127 tied; cap used
+
+- v597 S128/S124v2/G127 scored `0.949`, tying but not improving. Treat visible direct Itshyao S124/S128 fork family as saturated unless a new non-replayable-public-score mystery is resolved.
+- 2026-05-21 cap is now `5/5`; no further submissions today.
+- Fresh scan: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1000Z.json`; focused audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1000Z_fresh/summary.json`.
+- Next-source queue after audit:
+  1. Watch Samejima HGNet/OpenVINO training until COMPLETE; use only if outputs are downloadable and inference path is finite/non-NaN.
+  2. Mine Haivan blindspot/NFNet025 code for a repo-owned, protected-delta utility; do not direct-submit blindly because prior BirdNET/NFNet/public946 sidecars underperformed.
+  3. Keep Meenal v24 and Henry/Cheny NFNet as fallback idea sources, not first-slot reset owners.
+  4. Reject Kijiang v348-v351 until malformed/NaN `submission.csv` issue is fixed; reject Cheny/Alrickh exp070 family after v595 `0.899`.
