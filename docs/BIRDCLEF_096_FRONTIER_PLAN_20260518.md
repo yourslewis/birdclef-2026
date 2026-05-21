@@ -1219,3 +1219,14 @@ Queue remains unchanged:
   - `juanpp11/birdclef2026-seguda-parte`: v4 ERROR/no outputs; local/offline EfficientNet weight path notebook, no validated `submission.csv`; not slot-ready.
   - `tulayppppp/my-efficientnet-b0-weights`: v28 ERROR/no outputs; still generic/dynamic/fallback EfficientNet and not competition-safe.
 - Decision: no candidate displaces v593. Keep v593 first at reset; v592 HGNet remains backup if v593 ties/drops/no-scores.
+
+## 2026-05-21 00:01 UTC reset update — v593 submitted, pending
+
+- At reset, 2026-05-21 visible submissions were initially `0`; 2026-05-20 final remained v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`.
+- The parked v593 submitter PID `96527` woke but failed before submission because it used system `python3` and hit a local Kaggle SDK signature mismatch: `KaggleHttpClient.__init__() got an unexpected keyword argument 'api_token'`. No submission was created by that failed wrapper.
+- Immediately reran the same guarded submitter with the repo/Kaggle venv: `/Users/yourslewis/.openclaw/workspace-don/kaggle/playground-series-s6e3/.venv/bin/python scripts/submit_v593_itshyao_s124_g124_rankblend_v2_when_ready.py`.
+- v593 manual guarded run passed all checks and submitted successfully: ref `52866246`, description `v593: Guarded direct Itshyao S124 S114 plus G124 F1 rankblend v2 0952 lead`, date `2026-05-21T00:06:26.767Z`, status `pending` at `00:08Z`; 2026-05-21 count is now `1/5`.
+- Pre-submit scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0001Z.json`.
+- Pre-submit audit artifact: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0001Z_top/summary.json`.
+- Fresh 00:01 audit decisions: `rauffauzanrambe/birdclef-2026-s124-s114-g124-f1-rankblend` is a fork of the S124/S114/G124 family but lacks the G124 asset and logs `S124 G124 fold1 rank sidecar failed`; not better than v593. `mtoshidesu/notebookc6e90ae327` v11 is COMPLETE/schema-valid but only a Karnakbayev PowerOptimization `0.948`/0.949-family output; not a slot displacer.
+- Hold remaining 4 slots until v593 scores or a clearly stronger fresh source appears. If v593 confirms >=0.952, port/confirm repo-owned; if it ties/drops/no-scores, fall back to v592 HGNet or S124/G124 reconstruction mining.

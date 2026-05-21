@@ -3396,3 +3396,11 @@ Decision:
 - **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2200Z_top/summary.json`.
 - **Fresh audit:** Muhammad WildSound v8 is ERROR/no outputs due missing train metadata path; Juanpp segunda parte is ERROR/no outputs and local/offline-weight style; Tulay EfficientNet v28 remains ERROR/no outputs and unsafe/generic. None displaces v593.
 - **Decision:** keep v593 first; v592 HGNet backup.
+
+## 2026-05-21 00:01 UTC — v593 submitted and pending
+
+- **Reset status:** 2026-05-21 initially `0/5`; 2026-05-20 final remained v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`.
+- **Wrapper issue:** parked v593 PID `96527` failed before submission due system Python using an incompatible Kaggle SDK (`KaggleHttpClient.__init__() got an unexpected keyword argument 'api_token'`). No submission was created by the wrapper.
+- **Recovery:** reran guarded v593 with venv Python. Checks passed: source v2, COMPLETE/no failure, required outputs present, finite `3x235` submission. Submitted ref `52866246`; visible as `pending` at `2026-05-21T00:06:26.767Z`; count now `1/5`.
+- **Scan/audit:** saved `scan_20260521T0001Z.json` and `source_audit_20260521T0001Z_top/summary.json`. Rauffauzan S124 fork fails G124 sidecar (`S124 G124 fold1 rank sidecar failed`) and is not above v593; Mtoshi v11 is schema-valid but Karnak/0.948-family only.
+- **Decision:** hold remaining four slots until v593 score lands or a clearly stronger fresh source appears.
