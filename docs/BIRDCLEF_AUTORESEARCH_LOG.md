@@ -3492,3 +3492,10 @@ Decision:
   - `kijiang` v348-v351: COMPLETE but downloaded `submission.csv` is malformed/NaN (`243x235`, 56862 bad values); reject.
   - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING/no outputs; keep watching as possible future OpenVINO/HGNet artifact.
 - **Decision:** no submitter prepared for reset yet. Next useful work is to continue source discovery and/or extract a repo-owned utility from the safer concepts (blindspot/NFNet/protected-delta) only if stronger validation appears.
+
+## 2026-05-21 10:23 UTC heartbeat — capped post-v597 scout
+
+- **Status:** best remains `0.949`; 2026-05-21 cap remains `5/5`; v597 `0.949`, v596 `0.946`, v595 `0.899`, v594 RAM/no-score, v593 `0.949`.
+- **Heartbeat scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/heartbeat_scan_20260521T1023Z.json`; fresh source audit wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1023Z_heartbeat/summary.json`.
+- **New since 10:00:** Haivan `public0952-perch-probe-vi`, `lambda075-blindspot-nfnet025-vi`, `lambda075-blindspot-force-vi`; `mlclsumit/notebook2e815ef354`.
+- **Audit decisions:** Haivan public0952 Perch probe is valid `240x235` but same family as v595 `0.899`; do not submit. Haivan blindspot/NFNet and blindspot-force are COMPLETE/schema-valid but are PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; idea-mining only, not reset owner without stronger evidence. MLCLSumit is a generic training notebook/no Kaggle output/status and not competition-submit ready.
