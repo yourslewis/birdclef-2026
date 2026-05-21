@@ -1255,3 +1255,12 @@ Queue remains unchanged:
   - `karnakbaevarthur/s124-g124-reverse-engineered` is promising for future training/porting but produces no `submission.csv` yet; not a direct submit candidate.
 - Added guarded submitter `scripts/submit_v595_cheny_public0952_perch_prior_probe.py` and submitted v595 ref `52871700` at `2026-05-21T04:07:52Z`; status pending. 2026-05-21 count now `3/5`.
 - Hold remaining `2/5` slots until v595 scores or a clearly stronger complete/source-safe candidate appears. Next candidate class: repo-owned port of Cheny exp070 if it scores high; otherwise mine Karnak S124/G124 reverse-engineering or memory-safe HGNet/OpenVINO sidecar, but do not submit Samejima HGNet until NaNs are fixed.
+
+## 2026-05-21 18:00 UTC update — v598 Samejima HGNet artifact becomes first reset owner
+
+- Cap remains `5/5`; best remains `0.949`. Fresh scan/audit: `scan_20260521T1800Z.json` and `source_audit_20260521T1800Z_fresh/summary.json`.
+- Public R0952/PriorField/Visual feed items were audited but held: Claudedevore R0952 is still EoS/Karnak Model2+Model5 blend-family, and Vicmcorrea PriorField logs BirdNET unavailable / saturated Visual-BirdNET behavior.
+- Samejima HGNet training v41 is now the strongest reset candidate: despite final metric error, it exposes fold checkpoints/OpenVINO artifacts and fold validation scores averaging `0.9674`. This is materially more distinct than another scalar EoS5 or public946 sidecar.
+- Prepared repo-owned v598 notebook kernel `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1 (kernel id `120124341`) using Samejima inference source + training kernel outputs as a kernel source, with fixed dry-run row alignment and finite-output guard.
+- v598 dry-run COMPLETE/preflight: `submission.csv` valid `120x235`, no NaNs/infs, min/max `0.00097276596/0.86856884`; OpenVINO path executed.
+- Guarded wait-for-slot monitor is active for the 2026-05-22 UTC reset (`logs/v598_samejima_hgnet_submit_20260522.log`). If v598 scores high, immediately port/confirm/ensemble; if it drops/no-scores, diagnose hidden runtime/path behavior before spending another HGNet slot.

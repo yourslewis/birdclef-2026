@@ -1,0 +1,21 @@
+{
+  "id": "yourslewis/bc26-v598-samejima-hgnet-openvino-artifact",
+  "title": "BC26 v598 Samejima HGNet OpenVINO Artifact",
+  "code_file": "v598.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "birdclef-2026"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "ttahara/birdclef-2026-download-wheels",
+    "samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training"
+  ],
+  "model_sources": [],
+  "id_no": 120124341
+}
