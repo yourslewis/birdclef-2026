@@ -1264,3 +1264,11 @@ Queue remains unchanged:
 - Prepared repo-owned v598 notebook kernel `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1 (kernel id `120124341`) using Samejima inference source + training kernel outputs as a kernel source, with fixed dry-run row alignment and finite-output guard.
 - v598 dry-run COMPLETE/preflight: `submission.csv` valid `120x235`, no NaNs/infs, min/max `0.00097276596/0.86856884`; OpenVINO path executed.
 - Guarded wait-for-slot monitor is active for the 2026-05-22 UTC reset (`logs/v598_samejima_hgnet_submit_20260522.log`). If v598 scores high, immediately port/confirm/ensemble; if it drops/no-scores, diagnose hidden runtime/path behavior before spending another HGNet slot.
+
+## 2026-05-21 20:00 UTC update — no newer reset candidate than v598
+
+- Cap remains `5/5`; best remains `0.949`. Fresh scan: `scan_20260521T2000Z.json`; focused audit: `source_audit_20260521T2000Z_fresh/summary.json`.
+- v598 guarded monitor remains alive and sleeping until after 2026-05-22 UTC reset after passing source/status/output preflight.
+- Only new/changed feed item after 18UTC was `deepanshus167/bird-claasifier-comp`; it is COMPLETE but outputless/no `submission.csv`, so not submit-ready.
+- Web search found no fresh public `0.960/0.96` notebook claim.
+- Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next available slot; next work is score recheck after reset and immediate diagnose/port depending on v598 result.

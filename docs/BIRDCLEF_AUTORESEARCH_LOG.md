@@ -3447,3 +3447,14 @@ Decision:
 - **Kaggle push/preflight:** pushed `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1, kernel id `120124341`; run COMPLETE with `submission.csv` only. Dry-run output valid `120x235`, no bad values, min/max `0.00097276596/0.86856884`; log shows OpenVINO fold inference completed (`~2.7s/fold` for 120 segments) and no merge NaNs.
 - **Submission scheduling:** started guarded wait-for-slot monitor PID recorded in `logs/v598_samejima_hgnet_submit_20260522.pid`; log `logs/v598_samejima_hgnet_submit_20260522.log`. It completed source/status/output preflight, saw 2026-05-21 cap `5/5`, and is sleeping until just after 2026-05-22 UTC reset. It will submit at most one v598 code submission with description `v598: Repo-owned Samejima HGNet OpenVINO artifact inference`, unless already visible or preflight fails.
 
+
+## 2026-05-21 20:00 UTC — capped scan; v598 monitor remains reset owner
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #251 (v598) and PR #250 (v596) are open/BLOCKED. No v577/v578 scalar submitter visible.
+- **v598 monitor:** PID in `logs/v598_samejima_hgnet_submit_20260522.pid` is alive and still sleeping after successful source/status/output preflight; log `logs/v598_samejima_hgnet_submit_20260522.log` shows cap `5/5` and sleep until after 2026-05-22 UTC reset.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T2000Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T2000Z_fresh/summary.json`.
+- **New/changed feed:** only `deepanshus167/bird-claasifier-comp` reran after the 18UTC scan (`2026-05-21T18:11Z`). Audit showed it is COMPLETE but still has no output files/submission and is an exploratory training/visualization notebook, not a competition-submit candidate.
+- **External web check:** search for fresh `0.960/0.96` BirdCLEF Kaggle notebook claims returned no results.
+- **Decision:** keep v598 Samejima HGNet OpenVINO artifact as the first reset-slot owner. Do not start duplicate submitters or spend a slot on repeated EoS/Karnak/R0952/PriorField/Visual/NFNet clones while v598 is queued.
+
