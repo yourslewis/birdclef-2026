@@ -1256,80 +1256,19 @@ Queue remains unchanged:
 - Added guarded submitter `scripts/submit_v595_cheny_public0952_perch_prior_probe.py` and submitted v595 ref `52871700` at `2026-05-21T04:07:52Z`; status pending. 2026-05-21 count now `3/5`.
 - Hold remaining `2/5` slots until v595 scores or a clearly stronger complete/source-safe candidate appears. Next candidate class: repo-owned port of Cheny exp070 if it scores high; otherwise mine Karnak S124/G124 reverse-engineering or memory-safe HGNet/OpenVINO sidecar, but do not submit Samejima HGNet until NaNs are fixed.
 
-## 2026-05-21 06:00 UTC update — v595 failed; 06:00 scan, no slot spent
+## 2026-05-21 18:00 UTC update — v598 Samejima HGNet artifact becomes first reset owner
 
-- Submission status: v595 Cheny `public0952` Perch-prior probe scored `0.899`; v594 remains no-score RAM fail; v593 remains `0.949`. 2026-05-21 UTC count is `3/5`; two slots remain.
-- PR state: PR #249 and #245 are both merged; current branch is clean against origin. No stale v577/v578 scalar submitter or reset submitter was visible.
-- Fresh scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0600Z.json`; focused audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0600Z_fresh/summary.json`.
-- Candidate audit decisions:
-  - `haivan11/birdclef-2026-proto-rank-062-vi`: valid dry-run output but explicitly a Proto/SED rank scalar shift (`0.60/0.40` -> `0.62/0.38`) on PriorField/Yaroslav family; not 0.96-upside after v595 and prior-field saturation.
-  - `mtoshidesu/notebookc6e90ae327`: valid dry-run but Karnak/PowerOptimization family; no independent >0.949 evidence.
-  - `qiuzilang/hgnetv2-b0-training-distill`: ERROR/no outputs; not slot-ready.
-  - `alrickh/bc26-eos5-meta-may21`: valid dry-run but EoS5 Model2/Model5 scalar blend family already confirmed `0.949`; low-upside.
-  - `alrickh/bc26-nfnet-lprior075-may21` and `henryszy/bc2026-g124-protectdelta-v84`: COMPLETE and schema-valid, but still rank-power/prior residual-diversity family. Keep as fallback/idea-mining only; do not spend a slot ahead of fresh-source discovery because prior sidecars have repeatedly dropped or no-scored.
-  - `chenyfdws/bc26-exp071-perch-starter-birdnet-unmapped`: now COMPLETE and valid dry-run, but same Perch-prior/probe family whose direct replay v595 scored `0.899`; skip direct submit.
-  - `samejimatink0/birdclef-2026-visual-cpu-inference`: COMPLETE and valid `240x235`, but Visual/BirdNET/Mtoshi family already scored `0.942` via v584; not a 0.96 candidate.
-  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING training artifacts; no submission output yet.
-  - `karnakbaevarthur/s124-g124-reverse-engineered`: still no submission output, but remains the best code-mining lead for a repo-owned G124/S124 sidecar because it documents the private Itshyao G124 asset dependency and rankblend gates.
-- Decision: spend **no** Kaggle slot at 06:00. Preserve remaining two slots for a stronger complete/source-safe candidate or a repo-owned artifact. Next productive work is mining Karnak/Samejima HGNet/S124 code for a memory-safe repo-owned sidecar rather than more direct scalar/fork submissions.
+- Cap remains `5/5`; best remains `0.949`. Fresh scan/audit: `scan_20260521T1800Z.json` and `source_audit_20260521T1800Z_fresh/summary.json`.
+- Public R0952/PriorField/Visual feed items were audited but held: Claudedevore R0952 is still EoS/Karnak Model2+Model5 blend-family, and Vicmcorrea PriorField logs BirdNET unavailable / saturated Visual-BirdNET behavior.
+- Samejima HGNet training v41 is now the strongest reset candidate: despite final metric error, it exposes fold checkpoints/OpenVINO artifacts and fold validation scores averaging `0.9674`. This is materially more distinct than another scalar EoS5 or public946 sidecar.
+- Prepared repo-owned v598 notebook kernel `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1 (kernel id `120124341`) using Samejima inference source + training kernel outputs as a kernel source, with fixed dry-run row alignment and finite-output guard.
+- v598 dry-run COMPLETE/preflight: `submission.csv` valid `120x235`, no NaNs/infs, min/max `0.00097276596/0.86856884`; OpenVINO path executed.
+- Guarded wait-for-slot monitor is active for the 2026-05-22 UTC reset (`logs/v598_samejima_hgnet_submit_20260522.log`). If v598 scores high, immediately port/confirm/ensemble; if it drops/no-scores, diagnose hidden runtime/path behavior before spending another HGNet slot.
 
-## 2026-05-21 06:24 UTC update — v596 streaming HGNet sidecar submitted
+## 2026-05-21 20:00 UTC update — no newer reset candidate than v598
 
-- User asked to push harder on breaking the ceiling, so direct-public replay search was parallelized with S124/G124 code mining and HGNet repair mining.
-- Public scout report: `artifacts/public_kernels_20260521_frontier_candidates/breakthrough_scout_report_0602.md`. It found no convincing independent public candidate above `0.949`; best speculative direct-public fallback is `alrickh/bc26-nfnet-lprior075-may21`, but still lower EV than a repo-owned HGNet repair.
-- S124/G124 mining report: `artifacts/public_kernels_20260521_frontier_candidates/karnak_s124_mining_report_0602.md`. Conclusion: Karnak/Itshyao G124 exact path is blocked by missing private `g124_fold1_fp16.pt`; extract rank/protected-delta utility later, but no direct G124 recreation is slot-ready.
-- HGNet repair report: `artifacts/public_kernels_20260521_frontier_candidates/hgnet_repair_report_0602.md`. Conclusion: v594 failure was likely memory implementation, not invalid model signal; Qiuzi HGNet sidecar should be streamed file/fold-wise.
-- Created branch `feature/birdclef-v596-hgnet-stream-20260521` from updated `origin/main`.
-- Built private repo-owned kernel `kaggle-kernels/v596-public946-hgnet-distill-w010-stream/` with slug `yourslewis/bc26-v596-public946-hgnet-w010-stream` and CPU/no-internet metadata. It copies v592 but replaces HGNet global materialization with streaming accumulator:
-  - no global `_segments`, `_waves`, `_fold_probs`, or all-audio cache;
-  - groups row_ids by audio id;
-  - loads one audio file at a time;
-  - for each of 4 folds, accumulates `sigmoid(logits)/4` into a `(n_rows, 234)` float32 matrix;
-  - logs RSS before/after folds.
-- Pushed Kaggle kernel version `1`, kernel id `120055586`; run completed with outputs `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, and caches.
-- Dry-run validation: `submission.csv` valid `240x235`, no bad values, min/max `0.0073333336/1.0`; `submission_hgnet.csv` valid `240x235`, HGNet max `0.947721`; run log showed HGNet streaming rows `240` per fold and RSS stayed roughly `21.39GB -> 21.54GB`, i.e. no multi-GB growth from segment/fold materialization.
-- Submitted v596 ref `52875117` at `2026-05-21T06:24:24.773Z`; status pending. UTC count now `4/5`; preserve final slot pending v596 score unless a clearly stronger source appears.
-
-## 2026-05-21 08:06 UTC update — v596 0.946; v597 final-slot S128/G127 probe pending
-
-- v596 streaming HGNet sidecar scored `0.946`: memory-safe repair worked, but HGNet 10% did not improve over the `0.949` plateau. Do not spend another slot on HGNet weight variants without stronger evidence than local/public946 gates.
-- Fresh scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0800Z.json`; audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0800Z_fresh/summary.json`.
-- Final slot candidate selected: `itshyao/birdclef-2026-s128-s124v2-g127-top2-rankblend` v1. It adds a new G127 EfficientNet-B0 NS softCE pseudo top-2 sidecar on top of the S124/S124v2 rankblend family, with visible assets and output files.
-- Guarded submitter: `scripts/submit_v597_itshyao_s128_s124v2_g127_top2_rankblend_when_ready.py`.
-- Preflight summary: source markers and outputs passed; public dry-run final CSV valid `3x235`, no NaNs/infs, min/max `0.47687027/0.5553993`. Public dry-run keeps anchor on row mismatch, but hidden scoring should exercise the sidecar when sample/test row IDs align.
-- Submitted v597 ref `52878057`; pending. 2026-05-21 UTC cap now `5/5`.
-- Next after result: if v597 improves, immediately repo-port/confirm the S128/G127 path. If it ties/drops, stop direct S124/S128 fork spending and pursue a repo-owned extracted utility or new independent model/source lane.
-
-## 2026-05-21 10:00 UTC update — S128/G127 tied; cap used
-
-- v597 S128/S124v2/G127 scored `0.949`, tying but not improving. Treat visible direct Itshyao S124/S128 fork family as saturated unless a new non-replayable-public-score mystery is resolved.
-- 2026-05-21 cap is now `5/5`; no further submissions today.
-- Fresh scan: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1000Z.json`; focused audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1000Z_fresh/summary.json`.
-- Next-source queue after audit:
-  1. Watch Samejima HGNet/OpenVINO training until COMPLETE; use only if outputs are downloadable and inference path is finite/non-NaN.
-  2. Mine Haivan blindspot/NFNet025 code for a repo-owned, protected-delta utility; do not direct-submit blindly because prior BirdNET/NFNet/public946 sidecars underperformed.
-  3. Keep Meenal v24 and Henry/Cheny NFNet as fallback idea sources, not first-slot reset owners.
-  4. Reject Kijiang v348-v351 until malformed/NaN `submission.csv` issue is fixed; reject Cheny/Alrickh exp070 family after v595 `0.899`.
-
-## 2026-05-21 12:00 UTC update — no reset owner yet
-
-- Cap still `5/5`; best still `0.949`.
-- Fresh scan/audit: `scan_20260521T1200Z.json` and `source_audit_20260521T1200Z_fresh/summary.json`.
-- No first-slot reset owner selected. The newest valid notebooks are mostly saturated Visual/BirdNET/PriorField/NFNet/Karnak variants; Samejima HGNet inference v6 remains invalid with NaN output; Aiaiaiooo output is all zeros.
-- Candidate watchlist for next reset: fixed Samejima HGNet/OpenVINO, genuinely new complete 0.95+ source, or repo-owned protected-delta extraction from Haivan BSF/NFNet/FrogPrior only if validation strengthens.
-
-## 2026-05-21 14:00 UTC update — Samejima watch, no submitter
-
-- Cap remains `5/5`; best remains `0.949`.
-- Fresh scan/audit: `scan_20260521T1400Z.json` and `source_audit_20260521T1400Z_fresh/summary.json`.
-- Samejima HGNet training v41 remains the main watch item: file listing exposes fold checkpoints plus OpenVINO `.xml/.bin`, but session is still RUNNING/no usable output submission. Wait for COMPLETE/downloadable outputs before any port.
-- Reject repeated Public0952/Perch-probe clones after v595 `0.899`; reject visual/BirdNET explanatory copies after v584 `0.942`; reject generic training notebooks without `submission.csv`.
-- No submitter prepared for reset yet.
-
-## 2026-05-21 16:02 UTC update — Samejima HGNet errored, artifact-mining lead
-
-- Cap remains `5/5`; best remains `0.949`.
-- Fresh scan/audit: `scan_20260521T1602Z.json` and `source_audit_20260521T1602Z_fresh/summary.json`.
-- Samejima HGNet training v41 errored during metric calculation (`continuous-multioutput format is not supported`) but yielded PT fold checkpoints, val preds, and result CSV outputs; kernel file listing also shows OpenVINO XML/BIN assets. This is now artifact-mining material, not a direct slot candidate.
-- New feed rejected/held: Nicolas NFNet Aves LPrior075 is schema-valid but saturated NFNet/rank-power family; Anthony Blend 2 malformed/NaN; Abhiiiish low-scale fallback custom model; Samejima Visual valid but visual/BirdNET weak; generic training notebooks no outputs.
-- No reset submitter selected yet.
+- Cap remains `5/5`; best remains `0.949`. Fresh scan: `scan_20260521T2000Z.json`; focused audit: `source_audit_20260521T2000Z_fresh/summary.json`.
+- v598 guarded monitor remains alive and sleeping until after 2026-05-22 UTC reset after passing source/status/output preflight.
+- Only new/changed feed item after 18UTC was `deepanshus167/bird-claasifier-comp`; it is COMPLETE but outputless/no `submission.csv`, so not submit-ready.
+- Web search found no fresh public `0.960/0.96` notebook claim.
+- Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next available slot; next work is score recheck after reset and immediate diagnose/port depending on v598 result.

@@ -3433,113 +3433,28 @@ Decision:
 - Review of >0.949 notes: only the user-reported Itshyao `0.952` and derivative references to that same S124/G124 lead were found as explicit public-LB claims above `0.949`; our v593 direct v2 replay reproduced only `0.949`. Cheny `public0952` did not reproduce (`0.899`). Karnak `s124-g124-reverse-engineered` cites the Itshyao 0.952 but has no submission artifact; use only for code-mining/training-port ideas.
 - Working hypothesis for Itshyao 0.952 non-repro: exact decoded v1/v2 source matched and public dry-run log kept the S114 anchor due row mismatch; if the public post actually showed 0.952, the lift likely depended on a private/non-current artifact/version, author-side submission state, leaderboard/reporting mismatch, or non-replayable attached asset/version rather than visible source changes.
 
-## 2026-05-21 06:00 UTC — v595 failed; scan found no slot-worthy candidate
+## 2026-05-21 18:00 UTC — capped scan; v598 Samejima HGNet artifact port prepared
 
-- **Live scores:** v595 `0.899`; v594 RAM/no-score; v593 `0.949`; best remains `0.949`; UTC count `3/5`, two slots remain.
-- **State:** PR #249 and #245 merged; branch clean; no stale v577/v578/reset submitters.
-- **Artifacts:** `scan_20260521T0600Z.json` and `source_audit_20260521T0600Z_fresh/summary.json`.
-- **Rejected for direct submission:**
-  - Haivan Proto Rank 062: small PriorField scalar (`PROTO_RANK_WEIGHT=0.62`) on saturated family.
-  - Mtoshi v14: Karnak/PowerOptimization family only.
-  - Qiuzi HGNet distill: ERROR/no outputs.
-  - Alrickh EoS5 meta: EoS5 Model2/5 scalar blend family; already `0.949`.
-  - Alrickh NFNet LPrior075 / Henry G124 protectdelta: schema-valid residual-diversity/rank-power family, but prior sidecars have repeatedly failed public transfer; idea-mining/fallback only.
-  - Cheny exp071: now output-valid, but same Perch-prior/probe family as v595 (`0.899`); skip.
-  - Samejima Visual CPU: output-valid `240x235`, but Visual/BirdNET/Mtoshi direct lane already dropped to `0.942` in v584.
-  - Samejima HGNet training: still running/no submission output.
-  - Karnak S124/G124 reverse-engineered: no outputs; code-mining only.
-- **Decision:** no new slot spent. Preserve final two slots for a genuinely new complete/source-safe candidate or a repo-owned sidecar generated from Karnak/Samejima/HGNet mining.
-
-## 2026-05-21 06:24 UTC — v596 streaming HGNet sidecar submitted
-
-- **Breakthrough push:** parallel scouting found no public source with credible independent >`0.949` evidence. Reports written:
-  - `breakthrough_scout_report_0602.md`
-  - `karnak_s124_mining_report_0602.md`
-  - `hgnet_repair_report_0602.md`
-- **Decision:** stop spending on public forks; build the strongest repo-owned non-saturated artifact. HGNet repair is most credible because v594 preflight was valid and failure was RAM-only.
-- **Implementation:** new branch `feature/birdclef-v596-hgnet-stream-20260521`; new kernel folder `kaggle-kernels/v596-public946-hgnet-distill-w010-stream/`; submitter `scripts/submit_v596_public946_hgnet_w010_stream_when_ready.py`.
-- **Code change:** replaced v592/v594 HGNet all-at-once inference (`_segments`, `_waves`, `_fold_probs`, audio cache) with streaming `(fold, audio-file)` inference and a single `_hgnet_probs_sum` accumulator. Added RSS logging.
-- **Kaggle kernel:** pushed `yourslewis/bc26-v596-public946-hgnet-w010-stream` v1, kernel id `120055586`; COMPLETE/no failure.
-- **Validation:** outputs present: `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, `submission_sed.csv`; final `submission.csv` `240x235`, no bad values, min/max `0.0073333336/1.0`; log shows streaming HGNet folds processed 240 rows each with RSS approximately `21392MB` to `21538MB`, avoiding hidden-scale segment/fold materialization.
-- **Submission:** v596 ref `52875117`, description `v596: Repo-owned public946 plus streaming Qiuzi HGNet rank sidecar 10pct`, pending at `2026-05-21T06:24:24.773Z`. UTC count `4/5`; hold final slot until v596 scores.
-
-## 2026-05-21 08:06 UTC — v596 scored 0.946; v597 Itshyao S128/S124v2/G127 submitted
-
-- **v596 result:** streaming HGNet repair scored `0.946`. The streaming implementation fixed the v594 RAM failure and produced valid hidden-scale output, but the Qiuzi HGNet 10% sidecar still failed to transfer above the `0.949` plateau. Lesson reinforced: public946 sidecar/local-gate signals are rejection filters only, not approval filters.
-- **Slot state before action:** 2026-05-21 UTC count was `4/5` after v593/v594/v595/v596; one slot remained. Best confirmed public LB stayed `0.949`; target remains `0.960`.
-- **Fresh 08:00 source scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0800Z.json`; focused audit wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0800Z_fresh/summary.json`.
-- **Candidate chosen:** `itshyao/birdclef-2026-s128-s124v2-g127-top2-rankblend` v1. This is the only fresh source-safe candidate with a new structural sidecar: S128/S124v2 anchor plus G127 EfficientNet-B0 NS softCE pseudo top-2 rankblend (`S128_RANK_WEIGHT=0.075`, checkpoints `g127_fold1_fp16.pt` and `g127_fold2_fp16.pt`).
-- **Rejected/held from same scan:** Henry/Alrickh NFNet residual-diversity variants are valid but saturated rank-power/prior-family; Kijiang v345 outputs all zeros on dry-run and v346 has malformed/NaN output; Samejima HGNet inference still emits bad/NaN public output; Cheny exp072 is same Perch-prior/probe family as v595 drop; Jaskaran training notebook still RUNNING/no output.
-- **v597 preflight:** added `scripts/submit_v597_itshyao_s128_s124v2_g127_top2_rankblend_when_ready.py`. Source preflight passed version `1` with required S128/G127 markers; kernel COMPLETE/no failure; outputs present: `submission.csv`, `submission_g124_effv2s_fold1_s124.csv`, `submission_g127_effb0ns_softce_top2_s128.csv`, `submission_protossm.csv`, `submission_sed.csv`, `subm_karnakbayev_power_optimization.csv`, `v17_logs.json`. Public dry-run final `submission.csv` is valid `3x235`, no bad values, min/max `0.47687027/0.5553993`.
-- **Submission:** submitted v597 ref `52878057` at `2026-05-21T08:06:06.807Z`, description `v597: Guarded direct Itshyao S128 S124v2 plus G127 top2 rankblend`; status pending immediately after submit. UTC cap now `5/5`.
-- **Decision:** no more slots today. If v597 ties/drops, stop direct Itshyao S124/S128 fork spending and move to repo-owned rank/protected-delta utility or new training/source discovery after reset.
-
-## 2026-05-21 10:00 UTC — v597 tied; cap used, fresh scan/audit completed
-
-- **Score update:** v597 ref `52878057` scored `0.949`, tying the plateau. Itshyao S128/S124v2/G127 is valid but did not break above the current best. Stop spending direct Itshyao S124/S128 fork slots unless a genuinely new public score/source appears.
-- **Current LB/submission state:** best remains `0.949`; 2026-05-21 UTC cap is `5/5`: v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`.
-- **Repo/process state:** branch `feature/birdclef-v596-hgnet-stream-20260521` is synced with origin; PR #250 open/BLOCKED; PR #245 merged. No stale v577/v578 scalar submitter visible.
-- **Fresh source scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1000Z.json`.
-- **Fresh focused audit:** wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1000Z_fresh/summary.json`.
-- **Audit decisions while capped:**
-  - `alrickh/bc26-exp070-public0952-may22`: COMPLETE, valid `240x235`, but same Cheny/Perch-prior-probe family as v595 (`0.899`); reject direct submit.
-  - `haivan11/birdclef-2026-lambda075-blindspot-vi`: COMPLETE/schema-valid, adds blindspot alpha boosts over saturated PriorField/BirdNET; idea-mining only until reset because direct BirdNET/PriorField side lanes have repeatedly underperformed.
-  - `haivan11/birdclef-2026-lambda075-nfnet025-vi`: COMPLETE/schema-valid, adds conservative NFNet sidecar; idea-mining/fallback only because NFNet/public946 sidecars have repeatedly failed transfer without stronger evidence.
-  - `scenerysunfireink/birdclef-2026-perch-v2-full-v2`: RUNNING/no outputs; source admits partial Perch processing/slow path, not slot-ready.
-  - `chenyfdws/bc26-exp075-kijiang-v351-genus-safealign`: COMPLETE but final dry-run `submission.csv` is constant `0.5`; reject.
-  - `meenalsinha/birdclef-2026-improved` v24: COMPLETE valid `240x235`; overlaps Visual/BirdNET/PriorField family that already dropped (v584 `0.942`) and not a first reset-slot owner.
-  - `chenyfdws/bc26-exp076-henry-rankpower-nfnet-v86`: COMPLETE/schema-valid; duplicate Henry rankpower/NFNet residual family, no new evidence beyond saturated `0.949` line.
-  - `kijiang` v348-v351: COMPLETE but downloaded `submission.csv` is malformed/NaN (`243x235`, 56862 bad values); reject.
-  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING/no outputs; keep watching as possible future OpenVINO/HGNet artifact.
-- **Decision:** no submitter prepared for reset yet. Next useful work is to continue source discovery and/or extract a repo-owned utility from the safer concepts (blindspot/NFNet/protected-delta) only if stronger validation appears.
-
-## 2026-05-21 10:23 UTC heartbeat — capped post-v597 scout
-
-- **Status:** best remains `0.949`; 2026-05-21 cap remains `5/5`; v597 `0.949`, v596 `0.946`, v595 `0.899`, v594 RAM/no-score, v593 `0.949`.
-- **Heartbeat scan:** wrote `artifacts/public_kernels_20260521_frontier_candidates/heartbeat_scan_20260521T1023Z.json`; fresh source audit wrote `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1023Z_heartbeat/summary.json`.
-- **New since 10:00:** Haivan `public0952-perch-probe-vi`, `lambda075-blindspot-nfnet025-vi`, `lambda075-blindspot-force-vi`; `mlclsumit/notebook2e815ef354`.
-- **Audit decisions:** Haivan public0952 Perch probe is valid `240x235` but same family as v595 `0.899`; do not submit. Haivan blindspot/NFNet and blindspot-force are COMPLETE/schema-valid but are PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; idea-mining only, not reset owner without stronger evidence. MLCLSumit is a generic training notebook/no Kaggle output/status and not competition-submit ready.
-
-## 2026-05-21 12:00 UTC — capped scan, no reset-worthy candidate yet
-
-- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. No stale v577/v578 scalar submitter visible. PR #250 open; PR #245 merged.
-- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1200Z.json`.
-- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1200Z_fresh/summary.json`.
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #250 is open/BLOCKED; no stale v577/v578 scalar submitter visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1800Z.json`.
+- **Fresh audit artifacts:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1800Z_fresh/summary.json`, `samejima_hgnet_v41_files_1800.json`, and `samejima_v41_artifact_probe/summary.json`.
 - **Fresh feed decisions:**
-  - `meenalsinha/birdclef-2026-improved` v24: COMPLETE and valid `240x235`, but overlaps Visual/BirdNET/PriorField/Karnak family; previous direct visual/BirdNET replay v584 scored `0.942`, so not a first reset-slot owner.
-  - `chenyfdws/bc26-exp083-birdnet-sitehour-safe` and `exp082-raunak-v7-safe`: COMPLETE/schema-valid dry-run but logs include public/dry-run fallback/error markers and both are older 0.941/0.947-style Perch/BirdNET/site-hour lanes; idea-mining only.
-  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` v6: COMPLETE but `submission.csv` still all NaN/bad values (`3x235`, 702 bad); reject until row-id/merge path fixed.
-  - `chenyfdws/bc26-exp081-scenery-v6-model7-safe` and `exp079-pilkwang-time-window-rank-fusion-safe`: COMPLETE/schema-valid but saturated Model7/Karnak/Pilkwang `0.948` family; not above plateau.
-  - `chenyfdws/bc26-exp080-karnak-dual-arch-safe`: COMPLETE/schema-valid but low-scale output (`0.226-0.361`) and saturated Karnak/dual-arch lineage; not reset owner.
-  - `chenyfdws/bc26-exp078-sameji-visual-cpu-safe`: valid `240x235` but same Sameji/Visual/BirdNET family already shown weak; idea-mining only.
-  - `aiaiaiooo/birdclef2026`: COMPLETE but all-zero `3x235` submission; reject.
-  - `haivan11/birdclef-2026-bsf-nfnet-frogprior-vi` / `bsf-nfnet025-vi` and `starsdaisuki/v132-nfnet-lprior075`: COMPLETE/schema-valid but remain PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; use for code mining, not direct reset slot without new evidence.
-- **Decision:** no new submitter or Kaggle push while capped. Preserve next reset for either (a) a genuinely new complete/source-safe candidate, (b) a fixed Samejima/HGNet OpenVINO output, or (c) a repo-owned protected-delta extraction if stronger validation appears.
+  - `claudedevore/birdclef-2026-r0952-run2-sidecar-submit` is COMPLETE/schema-valid (`3x235`) but source is a Model2/Model5 EoS/Karnak sidecar/blend family, not enough to justify first reset slot after v574-v576/v597 already tied `0.949`.
+  - `vicmcorrea/birdclef-2026-v6-prior-field` is COMPLETE/schema-valid but logs BirdNET unavailable and falls back to the PriorField/Visual/BirdNET family; idea-mining only after v584/v595 drops.
+  - `deepanshus167` and similar generic notebooks remain no-output/non-submit-ready.
+- **Samejima artifact mining:** Samejima HGNet training v41 errored only in final metric calculation (`continuous-multioutput format is not supported`) but produced real fold artifacts. Downloaded/inspected `best_model_fold0-3.pt` (about 34.6 MB each), val prediction arrays, and result CSVs. Fold best validation scores are `0.9646`, `0.9659`, `0.9684`, `0.9707` (mean best `0.9674`), making it a stronger structural lead than repeated public946 micro-sidecars.
+- **v598 implementation:** created branch `feature/birdclef-v598-samejima-hgnet-20260521`; added private repo-owned notebook kernel `kaggle-kernels/v598-samejima-hgnet-openvino-artifact/` plus push/submitter scripts. The kernel is built from Samejima inference source, attaches `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` as a kernel source, fixes the public dry-run row-id/NaN merge path, and uses OpenVINO `best_model_fold*_256x512.xml` artifacts when present.
+- **Kaggle push/preflight:** pushed `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1, kernel id `120124341`; run COMPLETE with `submission.csv` only. Dry-run output valid `120x235`, no bad values, min/max `0.00097276596/0.86856884`; log shows OpenVINO fold inference completed (`~2.7s/fold` for 120 segments) and no merge NaNs.
+- **Submission scheduling:** started guarded wait-for-slot monitor PID recorded in `logs/v598_samejima_hgnet_submit_20260522.pid`; log `logs/v598_samejima_hgnet_submit_20260522.log`. It completed source/status/output preflight, saw 2026-05-21 cap `5/5`, and is sleeping until just after 2026-05-22 UTC reset. It will submit at most one v598 code submission with description `v598: Repo-owned Samejima HGNet OpenVINO artifact inference`, unless already visible or preflight fails.
 
-## 2026-05-21 14:00 UTC — capped scan, Samejima training still running
 
-- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #250 open; PR #245 merged. No stale v577/v578 scalar submitter visible.
-- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1400Z.json`.
-- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1400Z_fresh/summary.json`.
-- **Fresh audit decisions:**
-  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v41 is still RUNNING. Kernel file listing shows potentially valuable artifacts (`best_model_fold*.pt`, OpenVINO `.xml/.bin` for 256x256 and 256x512, val preds/results), but no session outputs yet and no valid submission path; keep watching, do not submit.
-  - `deepanshus167/bird-claasifier-comp` COMPLETE but no output files/submission; not competition-ready.
-  - `vicmcorrea/birdclef-2026-improved` COMPLETE/schema-valid dry-run `3x235`, but it is an explained/visual copy of a 0.946 + BirdNET branch and logs BirdNET unavailable; not a 0.96 candidate.
-  - `starsdaisuki/birdclef-2026-v135-public0952-perch-probe` and `v136-public0952-may22` are COMPLETE/valid `240x235`, but same Perch-probe/Public0952 family as v595 `0.899`; reject direct submit.
-  - `meenalsinha/birdclef-2026-improved` v25 remains COMPLETE/valid `240x235`, but is still Visual/BirdNET/PriorField/Karnak family and not a first reset-slot owner after v584 `0.942`.
-  - `lamidoahmad/birdclef-2026` is generic training/no output; not submit-ready.
-- **Decision:** no reset owner selected. Best next actionable path is still to wait for Samejima HGNet/OpenVINO training to COMPLETE or for a genuinely new source-safe candidate; otherwise next reset should not be spent on repeated Perch-probe/Public0952 or Visual/BirdNET clones.
+## 2026-05-21 20:00 UTC — capped scan; v598 monitor remains reset owner
 
-## 2026-05-21 16:02 UTC — capped scan, Samejima HGNet errored but artifacts exist
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #251 (v598) and PR #250 (v596) are open/BLOCKED. No v577/v578 scalar submitter visible.
+- **v598 monitor:** PID in `logs/v598_samejima_hgnet_submit_20260522.pid` is alive and still sleeping after successful source/status/output preflight; log `logs/v598_samejima_hgnet_submit_20260522.log` shows cap `5/5` and sleep until after 2026-05-22 UTC reset.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T2000Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T2000Z_fresh/summary.json`.
+- **New/changed feed:** only `deepanshus167/bird-claasifier-comp` reran after the 18UTC scan (`2026-05-21T18:11Z`). Audit showed it is COMPLETE but still has no output files/submission and is an exploratory training/visualization notebook, not a competition-submit candidate.
+- **External web check:** search for fresh `0.960/0.96` BirdCLEF Kaggle notebook claims returned no results.
+- **Decision:** keep v598 Samejima HGNet OpenVINO artifact as the first reset-slot owner. Do not start duplicate submitters or spend a slot on repeated EoS/Karnak/R0952/PriorField/Visual/NFNet clones while v598 is queued.
 
-- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #250 open; PR #245 merged. No stale v577/v578 scalar submitter visible.
-- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1602Z.json`.
-- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1602Z_fresh/summary.json`.
-- **Key change:** `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v41 moved from RUNNING to ERROR. The error is `ValueError: continuous-multioutput format is not supported` in scoring/metric calculation, but output artifacts exist: `best_model_fold0-3.pt`, `best_val_pred_fold0-3.npy`, `result_df_fold0-3.csv`. Kernel file listing also exposes OpenVINO `.xml/.bin` for 256x256 and 256x512, but session output list does not currently expose those XML/BIN files. This remains a useful artifact-mining lead, not a direct submission.
-- **Fresh audit decisions:**
-  - `nicolasschuldt/nfnet-aves-lprior075` v2: COMPLETE/schema-valid dry-run `3x235`; attaches `samuelzxu/bc26-birdaves-onnx` and NFNet/Aves sidecars. Still EoS5/rank-power/NFNet residual family and not strong enough to own reset without evidence; code-mining/fallback only.
-  - `anthonytherrien/birdclef-2026-blend-2`: COMPLETE but `submission.csv` malformed/NaN (`243x235`, 56862 bad); reject.
-  - `abhiiiish/birdclef-26-nb-v4`: COMPLETE/schema-valid `3x235`, but fallback-to-train dry run, private/custom model dataset, very low max `0.245`, no public evidence; not reset owner.
-  - `samejimatink0/birdclef-2026-visual-cpu-inference` v10: COMPLETE/valid `240x235`, but BirdNET branch logs unavailable/all-zero and visual family already dropped (v584 `0.942`); reject direct submit.
-  - `deepanshus167` / `mlclsumit`: generic training/no output; reject.
-- **Decision:** no submitter prepared. If slots reset before a stronger source arrives, best work is artifact mining: try to adapt Samejima HGNet PT outputs or inspect whether OpenVINO files can be pulled from kernel files; otherwise keep waiting for a genuinely new complete/source-safe candidate.
