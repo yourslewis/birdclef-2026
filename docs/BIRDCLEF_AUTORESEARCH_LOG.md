@@ -3228,3 +3228,207 @@ Decision:
 - **New date-run candidate:** `ommodi07/birdclef2026` is a dual-resolution EfficientNetV2/temporal-transformer training notebook, but the completed output loaded checkpoint epoch 1 AUC `0.5124` and produced all-zero fallback `submission.csv` due no test files. Reject for submission.
 - **Other 06:47 search hits:** Aditya Safe EoS5/RankPower and Pilkwang/Yash/Rikuter PriorField are saturated EoS/Karnak/PriorField 0.949-family variants; do not spend slots unless all new-signal paths are blocked and a diagnostic slot would otherwise expire.
 - **Decision:** no submission while capped. For next reset, do not submit raw HGNet sources yet. First prepare a repo-owned HGNet recipe/sidecar only if we can obtain complete weights or run controlled training/inference and compare against the 0.949 EoS5 anchor; otherwise continue source frontier scan.
+
+## 2026-05-20 07:47 UTC / 2026-05-20 PDT — post-merge capped scan; Qiuzi distill cancelled, Henry NFNet v80 valid but low-upside
+
+- **Status:** latest submissions unchanged: v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`. Current confirmed best remains `0.949`; 2026-05-20 UTC slots remain `5/5` used. No v577/v578 scalar submitter or other active submitter process. PR #248 is now MERGED, so new work moved to branch `feature/birdclef-096-hgnet-nfnet-triage-20260520`.
+- **Fresh scan:** saved ignored local scan artifact `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0747Z.json`; audited new top-feed/source items in `source_audit_20260520T0747Z_top/summary.json`.
+- **Qiuzi `hgnetv2-b0-training-distill`:** new top date-run item. It is training-only, status `CANCEL_ACKNOWLEDGED`, and log tail only reaches epoch 0 (`val_score=0.54157`). No submission artifact. This does not supersede the earlier Qiuzi non-distill recipe lead; treat distill as not useful until a complete run appears.
+- **Henry `bc2026-rankpower-nfnet-v80`:** COMPLETE with schema-valid non-empty `submission.csv` and outputs `subm_rankpower06_prior05_consensus.csv`, `submission_nfnet_selective.csv`, ProtoSSM/SED artifacts, and logs showing `[NFNet] final submission.csv safety check passed (3, 235)`. Source says it is an EoS5/Sunderekkiz/Pilkwang rank-power branch with a low-weight YukiZ residual blend (`YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, `RANK_BLEND_WEIGHT=0.9736`) and marks the rank-power LB as `0.949`. Hidden-test path/output behavior looks safer than the earlier timed-out NFNet attempt, but it is still largely saturated EoS5/Karnak/Pilkwang family, so it is a **backup next-reset candidate**, not a 0.96-first candidate.
+- **Koushik acoustic species notebook:** COMPLETE but no output files; skip for submission/source port.
+- **Decision:** while capped, do not submit anything. Next reset priority remains: search for a genuinely new >0.949 source lineage first; if none appears and a slot would otherwise idle, Henry NFNet v80 is the cleanest guarded direct backup, but label it a diagnostic/backup because expected upside is modest.
+
+## 2026-05-20 08:48 UTC / 2026-05-20 PDT — capped scan; v590 Zeyad Proto Temporal backup preflighted
+
+- **Status:** latest submissions unchanged and complete: v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`; best remains `0.949`; 2026-05-20 UTC slots remain `5/5`. PR #249 remains open/BLOCKED; no active submitter processes.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0848Z.json` and audited top-feed items in `source_audit_20260520T0848Z_top/summary.json`.
+- **Rejected/low-signal fresh items:**
+  - `aiaiaiooo/birdclef2026` COMPLETE but dry-run `submission.csv` is all zeros; reject for slots.
+  - `mtoshidesu/notebookc6e90ae327` status ERROR; skip.
+  - `mtoshidesu/testbirdclef-2026-s124-s114-g124-f1-rankblend` is a running duplicate of already-submitted/tied S124 lane; skip unless it later proves a distinct >0.949 source.
+  - Qiuzi `hgnetv2-b0-training-distill` now reports COMPLETE but has no output files/no submission artifact; still not useful.
+  - Claude/Rajnish PriorField/EoS6/Kijiang safe writers are complete and schema-valid except Claude V6 replay has bad 243-row/all-NaN output; all remain saturated 0.949-family replays.
+- **Best backup discovered:** `rajnish1419kumar/birdclef-2026-zeyad-proto-temporal-safe` is COMPLETE with finite sample-shaped `submission.csv` plus branch artifacts `submission_birdnet.csv`, `submission_centroid.csv`, `submission_public_cnn.csv`, `submission_protossm.csv`, and `submission_sed.csv`. It is an exp019/Pilkwang 0.948→0.949 Proto+SED path plus optional BirdNET/centroid/public-CNN branches and temporal flip/shift TTA. Public-CNN is zero on the dry run, but BirdNET/centroid branches have independent nonzero signals; branch correlations vs ProtoSSM are low/moderate (BirdNET/Proto ~0.25, Centroid/Proto ~0.31, SED/Proto ~0.45), making it more structurally distinct than additional S114+G siblings.
+- **Prepared v590:** added `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py` with source/version/output/submission-shape preflights and `--preflight-only`. Preflight passed: source v1 length `106762`, kernel COMPLETE/no failure, required outputs present, `submission.csv` stats rows=3 cols=235 finite min=`0.47687027` max=`0.556084` zeros=0. Script does not submit while capped.
+- **Decision:** keep v590 as the cleanest next-reset backup/diagnostic if no genuinely new >0.949 source appears. It is not a 0.96-first lane, but it is more diverse than Henry NFNet v80 or more EoS/S114/PriorField replays.
+
+## 2026-05-20 09:48 UTC / 2026-05-20 PDT — capped scan; v590 remains best backup, no new 0.96 lane
+
+- **Status:** latest submissions unchanged: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current confirmed best remains `0.949`; 2026-05-20 UTC slots remain `5/5`. PR #249 is open/BLOCKED; no active submitter or v577/v578 process.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T0948Z.json`; audited top/new items in `source_audit_20260520T0948Z_top/summary.json`.
+- **New top-feed findings:**
+  - `bugraeyidogan/hdmrlib-as-an-interpretable-spectrogram` is COMPLETE but has no output files / no submission; idea-only, no slot.
+  - Henry `bc2026-rankpower-nfnet-v81` and `v82` are COMPLETE, schema-valid, and output the same branch set as v80. v81 uses NFNet blend/spike `0.06/0.080`; v82 uses `0.035/0.13`. Both retain `YUKIZ_BLEND_WEIGHT=0.0264`, `PROTO_RANK_WEIGHT=0.600`, and rank-power LB marker `0.949`, so they remain saturated EoS5/Sunderekkiz/Pilkwang-family backups behind v590.
+  - Pilkwang PriorField v10 was RUNNING at audit time and remains same PriorField/EoS6 lane; not a new distinct candidate.
+  - Nina EoS6 v12 COMPLETE but primary `submission.csv` is invalid for sample submission: 243 rows and all NaN values. Continue rejecting direct EoS6 primary-output submissions unless a safe writer fixes the output and shows evidence beyond 0.949.
+  - Mtoshi S124 test COMPLETE with valid 3x235 output but is a duplicate of already-submitted/tied S124/G124 rankblend lane.
+  - Original Zeyad `birdclef-2026-proto-fusion-and-temporal-flip` v4 is equivalent to the Rajnish safe writer behind prepared v590: COMPLETE, finite 3x235 output, same BirdNET/centroid/public-CNN/Proto/SED branch set.
+- **Decision:** v590 Rajnish/Zeyad Proto Temporal Safe remains the best prepared next-reset backup diagnostic. Do not replace it with Henry v81/v82 or S124/PriorField/EoS6 reruns. Still prioritize true non-saturated 0.95/0.96 source discovery if one appears before reset.
+
+## 2026-05-20 10:48 UTC / 2026-05-20 PDT — capped scan; Pilkwang v11 fixed output but still saturated
+
+- **Status:** latest submissions unchanged; current best remains `0.949`; 2026-05-20 UTC slots are still `5/5`. PR #249 remains open, merge state currently UNKNOWN/BLOCKED-flaky; no active submitter or v577/v578 process.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1048Z.json`; audited refreshed high-rank items in `source_audit_20260520T1048Z_top/summary.json`.
+- **v590 preflight recheck:** `scripts/submit_v590_rajnish_zeyad_proto_temporal_safe_when_ready.py --preflight-only` still passes. Source v1 length `106762`, kernel COMPLETE/no failure, required outputs present, finite `3x235` sample submission, min `0.47687027`, max `0.556084`, zeros `0`; script correctly refuses to submit while the visible UTC count is `5`.
+- **Pilkwang PriorField refresh:** `pilkwang/949-birdclef-2026-acoustic-prior-field-fusion` v11 is now COMPLETE with finite sample-shaped `submission.csv` (`3x235`, min `0.460793537150703`, max `0.5381690938702316`) and adds `subm_birdnet_v24.csv`. This fixes output validity vs some prior unsafe wrappers, but it remains the known 0.949 PriorField/EoS6/Karnak lane, not a new 0.96-first source. Keep below v590 in backup order.
+- **Nina EoS6:** v12 still invalid primary output (`243x235`, all NaN values). Continue rejecting direct EoS6 primary-output submissions.
+- **Other scan items:** no new non-saturated 0.95/0.96 claim; Henry v80/v81/v82 and S124/PriorField/EoS6 remain backup/diagnostic families.
+- **Decision:** no candidate queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first reset backup; Pilkwang v11 becomes a later valid-but-saturated fallback behind v590 and Henry NFNet only if a slot would otherwise idle.
+
+## 2026-05-20 11:48 UTC / 2026-05-20 PDT — capped scan; fresh top-feed mostly invalid/debug outputs
+
+- **Status:** latest submissions unchanged; current best remains `0.949`; 2026-05-20 UTC count remains `5/5`. PR #249 open with flaky UNKNOWN/BLOCKED merge state; no active submitter or v577/v578 process.
+- **Fresh scan:** saved ignored local scan `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1148Z.json`; audited new top-feed notebooks in `source_audit_20260520T1148Z_top/summary.json`.
+- **New top-feed findings:**
+  - `haridoss31/birdclef-my-model` v37 was RUNNING at audit time with `native_resnet_fold_0.pth` and `submission.csv` listed but no downloadable submission output yet. Source is a custom EfficientNet/OpenVINO training/inference notebook with target comments around `0.85+` macro ROC-AUC and no high-LB evidence. Monitor only; not slot-ready.
+  - `meenalsinha/birdclef-2026-improved` v23 COMPLETE but primary `submission.csv` is `240x235` train/fallback-shaped, not sample-shaped. Reject for direct submit; same visual/BirdNET family has already failed/dropped in previous attempts.
+  - `jacqueszhelinzhang/birdclef26-perch-minimal` v21 COMPLETE with valid `3x235` shape but constant probabilities (`min=max=0.0042735`); baseline/debug only.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference` v7 COMPLETE but primary output is `240x235` train/fallback-shaped. Reject for direct submit; visual/BirdNET lane remains weak/idea-mining.
+  - Qiuzi `hgnetv2-b0-training-distill` v15 was RUNNING with no outputs at audit time. Continue to wait for complete artifacts before considering HGNet distill.
+  - `evgendvorkin/birdclef-baseline` v34 COMPLETE but primary output is `240x235` train/fallback-shaped with many zeros; reject.
+- **Decision:** no queue change. v590 Rajnish/Zeyad Proto Temporal Safe remains first prepared next-reset backup diagnostic. Continue scanning for true new non-saturated 0.95/0.96 source; do not submit Meenal/Samejima/Visual/BirdNET/debug baseline outputs.
+
+## 2026-05-20 12:48 UTC — v591 Qiuzi HGNet distill sidecar validation
+
+- **Track:** 0.96 frontier source scan + repo-owned high-upside extraction while daily submissions are capped.
+- **Live status:** latest 2026-05-20 submissions are capped at `5/5`: v585 `0.922`, v586 `0.941`, v587 `0.949`, v588 `0.949`, v589 `0.949`. Current best remains `0.949`. No stale v577/v578/v590 submitter is active.
+- **Source scan artifacts:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1248Z.json`; `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1248Z_top/summary.json`.
+- **Key finding:** `qiuzilang/hgnetv2-b0-training-distill` completed all four HGNetV2-B0 folds and exposes `best_model_fold0.pt` ... `best_model_fold3.pt`, validation prediction arrays, and `result_df_fold*.csv`. Downloaded fold result CSVs to `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1248Z_top/qiuzilang_distill_outputs/`.
+- **Validation evidence:** fold best val scores are `0.9651087`, `0.9701546`, `0.9669707`, `0.9729050`; final kernel log reports `auc for raw pred : 0.9583789191588714` and `auc for rank pred: 0.9672700848733766`. This is stronger evidence than the previous cancelled/partial HGNet lead and structurally distinct from EoS/RankPower/S114 sidecars.
+- **Implementation:** added `kaggle-kernels/v591-public946-hgnet-distill-w0025/` and `scripts/push_v591_public946_hgnet_distill.py`. The kernel forks v542 public946, attaches Qiuzi's training output as a kernel source, runs guarded 4-fold HGNetV2-B0 inference, writes `submission_hgnet.csv`, and blends HGNet at `0.025` rank weight with the existing Proto/SED anchor.
+- **Kaggle push:** private kernel `yourslewis/bc26-v591-public946-hgnet-distill-w0025`, version 1, pushed successfully with no invalid sources. Status is RUNNING at log time; no leaderboard submission was attempted because slots are capped.
+- **Next gate:** monitor v591. If COMPLETE with finite `submission.csv` and `submission_hgnet.csv`, make it the next-reset candidate ahead of v590. If it fails due mount/dependency/runtime, diagnose and either patch v591 or fall back to v590 Zeyad/Rajnish.
+
+## 2026-05-20 13:48 UTC — v592 HGNet 10% sidecar prepared
+
+- **Track:** repo-owned high-upside extraction from Qiuzi HGNet distill artifacts while daily slots are capped.
+- **Live status:** best remains `0.949`; 2026-05-20 submissions are capped at `5/5` with v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; no v577/v578/v590 submitter active.
+- **v591 failure/fix chain:** v1 failed on Kaggle CUDA during torchaudio STFT; v2 kept preprocessing on CPU but failed on HGNet CUDA ReLU; v3 completed CPU-only but produced constant HGNet predictions because row-id parsing was wrong and dry-run audio missing silently zero-filled; v4 fixed row-id parsing to use the final row-id token as end second and removed the zero fallback.
+- **v591 v4 validation:** private kernel `yourslewis/bc26-v591-public946-hgnet-distill-w0025` version 4 COMPLETE/no failure, runtime ~524s. Outputs downloaded under `artifacts/kaggle_outputs/v591-public946-hgnet-distill-w0025-v4/`. Final `submission.csv` is `240x235`, no NaNs, min/max `0.0053125/1.0`; `submission_hgnet.csv` is nonconstant and valid, min/max `3.390359e-07/0.9477211`.
+- **Local sidecar grid:** `artifacts/blend_grids/v591_hgnet_sidecar_weight_grid_20260520T1348Z_v4.json`. HGNet standalone rank sidecar: macro AUC `0.9956425`, corr vs public946 anchor `0.4808`. Weight grid improved dry-run overlap from base `0.9925249` to `0.9927187` at `0.025` and `0.9932913` at `0.10`; top3 row recall improved from `0.5211` base to `0.6211` at `0.10`.
+- **Decision/implementation:** added `kaggle-kernels/v592-public946-hgnet-distill-w010/`, `scripts/push_v592_public946_hgnet_distill_w010.py`, and `scripts/submit_v592_public946_hgnet_w010_when_ready.py`. v592 uses the same guarded HGNet CPU-only inference but sets `HGNET_RANK_WEIGHT=0.10` (`Proto=0.54`, `SED=0.36`, `HGNet=0.10`).
+- **v592 validation:** pushed private Kaggle kernel `yourslewis/bc26-v592-public946-hgnet-distill-w010` version 1; push returned no invalid sources. Kernel COMPLETE/no failure, runtime ~562s. Outputs downloaded under `artifacts/kaggle_outputs/v592-public946-hgnet-distill-w010/`. Final `submission.csv` is `240x235`, no NaNs, min/max `0.0065000006/1.0`; `submission_hgnet.csv` valid, min/max `3.390359e-07/0.9477211`.
+- **Submitter preflight:** `python3 scripts/submit_v592_public946_hgnet_w010_when_ready.py --preflight-only` passed: source v1, COMPLETE/no failure, required outputs, final CSV stats `240x235`, finite nonconstant. It did not submit because visible UTC submissions today are `5`.
+- **Next gate:** v592 is first next-reset candidate; v591/v4 is conservative fallback; v590 Zeyad/Rajnish is now backup only if HGNet is invalidated or Wenhao prefers the lower-risk saturated lane.
+
+## 2026-05-20 14:48 UTC — v592 reset submitter parked after fresh source audit
+
+- **Live status:** best remains `0.949`; 2026-05-20 remains capped `5/5`; latest scores unchanged (`v585=0.922`, `v586=0.941`, `v587/v588/v589=0.949`). No stale v577/v578/v590/v591/v592 submitter was active at run start.
+- **Fresh scan/audit:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1448Z.json` and `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1448Z_top/summary.json`.
+- **Candidate decisions:** Mtoshi v8 remains Karnak/PowerOptimization family; Jacques minimal is constant baseline; Samejima HGNet/OpenVINO artifacts are interesting but still RUNNING/no downloadable outputs at audit time; Sclim iter7 ProtoSSM+MLP is schema-safe but 0.949-family; Abhiiiish is training-artifact only; THBDH S124/G124 fork is duplicate of the tied v589 lane.
+- **Decision:** no stronger 0.96-relevant source displaced v592. v592 remains first reset-slot candidate.
+- **Action:** started a reset submitter: PID `13173`, log `logs/v592_hgnet_w010_reset_submitter_20260520.log`, nohup log `logs/v592_hgnet_w010_reset_nohup_20260520.out`. It sleeps until about `2026-05-21T00:05:00Z`, then runs `scripts/submit_v592_public946_hgnet_w010_when_ready.py`; the script revalidates source/version, kernel COMPLETE/no failure, required outputs, CSV stats, duplicate description, and daily cap before submitting.
+- **Next gate:** if v592 submits and improves, immediately preserve/confirm the HGNet path and consider OpenVINO acceleration via Samejima artifacts. If it ties/drops, keep HGNet as a structural diagnostic but continue frontier scan before using further slots.
+
+## 2026-05-20 15:48 UTC — capped source scan; v592 still first reset candidate
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`.
+- **Submitter health:** v592 reset submitter PID `13173` is alive and sleeping toward ~`2026-05-21T00:05:00Z`. No duplicate v592 submitter started.
+- **Fresh scan/audit:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1548Z.json` and `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1548Z_top/summary.json`.
+- **Candidate decisions:** Samejima HGNet training v25 exposes OpenVINO artifacts but is ERROR; Samejima HGNet inference v3 outputs all-NaN primary `submission.csv`; Deepanshu is constant baseline; Nina EoS6 v15 primary remains invalid/all-NaN; Mtoshi v9 and Scenery Model_7 are saturated Karnak/PowerOptimization; Anthony S124/G124 is a duplicate of tied v589 family.
+- **Decision:** keep v592 as the reset-slot owner. No new submission or kernel push. Samejima OpenVINO is logged as a possible future acceleration path if v592 hidden runtime is problematic or if HGNet improves.
+- **Transfer lesson maintained:** local train-soundscape sidecar gates are rejection filters, not approval filters. The v592 exception is justified by complete, structurally distinct HGNet artifacts and low-correlation sidecar evidence, not just a tiny local gain.
+
+## 2026-05-20 16:48 UTC — capped re-scan; no source displaces v592
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; latest scored rows unchanged (`v585=0.922`, `v586=0.941`, `v587/v588/v589=0.949`).
+- **Submitter health:** v592 reset submitter PID `13173` is still alive, sleeping toward ~`2026-05-21T00:05:00Z`; no duplicate submitter started.
+- **Fresh scan:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1648Z.json`.
+- **Candidate decisions:** the newest DATE_RUN feed did not reveal a stronger candidate than v592. Samejima HGNet remains an OpenVINO/artifact lead but not a validated submission; current inference primary output was invalid in the prior audit. EoS6/Karnak/RankPower/S124-family reruns are saturated or invalid; constant/baseline notebooks remain rejected.
+- **Decision:** preserve v592 as the only reset-slot owner. No new Kaggle push/submission. Continue scanning until reset; if no stronger source appears, allow the parked submitter to fire.
+
+## 2026-05-20 17:48 UTC — two-pass SSM audited, v592 still owner
+
+- **Live status:** best remains `0.949`; 2026-05-20 daily cap remains `5/5`; v592 reset submitter PID `13173` remains alive and sleeping toward reset.
+- **Fresh scan/audit:** saved `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1748Z.json` and `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1748Z_top/summary.json`.
+- **Candidate audit:** Tulay EfficientNet weights ERROR/no outputs; Scenery EoS6 invalid primary; Deepanshu constant baseline; Karnak S124/G124 reverse-engineered no outputs; Kospintr EfficientNet+Perch Distill+MixUp cancelled/partial; Scenery Perch V2 Full invalid `119988x235` output with `-1000` values.
+- **Two-pass SSM gate:** `scenerysunfireink/birdclef-2026-two-pass-ssm` is schema-safe (`240x235`) and distinct-sounding, so ran local sidecar gate. Artifact: `artifacts/blend_grids/scenery_two_pass_sidecar_weight_grid_20260520T1748Z.json`. Standalone rank AUC `0.97745`, corr vs v542 anchor `0.8884`; every blend weight reduced macro AUC vs base `0.9925249` (0.025 `0.9924122`, 0.05 `0.9922645`, 0.10 `0.9917289`). Do not let it displace v592.
+- **Decision:** keep v592 as sole reset-slot owner; no new push/submission; no duplicate submitter.
+
+## 2026-05-20 17:54 UTC — post-audit verification, still capped
+
+- Rechecked Kaggle submissions: v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; current best remains `0.949`; 2026-05-20 UTC remains capped at `5/5`.
+- Rechecked repo/PR/process state: branch clean before this log update; PR #249 open/BLOCKED; v592 reset submitter PID `13173` remains the only visible v59x submitter and is sleeping toward reset.
+- Ran an additional lightweight fresh source query across `0.95`, `0.96`, EoS6, SafeAlign, RankPower/NFNet, HGNet, and two-pass SSM terms. It returned the same already-audited Scenery two-pass/EoS6, Nina EoS6, S124/G124, RankPower/NFNet, Samejima/TY0912 HGNet, and saturated EoS/SafeAlign family; no new credible slot displacer.
+- Decision unchanged: preserve v592 as sole reset-slot owner; no new submission while capped.
+
+## 2026-05-20 18:48 UTC — capped source scan, Tulay EfficientNet rejected
+
+- **Live status:** best `0.949`; 2026-05-20 submissions remain v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; cap `5/5`.
+- **Process/PR:** v592 reset submitter PID `13173` alive and sleeping toward reset; no v577/v578 scalar submitter and no duplicate v59x submitter visible. PR #249 open; merge-state fetch returned `UNKNOWN`.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T1848Z.json`.
+- **New audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T1848Z_new/summary.json`.
+- **Tulay EfficientNet:** `tulayppppp/my-efficientnet-b0-weights` reran at 18:45Z, but audit shows v23 RUNNING/no outputs and source is unsafe/non-competitive: generic dynamic `bird_i` columns, dummy/fallback rows, potential empty `submission.csv`, and generic EfficientNet baseline load. Reject as reset-slot displacer.
+- **Other scan rows:** Scenery/Nina EoS6/two-pass, S124/G124, RankPower/NFNet, Samejima HGNet, SafeAlign, and acoustic-prior rows are previously audited/saturated; no new credible source above v592.
+- **Decision:** preserve v592 as only reset-slot owner.
+
+## 2026-05-20 19:04 UTC — user lead Itshyao S124/S114/G124 rankblend audited
+
+- User flagged `itshyao/birdclef-2026-s124-s114-g124-f1-rankblend` as new.
+- Pulled current source via Kaggle API and saved under `artifacts/public_kernels_20260520_frontier_candidates/itshyao_s124_s114_g124_rankblend_latest/`.
+- Current metadata says version `2`, but decoded source exactly matches the artifact audited before v589 (`6819` decoded lines, SHA `c5aed8358ce6ba4b8772c1649bed9475151adff011d07617a8ba2b6f223a62f9`).
+- Session output is COMPLETE/no failure; primary `submission.csv` is finite `3x235` dry-run/sample shape, min/max `0.47687027/0.5553993`, no NaNs/zeros. Log notes `S124 dry-run/mismatch: keeping S114 anchor submission.csv`.
+- Existing v589 guarded direct replay of this source scored `0.949`, tying but not improving. Decision: no resubmission; v592 remains sole reset-slot owner.
+
+## 2026-05-20 19:08 UTC — v593 Itshyao v2 0.952 lead takes reset slot
+
+- User clarified/reported score `0.952` for `itshyao/birdclef-2026-s124-s114-g124-f1-rankblend`.
+- Important correction: v589 submitted kernel version `1` and scored `0.949`; current Kaggle metadata is version `2`. Although decoded source matches previous source, the reported `0.952` is independent evidence and justifies one guarded v2 replay.
+- Added `scripts/submit_v593_itshyao_s124_g124_rankblend_v2_when_ready.py` pinned to version `2` with duplicate, source, status, output, and cap checks.
+- Preflight-only result: cap `5/5`, source version `2` OK, COMPLETE/no failure, required outputs present, `submission.csv` finite `3x235` min/max `0.47687027/0.5553993`, no NaNs/zeros.
+- Killed v592 reset submitter PID `13173`; started v593 reset submitter PID `96527` with log `logs/v593_itshyao_s124_g124_v2_reset_submitter_20260520.log`, sleeping toward reset.
+- Queue: v593 first; v592 HGNet sidecar demoted to backup if v593 does not improve.
+
+## 2026-05-20 20:00 UTC — capped scan, v593 healthy
+
+- **Live status:** v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; repo-confirmed best remains `0.949`; daily cap `5/5`.
+- **Reset owner:** v593 Itshyao S124/S114/G124 v2 remains alive as PID `96527`, sleeping toward reset; v592 PID `13173` is stopped. No v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2000Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2000Z_top/summary.json`.
+- **New lead audit:** `karnakbaevarthur/s124-g124-reverse-engineered` explicitly cites Itshyao S124/G124 LB `0.952`, but has no output files; code-mining only. `haivan11/birdclef-2026-prior-field-fusion-vi` is output-valid but saturated PriorField/Yaroslav/BirdNET family; not above v593. Tulay EfficientNet v27 ERROR/no outputs and still unsafe.
+- **Decision:** keep v593 first; v592 HGNet backup.
+
+## 2026-05-20 22:00 UTC — capped scan, v593 still healthy
+
+- **Live status:** v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`; repo-confirmed best remains `0.949`; 2026-05-20 cap `5/5`; no 2026-05-21 submissions visible yet.
+- **Reset owner:** v593 Itshyao S124/S114/G124 v2 PID `96527` still alive and sleeping toward reset; v592 PID `13173` stopped; no stale v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260520_frontier_candidates/scan_20260520T2200Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260520_frontier_candidates/source_audit_20260520T2200Z_top/summary.json`.
+- **Fresh audit:** Muhammad WildSound v8 is ERROR/no outputs due missing train metadata path; Juanpp segunda parte is ERROR/no outputs and local/offline-weight style; Tulay EfficientNet v28 remains ERROR/no outputs and unsafe/generic. None displaces v593.
+- **Decision:** keep v593 first; v592 HGNet backup.
+
+## 2026-05-21 00:01 UTC — v593 submitted and pending
+
+- **Reset status:** 2026-05-21 initially `0/5`; 2026-05-20 final remained v585 `0.922`, v586 `0.941`, v587/v588/v589 `0.949`.
+- **Wrapper issue:** parked v593 PID `96527` failed before submission due system Python using an incompatible Kaggle SDK (`KaggleHttpClient.__init__() got an unexpected keyword argument 'api_token'`). No submission was created by the wrapper.
+- **Recovery:** reran guarded v593 with venv Python. Checks passed: source v2, COMPLETE/no failure, required outputs present, finite `3x235` submission. Submitted ref `52866246`; visible as `pending` at `2026-05-21T00:06:26.767Z`; count now `1/5`.
+- **Scan/audit:** saved `scan_20260521T0001Z.json` and `source_audit_20260521T0001Z_top/summary.json`. Rauffauzan S124 fork fails G124 sidecar (`S124 G124 fold1 rank sidecar failed`) and is not above v593; Mtoshi v11 is schema-valid but Karnak/0.948-family only.
+- **Decision:** hold remaining four slots until v593 score lands or a clearly stronger fresh source appears.
+
+## 2026-05-21 02:00 UTC — v593 tied, v594 HGNet submitted
+
+- **Score update:** v593 ref `52866246` scored `0.949`, tying but not improving. The external `0.952` Itshyao v2 lead did not reproduce via our direct replay.
+- **Fallback action:** attempted the repo-owned HGNet 10% sidecar (v592 path). Preflight passed, but Kaggle rejected the version-1 kernel submission because metadata had GPU enabled (`GPU max of 0 minutes`).
+- **Fix:** patched `kaggle-kernels/v592-public946-hgnet-distill-w010/kernel-metadata.json` to `enable_gpu=false`, actual slug `yourslewis/bc26-v592-public946-hgnet-distill-w010`, `id_no=119970462`; repushed as kernel v2. Added `scripts/submit_v594_public946_hgnet_w010_cpu_when_ready.py` with `KERNEL_VERSION=2` and v594 description.
+- **v594:** CPU run COMPLETE; preflight valid (`240x235`, no NaNs, min/max `0.0065000006/1.0`); submitted ref `52869105`, status pending at `2026-05-21T02:14:22Z`. 2026-05-21 count `2/5`.
+- **Scan:** `scan_20260521T0200Z.json` showed no stronger source than v594; mostly pulled/forked saturated S124/EoS/PriorField or already-rejected error/no-output lanes.
+- **Decision:** hold remaining three slots pending v594 score.
+
+## 2026-05-21 04:01 UTC — v594 RAM fail; v595 submitted
+
+- **v594 result:** no public score. Kaggle hidden run failed with `Your notebook requested more memory (RAM) than is available.` Lesson: HGNet 10% sidecar must be memory-refactored/streamed before another slot; public dry-run success was insufficient.
+- **Frontier scan:** wrote `scan_20260521T0401Z.json`; focused fresh audit wrote `source_audit_20260521T0410Z_fresh/summary.json`.
+- **Candidate decisions:**
+  - Samejima HGNet inference: COMPLETE but invalid dry-run `submission.csv` (702 NaNs/bad values), skip.
+  - Cheny exp071 BirdNET-unmapped: ERROR/no final `submission.csv`, skip.
+  - Kijiang EoS forks: malformed/NaN outputs or saturated EoS scalar variants, skip.
+  - Karnak S124/G124 reverse-engineered: no submission output yet, keep as training/porting research lane.
+  - Cheny exp070 public0952: source-safe and output-valid; distinct Perch embedding + site/hour prior + classwise logistic-probe structure.
+- **v595:** added `scripts/submit_v595_cheny_public0952_perch_prior_probe.py`; preflight passed source version `1`, COMPLETE/no failure, outputs `submission.csv` + `perch_cache/full_oof_meta_features.npz`, stats `240x235`, no bad values, min/max `9.252071e-12/1.0`; submitted ref `52871700`, pending. UTC count now `3/5`.
+- **Decision:** hold last two slots until v595 score or a stronger verified candidate appears.
+
+## 2026-05-21 05:55 UTC — v595 scored 0.899; >0.949 notes reviewed
+
+- v595 ref `52871700` scored `0.899`, a major drop. The Cheny exp070 `public0952`/Perch-prior-probe source is therefore not a viable direct replay despite source/output safety.
+- Review of >0.949 notes: only the user-reported Itshyao `0.952` and derivative references to that same S124/G124 lead were found as explicit public-LB claims above `0.949`; our v593 direct v2 replay reproduced only `0.949`. Cheny `public0952` did not reproduce (`0.899`). Karnak `s124-g124-reverse-engineered` cites the Itshyao 0.952 but has no submission artifact; use only for code-mining/training-port ideas.
+- Working hypothesis for Itshyao 0.952 non-repro: exact decoded v1/v2 source matched and public dry-run log kept the S114 anchor due row mismatch; if the public post actually showed 0.952, the lift likely depended on a private/non-current artifact/version, author-side submission state, leaderboard/reporting mismatch, or non-replayable attached asset/version rather than visible source changes.
