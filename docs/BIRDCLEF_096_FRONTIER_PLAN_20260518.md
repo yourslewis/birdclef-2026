@@ -1317,3 +1317,11 @@ Queue remains unchanged:
 - Fresh scan/audit: `scan_20260521T1200Z.json` and `source_audit_20260521T1200Z_fresh/summary.json`.
 - No first-slot reset owner selected. The newest valid notebooks are mostly saturated Visual/BirdNET/PriorField/NFNet/Karnak variants; Samejima HGNet inference v6 remains invalid with NaN output; Aiaiaiooo output is all zeros.
 - Candidate watchlist for next reset: fixed Samejima HGNet/OpenVINO, genuinely new complete 0.95+ source, or repo-owned protected-delta extraction from Haivan BSF/NFNet/FrogPrior only if validation strengthens.
+
+## 2026-05-21 14:00 UTC update — Samejima watch, no submitter
+
+- Cap remains `5/5`; best remains `0.949`.
+- Fresh scan/audit: `scan_20260521T1400Z.json` and `source_audit_20260521T1400Z_fresh/summary.json`.
+- Samejima HGNet training v41 remains the main watch item: file listing exposes fold checkpoints plus OpenVINO `.xml/.bin`, but session is still RUNNING/no usable output submission. Wait for COMPLETE/downloadable outputs before any port.
+- Reject repeated Public0952/Perch-probe clones after v595 `0.899`; reject visual/BirdNET explanatory copies after v584 `0.942`; reject generic training notebooks without `submission.csv`.
+- No submitter prepared for reset yet.

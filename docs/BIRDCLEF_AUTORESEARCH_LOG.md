@@ -3515,3 +3515,17 @@ Decision:
   - `aiaiaiooo/birdclef2026`: COMPLETE but all-zero `3x235` submission; reject.
   - `haivan11/birdclef-2026-bsf-nfnet-frogprior-vi` / `bsf-nfnet025-vi` and `starsdaisuki/v132-nfnet-lprior075`: COMPLETE/schema-valid but remain PriorField/BirdNET/NFNet residual tweaks over saturated `0.949`; use for code mining, not direct reset slot without new evidence.
 - **Decision:** no new submitter or Kaggle push while capped. Preserve next reset for either (a) a genuinely new complete/source-safe candidate, (b) a fixed Samejima/HGNet OpenVINO output, or (c) a repo-owned protected-delta extraction if stronger validation appears.
+
+## 2026-05-21 14:00 UTC — capped scan, Samejima training still running
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #250 open; PR #245 merged. No stale v577/v578 scalar submitter visible.
+- **Scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T1400Z.json`.
+- **Audit artifact:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T1400Z_fresh/summary.json`.
+- **Fresh audit decisions:**
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v41 is still RUNNING. Kernel file listing shows potentially valuable artifacts (`best_model_fold*.pt`, OpenVINO `.xml/.bin` for 256x256 and 256x512, val preds/results), but no session outputs yet and no valid submission path; keep watching, do not submit.
+  - `deepanshus167/bird-claasifier-comp` COMPLETE but no output files/submission; not competition-ready.
+  - `vicmcorrea/birdclef-2026-improved` COMPLETE/schema-valid dry-run `3x235`, but it is an explained/visual copy of a 0.946 + BirdNET branch and logs BirdNET unavailable; not a 0.96 candidate.
+  - `starsdaisuki/birdclef-2026-v135-public0952-perch-probe` and `v136-public0952-may22` are COMPLETE/valid `240x235`, but same Perch-probe/Public0952 family as v595 `0.899`; reject direct submit.
+  - `meenalsinha/birdclef-2026-improved` v25 remains COMPLETE/valid `240x235`, but is still Visual/BirdNET/PriorField/Karnak family and not a first reset-slot owner after v584 `0.942`.
+  - `lamidoahmad/birdclef-2026` is generic training/no output; not submit-ready.
+- **Decision:** no reset owner selected. Best next actionable path is still to wait for Samejima HGNet/OpenVINO training to COMPLETE or for a genuinely new source-safe candidate; otherwise next reset should not be spent on repeated Perch-probe/Public0952 or Visual/BirdNET clones.
