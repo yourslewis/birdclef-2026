@@ -3426,3 +3426,9 @@ Decision:
   - Cheny exp070 public0952: source-safe and output-valid; distinct Perch embedding + site/hour prior + classwise logistic-probe structure.
 - **v595:** added `scripts/submit_v595_cheny_public0952_perch_prior_probe.py`; preflight passed source version `1`, COMPLETE/no failure, outputs `submission.csv` + `perch_cache/full_oof_meta_features.npz`, stats `240x235`, no bad values, min/max `9.252071e-12/1.0`; submitted ref `52871700`, pending. UTC count now `3/5`.
 - **Decision:** hold last two slots until v595 score or a stronger verified candidate appears.
+
+## 2026-05-21 05:55 UTC — v595 scored 0.899; >0.949 notes reviewed
+
+- v595 ref `52871700` scored `0.899`, a major drop. The Cheny exp070 `public0952`/Perch-prior-probe source is therefore not a viable direct replay despite source/output safety.
+- Review of >0.949 notes: only the user-reported Itshyao `0.952` and derivative references to that same S124/G124 lead were found as explicit public-LB claims above `0.949`; our v593 direct v2 replay reproduced only `0.949`. Cheny `public0952` did not reproduce (`0.899`). Karnak `s124-g124-reverse-engineered` cites the Itshyao 0.952 but has no submission artifact; use only for code-mining/training-port ideas.
+- Working hypothesis for Itshyao 0.952 non-repro: exact decoded v1/v2 source matched and public dry-run log kept the S114 anchor due row mismatch; if the public post actually showed 0.952, the lift likely depended on a private/non-current artifact/version, author-side submission state, leaderboard/reporting mismatch, or non-replayable attached asset/version rather than visible source changes.
