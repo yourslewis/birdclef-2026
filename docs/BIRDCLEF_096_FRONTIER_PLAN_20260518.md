@@ -1241,3 +1241,17 @@ Queue remains unchanged:
 - Submitted v594 ref `52869105` at `2026-05-21T02:14:22.29Z`; status `pending`; 2026-05-21 count now `2/5`.
 - Fresh 02:00 scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0200Z.json`. New feed was mostly pulled/forked S124/EoS/PriorField or already-audited error/no-output notebooks; no source displaced v594 before submission.
 - Hold remaining `3/5` slots until v594 scores or a clearly stronger non-saturated source appears.
+
+## 2026-05-21 04:01 UTC update — v594 RAM fail; v595 Cheny Perch-prior probe submitted
+
+- Status check: v594 completed without score; Kaggle rejected hidden submission with `Your notebook requested more memory (RAM) than is available.` This confirms the HGNet 10% CPU sidecar is not submit-ready until memory is refactored/streamed.
+- 2026-05-21 count before v595 was `2/5`: v593 `0.949`, v594 no-score RAM fail.
+- Fresh scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0401Z.json`; focused audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0410Z_fresh/summary.json`.
+- Audited fresh candidates:
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: COMPLETE but public dry-run `submission.csv` has 702 bad/NaN values; not safe.
+  - `chenyfdws/bc26-exp071-perch-starter-birdnet-unmapped`: ERROR, no `submission.csv`; not safe.
+  - `chenyfdws/bc26-exp070-public0952-s124-g124-repro`: COMPLETE, valid `240x235` `submission.csv`, no NaNs, min/max `9.252071e-12/1.0`. Despite slug, source is structurally distinct from S124 direct replay: Perch embeddings + site/hour prior tables + frozen classwise logistic probes; hidden path switches from dry-run train soundscapes to `/test_soundscapes` and asserts row/column schema/no NaNs.
+  - Kijiang v342/v343/v344 and pulled EoS forks have malformed dry-run outputs (`236` columns or NaNs) or saturated EoS weights; skip.
+  - `karnakbaevarthur/s124-g124-reverse-engineered` is promising for future training/porting but produces no `submission.csv` yet; not a direct submit candidate.
+- Added guarded submitter `scripts/submit_v595_cheny_public0952_perch_prior_probe.py` and submitted v595 ref `52871700` at `2026-05-21T04:07:52Z`; status pending. 2026-05-21 count now `3/5`.
+- Hold remaining `2/5` slots until v595 scores or a clearly stronger complete/source-safe candidate appears. Next candidate class: repo-owned port of Cheny exp070 if it scores high; otherwise mine Karnak S124/G124 reverse-engineering or memory-safe HGNet/OpenVINO sidecar, but do not submit Samejima HGNet until NaNs are fixed.

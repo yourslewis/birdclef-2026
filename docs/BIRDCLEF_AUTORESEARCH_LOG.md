@@ -3413,3 +3413,16 @@ Decision:
 - **v594:** CPU run COMPLETE; preflight valid (`240x235`, no NaNs, min/max `0.0065000006/1.0`); submitted ref `52869105`, status pending at `2026-05-21T02:14:22Z`. 2026-05-21 count `2/5`.
 - **Scan:** `scan_20260521T0200Z.json` showed no stronger source than v594; mostly pulled/forked saturated S124/EoS/PriorField or already-rejected error/no-output lanes.
 - **Decision:** hold remaining three slots pending v594 score.
+
+## 2026-05-21 04:01 UTC — v594 RAM fail; v595 submitted
+
+- **v594 result:** no public score. Kaggle hidden run failed with `Your notebook requested more memory (RAM) than is available.` Lesson: HGNet 10% sidecar must be memory-refactored/streamed before another slot; public dry-run success was insufficient.
+- **Frontier scan:** wrote `scan_20260521T0401Z.json`; focused fresh audit wrote `source_audit_20260521T0410Z_fresh/summary.json`.
+- **Candidate decisions:**
+  - Samejima HGNet inference: COMPLETE but invalid dry-run `submission.csv` (702 NaNs/bad values), skip.
+  - Cheny exp071 BirdNET-unmapped: ERROR/no final `submission.csv`, skip.
+  - Kijiang EoS forks: malformed/NaN outputs or saturated EoS scalar variants, skip.
+  - Karnak S124/G124 reverse-engineered: no submission output yet, keep as training/porting research lane.
+  - Cheny exp070 public0952: source-safe and output-valid; distinct Perch embedding + site/hour prior + classwise logistic-probe structure.
+- **v595:** added `scripts/submit_v595_cheny_public0952_perch_prior_probe.py`; preflight passed source version `1`, COMPLETE/no failure, outputs `submission.csv` + `perch_cache/full_oof_meta_features.npz`, stats `240x235`, no bad values, min/max `9.252071e-12/1.0`; submitted ref `52871700`, pending. UTC count now `3/5`.
+- **Decision:** hold last two slots until v595 score or a stronger verified candidate appears.
