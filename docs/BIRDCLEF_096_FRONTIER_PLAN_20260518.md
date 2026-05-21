@@ -1230,3 +1230,14 @@ Queue remains unchanged:
 - Pre-submit audit artifact: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0001Z_top/summary.json`.
 - Fresh 00:01 audit decisions: `rauffauzanrambe/birdclef-2026-s124-s114-g124-f1-rankblend` is a fork of the S124/S114/G124 family but lacks the G124 asset and logs `S124 G124 fold1 rank sidecar failed`; not better than v593. `mtoshidesu/notebookc6e90ae327` v11 is COMPLETE/schema-valid but only a Karnakbayev PowerOptimization `0.948`/0.949-family output; not a slot displacer.
 - Hold remaining 4 slots until v593 scores or a clearly stronger fresh source appears. If v593 confirms >=0.952, port/confirm repo-owned; if it ties/drops/no-scores, fall back to v592 HGNet or S124/G124 reconstruction mining.
+
+## 2026-05-21 02:00 UTC update — v593 tied; v594 HGNet CPU submitted
+
+- v593 Itshyao S124/S114/G124 v2 scored `0.949`, tying the plateau and failing to confirm the external `0.952` report. 2026-05-21 now had `1/5` used before the v594 action.
+- Contingency executed: v592/v594 HGNet 10% sidecar was next structural backup. First direct v592 submit attempt passed source/status/output preflight but Kaggle rejected it because the repo-owned kernel metadata was marked GPU: `Submission not allowed: Your Notebook's runtime of 9 minutes exceeds this competition's GPU max of 0 minutes.`
+- Fixed the private kernel metadata for `yourslewis/bc26-v592-public946-hgnet-distill-w010`: set `enable_gpu=false`, corrected metadata slug to the actual `...hgnet-distill-w010`, added `id_no=119970462`, and repushed as kernel version `2`. CPU run completed.
+- Added `scripts/submit_v594_public946_hgnet_w010_cpu_when_ready.py`, pinned to kernel version `2`, description `v594: Repo-owned public946 plus Qiuzi HGNet rank sidecar 10pct CPU v2`.
+- v594 preflight passed: source version `2`, COMPLETE/no failure, required outputs present, final `submission.csv` valid `240x235`, no NaNs, min/max `0.0065000006/1.0`.
+- Submitted v594 ref `52869105` at `2026-05-21T02:14:22.29Z`; status `pending`; 2026-05-21 count now `2/5`.
+- Fresh 02:00 scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0200Z.json`. New feed was mostly pulled/forked S124/EoS/PriorField or already-audited error/no-output notebooks; no source displaced v594 before submission.
+- Hold remaining `3/5` slots until v594 scores or a clearly stronger non-saturated source appears.

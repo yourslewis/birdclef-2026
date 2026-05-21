@@ -3404,3 +3404,12 @@ Decision:
 - **Recovery:** reran guarded v593 with venv Python. Checks passed: source v2, COMPLETE/no failure, required outputs present, finite `3x235` submission. Submitted ref `52866246`; visible as `pending` at `2026-05-21T00:06:26.767Z`; count now `1/5`.
 - **Scan/audit:** saved `scan_20260521T0001Z.json` and `source_audit_20260521T0001Z_top/summary.json`. Rauffauzan S124 fork fails G124 sidecar (`S124 G124 fold1 rank sidecar failed`) and is not above v593; Mtoshi v11 is schema-valid but Karnak/0.948-family only.
 - **Decision:** hold remaining four slots until v593 score lands or a clearly stronger fresh source appears.
+
+## 2026-05-21 02:00 UTC — v593 tied, v594 HGNet submitted
+
+- **Score update:** v593 ref `52866246` scored `0.949`, tying but not improving. The external `0.952` Itshyao v2 lead did not reproduce via our direct replay.
+- **Fallback action:** attempted the repo-owned HGNet 10% sidecar (v592 path). Preflight passed, but Kaggle rejected the version-1 kernel submission because metadata had GPU enabled (`GPU max of 0 minutes`).
+- **Fix:** patched `kaggle-kernels/v592-public946-hgnet-distill-w010/kernel-metadata.json` to `enable_gpu=false`, actual slug `yourslewis/bc26-v592-public946-hgnet-distill-w010`, `id_no=119970462`; repushed as kernel v2. Added `scripts/submit_v594_public946_hgnet_w010_cpu_when_ready.py` with `KERNEL_VERSION=2` and v594 description.
+- **v594:** CPU run COMPLETE; preflight valid (`240x235`, no NaNs, min/max `0.0065000006/1.0`); submitted ref `52869105`, status pending at `2026-05-21T02:14:22Z`. 2026-05-21 count `2/5`.
+- **Scan:** `scan_20260521T0200Z.json` showed no stronger source than v594; mostly pulled/forked saturated S124/EoS/PriorField or already-rejected error/no-output lanes.
+- **Decision:** hold remaining three slots pending v594 score.

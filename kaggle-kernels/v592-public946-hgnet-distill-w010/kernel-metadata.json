@@ -1,11 +1,11 @@
 {
-  "id": "yourslewis/bc26-v592-public946-hgnet-w010",
+  "id": "yourslewis/bc26-v592-public946-hgnet-distill-w010",
   "title": "BC26 v592 Public946 HGNet Distill W010",
   "code_file": "script.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": true,
-  "enable_gpu": true,
+  "enable_gpu": false,
   "enable_tpu": false,
   "enable_internet": false,
   "competition_sources": [
@@ -24,5 +24,6 @@
   ],
   "model_sources": [
     "google/bird-vocalization-classifier/tensorflow2/perch_v2_cpu/1"
-  ]
+  ],
+  "id_no": 119970462
 }
