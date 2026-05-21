@@ -1289,3 +1289,13 @@ Queue remains unchanged:
 - Pushed Kaggle kernel version `1`, kernel id `120055586`; run completed with outputs `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, and caches.
 - Dry-run validation: `submission.csv` valid `240x235`, no bad values, min/max `0.0073333336/1.0`; `submission_hgnet.csv` valid `240x235`, HGNet max `0.947721`; run log showed HGNet streaming rows `240` per fold and RSS stayed roughly `21.39GB -> 21.54GB`, i.e. no multi-GB growth from segment/fold materialization.
 - Submitted v596 ref `52875117` at `2026-05-21T06:24:24.773Z`; status pending. UTC count now `4/5`; preserve final slot pending v596 score unless a clearly stronger source appears.
+
+## 2026-05-21 08:06 UTC update — v596 0.946; v597 final-slot S128/G127 probe pending
+
+- v596 streaming HGNet sidecar scored `0.946`: memory-safe repair worked, but HGNet 10% did not improve over the `0.949` plateau. Do not spend another slot on HGNet weight variants without stronger evidence than local/public946 gates.
+- Fresh scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0800Z.json`; audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0800Z_fresh/summary.json`.
+- Final slot candidate selected: `itshyao/birdclef-2026-s128-s124v2-g127-top2-rankblend` v1. It adds a new G127 EfficientNet-B0 NS softCE pseudo top-2 sidecar on top of the S124/S124v2 rankblend family, with visible assets and output files.
+- Guarded submitter: `scripts/submit_v597_itshyao_s128_s124v2_g127_top2_rankblend_when_ready.py`.
+- Preflight summary: source markers and outputs passed; public dry-run final CSV valid `3x235`, no NaNs/infs, min/max `0.47687027/0.5553993`. Public dry-run keeps anchor on row mismatch, but hidden scoring should exercise the sidecar when sample/test row IDs align.
+- Submitted v597 ref `52878057`; pending. 2026-05-21 UTC cap now `5/5`.
+- Next after result: if v597 improves, immediately repo-port/confirm the S128/G127 path. If it ties/drops, stop direct S124/S128 fork spending and pursue a repo-owned extracted utility or new independent model/source lane.
