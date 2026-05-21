@@ -1272,3 +1272,11 @@ Queue remains unchanged:
 - Only new/changed feed item after 18UTC was `deepanshus167/bird-claasifier-comp`; it is COMPLETE but outputless/no `submission.csv`, so not submit-ready.
 - Web search found no fresh public `0.960/0.96` notebook claim.
 - Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next available slot; next work is score recheck after reset and immediate diagnose/port depending on v598 result.
+
+## 2026-05-21 22:00 UTC update — v598 still owns reset; WildSound watch-only
+
+- Cap remains `5/5`; best remains `0.949`. Fresh scan: `scan_20260521T2200Z.json`; focused audit: `source_audit_20260521T2200Z_fresh/summary.json`.
+- v598 guarded monitor remains alive and sleeping until after 2026-05-22 UTC reset after passing source/status/output preflight.
+- New top-feed item: `muhammadsaadalvi/birdclef-2026-wildsound-v8` reran at 21:57Z. It is RUNNING with no outputs/submission; source is a full training/data-diversity lane, not a direct reset-slot candidate yet.
+- Web search found no fresh public `0.960` or `0.952` Kaggle notebook claim.
+- Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next slot; WildSound becomes a watch item only if it completes with valid output and stronger evidence.

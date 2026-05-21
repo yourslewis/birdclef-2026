@@ -3458,3 +3458,14 @@ Decision:
 - **External web check:** search for fresh `0.960/0.96` BirdCLEF Kaggle notebook claims returned no results.
 - **Decision:** keep v598 Samejima HGNet OpenVINO artifact as the first reset-slot owner. Do not start duplicate submitters or spend a slot on repeated EoS/Karnak/R0952/PriorField/Visual/NFNet clones while v598 is queued.
 
+
+## 2026-05-21 22:00 UTC — capped scan; WildSound rerun not slot-ready
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #251 (v598) is open/BLOCKED. No v577/v578 scalar submitter visible.
+- **v598 monitor:** PID in `logs/v598_samejima_hgnet_submit_20260522.pid` remains alive and sleeping after successful source/status/output preflight; it is still the first reset-slot owner.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T2200Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T2200Z_fresh/summary.json`.
+- **New/changed feed:** `muhammadsaadalvi/birdclef-2026-wildsound-v8` reran at `2026-05-21T21:57Z` and was audited because it is the only fresh top-feed change. Current status is RUNNING with no output files/no `submission.csv`. Source is a full training pipeline using external BirdCLEF/Xeno-Canto-style data and Google BVC model source; it is potentially interesting as a training/data-diversity lane but not hidden-safe or slot-ready until it completes with a valid competition-format output.
+- **External web check:** searches for fresh public `0.960` and `0.952` BirdCLEF Kaggle notebook claims returned no results.
+- **Decision:** keep v598 Samejima HGNet OpenVINO artifact as next reset-slot owner. Watch WildSound only after it completes; do not displace v598 with a running/no-output training notebook.
+
