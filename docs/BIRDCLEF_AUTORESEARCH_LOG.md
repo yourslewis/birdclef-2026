@@ -3432,3 +3432,33 @@ Decision:
 - v595 ref `52871700` scored `0.899`, a major drop. The Cheny exp070 `public0952`/Perch-prior-probe source is therefore not a viable direct replay despite source/output safety.
 - Review of >0.949 notes: only the user-reported Itshyao `0.952` and derivative references to that same S124/G124 lead were found as explicit public-LB claims above `0.949`; our v593 direct v2 replay reproduced only `0.949`. Cheny `public0952` did not reproduce (`0.899`). Karnak `s124-g124-reverse-engineered` cites the Itshyao 0.952 but has no submission artifact; use only for code-mining/training-port ideas.
 - Working hypothesis for Itshyao 0.952 non-repro: exact decoded v1/v2 source matched and public dry-run log kept the S114 anchor due row mismatch; if the public post actually showed 0.952, the lift likely depended on a private/non-current artifact/version, author-side submission state, leaderboard/reporting mismatch, or non-replayable attached asset/version rather than visible source changes.
+
+## 2026-05-21 06:00 UTC — v595 failed; scan found no slot-worthy candidate
+
+- **Live scores:** v595 `0.899`; v594 RAM/no-score; v593 `0.949`; best remains `0.949`; UTC count `3/5`, two slots remain.
+- **State:** PR #249 and #245 merged; branch clean; no stale v577/v578/reset submitters.
+- **Artifacts:** `scan_20260521T0600Z.json` and `source_audit_20260521T0600Z_fresh/summary.json`.
+- **Rejected for direct submission:**
+  - Haivan Proto Rank 062: small PriorField scalar (`PROTO_RANK_WEIGHT=0.62`) on saturated family.
+  - Mtoshi v14: Karnak/PowerOptimization family only.
+  - Qiuzi HGNet distill: ERROR/no outputs.
+  - Alrickh EoS5 meta: EoS5 Model2/5 scalar blend family; already `0.949`.
+  - Alrickh NFNet LPrior075 / Henry G124 protectdelta: schema-valid residual-diversity/rank-power family, but prior sidecars have repeatedly failed public transfer; idea-mining/fallback only.
+  - Cheny exp071: now output-valid, but same Perch-prior/probe family as v595 (`0.899`); skip.
+  - Samejima Visual CPU: output-valid `240x235`, but Visual/BirdNET/Mtoshi direct lane already dropped to `0.942` in v584.
+  - Samejima HGNet training: still running/no submission output.
+  - Karnak S124/G124 reverse-engineered: no outputs; code-mining only.
+- **Decision:** no new slot spent. Preserve final two slots for a genuinely new complete/source-safe candidate or a repo-owned sidecar generated from Karnak/Samejima/HGNet mining.
+
+## 2026-05-21 06:24 UTC — v596 streaming HGNet sidecar submitted
+
+- **Breakthrough push:** parallel scouting found no public source with credible independent >`0.949` evidence. Reports written:
+  - `breakthrough_scout_report_0602.md`
+  - `karnak_s124_mining_report_0602.md`
+  - `hgnet_repair_report_0602.md`
+- **Decision:** stop spending on public forks; build the strongest repo-owned non-saturated artifact. HGNet repair is most credible because v594 preflight was valid and failure was RAM-only.
+- **Implementation:** new branch `feature/birdclef-v596-hgnet-stream-20260521`; new kernel folder `kaggle-kernels/v596-public946-hgnet-distill-w010-stream/`; submitter `scripts/submit_v596_public946_hgnet_w010_stream_when_ready.py`.
+- **Code change:** replaced v592/v594 HGNet all-at-once inference (`_segments`, `_waves`, `_fold_probs`, audio cache) with streaming `(fold, audio-file)` inference and a single `_hgnet_probs_sum` accumulator. Added RSS logging.
+- **Kaggle kernel:** pushed `yourslewis/bc26-v596-public946-hgnet-w010-stream` v1, kernel id `120055586`; COMPLETE/no failure.
+- **Validation:** outputs present: `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, `submission_sed.csv`; final `submission.csv` `240x235`, no bad values, min/max `0.0073333336/1.0`; log shows streaming HGNet folds processed 240 rows each with RSS approximately `21392MB` to `21538MB`, avoiding hidden-scale segment/fold materialization.
+- **Submission:** v596 ref `52875117`, description `v596: Repo-owned public946 plus streaming Qiuzi HGNet rank sidecar 10pct`, pending at `2026-05-21T06:24:24.773Z`. UTC count `4/5`; hold final slot until v596 scores.

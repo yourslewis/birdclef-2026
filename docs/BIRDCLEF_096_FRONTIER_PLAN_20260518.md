@@ -1255,3 +1255,37 @@ Queue remains unchanged:
   - `karnakbaevarthur/s124-g124-reverse-engineered` is promising for future training/porting but produces no `submission.csv` yet; not a direct submit candidate.
 - Added guarded submitter `scripts/submit_v595_cheny_public0952_perch_prior_probe.py` and submitted v595 ref `52871700` at `2026-05-21T04:07:52Z`; status pending. 2026-05-21 count now `3/5`.
 - Hold remaining `2/5` slots until v595 scores or a clearly stronger complete/source-safe candidate appears. Next candidate class: repo-owned port of Cheny exp070 if it scores high; otherwise mine Karnak S124/G124 reverse-engineering or memory-safe HGNet/OpenVINO sidecar, but do not submit Samejima HGNet until NaNs are fixed.
+
+## 2026-05-21 06:00 UTC update — v595 failed; 06:00 scan, no slot spent
+
+- Submission status: v595 Cheny `public0952` Perch-prior probe scored `0.899`; v594 remains no-score RAM fail; v593 remains `0.949`. 2026-05-21 UTC count is `3/5`; two slots remain.
+- PR state: PR #249 and #245 are both merged; current branch is clean against origin. No stale v577/v578 scalar submitter or reset submitter was visible.
+- Fresh scan artifact: `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T0600Z.json`; focused audit: `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T0600Z_fresh/summary.json`.
+- Candidate audit decisions:
+  - `haivan11/birdclef-2026-proto-rank-062-vi`: valid dry-run output but explicitly a Proto/SED rank scalar shift (`0.60/0.40` -> `0.62/0.38`) on PriorField/Yaroslav family; not 0.96-upside after v595 and prior-field saturation.
+  - `mtoshidesu/notebookc6e90ae327`: valid dry-run but Karnak/PowerOptimization family; no independent >0.949 evidence.
+  - `qiuzilang/hgnetv2-b0-training-distill`: ERROR/no outputs; not slot-ready.
+  - `alrickh/bc26-eos5-meta-may21`: valid dry-run but EoS5 Model2/Model5 scalar blend family already confirmed `0.949`; low-upside.
+  - `alrickh/bc26-nfnet-lprior075-may21` and `henryszy/bc2026-g124-protectdelta-v84`: COMPLETE and schema-valid, but still rank-power/prior residual-diversity family. Keep as fallback/idea-mining only; do not spend a slot ahead of fresh-source discovery because prior sidecars have repeatedly dropped or no-scored.
+  - `chenyfdws/bc26-exp071-perch-starter-birdnet-unmapped`: now COMPLETE and valid dry-run, but same Perch-prior/probe family whose direct replay v595 scored `0.899`; skip direct submit.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference`: COMPLETE and valid `240x235`, but Visual/BirdNET/Mtoshi family already scored `0.942` via v584; not a 0.96 candidate.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING training artifacts; no submission output yet.
+  - `karnakbaevarthur/s124-g124-reverse-engineered`: still no submission output, but remains the best code-mining lead for a repo-owned G124/S124 sidecar because it documents the private Itshyao G124 asset dependency and rankblend gates.
+- Decision: spend **no** Kaggle slot at 06:00. Preserve remaining two slots for a stronger complete/source-safe candidate or a repo-owned artifact. Next productive work is mining Karnak/Samejima HGNet/S124 code for a memory-safe repo-owned sidecar rather than more direct scalar/fork submissions.
+
+## 2026-05-21 06:24 UTC update — v596 streaming HGNet sidecar submitted
+
+- User asked to push harder on breaking the ceiling, so direct-public replay search was parallelized with S124/G124 code mining and HGNet repair mining.
+- Public scout report: `artifacts/public_kernels_20260521_frontier_candidates/breakthrough_scout_report_0602.md`. It found no convincing independent public candidate above `0.949`; best speculative direct-public fallback is `alrickh/bc26-nfnet-lprior075-may21`, but still lower EV than a repo-owned HGNet repair.
+- S124/G124 mining report: `artifacts/public_kernels_20260521_frontier_candidates/karnak_s124_mining_report_0602.md`. Conclusion: Karnak/Itshyao G124 exact path is blocked by missing private `g124_fold1_fp16.pt`; extract rank/protected-delta utility later, but no direct G124 recreation is slot-ready.
+- HGNet repair report: `artifacts/public_kernels_20260521_frontier_candidates/hgnet_repair_report_0602.md`. Conclusion: v594 failure was likely memory implementation, not invalid model signal; Qiuzi HGNet sidecar should be streamed file/fold-wise.
+- Created branch `feature/birdclef-v596-hgnet-stream-20260521` from updated `origin/main`.
+- Built private repo-owned kernel `kaggle-kernels/v596-public946-hgnet-distill-w010-stream/` with slug `yourslewis/bc26-v596-public946-hgnet-w010-stream` and CPU/no-internet metadata. It copies v592 but replaces HGNet global materialization with streaming accumulator:
+  - no global `_segments`, `_waves`, `_fold_probs`, or all-audio cache;
+  - groups row_ids by audio id;
+  - loads one audio file at a time;
+  - for each of 4 folds, accumulates `sigmoid(logits)/4` into a `(n_rows, 234)` float32 matrix;
+  - logs RSS before/after folds.
+- Pushed Kaggle kernel version `1`, kernel id `120055586`; run completed with outputs `submission.csv`, `submission_hgnet.csv`, `submission_protossm.csv`, `submission_sed.csv`, and caches.
+- Dry-run validation: `submission.csv` valid `240x235`, no bad values, min/max `0.0073333336/1.0`; `submission_hgnet.csv` valid `240x235`, HGNet max `0.947721`; run log showed HGNet streaming rows `240` per fold and RSS stayed roughly `21.39GB -> 21.54GB`, i.e. no multi-GB growth from segment/fold materialization.
+- Submitted v596 ref `52875117` at `2026-05-21T06:24:24.773Z`; status pending. UTC count now `4/5`; preserve final slot pending v596 score unless a clearly stronger source appears.
