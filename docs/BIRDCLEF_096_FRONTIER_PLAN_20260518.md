@@ -1287,3 +1287,9 @@ Queue remains unchanged:
 - Scan/audit artifacts: `scan_20260522T0000Z.json` and `source_audit_20260522T0000Z_fresh/summary.json`.
 - Rejected reset-feed alternatives: Aiaiaiooo output is all-zero; Scenery EoS6 v7 power0.90 extreme has malformed/NaN `submission.csv` and is saturated EoS/Karnak/Power family; WildSound errored with no output.
 - Queue decision: hold remaining slots pending v598 score unless a genuinely new source-safe 0.96-relevant candidate appears.
+
+## 2026-05-22 00:30 UTC update — v598 failed transfer
+
+- v598 Samejima HGNet OpenVINO artifact scored `0.860` (ref `52905096`), despite valid output and successful hidden run.
+- Mark standalone Samejima/HGNet artifact lane rejected. Future HGNet work needs anchored tiny-weight blend/correlation diagnostics before any slot.
+- 2026-05-22 count is `1/5`; preserve remaining slots for a genuinely new source-safe candidate or a stronger repo-owned extraction.

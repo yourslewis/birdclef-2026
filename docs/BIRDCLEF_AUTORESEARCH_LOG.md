@@ -3482,3 +3482,11 @@ Decision:
   - `muhammadsaadalvi/birdclef-2026-wildsound-v8` moved from RUNNING to ERROR with no outputs; keep only as future training/data-diversity idea if repaired.
 - **Decision:** hold remaining 4 slots while v598 is pending; no second reset-slot candidate is currently source/output-safe and distinct enough to spend immediately.
 
+
+## 2026-05-22 00:30 UTC — v598 scored 0.860; standalone Samejima HGNet rejected
+
+- **v598 result:** ref `52905096` completed with public score `0.860`, far below current best `0.949`.
+- **Lesson:** the Samejima HGNet OpenVINO artifact is hidden-test format-safe but not leaderboard-competitive as a standalone submission. Strong local/training fold metrics (`~0.967` validation) did not transfer to the competition public LB, likely due to objective/domain/task mismatch rather than output-format failure.
+- **Decision:** do not spend another slot on standalone Samejima/HGNet artifact submissions. If HGNet is revisited, require a guarded, tiny-weight anchored blend with stronger public/offline evidence and preferably class/order/correlation diagnostics first.
+- **Current slot state:** 2026-05-22 UTC count is `1/5`; 4 slots remain, but no currently audited reset-feed candidate is source/output-safe and high-upside enough for immediate submission.
+
