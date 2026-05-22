@@ -1392,3 +1392,9 @@ Queue remains unchanged:
 - v604 monitor pid `73273` is alive and sleeping until UTC reset after successful preflight.
 - Scan: `scan_20260522T2000Z.json`; audit: `source_audit_20260522T2000Z_newleads/summary.json`.
 - No fresh lead supersedes v604. Beicicc PCEN is a fork/copy of the Pilkwang PCEN package; Junseong EoS6 scoreblend is plateau-family and unverified; Meenal/Kalyan are saturated family; StudyExchange S14 has no writer; Lamido is inaccessible.
+
+## 2026-05-22 22:00 UTC update — hold course on v604
+
+- Day remains capped `5/5`; best remains `0.949`; v604 monitor pid `73273` is alive and sleeping until reset.
+- Scan: `scan_20260522T2200Z.json`; audit: `source_audit_20260522T2200Z_newleads/summary.json`.
+- No fresh lead supersedes v604. Beicicc PCEN is the same Pilkwang PCEN package; Junseong EoS6 scoreblend is unverified plateau-family; Meenal/Kalyan are saturated/fallback-risk; StudyExchange S14 lacks writer; Anatoly v27 remains zero/fallback-risk.

@@ -3663,3 +3663,17 @@ Decision:
   - `studyexchange/birdclef-2026-infer-s14` still lacks a clear competition writer; `lamidoahmad/birdclef-2026` pull is now 403/inaccessible.
 - **Decision:** keep v604 as the single queued reset slot. Do not add another monitor or spend slots on Beicicc/Junseong/Meenal/Kalyan siblings without verified output and score evidence above the `0.949` plateau.
 
+
+## 2026-05-22 22:00 UTC — v604 monitor still sole reset owner
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`. 2026-05-23 count is still `0` at this check.
+- **v604 reset monitor:** pid `73273` remains alive after ~4h and is still sleeping from the successful preflight/cap response. Do not start a duplicate monitor. It should wake around UTC reset and submit `v604: Repo-owned Pilkwang PCEN sidecar verify` once a slot exists.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T2200Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T2200Z_newleads/summary.json`.
+- **Fresh lead triage:**
+  - Beicicc `bc26-pcen-sidecar-may22` remains a direct fork/copy of Pilkwang PCEN package, same dataset and risks; it does not supersede queued v604.
+  - Junseong `eos6-scoreblend-g004-w05` is an EoS6 scoreblend derivative with fallback/zero/constant risks; no verified output or non-plateau evidence.
+  - Meenal v28 / Kalyan Blend2 remain saturated visual/EoS/Blend family with fallback/constant risks.
+  - StudyExchange S14 still lacks a clear competition writer; Anatoly v27 still has zero/fallback risk and no usable output; v603 remains held.
+- **Decision:** keep v604 as the single reset-slot owner. No new kernels or submitters were created this turn.
+
