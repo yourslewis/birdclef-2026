@@ -1307,3 +1307,10 @@ Queue remains unchanged:
 - Fresh scan/audit: `scan_20260522T0200Z.json` and `source_audit_20260522T0200Z_fresh/summary.json`.
 - Fresh candidates were held: Koushik and JGuevara are no-output training notebooks; Samejima HGNet v43 is watch-only after v598 failure; Meenal v25/Gendaijin Meenal-new are valid but saturated Visual/BirdNET/Prior/Karnak family.
 - Recommendation: keep slots open until a genuinely new source-safe candidate appears, rather than spending on saturated families after multiple drops.
+
+## 2026-05-22 04:01 UTC update — fresh outputs rejected, no second slot
+
+- v598 remains failed (`0.860`); best remains `0.949`; 2026-05-22 count `1/5`.
+- Fresh scan/audit: `scan_20260522T0401Z.json` and `source_audit_20260522T0401Z_fresh/summary.json`.
+- Rejected fresh outputs: Samejima HGNet inference v7 still NaN/invalid; Koushik acoustic species notebook outputs constant `1/234`; MLCLSumit has no session/output; JGuevara SED training is still running/no output.
+- Web search found no fresh 0.960/0.952+ claims. Preserve remaining slots for genuinely new source-safe evidence.

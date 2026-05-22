@@ -3516,3 +3516,18 @@ Decision:
   - `gendaijin/birdclef2026-day0522-meenal-new`: COMPLETE/schema-valid (`240x235`) but effectively same Meenal v6_prior065 / Visual-BirdNET-prior family; hold.
 - **Decision:** preserve remaining slots. None of the fresh candidates is both distinct and source/output-safe enough to justify a second 2026-05-22 submission under the 0.96 target.
 
+
+## 2026-05-22 04:01 UTC — post-v598 scan, reject constant/invalid fresh outputs
+
+- **Live state:** v598 scored `0.860`; best remains `0.949`; 2026-05-22 UTC count remains `1/5` with 4 slots unused. PR #252 is open/BLOCKED. No stale v577/v578 scalar submitter or duplicate submission process visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0401Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0401Z_fresh/summary.json`.
+- **Audit decisions:**
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` v7: COMPLETE but output invalid (`3x235`, 702 bad/NaN values). Reject; standalone Samejima/HGNet already failed via v598 `0.860`.
+  - `koushikkumardinda/birdclef-2026-acoustic-species-identification` v8: COMPLETE with `submission.csv`, but output is constant `1/234` (`3x235`, min=max `0.0042735`, `uniq100=1`); reject as fallback/baseline output.
+  - `mlclsumit/notebook2e815ef354`: no Kaggle session/status/output; generic training notebook, not submit-ready.
+  - `jguevarag/07-optimal-sed-training` v7: RUNNING with no outputs; training idea only.
+  - Recent Meenal/Gendaijin visual/BirdNET/prior variants remain valid but saturated families after v584/v595/v598 failures; not worth immediate slot.
+- **External web check:** no fresh public `0.960/0.96/0.952/0.951/0.950` Kaggle notebook claims found.
+- **Decision:** preserve all remaining slots. No second 2026-05-22 submission should be made from the current queue.
+
