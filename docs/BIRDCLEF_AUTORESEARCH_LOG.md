@@ -3637,3 +3637,14 @@ Decision:
 - **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v604-pilkwang-pcen-sidecar-verify/` and push script `scripts/push_v604_pilkwang_pcen_sidecar_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v604-pilkwang-pcen-sidecar-verify`, kernel id `120230356`, version 1. This is **not** a competition submission.
 - **Validation:** v604 push succeeded with no invalid data/competition/kernel/model sources; metadata and notebook JSON parse; push script py_compile passes. Like v603, `kernels/pull` works but `kernels/status` and `kernels/output` return 404/HTML, so v604 is **not competition-submit-ready** until output can be verified.
 
+
+## 2026-05-22 18:01 UTC — v604 guarded submit monitor queued for reset
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1801Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1801Z_newleads/summary.json`.
+- **Private verifier status:** SDK verification now works for v604/v603 even though raw REST status/output endpoints return 404. v604 is COMPLETE with files `submission.csv`, `sidecar_exp001_diagnostics.csv`, `submission_before_all_sidecars.csv`, `submission_before_exp001_sidecar.csv`, `submission_protossm.csv`, `submission_sed.csv`, and `v17_logs.json`. v604 sample/public output has shape `3 x 235`, finite/non-constant values, range `0.4607935..0.5381691`, `0` zeros, `98` unique first-100 values. v603 is COMPLETE but its output is all-zero sample fallback (`0.0..0.0`, 702 zeros), so it remains rejected/held.
+- **v604 caveat:** the public/sample run diagnostics show `effective_weight=0.0` and `skip_reason=No test_soundscapes .ogg files found; public/dry-run anchor rows cannot be matched by exp001 inference.` This means schema/output is verified, but the PCEN sidecar correction itself is only exercised on hidden test. It is still the best distinct reset slot because the code path is source-safe and guarded, but this is a real uncertainty.
+- **Guarded submitter:** added `scripts/submit_v604_pilkwang_pcen_when_ready.py`. Preflight-only passed with source markers, COMPLETE status, required outputs, and non-constant `submission.csv`. Started reset monitor pid `73273` with `--wait-for-slot`; log `logs/v604_pilkwang_pcen_submit_monitor_20260522T1801Z.log`; it is sleeping until UTC reset after daily cap.
+- **Fresh lead triage:** Kalyan Blend 2 is another EoS/Blend plateau derivative with fallback/constant risks; StudyExchange S14 still lacks a clear writer; Anatoly v26 remains unverified/zero-fallback; Junseong scoreblend is EoS plateau derivative; Lamido has model weights but zero/fallback risk; Pilkwang PCEN remains selected.
+

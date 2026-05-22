@@ -1377,3 +1377,11 @@ Queue remains unchanged:
 - Packaged repo-owned private verifier `yourslewis/bc26-v604-pilkwang-pcen-sidecar-verify` (kernel id `120230356`) from Pilkwang PCEN sidecar source. Push succeeded and JSON/script validation passed.
 - v604 is held: pull works, but status/output are 404/HTML. Do not competition-submit until valid non-constant `submission.csv` output is verified.
 - Other fresh leads remain below slot bar: S14 no writer, Anatoly still unverified, Tuannm Perch-only/subset, Junseong EoS5 scoreblend derivative, Samejima HGNet rejected after v598.
+
+## 2026-05-22 18:01 UTC update — v604 selected for reset slot
+
+- Day remains capped `5/5`; best remains `0.949`.
+- Scan: `scan_20260522T1801Z.json`; audit: `source_audit_20260522T1801Z_newleads/summary.json`.
+- v604 Pilkwang PCEN verifier is COMPLETE via SDK output API; sample output is valid/non-constant (`3 x 235`, range `0.4607935..0.5381691`, zero count `0`). v603 output is all-zero sample fallback and remains held.
+- Added guarded submitter `scripts/submit_v604_pilkwang_pcen_when_ready.py` and started monitor pid `73273`; it passed preflight and is sleeping until UTC reset because day is capped.
+- Caveat: PCEN sidecar diagnostics on public/sample run have `effective_weight=0` because no real `test_soundscapes` files exist in the public dry run. Hidden test will exercise the sidecar path.
