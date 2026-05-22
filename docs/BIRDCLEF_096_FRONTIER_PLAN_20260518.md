@@ -1321,3 +1321,9 @@ Queue remains unchanged:
 - v599 `52913376`: Claudedevore R0952 run2 sidecar; v600 `52913377`: Gendaijin Pilkwang prior-field fusion; v601 `52913379`: Gendaijin Meenal new visual prior; v602 `52913380`: Nicolas NFNet Aves lprior075.
 - All four passed COMPLETE/output preflight with finite, non-constant `submission.csv`; all are pending. 2026-05-22 count is now `5/5`.
 - Next action is score recheck and immediate lane triage once results land.
+
+## 2026-05-22 06:01 UTC update — v599-v602 still pending
+
+- v599-v602 remain pending; best confirmed remains `0.949`; day is capped at `5/5`.
+- Fresh scan: `scan_20260522T0601Z.json`.
+- No new candidate supersedes the pending batch. Next action is score recheck and lane triage once v599-v602 land.

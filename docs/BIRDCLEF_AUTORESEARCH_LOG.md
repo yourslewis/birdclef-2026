@@ -3545,3 +3545,12 @@ Decision:
 - **Slot state after batch:** 2026-05-22 count is now `5/5`; v599-v602 are all pending immediately after submit.
 - **Decision:** wait for v599-v602 scores. If one improves/ties high, port/confirm; if all drop, treat the public 0.95-ish visual/prior/NFNet/R0952 families as saturated or misleading under the 0.96 target.
 
+
+## 2026-05-22 06:01 UTC — broad batch pending, fresh scan no new slot path
+
+- **Live state:** v599-v602 are still pending; v598 remains `0.860`; best confirmed score remains `0.949`. 2026-05-22 UTC count is `5/5`, so no more submissions today.
+- **Submitted batch still pending:** v599 `52913376` Claudedevore R0952 run2 sidecar; v600 `52913377` Gendaijin Pilkwang prior-field fusion; v601 `52913379` Gendaijin Meenal new visual prior; v602 `52913380` Nicolas NFNet Aves lprior075.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0601Z.json`.
+- **Fresh feed:** no new source-safe candidate supersedes the pending batch. The newest visible items are Samejima HGNet inference/training reruns, JGuevara/Koushik training notebooks, Meenal visual-prior rerun, and the already-submitted/held Gendaijin day0522 family.
+- **Decision:** wait for v599-v602 scores. If all drop or tie below 0.949, mark public R0952/Pilkwang/Meenal/NFNet direct lanes as exhausted for 0.96 purposes and pivot back to source discovery/training artifact evidence.
+
