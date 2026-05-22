@@ -1300,3 +1300,10 @@ Queue remains unchanged:
 - Heartbeat scan: `heartbeat_scan_20260522T0030Z.json`; audit: `source_audit_20260522T0030Z_heartbeat/summary.json`.
 - New Gendaijin day0522 feed was audited. Nina EoS6 BZ is malformed/NaN; Anthony S124 is valid but saturated S124/Karnak family; Pilkwang-new is valid but prior-field/BirdNET lineage with dry-run BirdNET row mismatch/anchor fallback.
 - Remaining 4 slots should be preserved until a stronger source-safe 0.96-relevant candidate appears.
+
+## 2026-05-22 02:00 UTC update — slots preserved after broad scan
+
+- v598 remains failed (`0.860`); best remains `0.949`; 2026-05-22 count `1/5`.
+- Fresh scan/audit: `scan_20260522T0200Z.json` and `source_audit_20260522T0200Z_fresh/summary.json`.
+- Fresh candidates were held: Koushik and JGuevara are no-output training notebooks; Samejima HGNet v43 is watch-only after v598 failure; Meenal v25/Gendaijin Meenal-new are valid but saturated Visual/BirdNET/Prior/Karnak family.
+- Recommendation: keep slots open until a genuinely new source-safe candidate appears, rather than spending on saturated families after multiple drops.

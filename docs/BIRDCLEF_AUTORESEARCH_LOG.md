@@ -3502,3 +3502,17 @@ Decision:
   - `gendaijin/birdclef2026-day0522-pilkwang-new`: COMPLETE and valid dry-run `3x235`; source is Acoustic Prior-Field Fusion with low-weight yukiZ branch + dominant v6 prior-field + optional BirdNET sidecar. Dry-run log says `BirdNET row_id mismatch; keeping anchor submission`, so hidden behavior may differ, but it remains PriorField/BirdNET/Pilkwang lineage already broadly saturated/weak in recent replays. Hold for now; do not spend a slot before stronger evidence.
 - **Decision:** after v598 failure, continue scanning rather than immediately spending remaining slots. Next slot should wait for either a genuinely new source-safe candidate or a better grounded repo-owned extraction.
 
+
+## 2026-05-22 02:00 UTC — post-v598 scan; no second slot spent
+
+- **Live state:** v598 scored `0.860`; best remains `0.949`; 2026-05-22 UTC count remains `1/5` with 4 slots unused. PR #252 remains open. No stale v577/v578 scalar submitter or duplicate v598 submitter visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0200Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0200Z_fresh/summary.json`.
+- **Audit decisions:**
+  - `koushikkumardinda/birdclef-2026-acoustic-species-identification`: COMPLETE but no output files/no `submission.csv`; educational/training notebook only, not submit-ready.
+  - `meenalsinha/birdclef-2026-improved` v25: COMPLETE/schema-valid (`240x235`) and high-vote, but it is still the Visual/BirdNET/Prior/Karnak family; previous Visual/BirdNET replay v584 scored `0.942`, so no immediate slot.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v43: RUNNING with the same artifact family; after standalone v598 scored `0.860`, do not pursue standalone HGNet. Watch only for evidence useful to anchored diagnostics.
+  - `jguevarag/07-optimal-sed-training`: COMPLETE but no outputs/submission; training idea only.
+  - `gendaijin/birdclef2026-day0522-meenal-new`: COMPLETE/schema-valid (`240x235`) but effectively same Meenal v6_prior065 / Visual-BirdNET-prior family; hold.
+- **Decision:** preserve remaining slots. None of the fresh candidates is both distinct and source/output-safe enough to justify a second 2026-05-22 submission under the 0.96 target.
+
