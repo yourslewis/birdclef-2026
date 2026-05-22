@@ -1293,3 +1293,10 @@ Queue remains unchanged:
 - v598 Samejima HGNet OpenVINO artifact scored `0.860` (ref `52905096`), despite valid output and successful hidden run.
 - Mark standalone Samejima/HGNet artifact lane rejected. Future HGNet work needs anchored tiny-weight blend/correlation diagnostics before any slot.
 - 2026-05-22 count is `1/5`; preserve remaining slots for a genuinely new source-safe candidate or a stronger repo-owned extraction.
+
+## 2026-05-22 00:31 UTC heartbeat — Gendaijin candidates held
+
+- v598 scored `0.860`; best remains `0.949`; 2026-05-22 count `1/5`.
+- Heartbeat scan: `heartbeat_scan_20260522T0030Z.json`; audit: `source_audit_20260522T0030Z_heartbeat/summary.json`.
+- New Gendaijin day0522 feed was audited. Nina EoS6 BZ is malformed/NaN; Anthony S124 is valid but saturated S124/Karnak family; Pilkwang-new is valid but prior-field/BirdNET lineage with dry-run BirdNET row mismatch/anchor fallback.
+- Remaining 4 slots should be preserved until a stronger source-safe 0.96-relevant candidate appears.

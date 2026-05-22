@@ -3490,3 +3490,15 @@ Decision:
 - **Decision:** do not spend another slot on standalone Samejima/HGNet artifact submissions. If HGNet is revisited, require a guarded, tiny-weight anchored blend with stronger public/offline evidence and preferably class/order/correlation diagnostics first.
 - **Current slot state:** 2026-05-22 UTC count is `1/5`; 4 slots remain, but no currently audited reset-feed candidate is source/output-safe and high-upside enough for immediate submission.
 
+
+## 2026-05-22 00:31 UTC heartbeat — post-v598 source scan, no second slot yet
+
+- **Live state:** v598 scored `0.860`, best remains `0.949`; 2026-05-22 UTC count is `1/5`, leaving 4 slots. PR #252 remains open for reset logging. No duplicate/stale submitter visible.
+- **Heartbeat scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/heartbeat_scan_20260522T0030Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0030Z_heartbeat/summary.json`.
+- **New Gendaijin day0522 candidates:**
+  - `gendaijin/birdclef2026-day0522-nina-eos6-bz`: COMPLETE but `submission.csv` is malformed/invalid (`243x235`, 56862 bad/NaN values). Reject.
+  - `gendaijin/birdclef2026-day0522-anthony-s124`: COMPLETE and valid dry-run `3x235`, but it is Anthony/S124/Sunderek/Karnak Model2+Model5 blend-family already saturated by v593/v597 at `0.949`. Hold; not a 0.96 reset-slot owner.
+  - `gendaijin/birdclef2026-day0522-pilkwang-new`: COMPLETE and valid dry-run `3x235`; source is Acoustic Prior-Field Fusion with low-weight yukiZ branch + dominant v6 prior-field + optional BirdNET sidecar. Dry-run log says `BirdNET row_id mismatch; keeping anchor submission`, so hidden behavior may differ, but it remains PriorField/BirdNET/Pilkwang lineage already broadly saturated/weak in recent replays. Hold for now; do not spend a slot before stronger evidence.
+- **Decision:** after v598 failure, continue scanning rather than immediately spending remaining slots. Next slot should wait for either a genuinely new source-safe candidate or a better grounded repo-owned extraction.
+
