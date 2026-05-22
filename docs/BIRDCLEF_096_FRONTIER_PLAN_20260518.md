@@ -1272,3 +1272,52 @@ Queue remains unchanged:
 - Only new/changed feed item after 18UTC was `deepanshus167/bird-claasifier-comp`; it is COMPLETE but outputless/no `submission.csv`, so not submit-ready.
 - Web search found no fresh public `0.960/0.96` notebook claim.
 - Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next available slot; next work is score recheck after reset and immediate diagnose/port depending on v598 result.
+
+## 2026-05-21 22:00 UTC update — v598 still owns reset; WildSound watch-only
+
+- Cap remains `5/5`; best remains `0.949`. Fresh scan: `scan_20260521T2200Z.json`; focused audit: `source_audit_20260521T2200Z_fresh/summary.json`.
+- v598 guarded monitor remains alive and sleeping until after 2026-05-22 UTC reset after passing source/status/output preflight.
+- New top-feed item: `muhammadsaadalvi/birdclef-2026-wildsound-v8` reran at 21:57Z. It is RUNNING with no outputs/submission; source is a full training/data-diversity lane, not a direct reset-slot candidate yet.
+- Web search found no fresh public `0.960` or `0.952` Kaggle notebook claim.
+- Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next slot; WildSound becomes a watch item only if it completes with valid output and stronger evidence.
+
+## 2026-05-22 00:05 UTC update — v598 submitted, pending
+
+- Reset opened and v598 submitted successfully: ref `52905096`, status `pending`, 2026-05-22 count `1/5`.
+- Scan/audit artifacts: `scan_20260522T0000Z.json` and `source_audit_20260522T0000Z_fresh/summary.json`.
+- Rejected reset-feed alternatives: Aiaiaiooo output is all-zero; Scenery EoS6 v7 power0.90 extreme has malformed/NaN `submission.csv` and is saturated EoS/Karnak/Power family; WildSound errored with no output.
+- Queue decision: hold remaining slots pending v598 score unless a genuinely new source-safe 0.96-relevant candidate appears.
+
+## 2026-05-22 00:30 UTC update — v598 failed transfer
+
+- v598 Samejima HGNet OpenVINO artifact scored `0.860` (ref `52905096`), despite valid output and successful hidden run.
+- Mark standalone Samejima/HGNet artifact lane rejected. Future HGNet work needs anchored tiny-weight blend/correlation diagnostics before any slot.
+- 2026-05-22 count is `1/5`; preserve remaining slots for a genuinely new source-safe candidate or a stronger repo-owned extraction.
+
+## 2026-05-22 00:31 UTC heartbeat — Gendaijin candidates held
+
+- v598 scored `0.860`; best remains `0.949`; 2026-05-22 count `1/5`.
+- Heartbeat scan: `heartbeat_scan_20260522T0030Z.json`; audit: `source_audit_20260522T0030Z_heartbeat/summary.json`.
+- New Gendaijin day0522 feed was audited. Nina EoS6 BZ is malformed/NaN; Anthony S124 is valid but saturated S124/Karnak family; Pilkwang-new is valid but prior-field/BirdNET lineage with dry-run BirdNET row mismatch/anchor fallback.
+- Remaining 4 slots should be preserved until a stronger source-safe 0.96-relevant candidate appears.
+
+## 2026-05-22 02:00 UTC update — slots preserved after broad scan
+
+- v598 remains failed (`0.860`); best remains `0.949`; 2026-05-22 count `1/5`.
+- Fresh scan/audit: `scan_20260522T0200Z.json` and `source_audit_20260522T0200Z_fresh/summary.json`.
+- Fresh candidates were held: Koushik and JGuevara are no-output training notebooks; Samejima HGNet v43 is watch-only after v598 failure; Meenal v25/Gendaijin Meenal-new are valid but saturated Visual/BirdNET/Prior/Karnak family.
+- Recommendation: keep slots open until a genuinely new source-safe candidate appears, rather than spending on saturated families after multiple drops.
+
+## 2026-05-22 04:01 UTC update — fresh outputs rejected, no second slot
+
+- v598 remains failed (`0.860`); best remains `0.949`; 2026-05-22 count `1/5`.
+- Fresh scan/audit: `scan_20260522T0401Z.json` and `source_audit_20260522T0401Z_fresh/summary.json`.
+- Rejected fresh outputs: Samejima HGNet inference v7 still NaN/invalid; Koushik acoustic species notebook outputs constant `1/234`; MLCLSumit has no session/output; JGuevara SED training is still running/no output.
+- Web search found no fresh 0.960/0.952+ claims. Preserve remaining slots for genuinely new source-safe evidence.
+
+## 2026-05-22 05:22 UTC update — broad promising batch submitted
+
+- After user asked to test all promising remaining experiments, submitted the four best preflight-valid candidates to use remaining slots.
+- v599 `52913376`: Claudedevore R0952 run2 sidecar; v600 `52913377`: Gendaijin Pilkwang prior-field fusion; v601 `52913379`: Gendaijin Meenal new visual prior; v602 `52913380`: Nicolas NFNet Aves lprior075.
+- All four passed COMPLETE/output preflight with finite, non-constant `submission.csv`; all are pending. 2026-05-22 count is now `5/5`.
+- Next action is score recheck and immediate lane triage once results land.

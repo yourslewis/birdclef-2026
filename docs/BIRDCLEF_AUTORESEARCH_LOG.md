@@ -3458,3 +3458,90 @@ Decision:
 - **External web check:** search for fresh `0.960/0.96` BirdCLEF Kaggle notebook claims returned no results.
 - **Decision:** keep v598 Samejima HGNet OpenVINO artifact as the first reset-slot owner. Do not start duplicate submitters or spend a slot on repeated EoS/Karnak/R0952/PriorField/Visual/NFNet clones while v598 is queued.
 
+
+## 2026-05-21 22:00 UTC — capped scan; WildSound rerun not slot-ready
+
+- **Live state:** best remains `0.949`; 2026-05-21 UTC cap remains `5/5` with v593 `0.949`, v594 RAM/no-score, v595 `0.899`, v596 `0.946`, v597 `0.949`. PR #251 (v598) is open/BLOCKED. No v577/v578 scalar submitter visible.
+- **v598 monitor:** PID in `logs/v598_samejima_hgnet_submit_20260522.pid` remains alive and sleeping after successful source/status/output preflight; it is still the first reset-slot owner.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260521_frontier_candidates/scan_20260521T2200Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260521_frontier_candidates/source_audit_20260521T2200Z_fresh/summary.json`.
+- **New/changed feed:** `muhammadsaadalvi/birdclef-2026-wildsound-v8` reran at `2026-05-21T21:57Z` and was audited because it is the only fresh top-feed change. Current status is RUNNING with no output files/no `submission.csv`. Source is a full training pipeline using external BirdCLEF/Xeno-Canto-style data and Google BVC model source; it is potentially interesting as a training/data-diversity lane but not hidden-safe or slot-ready until it completes with a valid competition-format output.
+- **External web check:** searches for fresh public `0.960` and `0.952` BirdCLEF Kaggle notebook claims returned no results.
+- **Decision:** keep v598 Samejima HGNet OpenVINO artifact as next reset-slot owner. Watch WildSound only after it completes; do not displace v598 with a running/no-output training notebook.
+
+
+## 2026-05-22 00:05 UTC — reset opened; v598 submitted and pending
+
+- **Live state after UTC reset:** 2026-05-22 count is `1/5`; v598 was submitted by the guarded wait-for-slot monitor at `2026-05-22T00:03:02Z`, ref `52905096`, status `pending`. Current confirmed best remains `0.949` until v598 scores.
+- **Monitor result:** `logs/v598_samejima_hgnet_submit_20260522.log` shows the monitor woke after reset, observed `visible UTC submissions today: 0`, reran source/status/output preflight, and submitted `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1 with description `v598: Repo-owned Samejima HGNet OpenVINO artifact inference`. No duplicate submitter remains visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0000Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0000Z_fresh/summary.json`.
+- **Reset scan decisions:**
+  - `aiaiaiooo/birdclef2026` reran and is COMPLETE with `submission.csv`, but dry-run output is all-zero (`3x235`, min=max=0, 702 zeros); reject.
+  - `scenerysunfireink/eos-6-v7-power-0-90-extreme` is COMPLETE with outputs, but `submission.csv` is malformed/invalid (`243x235`, 56862 bad/NaN values). It is also a saturated EoS6/Karnak/Power blend family; reject direct submit.
+  - `muhammadsaadalvi/birdclef-2026-wildsound-v8` moved from RUNNING to ERROR with no outputs; keep only as future training/data-diversity idea if repaired.
+- **Decision:** hold remaining 4 slots while v598 is pending; no second reset-slot candidate is currently source/output-safe and distinct enough to spend immediately.
+
+
+## 2026-05-22 00:30 UTC — v598 scored 0.860; standalone Samejima HGNet rejected
+
+- **v598 result:** ref `52905096` completed with public score `0.860`, far below current best `0.949`.
+- **Lesson:** the Samejima HGNet OpenVINO artifact is hidden-test format-safe but not leaderboard-competitive as a standalone submission. Strong local/training fold metrics (`~0.967` validation) did not transfer to the competition public LB, likely due to objective/domain/task mismatch rather than output-format failure.
+- **Decision:** do not spend another slot on standalone Samejima/HGNet artifact submissions. If HGNet is revisited, require a guarded, tiny-weight anchored blend with stronger public/offline evidence and preferably class/order/correlation diagnostics first.
+- **Current slot state:** 2026-05-22 UTC count is `1/5`; 4 slots remain, but no currently audited reset-feed candidate is source/output-safe and high-upside enough for immediate submission.
+
+
+## 2026-05-22 00:31 UTC heartbeat — post-v598 source scan, no second slot yet
+
+- **Live state:** v598 scored `0.860`, best remains `0.949`; 2026-05-22 UTC count is `1/5`, leaving 4 slots. PR #252 remains open for reset logging. No duplicate/stale submitter visible.
+- **Heartbeat scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/heartbeat_scan_20260522T0030Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0030Z_heartbeat/summary.json`.
+- **New Gendaijin day0522 candidates:**
+  - `gendaijin/birdclef2026-day0522-nina-eos6-bz`: COMPLETE but `submission.csv` is malformed/invalid (`243x235`, 56862 bad/NaN values). Reject.
+  - `gendaijin/birdclef2026-day0522-anthony-s124`: COMPLETE and valid dry-run `3x235`, but it is Anthony/S124/Sunderek/Karnak Model2+Model5 blend-family already saturated by v593/v597 at `0.949`. Hold; not a 0.96 reset-slot owner.
+  - `gendaijin/birdclef2026-day0522-pilkwang-new`: COMPLETE and valid dry-run `3x235`; source is Acoustic Prior-Field Fusion with low-weight yukiZ branch + dominant v6 prior-field + optional BirdNET sidecar. Dry-run log says `BirdNET row_id mismatch; keeping anchor submission`, so hidden behavior may differ, but it remains PriorField/BirdNET/Pilkwang lineage already broadly saturated/weak in recent replays. Hold for now; do not spend a slot before stronger evidence.
+- **Decision:** after v598 failure, continue scanning rather than immediately spending remaining slots. Next slot should wait for either a genuinely new source-safe candidate or a better grounded repo-owned extraction.
+
+
+## 2026-05-22 02:00 UTC — post-v598 scan; no second slot spent
+
+- **Live state:** v598 scored `0.860`; best remains `0.949`; 2026-05-22 UTC count remains `1/5` with 4 slots unused. PR #252 remains open. No stale v577/v578 scalar submitter or duplicate v598 submitter visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0200Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0200Z_fresh/summary.json`.
+- **Audit decisions:**
+  - `koushikkumardinda/birdclef-2026-acoustic-species-identification`: COMPLETE but no output files/no `submission.csv`; educational/training notebook only, not submit-ready.
+  - `meenalsinha/birdclef-2026-improved` v25: COMPLETE/schema-valid (`240x235`) and high-vote, but it is still the Visual/BirdNET/Prior/Karnak family; previous Visual/BirdNET replay v584 scored `0.942`, so no immediate slot.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v43: RUNNING with the same artifact family; after standalone v598 scored `0.860`, do not pursue standalone HGNet. Watch only for evidence useful to anchored diagnostics.
+  - `jguevarag/07-optimal-sed-training`: COMPLETE but no outputs/submission; training idea only.
+  - `gendaijin/birdclef2026-day0522-meenal-new`: COMPLETE/schema-valid (`240x235`) but effectively same Meenal v6_prior065 / Visual-BirdNET-prior family; hold.
+- **Decision:** preserve remaining slots. None of the fresh candidates is both distinct and source/output-safe enough to justify a second 2026-05-22 submission under the 0.96 target.
+
+
+## 2026-05-22 04:01 UTC — post-v598 scan, reject constant/invalid fresh outputs
+
+- **Live state:** v598 scored `0.860`; best remains `0.949`; 2026-05-22 UTC count remains `1/5` with 4 slots unused. PR #252 is open/BLOCKED. No stale v577/v578 scalar submitter or duplicate submission process visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0401Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0401Z_fresh/summary.json`.
+- **Audit decisions:**
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` v7: COMPLETE but output invalid (`3x235`, 702 bad/NaN values). Reject; standalone Samejima/HGNet already failed via v598 `0.860`.
+  - `koushikkumardinda/birdclef-2026-acoustic-species-identification` v8: COMPLETE with `submission.csv`, but output is constant `1/234` (`3x235`, min=max `0.0042735`, `uniq100=1`); reject as fallback/baseline output.
+  - `mlclsumit/notebook2e815ef354`: no Kaggle session/status/output; generic training notebook, not submit-ready.
+  - `jguevarag/07-optimal-sed-training` v7: RUNNING with no outputs; training idea only.
+  - Recent Meenal/Gendaijin visual/BirdNET/prior variants remain valid but saturated families after v584/v595/v598 failures; not worth immediate slot.
+- **External web check:** no fresh public `0.960/0.96/0.952/0.951/0.950` Kaggle notebook claims found.
+- **Decision:** preserve all remaining slots. No second 2026-05-22 submission should be made from the current queue.
+
+
+## 2026-05-22 05:22 UTC — user-approved broad promising batch submitted
+
+- **User direction:** Wenhao asked to test all the most promising remaining experiments. With v598 failed and 4 daily slots still open, I loosened the prior hold rule while preserving output/source preflight guards.
+- **Live state before batch:** best remained `0.949`; 2026-05-22 count was `1/5` from v598 `0.860`; no duplicate submitter process visible.
+- **Batch submitter:** added `scripts/submit_v599_v602_promising_public_batch.py`. It pulls each public kernel via Bearer API, requires COMPLETE status and finite/non-constant `submission.csv`, duplicate-guards descriptions, and submits until daily cap.
+- **Submitted candidates:**
+  - v599 ref `52913376`: `claudedevore/birdclef-2026-r0952-run2-sidecar-submit` v1, valid dry-run `3x235`, min/max `0.47687027/0.5553993`, `uniq_first100=91`.
+  - v600 ref `52913377`: `gendaijin/birdclef2026-day0522-pilkwang-new` v1, valid dry-run `3x235`, min/max `0.460793537150703/0.5381690938702316`, `uniq_first100=96`.
+  - v601 ref `52913379`: `gendaijin/birdclef2026-day0522-meenal-new` v1, valid dry-run `240x235`, min/max `0.0037499997/1.0`, `uniq_first100=94`.
+  - v602 ref `52913380`: `nicolasschuldt/nfnet-aves-lprior075` v2, valid dry-run `3x235`, min/max `0.4642808950427329/0.5409460535973569`, `uniq_first100=95`.
+- **Slot state after batch:** 2026-05-22 count is now `5/5`; v599-v602 are all pending immediately after submit.
+- **Decision:** wait for v599-v602 scores. If one improves/ties high, port/confirm; if all drop, treat the public 0.95-ish visual/prior/NFNet/R0952 families as saturated or misleading under the 0.96 target.
+
