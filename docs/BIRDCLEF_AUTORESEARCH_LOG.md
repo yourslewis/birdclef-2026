@@ -3469,3 +3469,16 @@ Decision:
 - **External web check:** searches for fresh public `0.960` and `0.952` BirdCLEF Kaggle notebook claims returned no results.
 - **Decision:** keep v598 Samejima HGNet OpenVINO artifact as next reset-slot owner. Watch WildSound only after it completes; do not displace v598 with a running/no-output training notebook.
 
+
+## 2026-05-22 00:05 UTC — reset opened; v598 submitted and pending
+
+- **Live state after UTC reset:** 2026-05-22 count is `1/5`; v598 was submitted by the guarded wait-for-slot monitor at `2026-05-22T00:03:02Z`, ref `52905096`, status `pending`. Current confirmed best remains `0.949` until v598 scores.
+- **Monitor result:** `logs/v598_samejima_hgnet_submit_20260522.log` shows the monitor woke after reset, observed `visible UTC submissions today: 0`, reran source/status/output preflight, and submitted `yourslewis/bc26-v598-samejima-hgnet-openvino-artifact` v1 with description `v598: Repo-owned Samejima HGNet OpenVINO artifact inference`. No duplicate submitter remains visible.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0000Z.json`.
+- **Fresh focused audit:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0000Z_fresh/summary.json`.
+- **Reset scan decisions:**
+  - `aiaiaiooo/birdclef2026` reran and is COMPLETE with `submission.csv`, but dry-run output is all-zero (`3x235`, min=max=0, 702 zeros); reject.
+  - `scenerysunfireink/eos-6-v7-power-0-90-extreme` is COMPLETE with outputs, but `submission.csv` is malformed/invalid (`243x235`, 56862 bad/NaN values). It is also a saturated EoS6/Karnak/Power blend family; reject direct submit.
+  - `muhammadsaadalvi/birdclef-2026-wildsound-v8` moved from RUNNING to ERROR with no outputs; keep only as future training/data-diversity idea if repaired.
+- **Decision:** hold remaining 4 slots while v598 is pending; no second reset-slot candidate is currently source/output-safe and distinct enough to spend immediately.
+

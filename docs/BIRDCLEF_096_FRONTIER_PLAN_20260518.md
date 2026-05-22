@@ -1280,3 +1280,10 @@ Queue remains unchanged:
 - New top-feed item: `muhammadsaadalvi/birdclef-2026-wildsound-v8` reran at 21:57Z. It is RUNNING with no outputs/submission; source is a full training/data-diversity lane, not a direct reset-slot candidate yet.
 - Web search found no fresh public `0.960` or `0.952` Kaggle notebook claim.
 - Queue decision unchanged: v598 Samejima HGNet OpenVINO artifact owns the next slot; WildSound becomes a watch item only if it completes with valid output and stronger evidence.
+
+## 2026-05-22 00:05 UTC update — v598 submitted, pending
+
+- Reset opened and v598 submitted successfully: ref `52905096`, status `pending`, 2026-05-22 count `1/5`.
+- Scan/audit artifacts: `scan_20260522T0000Z.json` and `source_audit_20260522T0000Z_fresh/summary.json`.
+- Rejected reset-feed alternatives: Aiaiaiooo output is all-zero; Scenery EoS6 v7 power0.90 extreme has malformed/NaN `submission.csv` and is saturated EoS/Karnak/Power family; WildSound errored with no output.
+- Queue decision: hold remaining slots pending v598 score unless a genuinely new source-safe 0.96-relevant candidate appears.
