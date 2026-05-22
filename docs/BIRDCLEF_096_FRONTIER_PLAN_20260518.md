@@ -1349,3 +1349,15 @@ Queue remains unchanged:
   1. Recheck v603 runtime/output using a working status/output path. Submit only if COMPLETE and output has valid/non-constant schema.
   2. Continue public source discovery for claims above the 0.949 plateau.
   3. Keep Ykuroka OOF as idea-mining only; direct output is unsafe due OOF/train path append.
+
+## 2026-05-22 12:00 UTC update — no submit-ready breakout
+
+- Day remains capped `5/5`; best remains `0.949`.
+- Fresh scan: `scan_20260522T1200Z.json`; focused audit: `source_audit_20260522T1200Z_newleads/summary.json`.
+- v603 private kernel remains blocked: `pull` works, but `status`/`output` 404 and local Kaggle CLI is unauthorized/forbidden. Do not submit v603 until output can be verified.
+- Fresh leads rejected/held:
+  - JGuevara Winning TTA: fallback `submission.csv`/zero-risk, no output; idea-mining only.
+  - Mtoshi EoS6: EoS plateau derivative with fallback/debug path.
+  - Samejima HGNet training: no standalone slot after v598 `0.860`.
+  - Scenery Perch V2 full: subset-species/evaluation path, `-1000` no-pred rows.
+  - Deepanshu classifier: EDA/training notebook, not submit path.

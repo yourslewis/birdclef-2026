@@ -3586,3 +3586,18 @@ Decision:
 - **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v603-anatoly-iter5-b0f1-verify/` and push script `scripts/push_v603_anatoly_iter5_b0f1_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`, kernel id `120204403`, version 1. This is **not** a competition submission.
 - **Verification status:** Kaggle push succeeded with no invalid data/competition/model sources. `kernels/pull` can retrieve the private kernel, but `kernels/status` and `kernels/output` currently return 404/HTML for this private pushed kernel, so runtime/output verification is not yet available. Do not submit v603 to competition until a later check confirms COMPLETE and a valid non-constant `submission.csv`, or until the verifier path is repaired.
 
+
+## 2026-05-22 12:00 UTC — capped scan, v603 verifier still blocked, fresh lead audit
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC count remains `5/5`. No stale v577/v578 scalar submitter is active.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1200Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1200Z_newleads/summary.json`.
+- **v603 verification:** tried Bearer API variants and local Kaggle CLI. Bearer `kernels/pull` still retrieves private v603 (`yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`), but `kernels/status`/`kernels/output` still return 404/HTML; Kaggle CLI with the available venv is unauthorized/forbidden. v603 remains **not competition-submit-ready** until `submission.csv` output can be verified.
+- **Fresh 12UTC lead triage:**
+  - `jguevarag/08-winning-tta-submission-pipeline`: source-pullable but unsafe/weak as direct candidate. It creates sample-submission fallback immediately, then relies on a model from JGuevara 07; no attached output/status via API, and fallback/zero-output risk is present.
+  - `mtoshidesu/testbirdclef-2026-eos-6-bz`: EoS6 derivative; large source with train fallback/debug path and zero/fallback output risk. It remains high-plateau EoS family, not distinct 0.96 evidence.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: training/internet path only; previous v598 inference artifact scored `0.860`, so do not spend slots on standalone HGNet without stronger anchored diagnostics.
+  - `scenerysunfireink/birdclef-2026-perch-v2-full-v3`: Perch V2 model can only predict a subset of 234 species and returns `-1000` rows when runtime threshold/no-prediction triggers; it is evaluation/idea-mining, not direct-submit safe.
+  - `deepanshus167/bird-claasifier-comp`: training/EDA notebook, no credible competition-submit path.
+- **Decision:** still no submission while capped. Next reset should not use v603 unless verifier output is available; otherwise continue source discovery or build a local/repo-owned validation harness for Anatoly B0 fold1.
+
