@@ -3648,3 +3648,18 @@ Decision:
 - **Guarded submitter:** added `scripts/submit_v604_pilkwang_pcen_when_ready.py`. Preflight-only passed with source markers, COMPLETE status, required outputs, and non-constant `submission.csv`. Started reset monitor pid `73273` with `--wait-for-slot`; log `logs/v604_pilkwang_pcen_submit_monitor_20260522T1801Z.log`; it is sleeping until UTC reset after daily cap.
 - **Fresh lead triage:** Kalyan Blend 2 is another EoS/Blend plateau derivative with fallback/constant risks; StudyExchange S14 still lacks a clear writer; Anatoly v26 remains unverified/zero-fallback; Junseong scoreblend is EoS plateau derivative; Lamido has model weights but zero/fallback risk; Pilkwang PCEN remains selected.
 
+
+## 2026-05-22 20:00 UTC — v604 monitor alive, fresh PCEN/scoreblend scan
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`.
+- **v604 reset monitor:** pid `73273` is still alive and sleeping after successful preflight; log `logs/v604_pilkwang_pcen_submit_monitor_20260522T1801Z.log` still shows `daily cap reached; sleeping 21506s`. No duplicate submitter started.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T2000Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T2000Z_newleads/summary.json`.
+- **Fresh lead triage:**
+  - `beicicc/bc26-pcen-sidecar-may22` is a fork/copy of the Pilkwang PCEN package: same `pilkwang/birdclef26-sidecar-exp001` dataset, same yukiZ/v6/BirdNET/PCEN lineage, same fallback/zero/constant risks. It does **not** supersede queued v604.
+  - `junseonglee11/birdclef2026-eos6-scoreblend-g004-w05` is an EoS6 scoreblend derivative with G004-style score blend markers, but has fallback/zero/constant risks and no output; hold as plateau-family idea-mining only.
+  - `meenalsinha/birdclef-2026-improved` v28 remains saturated Visual/BirdNET/Perch lineage; prior direct family tied `0.949` and did not break out.
+  - `kalyankkr/birdclef-2026-blend-2` remains EoS/Blend derivative with fallback/zero/constant risks.
+  - `studyexchange/birdclef-2026-infer-s14` still lacks a clear competition writer; `lamidoahmad/birdclef-2026` pull is now 403/inaccessible.
+- **Decision:** keep v604 as the single queued reset slot. Do not add another monitor or spend slots on Beicicc/Junseong/Meenal/Kalyan siblings without verified output and score evidence above the `0.949` plateau.
+

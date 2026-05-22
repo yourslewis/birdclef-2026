@@ -1385,3 +1385,10 @@ Queue remains unchanged:
 - v604 Pilkwang PCEN verifier is COMPLETE via SDK output API; sample output is valid/non-constant (`3 x 235`, range `0.4607935..0.5381691`, zero count `0`). v603 output is all-zero sample fallback and remains held.
 - Added guarded submitter `scripts/submit_v604_pilkwang_pcen_when_ready.py` and started monitor pid `73273`; it passed preflight and is sleeping until UTC reset because day is capped.
 - Caveat: PCEN sidecar diagnostics on public/sample run have `effective_weight=0` because no real `test_soundscapes` files exist in the public dry run. Hidden test will exercise the sidecar path.
+
+## 2026-05-22 20:00 UTC update — v604 remains queued, no superseding lead
+
+- Day remains capped `5/5`; best remains `0.949`.
+- v604 monitor pid `73273` is alive and sleeping until UTC reset after successful preflight.
+- Scan: `scan_20260522T2000Z.json`; audit: `source_audit_20260522T2000Z_newleads/summary.json`.
+- No fresh lead supersedes v604. Beicicc PCEN is a fork/copy of the Pilkwang PCEN package; Junseong EoS6 scoreblend is plateau-family and unverified; Meenal/Kalyan are saturated family; StudyExchange S14 has no writer; Lamido is inaccessible.
