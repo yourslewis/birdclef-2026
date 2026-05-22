@@ -3620,3 +3620,20 @@ Decision:
   - Lamido/Deepanshu: EDA/training or no clear competition writer.
 - **Decision:** no submission while capped. Next useful work: build a local/repo-owned PCEN sidecar extraction/verification plan, or verify public output if Kaggle status/output becomes available.
 
+
+## 2026-05-22 16:02 UTC — v604 PCEN verifier packaged, still capped
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain `5/5` capped. No durable v577/v578/v6 submitter is active.
+- **v603 verification:** unchanged; private pull works but status/output remain 404/HTML.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1602Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1602Z_newleads/summary.json`.
+- **New/updated lead triage:**
+  - `studyexchange/birdclef-2026-infer-s14`: pulls, but no clear competition submission writer; references S14/SED assets only, hold/reject as direct candidate.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3`: updated to v26, still zero/fallback output risk and no API output. Keep v603/vAnatoly held pending verifier.
+  - `tuannm3812/birdclef-2026-perch-v2`: Perch v2 path with sample/test writer markers, but no output/status and Perch-only/subset lineage; idea-mining only.
+  - `junseonglee11/birdclef2026-eos5-scoreblend-g004-w05`: EoS5 scoreblend / G004 weight 0.5, but EoS plateau derivative with fallback/constant risks. Do not spend scarce slot unless a real score appears.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: updated v8 but same standalone HGNet lane; v598 already scored `0.860`.
+  - `pilkwang/birdclef-2026-pcen-sidecar-package`: still top watch item; source unchanged at v7 and remains unverified but structurally distinct.
+- **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v604-pilkwang-pcen-sidecar-verify/` and push script `scripts/push_v604_pilkwang_pcen_sidecar_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v604-pilkwang-pcen-sidecar-verify`, kernel id `120230356`, version 1. This is **not** a competition submission.
+- **Validation:** v604 push succeeded with no invalid data/competition/kernel/model sources; metadata and notebook JSON parse; push script py_compile passes. Like v603, `kernels/pull` works but `kernels/status` and `kernels/output` return 404/HTML, so v604 is **not competition-submit-ready** until output can be verified.
+

@@ -1369,3 +1369,11 @@ Queue remains unchanged:
 - Top watch item: Pilkwang `birdclef-2026-pcen-sidecar-package` + dataset `pilkwang/birdclef26-sidecar-exp001` (public v1, ~0.56GB). It adds constrained PCEN/ConvNeXt rank correction on top of EoS/v6 prior-field anchor with weight cap `0.020` and D budget `0.003`.
 - Hold, do not direct-submit yet: API output/status unavailable and source contains fallback/debug/constant-risk paths. Needs repo-owned verifier/extraction before slot use.
 - v603 remains held for the same reason: private pull works, status/output unavailable.
+
+## 2026-05-22 16:02 UTC update — v604 PCEN verifier packaged
+
+- Day remains capped `5/5`; best remains `0.949`.
+- Scan: `scan_20260522T1602Z.json`; audit: `source_audit_20260522T1602Z_newleads/summary.json`.
+- Packaged repo-owned private verifier `yourslewis/bc26-v604-pilkwang-pcen-sidecar-verify` (kernel id `120230356`) from Pilkwang PCEN sidecar source. Push succeeded and JSON/script validation passed.
+- v604 is held: pull works, but status/output are 404/HTML. Do not competition-submit until valid non-constant `submission.csv` output is verified.
+- Other fresh leads remain below slot bar: S14 no writer, Anatoly still unverified, Tuannm Perch-only/subset, Junseong EoS5 scoreblend derivative, Samejima HGNet rejected after v598.
