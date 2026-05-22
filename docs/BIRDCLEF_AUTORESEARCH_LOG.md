@@ -3573,3 +3573,16 @@ Decision:
   - WildSound v8 is a training notebook using internet/external XC-style data and a 60-epoch ConvNeXtBase path; not a safe/fast direct code-submission candidate.
 - **Decision:** no new submission attempt while capped. Next useful slot should require either (a) a new public source with evidence above plateau, or (b) a repo-owned extraction from Anatoly/EoS-style source with stronger validation than direct replay.
 
+
+## 2026-05-22 10:00 UTC — capped 10UTC scan + v603 Anatoly preflight push
+
+- **Live state:** best remains `0.949`; v599-v602 are all complete at `0.949`; v598 remains `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`. No stale v577/v578 scalar submitter is active.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1000Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1000Z_newleads/summary.json`.
+- **10UTC lead triage:**
+  - Anatoly `bc2026-iter-5-sed-ensemble-submit-v3` updated to version 24. Source now targets `tf_efficientnet_b0.ns_jft_in1k` with `TARGET_FOLDS=[1]` (`b0_fold1 val 0.9579` comment) for speed instead of the earlier 5-SRX version. Dataset `anatoly7m/bc2026-iter5-ckpts` is public, CC0, ~0.86GB, current v4, with notes saying it contains 15 `best.pth` checkpoints in `iter5/{backbone}_fold{N}/`.
+  - Ykuroka's new `949-birdclef-2026-acoustic-prior-field-fusion-oof`, `perch-v2-protossm-0-925-oof`, and updated `iter-pseudo-oof` remain **direct-submit unsafe** because source appends OOF/train paths to test paths (`test_paths = test_paths + _OOF_PATHS`). Use for idea-mining only.
+  - Suncrest `eval-birdnet-1000-soundscapes` is an evaluation notebook with BirdNET TFLite source only; not a competition submit candidate.
+- **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v603-anatoly-iter5-b0f1-verify/` and push script `scripts/push_v603_anatoly_iter5_b0f1_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`, kernel id `120204403`, version 1. This is **not** a competition submission.
+- **Verification status:** Kaggle push succeeded with no invalid data/competition/model sources. `kernels/pull` can retrieve the private kernel, but `kernels/status` and `kernels/output` currently return 404/HTML for this private pushed kernel, so runtime/output verification is not yet available. Do not submit v603 to competition until a later check confirms COMPLETE and a valid non-constant `submission.csv`, or until the verifier path is repaired.
+

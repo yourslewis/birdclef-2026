@@ -1339,3 +1339,13 @@ Queue remains unchanged:
   2. **Repo-owned Anatoly Iter5 SED extraction** — structurally distinct SED/seresnext candidate; requires deeper output/runtime preflight before any slot.
   3. **Reject direct Ykuroka OOF** — appends train OOF paths to test paths; unsafe direct-submit, idea-mining only.
   4. **Reject direct WildSound v8** — training/internet/external-data path, not hidden-code safe.
+
+## 2026-05-22 10:00 UTC update — Anatoly v603 verification prepared
+
+- Day remains capped `5/5`; best remains `0.949`.
+- Fresh scan: `scan_20260522T1000Z.json`; focused audit: `source_audit_20260522T1000Z_newleads/summary.json`.
+- Prepared private repo-owned verification kernel `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify` (kernel id `120204403`) from Anatoly v24 B0 fold1 source. Push succeeded, but status/output endpoints currently return 404, so this is **not submission-ready**.
+- Next candidate queue:
+  1. Recheck v603 runtime/output using a working status/output path. Submit only if COMPLETE and output has valid/non-constant schema.
+  2. Continue public source discovery for claims above the 0.949 plateau.
+  3. Keep Ykuroka OOF as idea-mining only; direct output is unsafe due OOF/train path append.
