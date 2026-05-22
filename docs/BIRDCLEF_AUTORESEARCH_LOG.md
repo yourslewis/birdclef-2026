@@ -3531,3 +3531,17 @@ Decision:
 - **External web check:** no fresh public `0.960/0.96/0.952/0.951/0.950` Kaggle notebook claims found.
 - **Decision:** preserve all remaining slots. No second 2026-05-22 submission should be made from the current queue.
 
+
+## 2026-05-22 05:22 UTC — user-approved broad promising batch submitted
+
+- **User direction:** Wenhao asked to test all the most promising remaining experiments. With v598 failed and 4 daily slots still open, I loosened the prior hold rule while preserving output/source preflight guards.
+- **Live state before batch:** best remained `0.949`; 2026-05-22 count was `1/5` from v598 `0.860`; no duplicate submitter process visible.
+- **Batch submitter:** added `scripts/submit_v599_v602_promising_public_batch.py`. It pulls each public kernel via Bearer API, requires COMPLETE status and finite/non-constant `submission.csv`, duplicate-guards descriptions, and submits until daily cap.
+- **Submitted candidates:**
+  - v599 ref `52913376`: `claudedevore/birdclef-2026-r0952-run2-sidecar-submit` v1, valid dry-run `3x235`, min/max `0.47687027/0.5553993`, `uniq_first100=91`.
+  - v600 ref `52913377`: `gendaijin/birdclef2026-day0522-pilkwang-new` v1, valid dry-run `3x235`, min/max `0.460793537150703/0.5381690938702316`, `uniq_first100=96`.
+  - v601 ref `52913379`: `gendaijin/birdclef2026-day0522-meenal-new` v1, valid dry-run `240x235`, min/max `0.0037499997/1.0`, `uniq_first100=94`.
+  - v602 ref `52913380`: `nicolasschuldt/nfnet-aves-lprior075` v2, valid dry-run `3x235`, min/max `0.4642808950427329/0.5409460535973569`, `uniq_first100=95`.
+- **Slot state after batch:** 2026-05-22 count is now `5/5`; v599-v602 are all pending immediately after submit.
+- **Decision:** wait for v599-v602 scores. If one improves/ties high, port/confirm; if all drop, treat the public 0.95-ish visual/prior/NFNet/R0952 families as saturated or misleading under the 0.96 target.
+

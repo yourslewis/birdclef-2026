@@ -1314,3 +1314,10 @@ Queue remains unchanged:
 - Fresh scan/audit: `scan_20260522T0401Z.json` and `source_audit_20260522T0401Z_fresh/summary.json`.
 - Rejected fresh outputs: Samejima HGNet inference v7 still NaN/invalid; Koushik acoustic species notebook outputs constant `1/234`; MLCLSumit has no session/output; JGuevara SED training is still running/no output.
 - Web search found no fresh 0.960/0.952+ claims. Preserve remaining slots for genuinely new source-safe evidence.
+
+## 2026-05-22 05:22 UTC update — broad promising batch submitted
+
+- After user asked to test all promising remaining experiments, submitted the four best preflight-valid candidates to use remaining slots.
+- v599 `52913376`: Claudedevore R0952 run2 sidecar; v600 `52913377`: Gendaijin Pilkwang prior-field fusion; v601 `52913379`: Gendaijin Meenal new visual prior; v602 `52913380`: Nicolas NFNet Aves lprior075.
+- All four passed COMPLETE/output preflight with finite, non-constant `submission.csv`; all are pending. 2026-05-22 count is now `5/5`.
+- Next action is score recheck and immediate lane triage once results land.
