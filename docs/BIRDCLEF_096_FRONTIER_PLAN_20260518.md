@@ -1327,3 +1327,15 @@ Queue remains unchanged:
 - v599-v602 remain pending; best confirmed remains `0.949`; day is capped at `5/5`.
 - Fresh scan: `scan_20260522T0601Z.json`.
 - No new candidate supersedes the pending batch. Next action is score recheck and lane triage once v599-v602 land.
+
+## 2026-05-22 08:00 UTC update — v599-v602 plateau confirmed
+
+- v599-v602 all scored `0.949`; no improvement above current best. Day is capped at `5/5`.
+- Direct public replay lanes now saturated at `0.949`: R0952 run2 sidecar, Pilkwang/new prior-field, Meenal/visual-prior, NFNet/Aves-lprior.
+- Fresh scan: `scan_20260522T0800Z.json`.
+- Source audit: `source_audit_20260522T0800Z_newleads/summary.json`.
+- Candidate queue after audit:
+  1. **Watch / idea-mine EoS6 Version.15** — high-plateau source-pullable blend (`Model_21` 1.4%, `Model_52` 2.1%, `Model_74` 96.5%), but source table does not indicate 0.96 upside yet.
+  2. **Repo-owned Anatoly Iter5 SED extraction** — structurally distinct SED/seresnext candidate; requires deeper output/runtime preflight before any slot.
+  3. **Reject direct Ykuroka OOF** — appends train OOF paths to test paths; unsafe direct-submit, idea-mining only.
+  4. **Reject direct WildSound v8** — training/internet/external-data path, not hidden-code safe.

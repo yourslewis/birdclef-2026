@@ -3554,3 +3554,22 @@ Decision:
 - **Fresh feed:** no new source-safe candidate supersedes the pending batch. The newest visible items are Samejima HGNet inference/training reruns, JGuevara/Koushik training notebooks, Meenal visual-prior rerun, and the already-submitted/held Gendaijin day0522 family.
 - **Decision:** wait for v599-v602 scores. If all drop or tie below 0.949, mark public R0952/Pilkwang/Meenal/NFNet direct lanes as exhausted for 0.96 purposes and pivot back to source discovery/training artifact evidence.
 
+
+## 2026-05-22 08:00 UTC — v599-v602 scored tied-best, capped-source audit
+
+- **Live state:** v599-v602 all completed at `0.949`; v598 remains `0.860`; best confirmed public LB remains `0.949` and target remains `0.960`. 2026-05-22 UTC submissions are `5/5`, so no more submissions can be made today.
+- **Scores landed:**
+  - v599 `52913376` Claudedevore R0952 run2 sidecar: `0.949`.
+  - v600 `52913377` Gendaijin Pilkwang prior-field fusion: `0.949`.
+  - v601 `52913379` Gendaijin Meenal new visual prior: `0.949`.
+  - v602 `52913380` Nicolas NFNet Aves lprior075: `0.949`.
+- **Lesson:** the broad 0.95-ish public families are real high-plateau signals but not 0.96 breakthroughs. Treat R0952, Pilkwang/new prior-field, Meenal/visual-prior, and NFNet/Aves-lprior direct replay as saturated at the current `0.949` plateau until a genuinely new artifact/source appears.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0800Z.json`.
+- **Source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0800Z_newleads/summary.json` plus pulled source/full JSON files.
+- **08UTC lead triage:**
+  - EoS6 family (`dhyuk54/birdclef-2026-eos-6-bz`, `gendaijin/birdclef2026-day0522-nina-eos6-bz`, `scenerysunfireink/eos-6-v7-power-0-90-extreme`) is source-pullable and hidden-path aware. The live config is effectively EoS6 Version.15: direct blend of Model_21 `0.014`, Model_52 PSSM `0.021`, and Model_74 `0.965`; source table shows prior EoS6 variants mostly `0.948`/`0.949`, so this is a high-plateau candidate, not currently strong enough to spend scarce slots without a better score clue.
+  - Ykuroka pseudo/OOF notebooks are **not direct-submit safe**: they append train soundscape OOF paths to hidden test paths (`test_paths = test_paths + _OOF_PATHS`), which can create extra non-sample rows. Use only for idea mining around OOF validation / rank gates.
+  - Anatoly Iter5 SED ensemble is structurally distinct (`seresnext26t_32x4d`, 5 fold ckpts, `anatoly7m/bc2026-iter5-ckpts`) and sample-schema aware, but direct output/status is unavailable and its no-test branch emits zeros; keep as a repo-owned extraction candidate only after deeper preflight.
+  - WildSound v8 is a training notebook using internet/external XC-style data and a 60-epoch ConvNeXtBase path; not a safe/fast direct code-submission candidate.
+- **Decision:** no new submission attempt while capped. Next useful slot should require either (a) a new public source with evidence above plateau, or (b) a repo-owned extraction from Anatoly/EoS-style source with stronger validation than direct replay.
+
