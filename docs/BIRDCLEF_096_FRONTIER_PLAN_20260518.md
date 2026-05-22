@@ -1361,3 +1361,11 @@ Queue remains unchanged:
   - Samejima HGNet training: no standalone slot after v598 `0.860`.
   - Scenery Perch V2 full: subset-species/evaluation path, `-1000` no-pred rows.
   - Deepanshu classifier: EDA/training notebook, not submit path.
+
+## 2026-05-22 14:00 UTC update — PCEN sidecar becomes top watch item
+
+- Day remains capped `5/5`; best remains `0.949`.
+- Scan: `scan_20260522T1400Z.json`; audit: `source_audit_20260522T1400Z_newleads/summary.json`.
+- Top watch item: Pilkwang `birdclef-2026-pcen-sidecar-package` + dataset `pilkwang/birdclef26-sidecar-exp001` (public v1, ~0.56GB). It adds constrained PCEN/ConvNeXt rank correction on top of EoS/v6 prior-field anchor with weight cap `0.020` and D budget `0.003`.
+- Hold, do not direct-submit yet: API output/status unavailable and source contains fallback/debug/constant-risk paths. Needs repo-owned verifier/extraction before slot use.
+- v603 remains held for the same reason: private pull works, status/output unavailable.

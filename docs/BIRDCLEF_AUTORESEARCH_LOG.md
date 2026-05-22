@@ -3601,3 +3601,22 @@ Decision:
   - `deepanshus167/bird-claasifier-comp`: training/EDA notebook, no credible competition-submit path.
 - **Decision:** still no submission while capped. Next reset should not use v603 unless verifier output is available; otherwise continue source discovery or build a local/repo-owned validation harness for Anatoly B0 fold1.
 
+
+## 2026-05-22 14:00 UTC — capped scan, PCEN sidecar lead held
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC count remains `5/5`. No durable v577/v578/v6 submitter is active.
+- **v603 verification:** unchanged. Bearer `kernels/pull` can retrieve private `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`, but `kernels/status` and `kernels/output` still return 404/HTML. Do not competition-submit v603 until output can be verified.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1400Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1400Z_newleads/summary.json`.
+- **Strongest fresh lead:** Pilkwang `birdclef-2026-pcen-sidecar-package` / dataset `pilkwang/birdclef26-sidecar-exp001`.
+  - Source describes **Acoustic Prior-Field Fusion + PCEN Sidecar**: low-weight yukiZ Perch/SSM + dominant v6 prior-field branch; BirdNET and custom PCEN/ConvNeXt sidecar are constrained rank corrections with top-k masks, overlap guards, and perturbation budgets.
+  - Dataset `pilkwang/birdclef26-sidecar-exp001` is public, v1, ~0.56GB, license unknown, tagged pre-trained model.
+  - Current notebook settings: `RUN_EXP001_SIDECAR=True`, `SIDECAR_EXP001_REQUIRE=True`, `SIDECAR_EXP001_DEVICE="cpu"`, `SIDECAR_EXP001_BATCH_SIZE=8`, `SIDECAR_EXP001_FOLDS=[0]`, `SIDECAR_EXP001_FORCE_INFER=True`, timeout `600s`, weight cap `0.020`, D budget `0.003`, anchor top-k `48`, side top-k `32`, tau `0.55`, max active fraction `0.25`.
+  - **Decision:** high-upside idea-mining / repo-owned extraction candidate, but not direct-submit-ready because API status/output are unavailable and source has fallback/debug/constant-risk paths. It needs output verification or a repo-owned harness before a slot.
+- **Other fresh lead triage:**
+  - Jungchan `birdclef-first`: Big Mods / class-aware blend + targeted BirdNET + sonotype mirroring; but train fallback, zero/fallback, and constant/ones risks are present.
+  - Samejima visual CPU update: still Perch/visual lineage with fallback/constant risks; same family as saturated visual candidates.
+  - Scenery Perch V2 Full v4: only Perch subset/species path; train fallback and constant/ones risk.
+  - Lamido/Deepanshu: EDA/training or no clear competition writer.
+- **Decision:** no submission while capped. Next useful work: build a local/repo-owned PCEN sidecar extraction/verification plan, or verify public output if Kaggle status/output becomes available.
+
