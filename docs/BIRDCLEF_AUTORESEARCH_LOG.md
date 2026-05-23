@@ -3705,3 +3705,14 @@ Decision:
 - **Other fresh leads:** Koushik/Perch-v2/JGuevara are structurally simpler baseline/training lanes; StudyExchange S14 still lacks writer; Gendaijin PCEN/Junseong are copies of already-held PCEN/scoreblend lineages; WildSound/CKPT-chain require internet or lack competition writer.
 - **Decision:** preserve remaining 4 slots while v605 verifier runs. If v605 completes cleanly, inspect output before any submit; if it fails or falls back, do not spend a slot.
 
+
+## 2026-05-23 04:15 UTC — v605 failed guard; v606 ProtoSSM repair verifier running
+
+- **Live state:** confirmed best remains `0.949`; v604 tied `0.949`; 2026-05-23 slots used remain `1/5`.
+- **v605 result:** verifier `yourslewis/bc26-v605-eslam-v26c-source-verify` reached `ERROR` before `submission.csv`. Guard correctly prevented submission. Root cause: `NameError: name 'proto_model' is not defined` at the ProtoSSM inference cell; only cache outputs were produced.
+- **Repair action:** created and pushed v606 `yourslewis/bc26-v606-eslam-v26c-proto-repair`, version 1 / kernel id `120285231`. Patch trains `LightProtoSSM` in submit mode and materializes `emb_te_f`, `sc_te_f`, `test_site_ids`, and `test_hour_ids` before the ProtoSSM inference cell.
+- **v606 status:** SDK reports `RUNNING`, no failure message. Output listing currently has no files/log yet, so no submission is allowed until COMPLETE + valid non-constant `submission.csv` + no traceback.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0400Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0400Z_newleads/summary.json`.
+- **Fresh lead triage:** Koushik source writes random uniform placeholder predictions despite safe schema; do not submit. Tuannm Perch v2 needs a private/unclear probe artifact. Safe EoS5 / Ykuroka / Cheny variants are fallback-risk or plateau-family. CKPT-chain/WildSound require internet or lack a competition writer. v606 remains the only active candidate.
+

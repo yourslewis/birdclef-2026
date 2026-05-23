@@ -1413,3 +1413,11 @@ Queue remains unchanged:
 - Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0200Z.json`.
 - Audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0200Z_newleads/summary.json`.
 - Launched v605 verifier `yourslewis/bc26-v605-eslam-v26c-source-verify` from Eslam v26C source. Submit only if COMPLETE + valid non-constant `submission.csv` + no traceback.
+
+## 2026-05-23 04:15 UTC update — v605 blocked, v606 repair running
+
+- v605 failed pre-submit guard with `NameError: proto_model is not defined`; no submission spent.
+- v606 `yourslewis/bc26-v606-eslam-v26c-proto-repair` is RUNNING and repairs the missing ProtoSSM setup. Submit only after COMPLETE + valid non-constant output + no traceback.
+- 2026-05-23 slots used remain `1/5`; confirmed best remains `0.949`.
+- Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0400Z.json`; audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0400Z_newleads/summary.json`.
+- Do not submit Koushik: source uses random uniform placeholder predictions. Tuannm depends on unclear/private probe artifact. Continue source scan if v606 fails.
