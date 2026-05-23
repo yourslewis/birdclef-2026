@@ -1483,3 +1483,11 @@ Queue remains unchanged:
 - Do not resubmit PerchFusion v951 as-is: in-kernel training + Perch/SED TTA is too slow for hidden rerun. Any follow-up must be precomputed or substantially simplified.
 - No direct public source cleared the final-slot bar: visual forks are v608-correlated plateau family; EoS6/PCEN saturated; HGNet inference output invalid/non-numeric; G-sidecar siblings already plateaued.
 - Pushed repo-owned verifier `yourslewis/bc26-v610-gandharva-b3-checkpoint-inference` (kernel id `120358093`, version 1) using `gandharvakhedekar/birdclef2026-new` EfficientNet-B3 checkpoints. It is RUNNING/no output yet. Submit only if verifier completes with valid finite non-constant output; otherwise preserve slot.
+
+## 2026-05-23 22:15 UTC update — v610 final slot submitted
+
+- v610 verifier completed with valid guarded outputs and was submitted as `v610: Repo-owned Gandharva B3 checkpoint inference`, ref `52967355`, pending. 2026-05-23 is now capped `5/5`.
+- v610 preflight: COMPLETE/no failure, `submission.csv` valid `3x235` finite/non-constant, raw soundscape output `submission_gandharva_b3_raw.csv` valid `12x235` finite/non-constant, all five EfficientNet-B3 fold checkpoints loaded with zero missing/unexpected keys.
+- 22UTC scan/audit saved: `scan_20260523T2200Z.json`, `source_audit_20260523T2200Z_newleads/summary.json`.
+- New WildSound v8 lead is ERROR/no outputs. Visual forks remain plateau/correlated, Samejima/TTAhara HGNet needs anchored repo-owned blend work before future slot, and EoS6/PCEN/G-sidecar lines remain saturated.
+- Next reset priority: score-gate v610; if it improves, immediately confirm/port/tune. If not, continue artifact-based inference/blend search rather than slow direct notebooks.
