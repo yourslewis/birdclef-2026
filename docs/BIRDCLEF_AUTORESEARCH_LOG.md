@@ -3677,3 +3677,19 @@ Decision:
   - StudyExchange S14 still lacks a clear competition writer; Anatoly v27 still has zero/fallback risk and no usable output; v603 remains held.
 - **Decision:** keep v604 as the single reset-slot owner. No new kernels or submitters were created this turn.
 
+
+## 2026-05-23 00:10 UTC — v604 submitted; preserve remaining reset slots pending score
+
+- **Live state:** best remains `0.949` until v604 scores. 2026-05-23 UTC now has `1/5` submissions used.
+- **Submitted:** v604 `Repo-owned Pilkwang PCEN sidecar verify`, ref `52937418`, at `2026-05-23T00:03:03Z`; status is currently `pending` with no error.
+- **Monitor:** pid `73273` exited after successful submit. Log confirms reset preflight repeated after cap cleared, kernel COMPLETE/no failure, `submission.csv` valid/non-constant sample shape, then `submitted {"ref": 52937418}`.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0000Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0008Z_newleads/summary.json`.
+- **Post-reset lead triage:**
+  - Pilkwang PCEN package v8 is the same PCEN sidecar lineage already represented by v604; do not duplicate before v604 score.
+  - Junseong EoS5/EoS6 scoreblend variants are source-pullable but output-private and have train/fallback/zero/constant risk markers; no direct submit without repo-owned verification.
+  - Gendaijin/Kalyan/Meenal/Nina/EoS derivatives remain plateau-family; no evidence they beat 0.949.
+  - Alrickh/Starsdaisuki public0952 copies are source-identical (`eeb13d1a4a130e5a`) and similar to the already-bad public0952 lane; hold.
+  - Cheny exp080 Karnak dual-arch safe is source-pullable but fallback/constant-risk and overlaps Karnak/EoS plateau; hold.
+- **Decision:** preserve remaining four 2026-05-23 slots until v604 scores or a clearly distinct source-safe candidate appears. No duplicate submitter started.
+

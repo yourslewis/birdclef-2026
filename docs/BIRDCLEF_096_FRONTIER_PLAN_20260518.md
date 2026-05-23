@@ -1398,3 +1398,10 @@ Queue remains unchanged:
 - Day remains capped `5/5`; best remains `0.949`; v604 monitor pid `73273` is alive and sleeping until reset.
 - Scan: `scan_20260522T2200Z.json`; audit: `source_audit_20260522T2200Z_newleads/summary.json`.
 - No fresh lead supersedes v604. Beicicc PCEN is the same Pilkwang PCEN package; Junseong EoS6 scoreblend is unverified plateau-family; Meenal/Kalyan are saturated/fallback-risk; StudyExchange S14 lacks writer; Anatoly v27 remains zero/fallback-risk.
+
+## 2026-05-23 00:10 UTC update — v604 pending, four slots preserved
+
+- v604 `Repo-owned Pilkwang PCEN sidecar verify` submitted at reset, ref `52937418`, currently pending/no error. 2026-05-23 slots used: `1/5`.
+- Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0000Z.json`.
+- Audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0008Z_newleads/summary.json`.
+- Hold remaining slots until v604 score unless a distinct source-safe 0.96-relevant candidate appears. Do not duplicate Pilkwang PCEN; hold Junseong scoreblend / public0952 / Karnak derivatives until repo-owned verification or score evidence.
