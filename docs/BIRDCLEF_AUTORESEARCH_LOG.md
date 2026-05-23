@@ -3727,3 +3727,16 @@ Decision:
 - **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
 - **Fresh lead triage:** new Beicicc/Gendaijin/karansinghbisht public forks are copies/near-copies of already plateaued PCEN/EoS/NFNet/Junseong lineages and have fallback/zero/constant risk markers; no direct submit supersedes v607.
 
+
+## 2026-05-23 08:05 UTC — v607 submitted; promising recipe autoresearch specs created
+
+- **Live state:** confirmed best remains `0.949`; 2026-05-23 slots used are now `2/5`.
+- **Submitted:** v607 `Repo-owned Eslam v26C ProtoSSM save repair`, ref `52947220`, status `pending` at check time.
+- **v607 preflight:** private verifier COMPLETE/no failure; outputs include `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, and cache files; no traceback; `submission.csv` stats valid `240x235`, finite, non-constant, unique row IDs.
+- **Specs created:**
+  - `AUTORESEARCH.md` root pointer.
+  - `experiments/autoresearch/2026-05-23-birdclef-096-frontier-recipes/protocol.md` active protocol.
+  - `docs/BIRDCLEF_096_PROMISING_RECIPES_AUTORESEARCH_20260523.md` recipe plan.
+- **Priority:** P0 is G124/S124 reconstruction or artifact discovery. Missing private asset remains `itshyao/birdclef2026-g124-effv2s-2025pre-pseudo-assets` with expected `g124_fold1_fp16.pt`, `_best.pt`, and `submission_g124_effv2s_fold1_s124.csv`-like outputs. P1 is result-gated Eslam v607; P2 is source/artifact scout.
+- **Non-goal:** LLM labeling path is skipped because no audio-capable labeler is available.
+

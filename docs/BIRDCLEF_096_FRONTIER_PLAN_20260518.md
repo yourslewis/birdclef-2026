@@ -1429,3 +1429,11 @@ Queue remains unchanged:
 - 2026-05-23 slots used remain `1/5`; confirmed best remains `0.949`.
 - Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0600Z.json`; audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
 - Do not duplicate Beicicc/Gendaijin/Karansingh PCEN/EoS/NFNet public forks without fresh score evidence; they are plateau-family and source-risky.
+
+## 2026-05-23 08:05 UTC update — v607 submitted + recipe protocol active
+
+- v607 `Repo-owned Eslam v26C ProtoSSM save repair` submitted as ref `52947220`, pending. 2026-05-23 slots used: `2/5`.
+- v607 verifier was COMPLETE/no failure with valid non-constant `submission.csv`; source is still caveated because optional student ONNX folds are unavailable, so this is a 2-way ProtoSSM+SED repair.
+- New active protocol: `experiments/autoresearch/2026-05-23-birdclef-096-frontier-recipes/protocol.md`.
+- New recipe summary: `docs/BIRDCLEF_096_PROMISING_RECIPES_AUTORESEARCH_20260523.md`.
+- P0: find or recreate missing G124/S124 sidecar artifact; P1: score-gate v607; P2: continue public source/artifact scout. LLM-labeling path explicitly skipped.
