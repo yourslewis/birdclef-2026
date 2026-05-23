@@ -1451,3 +1451,11 @@ Queue remains unchanged:
 - 12UTC scan/audit found no safe high-upside slot. Anthony gated-rank-fusion public output is invalid/ragged; Raunak v9 is self-labeled LB `0.948`; Pilkwang EoS6-bz PCEN overlaps v604 plateau; several fresh notebooks have no output/ERROR/running status.
 - G124 artifact search still finds no public dataset for `g124_fold1_fp16.pt` or the private pseudo-assets slug.
 - Remaining 2026-05-23 slots: 2. Preserve for source-safe new artifact/high claim; do not spend on below-plateau or invalid dry-run notebooks.
+
+## 2026-05-23 14:10 UTC update — Samejima visual audited, slots preserved
+
+- Current best remains `0.949`; 2026-05-23 slots used `3/5`.
+- 14UTC scan/audit saved under `scan_20260523T1400Z.json` and `source_audit_20260523T1400Z_newleads/summary.json`.
+- Samejima Visual CPU has valid output but source cites visual branch `0.948` and dry-run output is highly correlated with v608 (`corr≈0.993`), which already tied `0.949`; do not spend a slot absent new evidence.
+- HGNetV2 inference output is invalid/non-numeric in public dry-run; previous Samejima/HGNet repo-owned attempts did not improve. Hold.
+- No new 0.96-relevant source-safe candidate found; preserve remaining 2 slots.

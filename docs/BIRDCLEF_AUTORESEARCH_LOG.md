@@ -3783,3 +3783,20 @@ Decision:
 - **G124 artifact search:** exact `g124_fold1_fp16.pt` / private G124 slug still only surfaces derivative kernels, no public dataset. Dataset search returns no public artifact. `fold0_ep12_auc0.9643` and `efficientnet_b3_pretrained.pt` also no dataset/kernel artifact hit.
 - **Decision:** preserve remaining 2 slots for a genuinely source-safe distinct candidate or a new artifact; next loop should recheck running candidates and any new >0.949 claims.
 
+
+## 2026-05-23 14:10 UTC — 14UTC scan, no slot spent
+
+- **Status:** best remains `0.949`; 2026-05-23 slots used `3/5`; remaining `2/5`. Latest scored: v608 `0.949`, v607 `0.934`, v604 `0.949`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1400Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1400Z_newleads/summary.json`.
+- **No new submission:** no candidate cleared the distinct/high-upside/source-safe bar.
+- Candidate notes:
+  - `samejimatink0/birdclef-2026-visual-cpu-inference`: COMPLETE with valid `240x235` output and train8 artifacts, but source labels visual branch around `0.948`; dry-run output is highly correlated with v608 (`corr≈0.993`, MAE≈0.018). Since v608 already tied `0.949`, this is likely another plateau/visual-source slot, not 0.96-upside. Hold.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: public output invalid/non-numeric 3-row dry-run; earlier repo-owned Samejima/HGNet attempts did not improve (`v598=0.860`, v596 HGNet sidecar `0.946`). Hold unless a new artifact/score appears.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING/no submission output; training/source artifact only.
+  - `adarsh5harma/v62`: invalid/ragged public output; `v66`: valid 3-row dry-run but EoS/phase1 family; `v68` was already invalid at 10UTC. Hold.
+  - `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar`: PCEN/EoS6 family, v604 already tied `0.949`; hold.
+  - `thbdh5765/bc26-y948-w010-lanec-v2-fold0-art-v1`: valid 3-row dry-run but source is visual/BirdNET-like `0.948` lane; hold.
+  - `gandharvakhedekar` / `mlclsumit`: still RUNNING/no `submission.csv` at audit time.
+- GPU server check: no BirdCLEF student train process; GPU1 free. GPU0 occupied by unrelated/other workload. No training launched because G124 from-scratch smoke already failed gate and no stronger initialization/artifact found.
+
