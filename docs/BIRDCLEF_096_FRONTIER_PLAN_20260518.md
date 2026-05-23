@@ -1444,3 +1444,10 @@ Queue remains unchanged:
 - Submitted v608 `Guarded direct Scenery improved inner-blend source`, ref `52950601`, after source/output preflight. It is distinct from v607 on dry-run rows (`corr≈0.86`) but has no hard >0.949 evidence, so treat as one exploratory slot only.
 - Fresh scan/audit artifacts: `scan_20260523T1000Z.json` and `source_audit_20260523T1000Z_newleads/summary.json`.
 - G124 EffV2-S smoke on trainer failed continuation gate: best val AUC `0.726`, low corr `0.192`, torchscript/predictions produced, ONNX export hung and was killed. Do not run the pilot config from this from-scratch setup; next G124 work should focus on finding/borrowing a real pretrained checkpoint or initializing from a stronger existing V2-S artifact.
+
+## 2026-05-23 12:10 UTC update — plateau confirmed for v608; preserve slots
+
+- v608 tied `0.949`; Scenery/Ykuroka/KingKong inner-blend/BirdNET-family remains a plateau source, not a breakthrough.
+- 12UTC scan/audit found no safe high-upside slot. Anthony gated-rank-fusion public output is invalid/ragged; Raunak v9 is self-labeled LB `0.948`; Pilkwang EoS6-bz PCEN overlaps v604 plateau; several fresh notebooks have no output/ERROR/running status.
+- G124 artifact search still finds no public dataset for `g124_fold1_fp16.pt` or the private pseudo-assets slug.
+- Remaining 2026-05-23 slots: 2. Preserve for source-safe new artifact/high claim; do not spend on below-plateau or invalid dry-run notebooks.

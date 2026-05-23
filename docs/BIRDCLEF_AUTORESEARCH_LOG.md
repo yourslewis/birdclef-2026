@@ -3766,3 +3766,20 @@ Decision:
 - **Submitted:** v608 `Guarded direct Scenery improved inner-blend source`, ref `52950601`, using source version 1 after COMPLETE/no-failure/output preflight. This uses the base improved source, not the dependent inner-v1/v2 wrappers.
 - **G124 smoke:** copied G124 configs to trainer and ran `g124_effv2s_public946_pseudo_smoke_20260523.json` on GPU1. Training reached best val AUC `0.726` at epoch 3 with low student/teacher corr `0.192`; torchscript and student predictions were produced, but ONNX export hung and was killed. Criterion `>=0.93` failed, so do not run the pilot config from this initialization. This reinforces that simple from-scratch EffV2-S pseudo smoke is not enough to recreate the missing G124 artifact.
 
+
+## 2026-05-23 12:10 UTC — v608 tied; 12UTC scan no safe high-upside slot
+
+- **Status:** v608 `Guarded direct Scenery improved inner-blend source` completed at `0.949`, tied current best. Lesson: Scenery/Ykuroka/KingKong inner-blend/BirdNET-family source is distinct from v607 but still public plateau; do not tune dependent inner-v1/v2 wrappers without new evidence.
+- **Slots:** 2026-05-23 used `3/5`; best remains `0.949`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1200Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1200Z_newleads/summary.json`.
+- **Artifact search saved:** `artifacts/public_kernels_20260523_frontier_candidates/artifact_search_20260523T1200Z.json`.
+- **No new submission this run:**
+  - `anthonytherrien/gated-rank-fusion-pipeline` is source-interesting but public `submission.csv` is invalid/ragged (`243x235`, nonnumeric cells); do not submit blindly.
+  - `raunakdey07/birdclef-2026-v9` is COMPLETE with valid 3-row dry-run output, but source records `Model_7` as LB `0.948`; below plateau and not 0.96-upside enough.
+  - `pilkwang/birdclef-2026-eos6-bz-pcen-rank-sidecar` remains PCEN/EoS6-bz family; after repo-owned v604 PCEN tied `0.949`, hold unless a real scored improvement appears.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3` output is constant/sample-like 3-row dry-run; no direct slot.
+  - `mlclsumit` / `gandharvakhedekar` were still RUNNING/no `submission.csv`; `deepanshus167` no output; `neslihannuryilmaz` ERROR.
+- **G124 artifact search:** exact `g124_fold1_fp16.pt` / private G124 slug still only surfaces derivative kernels, no public dataset. Dataset search returns no public artifact. `fold0_ep12_auc0.9643` and `efficientnet_b3_pretrained.pt` also no dataset/kernel artifact hit.
+- **Decision:** preserve remaining 2 slots for a genuinely source-safe distinct candidate or a new artifact; next loop should recheck running candidates and any new >0.949 claims.
+
