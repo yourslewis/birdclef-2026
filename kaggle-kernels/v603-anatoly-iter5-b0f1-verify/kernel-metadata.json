@@ -1,0 +1,25 @@
+{
+  "id": "yourslewis/bc26-v603-anatoly-iter5-b0f1-verify",
+  "title": "BC26 v603 Anatoly Iter5 B0F1 Verify",
+  "code_file": "v603.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "birdclef-2026"
+  ],
+  "dataset_sources": [
+    "anatoly7m/bc2026-iter5-ckpts"
+  ],
+  "kernel_sources": [],
+  "model_sources": [],
+  "keywords": [
+    "birdclef",
+    "sed",
+    "preflight"
+  ],
+  "id_no": 120204403
+}

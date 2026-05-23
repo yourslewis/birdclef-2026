@@ -3545,3 +3545,185 @@ Decision:
 - **Slot state after batch:** 2026-05-22 count is now `5/5`; v599-v602 are all pending immediately after submit.
 - **Decision:** wait for v599-v602 scores. If one improves/ties high, port/confirm; if all drop, treat the public 0.95-ish visual/prior/NFNet/R0952 families as saturated or misleading under the 0.96 target.
 
+
+## 2026-05-22 06:01 UTC — broad batch pending, fresh scan no new slot path
+
+- **Live state:** v599-v602 are still pending; v598 remains `0.860`; best confirmed score remains `0.949`. 2026-05-22 UTC count is `5/5`, so no more submissions today.
+- **Submitted batch still pending:** v599 `52913376` Claudedevore R0952 run2 sidecar; v600 `52913377` Gendaijin Pilkwang prior-field fusion; v601 `52913379` Gendaijin Meenal new visual prior; v602 `52913380` Nicolas NFNet Aves lprior075.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0601Z.json`.
+- **Fresh feed:** no new source-safe candidate supersedes the pending batch. The newest visible items are Samejima HGNet inference/training reruns, JGuevara/Koushik training notebooks, Meenal visual-prior rerun, and the already-submitted/held Gendaijin day0522 family.
+- **Decision:** wait for v599-v602 scores. If all drop or tie below 0.949, mark public R0952/Pilkwang/Meenal/NFNet direct lanes as exhausted for 0.96 purposes and pivot back to source discovery/training artifact evidence.
+
+
+## 2026-05-22 08:00 UTC — v599-v602 scored tied-best, capped-source audit
+
+- **Live state:** v599-v602 all completed at `0.949`; v598 remains `0.860`; best confirmed public LB remains `0.949` and target remains `0.960`. 2026-05-22 UTC submissions are `5/5`, so no more submissions can be made today.
+- **Scores landed:**
+  - v599 `52913376` Claudedevore R0952 run2 sidecar: `0.949`.
+  - v600 `52913377` Gendaijin Pilkwang prior-field fusion: `0.949`.
+  - v601 `52913379` Gendaijin Meenal new visual prior: `0.949`.
+  - v602 `52913380` Nicolas NFNet Aves lprior075: `0.949`.
+- **Lesson:** the broad 0.95-ish public families are real high-plateau signals but not 0.96 breakthroughs. Treat R0952, Pilkwang/new prior-field, Meenal/visual-prior, and NFNet/Aves-lprior direct replay as saturated at the current `0.949` plateau until a genuinely new artifact/source appears.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T0800Z.json`.
+- **Source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T0800Z_newleads/summary.json` plus pulled source/full JSON files.
+- **08UTC lead triage:**
+  - EoS6 family (`dhyuk54/birdclef-2026-eos-6-bz`, `gendaijin/birdclef2026-day0522-nina-eos6-bz`, `scenerysunfireink/eos-6-v7-power-0-90-extreme`) is source-pullable and hidden-path aware. The live config is effectively EoS6 Version.15: direct blend of Model_21 `0.014`, Model_52 PSSM `0.021`, and Model_74 `0.965`; source table shows prior EoS6 variants mostly `0.948`/`0.949`, so this is a high-plateau candidate, not currently strong enough to spend scarce slots without a better score clue.
+  - Ykuroka pseudo/OOF notebooks are **not direct-submit safe**: they append train soundscape OOF paths to hidden test paths (`test_paths = test_paths + _OOF_PATHS`), which can create extra non-sample rows. Use only for idea mining around OOF validation / rank gates.
+  - Anatoly Iter5 SED ensemble is structurally distinct (`seresnext26t_32x4d`, 5 fold ckpts, `anatoly7m/bc2026-iter5-ckpts`) and sample-schema aware, but direct output/status is unavailable and its no-test branch emits zeros; keep as a repo-owned extraction candidate only after deeper preflight.
+  - WildSound v8 is a training notebook using internet/external XC-style data and a 60-epoch ConvNeXtBase path; not a safe/fast direct code-submission candidate.
+- **Decision:** no new submission attempt while capped. Next useful slot should require either (a) a new public source with evidence above plateau, or (b) a repo-owned extraction from Anatoly/EoS-style source with stronger validation than direct replay.
+
+
+## 2026-05-22 10:00 UTC — capped 10UTC scan + v603 Anatoly preflight push
+
+- **Live state:** best remains `0.949`; v599-v602 are all complete at `0.949`; v598 remains `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`. No stale v577/v578 scalar submitter is active.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1000Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1000Z_newleads/summary.json`.
+- **10UTC lead triage:**
+  - Anatoly `bc2026-iter-5-sed-ensemble-submit-v3` updated to version 24. Source now targets `tf_efficientnet_b0.ns_jft_in1k` with `TARGET_FOLDS=[1]` (`b0_fold1 val 0.9579` comment) for speed instead of the earlier 5-SRX version. Dataset `anatoly7m/bc2026-iter5-ckpts` is public, CC0, ~0.86GB, current v4, with notes saying it contains 15 `best.pth` checkpoints in `iter5/{backbone}_fold{N}/`.
+  - Ykuroka's new `949-birdclef-2026-acoustic-prior-field-fusion-oof`, `perch-v2-protossm-0-925-oof`, and updated `iter-pseudo-oof` remain **direct-submit unsafe** because source appends OOF/train paths to test paths (`test_paths = test_paths + _OOF_PATHS`). Use for idea-mining only.
+  - Suncrest `eval-birdnet-1000-soundscapes` is an evaluation notebook with BirdNET TFLite source only; not a competition submit candidate.
+- **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v603-anatoly-iter5-b0f1-verify/` and push script `scripts/push_v603_anatoly_iter5_b0f1_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`, kernel id `120204403`, version 1. This is **not** a competition submission.
+- **Verification status:** Kaggle push succeeded with no invalid data/competition/model sources. `kernels/pull` can retrieve the private kernel, but `kernels/status` and `kernels/output` currently return 404/HTML for this private pushed kernel, so runtime/output verification is not yet available. Do not submit v603 to competition until a later check confirms COMPLETE and a valid non-constant `submission.csv`, or until the verifier path is repaired.
+
+
+## 2026-05-22 12:00 UTC — capped scan, v603 verifier still blocked, fresh lead audit
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC count remains `5/5`. No stale v577/v578 scalar submitter is active.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1200Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1200Z_newleads/summary.json`.
+- **v603 verification:** tried Bearer API variants and local Kaggle CLI. Bearer `kernels/pull` still retrieves private v603 (`yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`), but `kernels/status`/`kernels/output` still return 404/HTML; Kaggle CLI with the available venv is unauthorized/forbidden. v603 remains **not competition-submit-ready** until `submission.csv` output can be verified.
+- **Fresh 12UTC lead triage:**
+  - `jguevarag/08-winning-tta-submission-pipeline`: source-pullable but unsafe/weak as direct candidate. It creates sample-submission fallback immediately, then relies on a model from JGuevara 07; no attached output/status via API, and fallback/zero-output risk is present.
+  - `mtoshidesu/testbirdclef-2026-eos-6-bz`: EoS6 derivative; large source with train fallback/debug path and zero/fallback output risk. It remains high-plateau EoS family, not distinct 0.96 evidence.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: training/internet path only; previous v598 inference artifact scored `0.860`, so do not spend slots on standalone HGNet without stronger anchored diagnostics.
+  - `scenerysunfireink/birdclef-2026-perch-v2-full-v3`: Perch V2 model can only predict a subset of 234 species and returns `-1000` rows when runtime threshold/no-prediction triggers; it is evaluation/idea-mining, not direct-submit safe.
+  - `deepanshus167/bird-claasifier-comp`: training/EDA notebook, no credible competition-submit path.
+- **Decision:** still no submission while capped. Next reset should not use v603 unless verifier output is available; otherwise continue source discovery or build a local/repo-owned validation harness for Anatoly B0 fold1.
+
+
+## 2026-05-22 14:00 UTC — capped scan, PCEN sidecar lead held
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC count remains `5/5`. No durable v577/v578/v6 submitter is active.
+- **v603 verification:** unchanged. Bearer `kernels/pull` can retrieve private `yourslewis/bc26-v603-anatoly-iter5-b0f1-verify`, but `kernels/status` and `kernels/output` still return 404/HTML. Do not competition-submit v603 until output can be verified.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1400Z.json`.
+- **Focused source audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1400Z_newleads/summary.json`.
+- **Strongest fresh lead:** Pilkwang `birdclef-2026-pcen-sidecar-package` / dataset `pilkwang/birdclef26-sidecar-exp001`.
+  - Source describes **Acoustic Prior-Field Fusion + PCEN Sidecar**: low-weight yukiZ Perch/SSM + dominant v6 prior-field branch; BirdNET and custom PCEN/ConvNeXt sidecar are constrained rank corrections with top-k masks, overlap guards, and perturbation budgets.
+  - Dataset `pilkwang/birdclef26-sidecar-exp001` is public, v1, ~0.56GB, license unknown, tagged pre-trained model.
+  - Current notebook settings: `RUN_EXP001_SIDECAR=True`, `SIDECAR_EXP001_REQUIRE=True`, `SIDECAR_EXP001_DEVICE="cpu"`, `SIDECAR_EXP001_BATCH_SIZE=8`, `SIDECAR_EXP001_FOLDS=[0]`, `SIDECAR_EXP001_FORCE_INFER=True`, timeout `600s`, weight cap `0.020`, D budget `0.003`, anchor top-k `48`, side top-k `32`, tau `0.55`, max active fraction `0.25`.
+  - **Decision:** high-upside idea-mining / repo-owned extraction candidate, but not direct-submit-ready because API status/output are unavailable and source has fallback/debug/constant-risk paths. It needs output verification or a repo-owned harness before a slot.
+- **Other fresh lead triage:**
+  - Jungchan `birdclef-first`: Big Mods / class-aware blend + targeted BirdNET + sonotype mirroring; but train fallback, zero/fallback, and constant/ones risks are present.
+  - Samejima visual CPU update: still Perch/visual lineage with fallback/constant risks; same family as saturated visual candidates.
+  - Scenery Perch V2 Full v4: only Perch subset/species path; train fallback and constant/ones risk.
+  - Lamido/Deepanshu: EDA/training or no clear competition writer.
+- **Decision:** no submission while capped. Next useful work: build a local/repo-owned PCEN sidecar extraction/verification plan, or verify public output if Kaggle status/output becomes available.
+
+
+## 2026-05-22 16:02 UTC — v604 PCEN verifier packaged, still capped
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain `5/5` capped. No durable v577/v578/v6 submitter is active.
+- **v603 verification:** unchanged; private pull works but status/output remain 404/HTML.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1602Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1602Z_newleads/summary.json`.
+- **New/updated lead triage:**
+  - `studyexchange/birdclef-2026-infer-s14`: pulls, but no clear competition submission writer; references S14/SED assets only, hold/reject as direct candidate.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3`: updated to v26, still zero/fallback output risk and no API output. Keep v603/vAnatoly held pending verifier.
+  - `tuannm3812/birdclef-2026-perch-v2`: Perch v2 path with sample/test writer markers, but no output/status and Perch-only/subset lineage; idea-mining only.
+  - `junseonglee11/birdclef2026-eos5-scoreblend-g004-w05`: EoS5 scoreblend / G004 weight 0.5, but EoS plateau derivative with fallback/constant risks. Do not spend scarce slot unless a real score appears.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: updated v8 but same standalone HGNet lane; v598 already scored `0.860`.
+  - `pilkwang/birdclef-2026-pcen-sidecar-package`: still top watch item; source unchanged at v7 and remains unverified but structurally distinct.
+- **Repo-owned preparation:** created private repo-owned verification kernel `kaggle-kernels/v604-pilkwang-pcen-sidecar-verify/` and push script `scripts/push_v604_pilkwang_pcen_sidecar_verify.py`. Pushed to Kaggle as `yourslewis/bc26-v604-pilkwang-pcen-sidecar-verify`, kernel id `120230356`, version 1. This is **not** a competition submission.
+- **Validation:** v604 push succeeded with no invalid data/competition/kernel/model sources; metadata and notebook JSON parse; push script py_compile passes. Like v603, `kernels/pull` works but `kernels/status` and `kernels/output` return 404/HTML, so v604 is **not competition-submit-ready** until output can be verified.
+
+
+## 2026-05-22 18:01 UTC — v604 guarded submit monitor queued for reset
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T1801Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T1801Z_newleads/summary.json`.
+- **Private verifier status:** SDK verification now works for v604/v603 even though raw REST status/output endpoints return 404. v604 is COMPLETE with files `submission.csv`, `sidecar_exp001_diagnostics.csv`, `submission_before_all_sidecars.csv`, `submission_before_exp001_sidecar.csv`, `submission_protossm.csv`, `submission_sed.csv`, and `v17_logs.json`. v604 sample/public output has shape `3 x 235`, finite/non-constant values, range `0.4607935..0.5381691`, `0` zeros, `98` unique first-100 values. v603 is COMPLETE but its output is all-zero sample fallback (`0.0..0.0`, 702 zeros), so it remains rejected/held.
+- **v604 caveat:** the public/sample run diagnostics show `effective_weight=0.0` and `skip_reason=No test_soundscapes .ogg files found; public/dry-run anchor rows cannot be matched by exp001 inference.` This means schema/output is verified, but the PCEN sidecar correction itself is only exercised on hidden test. It is still the best distinct reset slot because the code path is source-safe and guarded, but this is a real uncertainty.
+- **Guarded submitter:** added `scripts/submit_v604_pilkwang_pcen_when_ready.py`. Preflight-only passed with source markers, COMPLETE status, required outputs, and non-constant `submission.csv`. Started reset monitor pid `73273` with `--wait-for-slot`; log `logs/v604_pilkwang_pcen_submit_monitor_20260522T1801Z.log`; it is sleeping until UTC reset after daily cap.
+- **Fresh lead triage:** Kalyan Blend 2 is another EoS/Blend plateau derivative with fallback/constant risks; StudyExchange S14 still lacks a clear writer; Anatoly v26 remains unverified/zero-fallback; Junseong scoreblend is EoS plateau derivative; Lamido has model weights but zero/fallback risk; Pilkwang PCEN remains selected.
+
+
+## 2026-05-22 20:00 UTC — v604 monitor alive, fresh PCEN/scoreblend scan
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`.
+- **v604 reset monitor:** pid `73273` is still alive and sleeping after successful preflight; log `logs/v604_pilkwang_pcen_submit_monitor_20260522T1801Z.log` still shows `daily cap reached; sleeping 21506s`. No duplicate submitter started.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T2000Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T2000Z_newleads/summary.json`.
+- **Fresh lead triage:**
+  - `beicicc/bc26-pcen-sidecar-may22` is a fork/copy of the Pilkwang PCEN package: same `pilkwang/birdclef26-sidecar-exp001` dataset, same yukiZ/v6/BirdNET/PCEN lineage, same fallback/zero/constant risks. It does **not** supersede queued v604.
+  - `junseonglee11/birdclef2026-eos6-scoreblend-g004-w05` is an EoS6 scoreblend derivative with G004-style score blend markers, but has fallback/zero/constant risks and no output; hold as plateau-family idea-mining only.
+  - `meenalsinha/birdclef-2026-improved` v28 remains saturated Visual/BirdNET/Perch lineage; prior direct family tied `0.949` and did not break out.
+  - `kalyankkr/birdclef-2026-blend-2` remains EoS/Blend derivative with fallback/zero/constant risks.
+  - `studyexchange/birdclef-2026-infer-s14` still lacks a clear competition writer; `lamidoahmad/birdclef-2026` pull is now 403/inaccessible.
+- **Decision:** keep v604 as the single queued reset slot. Do not add another monitor or spend slots on Beicicc/Junseong/Meenal/Kalyan siblings without verified output and score evidence above the `0.949` plateau.
+
+
+## 2026-05-22 22:00 UTC — v604 monitor still sole reset owner
+
+- **Live state:** best remains `0.949`; v599-v602 all `0.949`; v598 `0.860`; 2026-05-22 UTC submissions remain capped at `5/5`. 2026-05-23 count is still `0` at this check.
+- **v604 reset monitor:** pid `73273` remains alive after ~4h and is still sleeping from the successful preflight/cap response. Do not start a duplicate monitor. It should wake around UTC reset and submit `v604: Repo-owned Pilkwang PCEN sidecar verify` once a slot exists.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260522_frontier_candidates/scan_20260522T2200Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260522_frontier_candidates/source_audit_20260522T2200Z_newleads/summary.json`.
+- **Fresh lead triage:**
+  - Beicicc `bc26-pcen-sidecar-may22` remains a direct fork/copy of Pilkwang PCEN package, same dataset and risks; it does not supersede queued v604.
+  - Junseong `eos6-scoreblend-g004-w05` is an EoS6 scoreblend derivative with fallback/zero/constant risks; no verified output or non-plateau evidence.
+  - Meenal v28 / Kalyan Blend2 remain saturated visual/EoS/Blend family with fallback/constant risks.
+  - StudyExchange S14 still lacks a clear competition writer; Anatoly v27 still has zero/fallback risk and no usable output; v603 remains held.
+- **Decision:** keep v604 as the single reset-slot owner. No new kernels or submitters were created this turn.
+
+
+## 2026-05-23 00:10 UTC — v604 submitted; preserve remaining reset slots pending score
+
+- **Live state:** best remains `0.949` until v604 scores. 2026-05-23 UTC now has `1/5` submissions used.
+- **Submitted:** v604 `Repo-owned Pilkwang PCEN sidecar verify`, ref `52937418`, at `2026-05-23T00:03:03Z`; status is currently `pending` with no error.
+- **Monitor:** pid `73273` exited after successful submit. Log confirms reset preflight repeated after cap cleared, kernel COMPLETE/no failure, `submission.csv` valid/non-constant sample shape, then `submitted {"ref": 52937418}`.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0000Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0008Z_newleads/summary.json`.
+- **Post-reset lead triage:**
+  - Pilkwang PCEN package v8 is the same PCEN sidecar lineage already represented by v604; do not duplicate before v604 score.
+  - Junseong EoS5/EoS6 scoreblend variants are source-pullable but output-private and have train/fallback/zero/constant risk markers; no direct submit without repo-owned verification.
+  - Gendaijin/Kalyan/Meenal/Nina/EoS derivatives remain plateau-family; no evidence they beat 0.949.
+  - Alrickh/Starsdaisuki public0952 copies are source-identical (`eeb13d1a4a130e5a`) and similar to the already-bad public0952 lane; hold.
+  - Cheny exp080 Karnak dual-arch safe is source-pullable but fallback/constant-risk and overlaps Karnak/EoS plateau; hold.
+- **Decision:** preserve remaining four 2026-05-23 slots until v604 scores or a clearly distinct source-safe candidate appears. No duplicate submitter started.
+
+
+## 2026-05-23 02:10 UTC — v604 tied; v605 Eslam v26C verifier launched
+
+- **Live state:** v604 `Repo-owned Pilkwang PCEN sidecar verify` scored `0.949`, tying the current best but not improving toward `0.960`. 2026-05-23 UTC slots used: `1/5`; confirmed best remains `0.949`.
+- **Lesson:** the Pilkwang PCEN sidecar is safe but still plateau-bound. Do not duplicate PCEN forks (`pilkwang`, `beicicc`, `gendaijin day0523-pcen`) without a new artifact or stronger evidence.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0200Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0200Z_newleads/summary.json`.
+- **New verifier:** pushed repo-owned private kernel v605 `yourslewis/bc26-v605-eslam-v26c-source-verify`, version 1 / kernel id `120276728`, from `eslamelokpy/birdclef2026-v26c` source. Push returned HTTP 200 and the kernel was observed RUNNING via SDK immediately after push.
+- **v605 caveat:** Kaggle rejected `eslamelokpy/birdclef2026-student-onnx` as an invalid dataset source. Source treats missing student ONNX folds as optional, so this verifier still tests Eslam's main Perch/SED/prior path. Do **not** submit v605 until kernel COMPLETE output is verified with non-constant `submission.csv` and no traceback.
+- **Other fresh leads:** Koushik/Perch-v2/JGuevara are structurally simpler baseline/training lanes; StudyExchange S14 still lacks writer; Gendaijin PCEN/Junseong are copies of already-held PCEN/scoreblend lineages; WildSound/CKPT-chain require internet or lack competition writer.
+- **Decision:** preserve remaining 4 slots while v605 verifier runs. If v605 completes cleanly, inspect output before any submit; if it fails or falls back, do not spend a slot.
+
+
+## 2026-05-23 04:15 UTC — v605 failed guard; v606 ProtoSSM repair verifier running
+
+- **Live state:** confirmed best remains `0.949`; v604 tied `0.949`; 2026-05-23 slots used remain `1/5`.
+- **v605 result:** verifier `yourslewis/bc26-v605-eslam-v26c-source-verify` reached `ERROR` before `submission.csv`. Guard correctly prevented submission. Root cause: `NameError: name 'proto_model' is not defined` at the ProtoSSM inference cell; only cache outputs were produced.
+- **Repair action:** created and pushed v606 `yourslewis/bc26-v606-eslam-v26c-proto-repair`, version 1 / kernel id `120285231`. Patch trains `LightProtoSSM` in submit mode and materializes `emb_te_f`, `sc_te_f`, `test_site_ids`, and `test_hour_ids` before the ProtoSSM inference cell.
+- **v606 status:** SDK reports `RUNNING`, no failure message. Output listing currently has no files/log yet, so no submission is allowed until COMPLETE + valid non-constant `submission.csv` + no traceback.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0400Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0400Z_newleads/summary.json`.
+- **Fresh lead triage:** Koushik source writes random uniform placeholder predictions despite safe schema; do not submit. Tuannm Perch v2 needs a private/unclear probe artifact. Safe EoS5 / Ykuroka / Cheny variants are fallback-risk or plateau-family. CKPT-chain/WildSound require internet or lack a competition writer. v606 remains the only active candidate.
+
+
+## 2026-05-23 06:15 UTC — v606 failed guard; v607 ProtoSSM-save repair running
+
+- **Live state:** confirmed best remains `0.949`; v604 tied `0.949`; 2026-05-23 slots used remain `1/5`.
+- **v606 result:** verifier `yourslewis/bc26-v606-eslam-v26c-proto-repair` reached `ERROR` before final `submission.csv`. Root cause: downstream blend cell attempted to read missing `submission_protossm.csv`; only cache outputs were produced. No submission was spent.
+- **Repair action:** created and pushed v607 `yourslewis/bc26-v607-eslam-v26c-proto-save`, version 1 / kernel id `120293556`. Patch persists `submission_protossm.csv` from ProtoSSM sigmoid probabilities before the SED/student/final rank-blend cell.
+- **v607 status:** SDK reports `RUNNING`, no failure message. Output listing currently has no files/log yet; no submission allowed until COMPLETE + valid non-constant `submission.csv` + no traceback.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0600Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
+- **Fresh lead triage:** new Beicicc/Gendaijin/karansinghbisht public forks are copies/near-copies of already plateaued PCEN/EoS/NFNet/Junseong lineages and have fallback/zero/constant risk markers; no direct submit supersedes v607.
+
