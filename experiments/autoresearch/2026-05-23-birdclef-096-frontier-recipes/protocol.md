@@ -220,3 +220,46 @@ Append each loop to:
    - If <0.949/no-score: kill Eslam repair lane.
 2. Start G124 artifact scout + reconstruction spec implementation.
 3. Only use remaining daily slots for source-safe distinct candidates.
+
+## 2026-05-23 08:15 UTC recipe additions
+
+### G124 reconstruction config files
+
+Created two concrete EffV2-S pseudo-student configs:
+
+- `configs/birdclef/g124_effv2s_public946_pseudo_smoke_20260523.json`
+- `configs/birdclef/g124_effv2s_public946_pseudo_pilot_20260523.json`
+
+Runner command:
+
+```bash
+python scripts/birdclef_pseudolabel_student_train.py \
+  --config configs/birdclef/g124_effv2s_public946_pseudo_smoke_20260523.json
+```
+
+Smoke continuation criteria:
+
+- `metrics.json` exists;
+- `model_torchscript.pt` and, if export succeeds, `model.onnx` exist;
+- `best_val_auc >= 0.93` on the held-out train-soundscape rows;
+- `final_student_teacher_corr < 0.97` so the sidecar is not merely a teacher clone;
+- exported model size/runtime plausibly fits Kaggle CPU.
+
+Pilot continuation criteria:
+
+- Pilot beats existing V2-S public946 full run on either validation AUC or lower-correlation blend evidence;
+- sidecar rank-blend audit finds a nonzero useful weight above `0.005` without top-k overlap failure.
+
+### Source audit result
+
+Fresh audit saved locally under:
+
+- `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0805Z_newleads/summary.json`
+- `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0815Z_sources/summary.json`
+
+Findings:
+
+- `studyexchange/birdclef-2026-infer-s14`: valid 240-row output, structurally interesting fresh-Perch/S14 package, but source itself cites S14/S12 score history around `0.932`/`0.943`; hold as idea-mining, not a slot before v607 score.
+- `henryszy/bc2026-g124-protectdelta-v84`: source contains the exact G124 protected-delta logic and expected `g124_fold1_fp16.pt`, but the asset finder still depends on the private `birdclef2026-g124-effv2s-2025pre-pseudo-assets` dataset. If missing, it catches the exception and keeps NFNet/anchor `submission.csv`; likely plateau unless the asset is attached privately.
+- `gendaijin/birdclef2026-day0523-beicicc-pcen`: PCEN/ConvNeXt protected correction; overlaps v604 PCEN plateau, no immediate slot.
+- `anatoly7m` and `jguevarag` fresh TTA/SED submission notebooks produced constant three-row dry-run outputs in public outputs; no blind direct submission.

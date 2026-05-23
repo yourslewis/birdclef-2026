@@ -111,3 +111,18 @@ Promote only if:
 2. Can a repo-owned EffV2-S sidecar reproduce enough of G124 to beat 0.949?
 3. Does v607's repaired 2-way Eslam path score above plateau?
 4. Are JGuevara `08-winning-tta-submission-pipeline` or Soundscape Finetune posts source-safe and artifact-backed, or just training notebooks?
+
+## 2026-05-23 08:15 UTC concrete recipe specs
+
+Added concrete G124 reconstruction configs:
+
+- `configs/birdclef/g124_effv2s_public946_pseudo_smoke_20260523.json`
+- `configs/birdclef/g124_effv2s_public946_pseudo_pilot_20260523.json`
+
+Fresh public source audit conclusion:
+
+- S14 fresh-Perch source is structurally interesting but self-reported below the 0.949 frontier, so hold for idea-mining.
+- Henry G124 protect-delta source has the right protected-delta mechanism but still lacks the private G124 checkpoint/infer asset; fallback preserves the anchor and is not a high-upside slot by itself.
+- New PCEN/EoS/NFNet forks remain plateau-like after v599-v604.
+
+Next actionable training step is to run the G124 EffV2-S smoke config where the repo and public946 teacher cache are both available, then run sidecar/rank-blend audit before any Kaggle slot.
