@@ -3752,3 +3752,17 @@ Decision:
   - `configs/birdclef/g124_effv2s_public946_pseudo_pilot_20260523.json`
 - Commit pushed: `9165dc4` (`Add G124 EffV2-S reconstruction configs`) on PR #254.
 
+
+## 2026-05-23 10:15 UTC — v607 dropped; v608 submitted; G124 smoke rejected
+
+- **Status:** v607 `Repo-owned Eslam v26C ProtoSSM save repair` scored `0.934`, below the `0.949` plateau. Kill the repaired Eslam 2-way fallback lane unless the missing student ONNX artifact becomes available; the repair was mechanically valid but not leaderboard-competitive.
+- **Slots:** 2026-05-23 used `2/5` before new action; best remains `0.949`.
+- **Fresh scan:** saved `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1000Z.json`; audit saved `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1000Z_newleads/summary.json`.
+- **Source audit lessons:**
+  - `scenerysunfireink/birdclef-2026-improved-fork` has valid `240x235` dry-run output, hidden-test source markers, and structurally different inner blend / BirdNET / distill model sources. Dry-run output correlation vs v607 was only `0.860`, so it is distinct enough for one guarded slot despite no >0.949 evidence.
+  - `scenerysunfireink/bc26-inner-ensemble-v1/v2` are dependent-output kernels over `birdclef-2026-improved-fork`, not preferred for direct submission because notebook-output dependency may not recompute hidden rows.
+  - `pilkwang/birdclef-2026-eos6-bz-pcen-rank-sidecar` is a PCEN/EoS6-bz sidecar but public output is only 3-row dry-run; after v604 PCEN tied `0.949`, hold unless it shows a real scored improvement.
+  - `ommodi07`, `adarsh5harma`, and `jacqueszhelinzhang/deepcnn` outputs were invalid/constant/ragged for direct guarded use.
+- **Submitted:** v608 `Guarded direct Scenery improved inner-blend source`, ref `52950601`, using source version 1 after COMPLETE/no-failure/output preflight. This uses the base improved source, not the dependent inner-v1/v2 wrappers.
+- **G124 smoke:** copied G124 configs to trainer and ran `g124_effv2s_public946_pseudo_smoke_20260523.json` on GPU1. Training reached best val AUC `0.726` at epoch 3 with low student/teacher corr `0.192`; torchscript and student predictions were produced, but ONNX export hung and was killed. Criterion `>=0.93` failed, so do not run the pilot config from this initialization. This reinforces that simple from-scratch EffV2-S pseudo smoke is not enough to recreate the missing G124 artifact.
+

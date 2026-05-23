@@ -1437,3 +1437,10 @@ Queue remains unchanged:
 - New active protocol: `experiments/autoresearch/2026-05-23-birdclef-096-frontier-recipes/protocol.md`.
 - New recipe summary: `docs/BIRDCLEF_096_PROMISING_RECIPES_AUTORESEARCH_20260523.md`.
 - P0: find or recreate missing G124/S124 sidecar artifact; P1: score-gate v607; P2: continue public source/artifact scout. LLM-labeling path explicitly skipped.
+
+## 2026-05-23 10:15 UTC update — v607 fail, v608 Scenery source test, G124 smoke fail
+
+- v607 completed at `0.934`; repaired Eslam v26C 2-way ProtoSSM+SED fallback is killed unless `eslamelokpy/birdclef2026-student-onnx` or equivalent student folds become available.
+- Submitted v608 `Guarded direct Scenery improved inner-blend source`, ref `52950601`, after source/output preflight. It is distinct from v607 on dry-run rows (`corr≈0.86`) but has no hard >0.949 evidence, so treat as one exploratory slot only.
+- Fresh scan/audit artifacts: `scan_20260523T1000Z.json` and `source_audit_20260523T1000Z_newleads/summary.json`.
+- G124 EffV2-S smoke on trainer failed continuation gate: best val AUC `0.726`, low corr `0.192`, torchscript/predictions produced, ONNX export hung and was killed. Do not run the pilot config from this from-scratch setup; next G124 work should focus on finding/borrowing a real pretrained checkpoint or initializing from a stronger existing V2-S artifact.
