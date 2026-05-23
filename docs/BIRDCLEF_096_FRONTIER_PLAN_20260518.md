@@ -1475,3 +1475,11 @@ Queue remains unchanged:
 - Submitted `svanikkolli/perchfusion-engine` v8 as v609 `Guarded direct PerchFusion v951 TTA source`, ref `52962837`, pending. Source is a distinct `v951 Target` Perch/ProtoSSM/SED stack: 3x Perch TTA, 3x SED TTA, larger ProtoSSM, ResidualSSM correction, raw Perch third rank-blend member, and safety gates. Preflight passed COMPLETE/no-failure/source markers/output markers; final public `submission.csv` is sample-shaped by dry-run design, while intermediate ProtoSSM/SED outputs are valid non-constant `240x235`.
 - 2026-05-23 slots now used `4/5`; preserve final slot unless v609 scores high and needs immediate repo-owned confirmation, or a stronger source-safe candidate appears.
 - New idea queue: `gandharvakhedekar/birdclef2026-new` has EfficientNet-B3 training artifacts with fold AUC filenames around `0.965`-`0.969` but lacks a submission writer. Treat as repo-owned inference-port candidate, not direct slot-ready.
+
+## 2026-05-23 20:15 UTC update — v609 timeout, v610 verifier started
+
+- v609 completed with no public score because it exceeded runtime. Best remains `0.949`; 2026-05-23 slots used `4/5`; one slot remains.
+- Scan/audit: `scan_20260523T2000Z.json`, `source_audit_20260523T2000Z_newleads/summary.json`.
+- Do not resubmit PerchFusion v951 as-is: in-kernel training + Perch/SED TTA is too slow for hidden rerun. Any follow-up must be precomputed or substantially simplified.
+- No direct public source cleared the final-slot bar: visual forks are v608-correlated plateau family; EoS6/PCEN saturated; HGNet inference output invalid/non-numeric; G-sidecar siblings already plateaued.
+- Pushed repo-owned verifier `yourslewis/bc26-v610-gandharva-b3-checkpoint-inference` (kernel id `120358093`, version 1) using `gandharvakhedekar/birdclef2026-new` EfficientNet-B3 checkpoints. It is RUNNING/no output yet. Submit only if verifier completes with valid finite non-constant output; otherwise preserve slot.

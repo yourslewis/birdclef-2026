@@ -1,0 +1,16 @@
+{
+  "id": "yourslewis/bc26-v610-gandharva-b3-infer",
+  "title": "BC26 v610 Gandharva B3 checkpoint inference",
+  "code_file": "kernel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "competition_sources": ["birdclef-2026"],
+  "dataset_sources": [],
+  "kernel_sources": ["gandharvakhedekar/birdclef2026-new"],
+  "model_sources": [],
+  "keywords": []
+}

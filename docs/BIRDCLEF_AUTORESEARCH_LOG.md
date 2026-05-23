@@ -3835,3 +3835,16 @@ Decision:
   - Samejima/Cheny visual outputs remain valid but highly correlated with v608 (`corr≈0.993`) and visual branch evidence is below plateau; do not spend the final slot there.
   - HGNet/Kosuke/Henry/Praxel/Chaney variants mostly provide valid 240-row raw branch files, but final submissions are often 3-row dry-runs or highly correlated with the v608/PCEN plateau. Standalone HGNet raw branches are diverse but previous HGNet slots dropped/tied; require anchored blend/score evidence before slot use.
   - PCEN/EoS6 forks remain saturated after v604/v608; Cheny public0952 remains rejected by v595 `0.899`.
+
+
+## 2026-05-23 20:15 UTC — v609 timeout; v610 Gandharva B3 verifier running
+
+- **Status:** v609 `Guarded direct PerchFusion v951 TTA source` completed with no public score due Kaggle runtime timeout. Best remains `0.949`; target remains `0.960`. 2026-05-23 slots used `4/5`, with one slot remaining. No active v577/v578 scalar submitter or BirdCLEF monitor process was found.
+- **Repo state at start:** branch `feature/birdclef-20260522-v599-v602-pending`, latest pushed commit `dfbac4b`; PR #254 open/review-required; PR #245 merged.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T2000Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T2000Z_newleads/summary.json`.
+- **v609 lesson:** PerchFusion is structurally interesting but public dry-run wall time was already ~11.8 min and hidden rerun exceeded the competition limit. Do not resubmit TTA-heavy in-notebook training/TTA variants; any PerchFusion follow-up must be repo-owned and much faster (precomputed artifacts or no in-kernel training/TTA).
+- **20UTC source triage:** Sakur/Samejima/Cheny visual forks remain the same visual plateau family highly correlated with v608; EoS6/PCEN forks remain saturated after v604; Samejima/TTAhara HGNet inference public output remains invalid/non-numeric; Itshyao S116/G116 remains G-sidecar plateau-family. No direct public source deserved the final slot.
+- **Repo-owned high-upside action:** built and pushed v610 verifier `yourslewis/bc26-v610-gandharva-b3-checkpoint-inference`, kernel id `120358093`, version 1. It attaches `gandharvakhedekar/birdclef2026-new` as a kernel source and implements a minimal CPU inference writer for the EfficientNet-B3 SED checkpoints (`fold0_ep12_auc0.9679.pth`, `fold1_ep15_auc0.9658.pth`, `fold2_ep12_auc0.9688.pth`, `fold3_ep13_auc0.9692.pth`, plus available fold4 artifact). It writes `submission_gandharva_b3_raw.csv` and final `submission.csv`, with shape/finite/range guards.
+- **Gandharva artifact audit:** saved `artifacts/public_kernels_20260523_frontier_candidates/gandharva_b3_artifact_audit_20260523T2000Z/`; downloaded `fold_results.json`, showing fold AUCs `0.96794`, `0.96581`, `0.96880`, `0.96925` for listed folds. This is promising structurally but not yet slot-ready until verifier completes with valid output.
+- **v610 status:** SDK status is `RUNNING`, no failure message, no output/log yet. Do not submit until COMPLETE + valid finite non-constant `submission.csv`/raw output. If verifier completes before reset, v610 is the best candidate for the final slot.
