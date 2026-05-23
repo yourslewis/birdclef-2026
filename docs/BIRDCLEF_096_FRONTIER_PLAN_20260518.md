@@ -1405,3 +1405,11 @@ Queue remains unchanged:
 - Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0000Z.json`.
 - Audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0008Z_newleads/summary.json`.
 - Hold remaining slots until v604 score unless a distinct source-safe 0.96-relevant candidate appears. Do not duplicate Pilkwang PCEN; hold Junseong scoreblend / public0952 / Karnak derivatives until repo-owned verification or score evidence.
+
+## 2026-05-23 02:10 UTC update — v604 plateau, v605 verifier running
+
+- v604 scored `0.949`; PCEN sidecar tied plateau and should not be duplicated via Pilkwang/Beicicc/Gendaijin PCEN forks.
+- 2026-05-23 slots used: `1/5`.
+- Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0200Z.json`.
+- Audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0200Z_newleads/summary.json`.
+- Launched v605 verifier `yourslewis/bc26-v605-eslam-v26c-source-verify` from Eslam v26C source. Submit only if COMPLETE + valid non-constant `submission.csv` + no traceback.

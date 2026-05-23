@@ -3693,3 +3693,15 @@ Decision:
   - Cheny exp080 Karnak dual-arch safe is source-pullable but fallback/constant-risk and overlaps Karnak/EoS plateau; hold.
 - **Decision:** preserve remaining four 2026-05-23 slots until v604 scores or a clearly distinct source-safe candidate appears. No duplicate submitter started.
 
+
+## 2026-05-23 02:10 UTC — v604 tied; v605 Eslam v26C verifier launched
+
+- **Live state:** v604 `Repo-owned Pilkwang PCEN sidecar verify` scored `0.949`, tying the current best but not improving toward `0.960`. 2026-05-23 UTC slots used: `1/5`; confirmed best remains `0.949`.
+- **Lesson:** the Pilkwang PCEN sidecar is safe but still plateau-bound. Do not duplicate PCEN forks (`pilkwang`, `beicicc`, `gendaijin day0523-pcen`) without a new artifact or stronger evidence.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0200Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0200Z_newleads/summary.json`.
+- **New verifier:** pushed repo-owned private kernel v605 `yourslewis/bc26-v605-eslam-v26c-source-verify`, version 1 / kernel id `120276728`, from `eslamelokpy/birdclef2026-v26c` source. Push returned HTTP 200 and the kernel was observed RUNNING via SDK immediately after push.
+- **v605 caveat:** Kaggle rejected `eslamelokpy/birdclef2026-student-onnx` as an invalid dataset source. Source treats missing student ONNX folds as optional, so this verifier still tests Eslam's main Perch/SED/prior path. Do **not** submit v605 until kernel COMPLETE output is verified with non-constant `submission.csv` and no traceback.
+- **Other fresh leads:** Koushik/Perch-v2/JGuevara are structurally simpler baseline/training lanes; StudyExchange S14 still lacks writer; Gendaijin PCEN/Junseong are copies of already-held PCEN/scoreblend lineages; WildSound/CKPT-chain require internet or lack competition writer.
+- **Decision:** preserve remaining 4 slots while v605 verifier runs. If v605 completes cleanly, inspect output before any submit; if it fails or falls back, do not spend a slot.
+
