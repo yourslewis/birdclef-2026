@@ -3740,3 +3740,15 @@ Decision:
 - **Priority:** P0 is G124/S124 reconstruction or artifact discovery. Missing private asset remains `itshyao/birdclef2026-g124-effv2s-2025pre-pseudo-assets` with expected `g124_fold1_fp16.pt`, `_best.pt`, and `submission_g124_effv2s_fold1_s124.csv`-like outputs. P1 is result-gated Eslam v607; P2 is source/artifact scout.
 - **Non-goal:** LLM labeling path is skipped because no audio-capable labeler is available.
 
+
+## 2026-05-23 08:15 UTC — fresh source audit + G124 reconstruction configs
+
+- Audited new 08UTC frontier candidates from `scan_20260523T0800Z.json`.
+- `studyexchange/birdclef-2026-infer-s14`: COMPLETE with valid `240x235` output and fresh-Perch/S14 package, but source score history is `0.932`/`0.943`, below current `0.949`; hold for idea-mining, not a slot before v607 scores.
+- `henryszy/bc2026-g124-protectdelta-v84`: source contains useful G124 protected-delta logic and expects `g124_fold1_fp16.pt` under the private G124 asset dataset, but if unavailable it catches the error and keeps NFNet/anchor `submission.csv`; likely plateau unless the real G124 artifact is attached.
+- New PCEN/EoS/NFNet forks remain plateau-like after v599-v604; `anatoly7m`/`jguevarag` fresh TTA/SED public outputs were constant 3-row dry-run outputs, so no blind direct submission.
+- Added concrete G124 reconstruction configs:
+  - `configs/birdclef/g124_effv2s_public946_pseudo_smoke_20260523.json`
+  - `configs/birdclef/g124_effv2s_public946_pseudo_pilot_20260523.json`
+- Commit pushed: `9165dc4` (`Add G124 EffV2-S reconstruction configs`) on PR #254.
+
