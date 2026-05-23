@@ -1459,3 +1459,11 @@ Queue remains unchanged:
 - Samejima Visual CPU has valid output but source cites visual branch `0.948` and dry-run output is highly correlated with v608 (`corr≈0.993`), which already tied `0.949`; do not spend a slot absent new evidence.
 - HGNetV2 inference output is invalid/non-numeric in public dry-run; previous Samejima/HGNet repo-owned attempts did not improve. Hold.
 - No new 0.96-relevant source-safe candidate found; preserve remaining 2 slots.
+
+## 2026-05-23 16:20 UTC update — 16UTC scan, preserve two slots
+
+- Best remains `0.949`; target remains `0.960`; 2026-05-23 slots used `3/5` with v604 `0.949`, v607 `0.934`, v608 `0.949`.
+- Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1600Z.json`; audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1600Z_newleads/summary.json`.
+- Output audits: `output_audit_20260523T1600Z/summary.json` and `output_audit_20260523T1600Z_more/summary.json`.
+- No slot spent. Cheny exp070/public0952 is already disproven by v595 `0.899`; Samejima HGNet inference output is invalid/non-numeric; Samejima visual is running/no output now and earlier was a highly-correlated plateau candidate; Ykuroka/Beicicc/Gendaijin/Karansingh EoS6/PCEN forks are invalid or saturated; Itshyao S116/G116 pure sidecar is held because G-sidecar siblings tied plateau without lift.
+- Keep remaining slots for genuinely new evidence: public G124 artifact discovery, Samejima HGNet training completion with valid artifact, or a non-EoS/non-PCEN source-safe candidate with real >0.949 support.

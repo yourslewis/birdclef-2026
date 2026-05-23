@@ -3800,3 +3800,22 @@ Decision:
   - `gandharvakhedekar` / `mlclsumit`: still RUNNING/no `submission.csv` at audit time.
 - GPU server check: no BirdCLEF student train process; GPU1 free. GPU0 occupied by unrelated/other workload. No training launched because G124 from-scratch smoke already failed gate and no stronger initialization/artifact found.
 
+
+
+## 2026-05-23 16:20 UTC — 16UTC frontier scan, no slot spent
+
+- **Status:** latest Kaggle submissions unchanged: v608 `0.949`, v607 `0.934`, v604 `0.949`; current confirmed best remains `0.949` vs target `0.960`. 2026-05-23 UTC slots used `3/5`, remaining `2/5`.
+- **Repo/process:** branch `feature/birdclef-20260522-v599-v602-pending`, latest commit `71d846c`; PR #254 remains OPEN / REVIEW_REQUIRED / BLOCKED, PR #245 is merged. No active v577/v578 scalar submitter or BirdCLEF monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1600Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1600Z_newleads/summary.json`.
+- **Output audits saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1600Z/summary.json` and `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1600Z_more/summary.json`.
+- **No new submission:** no 16UTC candidate cleared the distinct/high-upside/source-safe bar.
+- Candidate notes:
+  - `chenyfdws/bc26-exp070-public0952-s124-g124-repro`: COMPLETE with valid `240x235` output and safe hidden-test writer, but this is the already-tested public0952/Perch-prior-probe lane (`v595=0.899`). Do not duplicate.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference`: now RUNNING/no output in the 16UTC output API check. The earlier valid visual output was already judged plateau-like (`0.948` branch, high corr to v608), so hold.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: COMPLETE but public `submission.csv` is invalid/non-numeric (`3x235`, 702 bad numeric cells). Hold unless a fixed output/artifact appears.
+  - `ykuroka`/`beicicc`/`gendaijin`/`karansinghbisht` Nina EoS6-bz and PCEN forks: mostly invalid `243x235` public outputs with nonnumeric cells or 3-row dry-runs; overlaps v604/v608 plateau families. Hold.
+  - `jungchanryu/birdclef-first`, `beicicc/bc26-gendaijin-junseong-eos6-may23`, `junseonglee11/birdclef2026-eos6-scoreblend-g004-w05`, `starsdaisuki/birdclef-2026-v131-nina-eos6-sz`, and `beicicc/bc26-nfnet-aves-lp075-may23`: valid only as 3-row dry-run/sample outputs, not enough for a guarded direct slot after similar families tied/dropped.
+  - `itshyao/birdclef-2026-s116-g116-hgnet-b1-rawpseudo-all5`: source-safe-looking pure G116/HGNet all5 sidecar with finite 12-row dry-run output, but G116/G123/G124 siblings have already tied rather than lifted (`v587/v588/v589/v597=0.949`). Treat as idea-mining only unless a scored improvement appears.
+  - `karnakbaevarthur/s124-g124-reverse-engineered`: still COMPLETE but no output artifacts; useful for code-mining/reconstruction, not direct submit.
+- **Decision:** preserve the remaining 2 slots for a real new artifact/high-claim source. Next loop should recheck Samejima HGNet training / running notebooks and keep hunting for public G124 artifacts or a non-EoS/non-PCEN structural source.
