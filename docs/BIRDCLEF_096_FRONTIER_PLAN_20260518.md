@@ -1467,3 +1467,11 @@ Queue remains unchanged:
 - Output audits: `output_audit_20260523T1600Z/summary.json` and `output_audit_20260523T1600Z_more/summary.json`.
 - No slot spent. Cheny exp070/public0952 is already disproven by v595 `0.899`; Samejima HGNet inference output is invalid/non-numeric; Samejima visual is running/no output now and earlier was a highly-correlated plateau candidate; Ykuroka/Beicicc/Gendaijin/Karansingh EoS6/PCEN forks are invalid or saturated; Itshyao S116/G116 pure sidecar is held because G-sidecar siblings tied plateau without lift.
 - Keep remaining slots for genuinely new evidence: public G124 artifact discovery, Samejima HGNet training completion with valid artifact, or a non-EoS/non-PCEN source-safe candidate with real >0.949 support.
+
+## 2026-05-23 18:10 UTC update — v609 PerchFusion submitted
+
+- Best before action remained `0.949`; 2026-05-23 slots used `3/5`; v608 `0.949`, v607 `0.934`, v604 `0.949`.
+- Scan/audit: `scan_20260523T1800Z.json`, `source_audit_20260523T1800Z_newleads/summary.json`; output audit: `output_audit_20260523T1800Z/summary.json`.
+- Submitted `svanikkolli/perchfusion-engine` v8 as v609 `Guarded direct PerchFusion v951 TTA source`, ref `52962837`, pending. Source is a distinct `v951 Target` Perch/ProtoSSM/SED stack: 3x Perch TTA, 3x SED TTA, larger ProtoSSM, ResidualSSM correction, raw Perch third rank-blend member, and safety gates. Preflight passed COMPLETE/no-failure/source markers/output markers; final public `submission.csv` is sample-shaped by dry-run design, while intermediate ProtoSSM/SED outputs are valid non-constant `240x235`.
+- 2026-05-23 slots now used `4/5`; preserve final slot unless v609 scores high and needs immediate repo-owned confirmation, or a stronger source-safe candidate appears.
+- New idea queue: `gandharvakhedekar/birdclef2026-new` has EfficientNet-B3 training artifacts with fold AUC filenames around `0.965`-`0.969` but lacks a submission writer. Treat as repo-owned inference-port candidate, not direct slot-ready.

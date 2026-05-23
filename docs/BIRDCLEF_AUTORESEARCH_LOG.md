@@ -3819,3 +3819,19 @@ Decision:
   - `itshyao/birdclef-2026-s116-g116-hgnet-b1-rawpseudo-all5`: source-safe-looking pure G116/HGNet all5 sidecar with finite 12-row dry-run output, but G116/G123/G124 siblings have already tied rather than lifted (`v587/v588/v589/v597=0.949`). Treat as idea-mining only unless a scored improvement appears.
   - `karnakbaevarthur/s124-g124-reverse-engineered`: still COMPLETE but no output artifacts; useful for code-mining/reconstruction, not direct submit.
 - **Decision:** preserve the remaining 2 slots for a real new artifact/high-claim source. Next loop should recheck Samejima HGNet training / running notebooks and keep hunting for public G124 artifacts or a non-EoS/non-PCEN structural source.
+
+
+## 2026-05-23 18:10 UTC — v609 PerchFusion submitted; Gandharva training artifact noted
+
+- **Status before action:** best remained `0.949`; latest scored submissions unchanged (v608 `0.949`, v607 `0.934`, v604 `0.949`). 2026-05-23 UTC slots used `3/5`; no v577/v578 scalar submitter or BirdCLEF monitor process was active. PR #254 remained open/review-required; branch was clean at `cd79e42`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1800Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1800Z_newleads/summary.json`.
+- **Output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1800Z/summary.json`.
+- **Selected candidate:** `svanikkolli/perchfusion-engine` v8 as v609. Rationale: structurally distinct enough for one guarded slot after the 0.949 plateau — source labels itself `v951 Target` and adds 3x Perch audio-shift TTA, 3x SED TTA, larger in-notebook ProtoSSM (`d_model=192`, 3 SSM layers), ResidualSSM correction, raw Perch logits as a third rank-blend member, and safety gates. It is not a dependent-output wrapper.
+- **v609 preflight:** source pull version `8`; kernel COMPLETE/no failure; outputs include `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `cache/perch_arrays_tta3x.npz`, `cache/perch_meta_tta3x.parquet`; log includes `Training complete`, `ProtoSSM branch done`, `SED branch done`, `3-way rank blend`, and `Diagnostics OK`. Public final `submission.csv` is intentionally sample-shaped (`3x235`) because the source aligns dry-runs to `sample_submission.csv`; hidden source path uses `/test_soundscapes`. Intermediate dry-run branches validated as full train rows: ProtoSSM `240x235`, finite/non-constant, range `0.00038196085..0.95813334`; SED `240x235`, finite/non-constant, range `2.2149461e-05..0.97304124`.
+- **Submitted:** v609 `Guarded direct PerchFusion v951 TTA source`, ref `52962837`, pending at check time. 2026-05-23 slots used now `4/5`; preserve final slot unless a stronger source-safe candidate appears or v609 scores high and needs immediate confirmation/port.
+- **Other 18UTC findings:**
+  - `gandharvakhedekar/birdclef2026-new` completed as a training artifact with EfficientNet-B3 checkpoints and fold AUC filenames around `0.965`-`0.969`, but no inference/submission writer. High-upside for repo-owned inference-port work, not direct submit-ready.
+  - Samejima/Cheny visual outputs remain valid but highly correlated with v608 (`corr≈0.993`) and visual branch evidence is below plateau; do not spend the final slot there.
+  - HGNet/Kosuke/Henry/Praxel/Chaney variants mostly provide valid 240-row raw branch files, but final submissions are often 3-row dry-runs or highly correlated with the v608/PCEN plateau. Standalone HGNet raw branches are diverse but previous HGNet slots dropped/tied; require anchored blend/score evidence before slot use.
+  - PCEN/EoS6 forks remain saturated after v604/v608; Cheny public0952 remains rejected by v595 `0.899`.
