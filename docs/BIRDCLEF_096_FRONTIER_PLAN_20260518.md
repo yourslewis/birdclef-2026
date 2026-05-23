@@ -1421,3 +1421,11 @@ Queue remains unchanged:
 - 2026-05-23 slots used remain `1/5`; confirmed best remains `0.949`.
 - Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0400Z.json`; audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0400Z_newleads/summary.json`.
 - Do not submit Koushik: source uses random uniform placeholder predictions. Tuannm depends on unclear/private probe artifact. Continue source scan if v606 fails.
+
+## 2026-05-23 06:15 UTC update — v607 repair running
+
+- v606 failed pre-submit guard because `submission_protossm.csv` was not written before final blend; no slot spent.
+- v607 `yourslewis/bc26-v607-eslam-v26c-proto-save` is RUNNING and repairs the missing ProtoSSM CSV. Submit only after COMPLETE + valid non-constant output + no traceback.
+- 2026-05-23 slots used remain `1/5`; confirmed best remains `0.949`.
+- Scan: `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0600Z.json`; audit: `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
+- Do not duplicate Beicicc/Gendaijin/Karansingh PCEN/EoS/NFNet public forks without fresh score evidence; they are plateau-family and source-risky.

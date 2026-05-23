@@ -3716,3 +3716,14 @@ Decision:
 - **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0400Z_newleads/summary.json`.
 - **Fresh lead triage:** Koushik source writes random uniform placeholder predictions despite safe schema; do not submit. Tuannm Perch v2 needs a private/unclear probe artifact. Safe EoS5 / Ykuroka / Cheny variants are fallback-risk or plateau-family. CKPT-chain/WildSound require internet or lack a competition writer. v606 remains the only active candidate.
 
+
+## 2026-05-23 06:15 UTC — v606 failed guard; v607 ProtoSSM-save repair running
+
+- **Live state:** confirmed best remains `0.949`; v604 tied `0.949`; 2026-05-23 slots used remain `1/5`.
+- **v606 result:** verifier `yourslewis/bc26-v606-eslam-v26c-proto-repair` reached `ERROR` before final `submission.csv`. Root cause: downstream blend cell attempted to read missing `submission_protossm.csv`; only cache outputs were produced. No submission was spent.
+- **Repair action:** created and pushed v607 `yourslewis/bc26-v607-eslam-v26c-proto-save`, version 1 / kernel id `120293556`. Patch persists `submission_protossm.csv` from ProtoSSM sigmoid probabilities before the SED/student/final rank-blend cell.
+- **v607 status:** SDK reports `RUNNING`, no failure message. Output listing currently has no files/log yet; no submission allowed until COMPLETE + valid non-constant `submission.csv` + no traceback.
+- **Fresh scan artifact:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T0600Z.json`.
+- **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
+- **Fresh lead triage:** new Beicicc/Gendaijin/karansinghbisht public forks are copies/near-copies of already plateaued PCEN/EoS/NFNet/Junseong lineages and have fallback/zero/constant risk markers; no direct submit supersedes v607.
+
