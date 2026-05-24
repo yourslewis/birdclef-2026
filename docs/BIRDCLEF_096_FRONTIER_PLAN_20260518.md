@@ -1532,3 +1532,11 @@ Queue remains unchanged:
 - `studyexchange/birdclef-2026-infer-s14` v26 completed with valid `240x235` output and no failure. It is structurally interesting (fusion_alpha fix, BidirProtoSSM, Tucker/Snowflake SED), but source expectation is only `~0.943 -> 0.946+`; public output corr vs Samejima visual anchor `0.9345`, MAE `0.0677`, dry-run OOF AUC `0.991722`. Hold; not a direct 0.96 slot.
 - Anchored movement audit using Samejima visual as plateau anchor found positive rejection-gate movement: base local AUC `0.9903905`; Praxel-only best `+0.00317`; Jungchan+Praxel best `+0.00325`; S14 sidecar best `+0.00272`. This is not approval evidence because train-soundscape gates have failed before, but it identifies Praxel HGNet/raw + Jungchan subm_21 as the best repo-owned blend-mining direction.
 - No v611 slot spent. Do not submit direct S14, Beicicc Model7/EoS duplicates, PCEN/EoS duplicates, or public-output branch wrappers. Next useful work is a hidden-safe repo-owned implementation plan for the anchored blend, or continued search for real G124/source-safe 0.96 assets.
+
+## 2026-05-24 10:20 UTC update — no new source slot, anchored blend plan added
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T1000Z.json`, `source_audit_20260524T1000Z_newleads/summary.json`, `output_audit_20260524T1000Z/summary.json`.
+- New/fresh candidates did not clear the bar: `deepanshus167/bird-claasifier-comp` completed with no outputs; `scottfyy/birdclef-2026-code` writes `1x235` all-0.5 output; `anatoly7m` still writes constant `0.5`; `mlclsumit` still errors/no outputs. Existing leads remain plateau/invalid families.
+- Added hidden-safe implementation plan: `docs/BIRDCLEF_096_ANCHORED_BLEND_IMPLEMENTATION_PLAN_20260524.md`.
+- Preferred repo-owned extraction direction if no better source appears: Samejima/v608-family anchor + low-weight Praxel HGNet raw sidecar, optionally Praxel blend/pc010; Jungchan Model21 is second-tier because it adds more EoS-family overlap. Do not submit public-output wrappers.

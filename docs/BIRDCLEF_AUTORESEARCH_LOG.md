@@ -3944,3 +3944,20 @@ Decision:
   - S14 as sidecar best: `s14=0.20` -> local AUC `0.9931105` (`+0.00272`), top3 `0.4789`, corr `0.99743`, MAE `0.0141`; S14 standalone local AUC `0.9915122`.
 - **Decision:** no v611 submission. The movement audit is useful, but it is still a train-soundscape/local gate and previous v560/v573/v610 showed local positives are rejection filters, not approval filters. The result supports a future repo-owned anchored blend candidate only if we can implement hidden-test inference without relying on public-output artifacts; do not submit direct S14, Beicicc, PCEN/EoS, visual duplicate, or branch-output wrappers.
 - **Next:** keep watching for a source-safe 0.96 candidate or real G124 assets. If no better public source appears and slots remain idle, the next preparation task is a repo-owned hidden-safe implementation plan for the Samejima/Praxel/Jungchan anchored blend, including which models/artifacts can actually be attached and rerun on hidden test.
+
+## 2026-05-24 10:20 UTC — 10UTC scan + hidden-safe anchored blend plan, no slot spent
+
+- **Status:** latest Bearer API submissions unchanged: v610 `0.852`, v609 timeout/no score, v608 `0.949`, v607 `0.934`, v604 `0.949`. Current confirmed best remains `0.949` vs target `0.960`. 2026-05-24 UTC slots used: `0/5`.
+- **Memory/repo/process:** `memory_search` still fails with `Unknown system error -11`; direct daily memory was used. Main worktree git remains unhealthy (`fatal: not a git repository: .../.git/worktrees/birdclef-2026-v545`). PR #255 was OPEN / REVIEW_REQUIRED / BLOCKED at remote head `b52e4d4`. No active v577/v578 scalar submitter or BirdCLEF queue/monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T1000Z.json`.
+- **Fresh source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T1000Z_newleads/summary.json`.
+- **Fresh output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T1000Z/summary.json`.
+- **New/fresh candidates:**
+  - `deepanshus167/bird-claasifier-comp`: COMPLETE but no output files; source contains fallback/constant markers. No slot.
+  - `scottfyy/birdclef-2026-code`: COMPLETE with `best_bird_model.pth`, but public `submission.csv` is `1x235` all `0.5`; not competition-format or useful. No slot.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3`: v54 still writes sample-shaped constant `0.5`; no slot.
+  - `mlclsumit/notebook2e815ef354`: still ERROR/no outputs; no slot.
+  - Remaining visible leads are already-known EoS/PCEN/visual/HGNet plateau or invalid families.
+- **Prepared repo-owned plan:** added `docs/BIRDCLEF_096_ANCHORED_BLEND_IMPLEMENTATION_PLAN_20260524.md`. It maps Samejima visual anchor, Praxel HGNet/raw sidecar, Jungchan Model21 sidecar, and S14 sidecar; defines candidate low-weight rank blends; and lists hidden-safe implementation/pre-submit gates.
+- **Plan decision:** preferred implementation direction is not direct replay. Candidate P1 is Samejima/v608-family hidden-safe anchor + Praxel HGNet raw low-weight sidecar (`0.06`) plus optional Praxel blend/pc010 (`0.02/0.02`). Candidate P2 adds Jungchan `subm_21` (`0.04`) but is more EoS-overlap-heavy. Candidate P3 S14 is lower priority because source expectation is below current best.
+- **No v611 submission:** 10UTC scan produced no source-safe direct 0.96 candidate, and the anchored blend still needs hidden-safe repo-owned implementation. Preserve all five 2026-05-24 slots.
