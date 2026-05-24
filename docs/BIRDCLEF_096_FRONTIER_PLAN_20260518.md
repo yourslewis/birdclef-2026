@@ -1586,3 +1586,16 @@ Queue remains unchanged:
 - Added private v612 verifier `kaggle-kernels/v612-anchored-sameji-hgnet57-pt/` using Samejima visual anchor + newly saved Samejima HGNet-v57 torch checkpoints as a conservative `0.94/0.06` anchored rank sidecar.
 - Pushed private Kaggle validation `yourslewis/bc26-v612-anchored-sameji-hgnet57-pt` v1, kernel id `120456720`; currently RUNNING/no outputs. Do **not** submit unless it completes, outputs validate, runtime is plausible, and evidence is materially stronger than v611's tied-best result.
 - Hold remaining `4/5` competition slots.
+
+## 2026-05-24 20:25 UTC update — v612 submitted, pending score
+
+- Best before v612 remains `0.949`; target `0.960`; UTC slots used before v612 `1/5`.
+- v612 private validation COMPLETE/no failure. Outputs validated: final `submission.csv` `240x235`, no bad values, nonconstant all 234 class columns; branch output `submission_sameji_hgnet57_raw.csv` exists and row-aligns. Public dry-run runtime about `813s`; Samejima HGNet-v57 PT sidecar added about `106s` after the Samejima visual anchor.
+- v612 sidecar evidence: raw sidecar rank-vs-anchor corr `0.50213`, MAE `0.22085`; final rank-vs-anchor corr `0.99879`, MAE `0.01109`. Local dry-run rejection gate over 190 matched rows / 11 classes: anchor AUC `0.93315`, v611 final `0.93895`, v612 final `0.94089`, v612 raw sidecar `0.96489`.
+- Submitted v612 `Repo-owned Samejima anchor plus HGNet-v57 PT sidecar`, ref `52998418`; status `pending`. 2026-05-24 UTC slots used now `2/5`.
+- 20UTC scan/audit artifacts:
+  - `scan_20260524T2000Z.json`
+  - `source_audit_20260524T2000Z_newleads/summary.json`
+  - `output_audit_20260524T2000Z_focus/summary.json`
+- 20UTC scan found no stronger direct source-safe candidate. Tulay EfficientNet was mock/all-zero `2x207`; Claudedevore R0952 train outputs are checkpoints/manifests without inference; Raunak final remains 3-row fallback; known plateau families unchanged.
+- Hold remaining `3/5` slots until v612 scores or a materially stronger source-safe candidate appears.
