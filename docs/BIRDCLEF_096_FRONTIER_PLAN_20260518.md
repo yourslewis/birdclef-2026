@@ -1491,3 +1491,11 @@ Queue remains unchanged:
 - 22UTC scan/audit saved: `scan_20260523T2200Z.json`, `source_audit_20260523T2200Z_newleads/summary.json`.
 - New WildSound v8 lead is ERROR/no outputs. Visual forks remain plateau/correlated, Samejima/TTAhara HGNet needs anchored repo-owned blend work before future slot, and EoS6/PCEN/G-sidecar lines remain saturated.
 - Next reset priority: score-gate v610; if it improves, immediately confirm/port/tune. If not, continue artifact-based inference/blend search rather than slow direct notebooks.
+
+## 2026-05-24 00:20 UTC update — reset scan after v610 drop
+
+- v610 scored `0.852`; best remains `0.949`. v609 timed out. 2026-05-24 UTC slots used `0/5`.
+- Lesson: clean/train-audio local fold AUC around `0.966–0.969` did not transfer; clean-audio-only artifact inference is not hidden soundscape approval evidence.
+- Scan/audit: `scan_20260524T0000Z.json`, `source_audit_20260524T0000Z_newleads/summary.json`.
+- No v611 slot spent. Pilkwang PCEN v22 is queued/no output and overlaps v604 plateau; WildSound v8 errors on missing `train_metadata.csv` and would train ConvNeXtBase in-kernel; visual forks remain v608-correlated; HGNet artifacts need anchored blend verification after v598 standalone `0.860`.
+- Preserve 2026-05-24 slots for true source-safe upside or a verified repo-owned anchored artifact blend.
