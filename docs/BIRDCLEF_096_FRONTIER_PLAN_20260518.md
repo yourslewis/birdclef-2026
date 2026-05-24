@@ -1499,3 +1499,90 @@ Queue remains unchanged:
 - Scan/audit: `scan_20260524T0000Z.json`, `source_audit_20260524T0000Z_newleads/summary.json`.
 - No v611 slot spent. Pilkwang PCEN v22 is queued/no output and overlaps v604 plateau; WildSound v8 errors on missing `train_metadata.csv` and would train ConvNeXtBase in-kernel; visual forks remain v608-correlated; HGNet artifacts need anchored blend verification after v598 standalone `0.860`.
 - Preserve 2026-05-24 slots for true source-safe upside or a verified repo-owned anchored artifact blend.
+
+## 2026-05-24 02:20 UTC update — G124 evidence sharpened, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0200Z.json`, `source_audit_20260524T0200Z_newleads/summary.json`, `output_audit_20260524T0200Z/summary.json`.
+- Manual G124 search/audit: `search_20260524T0200Z_g124_096.txt`, `source_audit_20260524T0200Z_g124_manual/summary.json`.
+- `karnakbaevarthur/s124-g124-reverse-engineered` is the clearest source description of the missing G124 path/assets (`g124_fold1_fp16.pt`, `submission_g124_effv2s_fold1_s124.csv`), but has no output artifact. Anthony/Gendaijin/Karansingh/Henry G124 forks all fall back because the fold1 assets are missing, so they are not slot-ready.
+- Anatoly SED ensemble and Koushik Pantanal are not direct-safe: public outputs are constant/sample fallback. EoS6+PCEN and visual forks remain saturated/plateau-correlated.
+- Preserve slots for either real G124 asset discovery or a repo-owned anchored blend verifier with meaningful movement evidence; do not spend v611 on fallback G124 wrappers, constant SED/Pantanal runs, or PCEN/visual duplicates.
+
+## 2026-05-24 04:20 UTC update — Jungchan CT-MoBE held, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0400Z.json`, `source_audit_20260524T0400Z_newleads/summary.json`, `output_audit_20260524T0400Z/summary.json`.
+- `jungchanryu/birdclef-first` v18 is the only fresh source worth mining: it produces full `240x235` custom SED / ProtoSSM / SED / pseudo-label branches plus a CT-MoBE final dry-run. It remains EoS6/v6 lineage, anchor-heavy (`0.014/0.021/0.965` weights with two `0.949` members), and public runtime is ~948s; hold for repo-owned anchored-blend extraction, not direct submission.
+- Pilkwang v25 PCEN/EoS6, Samejima visual, Samejima HGNet inference, and Gandharva B3 do not justify a slot. Preserve slots for actual G124 assets or a fast anchored blend verifier with measured movement.
+- Local worktree git metadata is unhealthy (`Resource deadlock avoided` on git HEAD/refs); use fresh clone or repair before next commit from `/Users/yourslewis/Documents/birdclef-2026-v545`.
+
+## 2026-05-24 06:15 UTC update — G124 asset search empty, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0600Z.json`, `source_audit_20260524T0600Z_newleads/summary.json`, `output_audit_20260524T0600Z/summary.json`.
+- G124 dataset search returned no public assets for `birdclef2026 g124`, `g124 effv2s 2025pre pseudo`, `submission_g124_effv2s`, `g124_fold1_fp16`, or `birdclef 2026 s124 g124`; the actual fold1 asset remains unavailable.
+- No v611 slot spent. Fresh leads either duplicate saturated EoS6/PCEN/visual families, fail output format, or require repo-owned anchored extraction. `chenyfdws/bc26-exp070-public0952-s124-g124-repro` is title-misleading: source contains no G124 tokens/path and is an older Perch embedding-probe notebook. `chaneyma`/`praxel`/`jungchan` artifacts are the best code-mining inputs for an anchored movement audit, not direct replay.
+- Preserve slots for a source-safe high-upside candidate or a fast anchored blend verifier; do not submit v577/v578 scalar tuning, PCEN/visual duplicates, standalone clean-audio checkpoints, or broken HGNet/G124 wrappers.
+
+## 2026-05-24 08:20 UTC update — S14 complete, anchored movement positive but no v611
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0800Z.json`, `source_audit_20260524T0800Z_newleads/summary.json`, `output_audit_20260524T0800Z/summary.json`, `anchored_blend_audit_20260524T0800Z/`.
+- `studyexchange/birdclef-2026-infer-s14` v26 completed with valid `240x235` output and no failure. It is structurally interesting (fusion_alpha fix, BidirProtoSSM, Tucker/Snowflake SED), but source expectation is only `~0.943 -> 0.946+`; public output corr vs Samejima visual anchor `0.9345`, MAE `0.0677`, dry-run OOF AUC `0.991722`. Hold; not a direct 0.96 slot.
+- Anchored movement audit using Samejima visual as plateau anchor found positive rejection-gate movement: base local AUC `0.9903905`; Praxel-only best `+0.00317`; Jungchan+Praxel best `+0.00325`; S14 sidecar best `+0.00272`. This is not approval evidence because train-soundscape gates have failed before, but it identifies Praxel HGNet/raw + Jungchan subm_21 as the best repo-owned blend-mining direction.
+- No v611 slot spent. Do not submit direct S14, Beicicc Model7/EoS duplicates, PCEN/EoS duplicates, or public-output branch wrappers. Next useful work is a hidden-safe repo-owned implementation plan for the anchored blend, or continued search for real G124/source-safe 0.96 assets.
+
+## 2026-05-24 10:20 UTC update — no new source slot, anchored blend plan added
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T1000Z.json`, `source_audit_20260524T1000Z_newleads/summary.json`, `output_audit_20260524T1000Z/summary.json`.
+- New/fresh candidates did not clear the bar: `deepanshus167/bird-claasifier-comp` completed with no outputs; `scottfyy/birdclef-2026-code` writes `1x235` all-0.5 output; `anatoly7m` still writes constant `0.5`; `mlclsumit` still errors/no outputs. Existing leads remain plateau/invalid families.
+- Added hidden-safe implementation plan: `docs/BIRDCLEF_096_ANCHORED_BLEND_IMPLEMENTATION_PLAN_20260524.md`.
+- Preferred repo-owned extraction direction if no better source appears: Samejima/v608-family anchor + low-weight Praxel HGNet raw sidecar, optionally Praxel blend/pc010; Jungchan Model21 is second-tier because it adds more EoS-family overlap. Do not submit public-output wrappers.
+
+## 2026-05-24 12:25 UTC update — v611 private validation running, no submission
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC competition slots used `0/5`.
+- Scan/audit: `scan_20260524T1200Z.json`, `source_audit_20260524T1200Z_newleads/summary.json`.
+- No new direct source candidate cleared the bar. Fresh/visible leads were rejected or held: Scott is ERROR / prior all-0.5 output; Neslihan completed with no outputs; MLCL Sumit still errors; Gandharva remains rejected by v610 `0.852`; remaining EoS/PCEN/visual/HGNet leads are known plateau or invalid families.
+- Added repo-owned v611 scaffold: `kaggle-kernels/v611-anchored-hgnet-sidecar/` plus `scripts/push_v611_anchored_hgnet_sidecar.py`.
+- Pushed private validation kernel `yourslewis/bc26-v611-anchored-hgnet-sidecar`, v1, kernel id `120423812`; push had no invalid sources. It is still RUNNING at handoff and is not a competition submission.
+- v611 implements hidden-safe Samejima visual anchor + streaming Praxel HGNet raw sidecar, final rank blend `0.94/0.06`. Wait for COMPLETE + output/log validation before considering a submission slot.
+
+## 2026-05-24 14:20 UTC update — v611 submitted, pending score
+
+- Best before v611 remains `0.949`; target `0.960`.
+- v611 private validation COMPLETE/no failure. Outputs validated: final `submission.csv` `240x235`, no bad values, nonconstant all 234 class columns; branch outputs `submission_anchor_raw.csv` and `submission_prax_hgnet_raw.csv` exist and row-align. Public dry-run runtime about `715s`; HGNet sidecar added about `82s` after the Samejima anchor.
+- Submitted v611 `Repo-owned Samejima anchor plus Praxel HGNet sidecar`, ref `52988938`; status `pending`. 2026-05-24 UTC slots used now `1/5`.
+- Scan/audit: `scan_20260524T1400Z.json`, `source_audit_20260524T1400Z_newleads/summary.json`.
+- 14UTC scan found no stronger direct source-safe candidate. Samejima HGNet training v57 is still RUNNING/no outputs; Scott/Deepanshu/Mins00/PCEN/EoS/visual/gated-HGNet leads remain fallback, invalid, plateau, or already-covered families.
+- Hold remaining `4/5` slots until v611 scores or a materially stronger source-safe candidate appears.
+
+## 2026-05-24 16:25 UTC update — v611 tied best, hold slots
+
+- v611 scored `0.949`, tied best but no lift. Current best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `1/5`.
+- 16UTC scan/audit artifacts:
+  - `scan_20260524T1600Z.json`
+  - `source_audit_20260524T1600Z_newleads/summary.json`
+  - `output_audit_20260524T1600Z/summary.json`
+- Reconfirmed lesson: locally plausible sidecars (public946 family, v611 HGNet) can tie/preserve but not approve. Local train-soundscape gates should reject bad candidates, not justify slots by themselves.
+- Candidate queue after 16UTC:
+  - **Alexy NS1 CNN ensemble**: structurally different CNN/noisy-student signal, but source states LB `0.922`, so it is only a private v612 feasibility sidecar candidate; do not direct-submit.
+  - **Raunak V9**: final dry-run submission is 3-row fallback; only branch outputs are full 240 rows, known lineage.
+  - **Samejima HGNet training v57**: still running/no outputs; revisit if outputs/checkpoints appear.
+  - **Scott**: all-0.5 output; reject.
+  - **PCEN/EoS6 forks**: known tied-best/plateau family, no direct 0.96 evidence.
+- Preserve remaining `4/5` slots until stronger source-safe evidence appears or a private v612-style repo-owned verifier completes with materially better rationale.
+
+## 2026-05-24 18:25 UTC update — v612 private verifier started from Samejima HGNet-v57 PT outputs
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `1/5`.
+- 18UTC artifacts:
+  - `scan_20260524T1800Z.json`
+  - `source_audit_20260524T1800Z_newleads/summary.json`
+  - `output_audit_20260524T1800Z_samejima_training/summary.json`
+- Samejima HGNet training v57 ERRORed after saving PT checkpoints. Fold best val scores are `0.958302`, `0.960042`, `0.968769`, `0.965945`; error was later OOF shape mismatch before OpenVINO export.
+- Added private v612 verifier `kaggle-kernels/v612-anchored-sameji-hgnet57-pt/` using Samejima visual anchor + newly saved Samejima HGNet-v57 torch checkpoints as a conservative `0.94/0.06` anchored rank sidecar.
+- Pushed private Kaggle validation `yourslewis/bc26-v612-anchored-sameji-hgnet57-pt` v1, kernel id `120456720`; currently RUNNING/no outputs. Do **not** submit unless it completes, outputs validate, runtime is plausible, and evidence is materially stronger than v611's tied-best result.
+- Hold remaining `4/5` competition slots.
