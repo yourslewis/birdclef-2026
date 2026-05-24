@@ -4064,3 +4064,11 @@ Decision:
   2. G124 EffV2-S reconstruction with external/V2S init, not scratch-only retry.
   3. Unified anchored sidecar validation harness across Praxel/Samejima/S14/Jungchan/Alexy outputs with file/site bootstrap.
 - Verified local repo scripts compile for key lanes (`birdclef_sed_smoke.py`, `birdclef_sed_pilot_train.py`, `birdclef_pseudolabel_student_train.py`, `birdclef_public946_multi_sidecar_weight_grid.py`), and key configs parse (`g124_effv2s_public946_pseudo_smoke_20260523.json`, `sed_b0_5s_attn_smoke.json`, `pl_public946_sed_b0_5s_lr3e4_smoke.json`). Local Mac python lacks pandas for execution, but trainer venv `~/kaggle_envs/s6e3` has pandas/torch/timm/sklearn/numpy. Trainer `~/birdclef-2026` exists but is not a git repo, so sync intentionally before long runs.
+
+### 2026-05-24 23:10 UTC — Two-day good-ideas sprint spec
+
+- Added `docs/BIRDCLEF_TWO_DAY_EXPERIMENT_SPEC_20260524.md` to prevent the loop from idling after public replay exhaustion.
+- Spec confirms enough good ideas for today/tomorrow and defines slot policy, no-slot validation gates, and concrete work items.
+- Today focus: Alexy NS1 sidecar skeleton/private verifier, unified anchored sidecar manifest, and G124/V2S-init config prep.
+- Tomorrow focus: finish Alexy verifier and grid; run G124 EffV2-S V2S-init smoke on trainer; run SED/export smoke if needed; start pseudo-label threshold redesign or per-class residual selector as fallback lanes.
+- Slot rule: preserve remaining 2026-05-24 slots unless a private/no-slot candidate passes promotion gates; on 2026-05-25 use at most two promoted submissions and keep reserve slots.
