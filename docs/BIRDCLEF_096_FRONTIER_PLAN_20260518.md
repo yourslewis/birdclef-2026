@@ -1524,3 +1524,11 @@ Queue remains unchanged:
 - G124 dataset search returned no public assets for `birdclef2026 g124`, `g124 effv2s 2025pre pseudo`, `submission_g124_effv2s`, `g124_fold1_fp16`, or `birdclef 2026 s124 g124`; the actual fold1 asset remains unavailable.
 - No v611 slot spent. Fresh leads either duplicate saturated EoS6/PCEN/visual families, fail output format, or require repo-owned anchored extraction. `chenyfdws/bc26-exp070-public0952-s124-g124-repro` is title-misleading: source contains no G124 tokens/path and is an older Perch embedding-probe notebook. `chaneyma`/`praxel`/`jungchan` artifacts are the best code-mining inputs for an anchored movement audit, not direct replay.
 - Preserve slots for a source-safe high-upside candidate or a fast anchored blend verifier; do not submit v577/v578 scalar tuning, PCEN/visual duplicates, standalone clean-audio checkpoints, or broken HGNet/G124 wrappers.
+
+## 2026-05-24 08:20 UTC update — S14 complete, anchored movement positive but no v611
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0800Z.json`, `source_audit_20260524T0800Z_newleads/summary.json`, `output_audit_20260524T0800Z/summary.json`, `anchored_blend_audit_20260524T0800Z/`.
+- `studyexchange/birdclef-2026-infer-s14` v26 completed with valid `240x235` output and no failure. It is structurally interesting (fusion_alpha fix, BidirProtoSSM, Tucker/Snowflake SED), but source expectation is only `~0.943 -> 0.946+`; public output corr vs Samejima visual anchor `0.9345`, MAE `0.0677`, dry-run OOF AUC `0.991722`. Hold; not a direct 0.96 slot.
+- Anchored movement audit using Samejima visual as plateau anchor found positive rejection-gate movement: base local AUC `0.9903905`; Praxel-only best `+0.00317`; Jungchan+Praxel best `+0.00325`; S14 sidecar best `+0.00272`. This is not approval evidence because train-soundscape gates have failed before, but it identifies Praxel HGNet/raw + Jungchan subm_21 as the best repo-owned blend-mining direction.
+- No v611 slot spent. Do not submit direct S14, Beicicc Model7/EoS duplicates, PCEN/EoS duplicates, or public-output branch wrappers. Next useful work is a hidden-safe repo-owned implementation plan for the anchored blend, or continued search for real G124/source-safe 0.96 assets.
