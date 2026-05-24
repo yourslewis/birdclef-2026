@@ -1574,3 +1574,15 @@ Queue remains unchanged:
   - **Scott**: all-0.5 output; reject.
   - **PCEN/EoS6 forks**: known tied-best/plateau family, no direct 0.96 evidence.
 - Preserve remaining `4/5` slots until stronger source-safe evidence appears or a private v612-style repo-owned verifier completes with materially better rationale.
+
+## 2026-05-24 18:25 UTC update — v612 private verifier started from Samejima HGNet-v57 PT outputs
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `1/5`.
+- 18UTC artifacts:
+  - `scan_20260524T1800Z.json`
+  - `source_audit_20260524T1800Z_newleads/summary.json`
+  - `output_audit_20260524T1800Z_samejima_training/summary.json`
+- Samejima HGNet training v57 ERRORed after saving PT checkpoints. Fold best val scores are `0.958302`, `0.960042`, `0.968769`, `0.965945`; error was later OOF shape mismatch before OpenVINO export.
+- Added private v612 verifier `kaggle-kernels/v612-anchored-sameji-hgnet57-pt/` using Samejima visual anchor + newly saved Samejima HGNet-v57 torch checkpoints as a conservative `0.94/0.06` anchored rank sidecar.
+- Pushed private Kaggle validation `yourslewis/bc26-v612-anchored-sameji-hgnet57-pt` v1, kernel id `120456720`; currently RUNNING/no outputs. Do **not** submit unless it completes, outputs validate, runtime is plausible, and evidence is materially stronger than v611's tied-best result.
+- Hold remaining `4/5` competition slots.

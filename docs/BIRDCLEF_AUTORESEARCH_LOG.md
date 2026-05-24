@@ -4006,3 +4006,21 @@ Decision:
   - `scottfyy/birdclef-2026-code`: output `submission.csv` is all `0.5`; reject as fallback.
   - `mins00/birdclef-2026-pcen-sidecar-fork`/PCEN/EoS6 family: complete but dry-run final is 3 rows and lineage is already plateau-covered by v604/v608-style tied-best results.
 - **Decision:** do not spend a second 2026-05-24 slot from this scan. Preserve `4/5` remaining slots. Next plausible implementation lane is a private, no-slot repo-owned v612 feasibility scaffold using the Alexy NS1 CNN as a low/medium-weight anchored sidecar, but only if it can pass runtime/output validation and show stronger evidence than previous sidecar ties.
+
+## 2026-05-24 18:25 UTC — Samejima HGNet-v57 PT candidate discovered; v612 private validation started
+
+- **Status:** latest submissions unchanged: v611 `0.949`, v610 `0.852`, v609 runtime/no-score, v608/v604 `0.949`. Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `1/5`.
+- **Repo/process:** main clone `.git` still unreadable; continued in `/tmp/birdclef-pr255-0600`. PR #255 open/review-required/blocked. No v577/v578 scalar submitter or active BirdCLEF submit monitor found.
+- **Fresh 18UTC scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T1800Z.json`.
+- **Fresh 18UTC source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T1800Z_newleads/summary.json`.
+- **New actionable finding:** `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training` v57 moved from RUNNING to ERROR, but preserved usable outputs: `best_model_fold0..3.pt`, `best_val_pred_fold0..3.npy`, and `result_df_fold0..3.csv`.
+  - Fold best val scores: fold0 `0.958302`, fold1 `0.960042`, fold2 `0.968769`, fold3 `0.965945`.
+  - Root cause of public kernel ERROR: OOF aggregation shape mismatch (`best_val_pred_fold0.npy` shape `(9075,234)` vs `val_idxs` shape `(9084,234)`), after the PT checkpoints were already saved. No OpenVINO artifacts were produced.
+  - Treat as new structural asset, but not approval evidence by itself because v610 and v611 showed local/CV sidecar evidence can fail to lift hidden LB.
+- **Implemented no-slot repo-owned verifier:** `kaggle-kernels/v612-anchored-sameji-hgnet57-pt/`.
+  - Preserves Samejima visual anchor as `submission_anchor_raw.csv`.
+  - Discovers mounted Samejima v57 `best_model_fold*.pt` checkpoints under `/kaggle/input`.
+  - Rebuilds the HGNetV2-B0 LSE model from the public training source, reruns 4 folds on the same anchor row IDs, writes `submission_sameji_hgnet57_raw.csv`, then final rank blend `0.94 anchor + 0.06 Samejima HGNet-v57`.
+  - Hard-fails on missing assets, schema drift, non-finite/constant output, or row misalignment.
+- **Validation:** py_compile + AST + metadata JSON passed. Pushed private Kaggle validation kernel `yourslewis/bc26-v612-anchored-sameji-hgnet57-pt` v1, kernel id `120456720`; no invalid data/kernel/model sources. It is currently RUNNING with no outputs/log yet. No competition submission was made.
+- **Other 18UTC leads:** Tulay EfficientNet weights still RUNNING/no outputs; Claudedevore R0952 teacher/hybrid train produced pseudo sidecar checkpoints but no hidden-test inference path; Deepanshu still no outputs; EoS6/PCEN/HGNet forks remain known plateau or fallback families.
