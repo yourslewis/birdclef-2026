@@ -3961,3 +3961,20 @@ Decision:
 - **Prepared repo-owned plan:** added `docs/BIRDCLEF_096_ANCHORED_BLEND_IMPLEMENTATION_PLAN_20260524.md`. It maps Samejima visual anchor, Praxel HGNet/raw sidecar, Jungchan Model21 sidecar, and S14 sidecar; defines candidate low-weight rank blends; and lists hidden-safe implementation/pre-submit gates.
 - **Plan decision:** preferred implementation direction is not direct replay. Candidate P1 is Samejima/v608-family hidden-safe anchor + Praxel HGNet raw low-weight sidecar (`0.06`) plus optional Praxel blend/pc010 (`0.02/0.02`). Candidate P2 adds Jungchan `subm_21` (`0.04`) but is more EoS-overlap-heavy. Candidate P3 S14 is lower priority because source expectation is below current best.
 - **No v611 submission:** 10UTC scan produced no source-safe direct 0.96 candidate, and the anchored blend still needs hidden-safe repo-owned implementation. Preserve all five 2026-05-24 slots.
+
+## 2026-05-24 12:25 UTC — v611 anchored HGNet scaffold pushed for private validation; no submission
+
+- **Status:** latest Bearer API submissions unchanged: v610 `0.852`, v609 timeout/no score, v608 `0.949`, v607 `0.934`, v604 `0.949`. Current confirmed best remains `0.949` vs target `0.960`. 2026-05-24 UTC competition slots used: `0/5`.
+- **Memory/repo/process:** `memory_search` still fails with `Unknown system error -11`; direct daily memory was used. Main worktree git remains unhealthy (`fatal: not a git repository: .../.git/worktrees/birdclef-2026-v545`). PR #255 was OPEN / REVIEW_REQUIRED / BLOCKED at remote head `8a4bff1`. No active v577/v578 scalar submitter or BirdCLEF submit monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T1200Z.json`.
+- **Fresh source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T1200Z_newleads/summary.json`.
+- **12UTC source triage:** no new direct 0.96/source-safe candidate appeared. `scottfyy/birdclef-2026-code` is now ERROR and only exposes `best_bird_model.pth`; its prior output was `1x235` all `0.5`. `neslihannuryilmaz/neslihan-nur-yilmaz` completed with no outputs and no useful BirdCLEF submission evidence. `mlclsumit` still errors/no outputs. Gandharva remains rejected by v610 `0.852`. Remaining EoS/PCEN/visual/HGNet leads are known plateau/invalid families.
+- **Repo-owned implementation:** added `kaggle-kernels/v611-anchored-hgnet-sidecar/` and `scripts/push_v611_anchored_hgnet_sidecar.py`.
+  - `script.py` preserves Samejima visual CPU inference as anchor and writes `submission_anchor_raw.csv`.
+  - It reimplements a streaming Praxel/Kosuke/TTAhara OpenVINO HGNet sidecar that searches `/kaggle/input/**/best_model_fold0.xml`, requires all four `best_model_fold*.xml/.bin`, reruns on the same anchor row IDs, and writes `submission_prax_hgnet_raw.csv`.
+  - Final candidate blend is intentionally conservative: `0.94 * rank(anchor) + 0.06 * rank(prax_hgnet_raw)`.
+  - Diagnostics: `submission_before_alignment.csv` and final `submission.csv`; no public-output CSV artifacts are used.
+- **Local validation:** `python3 -m py_compile` passed for `script.py` and the push script; AST parse passed; `kernel-metadata.json` JSON parse passed.
+- **Kaggle private validation push:** pushed private kernel `yourslewis/bc26-v611-anchored-hgnet-sidecar`, version 1, kernel id `120423812`. Push returned no invalid dataset/competition/kernel/model sources. This is **not** a competition submission and spent no daily submission slot.
+- **Validation status at handoff:** v611 is still `RUNNING`, with no output files or log exposed yet. Do not submit until it reaches COMPLETE, branch outputs exist, final `submission.csv` passes shape/finite/nonconstant checks, and runtime/logs confirm the hidden-safe path.
+- **Decision:** no v611 competition submission yet. Preserve all five slots. Next loop should inspect v611 completion; if COMPLETE and valid, decide whether the hidden-safe anchored HGNet sidecar is worth one distinct daily slot or needs further runtime/branch-weight adjustment.

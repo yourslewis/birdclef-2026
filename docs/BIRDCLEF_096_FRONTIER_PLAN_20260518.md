@@ -1540,3 +1540,12 @@ Queue remains unchanged:
 - New/fresh candidates did not clear the bar: `deepanshus167/bird-claasifier-comp` completed with no outputs; `scottfyy/birdclef-2026-code` writes `1x235` all-0.5 output; `anatoly7m` still writes constant `0.5`; `mlclsumit` still errors/no outputs. Existing leads remain plateau/invalid families.
 - Added hidden-safe implementation plan: `docs/BIRDCLEF_096_ANCHORED_BLEND_IMPLEMENTATION_PLAN_20260524.md`.
 - Preferred repo-owned extraction direction if no better source appears: Samejima/v608-family anchor + low-weight Praxel HGNet raw sidecar, optionally Praxel blend/pc010; Jungchan Model21 is second-tier because it adds more EoS-family overlap. Do not submit public-output wrappers.
+
+## 2026-05-24 12:25 UTC update — v611 private validation running, no submission
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC competition slots used `0/5`.
+- Scan/audit: `scan_20260524T1200Z.json`, `source_audit_20260524T1200Z_newleads/summary.json`.
+- No new direct source candidate cleared the bar. Fresh/visible leads were rejected or held: Scott is ERROR / prior all-0.5 output; Neslihan completed with no outputs; MLCL Sumit still errors; Gandharva remains rejected by v610 `0.852`; remaining EoS/PCEN/visual/HGNet leads are known plateau or invalid families.
+- Added repo-owned v611 scaffold: `kaggle-kernels/v611-anchored-hgnet-sidecar/` plus `scripts/push_v611_anchored_hgnet_sidecar.py`.
+- Pushed private validation kernel `yourslewis/bc26-v611-anchored-hgnet-sidecar`, v1, kernel id `120423812`; push had no invalid sources. It is still RUNNING at handoff and is not a competition submission.
+- v611 implements hidden-safe Samejima visual anchor + streaming Praxel HGNet raw sidecar, final rank blend `0.94/0.06`. Wait for COMPLETE + output/log validation before considering a submission slot.
