@@ -3727,3 +3727,144 @@ Decision:
 - **Focused audit artifact:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T0600Z_newleads/summary.json`.
 - **Fresh lead triage:** new Beicicc/Gendaijin/karansinghbisht public forks are copies/near-copies of already plateaued PCEN/EoS/NFNet/Junseong lineages and have fallback/zero/constant risk markers; no direct submit supersedes v607.
 
+
+## 2026-05-23 08:05 UTC — v607 submitted; promising recipe autoresearch specs created
+
+- **Live state:** confirmed best remains `0.949`; 2026-05-23 slots used are now `2/5`.
+- **Submitted:** v607 `Repo-owned Eslam v26C ProtoSSM save repair`, ref `52947220`, status `pending` at check time.
+- **v607 preflight:** private verifier COMPLETE/no failure; outputs include `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, and cache files; no traceback; `submission.csv` stats valid `240x235`, finite, non-constant, unique row IDs.
+- **Specs created:**
+  - `AUTORESEARCH.md` root pointer.
+  - `experiments/autoresearch/2026-05-23-birdclef-096-frontier-recipes/protocol.md` active protocol.
+  - `docs/BIRDCLEF_096_PROMISING_RECIPES_AUTORESEARCH_20260523.md` recipe plan.
+- **Priority:** P0 is G124/S124 reconstruction or artifact discovery. Missing private asset remains `itshyao/birdclef2026-g124-effv2s-2025pre-pseudo-assets` with expected `g124_fold1_fp16.pt`, `_best.pt`, and `submission_g124_effv2s_fold1_s124.csv`-like outputs. P1 is result-gated Eslam v607; P2 is source/artifact scout.
+- **Non-goal:** LLM labeling path is skipped because no audio-capable labeler is available.
+
+
+## 2026-05-23 08:15 UTC — fresh source audit + G124 reconstruction configs
+
+- Audited new 08UTC frontier candidates from `scan_20260523T0800Z.json`.
+- `studyexchange/birdclef-2026-infer-s14`: COMPLETE with valid `240x235` output and fresh-Perch/S14 package, but source score history is `0.932`/`0.943`, below current `0.949`; hold for idea-mining, not a slot before v607 scores.
+- `henryszy/bc2026-g124-protectdelta-v84`: source contains useful G124 protected-delta logic and expects `g124_fold1_fp16.pt` under the private G124 asset dataset, but if unavailable it catches the error and keeps NFNet/anchor `submission.csv`; likely plateau unless the real G124 artifact is attached.
+- New PCEN/EoS/NFNet forks remain plateau-like after v599-v604; `anatoly7m`/`jguevarag` fresh TTA/SED public outputs were constant 3-row dry-run outputs, so no blind direct submission.
+- Added concrete G124 reconstruction configs:
+  - `configs/birdclef/g124_effv2s_public946_pseudo_smoke_20260523.json`
+  - `configs/birdclef/g124_effv2s_public946_pseudo_pilot_20260523.json`
+- Commit pushed: `9165dc4` (`Add G124 EffV2-S reconstruction configs`) on PR #254.
+
+
+## 2026-05-23 10:15 UTC — v607 dropped; v608 submitted; G124 smoke rejected
+
+- **Status:** v607 `Repo-owned Eslam v26C ProtoSSM save repair` scored `0.934`, below the `0.949` plateau. Kill the repaired Eslam 2-way fallback lane unless the missing student ONNX artifact becomes available; the repair was mechanically valid but not leaderboard-competitive.
+- **Slots:** 2026-05-23 used `2/5` before new action; best remains `0.949`.
+- **Fresh scan:** saved `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1000Z.json`; audit saved `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1000Z_newleads/summary.json`.
+- **Source audit lessons:**
+  - `scenerysunfireink/birdclef-2026-improved-fork` has valid `240x235` dry-run output, hidden-test source markers, and structurally different inner blend / BirdNET / distill model sources. Dry-run output correlation vs v607 was only `0.860`, so it is distinct enough for one guarded slot despite no >0.949 evidence.
+  - `scenerysunfireink/bc26-inner-ensemble-v1/v2` are dependent-output kernels over `birdclef-2026-improved-fork`, not preferred for direct submission because notebook-output dependency may not recompute hidden rows.
+  - `pilkwang/birdclef-2026-eos6-bz-pcen-rank-sidecar` is a PCEN/EoS6-bz sidecar but public output is only 3-row dry-run; after v604 PCEN tied `0.949`, hold unless it shows a real scored improvement.
+  - `ommodi07`, `adarsh5harma`, and `jacqueszhelinzhang/deepcnn` outputs were invalid/constant/ragged for direct guarded use.
+- **Submitted:** v608 `Guarded direct Scenery improved inner-blend source`, ref `52950601`, using source version 1 after COMPLETE/no-failure/output preflight. This uses the base improved source, not the dependent inner-v1/v2 wrappers.
+- **G124 smoke:** copied G124 configs to trainer and ran `g124_effv2s_public946_pseudo_smoke_20260523.json` on GPU1. Training reached best val AUC `0.726` at epoch 3 with low student/teacher corr `0.192`; torchscript and student predictions were produced, but ONNX export hung and was killed. Criterion `>=0.93` failed, so do not run the pilot config from this initialization. This reinforces that simple from-scratch EffV2-S pseudo smoke is not enough to recreate the missing G124 artifact.
+
+
+## 2026-05-23 12:10 UTC — v608 tied; 12UTC scan no safe high-upside slot
+
+- **Status:** v608 `Guarded direct Scenery improved inner-blend source` completed at `0.949`, tied current best. Lesson: Scenery/Ykuroka/KingKong inner-blend/BirdNET-family source is distinct from v607 but still public plateau; do not tune dependent inner-v1/v2 wrappers without new evidence.
+- **Slots:** 2026-05-23 used `3/5`; best remains `0.949`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1200Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1200Z_newleads/summary.json`.
+- **Artifact search saved:** `artifacts/public_kernels_20260523_frontier_candidates/artifact_search_20260523T1200Z.json`.
+- **No new submission this run:**
+  - `anthonytherrien/gated-rank-fusion-pipeline` is source-interesting but public `submission.csv` is invalid/ragged (`243x235`, nonnumeric cells); do not submit blindly.
+  - `raunakdey07/birdclef-2026-v9` is COMPLETE with valid 3-row dry-run output, but source records `Model_7` as LB `0.948`; below plateau and not 0.96-upside enough.
+  - `pilkwang/birdclef-2026-eos6-bz-pcen-rank-sidecar` remains PCEN/EoS6-bz family; after repo-owned v604 PCEN tied `0.949`, hold unless a real scored improvement appears.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3` output is constant/sample-like 3-row dry-run; no direct slot.
+  - `mlclsumit` / `gandharvakhedekar` were still RUNNING/no `submission.csv`; `deepanshus167` no output; `neslihannuryilmaz` ERROR.
+- **G124 artifact search:** exact `g124_fold1_fp16.pt` / private G124 slug still only surfaces derivative kernels, no public dataset. Dataset search returns no public artifact. `fold0_ep12_auc0.9643` and `efficientnet_b3_pretrained.pt` also no dataset/kernel artifact hit.
+- **Decision:** preserve remaining 2 slots for a genuinely source-safe distinct candidate or a new artifact; next loop should recheck running candidates and any new >0.949 claims.
+
+
+## 2026-05-23 14:10 UTC — 14UTC scan, no slot spent
+
+- **Status:** best remains `0.949`; 2026-05-23 slots used `3/5`; remaining `2/5`. Latest scored: v608 `0.949`, v607 `0.934`, v604 `0.949`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1400Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1400Z_newleads/summary.json`.
+- **No new submission:** no candidate cleared the distinct/high-upside/source-safe bar.
+- Candidate notes:
+  - `samejimatink0/birdclef-2026-visual-cpu-inference`: COMPLETE with valid `240x235` output and train8 artifacts, but source labels visual branch around `0.948`; dry-run output is highly correlated with v608 (`corr≈0.993`, MAE≈0.018). Since v608 already tied `0.949`, this is likely another plateau/visual-source slot, not 0.96-upside. Hold.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: public output invalid/non-numeric 3-row dry-run; earlier repo-owned Samejima/HGNet attempts did not improve (`v598=0.860`, v596 HGNet sidecar `0.946`). Hold unless a new artifact/score appears.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-training`: still RUNNING/no submission output; training/source artifact only.
+  - `adarsh5harma/v62`: invalid/ragged public output; `v66`: valid 3-row dry-run but EoS/phase1 family; `v68` was already invalid at 10UTC. Hold.
+  - `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar`: PCEN/EoS6 family, v604 already tied `0.949`; hold.
+  - `thbdh5765/bc26-y948-w010-lanec-v2-fold0-art-v1`: valid 3-row dry-run but source is visual/BirdNET-like `0.948` lane; hold.
+  - `gandharvakhedekar` / `mlclsumit`: still RUNNING/no `submission.csv` at audit time.
+- GPU server check: no BirdCLEF student train process; GPU1 free. GPU0 occupied by unrelated/other workload. No training launched because G124 from-scratch smoke already failed gate and no stronger initialization/artifact found.
+
+
+
+## 2026-05-23 16:20 UTC — 16UTC frontier scan, no slot spent
+
+- **Status:** latest Kaggle submissions unchanged: v608 `0.949`, v607 `0.934`, v604 `0.949`; current confirmed best remains `0.949` vs target `0.960`. 2026-05-23 UTC slots used `3/5`, remaining `2/5`.
+- **Repo/process:** branch `feature/birdclef-20260522-v599-v602-pending`, latest commit `71d846c`; PR #254 remains OPEN / REVIEW_REQUIRED / BLOCKED, PR #245 is merged. No active v577/v578 scalar submitter or BirdCLEF monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1600Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1600Z_newleads/summary.json`.
+- **Output audits saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1600Z/summary.json` and `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1600Z_more/summary.json`.
+- **No new submission:** no 16UTC candidate cleared the distinct/high-upside/source-safe bar.
+- Candidate notes:
+  - `chenyfdws/bc26-exp070-public0952-s124-g124-repro`: COMPLETE with valid `240x235` output and safe hidden-test writer, but this is the already-tested public0952/Perch-prior-probe lane (`v595=0.899`). Do not duplicate.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference`: now RUNNING/no output in the 16UTC output API check. The earlier valid visual output was already judged plateau-like (`0.948` branch, high corr to v608), so hold.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: COMPLETE but public `submission.csv` is invalid/non-numeric (`3x235`, 702 bad numeric cells). Hold unless a fixed output/artifact appears.
+  - `ykuroka`/`beicicc`/`gendaijin`/`karansinghbisht` Nina EoS6-bz and PCEN forks: mostly invalid `243x235` public outputs with nonnumeric cells or 3-row dry-runs; overlaps v604/v608 plateau families. Hold.
+  - `jungchanryu/birdclef-first`, `beicicc/bc26-gendaijin-junseong-eos6-may23`, `junseonglee11/birdclef2026-eos6-scoreblend-g004-w05`, `starsdaisuki/birdclef-2026-v131-nina-eos6-sz`, and `beicicc/bc26-nfnet-aves-lp075-may23`: valid only as 3-row dry-run/sample outputs, not enough for a guarded direct slot after similar families tied/dropped.
+  - `itshyao/birdclef-2026-s116-g116-hgnet-b1-rawpseudo-all5`: source-safe-looking pure G116/HGNet all5 sidecar with finite 12-row dry-run output, but G116/G123/G124 siblings have already tied rather than lifted (`v587/v588/v589/v597=0.949`). Treat as idea-mining only unless a scored improvement appears.
+  - `karnakbaevarthur/s124-g124-reverse-engineered`: still COMPLETE but no output artifacts; useful for code-mining/reconstruction, not direct submit.
+- **Decision:** preserve the remaining 2 slots for a real new artifact/high-claim source. Next loop should recheck Samejima HGNet training / running notebooks and keep hunting for public G124 artifacts or a non-EoS/non-PCEN structural source.
+
+
+## 2026-05-23 18:10 UTC — v609 PerchFusion submitted; Gandharva training artifact noted
+
+- **Status before action:** best remained `0.949`; latest scored submissions unchanged (v608 `0.949`, v607 `0.934`, v604 `0.949`). 2026-05-23 UTC slots used `3/5`; no v577/v578 scalar submitter or BirdCLEF monitor process was active. PR #254 remained open/review-required; branch was clean at `cd79e42`.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T1800Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T1800Z_newleads/summary.json`.
+- **Output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260523T1800Z/summary.json`.
+- **Selected candidate:** `svanikkolli/perchfusion-engine` v8 as v609. Rationale: structurally distinct enough for one guarded slot after the 0.949 plateau — source labels itself `v951 Target` and adds 3x Perch audio-shift TTA, 3x SED TTA, larger in-notebook ProtoSSM (`d_model=192`, 3 SSM layers), ResidualSSM correction, raw Perch logits as a third rank-blend member, and safety gates. It is not a dependent-output wrapper.
+- **v609 preflight:** source pull version `8`; kernel COMPLETE/no failure; outputs include `submission.csv`, `submission_protossm.csv`, `submission_sed.csv`, `cache/perch_arrays_tta3x.npz`, `cache/perch_meta_tta3x.parquet`; log includes `Training complete`, `ProtoSSM branch done`, `SED branch done`, `3-way rank blend`, and `Diagnostics OK`. Public final `submission.csv` is intentionally sample-shaped (`3x235`) because the source aligns dry-runs to `sample_submission.csv`; hidden source path uses `/test_soundscapes`. Intermediate dry-run branches validated as full train rows: ProtoSSM `240x235`, finite/non-constant, range `0.00038196085..0.95813334`; SED `240x235`, finite/non-constant, range `2.2149461e-05..0.97304124`.
+- **Submitted:** v609 `Guarded direct PerchFusion v951 TTA source`, ref `52962837`, pending at check time. 2026-05-23 slots used now `4/5`; preserve final slot unless a stronger source-safe candidate appears or v609 scores high and needs immediate confirmation/port.
+- **Other 18UTC findings:**
+  - `gandharvakhedekar/birdclef2026-new` completed as a training artifact with EfficientNet-B3 checkpoints and fold AUC filenames around `0.965`-`0.969`, but no inference/submission writer. High-upside for repo-owned inference-port work, not direct submit-ready.
+  - Samejima/Cheny visual outputs remain valid but highly correlated with v608 (`corr≈0.993`) and visual branch evidence is below plateau; do not spend the final slot there.
+  - HGNet/Kosuke/Henry/Praxel/Chaney variants mostly provide valid 240-row raw branch files, but final submissions are often 3-row dry-runs or highly correlated with the v608/PCEN plateau. Standalone HGNet raw branches are diverse but previous HGNet slots dropped/tied; require anchored blend/score evidence before slot use.
+  - PCEN/EoS6 forks remain saturated after v604/v608; Cheny public0952 remains rejected by v595 `0.899`.
+
+
+## 2026-05-23 20:15 UTC — v609 timeout; v610 Gandharva B3 verifier running
+
+- **Status:** v609 `Guarded direct PerchFusion v951 TTA source` completed with no public score due Kaggle runtime timeout. Best remains `0.949`; target remains `0.960`. 2026-05-23 slots used `4/5`, with one slot remaining. No active v577/v578 scalar submitter or BirdCLEF monitor process was found.
+- **Repo state at start:** branch `feature/birdclef-20260522-v599-v602-pending`, latest pushed commit `dfbac4b`; PR #254 open/review-required; PR #245 merged.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T2000Z.json`.
+- **Fresh audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260523T2000Z_newleads/summary.json`.
+- **v609 lesson:** PerchFusion is structurally interesting but public dry-run wall time was already ~11.8 min and hidden rerun exceeded the competition limit. Do not resubmit TTA-heavy in-notebook training/TTA variants; any PerchFusion follow-up must be repo-owned and much faster (precomputed artifacts or no in-kernel training/TTA).
+- **20UTC source triage:** Sakur/Samejima/Cheny visual forks remain the same visual plateau family highly correlated with v608; EoS6/PCEN forks remain saturated after v604; Samejima/TTAhara HGNet inference public output remains invalid/non-numeric; Itshyao S116/G116 remains G-sidecar plateau-family. No direct public source deserved the final slot.
+- **Repo-owned high-upside action:** built and pushed v610 verifier `yourslewis/bc26-v610-gandharva-b3-checkpoint-inference`, kernel id `120358093`, version 1. It attaches `gandharvakhedekar/birdclef2026-new` as a kernel source and implements a minimal CPU inference writer for the EfficientNet-B3 SED checkpoints (`fold0_ep12_auc0.9679.pth`, `fold1_ep15_auc0.9658.pth`, `fold2_ep12_auc0.9688.pth`, `fold3_ep13_auc0.9692.pth`, plus available fold4 artifact). It writes `submission_gandharva_b3_raw.csv` and final `submission.csv`, with shape/finite/range guards.
+- **Gandharva artifact audit:** saved `artifacts/public_kernels_20260523_frontier_candidates/gandharva_b3_artifact_audit_20260523T2000Z/`; downloaded `fold_results.json`, showing fold AUCs `0.96794`, `0.96581`, `0.96880`, `0.96925` for listed folds. This is promising structurally but not yet slot-ready until verifier completes with valid output.
+- **v610 status:** SDK status is `RUNNING`, no failure message, no output/log yet. Do not submit until COMPLETE + valid finite non-constant `submission.csv`/raw output. If verifier completes before reset, v610 is the best candidate for the final slot.
+
+
+## 2026-05-23 22:15 UTC — v610 submitted; day capped
+
+- **Status at start:** v609 completed with no score due runtime timeout; best remains `0.949`; 2026-05-23 slots used `4/5`; no v577/v578 scalar submitter or stale BirdCLEF monitor process was active. Branch `feature/birdclef-20260522-v599-v602-pending`, latest commit `6f7ecdd`; PR #254 still open/review-required/BLOCKED.
+- **v610 verifier result:** `yourslewis/bc26-v610-gandharva-b3-checkpoint-inference` reached COMPLETE/no failure. Outputs: `submission.csv` and `submission_gandharva_b3_raw.csv`. Log loaded all five Gandharva B3 checkpoints with zero missing/unexpected keys and wrote guarded outputs.
+- **v610 preflight:** final public dry-run `submission.csv` valid `3x235`, finite/non-constant, range `0.0003119007..0.9673849`, unique-rounded first 10k `234`; raw soundscape output `submission_gandharva_b3_raw.csv` valid `12x235`, finite/non-constant, range `5.9441132e-05..0.99251634`, unique-rounded first 10k `2537`; no traceback. Preflight log: `logs/v610_gandharva_b3_preflight.txt`.
+- **Submitted final slot:** v610 `Repo-owned Gandharva B3 checkpoint inference`, ref `52967355`, pending. 2026-05-23 is now capped at `5/5` visible submissions.
+- **22UTC scan while capped:** saved `artifacts/public_kernels_20260523_frontier_candidates/scan_20260523T2200Z.json` and `source_audit_20260523T2200Z_newleads/summary.json`. New WildSound v8 lead (`muhammadsaadalvi/birdclef-2026-wildsound-v8`) is ERROR/no outputs; visual forks remain v608-correlated plateau family; Samejima/TTAhara HGNet training artifacts are available but prior standalone HGNet inference dropped badly (`v598=0.860`) and need a careful repo-owned anchored blend before any future slot; EoS6/PCEN and G-sidecar forks remain saturated.
+- **Next:** monitor v610 score. If high, port/confirm/tune; if it drops/no-scores, diagnose hidden behavior and continue tomorrow with faster artifact-based inference/blend lanes, not direct slow training notebooks.
+
+
+## 2026-05-24 00:20 UTC — v610 dropped; reset scan, no v611 slot spent
+
+- **Status:** v610 `Repo-owned Gandharva B3 checkpoint inference` scored `0.852`, a severe drop. Best remains `0.949` vs `0.960` target. v609 remains no-score/runtime-timeout. 2026-05-24 UTC slots used `0/5` after reset; no active v577/v578 scalar submitter or BirdCLEF monitor process was found.
+- **Lesson from v610:** high local fold AUC from clean/train-audio EfficientNet-B3 checkpoints is not approval evidence for hidden soundscape LB. The simple artifact inference is valid mechanically but domain-mismatched and far below plateau. Do not spend more slots on clean-audio-only checkpoint inference unless anchored/blended with strong hidden-test-aligned soundscape predictions and validated by much stronger evidence.
+- **Fresh reset scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T0000Z.json`.
+- **Fresh reset audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T0000Z_newleads/summary.json`.
+- **No v611 submission:** the only fresh post-reset public movement was mostly saturated or invalid. `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar` v22 was QUEUED/no output and is a PCEN/EoS6 family already tied by v604; no blind slot. `muhammadsaadalvi/birdclef-2026-wildsound-v8` remains ERROR/no outputs; root cause is `FileNotFoundError: /kaggle/input/birdclef-2026/train_metadata.csv` and source would train ConvNeXtBase in-kernel, so not direct-slot-safe. Sakur/Samejima visual forks remain v608-correlated plateau family. Samejima/TTAhara HGNet artifacts need careful anchored repo-owned blend work before another slot because v598 standalone HGNet dropped to `0.860`.
+- **Decision:** preserve all five 2026-05-24 slots until a genuinely source-safe higher-upside candidate appears or a repo-owned artifact blend verifier completes with evidence. Next work should focus on fast artifact-based blends with plateau anchors, not clean-only standalone models or slow in-kernel training/TTA.
