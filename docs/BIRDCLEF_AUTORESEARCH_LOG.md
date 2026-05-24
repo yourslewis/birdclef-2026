@@ -3990,3 +3990,19 @@ Decision:
 - **Fresh 14UTC source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T1400Z_newleads/summary.json`.
 - **14UTC source triage:** no better direct source-safe 0.96 candidate appeared. Samejima HGNet training v57 is RUNNING/no outputs; Scott is complete again but prior output was all-0.5 and current source still has fallback markers; Deepanshu has no outputs; Mins00/PCEN, Beicicc/Jungchan/EoS, Pilkwang, visual, and gated/HGNet forks remain known plateau/invalid families.
 - **Decision:** do not submit anything else until v611 scores or a materially stronger source-safe candidate appears. Preserve remaining `4/5` slots.
+
+## 2026-05-24 16:25 UTC — v611 scored tied best; 16UTC source/output audit favors no new slot
+
+- **Status:** Bearer API submissions now show v611 `Repo-owned Samejima anchor plus Praxel HGNet sidecar` complete with public LB `0.949`. Best remains `0.949`; target remains `0.960`. v610 remains `0.852`; v609 remains runtime/no-score; v608/v604 remain `0.949`. 2026-05-24 UTC slots used `1/5`.
+- **Lesson:** v611 proves another locally-plausible, diverse HGNet OpenVINO sidecar can preserve the 0.949 anchor but not lift it. This reinforces the public946/sidecar lesson: train-soundscape/local gates are rejection filters, not approval filters. Do not spend slots on low-weight sidecar additions unless they introduce genuinely new hidden-test-safe signal or a public source implies a higher LB lineage.
+- **Process/repo:** main clone at `/Users/yourslewis/Documents/birdclef-2026-v545` still has unreadable `.git`; work continues from `/tmp/birdclef-pr255-0600`. PR #255 is open/review-required/blocked, head `b4db095`. No v577/v578 scalar submitter or active BirdCLEF submit monitor found.
+- **Fresh 16UTC scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T1600Z.json`.
+- **Fresh 16UTC source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T1600Z_newleads/summary.json`.
+- **Fresh 16UTC output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T1600Z/summary.json`.
+- **New/source findings:**
+  - `alexycactus/birdclef-2026-ns1-ensemble`: structurally different Noisy Student CNN ensemble plus Perch/MLP; source comment claims nb21 LB `0.922` and mean OOF `0.9745`. Dry-run output is 192 rows, valid/nonconstant; correlation with v611 anchor is low (`~0.263`), but standalone public clue is far below 0.949, so it is candidate material for a guarded repo-owned sidecar only, not direct submission.
+  - `raunakdey07/birdclef-2026-v9`: final `submission.csv` is only 3-row power-optimization fallback in dry-run; branch artifacts `submission_protossm.csv`/`submission_sed.csv` are valid 240-row dry-run outputs but are known ProtoSSM/SED lineage, not a direct source-safe 0.96 candidate.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: public `submission.csv` has only 3 rows with nonnumeric/bad values; `ghnet_test.csv` is 120-row HGNet artifact. Samejima HGNet training v57 remains RUNNING/no outputs.
+  - `scottfyy/birdclef-2026-code`: output `submission.csv` is all `0.5`; reject as fallback.
+  - `mins00/birdclef-2026-pcen-sidecar-fork`/PCEN/EoS6 family: complete but dry-run final is 3 rows and lineage is already plateau-covered by v604/v608-style tied-best results.
+- **Decision:** do not spend a second 2026-05-24 slot from this scan. Preserve `4/5` remaining slots. Next plausible implementation lane is a private, no-slot repo-owned v612 feasibility scaffold using the Alexy NS1 CNN as a low/medium-weight anchored sidecar, but only if it can pass runtime/output validation and show stronger evidence than previous sidecar ties.

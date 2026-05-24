@@ -1558,3 +1558,19 @@ Queue remains unchanged:
 - Scan/audit: `scan_20260524T1400Z.json`, `source_audit_20260524T1400Z_newleads/summary.json`.
 - 14UTC scan found no stronger direct source-safe candidate. Samejima HGNet training v57 is still RUNNING/no outputs; Scott/Deepanshu/Mins00/PCEN/EoS/visual/gated-HGNet leads remain fallback, invalid, plateau, or already-covered families.
 - Hold remaining `4/5` slots until v611 scores or a materially stronger source-safe candidate appears.
+
+## 2026-05-24 16:25 UTC update — v611 tied best, hold slots
+
+- v611 scored `0.949`, tied best but no lift. Current best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `1/5`.
+- 16UTC scan/audit artifacts:
+  - `scan_20260524T1600Z.json`
+  - `source_audit_20260524T1600Z_newleads/summary.json`
+  - `output_audit_20260524T1600Z/summary.json`
+- Reconfirmed lesson: locally plausible sidecars (public946 family, v611 HGNet) can tie/preserve but not approve. Local train-soundscape gates should reject bad candidates, not justify slots by themselves.
+- Candidate queue after 16UTC:
+  - **Alexy NS1 CNN ensemble**: structurally different CNN/noisy-student signal, but source states LB `0.922`, so it is only a private v612 feasibility sidecar candidate; do not direct-submit.
+  - **Raunak V9**: final dry-run submission is 3-row fallback; only branch outputs are full 240 rows, known lineage.
+  - **Samejima HGNet training v57**: still running/no outputs; revisit if outputs/checkpoints appear.
+  - **Scott**: all-0.5 output; reject.
+  - **PCEN/EoS6 forks**: known tied-best/plateau family, no direct 0.96 evidence.
+- Preserve remaining `4/5` slots until stronger source-safe evidence appears or a private v612-style repo-owned verifier completes with materially better rationale.
