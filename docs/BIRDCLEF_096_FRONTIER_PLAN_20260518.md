@@ -1499,3 +1499,12 @@ Queue remains unchanged:
 - Scan/audit: `scan_20260524T0000Z.json`, `source_audit_20260524T0000Z_newleads/summary.json`.
 - No v611 slot spent. Pilkwang PCEN v22 is queued/no output and overlaps v604 plateau; WildSound v8 errors on missing `train_metadata.csv` and would train ConvNeXtBase in-kernel; visual forks remain v608-correlated; HGNet artifacts need anchored blend verification after v598 standalone `0.860`.
 - Preserve 2026-05-24 slots for true source-safe upside or a verified repo-owned anchored artifact blend.
+
+## 2026-05-24 02:20 UTC update — G124 evidence sharpened, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0200Z.json`, `source_audit_20260524T0200Z_newleads/summary.json`, `output_audit_20260524T0200Z/summary.json`.
+- Manual G124 search/audit: `search_20260524T0200Z_g124_096.txt`, `source_audit_20260524T0200Z_g124_manual/summary.json`.
+- `karnakbaevarthur/s124-g124-reverse-engineered` is the clearest source description of the missing G124 path/assets (`g124_fold1_fp16.pt`, `submission_g124_effv2s_fold1_s124.csv`), but has no output artifact. Anthony/Gendaijin/Karansingh/Henry G124 forks all fall back because the fold1 assets are missing, so they are not slot-ready.
+- Anatoly SED ensemble and Koushik Pantanal are not direct-safe: public outputs are constant/sample fallback. EoS6+PCEN and visual forks remain saturated/plateau-correlated.
+- Preserve slots for either real G124 asset discovery or a repo-owned anchored blend verifier with meaningful movement evidence; do not spend v611 on fallback G124 wrappers, constant SED/Pantanal runs, or PCEN/visual duplicates.

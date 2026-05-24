@@ -3868,3 +3868,22 @@ Decision:
 - **Fresh reset audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T0000Z_newleads/summary.json`.
 - **No v611 submission:** the only fresh post-reset public movement was mostly saturated or invalid. `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar` v22 was QUEUED/no output and is a PCEN/EoS6 family already tied by v604; no blind slot. `muhammadsaadalvi/birdclef-2026-wildsound-v8` remains ERROR/no outputs; root cause is `FileNotFoundError: /kaggle/input/birdclef-2026/train_metadata.csv` and source would train ConvNeXtBase in-kernel, so not direct-slot-safe. Sakur/Samejima visual forks remain v608-correlated plateau family. Samejima/TTAhara HGNet artifacts need careful anchored repo-owned blend work before another slot because v598 standalone HGNet dropped to `0.860`.
 - **Decision:** preserve all five 2026-05-24 slots until a genuinely source-safe higher-upside candidate appears or a repo-owned artifact blend verifier completes with evidence. Next work should focus on fast artifact-based blends with plateau anchors, not clean-only standalone models or slow in-kernel training/TTA.
+
+## 2026-05-24 02:20 UTC — 02UTC frontier scan, G124 manual audit, no slot spent
+
+- **Status:** latest Kaggle submissions unchanged after reset: v610 `0.852`, v609 timeout/no score, v608 `0.949`, v607 `0.934`, v604 `0.949`. Current confirmed best remains `0.949` vs target `0.960`. 2026-05-24 UTC slots used `0/5`.
+- **Repo/process:** started fresh branch `feature/birdclef-20260524-reset-frontier` from merged `origin/main` (`e07cf99`). PR #245 and PR #254 are merged. No active v577/v578 scalar submitter or BirdCLEF queue/monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T0200Z.json`.
+- **Fresh source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T0200Z_newleads/summary.json`.
+- **Fresh output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T0200Z/summary.json`.
+- **G124 manual search/audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/search_20260524T0200Z_g124_096.txt` and `source_audit_20260524T0200Z_g124_manual/summary.json`.
+- **No v611 submission:** no candidate cleared the distinct 0.96-relevant slot bar.
+- Candidate notes:
+  - `karnakbaevarthur/s124-g124-reverse-engineered`: source confirms the exact missing artifacts (`g124_fold1_fp16.pt`, `submission_g124_effv2s_fold1_s124.csv`) and the private-ish path `/kaggle/input/birdclef2026-g124-effv2s-2025pre-pseudo-assets`, but kernel has no output artifacts. It is code-mining/reconstruction evidence, not direct submit-ready.
+  - `anthonytherrien/birdclef-2026-s124-s114-g124-f1-blend`, `gendaijin/birdclef2026-day0522-anthony-s124`, and `karansinghbisht/bc26-pulled-rauf-s124-s114-g124-f1-rankblend`: source/output audits show the G124 fold1 sidecar fails because the assets are missing, then falls back to the S114/Model5 anchor; these are duplicate plateau/fallback slots.
+  - `henryszy/bc2026-g124-protectdelta-v84`: useful protected-delta logic and NFNet sidecar code, but G124 sidecar also fails on missing fold1 assets and final dry-run keeps NFNet/anchor output. Prior NFNet/PCEN/EoS siblings tied plateau; hold unless a real artifact appears.
+  - `anatoly7m/bc2026-iter-5-sed-ensemble-submit-v3`: structurally different SED ensemble but public run kept a constant `0.5` safety baseline because it found `0` test soundscapes; no direct slot.
+  - `koushikkumardinda/birdclef-2026-pantanal-wetlands`: COMPLETE but only sample-shaped constant output after `0` test soundscapes; source also references a placeholder `/kaggle/input/your-trained-head/model_weights.h5`; no slot.
+  - `pilkwang`/`ykuroka`/`gendaijin` EoS6+PCEN v23/v2/v1 outputs are complete but dry-run final is unchanged anchor (`final_D_vs_base_anchor: 0.0`) and v604 already tied `0.949`; no duplicate.
+  - `sakur7a/birdclef-2026-visual-cpu-fork`: valid `240x235`, but final output is highly correlated with v608 (`corr≈0.993`, MAE≈0.018) and visual branch has already plateaued; hold.
+- **Decision:** preserve all five 2026-05-24 slots. The best next work is not a direct public replay; it is either finding the actual G124 pseudo-assets or building a fast repo-owned anchored blend that can use diverse branch artifacts without leaving the 0.949 anchor unprotected.
