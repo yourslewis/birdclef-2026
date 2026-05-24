@@ -4054,3 +4054,13 @@ Decision:
   - `alexycactus/birdclef-2026-ns1-ensemble`: structurally different CNN+Perch/noisy-student source, but source header says prior `LB 0.922`, public output writes `(192,235)` rather than the expected 240-row dry-run shape, and OOF/Perch AUC evidence is weak (`Perch 0.7478`, logit on `0.4913`). Idea-mining only; no direct slot.
   - `raunakdey07/birdclef-2026-v9`, `deepanshus167/bird-claasifier-comp`, Claudedevore R0952 train notebooks, and known PCEN/EoS6/rank-fusion families remain rejected/held from earlier audits (fallback/train-only/plateau lineage).
 - **Decision:** no v613 submission at 22UTC. Spending one of the 3 remaining slots on these would be inconsistent with the 0.960 target; continue source discovery and repo-owned extraction only when a candidate passes hidden-safety/output preflight.
+
+### 2026-05-24 22:55 UTC — Good-ideas backlog restored
+
+- Corrected the post-v612 framing: public-source replay was exhausted for 22UTC, but the research queue is **not** exhausted. If no source-safe public kernel is slot-worthy, the loop must pivot to no-slot repo-owned validation lanes rather than waiting.
+- Added `docs/BIRDCLEF_GOOD_IDEAS_BACKLOG_20260524.md` with a concrete backlog and promotion gates.
+- Top immediate no-slot ideas:
+  1. Alexy NS1 CNN/noisy-student sidecar extraction as hidden-safe repo-owned branch, not direct replay.
+  2. G124 EffV2-S reconstruction with external/V2S init, not scratch-only retry.
+  3. Unified anchored sidecar validation harness across Praxel/Samejima/S14/Jungchan/Alexy outputs with file/site bootstrap.
+- Verified local repo scripts compile for key lanes (`birdclef_sed_smoke.py`, `birdclef_sed_pilot_train.py`, `birdclef_pseudolabel_student_train.py`, `birdclef_public946_multi_sidecar_weight_grid.py`), and key configs parse (`g124_effv2s_public946_pseudo_smoke_20260523.json`, `sed_b0_5s_attn_smoke.json`, `pl_public946_sed_b0_5s_lr3e4_smoke.json`). Local Mac python lacks pandas for execution, but trainer venv `~/kaggle_envs/s6e3` has pandas/torch/timm/sklearn/numpy. Trainer `~/birdclef-2026` exists but is not a git repo, so sync intentionally before long runs.
