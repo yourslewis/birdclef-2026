@@ -3904,3 +3904,25 @@ Decision:
   - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` still emits invalid/non-numeric public `submission.csv` (`3x235`, 702 bad cells). Hold.
   - `gandharvakhedekar/birdclef2026-new` updated artifacts, but v610 already proved standalone Gandharva B3 hidden LB is poor (`0.852`); use only as a heavily anchored sidecar if ever revisited.
 - **Decision:** preserve all five 2026-05-24 slots. The best next step is a repo-owned anchored blend/movement audit using Jungchan's diverse branch artifacts or continued search for actual G124 assets, not a slow direct EoS6-family replay.
+
+## 2026-05-24 06:15 UTC — 06UTC frontier scan, G124 asset search empty, no slot spent
+
+- **Status:** latest Bearer API submissions are unchanged: v610 `Repo-owned Gandharva B3 checkpoint inference` scored `0.852`, v609 `Guarded direct PerchFusion v951 TTA source` no-scored on runtime timeout, v608 `0.949`, v607 `0.934`, v604 `0.949`. Current confirmed best remains `0.949` vs the `0.960` target. 2026-05-24 UTC slots used: `0/5`.
+- **Memory note:** `memory_search` is still unavailable with provider error `Unknown system error -11`; used the daily memory file directly for 00/02/04UTC context.
+- **Repo/process:** `/Users/yourslewis/Documents/birdclef-2026-v545` git metadata still fails with `fatal: not a git repository: .../.git/worktrees/birdclef-2026-v545` and `Resource deadlock avoided` on HEAD/refs. PR #255 is OPEN / REVIEW_REQUIRED / BLOCKED; remote head already contains `f6d343e` (`Log BirdCLEF 04UTC frontier scan`). No active v577/v578 scalar submitter or BirdCLEF queue/monitor process was found.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T0600Z.json`.
+- **Fresh source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T0600Z_newleads/summary.json`.
+- **Fresh output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T0600Z/summary.json`.
+- **G124 asset search:** Bearer dataset searches for `birdclef2026 g124`, `g124 effv2s 2025pre pseudo`, `submission_g124_effv2s`, `g124_fold1_fp16`, and `birdclef 2026 s124 g124` returned no public datasets. The actual fold1 asset path remains missing, so G124 wrappers are still reconstruction/code-mining only.
+- **No v611 submission:** no candidate cleared the distinct/source-safe 0.96 bar.
+- Candidate notes:
+  - `minyam/birdclef-eos6-fork` is COMPLETE but public `submission.csv` is invalid (`243x235` with 56,862 bad/non-numeric cells); no slot.
+  - `mins00/birdclef-2026-pcen-sidecar-fork`, `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar`, `ykuroka`, and `gendaijin` PCEN/EoS6 forks are saturated plateau-family; final public submissions are sample-shaped `3x235` and v604/v608 already cover this family.
+  - `sakur7a/bc2026-distilled-sed-fork` is standalone SED only (`60x235`, corr vs visual/plateau ref about `0.233`, mean near `0.015`) and not hidden-format/direct-safe enough for a slot.
+  - `sakur7a/birdclef-2026-visual-cpu-fork` and `samejimatink0/birdclef-2026-visual-cpu-inference` remain valid but plateau-correlated; Samejima visual remains `corr≈0.993`, MAE≈`0.018` vs the v608/visual reference.
+  - `itshyao/birdclef-2026-s116-g116-hgnet-b1-rawpseudo-all5` only produced `12x235` public output and is a G-sidecar/row-count mismatch, not direct-safe.
+  - `chaneyma/bc26-gate-v22-hgnet-sidecar-rank50-base50-hg50` has interesting branch artifacts and a diverse HGNet sidecar, but final public output is `120x235` and not competition-hidden shaped; keep for repo-owned anchored blend/movement audit, not direct replay.
+  - `praxel/birdclef-2026-kosuke-v15-hgnet` has full `240x235` raw blend/HGNet branch artifacts; the raw blend is still highly anchor-correlated (`corr≈0.957`, MAE≈`0.059`) and final public `submission.csv` is sample-shaped/constant. Code-mine only.
+  - `chenyfdws/bc26-exp070-public0952-s124-g124-repro` does not actually contain `g124`, `submission_g124`, or the missing G124 path in source; it is an older Perch embedding-probe notebook despite the title and should not be treated as recovered G124.
+  - `ttahara/birdclef-2026-hgnetv2-b0-baseline-inference` still emits invalid/non-numeric public output; `mlclsumit/notebook2e815ef354` errors on missing `best_model.pth`.
+- **Decision:** preserve all five 2026-05-24 slots. Next useful work is a fast repo-owned anchored blend/movement audit over Jungchan/Chaney/Praxel raw branch artifacts, or continued discovery of real G124 assets; do not spend slots on PCEN/EoS6 duplicates, visual duplicates, clean-audio-only checkpoints, or broken HGNet direct notebooks.

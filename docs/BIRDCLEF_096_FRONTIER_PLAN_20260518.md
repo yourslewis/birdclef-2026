@@ -1516,3 +1516,11 @@ Queue remains unchanged:
 - `jungchanryu/birdclef-first` v18 is the only fresh source worth mining: it produces full `240x235` custom SED / ProtoSSM / SED / pseudo-label branches plus a CT-MoBE final dry-run. It remains EoS6/v6 lineage, anchor-heavy (`0.014/0.021/0.965` weights with two `0.949` members), and public runtime is ~948s; hold for repo-owned anchored-blend extraction, not direct submission.
 - Pilkwang v25 PCEN/EoS6, Samejima visual, Samejima HGNet inference, and Gandharva B3 do not justify a slot. Preserve slots for actual G124 assets or a fast anchored blend verifier with measured movement.
 - Local worktree git metadata is unhealthy (`Resource deadlock avoided` on git HEAD/refs); use fresh clone or repair before next commit from `/Users/yourslewis/Documents/birdclef-2026-v545`.
+
+## 2026-05-24 06:15 UTC update — G124 asset search empty, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0600Z.json`, `source_audit_20260524T0600Z_newleads/summary.json`, `output_audit_20260524T0600Z/summary.json`.
+- G124 dataset search returned no public assets for `birdclef2026 g124`, `g124 effv2s 2025pre pseudo`, `submission_g124_effv2s`, `g124_fold1_fp16`, or `birdclef 2026 s124 g124`; the actual fold1 asset remains unavailable.
+- No v611 slot spent. Fresh leads either duplicate saturated EoS6/PCEN/visual families, fail output format, or require repo-owned anchored extraction. `chenyfdws/bc26-exp070-public0952-s124-g124-repro` is title-misleading: source contains no G124 tokens/path and is an older Perch embedding-probe notebook. `chaneyma`/`praxel`/`jungchan` artifacts are the best code-mining inputs for an anchored movement audit, not direct replay.
+- Preserve slots for a source-safe high-upside candidate or a fast anchored blend verifier; do not submit v577/v578 scalar tuning, PCEN/visual duplicates, standalone clean-audio checkpoints, or broken HGNet/G124 wrappers.
