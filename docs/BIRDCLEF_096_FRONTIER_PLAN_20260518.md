@@ -1549,3 +1549,12 @@ Queue remains unchanged:
 - Added repo-owned v611 scaffold: `kaggle-kernels/v611-anchored-hgnet-sidecar/` plus `scripts/push_v611_anchored_hgnet_sidecar.py`.
 - Pushed private validation kernel `yourslewis/bc26-v611-anchored-hgnet-sidecar`, v1, kernel id `120423812`; push had no invalid sources. It is still RUNNING at handoff and is not a competition submission.
 - v611 implements hidden-safe Samejima visual anchor + streaming Praxel HGNet raw sidecar, final rank blend `0.94/0.06`. Wait for COMPLETE + output/log validation before considering a submission slot.
+
+## 2026-05-24 14:20 UTC update — v611 submitted, pending score
+
+- Best before v611 remains `0.949`; target `0.960`.
+- v611 private validation COMPLETE/no failure. Outputs validated: final `submission.csv` `240x235`, no bad values, nonconstant all 234 class columns; branch outputs `submission_anchor_raw.csv` and `submission_prax_hgnet_raw.csv` exist and row-align. Public dry-run runtime about `715s`; HGNet sidecar added about `82s` after the Samejima anchor.
+- Submitted v611 `Repo-owned Samejima anchor plus Praxel HGNet sidecar`, ref `52988938`; status `pending`. 2026-05-24 UTC slots used now `1/5`.
+- Scan/audit: `scan_20260524T1400Z.json`, `source_audit_20260524T1400Z_newleads/summary.json`.
+- 14UTC scan found no stronger direct source-safe candidate. Samejima HGNet training v57 is still RUNNING/no outputs; Scott/Deepanshu/Mins00/PCEN/EoS/visual/gated-HGNet leads remain fallback, invalid, plateau, or already-covered families.
+- Hold remaining `4/5` slots until v611 scores or a materially stronger source-safe candidate appears.
