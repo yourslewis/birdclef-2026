@@ -4039,3 +4039,18 @@ Decision:
 - **Fresh 20UTC focused output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T2000Z_focus/summary.json`.
 - **20UTC source triage:** no better direct source-safe candidate appeared. `tulayppppp/my-efficientnet-b0-weights` completed with `2x207` all-zero/mock output and no hidden-test path; reject. `claudedevore` R0952 teacher/hybrid train outputs are training checkpoints/pseudo manifests only, no hidden-test inference path yet; hold for code-mining. `raunak` remains 3-row fallback final; EoS6/PCEN/visual/HGNet forks are known plateau/fallback families.
 - **Decision:** after v612 submission, hold remaining `3/5` slots until v612 scores or a materially stronger source-safe candidate appears.
+
+### 2026-05-24 22:30 UTC — v612 score + 22UTC frontier scan, no slot spent
+
+- **Live LB/submission state:** `v612` (`Repo-owned Samejima anchor plus HGNet-v57 PT sidecar`, ref `52998418`) scored `0.949`, tying the current best but giving no lift. `v611` also remains `0.949`; `v610` is rejected at `0.852`; `v609` timed out/no score. Current confirmed best remains **0.949** vs target **0.960**. 2026-05-24 UTC submissions used: `2/5`, so `3` estimated slots remain.
+- **Repo/process state:** original Documents clone is still unreadable (`fatal: error reading .../.git`), so canonical active work moved to `/Users/yourslewis/.openclaw/repos/birdclef-2026` on branch `feature/birdclef-20260524-20utc-v612-submit`. PR #245 is merged; PR #256 is open/blocked for v612. No stale v577/v578 scalar submitter was active; no BirdCLEF submit monitor was running.
+- **Lesson:** v612 reinforces the v611/public946-sidecar lesson: train/public dry-run gates and sidecar local AUC are useful rejection filters, not approval filters. A strong HGNet-v57 sidecar improved local overlap versus v611 but only tied hidden public LB.
+- **Chosen track:** A — public/source frontier scan and preflight, preserving remaining slots for distinct 0.96-relevant hypotheses.
+- **Artifacts:** saved ignored scan/audit artifacts under `artifacts/public_kernels_20260524_frontier_candidates/scan_20260524T2200Z.json` and `source_audit_20260524T2200Z_newleads/summary.json`.
+- **New/fresh candidate triage:**
+  - `muhammadsaadalvi/birdclef-2026-wildsound-v8`: latest run still ERROR; log tail shows `FileNotFoundError: /kaggle/input/birdclef-2026/train_metadata.csv`. Not hidden/test safe; no slot.
+  - `tulayppppp/my-efficientnet-b0-weights`: ERROR/mock path, output is tiny/fallback (`submission.csv` around 852 bytes) and log says `MOCK MODU`; no slot.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference`: COMPLETE but output/log indicate train-row/dry-run behavior (`submission.csv` printed `(3,235)`, `ghnet_test.csv` `(120,235)`); not a competition-format direct candidate. Existing repo-owned v612/v598 already tested Samejima HGNet ideas.
+  - `alexycactus/birdclef-2026-ns1-ensemble`: structurally different CNN+Perch/noisy-student source, but source header says prior `LB 0.922`, public output writes `(192,235)` rather than the expected 240-row dry-run shape, and OOF/Perch AUC evidence is weak (`Perch 0.7478`, logit on `0.4913`). Idea-mining only; no direct slot.
+  - `raunakdey07/birdclef-2026-v9`, `deepanshus167/bird-claasifier-comp`, Claudedevore R0952 train notebooks, and known PCEN/EoS6/rank-fusion families remain rejected/held from earlier audits (fallback/train-only/plateau lineage).
+- **Decision:** no v613 submission at 22UTC. Spending one of the 3 remaining slots on these would be inconsistent with the 0.960 target; continue source discovery and repo-owned extraction only when a candidate passes hidden-safety/output preflight.

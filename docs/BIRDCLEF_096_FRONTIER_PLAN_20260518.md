@@ -1599,3 +1599,27 @@ Queue remains unchanged:
   - `output_audit_20260524T2000Z_focus/summary.json`
 - 20UTC scan found no stronger direct source-safe candidate. Tulay EfficientNet was mock/all-zero `2x207`; Claudedevore R0952 train outputs are checkpoints/manifests without inference; Raunak final remains 3-row fallback; known plateau families unchanged.
 - Hold remaining `3/5` slots until v612 scores or a materially stronger source-safe candidate appears.
+
+## 2026-05-24 22:30 UTC execution update — v612 tie, 22UTC scan held
+
+Live status:
+
+- `v612` scored `0.949`, tying current best but giving no lift.
+- Confirmed best remains **0.949**; target remains **0.960**.
+- 2026-05-24 UTC slots used: `2/5`; estimated remaining: `3`.
+- PR #245 is merged; PR #256 (`feature/birdclef-20260524-20utc-v612-submit`) remains open/blocked.
+- Main Documents clone is unreadable, so active canonical repo work moved to `/Users/yourslewis/.openclaw/repos/birdclef-2026`.
+
+22UTC source-scan findings:
+
+- Latest post-20UTC leads did not pass source/output safety:
+  - WildSound v8: ERROR on missing `/kaggle/input/birdclef-2026/train_metadata.csv`.
+  - Tulay EfficientNet-B0 weights: ERROR/mock-mode/fallback-sized output.
+  - Samejima HGNetV2-B0 inference: COMPLETE but train/dry-run row behavior, not a valid direct competition output; repo-owned HGNet sidecars already tested and tied/dropped.
+  - Alexy NS1 ensemble: interesting CNN/noisy-student lineage, but source self-reports `LB 0.922`, public output is `(192,235)`, and evidence is not 0.96-relevant enough for a slot.
+- Known 2026-05-24 families (PCEN/EoS6, Jungchan rank-fusion outputs, Claudedevore train-only R0952, Raunak fallback, Samejima/Sakur visual/HGNet) remain held/rejected as plateau, invalid, train-only, or sidecar-only evidence.
+
+Decision:
+
+- Hold all remaining 2026-05-24 slots. The scan found no distinct source-safe candidate worth a `v613` slot under the 0.960 target.
+- Next best work: keep scanning for a genuine new 0.96 source/artifact lineage or build a repo-owned extraction only if a candidate shows hidden-test-safe output plus evidence stronger than the v611/v612 sidecar ties.
