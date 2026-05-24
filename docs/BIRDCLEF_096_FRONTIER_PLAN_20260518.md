@@ -1508,3 +1508,11 @@ Queue remains unchanged:
 - `karnakbaevarthur/s124-g124-reverse-engineered` is the clearest source description of the missing G124 path/assets (`g124_fold1_fp16.pt`, `submission_g124_effv2s_fold1_s124.csv`), but has no output artifact. Anthony/Gendaijin/Karansingh/Henry G124 forks all fall back because the fold1 assets are missing, so they are not slot-ready.
 - Anatoly SED ensemble and Koushik Pantanal are not direct-safe: public outputs are constant/sample fallback. EoS6+PCEN and visual forks remain saturated/plateau-correlated.
 - Preserve slots for either real G124 asset discovery or a repo-owned anchored blend verifier with meaningful movement evidence; do not spend v611 on fallback G124 wrappers, constant SED/Pantanal runs, or PCEN/visual duplicates.
+
+## 2026-05-24 04:20 UTC update — Jungchan CT-MoBE held, no v611 slot
+
+- Best remains `0.949`; target `0.960`; 2026-05-24 UTC slots used `0/5`.
+- Scan/audit: `scan_20260524T0400Z.json`, `source_audit_20260524T0400Z_newleads/summary.json`, `output_audit_20260524T0400Z/summary.json`.
+- `jungchanryu/birdclef-first` v18 is the only fresh source worth mining: it produces full `240x235` custom SED / ProtoSSM / SED / pseudo-label branches plus a CT-MoBE final dry-run. It remains EoS6/v6 lineage, anchor-heavy (`0.014/0.021/0.965` weights with two `0.949` members), and public runtime is ~948s; hold for repo-owned anchored-blend extraction, not direct submission.
+- Pilkwang v25 PCEN/EoS6, Samejima visual, Samejima HGNet inference, and Gandharva B3 do not justify a slot. Preserve slots for actual G124 assets or a fast anchored blend verifier with measured movement.
+- Local worktree git metadata is unhealthy (`Resource deadlock avoided` on git HEAD/refs); use fresh clone or repair before next commit from `/Users/yourslewis/Documents/birdclef-2026-v545`.

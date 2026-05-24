@@ -3887,3 +3887,20 @@ Decision:
   - `pilkwang`/`ykuroka`/`gendaijin` EoS6+PCEN v23/v2/v1 outputs are complete but dry-run final is unchanged anchor (`final_D_vs_base_anchor: 0.0`) and v604 already tied `0.949`; no duplicate.
   - `sakur7a/birdclef-2026-visual-cpu-fork`: valid `240x235`, but final output is highly correlated with v608 (`corr≈0.993`, MAE≈0.018) and visual branch has already plateaued; hold.
 - **Decision:** preserve all five 2026-05-24 slots. The best next work is not a direct public replay; it is either finding the actual G124 pseudo-assets or building a fast repo-owned anchored blend that can use diverse branch artifacts without leaving the 0.949 anchor unprotected.
+
+## 2026-05-24 04:20 UTC — 04UTC frontier scan, Jungchan CT-MoBE held, no slot spent
+
+- **Status:** latest submissions unchanged: v610 `0.852`, v609 timeout/no score, v608 `0.949`, v607 `0.934`, v604 `0.949`. Best remains `0.949` vs target `0.960`. 2026-05-24 UTC slots used `0/5`.
+- **Memory note:** `memory_search` failed with provider error `Unknown system error -11`; direct `memory_get` from `memory/2026-05-24.md` was used to recover the 00UTC/02UTC context.
+- **Repo/process:** local worktree git metadata became unhealthy after the 02UTC PR: `.git/HEAD`/refs report macOS `Resource deadlock avoided` / dataless state, and `git status` now fails. Remote PR #255 remains OPEN / REVIEW_REQUIRED / BLOCKED at `58e735b`. No v577/v578 scalar submitter or BirdCLEF monitor process was found. For any commit, use a fresh clone or repair the local worktree first.
+- **Fresh scan saved:** `artifacts/public_kernels_20260523_frontier_candidates/scan_20260524T0400Z.json`.
+- **Fresh source audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/source_audit_20260524T0400Z_newleads/summary.json`.
+- **Fresh output audit saved:** `artifacts/public_kernels_20260523_frontier_candidates/output_audit_20260524T0400Z/summary.json`.
+- **No v611 submission:** no candidate cleared the distinct 0.96-relevant slot bar.
+- Candidate notes:
+  - `jungchanryu/birdclef-first` v18 is the freshest structurally interesting candidate. It emits a CT-MoBE/Model_21+52p+74 final dry-run `submission.csv` (`3x235`, finite) plus full `240x235` branch artifacts: `submission_custom_sed.csv`, `submission_protossm.csv`, `submission_sed.csv`, `teacher_pseudo_train_soundscapes.csv`, and `subm_21.csv`. The source is still EoS6/v6 lineage, explicitly lists model LBs `0.928/0.949/0.949`, weights `0.014/0.021/0.965`, and says v7 timed out. Public run wall time is about 948s. Hold for code-mining/anchored blend, not direct slot.
+  - `pilkwang/birdclef-2026-eos6-pcen-rank-sidecar` v25 now has added `subm_karnakbayev_power_optimization*.csv` outputs, but final public dry-run remains EoS6/PCEN plateau-family and v604 already tied `0.949`; no duplicate.
+  - `samejimatink0/birdclef-2026-visual-cpu-inference` remains valid but highly correlated with the v608/visual reference (`corr≈0.993`, MAE≈0.018). Hold.
+  - `samejimatink0/birdclef-2026-hgnetv2-b0-baseline-inference` still emits invalid/non-numeric public `submission.csv` (`3x235`, 702 bad cells). Hold.
+  - `gandharvakhedekar/birdclef2026-new` updated artifacts, but v610 already proved standalone Gandharva B3 hidden LB is poor (`0.852`); use only as a heavily anchored sidecar if ever revisited.
+- **Decision:** preserve all five 2026-05-24 slots. The best next step is a repo-owned anchored blend/movement audit using Jungchan's diverse branch artifacts or continued search for actual G124 assets, not a slow direct EoS6-family replay.
