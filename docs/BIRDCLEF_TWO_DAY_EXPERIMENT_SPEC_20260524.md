@@ -405,3 +405,10 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - v613/v614/v615 final-slot experiments scored: Alexy NS1 direct `0.923`, Raunak v9 direct `0.949`, Jungchan CT-MoBE direct `0.949`. Direct Alexy is killed; Raunak/Jungchan are plateau ties and should only remain branch/manifest inputs.
 - G124 V2S-init smoke ran on trainer and cleared the training/export smoke gate: final-all student macro AUC `0.962116`, best epoch `4`, TorchScript+ONNX exported, V2S init loaded `786` keys. However a 384-row intersection blend audit found only a microscopic best lift (`+0.0000021` at weight `0.01`) and degradation at larger weights, so it is **not** a submission candidate yet.
 - Deliverable status: G124/V2S-init smoke result exists; unified sidecar manifest exists at `artifacts/anchored_blend_audit/sidecar_manifest_20260525T0000Z.json`; next priority should be an all-row/pilot decision or sidecar grid/Alexy sidecar extraction, not direct replay.
+
+## 2026-05-25 02:05 UTC update — unified sidecar grid result
+
+- Direct v614/v615 tied 0.949, but their branch outputs are useful as sidecar members. A unified anchored grid using Samejima visual as anchor found a strong local rejection-screen candidate: `0.02*Sakur visual + 0.04*Jungchan Model21 + 0.04*Raunak SED` into the Samejima visual rank anchor.
+- Local matched-row AUC improved from `0.9903905` to `0.9935362` (`+0.0031457`), corr vs anchor `0.999641`, MAE `0.006713`.
+- Stability was unusually clean for a local gate: site bootstrap q05 `+0.00181`; leave-one-site all 6 held-out sites positive with min lift `+0.002723`.
+- This still is not approval evidence by itself; next required step is a repo-owned private verifier (candidate v616) that reruns/generates the branches hidden-safely and validates runtime/schema before any 2026-05-25 competition slot.
