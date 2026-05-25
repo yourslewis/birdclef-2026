@@ -1,0 +1,2207 @@
+{
+  "available_data": {
+    "paths": {
+      "train_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train.csv",
+      "train_soundscapes_labels_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv",
+      "taxonomy_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/taxonomy.csv",
+      "sample_submission_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/sample_submission.csv"
+    },
+    "train_shape": [
+      35549,
+      15
+    ],
+    "train_columns": [
+      "primary_label",
+      "secondary_labels",
+      "type",
+      "latitude",
+      "longitude",
+      "scientific_name",
+      "common_name",
+      "class_name",
+      "inat_taxon_id",
+      "author",
+      "license",
+      "rating",
+      "url",
+      "filename",
+      "collection"
+    ],
+    "taxonomy_shape": [
+      234,
+      5
+    ],
+    "soundscape_labels_shape": [
+      1478,
+      4
+    ],
+    "sample_submission_shape": [
+      3,
+      235
+    ],
+    "train_primary_labels": 206,
+    "taxonomy_labels": 234,
+    "submission_classes": 234,
+    "train_collection_counts": {
+      "XC": 23043,
+      "iNat": 12506
+    },
+    "train_taxon_counts": {
+      "Aves": 34799,
+      "Amphibia": 451,
+      "Insecta": 199,
+      "Mammalia": 99,
+      "Reptilia": 1
+    },
+    "train_primary_count_summary": {
+      "count": 206.0,
+      "mean": 172.56796116504853,
+      "std": 155.37100442903204,
+      "min": 1.0,
+      "10%": 6.0,
+      "25%": 47.25,
+      "50%": 125.0,
+      "75%": 243.75,
+      "90%": 477.0,
+      "95%": 492.0,
+      "99%": 497.0,
+      "max": 499.0
+    },
+    "train_rare_primary_counts": {
+      "n_eq1": 4,
+      "n_le5": 18,
+      "n_le20": 36,
+      "n_ge100": 124
+    },
+    "rating_summary": {
+      "count": 35549.0,
+      "mean": 2.6007482629609835,
+      "std": 2.070470799888053,
+      "min": 0.0,
+      "10%": 0.0,
+      "25%": 0.0,
+      "50%": 3.5,
+      "75%": 4.5,
+      "90%": 5.0,
+      "max": 5.0
+    },
+    "secondary_nonempty_rows": 4372,
+    "soundscape_files": 66,
+    "soundscape_sites": [
+      "S03",
+      "S08",
+      "S09",
+      "S13",
+      "S15",
+      "S18",
+      "S19",
+      "S22",
+      "S23"
+    ],
+    "soundscape_site_counts": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 19,
+      "S13": 24,
+      "S15": 48,
+      "S18": 15,
+      "S19": 36,
+      "S22": 477,
+      "S23": 36
+    },
+    "soundscape_label_rows_by_n_labels": {
+      "1": 78,
+      "2": 49,
+      "3": 100,
+      "4": 182,
+      "5": 160,
+      "6": 95,
+      "7": 57,
+      "8": 14,
+      "9": 3,
+      "10": 1
+    },
+    "soundscape_unique_labels": 75,
+    "soundscape_positive_cell_count": 3122,
+    "soundscape_labels_not_in_submission": [],
+    "artifact_anchor_rows": 240,
+    "artifact_matched_label_rows": 190,
+    "artifact_unmatched_rows": 50,
+    "artifact_matched_sites": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 19,
+      "S13": 24,
+      "S18": 15,
+      "S22": 48
+    },
+    "artifact_matched_files": 20
+  },
+  "candidate_overall": [
+    {
+      "name": "sed_samejima",
+      "auc": 0.99597561698551,
+      "valid_classes": 42,
+      "top1": 0.9789473684210527,
+      "top3": 0.9894736842105263,
+      "top5": 0.9947368421052631,
+      "corr_vs_anchor": 0.2585727892884525,
+      "mae_vs_anchor": 0.47035781140444466
+    },
+    {
+      "name": "sed_raunak",
+      "auc": 0.99597561698551,
+      "valid_classes": 42,
+      "top1": 0.9789473684210527,
+      "top3": 0.9894736842105263,
+      "top5": 0.9947368421052631,
+      "corr_vs_anchor": 0.2585727892884525,
+      "mae_vs_anchor": 0.47035781140444466
+    },
+    {
+      "name": "v616_sameji_sed_raw",
+      "auc": 0.99597561698551,
+      "valid_classes": 42,
+      "top1": 0.9789473684210527,
+      "top3": 0.9894736842105263,
+      "top5": 0.9947368421052631,
+      "corr_vs_anchor": 0.2585727892884525,
+      "mae_vs_anchor": 0.47035781140444466
+    },
+    {
+      "name": "v616_final_blend",
+      "auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "top1": 0.25263157894736843,
+      "top3": 0.4842105263157895,
+      "top5": 0.6368421052631579,
+      "corr_vs_anchor": 0.988444508146105,
+      "mae_vs_anchor": 0.040323667816727395
+    },
+    {
+      "name": "visual_anchor_samejima",
+      "auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "top1": 0.4052631578947368,
+      "top3": 0.7210526315789474,
+      "top5": 0.8368421052631579,
+      "corr_vs_anchor": 1.0,
+      "mae_vs_anchor": 0.0
+    },
+    {
+      "name": "jung21_model",
+      "auc": 0.9874263769507543,
+      "valid_classes": 42,
+      "top1": 0.38421052631578945,
+      "top3": 0.5157894736842106,
+      "top5": 0.6,
+      "corr_vs_anchor": 0.4025140064095127,
+      "mae_vs_anchor": 0.28664004733753196
+    },
+    {
+      "name": "v616_jung21_raw",
+      "auc": 0.9874263769507543,
+      "valid_classes": 42,
+      "top1": 0.38421052631578945,
+      "top3": 0.5157894736842106,
+      "top5": 0.6,
+      "corr_vs_anchor": 0.4025140064095127,
+      "mae_vs_anchor": 0.28664004733753196
+    },
+    {
+      "name": "protossm_jungchan",
+      "auc": 0.9862533521526121,
+      "valid_classes": 42,
+      "top1": 0.6684210526315789,
+      "top3": 0.7789473684210526,
+      "top5": 0.8052631578947368,
+      "corr_vs_anchor": 0.4322341842256961,
+      "mae_vs_anchor": 0.41997180407511214
+    },
+    {
+      "name": "visual_sakur",
+      "auc": 0.9847750671147947,
+      "valid_classes": 42,
+      "top1": 0.1631578947368421,
+      "top3": 0.35789473684210527,
+      "top5": 0.5157894736842106,
+      "corr_vs_anchor": 0.9575686700614411,
+      "mae_vs_anchor": 0.059566394855811965
+    },
+    {
+      "name": "protossm_raunak",
+      "auc": 0.9846400867224245,
+      "valid_classes": 42,
+      "top1": 0.6368421052631579,
+      "top3": 0.7210526315789474,
+      "top5": 0.8,
+      "corr_vs_anchor": 0.4697012152370319,
+      "mae_vs_anchor": 0.38686543949752644
+    },
+    {
+      "name": "protossm_samejima",
+      "auc": 0.9821546059183527,
+      "valid_classes": 42,
+      "top1": 0.6263157894736842,
+      "top3": 0.7052631578947368,
+      "top5": 0.7578947368421053,
+      "corr_vs_anchor": 0.45057337519024643,
+      "mae_vs_anchor": 0.38626645086729644
+    }
+  ],
+  "site_slices": {
+    "S03": {
+      "rows": 24,
+      "n_files": 2,
+      "visual_anchor_samejima": {
+        "auc": 0.9623376623376624,
+        "valid_classes": 4
+      },
+      "v616_final_blend": {
+        "auc": 0.9623376623376624,
+        "valid_classes": 4
+      },
+      "jung21_model": {
+        "auc": 0.9964285714285714,
+        "valid_classes": 4
+      },
+      "sed_samejima": {
+        "auc": 0.9793831168831169,
+        "valid_classes": 4
+      },
+      "visual_sakur": {
+        "auc": 0.9614448051948052,
+        "valid_classes": 4
+      },
+      "protossm_samejima": {
+        "auc": 0.9339285714285714,
+        "valid_classes": 4
+      },
+      "protossm_raunak": {
+        "auc": 0.9339285714285714,
+        "valid_classes": 4
+      }
+    },
+    "S08": {
+      "rows": 60,
+      "n_files": 5,
+      "visual_anchor_samejima": {
+        "auc": 0.9842245794021945,
+        "valid_classes": 19
+      },
+      "v616_final_blend": {
+        "auc": 0.985618372636464,
+        "valid_classes": 19
+      },
+      "jung21_model": {
+        "auc": 0.9892936383420968,
+        "valid_classes": 19
+      },
+      "sed_samejima": {
+        "auc": 0.986570898627511,
+        "valid_classes": 19
+      },
+      "visual_sakur": {
+        "auc": 0.9771479502010137,
+        "valid_classes": 19
+      },
+      "protossm_samejima": {
+        "auc": 0.9705133612594223,
+        "valid_classes": 19
+      },
+      "protossm_raunak": {
+        "auc": 0.9801419374224691,
+        "valid_classes": 19
+      }
+    },
+    "S09": {
+      "rows": 19,
+      "n_files": 5,
+      "visual_anchor_samejima": {
+        "auc": 0.9486928104575163,
+        "valid_classes": 5
+      },
+      "v616_final_blend": {
+        "auc": 1.0,
+        "valid_classes": 5
+      },
+      "jung21_model": {
+        "auc": 0.9003016591251886,
+        "valid_classes": 5
+      },
+      "sed_samejima": {
+        "auc": 1.0,
+        "valid_classes": 5
+      },
+      "visual_sakur": {
+        "auc": 0.9209150326797386,
+        "valid_classes": 5
+      },
+      "protossm_samejima": {
+        "auc": 0.7945198592257416,
+        "valid_classes": 5
+      },
+      "protossm_raunak": {
+        "auc": 0.8004022121669181,
+        "valid_classes": 5
+      }
+    },
+    "S13": {
+      "rows": 24,
+      "n_files": 2,
+      "visual_anchor_samejima": {
+        "auc": 0.9503472222222222,
+        "valid_classes": 6
+      },
+      "v616_final_blend": {
+        "auc": 0.9923225308641975,
+        "valid_classes": 6
+      },
+      "jung21_model": {
+        "auc": 0.984375,
+        "valid_classes": 6
+      },
+      "sed_samejima": {
+        "auc": 0.9808063271604938,
+        "valid_classes": 6
+      },
+      "visual_sakur": {
+        "auc": 0.99609375,
+        "valid_classes": 6
+      },
+      "protossm_samejima": {
+        "auc": 0.9947916666666666,
+        "valid_classes": 6
+      },
+      "protossm_raunak": {
+        "auc": 0.9947916666666666,
+        "valid_classes": 6
+      }
+    },
+    "S18": {
+      "rows": 15,
+      "n_files": 2,
+      "visual_anchor_samejima": {
+        "auc": 0.9050324675324676,
+        "valid_classes": 4
+      },
+      "v616_final_blend": {
+        "auc": 0.9050324675324676,
+        "valid_classes": 4
+      },
+      "jung21_model": {
+        "auc": 0.8307792207792208,
+        "valid_classes": 4
+      },
+      "sed_samejima": {
+        "auc": 0.9285714285714286,
+        "valid_classes": 4
+      },
+      "visual_sakur": {
+        "auc": 0.8157467532467533,
+        "valid_classes": 4
+      },
+      "protossm_samejima": {
+        "auc": 0.6895454545454546,
+        "valid_classes": 4
+      },
+      "protossm_raunak": {
+        "auc": 0.7009090909090909,
+        "valid_classes": 4
+      }
+    },
+    "S22": {
+      "rows": 48,
+      "n_files": 4,
+      "visual_anchor_samejima": {
+        "auc": 0.9467059355694917,
+        "valid_classes": 15
+      },
+      "v616_final_blend": {
+        "auc": 0.9630222191445238,
+        "valid_classes": 15
+      },
+      "jung21_model": {
+        "auc": 0.9266948691710092,
+        "valid_classes": 15
+      },
+      "sed_samejima": {
+        "auc": 0.974435513085973,
+        "valid_classes": 15
+      },
+      "visual_sakur": {
+        "auc": 0.907195088781739,
+        "valid_classes": 15
+      },
+      "protossm_samejima": {
+        "auc": 0.91713870297516,
+        "valid_classes": 15
+      },
+      "protossm_raunak": {
+        "auc": 0.9258650149327067,
+        "valid_classes": 15
+      }
+    }
+  },
+  "time_slices": {
+    "early_<=20s": {
+      "rows": 68,
+      "visual_anchor_samejima": {
+        "auc": 0.9912986466846873,
+        "valid_classes": 36
+      },
+      "v616_final_blend": {
+        "auc": 0.9939713026136238,
+        "valid_classes": 36
+      },
+      "jung21_model": {
+        "auc": 0.9940201874835122,
+        "valid_classes": 36
+      },
+      "sed_samejima": {
+        "auc": 0.9958856758345228,
+        "valid_classes": 36
+      },
+      "visual_sakur": {
+        "auc": 0.986062212776791,
+        "valid_classes": 36
+      },
+      "protossm_samejima": {
+        "auc": 0.9880264531794641,
+        "valid_classes": 36
+      },
+      "protossm_raunak": {
+        "auc": 0.989227219866264,
+        "valid_classes": 36
+      }
+    },
+    "mid_25-40s": {
+      "rows": 59,
+      "visual_anchor_samejima": {
+        "auc": 0.9945353466368472,
+        "valid_classes": 35
+      },
+      "v616_final_blend": {
+        "auc": 0.9970017960115155,
+        "valid_classes": 35
+      },
+      "jung21_model": {
+        "auc": 0.9925318716846316,
+        "valid_classes": 35
+      },
+      "sed_samejima": {
+        "auc": 0.9965910341929083,
+        "valid_classes": 35
+      },
+      "visual_sakur": {
+        "auc": 0.9890557796263619,
+        "valid_classes": 35
+      },
+      "protossm_samejima": {
+        "auc": 0.9893834536947786,
+        "valid_classes": 35
+      },
+      "protossm_raunak": {
+        "auc": 0.9905344905042318,
+        "valid_classes": 35
+      }
+    },
+    "late_>=45s": {
+      "rows": 63,
+      "visual_anchor_samejima": {
+        "auc": 0.9918738859667507,
+        "valid_classes": 39
+      },
+      "v616_final_blend": {
+        "auc": 0.9939144070835655,
+        "valid_classes": 39
+      },
+      "jung21_model": {
+        "auc": 0.993503512443157,
+        "valid_classes": 39
+      },
+      "sed_samejima": {
+        "auc": 0.9950082490925968,
+        "valid_classes": 39
+      },
+      "visual_sakur": {
+        "auc": 0.9898795488666599,
+        "valid_classes": 39
+      },
+      "protossm_samejima": {
+        "auc": 0.9856556867097009,
+        "valid_classes": 39
+      },
+      "protossm_raunak": {
+        "auc": 0.9886383963996479,
+        "valid_classes": 39
+      }
+    }
+  },
+  "train_rarity_class_slices": {
+    "train_1-5": {
+      "n_valid_classes": 2,
+      "visual_anchor_samejima": {
+        "auc": 0.9877777777777778,
+        "valid_classes": 2
+      },
+      "v616_final_blend": {
+        "auc": 0.9915277777777778,
+        "valid_classes": 2
+      },
+      "jung21_model": {
+        "auc": 0.9984184412574244,
+        "valid_classes": 2
+      },
+      "sed_samejima": {
+        "auc": 0.9963888888888889,
+        "valid_classes": 2
+      },
+      "visual_sakur": {
+        "auc": 0.9883333333333333,
+        "valid_classes": 2
+      },
+      "protossm_samejima": {
+        "auc": 0.9656203824424163,
+        "valid_classes": 2
+      },
+      "protossm_raunak": {
+        "auc": 0.9714537157757497,
+        "valid_classes": 2
+      }
+    },
+    "train_21-100": {
+      "n_valid_classes": 7,
+      "visual_anchor_samejima": {
+        "auc": 0.9897719598093222,
+        "valid_classes": 7
+      },
+      "v616_final_blend": {
+        "auc": 0.9954989794724698,
+        "valid_classes": 7
+      },
+      "jung21_model": {
+        "auc": 0.9970253983436024,
+        "valid_classes": 7
+      },
+      "sed_samejima": {
+        "auc": 0.9956966296370053,
+        "valid_classes": 7
+      },
+      "visual_sakur": {
+        "auc": 0.9959872464678644,
+        "valid_classes": 7
+      },
+      "protossm_samejima": {
+        "auc": 0.9936177676355593,
+        "valid_classes": 7
+      },
+      "protossm_raunak": {
+        "auc": 0.9945565520734174,
+        "valid_classes": 7
+      }
+    },
+    "train_6-20": {
+      "n_valid_classes": 5,
+      "visual_anchor_samejima": {
+        "auc": 0.979062243650381,
+        "valid_classes": 5
+      },
+      "v616_final_blend": {
+        "auc": 0.98803981696838,
+        "valid_classes": 5
+      },
+      "jung21_model": {
+        "auc": 0.9874883546296835,
+        "valid_classes": 5
+      },
+      "sed_samejima": {
+        "auc": 0.9949051398997911,
+        "valid_classes": 5
+      },
+      "visual_sakur": {
+        "auc": 0.9639358193715349,
+        "valid_classes": 5
+      },
+      "protossm_samejima": {
+        "auc": 0.9768167895789434,
+        "valid_classes": 5
+      },
+      "protossm_raunak": {
+        "auc": 0.9777034980401199,
+        "valid_classes": 5
+      }
+    },
+    "train_>100": {
+      "n_valid_classes": 9,
+      "visual_anchor_samejima": {
+        "auc": 0.9841557722172732,
+        "valid_classes": 9
+      },
+      "v616_final_blend": {
+        "auc": 0.9883381505872543,
+        "valid_classes": 9
+      },
+      "jung21_model": {
+        "auc": 0.9578704186546262,
+        "valid_classes": 9
+      },
+      "sed_samejima": {
+        "auc": 0.9945423062239632,
+        "valid_classes": 9
+      },
+      "visual_sakur": {
+        "auc": 0.9653212532922752,
+        "valid_classes": 9
+      },
+      "protossm_samejima": {
+        "auc": 0.954069233040711,
+        "valid_classes": 9
+      },
+      "protossm_raunak": {
+        "auc": 0.9577167915586584,
+        "valid_classes": 9
+      }
+    },
+    "train_n=0": {
+      "n_valid_classes": 19,
+      "visual_anchor_samejima": {
+        "auc": 0.9968278332303443,
+        "valid_classes": 19
+      },
+      "v616_final_blend": {
+        "auc": 0.996810378217042,
+        "valid_classes": 19
+      },
+      "jung21_model": {
+        "auc": 0.9967167168406085,
+        "valid_classes": 19
+      },
+      "sed_samejima": {
+        "auc": 0.9969955406652619,
+        "valid_classes": 19
+      },
+      "visual_sakur": {
+        "auc": 0.9949686868627111,
+        "valid_classes": 19
+      },
+      "protossm_samejima": {
+        "auc": 0.9943800665776815,
+        "valid_classes": 19
+      },
+      "protossm_raunak": {
+        "auc": 0.9969532490551518,
+        "valid_classes": 19
+      }
+    }
+  },
+  "soundscape_rarity_class_slices": {
+    "sc_1-2": {
+      "n_valid_classes": 6,
+      "visual_anchor_samejima": {
+        "auc": 0.9774053435400952,
+        "valid_classes": 6
+      },
+      "v616_final_blend": {
+        "auc": 0.9884751773049646,
+        "valid_classes": 6
+      },
+      "jung21_model": {
+        "auc": 0.9388579308792074,
+        "valid_classes": 6
+      },
+      "sed_samejima": {
+        "auc": 0.9977836879432624,
+        "valid_classes": 6
+      },
+      "visual_sakur": {
+        "auc": 0.9588000487823184,
+        "valid_classes": 6
+      },
+      "protossm_samejima": {
+        "auc": 0.9432858643851553,
+        "valid_classes": 6
+      },
+      "protossm_raunak": {
+        "auc": 0.9432858643851553,
+        "valid_classes": 6
+      }
+    },
+    "sc_11-50": {
+      "n_valid_classes": 23,
+      "visual_anchor_samejima": {
+        "auc": 0.9957365103464388,
+        "valid_classes": 23
+      },
+      "v616_final_blend": {
+        "auc": 0.9967475344000529,
+        "valid_classes": 23
+      },
+      "jung21_model": {
+        "auc": 0.9981115038488323,
+        "valid_classes": 23
+      },
+      "sed_samejima": {
+        "auc": 0.9970482824656655,
+        "valid_classes": 23
+      },
+      "visual_sakur": {
+        "auc": 0.9906531174392065,
+        "valid_classes": 23
+      },
+      "protossm_samejima": {
+        "auc": 0.9921829405587704,
+        "valid_classes": 23
+      },
+      "protossm_raunak": {
+        "auc": 0.9943742201845448,
+        "valid_classes": 23
+      }
+    },
+    "sc_3-10": {
+      "n_valid_classes": 3,
+      "visual_anchor_samejima": {
+        "auc": 0.9881047372023432,
+        "valid_classes": 3
+      },
+      "v616_final_blend": {
+        "auc": 0.9913787294266116,
+        "valid_classes": 3
+      },
+      "jung21_model": {
+        "auc": 0.9981981981981982,
+        "valid_classes": 3
+      },
+      "sed_samejima": {
+        "auc": 0.9942921927452315,
+        "valid_classes": 3
+      },
+      "visual_sakur": {
+        "auc": 0.9956756756756757,
+        "valid_classes": 3
+      },
+      "protossm_samejima": {
+        "auc": 0.9822489155822489,
+        "valid_classes": 3
+      },
+      "protossm_raunak": {
+        "auc": 0.9945945945945945,
+        "valid_classes": 3
+      }
+    },
+    "sc_>50": {
+      "n_valid_classes": 10,
+      "visual_anchor_samejima": {
+        "auc": 0.9865715262989017,
+        "valid_classes": 10
+      },
+      "v616_final_blend": {
+        "auc": 0.9896007494802989,
+        "valid_classes": 10
+      },
+      "jung21_model": {
+        "auc": 0.9887601063538701,
+        "valid_classes": 10
+      },
+      "sed_samejima": {
+        "auc": 0.9929286710785845,
+        "valid_classes": 10
+      },
+      "visual_sakur": {
+        "auc": 0.9835703797998697,
+        "valid_classes": 10
+      },
+      "protossm_samejima": {
+        "auc": 0.9823823882661415,
+        "valid_classes": 10
+      },
+      "protossm_raunak": {
+        "auc": 0.984077760800259,
+        "valid_classes": 10
+      }
+    }
+  },
+  "taxon_class_slices": {
+    "Amphibia": {
+      "n_valid_classes": 10,
+      "visual_anchor_samejima": {
+        "auc": 0.9878419807264548,
+        "valid_classes": 10
+      },
+      "v616_final_blend": {
+        "auc": 0.9917451764669073,
+        "valid_classes": 10
+      },
+      "jung21_model": {
+        "auc": 0.9903834829772468,
+        "valid_classes": 10
+      },
+      "sed_samejima": {
+        "auc": 0.9950855703541419,
+        "valid_classes": 10
+      },
+      "visual_sakur": {
+        "auc": 0.9856833577184536,
+        "valid_classes": 10
+      },
+      "protossm_samejima": {
+        "auc": 0.985656197789951,
+        "valid_classes": 10
+      },
+      "protossm_raunak": {
+        "auc": 0.9869457261682243,
+        "valid_classes": 10
+      }
+    },
+    "Aves": {
+      "n_valid_classes": 11,
+      "visual_anchor_samejima": {
+        "auc": 0.9848780848359712,
+        "valid_classes": 11
+      },
+      "v616_final_blend": {
+        "auc": 0.9883984172370694,
+        "valid_classes": 11
+      },
+      "jung21_model": {
+        "auc": 0.9639622052386698,
+        "valid_classes": 11
+      },
+      "sed_samejima": {
+        "auc": 0.9934650631992682,
+        "valid_classes": 11
+      },
+      "visual_sakur": {
+        "auc": 0.9660294445318907,
+        "valid_classes": 11
+      },
+      "protossm_samejima": {
+        "auc": 0.9593979209192774,
+        "valid_classes": 11
+      },
+      "protossm_raunak": {
+        "auc": 0.9627512362120018,
+        "valid_classes": 11
+      }
+    },
+    "Insecta": {
+      "n_valid_classes": 17,
+      "visual_anchor_samejima": {
+        "auc": 0.9976586985016769,
+        "valid_classes": 17
+      },
+      "v616_final_blend": {
+        "auc": 0.9976431511378299,
+        "valid_classes": 17
+      },
+      "jung21_model": {
+        "auc": 0.9982808483834475,
+        "valid_classes": 17
+      },
+      "sed_samejima": {
+        "auc": 0.9979689328164405,
+        "valid_classes": 17
+      },
+      "visual_sakur": {
+        "auc": 0.9955124642971772,
+        "valid_classes": 17
+      },
+      "protossm_samejima": {
+        "auc": 0.9951247045249083,
+        "valid_classes": 17
+      },
+      "protossm_raunak": {
+        "auc": 0.9976047712882464,
+        "valid_classes": 17
+      }
+    },
+    "Mammalia": {
+      "n_valid_classes": 3,
+      "visual_anchor_samejima": {
+        "auc": 0.9828563677534726,
+        "valid_classes": 3
+      },
+      "v616_final_blend": {
+        "auc": 0.9977881863127765,
+        "valid_classes": 3
+      },
+      "jung21_model": {
+        "auc": 0.9980899591902649,
+        "valid_classes": 3
+      },
+      "sed_samejima": {
+        "auc": 0.9979182930002602,
+        "valid_classes": 3
+      },
+      "visual_sakur": {
+        "auc": 0.9923389306891225,
+        "valid_classes": 3
+      },
+      "protossm_samejima": {
+        "auc": 0.9905892323230473,
+        "valid_classes": 3
+      },
+      "protossm_raunak": {
+        "auc": 0.9908494456980147,
+        "valid_classes": 3
+      }
+    },
+    "Reptilia": {
+      "n_valid_classes": 1,
+      "visual_anchor_samejima": {
+        "auc": 0.9755555555555555,
+        "valid_classes": 1
+      },
+      "v616_final_blend": {
+        "auc": 0.9830555555555556,
+        "valid_classes": 1
+      },
+      "jung21_model": {
+        "auc": 0.9994444444444445,
+        "valid_classes": 1
+      },
+      "sed_samejima": {
+        "auc": 0.9927777777777778,
+        "valid_classes": 1
+      },
+      "visual_sakur": {
+        "auc": 0.9766666666666667,
+        "valid_classes": 1
+      },
+      "protossm_samejima": {
+        "auc": 0.9516666666666667,
+        "valid_classes": 1
+      },
+      "protossm_raunak": {
+        "auc": 0.9633333333333334,
+        "valid_classes": 1
+      }
+    }
+  },
+  "per_class_delta_top": {
+    "v616_final_best_lifts": [
+      {
+        "class": "74113",
+        "taxon": "Mammalia",
+        "train_n": 10,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9680851063829787,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.03191489361702127,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.03191489361702127,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.03191489361702127,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": 0.015957446808510634,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.03191489361702127
+      },
+      {
+        "class": "23158",
+        "taxon": "Amphibia",
+        "train_n": 25,
+        "soundscape_pos_rows": 175,
+        "anchor_auc": 0.9836956521739131,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.016304347826086918,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.016304347826086918,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.016304347826086918,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.016304347826086918,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.016304347826086918
+      },
+      {
+        "class": "grekis",
+        "taxon": "Aves",
+        "train_n": 482,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9867021276595744,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.013297872340425565,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.013297872340425565,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.013297872340425565,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": -0.0026595744680850686,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.013297872340425565
+      },
+      {
+        "class": "plcjay1",
+        "taxon": "Aves",
+        "train_n": 186,
+        "soundscape_pos_rows": 1,
+        "anchor_auc": 0.9867724867724867,
+        "jung21_model_auc": 0.9682539682539683,
+        "jung21_model_lift": -0.01851851851851849,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.013227513227513255,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.013227513227513255,
+        "visual_sakur_auc": 0.9735449735449736,
+        "visual_sakur_lift": -0.013227513227513144,
+        "protossm_raunak_auc": 0.9735449735449735,
+        "protossm_raunak_lift": -0.013227513227513255
+      },
+      {
+        "class": "555146",
+        "taxon": "Amphibia",
+        "train_n": 18,
+        "soundscape_pos_rows": 210,
+        "anchor_auc": 0.9297297297297298,
+        "jung21_model_auc": 0.9405405405405405,
+        "jung21_model_lift": 0.0108108108108107,
+        "sed_samejima_auc": 0.9783783783783784,
+        "sed_samejima_lift": 0.048648648648648596,
+        "v616_final_blend_auc": 0.9427027027027027,
+        "v616_final_blend_lift": 0.012972972972972951,
+        "visual_sakur_auc": 0.8810810810810812,
+        "visual_sakur_lift": -0.048648648648648596,
+        "protossm_raunak_auc": 0.8908108108108108,
+        "protossm_raunak_lift": -0.038918918918918965
+      },
+      {
+        "class": "47144",
+        "taxon": "Mammalia",
+        "train_n": 43,
+        "soundscape_pos_rows": 15,
+        "anchor_auc": 0.9804839968774395,
+        "jung21_model_auc": 0.9968774395003903,
+        "jung21_model_lift": 0.016393442622950838,
+        "sed_samejima_auc": 0.9937548790007806,
+        "sed_samejima_lift": 0.013270882123341154,
+        "v616_final_blend_auc": 0.9933645589383294,
+        "v616_final_blend_lift": 0.012880562060889944,
+        "visual_sakur_auc": 0.9929742388758782,
+        "visual_sakur_lift": 0.012490241998438734,
+        "protossm_raunak_auc": 0.9929742388758782,
+        "protossm_raunak_lift": 0.012490241998438734
+      },
+      {
+        "class": "65377",
+        "taxon": "Amphibia",
+        "train_n": 46,
+        "soundscape_pos_rows": 9,
+        "anchor_auc": 0.988950276243094,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.011049723756906049,
+        "sed_samejima_auc": 0.9969306322897483,
+        "sed_samejima_lift": 0.007980356046654369,
+        "v616_final_blend_auc": 0.9987722529158993,
+        "v616_final_blend_lift": 0.009821976672805377,
+        "visual_sakur_auc": 0.9999999999999999,
+        "visual_sakur_lift": 0.011049723756905938,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.011049723756906049
+      },
+      {
+        "class": "thlwre1",
+        "taxon": "Aves",
+        "train_n": 213,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9920212765957447,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.007978723404255317,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.007978723404255317,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.007978723404255317,
+        "visual_sakur_auc": 0.9893617021276595,
+        "visual_sakur_lift": -0.0026595744680851796,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.007978723404255317
+      },
+      {
+        "class": "116570",
+        "taxon": "Reptilia",
+        "train_n": 1,
+        "soundscape_pos_rows": 13,
+        "anchor_auc": 0.9755555555555555,
+        "jung21_model_auc": 0.9994444444444445,
+        "jung21_model_lift": 0.02388888888888896,
+        "sed_samejima_auc": 0.9927777777777778,
+        "sed_samejima_lift": 0.01722222222222225,
+        "v616_final_blend_auc": 0.9830555555555556,
+        "v616_final_blend_lift": 0.007500000000000062,
+        "visual_sakur_auc": 0.9766666666666667,
+        "visual_sakur_lift": 0.0011111111111111738,
+        "protossm_raunak_auc": 0.9633333333333334,
+        "protossm_raunak_lift": -0.012222222222222134
+      },
+      {
+        "class": "undtin1",
+        "taxon": "Aves",
+        "train_n": 204,
+        "soundscape_pos_rows": 43,
+        "anchor_auc": 0.9854054054054054,
+        "jung21_model_auc": 0.9956756756756757,
+        "jung21_model_lift": 0.010270270270270276,
+        "sed_samejima_auc": 0.9956756756756756,
+        "sed_samejima_lift": 0.010270270270270165,
+        "v616_final_blend_auc": 0.9881081081081081,
+        "v616_final_blend_lift": 0.002702702702702675,
+        "visual_sakur_auc": 0.9686486486486486,
+        "visual_sakur_lift": -0.016756756756756808,
+        "protossm_raunak_auc": 0.9794594594594594,
+        "protossm_raunak_lift": -0.005945945945945996
+      },
+      {
+        "class": "chacha1",
+        "taxon": "Aves",
+        "train_n": 99,
+        "soundscape_pos_rows": 65,
+        "anchor_auc": 0.9772727272727273,
+        "jung21_model_auc": 0.9837662337662338,
+        "jung21_model_lift": 0.006493506493506551,
+        "sed_samejima_auc": 0.9807900432900434,
+        "sed_samejima_lift": 0.0035173160173160856,
+        "v616_final_blend_auc": 0.9783549783549784,
+        "v616_final_blend_lift": 0.0010822510822511289,
+        "visual_sakur_auc": 0.9816017316017317,
+        "visual_sakur_lift": 0.0043290043290044045,
+        "protossm_raunak_auc": 0.9713203463203464,
+        "protossm_raunak_lift": -0.005952380952380931
+      },
+      {
+        "class": "trsowl",
+        "taxon": "Aves",
+        "train_n": 491,
+        "soundscape_pos_rows": 26,
+        "anchor_auc": 0.9774011299435028,
+        "jung21_model_auc": 0.9934810951760105,
+        "jung21_model_lift": 0.016079965232507654,
+        "sed_samejima_auc": 0.9769665362885701,
+        "sed_samejima_lift": -0.0004345936549327023,
+        "v616_final_blend_auc": 0.9778357235984355,
+        "v616_final_blend_lift": 0.0004345936549327023,
+        "visual_sakur_auc": 0.96045197740113,
+        "visual_sakur_lift": -0.016949152542372836,
+        "protossm_raunak_auc": 0.9821816601477619,
+        "protossm_raunak_lift": 0.004780530204259059
+      }
+    ],
+    "v616_final_worst_lifts": [
+      {
+        "class": "47158son10",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 33,
+        "anchor_auc": 0.994162087912088,
+        "jung21_model_auc": 0.9924450549450549,
+        "jung21_model_lift": -0.001717032967033183,
+        "sed_samejima_auc": 0.993131868131868,
+        "sed_samejima_lift": -0.0010302197802199986,
+        "v616_final_blend_auc": 0.9938186813186813,
+        "v616_final_blend_lift": -0.0003434065934067032,
+        "visual_sakur_auc": 0.9862637362637363,
+        "visual_sakur_lift": -0.007898351648351731,
+        "protossm_raunak_auc": 0.9958791208791209,
+        "protossm_raunak_lift": 0.00171703296703285
+      },
+      {
+        "class": "517063",
+        "taxon": "Amphibia",
+        "train_n": 0,
+        "soundscape_pos_rows": 313,
+        "anchor_auc": 0.98,
+        "jung21_model_auc": 0.9684848484848485,
+        "jung21_model_lift": -0.011515151515151478,
+        "sed_samejima_auc": 0.9779124579124578,
+        "sed_samejima_lift": -0.002087542087542138,
+        "v616_final_blend_auc": 0.9799326599326599,
+        "v616_final_blend_lift": -6.734006734010478e-05,
+        "visual_sakur_auc": 0.9812794612794613,
+        "visual_sakur_lift": 0.0012794612794613247,
+        "protossm_raunak_auc": 0.9832996632996633,
+        "protossm_raunak_lift": 0.003299663299663358
+      },
+      {
+        "class": "strher2",
+        "taxon": "Aves",
+        "train_n": 164,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9361702127659575,
+        "jung21_model_auc": 0.8085106382978724,
+        "jung21_model_lift": -0.12765957446808507,
+        "sed_samejima_auc": 0.9867021276595745,
+        "sed_samejima_lift": 0.05053191489361708,
+        "v616_final_blend_auc": 0.9361702127659574,
+        "v616_final_blend_lift": -1.1102230246251565e-16,
+        "visual_sakur_auc": 0.9335106382978725,
+        "visual_sakur_lift": -0.0026595744680849576,
+        "protossm_raunak_auc": 0.8430851063829787,
+        "protossm_raunak_lift": -0.09308510638297873
+      },
+      {
+        "class": "22961",
+        "taxon": "Amphibia",
+        "train_n": 6,
+        "soundscape_pos_rows": 36,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.999063670411985,
+        "visual_sakur_lift": -0.0009363295880150391,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      },
+      {
+        "class": "22973",
+        "taxon": "Amphibia",
+        "train_n": 63,
+        "soundscape_pos_rows": 213,
+        "anchor_auc": 0.998001066098081,
+        "jung21_model_auc": 0.9985341151385927,
+        "jung21_model_lift": 0.0005330490405116572,
+        "sed_samejima_auc": 0.9984008528784648,
+        "sed_samejima_lift": 0.0003997867803837707,
+        "v616_final_blend_auc": 0.998001066098081,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.9973347547974413,
+        "visual_sakur_lift": -0.0006663113006397658,
+        "protossm_raunak_auc": 0.9976012793176973,
+        "protossm_raunak_lift": -0.0003997867803837707
+      },
+      {
+        "class": "24279",
+        "taxon": "Amphibia",
+        "train_n": 46,
+        "soundscape_pos_rows": 173,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.9999999999999999,
+        "visual_sakur_lift": -1.1102230246251565e-16,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      },
+      {
+        "class": "47158son01",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 23,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.9789325842696629,
+        "visual_sakur_lift": -0.021067415730337102,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      },
+      {
+        "class": "47158son03",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 33,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.0,
+        "protossm_raunak_auc": 0.9995318352059925,
+        "protossm_raunak_lift": -0.000468164794007464
+      },
+      {
+        "class": "47158son05",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 3,
+        "anchor_auc": 0.9894179894179894,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.010582010582010581,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.010582010582010581,
+        "v616_final_blend_auc": 0.9894179894179894,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.010582010582010581,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.010582010582010581
+      },
+      {
+        "class": "47158son08",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 17,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.9925093632958801,
+        "visual_sakur_lift": -0.0074906367041198685,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      },
+      {
+        "class": "47158son11",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 36,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.9995318352059925,
+        "visual_sakur_lift": -0.000468164794007464,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      },
+      {
+        "class": "47158son15",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 12,
+        "anchor_auc": 1.0,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.0,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.0,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.0
+      }
+    ],
+    "jung21_best_lifts": [
+      {
+        "class": "74113",
+        "taxon": "Mammalia",
+        "train_n": 10,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9680851063829787,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.03191489361702127,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.03191489361702127,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.03191489361702127,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": 0.015957446808510634,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.03191489361702127
+      },
+      {
+        "class": "116570",
+        "taxon": "Reptilia",
+        "train_n": 1,
+        "soundscape_pos_rows": 13,
+        "anchor_auc": 0.9755555555555555,
+        "jung21_model_auc": 0.9994444444444445,
+        "jung21_model_lift": 0.02388888888888896,
+        "sed_samejima_auc": 0.9927777777777778,
+        "sed_samejima_lift": 0.01722222222222225,
+        "v616_final_blend_auc": 0.9830555555555556,
+        "v616_final_blend_lift": 0.007500000000000062,
+        "visual_sakur_auc": 0.9766666666666667,
+        "visual_sakur_lift": 0.0011111111111111738,
+        "protossm_raunak_auc": 0.9633333333333334,
+        "protossm_raunak_lift": -0.012222222222222134
+      },
+      {
+        "class": "47144",
+        "taxon": "Mammalia",
+        "train_n": 43,
+        "soundscape_pos_rows": 15,
+        "anchor_auc": 0.9804839968774395,
+        "jung21_model_auc": 0.9968774395003903,
+        "jung21_model_lift": 0.016393442622950838,
+        "sed_samejima_auc": 0.9937548790007806,
+        "sed_samejima_lift": 0.013270882123341154,
+        "v616_final_blend_auc": 0.9933645589383294,
+        "v616_final_blend_lift": 0.012880562060889944,
+        "visual_sakur_auc": 0.9929742388758782,
+        "visual_sakur_lift": 0.012490241998438734,
+        "protossm_raunak_auc": 0.9929742388758782,
+        "protossm_raunak_lift": 0.012490241998438734
+      },
+      {
+        "class": "23158",
+        "taxon": "Amphibia",
+        "train_n": 25,
+        "soundscape_pos_rows": 175,
+        "anchor_auc": 0.9836956521739131,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.016304347826086918,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.016304347826086918,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.016304347826086918,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.016304347826086918,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.016304347826086918
+      },
+      {
+        "class": "trsowl",
+        "taxon": "Aves",
+        "train_n": 491,
+        "soundscape_pos_rows": 26,
+        "anchor_auc": 0.9774011299435028,
+        "jung21_model_auc": 0.9934810951760105,
+        "jung21_model_lift": 0.016079965232507654,
+        "sed_samejima_auc": 0.9769665362885701,
+        "sed_samejima_lift": -0.0004345936549327023,
+        "v616_final_blend_auc": 0.9778357235984355,
+        "v616_final_blend_lift": 0.0004345936549327023,
+        "visual_sakur_auc": 0.96045197740113,
+        "visual_sakur_lift": -0.016949152542372836,
+        "protossm_raunak_auc": 0.9821816601477619,
+        "protossm_raunak_lift": 0.004780530204259059
+      },
+      {
+        "class": "grekis",
+        "taxon": "Aves",
+        "train_n": 482,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9867021276595744,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.013297872340425565,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.013297872340425565,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.013297872340425565,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": -0.0026595744680850686,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.013297872340425565
+      },
+      {
+        "class": "65377",
+        "taxon": "Amphibia",
+        "train_n": 46,
+        "soundscape_pos_rows": 9,
+        "anchor_auc": 0.988950276243094,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.011049723756906049,
+        "sed_samejima_auc": 0.9969306322897483,
+        "sed_samejima_lift": 0.007980356046654369,
+        "v616_final_blend_auc": 0.9987722529158993,
+        "v616_final_blend_lift": 0.009821976672805377,
+        "visual_sakur_auc": 0.9999999999999999,
+        "visual_sakur_lift": 0.011049723756905938,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.011049723756906049
+      },
+      {
+        "class": "555146",
+        "taxon": "Amphibia",
+        "train_n": 18,
+        "soundscape_pos_rows": 210,
+        "anchor_auc": 0.9297297297297298,
+        "jung21_model_auc": 0.9405405405405405,
+        "jung21_model_lift": 0.0108108108108107,
+        "sed_samejima_auc": 0.9783783783783784,
+        "sed_samejima_lift": 0.048648648648648596,
+        "v616_final_blend_auc": 0.9427027027027027,
+        "v616_final_blend_lift": 0.012972972972972951,
+        "visual_sakur_auc": 0.8810810810810812,
+        "visual_sakur_lift": -0.048648648648648596,
+        "protossm_raunak_auc": 0.8908108108108108,
+        "protossm_raunak_lift": -0.038918918918918965
+      },
+      {
+        "class": "47158son05",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 3,
+        "anchor_auc": 0.9894179894179894,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.010582010582010581,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.010582010582010581,
+        "v616_final_blend_auc": 0.9894179894179894,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.010582010582010581,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.010582010582010581
+      },
+      {
+        "class": "undtin1",
+        "taxon": "Aves",
+        "train_n": 204,
+        "soundscape_pos_rows": 43,
+        "anchor_auc": 0.9854054054054054,
+        "jung21_model_auc": 0.9956756756756757,
+        "jung21_model_lift": 0.010270270270270276,
+        "sed_samejima_auc": 0.9956756756756756,
+        "sed_samejima_lift": 0.010270270270270165,
+        "v616_final_blend_auc": 0.9881081081081081,
+        "v616_final_blend_lift": 0.002702702702702675,
+        "visual_sakur_auc": 0.9686486486486486,
+        "visual_sakur_lift": -0.016756756756756808,
+        "protossm_raunak_auc": 0.9794594594594594,
+        "protossm_raunak_lift": -0.005945945945945996
+      },
+      {
+        "class": "47158son19",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 5,
+        "anchor_auc": 0.985945945945946,
+        "jung21_model_auc": 0.9945945945945946,
+        "jung21_model_lift": 0.008648648648648671,
+        "sed_samejima_auc": 0.985945945945946,
+        "sed_samejima_lift": 0.0,
+        "v616_final_blend_auc": 0.985945945945946,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 0.987027027027027,
+        "visual_sakur_lift": 0.00108108108108107,
+        "protossm_raunak_auc": 0.9837837837837837,
+        "protossm_raunak_lift": -0.002162162162162251
+      },
+      {
+        "class": "thlwre1",
+        "taxon": "Aves",
+        "train_n": 213,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9920212765957447,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.007978723404255317,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.007978723404255317,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.007978723404255317,
+        "visual_sakur_auc": 0.9893617021276595,
+        "visual_sakur_lift": -0.0026595744680851796,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.007978723404255317
+      }
+    ],
+    "sed_best_lifts": [
+      {
+        "class": "strher2",
+        "taxon": "Aves",
+        "train_n": 164,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9361702127659575,
+        "jung21_model_auc": 0.8085106382978724,
+        "jung21_model_lift": -0.12765957446808507,
+        "sed_samejima_auc": 0.9867021276595745,
+        "sed_samejima_lift": 0.05053191489361708,
+        "v616_final_blend_auc": 0.9361702127659574,
+        "v616_final_blend_lift": -1.1102230246251565e-16,
+        "visual_sakur_auc": 0.9335106382978725,
+        "visual_sakur_lift": -0.0026595744680849576,
+        "protossm_raunak_auc": 0.8430851063829787,
+        "protossm_raunak_lift": -0.09308510638297873
+      },
+      {
+        "class": "555146",
+        "taxon": "Amphibia",
+        "train_n": 18,
+        "soundscape_pos_rows": 210,
+        "anchor_auc": 0.9297297297297298,
+        "jung21_model_auc": 0.9405405405405405,
+        "jung21_model_lift": 0.0108108108108107,
+        "sed_samejima_auc": 0.9783783783783784,
+        "sed_samejima_lift": 0.048648648648648596,
+        "v616_final_blend_auc": 0.9427027027027027,
+        "v616_final_blend_lift": 0.012972972972972951,
+        "visual_sakur_auc": 0.8810810810810812,
+        "visual_sakur_lift": -0.048648648648648596,
+        "protossm_raunak_auc": 0.8908108108108108,
+        "protossm_raunak_lift": -0.038918918918918965
+      },
+      {
+        "class": "74113",
+        "taxon": "Mammalia",
+        "train_n": 10,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9680851063829787,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.03191489361702127,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.03191489361702127,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.03191489361702127,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": 0.015957446808510634,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.03191489361702127
+      },
+      {
+        "class": "116570",
+        "taxon": "Reptilia",
+        "train_n": 1,
+        "soundscape_pos_rows": 13,
+        "anchor_auc": 0.9755555555555555,
+        "jung21_model_auc": 0.9994444444444445,
+        "jung21_model_lift": 0.02388888888888896,
+        "sed_samejima_auc": 0.9927777777777778,
+        "sed_samejima_lift": 0.01722222222222225,
+        "v616_final_blend_auc": 0.9830555555555556,
+        "v616_final_blend_lift": 0.007500000000000062,
+        "visual_sakur_auc": 0.9766666666666667,
+        "visual_sakur_lift": 0.0011111111111111738,
+        "protossm_raunak_auc": 0.9633333333333334,
+        "protossm_raunak_lift": -0.012222222222222134
+      },
+      {
+        "class": "23158",
+        "taxon": "Amphibia",
+        "train_n": 25,
+        "soundscape_pos_rows": 175,
+        "anchor_auc": 0.9836956521739131,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.016304347826086918,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.016304347826086918,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.016304347826086918,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.016304347826086918,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.016304347826086918
+      },
+      {
+        "class": "grekis",
+        "taxon": "Aves",
+        "train_n": 482,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9867021276595744,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.013297872340425565,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.013297872340425565,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.013297872340425565,
+        "visual_sakur_auc": 0.9840425531914894,
+        "visual_sakur_lift": -0.0026595744680850686,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.013297872340425565
+      },
+      {
+        "class": "47144",
+        "taxon": "Mammalia",
+        "train_n": 43,
+        "soundscape_pos_rows": 15,
+        "anchor_auc": 0.9804839968774395,
+        "jung21_model_auc": 0.9968774395003903,
+        "jung21_model_lift": 0.016393442622950838,
+        "sed_samejima_auc": 0.9937548790007806,
+        "sed_samejima_lift": 0.013270882123341154,
+        "v616_final_blend_auc": 0.9933645589383294,
+        "v616_final_blend_lift": 0.012880562060889944,
+        "visual_sakur_auc": 0.9929742388758782,
+        "visual_sakur_lift": 0.012490241998438734,
+        "protossm_raunak_auc": 0.9929742388758782,
+        "protossm_raunak_lift": 0.012490241998438734
+      },
+      {
+        "class": "plcjay1",
+        "taxon": "Aves",
+        "train_n": 186,
+        "soundscape_pos_rows": 1,
+        "anchor_auc": 0.9867724867724867,
+        "jung21_model_auc": 0.9682539682539683,
+        "jung21_model_lift": -0.01851851851851849,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.013227513227513255,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.013227513227513255,
+        "visual_sakur_auc": 0.9735449735449736,
+        "visual_sakur_lift": -0.013227513227513144,
+        "protossm_raunak_auc": 0.9735449735449735,
+        "protossm_raunak_lift": -0.013227513227513255
+      },
+      {
+        "class": "47158son05",
+        "taxon": "Insecta",
+        "train_n": 0,
+        "soundscape_pos_rows": 3,
+        "anchor_auc": 0.9894179894179894,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.010582010582010581,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.010582010582010581,
+        "v616_final_blend_auc": 0.9894179894179894,
+        "v616_final_blend_lift": 0.0,
+        "visual_sakur_auc": 1.0,
+        "visual_sakur_lift": 0.010582010582010581,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.010582010582010581
+      },
+      {
+        "class": "undtin1",
+        "taxon": "Aves",
+        "train_n": 204,
+        "soundscape_pos_rows": 43,
+        "anchor_auc": 0.9854054054054054,
+        "jung21_model_auc": 0.9956756756756757,
+        "jung21_model_lift": 0.010270270270270276,
+        "sed_samejima_auc": 0.9956756756756756,
+        "sed_samejima_lift": 0.010270270270270165,
+        "v616_final_blend_auc": 0.9881081081081081,
+        "v616_final_blend_lift": 0.002702702702702675,
+        "visual_sakur_auc": 0.9686486486486486,
+        "visual_sakur_lift": -0.016756756756756808,
+        "protossm_raunak_auc": 0.9794594594594594,
+        "protossm_raunak_lift": -0.005945945945945996
+      },
+      {
+        "class": "65377",
+        "taxon": "Amphibia",
+        "train_n": 46,
+        "soundscape_pos_rows": 9,
+        "anchor_auc": 0.988950276243094,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.011049723756906049,
+        "sed_samejima_auc": 0.9969306322897483,
+        "sed_samejima_lift": 0.007980356046654369,
+        "v616_final_blend_auc": 0.9987722529158993,
+        "v616_final_blend_lift": 0.009821976672805377,
+        "visual_sakur_auc": 0.9999999999999999,
+        "visual_sakur_lift": 0.011049723756905938,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.011049723756906049
+      },
+      {
+        "class": "thlwre1",
+        "taxon": "Aves",
+        "train_n": 213,
+        "soundscape_pos_rows": 2,
+        "anchor_auc": 0.9920212765957447,
+        "jung21_model_auc": 1.0,
+        "jung21_model_lift": 0.007978723404255317,
+        "sed_samejima_auc": 1.0,
+        "sed_samejima_lift": 0.007978723404255317,
+        "v616_final_blend_auc": 1.0,
+        "v616_final_blend_lift": 0.007978723404255317,
+        "visual_sakur_auc": 0.9893617021276595,
+        "visual_sakur_lift": -0.0026595744680851796,
+        "protossm_raunak_auc": 1.0,
+        "protossm_raunak_lift": 0.007978723404255317
+      }
+    ]
+  },
+  "row_label_density": {
+    "1": {
+      "rows": 49,
+      "visual_anchor_samejima": {
+        "auc": 0.9779458913035346,
+        "valid_classes": 11,
+        "top3": 0.6326530612244898
+      },
+      "v616_final_blend": {
+        "auc": 0.985541797170717,
+        "valid_classes": 11,
+        "top3": 0.2653061224489796
+      },
+      "jung21_model": {
+        "auc": 0.9705260391050665,
+        "valid_classes": 11,
+        "top3": 0.10204081632653061
+      },
+      "sed_samejima": {
+        "auc": 0.989707123635695,
+        "valid_classes": 11,
+        "top3": 0.9591836734693877
+      },
+      "visual_sakur": {
+        "auc": 0.9512559841994936,
+        "valid_classes": 11,
+        "top3": 0.2857142857142857
+      },
+      "protossm_samejima": {
+        "auc": 0.9401086444186376,
+        "valid_classes": 11,
+        "top3": 0.2857142857142857
+      },
+      "protossm_raunak": {
+        "auc": 0.9359803206826706,
+        "valid_classes": 11,
+        "top3": 0.2857142857142857
+      }
+    },
+    "2": {
+      "rows": 20,
+      "visual_anchor_samejima": {
+        "auc": 0.9987878787878788,
+        "valid_classes": 11,
+        "top3": 0.8
+      },
+      "v616_final_blend": {
+        "auc": 0.9987878787878788,
+        "valid_classes": 11,
+        "top3": 0.35
+      },
+      "jung21_model": {
+        "auc": 0.9969513314967862,
+        "valid_classes": 11,
+        "top3": 0.45
+      },
+      "sed_samejima": {
+        "auc": 0.9975757575757576,
+        "valid_classes": 11,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.9927910685805422,
+        "valid_classes": 11,
+        "top3": 0.25
+      },
+      "protossm_samejima": {
+        "auc": 0.9987878787878788,
+        "valid_classes": 11,
+        "top3": 0.75
+      },
+      "protossm_raunak": {
+        "auc": 0.9987878787878788,
+        "valid_classes": 11,
+        "top3": 0.75
+      }
+    },
+    "3": {
+      "rows": 26,
+      "visual_anchor_samejima": {
+        "auc": 0.9790719696969697,
+        "valid_classes": 20,
+        "top3": 0.7692307692307693
+      },
+      "v616_final_blend": {
+        "auc": 0.987215909090909,
+        "valid_classes": 20,
+        "top3": 0.5
+      },
+      "jung21_model": {
+        "auc": 0.9844507575757577,
+        "valid_classes": 20,
+        "top3": 0.6923076923076923
+      },
+      "sed_samejima": {
+        "auc": 0.9848484848484848,
+        "valid_classes": 20,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.9788825757575756,
+        "valid_classes": 20,
+        "top3": 0.46153846153846156
+      },
+      "protossm_samejima": {
+        "auc": 0.9834253246753247,
+        "valid_classes": 20,
+        "top3": 0.6923076923076923
+      },
+      "protossm_raunak": {
+        "auc": 0.9885389610389611,
+        "valid_classes": 20,
+        "top3": 0.7307692307692307
+      }
+    },
+    "4": {
+      "rows": 34,
+      "visual_anchor_samejima": {
+        "auc": 0.9932350161785646,
+        "valid_classes": 20,
+        "top3": 0.7058823529411765
+      },
+      "v616_final_blend": {
+        "auc": 0.9947990435490436,
+        "valid_classes": 20,
+        "top3": 0.5882352941176471
+      },
+      "jung21_model": {
+        "auc": 0.9971062271062271,
+        "valid_classes": 20,
+        "top3": 0.7647058823529411
+      },
+      "sed_samejima": {
+        "auc": 0.9905083074034687,
+        "valid_classes": 20,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.992246074641792,
+        "valid_classes": 20,
+        "top3": 0.47058823529411764
+      },
+      "protossm_samejima": {
+        "auc": 0.9949628612128614,
+        "valid_classes": 20,
+        "top3": 0.8529411764705882
+      },
+      "protossm_raunak": {
+        "auc": 0.9953622303622304,
+        "valid_classes": 20,
+        "top3": 0.9117647058823529
+      }
+    },
+    "5": {
+      "rows": 19,
+      "visual_anchor_samejima": {
+        "auc": 0.9924750146972369,
+        "valid_classes": 27,
+        "top3": 0.631578947368421
+      },
+      "v616_final_blend": {
+        "auc": 0.9945326278659612,
+        "valid_classes": 27,
+        "top3": 0.47368421052631576
+      },
+      "jung21_model": {
+        "auc": 0.996031746031746,
+        "valid_classes": 27,
+        "top3": 0.5789473684210527
+      },
+      "sed_samejima": {
+        "auc": 0.9934744268077601,
+        "valid_classes": 27,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.9853321575543796,
+        "valid_classes": 27,
+        "top3": 0.3684210526315789
+      },
+      "protossm_samejima": {
+        "auc": 0.9934744268077601,
+        "valid_classes": 27,
+        "top3": 0.8421052631578947
+      },
+      "protossm_raunak": {
+        "auc": 0.9947089947089945,
+        "valid_classes": 27,
+        "top3": 0.8421052631578947
+      }
+    },
+    "6": {
+      "rows": 27,
+      "visual_anchor_samejima": {
+        "auc": 0.9768671328671329,
+        "valid_classes": 25,
+        "top3": 0.8518518518518519
+      },
+      "v616_final_blend": {
+        "auc": 0.9848671328671328,
+        "valid_classes": 25,
+        "top3": 0.7037037037037037
+      },
+      "jung21_model": {
+        "auc": 0.9871440559440559,
+        "valid_classes": 25,
+        "top3": 0.8148148148148148
+      },
+      "sed_samejima": {
+        "auc": 0.9861762237762238,
+        "valid_classes": 25,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.9705560557089968,
+        "valid_classes": 25,
+        "top3": 0.37037037037037035
+      },
+      "protossm_samejima": {
+        "auc": 0.9824671328671328,
+        "valid_classes": 25,
+        "top3": 1.0
+      },
+      "protossm_raunak": {
+        "auc": 0.9840671328671329,
+        "valid_classes": 25,
+        "top3": 1.0
+      }
+    },
+    "7": {
+      "rows": 11,
+      "visual_anchor_samejima": {
+        "auc": 0.9923076923076923,
+        "valid_classes": 13,
+        "top3": 0.7272727272727273
+      },
+      "v616_final_blend": {
+        "auc": 0.9923076923076923,
+        "valid_classes": 13,
+        "top3": 0.8181818181818182
+      },
+      "jung21_model": {
+        "auc": 1.0,
+        "valid_classes": 13,
+        "top3": 0.45454545454545453
+      },
+      "sed_samejima": {
+        "auc": 1.0,
+        "valid_classes": 13,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 0.9794871794871796,
+        "valid_classes": 13,
+        "top3": 0.18181818181818182
+      },
+      "protossm_samejima": {
+        "auc": 0.9307692307692308,
+        "valid_classes": 13,
+        "top3": 1.0
+      },
+      "protossm_raunak": {
+        "auc": 0.9538461538461539,
+        "valid_classes": 13,
+        "top3": 1.0
+      }
+    },
+    "8": {
+      "rows": 3,
+      "visual_anchor_samejima": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 1.0
+      },
+      "v616_final_blend": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 0.6666666666666666
+      },
+      "jung21_model": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 0.6666666666666666
+      },
+      "sed_samejima": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 0.6666666666666666
+      },
+      "protossm_samejima": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 1.0
+      },
+      "protossm_raunak": {
+        "auc": 1.0,
+        "valid_classes": 16,
+        "top3": 1.0
+      }
+    },
+    "9": {
+      "rows": 1,
+      "visual_anchor_samejima": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 0.0
+      },
+      "v616_final_blend": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 0.0
+      },
+      "jung21_model": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 0.0
+      },
+      "sed_samejima": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 1.0
+      },
+      "visual_sakur": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 0.0
+      },
+      "protossm_samejima": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 1.0
+      },
+      "protossm_raunak": {
+        "auc": null,
+        "valid_classes": 0,
+        "top3": 1.0
+      }
+    }
+  },
+  "unmatched_prediction_stats": {
+    "visual_anchor_samejima": {
+      "rows": 50,
+      "mean": 0.5653126863841966,
+      "max_mean_by_row": 0.9925325192000001,
+      "p99": 0.9866395670000001
+    },
+    "v616_final_blend": {
+      "rows": 50,
+      "mean": 0.574732166622735,
+      "max_mean_by_row": 0.99443168,
+      "p99": 0.9906667
+    },
+    "jung21_model": {
+      "rows": 50,
+      "mean": 0.23765017786728074,
+      "max_mean_by_row": 0.9197676151999999,
+      "p99": 0.8597911712999999
+    },
+    "sed_samejima": {
+      "rows": 50,
+      "mean": 0.007057077309773675,
+      "max_mean_by_row": 0.2532543624,
+      "p99": 0.09221650870000013
+    }
+  },
+  "pair_checks": [
+    {
+      "a": "sed_samejima",
+      "b": "sed_raunak",
+      "corr": 1.0,
+      "mae": 0.0,
+      "max_abs": 0.0
+    },
+    {
+      "a": "visual_anchor_samejima",
+      "b": "visual_sakur",
+      "corr": 0.9556627616991195,
+      "mae": 0.05967252284681802,
+      "max_abs": 0.37183328000000004
+    },
+    {
+      "a": "jung21_model",
+      "b": "v616_jung21_raw",
+      "corr": 1.0,
+      "mae": 0.0,
+      "max_abs": 0.0
+    },
+    {
+      "a": "sed_samejima",
+      "b": "v616_sameji_sed_raw",
+      "corr": 1.0,
+      "mae": 0.0,
+      "max_abs": 0.0
+    }
+  ]
+}

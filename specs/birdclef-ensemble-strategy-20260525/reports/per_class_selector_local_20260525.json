@@ -1,0 +1,708 @@
+{
+  "base_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+  "sidecars": [
+    {
+      "name": "jung21",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_jung21_raw.csv"
+    },
+    {
+      "name": "sameji_sed",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_samejima_sed_raw.csv"
+    }
+  ],
+  "labels_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv",
+  "matched_rows": 190,
+  "valid_classes": 42,
+  "group_mode": "site",
+  "n_groups": 6,
+  "weight_grid": [
+    0.0,
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.06
+  ],
+  "max_total_weight": 0.08,
+  "min_train_pos": 2,
+  "min_train_neg": 10,
+  "min_lift": 0.0005,
+  "base_auc": 0.9903905065191599,
+  "cv_auc": 0.9903939823454874,
+  "cv_lift": 3.475826327425935e-06,
+  "cv_valid_classes": 42,
+  "leave_group_lifts": {
+    "n": 6,
+    "mean": 0.0,
+    "min": 0.0,
+    "q05": 0.0,
+    "p_gt_0": 0.0
+  },
+  "held_out_groups": [
+    {
+      "held_out_group": "S03",
+      "rows": 24,
+      "base_auc": 0.9623376623376624,
+      "candidate_auc": 0.9623376623376624,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 11,
+        "mean_total_weight": 0.00928571354597807,
+        "max_total_weight": 0.07999999821186066,
+        "per_sidecar_mean": {
+          "jung21": 0.005357142072170973,
+          "sameji_sed": 0.003928571008145809
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 7,
+          "sameji_sed": 8
+        },
+        "top_classes": [
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "116570",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "trsowl",
+            "total": 0.03999999910593033,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.02499999850988388,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "23158",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "thlwre1",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "65377",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "grekis",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "74113",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S08",
+      "rows": 60,
+      "base_auc": 0.9842245794021945,
+      "candidate_auc": 0.9842245794021945,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 10,
+        "mean_total_weight": 0.00809523742645979,
+        "max_total_weight": 0.07999999821186066,
+        "per_sidecar_mean": {
+          "jung21": 0.0022619045339524746,
+          "sameji_sed": 0.005833333358168602
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 5,
+          "sameji_sed": 9
+        },
+        "top_classes": [
+          {
+            "class": "chacha1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.07000000029802322,
+            "weights": {
+              "jung21": 0.009999999776482582,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "trsowl",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.02499999850988388,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "74113",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "23158",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "grekis",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "thlwre1",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "65377",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S09",
+      "rows": 19,
+      "base_auc": 0.9486928104575163,
+      "candidate_auc": 0.9486928104575163,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 7,
+        "mean_total_weight": 0.005238095298409462,
+        "max_total_weight": 0.07999999821186066,
+        "per_sidecar_mean": {
+          "jung21": 0.0034523808863013983,
+          "sameji_sed": 0.00178571417927742
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 5,
+          "sameji_sed": 4
+        },
+        "top_classes": [
+          {
+            "class": "555146",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "116570",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.03999999910593033,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.02499999850988388,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "23158",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "65377",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "74113",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S13",
+      "rows": 24,
+      "base_auc": 0.9503472222222222,
+      "candidate_auc": 0.9503472222222222,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 9,
+        "mean_total_weight": 0.00952380895614624,
+        "max_total_weight": 0.07999999821186066,
+        "per_sidecar_mean": {
+          "jung21": 0.005714285187423229,
+          "sameji_sed": 0.003809523768723011
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 6,
+          "sameji_sed": 7
+        },
+        "top_classes": [
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "trsowl",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "116570",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.02499999850988388,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "thlwre1",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "grekis",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "74113",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S18",
+      "rows": 15,
+      "base_auc": 0.9050324675324676,
+      "candidate_auc": 0.9050324675324676,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 10,
+        "mean_total_weight": 0.00654761865735054,
+        "max_total_weight": 0.07999999821186066,
+        "per_sidecar_mean": {
+          "jung21": 0.004047618713229895,
+          "sameji_sed": 0.0024999999441206455
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 6,
+          "sameji_sed": 7
+        },
+        "top_classes": [
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "jung21": 0.03999999910593033,
+              "sameji_sed": 0.03999999910593033
+            }
+          },
+          {
+            "class": "116570",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.02499999850988388,
+            "weights": {
+              "jung21": 0.019999999552965164,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "thlwre1",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "23158",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "65377",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "grekis",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "74113",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S22",
+      "rows": 48,
+      "base_auc": 0.9467059355694917,
+      "candidate_auc": 0.9467059355694917,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 6,
+        "mean_total_weight": 0.0033333334140479565,
+        "max_total_weight": 0.05999999865889549,
+        "per_sidecar_mean": {
+          "jung21": 0.0015476190019398928,
+          "sameji_sed": 0.00178571417927742
+        },
+        "per_sidecar_nonzero_classes": {
+          "jung21": 2,
+          "sameji_sed": 4
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.05999999865889549,
+              "sameji_sed": 0.0
+            }
+          },
+          {
+            "class": "47158son17",
+            "total": 0.05999999865889549,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.05999999865889549
+            }
+          },
+          {
+            "class": "thlwre1",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "23158",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "grekis",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.0,
+              "sameji_sed": 0.004999999888241291
+            }
+          },
+          {
+            "class": "65377",
+            "total": 0.004999999888241291,
+            "weights": {
+              "jung21": 0.004999999888241291,
+              "sameji_sed": 0.0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "all_row_auc": 0.9932691881817397,
+  "all_row_lift": 0.002878681662579763,
+  "all_row_weight_summary": {
+    "n_classes": 42,
+    "classes_with_any_sidecar": 10,
+    "mean_total_weight": 0.00833333283662796,
+    "max_total_weight": 0.07999999821186066,
+    "per_sidecar_mean": {
+      "jung21": 0.004880952183157206,
+      "sameji_sed": 0.0034523808863013983
+    },
+    "per_sidecar_nonzero_classes": {
+      "jung21": 6,
+      "sameji_sed": 8
+    },
+    "top_classes": [
+      {
+        "class": "undtin1",
+        "total": 0.07999999821186066,
+        "weights": {
+          "jung21": 0.05999999865889549,
+          "sameji_sed": 0.019999999552965164
+        }
+      },
+      {
+        "class": "chacha1",
+        "total": 0.07999999821186066,
+        "weights": {
+          "jung21": 0.03999999910593033,
+          "sameji_sed": 0.03999999910593033
+        }
+      },
+      {
+        "class": "555146",
+        "total": 0.07999999821186066,
+        "weights": {
+          "jung21": 0.019999999552965164,
+          "sameji_sed": 0.05999999865889549
+        }
+      },
+      {
+        "class": "116570",
+        "total": 0.05999999865889549,
+        "weights": {
+          "jung21": 0.05999999865889549,
+          "sameji_sed": 0.0
+        }
+      },
+      {
+        "class": "47144",
+        "total": 0.02499999850988388,
+        "weights": {
+          "jung21": 0.019999999552965164,
+          "sameji_sed": 0.004999999888241291
+        }
+      },
+      {
+        "class": "23158",
+        "total": 0.004999999888241291,
+        "weights": {
+          "jung21": 0.0,
+          "sameji_sed": 0.004999999888241291
+        }
+      },
+      {
+        "class": "thlwre1",
+        "total": 0.004999999888241291,
+        "weights": {
+          "jung21": 0.0,
+          "sameji_sed": 0.004999999888241291
+        }
+      },
+      {
+        "class": "65377",
+        "total": 0.004999999888241291,
+        "weights": {
+          "jung21": 0.004999999888241291,
+          "sameji_sed": 0.0
+        }
+      },
+      {
+        "class": "grekis",
+        "total": 0.004999999888241291,
+        "weights": {
+          "jung21": 0.0,
+          "sameji_sed": 0.004999999888241291
+        }
+      },
+      {
+        "class": "74113",
+        "total": 0.004999999888241291,
+        "weights": {
+          "jung21": 0.0,
+          "sameji_sed": 0.004999999888241291
+        }
+      }
+    ]
+  },
+  "topk_recall": {
+    "base_top3": 0.9315789473684211,
+    "cv_top3": 0.9368421052631579,
+    "all_row_top3": 0.9421052631578948
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "name": "birdclef_ensemble_strategy_20260525",
+  "description": "No-submit Phase 2 audit manifest for the v616 anchor/baseline plus fixed low-weight sidecar recipes.",
+  "labels_csv": "/Volumes/ExternalSSD/data/workspace_don/kaggle_birdclef2026/data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "Samejima/v616 visual anchor raw output.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output; public LB tied 0.949.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "sed_raw": {
+      "role": "branch",
+      "description": "Samejima/Raunak SED raw sidecar from v616 verifier.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_samejima_sed_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "jung21_raw": {
+      "role": "branch",
+      "description": "Jungchan Model21 raw sidecar from v616 verifier.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_jung21_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "sakur_visual": {
+      "role": "branch",
+      "description": "Sakur visual dry-run branch for no-slot audit only.",
+      "path": "artifacts/anchored_blend_audit/sidecar_grid_inputs_20260525T0200Z/sakur_visual.csv",
+      "hidden_safe_status": "analysis_only_public_dry_run_branch"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control: class-wise percentile-rank reconstruction of the v616 anchor.",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Control: actual submitted v616 final tied recipe.",
+      "member": "v616_final"
+    },
+    {
+      "name": "sakur_restored",
+      "type": "rank_blend",
+      "description": "Best Phase 1 numeric recipe: tiny Sakur visual restored on top of Jung21+SED.",
+      "weights": {
+        "anchor_v616_raw": 0.90,
+        "sakur_visual": 0.02,
+        "jung21_raw": 0.04,
+        "sed_raw": 0.04
+      }
+    },
+    {
+      "name": "sed_only_capped",
+      "type": "rank_blend",
+      "description": "Capped SED-only sidecar sensitivity check.",
+      "weights": {
+        "anchor_v616_raw": 0.94,
+        "sed_raw": 0.06
+      }
+    },
+    {
+      "name": "sed_jung_tighter",
+      "type": "rank_blend",
+      "description": "Tighter total sidecar weight variant of v616 branch mix.",
+      "weights": {
+        "anchor_v616_raw": 0.94,
+        "sed_raw": 0.03,
+        "jung21_raw": 0.03
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 1000,
+    "groups": ["site", "file"],
+    "note": "1000 iterations is smoke-grade but sufficient for Phase 2 local audit artifacts."
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 60,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}
