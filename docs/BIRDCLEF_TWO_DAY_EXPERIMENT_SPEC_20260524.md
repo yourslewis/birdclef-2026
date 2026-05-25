@@ -430,3 +430,9 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - v616 private verifier completed and passed output/log/runtime/schema gates.
 - Actual v616 outputs reproduced the local gate: AUC lift `+0.0030902`, site bootstrap q05 `+0.0017568`, leave-one-site all positive.
 - Submitted v616 as `v616: Repo-owned Samejima anchor plus Jung21 and SED rank blend`, ref `53012761`; 2026-05-25 UTC slots used `1/5`, status pending.
+
+## 2026-05-25 08:15 UTC update — no-slot follow-up while v616 pending
+
+- v616 remains pending after submission; 2026-05-25 UTC slots used `1/5`.
+- Alexy NS1 sidecar extraction is currently blocked by 403 access to source/session outputs; direct v613 already scored `0.923`, so do not spend another slot on that family without source access and a new local gate.
+- Per-class capped selector on v616 raw branches was implemented and rejected: in-sample lift near `+0.0029`, but leave-site CV lift only ~`+0.000002–0.000003`. This is not a v617 candidate.

@@ -1623,3 +1623,10 @@ Decision:
 
 - Hold all remaining 2026-05-24 slots. The scan found no distinct source-safe candidate worth a `v613` slot under the 0.960 target.
 - Next best work: keep scanning for a genuine new 0.96 source/artifact lineage or build a repo-owned extraction only if a candidate shows hidden-test-safe output plus evidence stronger than the v611/v612 sidecar ties.
+
+## 2026-05-25 08:15 UTC execution update — v616 pending, per-class selector rejected
+
+- v616 was submitted as ref `53012761` and is pending; 2026-05-25 UTC slots used `1/5`.
+- Alexy NS1 is blocked for repo-owned sidecar extraction because current Kaggle source/output API access returns 403 and direct v613 already scored `0.923`.
+- Added per-class capped selector tooling and ran it on actual v616 raw branches. All-row/in-sample lift was about `+0.0029`, but leave-site CV lift was effectively zero, so adaptive per-class v616 weighting is rejected.
+- Preserve remaining slots until v616 scores or a truly new source/artifact-backed candidate clears private/no-slot gates.
