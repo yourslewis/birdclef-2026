@@ -4211,3 +4211,17 @@ Decision:
 - **Aux negative coverage:** the OOF negative cache covered only `26/512` rows (`5.08%`) with `1664` masked negative cells / 64 per covered row. The tiny AUC lift over soft-only (`0.819410` vs `0.819021`) is noise-sized and not enough for scale or submission.
 - **Export/runtime validation:** TorchScript 15.389 MB and ONNX 0.56 MB exported; ONNX checker passed. CPU TorchScript inference smoke on 4 real audio files completed in `0.193s` total / `0.048s` per file, all 234 probability columns nonconstant. Trainer artifacts: `artifacts/sed_oof_teacher_students/sed-b0-oofteacher-b0v26-nfnetv29-soft-negaux002-512-ep3-20260525/`; logs `logs/sed_b0_oofteacher_b0v26_nfnetv29_soft_negaux002_512_ep3_20260525.log` and `logs/sed_b0_oofteacher_b0v26_nfnetv29_soft_negaux002_512_ep3_infer_smoke_20260525.log`.
 - **Decision:** no submission/no scale. Negative-mask auxiliary loss is operationally safe but currently too sparse to matter. Next exact target-design work should either (a) build a broader negative/no-call mask with much higher row coverage before retrying aux loss, or (b) test a curriculum/longer soft OOF-teacher student only if the small-smoke AUC can approach `0.90`.
+
+### 2026-05-25 22:43 UTC — ClawTeam late-day slot fill v617-v620
+
+- **Live state:** best remained **0.949**; `v616` completed at `0.949`; 2026-05-25 UTC slots were `1/5`; about `1.28h` remained before reset. No active local/trainer BirdCLEF jobs were found.
+- **Slot-policy decision:** under the hill-climb cron's new policy, late-day unused slots should be filled with highest-ranked valid exploratory candidates if no verifier-grade candidate exists. The high-priority new-branch lanes were not submission-ready inside the final window, so preserving 4 slots was not acceptable.
+- **Scouting/audit:** refreshed public scan to `artifacts/public_kernels_20260525_late_scout/scan_20260525T2238Z.json` and used guarded source/output preflight in `scripts/submit_v617_v620_late_slot_fill_20260525.py`; submit report is `artifacts/public_kernels_20260525_late_scout/submit_v617_v620_late_slot_fill_20260525.json`.
+- **Rejected by verifier:** WildSound v8 `ERROR`; Udaken cancelled/no final; P952 Exp070 teacher/cache kernels wrote 7992 train rows and lacked a competition-final path; Kijiang/P949/Gendaijin direct finals were malformed; Samejima HGNetV2 and Viktoriia finals had bad values; Om Modi was all-zero; Ykuroka wrote zero rows; Tulay was mock/wrong-shape.
+- **Submissions made:** filled remaining slots with guarded code submissions:
+  - `v617: Exploratory direct Nina EoS7 sz sidecar source`, ref `53032516`.
+  - `v618: Exploratory direct Kruzzcc Nina EoS4 BirdNET source`, ref `53032520`.
+  - `v619: Exploratory direct Kruzzcc Mtoshi UMAP BirdNET source`, ref `53032523`.
+  - `v620: Exploratory direct Kazuhiro Karnak rank fusion source`, ref `53032524`.
+- **Post-submit state:** 2026-05-25 UTC slots are now `5/5`; v617-v620 are pending. Current scored LB still `0.949` pending those results.
+- **Next:** monitor v617-v620. If any improves, build a repo-owned confirmer from that source family. If all tie/drop, resume genuinely new-signal work rather than more EoS/ProtoSSM/SED repeats.
