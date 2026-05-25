@@ -1630,3 +1630,10 @@ Decision:
 - Alexy NS1 is blocked for repo-owned sidecar extraction because current Kaggle source/output API access returns 403 and direct v613 already scored `0.923`.
 - Added per-class capped selector tooling and ran it on actual v616 raw branches. All-row/in-sample lift was about `+0.0029`, but leave-site CV lift was effectively zero, so adaptive per-class v616 weighting is rejected.
 - Preserve remaining slots until v616 scores or a truly new source/artifact-backed candidate clears private/no-slot gates.
+
+## 2026-05-25 10:10 UTC execution update — v616 tie, SYD52p rejected
+
+- v616 scored `0.949`; current best remains `0.949`, and 2026-05-25 slots used are `1/5`.
+- Fresh scout found recent `P949 SYD` clones and related probes. Public finals are malformed or report-only; raw branches are valid but mostly already-known Jungchan/Samejima/Raunak derivatives.
+- SYD52p sidecar grid produced a stable local lift but only `+0.000020` over v616, which just tied. Rejected as a near-duplicate slot candidate.
+- Preserve remaining slots for truly distinct source/artifact evidence or a new exportable SED/training lane.

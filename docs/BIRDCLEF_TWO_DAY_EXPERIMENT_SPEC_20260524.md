@@ -436,3 +436,10 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - v616 remains pending after submission; 2026-05-25 UTC slots used `1/5`.
 - Alexy NS1 sidecar extraction is currently blocked by 403 access to source/session outputs; direct v613 already scored `0.923`, so do not spend another slot on that family without source access and a new local gate.
 - Per-class capped selector on v616 raw branches was implemented and rejected: in-sample lift near `+0.0029`, but leave-site CV lift only ~`+0.000002–0.000003`. This is not a v617 candidate.
+
+## 2026-05-25 10:10 UTC update — v616 tie + fresh scout
+
+- v616 scored `0.949`, tying the current best and confirming the strong train-soundscape sidecar gate was not approval evidence.
+- Fresh Kaggle scout found new `BC2026 P949 SYD ...` clones with valid raw branch files but malformed public finals; they are branch-family variants of the already-tested Jungchan/Samejima/Raunak lane.
+- A SYD `subm_52p` no-slot grid added only microscopic local lift over v616 (`+0.000020` AUC over the v616 recipe) despite clean leave-site stability. Do not spend a second 2026-05-25 slot on this near-duplicate.
+- Next priority should be a genuinely new source/artifact line or real SED/export smoke, not more scalar/per-class/near-duplicate v616 branch tweaks.
