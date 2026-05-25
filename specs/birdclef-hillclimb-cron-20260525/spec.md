@@ -51,3 +51,21 @@ Each run must report:
 - submissions made or why none;
 - artifact paths / kernel refs / commits;
 - next exact action.
+
+## Data-point model training policy — added 2026-05-25
+The hill-climb loop should train distinct new model families anyway, even when the immediate smoke is unlikely to beat v616 or qualify for submission. The goal is to create a measured search landscape, not just a binary submit/no-submit gate.
+
+Rules:
+- Prefer many bounded, diverse data points over repeatedly polishing the same plateau family.
+- For each new model/training branch, record: model family, init/source, train rows, labels/targets, input window, augmentations, loss, epochs, runtime, CV/proxy metric, branch/anchor/v616 correlation when possible, export/runtime status, and whether it created useful hidden-behavior diversity.
+- Weak local score does not automatically kill a branch if it is decorrelated, covers rare/non-Aves/no-call slices, or can become an ensemble sidecar.
+- Still kill branches that are malformed, rule-risky, impossible to package, all-zero/constant, or exact duplicates.
+- Maintain an experiment ledger so the critic can rank future choices from evidence rather than vibes.
+
+Default new-model data-point queue:
+1. EfficientAT/PANNs AudioSet event/no-call branch.
+2. Broader OOF negative/no-call SED student.
+3. Non-Aves / no-train-soundscape specialist.
+4. 20s temporal context/localmax branch.
+5. G124/V2S-init larger/all-row pilot.
+6. Alexy/sidecar-derived model only if source/checkpoint access becomes clean.

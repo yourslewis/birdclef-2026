@@ -17,3 +17,6 @@
 - Immediate post-submit check: 2026-05-25 UTC slots now `5/5`; v617-v620 pending; v616 complete `0.949`.
 - Ranked queue artifact: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260525T2243Z.md`.
 - Next: monitor v617-v620 after scoring; if all tie/drop, stop EoS/ProtoSSM/SED public-source repeats and resume new-branch no-slot work (EfficientAT/PANNs event/no-call, broader no-call negative cache, non-Aves specialist, or 20s temporal branch).
+
+## 2026-05-25 data-point training policy
+- User advised training the new models anyway to obtain more data points. Updated hill-climb spec: new distinct model families should be trained as measured data points even if not immediate submission-grade, with an experiment ledger for model family/init/rows/targets/window/loss/runtime/CV/correlation/export status/diversity value.
