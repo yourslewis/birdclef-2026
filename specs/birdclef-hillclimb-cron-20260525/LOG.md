@@ -20,3 +20,12 @@
 
 ## 2026-05-25 data-point training policy
 - User advised training the new models anyway to obtain more data points. Updated hill-climb spec: new distinct model families should be trained as measured data points even if not immediate submission-grade, with an experiment ledger for model family/init/rows/targets/window/loss/runtime/CV/correlation/export status/diversity value.
+
+## 2026-05-25 23:07 UTC — capped slots + soundscape non-Aves/no-train data point
+
+- Live check: best remains `0.949`; `v616` tied; 2026-05-25 UTC slots are `5/5`; `v617`-`v620` remain pending; ~52 min to reset.
+- Active job check: no local/trainer BirdCLEF jobs before this run.
+- Scout refresh: EfficientAT and PANNs/Cnn14 remain the best AudioSet event/no-call leads, but trainer venv currently lacks `panns_inference`, TensorFlow/TF-Hub, and PaSST packages, so a real AudioSet branch needs asset packaging first.
+- Trained a distinct soundscape-native data point anyway: `soundscape-nonaves-notrain-b0-5s160-siteS08-ep3-20260525` using official `train_soundscapes` 5s labels scoped to 72 non-Aves/no-train classes.
+- Result: 1,478 windows; site-holdout `S08` 120 rows; runtime 19.46s CUDA; TorchScript+ONNX export passed; ONNX checker OK; CPU TorchScript smoke OK. Macro AUC only `0.48865` overall / `0.47610` no-train, with highly uneven sonotype behavior.
+- Decision: no submission/no scale. Keep as comparison-grade landscape data point; next after reset is monitor `v617`-`v620`, then package EfficientAT/PANNs AudioSet embedding branch or run site-balanced/group-DRO non-Aves smoke.

@@ -4225,3 +4225,14 @@ Decision:
   - `v620: Exploratory direct Kazuhiro Karnak rank fusion source`, ref `53032524`.
 - **Post-submit state:** 2026-05-25 UTC slots are now `5/5`; v617-v620 are pending. Current scored LB still `0.949` pending those results.
 - **Next:** monitor v617-v620. If any improves, build a repo-owned confirmer from that source family. If all tie/drop, resume genuinely new-signal work rather than more EoS/ProtoSSM/SED repeats.
+
+### 2026-05-25 23:07 UTC — capped slots + soundscape non-Aves/no-train data point
+
+- **Live state:** best remains **0.949**. `v616` tied at `0.949`; `v617`-`v620` are still pending; 2026-05-25 UTC slots are **5/5** with ~52 minutes to reset. No active BirdCLEF jobs were found locally or on trainer before this run.
+- **Slot decision:** no additional competition submission possible because cap is full. Per the new data-point policy, continued by training a distinct branch rather than idling.
+- **Scout refresh:** EfficientAT and PANNs/Cnn14 remain the strongest AudioSet event/no-call leads, but the current trainer venv lacks `panns_inference`, TensorFlow/TF-Hub, and PaSST packages. A real AudioSet embedding branch needs an explicit packaging step.
+- **Implementation:** added `scripts/birdclef_soundscape_specialist_train.py` and config `configs/birdclef/soundscape_nonaves_notrain_b0_5s160_siteS08_ep3_20260525.json`. The script trains on official `train_soundscapes_labels.csv` 5s windows, with a 72-class non-Aves/no-train specialist head.
+- **Training result:** 1,478 windows, 5,420 positive target cells, site-holdout `S08` with 120 validation rows. EfficientNet-B0 SED-style model used q3/cap80 external-pretrain encoder init; 352 keys loaded, head skipped. Runtime `19.46s` on CUDA. Best val loss at epoch 2 (`0.26949`).
+- **Metrics:** site-holdout macro AUC `0.48865` over 18 valid scoped classes; no-train macro AUC `0.47610` over 17 valid classes. Some sonotypes were learnable (`47158son22=0.988`, `son13=0.944`, `son11=0.910`), but several inverted badly (`son18=0.057`, `son25=0.092`, `son10=0.106`). This is a useful landscape data point, not a slot candidate.
+- **Export/runtime:** TorchScript and ONNX exported under `artifacts/soundscape_specialists/soundscape-nonaves-notrain-b0-5s160-siteS08-ep3-20260525/`; ONNX checker OK; CPU TorchScript smoke `0.093s` for 2 logmel samples with `[2,72]` clip output.
+- **Decision:** no submission/no scale. The branch is rule-safe and diverse, but not competition-format and not submission-grade. Next after reset: score-check `v617`-`v620`; if none improve, package EfficientAT/PANNs AudioSet embeddings for this same non-Aves/no-call target space or test site-balanced/group-DRO training.
