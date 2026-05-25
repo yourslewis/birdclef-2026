@@ -1586,3 +1586,40 @@ Queue remains unchanged:
 - Added private v612 verifier `kaggle-kernels/v612-anchored-sameji-hgnet57-pt/` using Samejima visual anchor + newly saved Samejima HGNet-v57 torch checkpoints as a conservative `0.94/0.06` anchored rank sidecar.
 - Pushed private Kaggle validation `yourslewis/bc26-v612-anchored-sameji-hgnet57-pt` v1, kernel id `120456720`; currently RUNNING/no outputs. Do **not** submit unless it completes, outputs validate, runtime is plausible, and evidence is materially stronger than v611's tied-best result.
 - Hold remaining `4/5` competition slots.
+
+## 2026-05-24 20:25 UTC update — v612 submitted, pending score
+
+- Best before v612 remains `0.949`; target `0.960`; UTC slots used before v612 `1/5`.
+- v612 private validation COMPLETE/no failure. Outputs validated: final `submission.csv` `240x235`, no bad values, nonconstant all 234 class columns; branch output `submission_sameji_hgnet57_raw.csv` exists and row-aligns. Public dry-run runtime about `813s`; Samejima HGNet-v57 PT sidecar added about `106s` after the Samejima visual anchor.
+- v612 sidecar evidence: raw sidecar rank-vs-anchor corr `0.50213`, MAE `0.22085`; final rank-vs-anchor corr `0.99879`, MAE `0.01109`. Local dry-run rejection gate over 190 matched rows / 11 classes: anchor AUC `0.93315`, v611 final `0.93895`, v612 final `0.94089`, v612 raw sidecar `0.96489`.
+- Submitted v612 `Repo-owned Samejima anchor plus HGNet-v57 PT sidecar`, ref `52998418`; status `pending`. 2026-05-24 UTC slots used now `2/5`.
+- 20UTC scan/audit artifacts:
+  - `scan_20260524T2000Z.json`
+  - `source_audit_20260524T2000Z_newleads/summary.json`
+  - `output_audit_20260524T2000Z_focus/summary.json`
+- 20UTC scan found no stronger direct source-safe candidate. Tulay EfficientNet was mock/all-zero `2x207`; Claudedevore R0952 train outputs are checkpoints/manifests without inference; Raunak final remains 3-row fallback; known plateau families unchanged.
+- Hold remaining `3/5` slots until v612 scores or a materially stronger source-safe candidate appears.
+
+## 2026-05-24 22:30 UTC execution update — v612 tie, 22UTC scan held
+
+Live status:
+
+- `v612` scored `0.949`, tying current best but giving no lift.
+- Confirmed best remains **0.949**; target remains **0.960**.
+- 2026-05-24 UTC slots used: `2/5`; estimated remaining: `3`.
+- PR #245 is merged; PR #256 (`feature/birdclef-20260524-20utc-v612-submit`) remains open/blocked.
+- Main Documents clone is unreadable, so active canonical repo work moved to `/Users/yourslewis/.openclaw/repos/birdclef-2026`.
+
+22UTC source-scan findings:
+
+- Latest post-20UTC leads did not pass source/output safety:
+  - WildSound v8: ERROR on missing `/kaggle/input/birdclef-2026/train_metadata.csv`.
+  - Tulay EfficientNet-B0 weights: ERROR/mock-mode/fallback-sized output.
+  - Samejima HGNetV2-B0 inference: COMPLETE but train/dry-run row behavior, not a valid direct competition output; repo-owned HGNet sidecars already tested and tied/dropped.
+  - Alexy NS1 ensemble: interesting CNN/noisy-student lineage, but source self-reports `LB 0.922`, public output is `(192,235)`, and evidence is not 0.96-relevant enough for a slot.
+- Known 2026-05-24 families (PCEN/EoS6, Jungchan rank-fusion outputs, Claudedevore train-only R0952, Raunak fallback, Samejima/Sakur visual/HGNet) remain held/rejected as plateau, invalid, train-only, or sidecar-only evidence.
+
+Decision:
+
+- Hold all remaining 2026-05-24 slots. The scan found no distinct source-safe candidate worth a `v613` slot under the 0.960 target.
+- Next best work: keep scanning for a genuine new 0.96 source/artifact lineage or build a repo-owned extraction only if a candidate shows hidden-test-safe output plus evidence stronger than the v611/v612 sidecar ties.
