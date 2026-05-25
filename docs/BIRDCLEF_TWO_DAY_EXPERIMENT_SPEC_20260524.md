@@ -443,3 +443,9 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - Fresh Kaggle scout found new `BC2026 P949 SYD ...` clones with valid raw branch files but malformed public finals; they are branch-family variants of the already-tested Jungchan/Samejima/Raunak lane.
 - A SYD `subm_52p` no-slot grid added only microscopic local lift over v616 (`+0.000020` AUC over the v616 recipe) despite clean leave-site stability. Do not spend a second 2026-05-25 slot on this near-duplicate.
 - Next priority should be a genuinely new source/artifact line or real SED/export smoke, not more scalar/per-class/near-duplicate v616 branch tweaks.
+
+## 2026-05-25 12:10 UTC update — real SED/export smoke
+
+- Ran a new all-class EfficientNet-B0 SED export smoke after v616 tied: q3/cap80 external init, 512 balanced real-audio files, 5s/160-mel, 2 epochs.
+- Operational gate passed: CUDA train completed in ~39s, TorchScript and ONNX exported, ONNX checker passed, CPU TorchScript inference smoke ran on 4 real files with nonconstant probabilities.
+- Model gate failed: holdout macro AUC only `0.754065` over 79 valid classes. Do not submit or scale this exact config; next SED lane needs a better target/data strategy such as OOF-teacher cache or hard-negative/no-call residual.

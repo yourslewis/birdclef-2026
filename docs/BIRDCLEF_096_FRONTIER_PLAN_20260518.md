@@ -1637,3 +1637,10 @@ Decision:
 - Fresh scout found recent `P949 SYD` clones and related probes. Public finals are malformed or report-only; raw branches are valid but mostly already-known Jungchan/Samejima/Raunak derivatives.
 - SYD52p sidecar grid produced a stable local lift but only `+0.000020` over v616, which just tied. Rejected as a near-duplicate slot candidate.
 - Preserve remaining slots for truly distinct source/artifact evidence or a new exportable SED/training lane.
+
+## 2026-05-25 12:10 UTC execution update — SED export smoke passed operationally, failed model gate
+
+- Current best remains `0.949`; v616 tied and 2026-05-25 slots used remain `1/5`.
+- Added and ran `sed_b0_q3cap80_ep12init_exportsmoke_5s_160_allcls_20260525`: EfficientNet-B0 SED, external q3/cap80 init, 512 balanced real-audio files, all classes.
+- Export/runtime path is viable (TorchScript + ONNX, ONNX checker OK, CPU inference smoke OK), but validation AUC `0.754065` is far below the useful threshold. Treat as packaging progress only, not a candidate.
+- Next work should pivot the SED target/data design rather than scale this exact supervised balanced smoke.
