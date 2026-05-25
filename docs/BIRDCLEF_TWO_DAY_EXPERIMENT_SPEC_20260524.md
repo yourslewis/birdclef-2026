@@ -456,3 +456,9 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - OOF teacher cache is broader (`0.911282` AUC over 170 classes) but hard positives are too sparse (12 cells / 6 classes at 91.7% precision); use soft labels if using it at all.
 - Soft OOF-teacher B0 SED smoke improved over the supervised balanced smoke (`0.819021` vs `0.754065`) and passed TorchScript/ONNX/inference packaging, but still fails the model gate. No submit/no scale.
 - Next target-design work should test a curriculum or negative-mask auxiliary loss, not hard pseudo-positive thresholds from current caches.
+
+## 2026-05-25 16:15 UTC update — negative-mask auxiliary smoke
+
+- Continued Track E after the soft OOF-teacher smoke: added a small `0.02` masked-negative auxiliary penalty using the OOF negative cache.
+- Result was essentially flat: macro AUC `0.819410` over 80 valid classes vs `0.819021` for soft-only. The negative mask covered only `26/512` rows (`5.08%`), so current coverage is too sparse to create useful new signal.
+- Export/runtime gates still pass (TorchScript+ONNX+CPU inference smoke), but the model gate fails. Do not submit or scale this exact config. Next Track E step needs either broader negative/no-call coverage or a curriculum/longer soft OOF-teacher test with a stronger small-smoke gate.

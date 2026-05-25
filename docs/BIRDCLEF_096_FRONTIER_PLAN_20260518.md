@@ -1650,3 +1650,9 @@ Decision:
 - Current best remains `0.949`; 2026-05-25 slots used remain `1/5`.
 - Threshold sweeps show public train-soundscape pseudo-label caches are too narrow for all-class training despite high local AUC; OOF teacher is broader but hard positives are sparse.
 - Soft OOF-teacher B0 SED smoke reached AUC `0.819021` and exported cleanly, improving over the 12UTC supervised SED smoke but still below scale threshold. Treat as target-design progress, not a candidate.
+
+### 2026-05-25 16:15 UTC — Track E negative-mask aux result
+
+- Tested soft OOF-teacher B0 SED plus OOF negative-mask auxiliary loss (`aux_negative_weight=0.02`) as a no-slot target-design smoke.
+- Holdout macro AUC was `0.819410` over 80 valid classes, effectively flat versus soft-only `0.819021`; negative-mask coverage was only `26/512` rows.
+- Decision: reject this exact negative-aux config for scale/submission. Keep exportable SED path alive, but prioritize broader negative/no-call mask construction or validation-proxy redesign before more SED students.
