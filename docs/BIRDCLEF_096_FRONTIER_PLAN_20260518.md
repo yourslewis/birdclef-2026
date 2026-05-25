@@ -1644,3 +1644,9 @@ Decision:
 - Added and ran `sed_b0_q3cap80_ep12init_exportsmoke_5s_160_allcls_20260525`: EfficientNet-B0 SED, external q3/cap80 init, 512 balanced real-audio files, all classes.
 - Export/runtime path is viable (TorchScript + ONNX, ONNX checker OK, CPU inference smoke OK), but validation AUC `0.754065` is far below the useful threshold. Treat as packaging progress only, not a candidate.
 - Next work should pivot the SED target/data design rather than scale this exact supervised balanced smoke.
+
+## 2026-05-25 14:15 UTC execution update — pseudo-label cache redesign result
+
+- Current best remains `0.949`; 2026-05-25 slots used remain `1/5`.
+- Threshold sweeps show public train-soundscape pseudo-label caches are too narrow for all-class training despite high local AUC; OOF teacher is broader but hard positives are sparse.
+- Soft OOF-teacher B0 SED smoke reached AUC `0.819021` and exported cleanly, improving over the 12UTC supervised SED smoke but still below scale threshold. Treat as target-design progress, not a candidate.

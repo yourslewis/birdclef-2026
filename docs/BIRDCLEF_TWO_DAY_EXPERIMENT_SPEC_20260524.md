@@ -449,3 +449,10 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - Ran a new all-class EfficientNet-B0 SED export smoke after v616 tied: q3/cap80 external init, 512 balanced real-audio files, 5s/160-mel, 2 epochs.
 - Operational gate passed: CUDA train completed in ~39s, TorchScript and ONNX exported, ONNX checker passed, CPU TorchScript inference smoke ran on 4 real files with nonconstant probabilities.
 - Model gate failed: holdout macro AUC only `0.754065` over 79 valid classes. Do not submit or scale this exact config; next SED lane needs a better target/data strategy such as OOF-teacher cache or hard-negative/no-call residual.
+
+## 2026-05-25 14:15 UTC update — pseudo-label/cache redesign
+
+- Added OOF-cache threshold diagnostics and swept four caches. Public train-soundscape teacher caches look excellent locally (`~0.997` AUC) but hard positives cover only 9 classes, so they are leakage/narrowness traps for all-class students.
+- OOF teacher cache is broader (`0.911282` AUC over 170 classes) but hard positives are too sparse (12 cells / 6 classes at 91.7% precision); use soft labels if using it at all.
+- Soft OOF-teacher B0 SED smoke improved over the supervised balanced smoke (`0.819021` vs `0.754065`) and passed TorchScript/ONNX/inference packaging, but still fails the model gate. No submit/no scale.
+- Next target-design work should test a curriculum or negative-mask auxiliary loss, not hard pseudo-positive thresholds from current caches.
