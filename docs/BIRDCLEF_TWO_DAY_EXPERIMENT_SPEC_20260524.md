@@ -412,3 +412,9 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - Local matched-row AUC improved from `0.9903905` to `0.9935362` (`+0.0031457`), corr vs anchor `0.999641`, MAE `0.006713`.
 - Stability was unusually clean for a local gate: site bootstrap q05 `+0.00181`; leave-one-site all 6 held-out sites positive with min lift `+0.002723`.
 - This still is not approval evidence by itself; next required step is a repo-owned private verifier (candidate v616) that reruns/generates the branches hidden-safely and validates runtime/schema before any 2026-05-25 competition slot.
+
+## 2026-05-25 04:10 UTC update — v616 feasibility clarified
+
+- The 02UTC sidecar grid is not directly submit-safe because static public dry-run CSVs cannot be used as hidden-test branch outputs.
+- Hidden-safe v616 can be simplified: Samejima SED and Raunak SED are identical on the audited rows, so v616 only needs Samejima anchor/SED plus Jungchan Model21. The Sakur-free blend `0.92*anchor + 0.04*Jung21 + 0.04*SED` retained local lift around `+0.00309`.
+- Added source extraction helper and feasibility notes. The blocker is cleaning the 8381-line Jungchan Model21 slice into a callable function inside a private verifier. No 2026-05-25 slot until that private verifier completes.
