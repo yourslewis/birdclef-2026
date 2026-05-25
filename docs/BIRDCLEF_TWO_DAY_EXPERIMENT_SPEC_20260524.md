@@ -398,3 +398,10 @@ There are enough ideas for at least two days without touching weak public replay
 12. OOF ensemble grid across repo-owned NPZs.
 
 The correct next behavior is not “wait for better public kernels.” It is to keep this list moving through no-slot gates until one candidate earns a Kaggle slot.
+
+## 2026-05-25 00:15 UTC update — reset + first tomorrow deliverables
+
+- 2026-05-25 UTC reset is active: `0/5` slots used at first check.
+- v613/v614/v615 final-slot experiments scored: Alexy NS1 direct `0.923`, Raunak v9 direct `0.949`, Jungchan CT-MoBE direct `0.949`. Direct Alexy is killed; Raunak/Jungchan are plateau ties and should only remain branch/manifest inputs.
+- G124 V2S-init smoke ran on trainer and cleared the training/export smoke gate: final-all student macro AUC `0.962116`, best epoch `4`, TorchScript+ONNX exported, V2S init loaded `786` keys. However a 384-row intersection blend audit found only a microscopic best lift (`+0.0000021` at weight `0.01`) and degradation at larger weights, so it is **not** a submission candidate yet.
+- Deliverable status: G124/V2S-init smoke result exists; unified sidecar manifest exists at `artifacts/anchored_blend_audit/sidecar_manifest_20260525T0000Z.json`; next priority should be an all-row/pilot decision or sidecar grid/Alexy sidecar extraction, not direct replay.
