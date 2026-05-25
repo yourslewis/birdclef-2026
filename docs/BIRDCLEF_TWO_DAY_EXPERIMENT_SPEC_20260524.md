@@ -424,3 +424,9 @@ The correct next behavior is not “wait for better public kernels.” It is to 
 - Implemented and pushed private verifier `yourslewis/bc26-v616-anchored-jung21-sed-blend` v1 / kernel id `120505284`.
 - It reruns Samejima anchor/SED and Jungchan Model21, then blends `0.92/0.04/0.04`. It explicitly does not read static public dry-run CSV outputs.
 - Status after push: RUNNING/no failure/no outputs yet. No competition slot should be spent until it completes and output/runtime/schema validation passes.
+
+## 2026-05-25 08:05 UTC update — v616 submitted
+
+- v616 private verifier completed and passed output/log/runtime/schema gates.
+- Actual v616 outputs reproduced the local gate: AUC lift `+0.0030902`, site bootstrap q05 `+0.0017568`, leave-one-site all positive.
+- Submitted v616 as `v616: Repo-owned Samejima anchor plus Jung21 and SED rank blend`, ref `53012761`; 2026-05-25 UTC slots used `1/5`, status pending.
