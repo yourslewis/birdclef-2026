@@ -4273,3 +4273,12 @@ Decision:
 - **Decision:** no submission/no package unchanged. This is a useful negative/decorrelation data point: naive 20s context with soft OOF targets hurts badly versus the 5s 1024-row soft-only control (`0.911067`). If revisited, use true local-window/offset pseudo-labels or multi-crop localmax aggregation.
 - **Reports/artifacts:** `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T0419Z.md`, `specs/birdclef-hillclimb-cron-20260525/model_data_point_20260526T0419Z_20s_localmax.md`, ledger `artifacts/model_data_point_ledger/20260526T0419Z_20s_localmax.md`, artifact root `artifacts/sed_oof_teacher_students/sed-b0-oofteacher-b0v26-nfnetv29-soft-20s-localmax-512-ep3-20260526/`.
 - **Next:** package/audit the stronger 1024-row soft-only B0 as a raw 234-class sidecar against v616, or move to G124/V2S if B0 audit fails.
+
+### 2026-05-26 06:34 UTC — G124/V2S target-design localmax data point + B0/G124 sidecar audit
+
+- **Live state:** best remains **0.949**; `v616` is still the tied baseline. Latest scored submissions remain `v617=0.949`, `v618=0.946`, `v619=0.944`, `v620=0.949`. 2026-05-26 UTC slots used **0/5** with ~17.4h to reset. No active jobs remained after cleanup.
+- **Scout refresh:** web/Kaggle-search queries for EfficientAT/PANNs/AudioSet and fresh 0.949+ leads found no clean new public lead; results were generic EDA/baseline or irrelevant.
+- **Duplicate prevention:** prior G124 all-row V2S-init center pilot already existed on trainer, so it was not rerun.
+- **Trained data point:** `g124-effv2s-public946-pseudo-pilot-20260526-v2sinit-power085-localmax-ep6` using EfficientNetV2-RW-S, external V2S init, 792 teacher train-soundscape rows, `teacher_power=0.85`, local-max radius 1 targets, focal BCE, 6 epochs. Best val AUC `0.960094` over 62 valid classes; all-row student AUC `0.944720`; student/teacher corr `0.847478`; TorchScript+ONNX export passed on trainer.
+- **Sidecar audit:** generated raw train-soundscape predictions for the soft-only B0 `1024_ep4` student, filtered to the 240 v616 proxy rows, converted G124 center/localmax predictions to sidecar CSVs, and ran `audit_vs_v616_fast.json`. Best tiny G124-only recipe lifted local proxy from `0.993480668` to `0.993484059` (`+0.00000339`) with corr `0.999986`; soft-B0 weights did not help.
+- **Decision:** no submission. The G124 signal is interesting but the local lift is too small and teacher/proxy-derived for an early-day Kaggle slot. Next: EfficientAT AudioSet embedding branch if assets are clean, otherwise a bounded G124 hard-confidence/power ablation.

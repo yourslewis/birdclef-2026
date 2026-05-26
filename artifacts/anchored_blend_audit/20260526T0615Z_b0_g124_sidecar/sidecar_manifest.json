@@ -1,0 +1,18 @@
+{
+  "g124_v2s_allrows_ep8_center_p100": {
+    "csv": "artifacts/anchored_blend_audit/20260526T0615Z_b0_g124_sidecar/g124_v2s_allrows_ep8_center_p100.csv",
+    "rows": 792,
+    "cols": 234,
+    "min": 0.003763457527384162,
+    "max": 0.9908871650695801,
+    "mean": 0.08095214515924454
+  },
+  "g124_v2s_power085_localmax_ep6": {
+    "csv": "artifacts/anchored_blend_audit/20260526T0615Z_b0_g124_sidecar/g124_v2s_power085_localmax_ep6.csv",
+    "rows": 792,
+    "cols": 234,
+    "min": 0.0,
+    "max": 1.0,
+    "mean": 0.11702047288417816
+  }
+}
