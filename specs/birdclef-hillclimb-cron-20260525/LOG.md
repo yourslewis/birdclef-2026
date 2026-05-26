@@ -39,3 +39,12 @@
 - Result: 1,478 official soundscape windows, 72 labels + no-call aux, S08 macro AUC `0.517333`, no-train AUC `0.520824`, embedding extraction 49.84s CUDA, best val loss `0.45604`.
 - Verifier: artifacts finite/nonconstant, TorchScript head smoke passed; not submission-format and no slot approved.
 - Reports: `ranked_queue_20260526T0022Z.md`, `model_data_point_20260526T0022Z_panns_cnn14_audioset_soundscape.md`, ledger under `artifacts/model_data_point_ledger/`.
+
+## 2026-05-26 02:20 UTC — Broad OOF negative/no-call mask + 1024-row control
+
+- Live check: best remains `0.949`; v616 tied; v617/v620 tied, v618/v619 dropped; 2026-05-26 UTC slots `0/5`; no active BirdCLEF jobs locally/on trainer before run.
+- Early-day slot decision: no submission. No verifier-grade candidate was ready; exact/tied replays are forbidden.
+- Built broad OOF-teacher-derived negative/no-call mask from `b0v26_nfnetv29_w090010_intersection_cache.npz` using threshold `0.03` and cap `64` negatives per row. Capped coverage: 47,343 cells, 1,259/1,279 rows, 230/234 classes, 0 false-negative cells.
+- Trained broad-neg B0 soft OOF-teacher student: 1,024 rows, 4 epochs, aux weight `0.01`; macro AUC `0.908278` over 122 classes; TorchScript/ONNX export and CPU smoke passed.
+- Trained matched soft-only 1,024-row/4-epoch control: macro AUC `0.911067` over 122 classes; TorchScript/ONNX export and CPU smoke passed.
+- Critic/verifier: broad mask solved coverage but aux weight slightly underperformed control; keep soft-only as better promotion candidate, no submission approved. Next: no-slot sidecar/v616 audit for soft-only B0 or distinct 20s temporal/localmax smoke.
