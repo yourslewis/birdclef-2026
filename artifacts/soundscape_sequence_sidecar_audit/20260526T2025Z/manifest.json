@@ -1,0 +1,145 @@
+{
+  "name": "birdclef_soundscape_sequence_sidecar_audit_20260526",
+  "description": "No-submit audit of train_soundscape sequence/file/site 72-label sidecars wrapped into 234-class v616 proxy matrices.",
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "Samejima/v616 visual anchor raw output.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output; public LB tied 0.949.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "seq_context_sidecar": {
+      "role": "analysis_branch",
+      "description": "DyMN10 context MLP leave-site sidecar; 72-label train_soundscape scope only, anchor-filled elsewhere.",
+      "path": "artifacts/soundscape_sequence_sidecar_audit/20260526T2025Z/sidecars/seq_context_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    },
+    "seq_r2_nofile_reg_sidecar": {
+      "role": "analysis_branch",
+      "description": "Regularized radius-2 no-file context leave-site sidecar; 72-label train_soundscape scope only, anchor-filled elsewhere.",
+      "path": "artifacts/soundscape_sequence_sidecar_audit/20260526T2025Z/sidecars/seq_r2_nofile_reg_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control: v616 anchor rank reconstruction.",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Control: actual submitted v616 tied recipe.",
+      "member": "v616_final"
+    },
+    {
+      "name": "seq_context_w01",
+      "type": "rank_blend",
+      "description": "1% DyMN10 context sequence sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "seq_context_sidecar": 0.01
+      }
+    },
+    {
+      "name": "seq_context_w02",
+      "type": "rank_blend",
+      "description": "2% DyMN10 context sequence sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "seq_context_sidecar": 0.02
+      }
+    },
+    {
+      "name": "seq_context_w04",
+      "type": "rank_blend",
+      "description": "4% DyMN10 context sequence sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "seq_context_sidecar": 0.04
+      }
+    },
+    {
+      "name": "seq_r2_w01",
+      "type": "rank_blend",
+      "description": "1% regularized r2/no-file sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "seq_r2_nofile_reg_sidecar": 0.01
+      }
+    },
+    {
+      "name": "seq_r2_w02",
+      "type": "rank_blend",
+      "description": "2% regularized r2/no-file sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "seq_r2_nofile_reg_sidecar": 0.02
+      }
+    },
+    {
+      "name": "seq_r2_w04",
+      "type": "rank_blend",
+      "description": "4% regularized r2/no-file sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "seq_r2_nofile_reg_sidecar": 0.04
+      }
+    },
+    {
+      "name": "seq_context02_r201",
+      "type": "rank_blend",
+      "description": "2% context + 1% r2 sidecar combo.",
+      "weights": {
+        "anchor_v616_raw": 0.97,
+        "seq_context_sidecar": 0.02,
+        "seq_r2_nofile_reg_sidecar": 0.01
+      }
+    },
+    {
+      "name": "seq_context01_r202",
+      "type": "rank_blend",
+      "description": "1% context + 2% r2 sidecar combo.",
+      "weights": {
+        "anchor_v616_raw": 0.97,
+        "seq_context_sidecar": 0.01,
+        "seq_r2_nofile_reg_sidecar": 0.02
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 20,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 40,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}

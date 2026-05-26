@@ -114,3 +114,10 @@
 - Verifier: leave-site predictions finite/nonconstant (`1314x72`, `72/72` nonconstant); TorchScript and ONNX export/check passed. No 234-class wrapper/v616 audit; no Kaggle submission.
 - Reports/artifacts: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T1620Z.md`, `artifacts/model_data_point_ledger/20260526T1620Z_soundscape_native_losite.md`, artifact root `artifacts/soundscape_native_losite/soundscape-native-b0-losite-nonaves-notrain-ep4-20260526/`.
 - Decision: no early-day slot. Next exact action: use context-MLP as the control; either run one regularized/worst-site context ablation then wrapper/audit, or reformulate DyMN10/AudioSet into a multi-site 234-class sidecar.
+
+## 2026-05-26 20:25 UTC — sequence sidecar wrapper audit
+- Live check: best `0.949`; v616/v617/v620 tied, v618 `0.946`, v619 `0.944`; 2026-05-26 slots `0/5`; ~3.7h to reset.
+- No valid nonduplicate submission-ready candidate; quick scout found no clean fresh >0.949 lead.
+- Added/evaluated `scripts/birdclef_soundscape_sequence_sidecar_audit.py`, wrapping current train_soundscape sequence predictions into 234-class v616 proxy sidecars.
+- Best combo `seq_context02_r201`: local macro AUC `0.991293583`, lift vs anchor `+0.000903076`, lift vs v616 `-0.002187085`. Best single context sidecar: `0.991279099`, lift vs v616 `-0.002201568`. Best single r2 sidecar: `0.991031704`, lift vs v616 `-0.002448964`.
+- Decision: reject as slot candidate; update canonical performance table and ledger. Next exact action: late-day slot-fill review inside `<3h`, or a true hidden-safe 234-class DyMN10/AudioSet package.
