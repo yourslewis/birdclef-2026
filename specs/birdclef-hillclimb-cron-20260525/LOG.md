@@ -77,3 +77,14 @@
 - Cloned EfficientAT to trainer `/home/yourslewis/external_models/EfficientAT`, installed missing `wget`, and used public AudioSet `mn10_as` checkpoint.
 - Trained 72-label non-Aves/no-train/no-call soundscape head on 1,478 official 5s train-soundscape windows, site-holdout S08. Embedding extraction 13.30s; best val loss 0.487352 at epoch 5; macro AUC 0.488240 over 18 valid classes; no-train AUC 0.472842 over 17 classes.
 - Verification: holdout predictions finite/nonconstant; TorchScript head smoke passed (`2x960 -> 2x72 + 2x1`). No submission: 72-label specialist only and weaker than PANNs/Cnn14 AudioSet branch (`0.517333`).
+
+### 2026-05-26 08:20 UTC — EfficientAT DyMN10 AudioSet soundscape embedding branch
+
+- **Live state:** best remains **0.949**. Bearer API listing shows no 2026-05-26 UTC submissions yet; latest scored are `v617=0.949`, `v618=0.946`, `v619=0.944`, `v620=0.949`, with `v616` still the tied repo-owned baseline. Slots used: **0/5** with ~15.7h to reset. No active BirdCLEF jobs were found locally/on trainer before the run.
+- **Scout/critic:** role report `specs/birdclef-hillclimb-cron-20260525/reports/scout_critic_20260526T0815Z.md` recommended EfficientAT `dymn10_as` as the next bounded no-slot data point and rejected early-day submission.
+- **Training:** added config `configs/birdclef/efficientat_dymn10_audioset_soundscape_nonaves_notrain_nocall_siteS08_ep12_20260526.json` and trained with existing `scripts/birdclef_efficientat_soundscape_embedding_train.py` on trainer. Used public EfficientAT `dymn10_as.pt`, official train-soundscape 5s windows, 72 non-Aves/no-train labels, no-call aux, site holdout `S08`, 12 epochs.
+- **Result:** extracted `1478 x 960` embeddings in `36.23s` CUDA; best val loss `0.428341`; S08 macro AUC `0.568586` over 18 valid scoped classes; no-train AUC `0.553327`; no-call AUC invalid on S08.
+- **Comparison:** DyMN10 beat EfficientAT MN10 (`0.488240`) and PANNs/Cnn14 (`0.517333`) on this same target contract, so AudioSet remains alive as a rare-slice sidecar lane.
+- **Verifier:** finite/nonconstant holdout predictions shape `120 x 72`; TorchScript head smoke passed `(2,960)->(2,72)+(2,1)`. Not submission-format; no Kaggle slot approved.
+- **Artifacts:** `artifacts/efficientat_soundscape_embeddings/efficientat-dymn10-audioset-soundscape-nonaves-notrain-nocall-siteS08-ep12-20260526/`, log `logs/efficientat_dymn10_audioset_soundscape_nonaves_notrain_nocall_siteS08_ep12_20260526.log`, ledger `artifacts/model_data_point_ledger/20260526T0820Z_efficientat_dymn10_soundscape.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T0820Z.md`.
+- **Next:** run multi-site/leave-one-site evaluation for AudioSet heads and decide whether DyMN10 deserves a 234-class sidecar wrapper; otherwise pivot to G124 hard-confidence/power ablation.
