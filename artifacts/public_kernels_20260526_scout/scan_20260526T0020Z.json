@@ -1,0 +1,444 @@
+{
+  "timestamp_utc": "2026-05-26T00:21:27.089040+00:00",
+  "queries": [
+    {
+      "name": "recent_competition",
+      "params": {
+        "competition": "birdclef-2026",
+        "pageSize": 20,
+        "sortBy": "dateRun",
+        "language": "python"
+      },
+      "rows": [
+        {
+          "ref": "muhammadsaadalvi/birdclef-2026-wildsound-v8",
+          "title": "BirdCLEF-2026-WildSound-V8",
+          "author": "Muhammad Saad Alvi",
+          "lastRunTime": "2026-05-25T21:50:36.183Z",
+          "totalVotes": 3,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "viktoriiahranadzer/birdclef-inference",
+          "title": "BirdCLEF_inference",
+          "author": "Grrvk",
+          "lastRunTime": "2026-05-25T20:47:33.933Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "tulayppppp/my-efficientnet-b0-weights",
+          "title": "my-efficientnet-b0-weights",
+          "author": "tulayppppp",
+          "lastRunTime": "2026-05-25T20:28:47.4Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "viktoriiahranadzer/birdclef-train",
+          "title": "BirdCLEF_train",
+          "author": "Grrvk",
+          "lastRunTime": "2026-05-25T20:23:58.307Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "viktoriiahranadzer/birdclef-eda",
+          "title": "BirdCLEF_EDA",
+          "author": "Grrvk",
+          "lastRunTime": "2026-05-25T20:19:48.93Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "deepanshus167/bird-claasifier-comp",
+          "title": "Bird_Claasifier_Comp",
+          "author": "DeepanshuS167",
+          "lastRunTime": "2026-05-25T18:22:29.34Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "evgendvorkin/birdclef-baseline",
+          "title": "BirdCLEF Baseline",
+          "author": "\u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447",
+          "lastRunTime": "2026-05-25T18:19:55.807Z",
+          "totalVotes": 5,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "abhiiiish/eda-nb-v1",
+          "title": "EDA_NB_V1",
+          "author": "Abhishek Jain",
+          "lastRunTime": "2026-05-25T17:26:49.217Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "guysoupgoui/guystcharly",
+          "title": "guystcharly",
+          "author": "Guy Soupgoui",
+          "lastRunTime": "2026-05-25T16:55:19.883Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "kennyhu52/birdclef-2026",
+          "title": "BirdCLEF 2026",
+          "author": "kennyhu52",
+          "lastRunTime": "2026-05-25T16:48:32.587Z",
+          "totalVotes": 2,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "jinyichen888/birdclef2026-kijiang-v352-v1",
+          "title": "BirdCLEF2026 kijiang v352 v1",
+          "author": "Jin Yichen",
+          "lastRunTime": "2026-05-25T16:34:54.847Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "jinyichen888/birdclef2026-gendaijin-r0952-v1",
+          "title": "BirdCLEF2026 Gendaijin r0952 v1",
+          "author": "Jin Yichen",
+          "lastRunTime": "2026-05-25T16:34:52.957Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "sultanalgizani/bc2026-teacher-p952-exp070-n16-s15",
+          "title": "BC2026 Teacher P952 Exp070 N16 S15",
+          "author": "Avenger",
+          "lastRunTime": "2026-05-25T15:24:51.693Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "mohamadmatali/bc2026-teacher-p952-exp070-n16-s14",
+          "title": "BC2026 Teacher P952 Exp070 N16 S14",
+          "author": "Mohamad Matali",
+          "lastRunTime": "2026-05-25T15:24:49.047Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "hanijezo/bc2026-teacher-p952-exp070-n16-s13",
+          "title": "BC2026 Teacher P952 Exp070 N16 S13",
+          "author": "HaniJezo",
+          "lastRunTime": "2026-05-25T15:24:45.513Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "joriahmed/bc2026-teacher-p952-exp070-n16-s12",
+          "title": "BC2026 Teacher P952 Exp070 N16 S12",
+          "author": "JoriAhmed",
+          "lastRunTime": "2026-05-25T15:24:42.627Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "hassan1417/bc2026-teacher-p952-exp070-n16-s11",
+          "title": "BC2026 Teacher P952 Exp070 N16 S11",
+          "author": "Hassan1417",
+          "lastRunTime": "2026-05-25T15:24:41.137Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "hassanalgizani/bc2026-teacher-p952-exp070-n16-s10",
+          "title": "BC2026 Teacher P952 Exp070 N16 S10",
+          "author": "Hassan Algizani",
+          "lastRunTime": "2026-05-25T15:24:36.467Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "ahmedkhudair121/bc2026-teacher-p952-exp070-n16-s09",
+          "title": "BC2026 Teacher P952 Exp070 N16 S09",
+          "author": "Ahmed Khudair",
+          "lastRunTime": "2026-05-25T15:24:33.347Z",
+          "totalVotes": 0,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "shahadaljayzani/bc2026-teacher-p952-exp070-n16-s08",
+          "title": "BC2026 Teacher P952 Exp070 N16 S08",
+          "author": "Shahad aljayzani",
+          "lastRunTime": "2026-05-25T15:24:30.823Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        }
+      ]
+    },
+    {
+      "name": "search_949",
+      "params": {
+        "competition": "birdclef-2026",
+        "pageSize": 20,
+        "search": "949"
+      },
+      "rows": [
+        {
+          "ref": "pilkwang/birdclef-2026-acoustic-prior-field-fusion",
+          "title": "BirdCLEF+ 2026 | Acoustic Prior-Field Fusion",
+          "author": "Pilkwang Kim",
+          "lastRunTime": "2026-05-21T00:09:11.567Z",
+          "totalVotes": 87,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "starsdaisuki/birdclef-2026-v133-pilkwang-949-prior-field",
+          "title": "BirdCLEF 2026 V133 Pilkwang 949 Prior Field",
+          "author": "Hoshino Takanashi",
+          "lastRunTime": "2026-05-21T10:35:31.123Z",
+          "totalVotes": 11,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "nina2025/birdclef-2026-eos-6-bz",
+          "title": "BirdCLEF+ 2026 | EoS.6 (bz)",
+          "author": "F.A.Nina",
+          "lastRunTime": "2026-05-20T15:27:14.953Z",
+          "totalVotes": 337,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "ykuroka/949-birdclef-2026-acoustic-prior-field-fusion-oof",
+          "title": "949 birdclef 2026 acoustic prior field fusion oof",
+          "author": "ykuroka",
+          "lastRunTime": "2026-05-22T10:08:05.1Z",
+          "totalVotes": 3,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "analyticaobscura/birdclef-2026-development",
+          "title": "BirdCLEF+ 2026-development",
+          "author": "OzanM.",
+          "lastRunTime": "2026-05-24T16:55:13.52Z",
+          "totalVotes": 68,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "beicicc/bc26-eos6-p090-may23",
+          "title": "bc26 eos6 p090 may23",
+          "author": "Kun Zhang",
+          "lastRunTime": "2026-05-25T07:03:32.18Z",
+          "totalVotes": 44,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "jungchanryu/birdclef-first",
+          "title": "birdclef first",
+          "author": "jungchanryu",
+          "lastRunTime": "2026-05-24T07:52:26.903Z",
+          "totalVotes": 40,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "scenerysunfireink/eos-6-v7-power-0-90-extreme",
+          "title": "EoS.6 v7 power 0.90 extreme",
+          "author": "Scenery SunFireInk",
+          "lastRunTime": "2026-05-21T22:25:38.58Z",
+          "totalVotes": 38,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "anthonytherrien/birdclef-2026-blend-2",
+          "title": "BirdCLEF+ 2026 | Blend 2",
+          "author": "AnthonyTherrien",
+          "lastRunTime": "2026-05-21T15:23:58.983Z",
+          "totalVotes": 28,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "karansinghbisht/bc26-pulled-pilkwang-949-prior-field-fusion",
+          "title": "BC26 Pulled Pilkwang 949 Prior Field Fusion",
+          "author": "Karan Singh Bisht",
+          "lastRunTime": "2026-05-21T01:21:40.19Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "mtoshidesu/testbirdclef-2026-eos-6-bz",
+          "title": "testBirdCLEF+ 2026 | EoS.6 (bz)",
+          "author": "m-toshi desu",
+          "lastRunTime": "2026-05-25T15:11:22.057Z",
+          "totalVotes": 12,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "gendaijin/birdclef2026-day0522-nina-eos6-bz",
+          "title": "birdclef2026-day0522-nina-eos6-bz",
+          "author": "Gendaijin",
+          "lastRunTime": "2026-05-22T00:18:29.06Z",
+          "totalVotes": 8,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "kojimar/0-949-lb-birdclef-2026-prior-axis-rank-fusion",
+          "title": "[0.949 LB] BirdCLEF+ 2026 | Prior-Axis Rank Fusion",
+          "author": "islet",
+          "lastRunTime": "2026-05-19T05:00:00.907Z",
+          "totalVotes": 38,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "karansinghbisht/bc26-pulled-nina-eos6-sz",
+          "title": "BC26 Pulled Nina EoS6 sz",
+          "author": "Karan Singh Bisht",
+          "lastRunTime": "2026-05-21T01:21:40.52Z",
+          "totalVotes": 4,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "rajnish1419kumar/birdclef-2026-eos6-sz-safe-writer",
+          "title": "BirdCLEF+ 2026 EoS6 SZ Safe Writer",
+          "author": "RAJNISH1419KUMAR",
+          "lastRunTime": "2026-05-20T08:17:47.953Z",
+          "totalVotes": 4,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "haivan11/birdclef-2026-prior-field-fusion-vi",
+          "title": "BirdCLEF+ 2026 Prior-Field Fusion VI",
+          "author": "caspian",
+          "lastRunTime": "2026-05-20T18:44:14.143Z",
+          "totalVotes": 2,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "junseonglee11/birdclef2026-eos6-scoreblend-g004-w05",
+          "title": "birdclef2026-eos6-scoreblend-g004-w05",
+          "author": "junseonglee11",
+          "lastRunTime": "2026-05-22T19:11:10.633Z",
+          "totalVotes": 2,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "haivan11/birdclef-2026-prior-field-lambda070-vi",
+          "title": "BirdCLEF+ 2026 Prior Field Lambda070 VI",
+          "author": "caspian",
+          "lastRunTime": "2026-05-21T04:03:40.42Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "haivan11/birdclef-2026-bsf-nfnet025-vi",
+          "title": "BirdCLEF+ 2026 BSF NFNet025 VI",
+          "author": "caspian",
+          "lastRunTime": "2026-05-21T10:27:21.573Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        },
+        {
+          "ref": "haivan11/birdclef-2026-lambda075-nfnet025-vi",
+          "title": "BirdCLEF+ 2026 Lambda075 NFNet025 VI",
+          "author": "caspian",
+          "lastRunTime": "2026-05-21T09:42:42.787Z",
+          "totalVotes": 1,
+          "isPrivate": false,
+          "enableInternet": false,
+          "enableGpu": false
+        }
+      ]
+    },
+    {
+      "name": "search_950",
+      "params": {
+        "competition": "birdclef-2026",
+        "pageSize": 20,
+        "search": "950"
+      },
+      "rows": []
+    },
+    {
+      "name": "search_panns_efficientat",
+      "params": {
+        "group": "everyone",
+        "pageSize": 20,
+        "search": "birdclef 2026 panns efficientat audioset"
+      },
+      "rows": []
+    }
+  ]
+}

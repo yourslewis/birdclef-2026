@@ -29,3 +29,13 @@
 - Trained a distinct soundscape-native data point anyway: `soundscape-nonaves-notrain-b0-5s160-siteS08-ep3-20260525` using official `train_soundscapes` 5s labels scoped to 72 non-Aves/no-train classes.
 - Result: 1,478 windows; site-holdout `S08` 120 rows; runtime 19.46s CUDA; TorchScript+ONNX export passed; ONNX checker OK; CPU TorchScript smoke OK. Macro AUC only `0.48865` overall / `0.47610` no-train, with highly uneven sonotype behavior.
 - Decision: no submission/no scale. Keep as comparison-grade landscape data point; next after reset is monitor `v617`-`v620`, then package EfficientAT/PANNs AudioSet embedding branch or run site-balanced/group-DRO non-Aves smoke.
+
+## 2026-05-26 00:22 UTC — Reset-day PANNs/Cnn14 AudioSet data point
+
+- Live Kaggle check: best remains `0.949`; 2026-05-26 UTC slots `0/5`; v617/v620 tied `0.949`, v618 `0.946`, v619 `0.944`. No local/trainer active jobs.
+- No submission made: early UTC day and no verifier-grade/high-info non-duplicate candidate ready.
+- Public scout artifact: `artifacts/public_kernels_20260526_scout/scan_20260526T0020Z.json`; no fresh clean >0.949 lead.
+- Trained PANNs/Cnn14 AudioSet embedding branch via `scripts/birdclef_panns_soundscape_embedding_train.py` and config `configs/birdclef/panns_cnn14_audioset_soundscape_nonaves_notrain_nocall_siteS08_ep12_20260526.json`.
+- Result: 1,478 official soundscape windows, 72 labels + no-call aux, S08 macro AUC `0.517333`, no-train AUC `0.520824`, embedding extraction 49.84s CUDA, best val loss `0.45604`.
+- Verifier: artifacts finite/nonconstant, TorchScript head smoke passed; not submission-format and no slot approved.
+- Reports: `ranked_queue_20260526T0022Z.md`, `model_data_point_20260526T0022Z_panns_cnn14_audioset_soundscape.md`, ledger under `artifacts/model_data_point_ledger/`.
