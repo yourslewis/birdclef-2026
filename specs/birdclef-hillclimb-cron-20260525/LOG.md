@@ -104,3 +104,13 @@
 - Positive fold deltas S19/S23/S13; regressions S03/S22, so comparison-grade only.
 - Verifier checks passed: finite/nonconstant `(1314,72)` predictions and TorchScript smoke `(2,5764)->(2,72)`. Not competition-format; no slot approved.
 - Reports: `ranked_queue_20260526T1020Z.md`, `model_data_point_20260526T1020Z_soundscape_sequence_mining.md`, `reports/scout_critic_20260526T1020Z.md`, ledger `artifacts/model_data_point_ledger/20260526T1020Z_soundscape_sequence_mining.md`.
+
+## 2026-05-26 16:20 UTC — compact soundscape-native B0 leave-site data point
+- Live status via Kaggle Bearer API: best remains `0.949`; latest scored `v616=0.949`, `v617=0.949`, `v618=0.946`, `v619=0.944`, `v620=0.949`; 2026-05-26 UTC slots `0/5` with ~7.66h to reset; no active local/trainer BirdCLEF jobs after run.
+- Scout/critic report `specs/birdclef-hillclimb-cron-20260525/reports/scout_critic_20260526T1615Z.md` found no fresh clean public lead and recommended a bounded compact soundscape-native branch, not another TCN/gating smoother.
+- Added `scripts/birdclef_soundscape_native_losite_train.py` and config `configs/birdclef/soundscape_native_b0_losite_nonaves_notrain_ep4_20260526.json`.
+- Trained `soundscape-native-b0-losite-nonaves-notrain-ep4-20260526`: EfficientNet-B0 SED-style compact CNN, q3/cap80 train-audio init, official `train_soundscapes` only, 1,478 5s windows / 66 files / 9 sites, 72 non-Aves/no-train labels, leave-site folds, BCE, observed-sqrt pos weights, label smoothing/mixup, 4 epochs.
+- Result: 6 completed folds / 2 skipped; leave-site row macro AUC mean `0.558044`, no-train row AUC `0.573554`, file-MIL macro AUC `0.429828`; pooled row AUC `0.396540`, pooled no-train `0.305887`. This underperforms the DyMN10 context-MLP sequence artifact (`0.601355` row / `0.632127` file-MIL), so it is a negative/diagnostic data point.
+- Verifier: leave-site predictions finite/nonconstant (`1314x72`, `72/72` nonconstant); TorchScript and ONNX export/check passed. No 234-class wrapper/v616 audit; no Kaggle submission.
+- Reports/artifacts: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T1620Z.md`, `artifacts/model_data_point_ledger/20260526T1620Z_soundscape_native_losite.md`, artifact root `artifacts/soundscape_native_losite/soundscape-native-b0-losite-nonaves-notrain-ep4-20260526/`.
+- Decision: no early-day slot. Next exact action: use context-MLP as the control; either run one regularized/worst-site context ablation then wrapper/audit, or reformulate DyMN10/AudioSet into a multi-site 234-class sidecar.
