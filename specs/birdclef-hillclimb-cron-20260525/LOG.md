@@ -88,3 +88,8 @@
 - **Verifier:** finite/nonconstant holdout predictions shape `120 x 72`; TorchScript head smoke passed `(2,960)->(2,72)+(2,1)`. Not submission-format; no Kaggle slot approved.
 - **Artifacts:** `artifacts/efficientat_soundscape_embeddings/efficientat-dymn10-audioset-soundscape-nonaves-notrain-nocall-siteS08-ep12-20260526/`, log `logs/efficientat_dymn10_audioset_soundscape_nonaves_notrain_nocall_siteS08_ep12_20260526.log`, ledger `artifacts/model_data_point_ledger/20260526T0820Z_efficientat_dymn10_soundscape.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T0820Z.md`.
 - **Next:** run multi-site/leave-one-site evaluation for AudioSet heads and decide whether DyMN10 deserves a 234-class sidecar wrapper; otherwise pivot to G124 hard-confidence/power ablation.
+
+## 2026-05-26 train-soundscape sequence/deeper queue correction
+- User asked whether the data-driven train-soundscape directions are already in queue and whether there is a deeper training variant.
+- Finding: partial queue existed (non-Aves/no-train B0, PANNs/EfficientAT embeddings, broader OOF negative/no-call, 20s localmax, G124/V2S), but no explicit top-priority sequence/file/site mining branch and no true deeper soundscape-native variant beyond row-level CNN/SED smokes.
+- Updated spec and cron prompt so the top queue is now: (1) train-soundscape sequence/file/site mining with MIL/temporal/file context and leave-site/file validation, (2) deeper soundscape-native training variant with last-block/adapters/compact CNN/SED on task-aligned targets, then AudioSet reformulation and existing queues.

@@ -63,9 +63,18 @@ Rules:
 - Maintain an experiment ledger so the critic can rank future choices from evidence rather than vibes.
 
 Default new-model data-point queue:
-1. EfficientAT/PANNs AudioSet event/no-call branch.
-2. Broader OOF negative/no-call SED student.
-3. Non-Aves / no-train-soundscape specialist.
-4. 20s temporal context/localmax branch.
-5. G124/V2S-init larger/all-row pilot.
-6. Alexy/sidecar-derived model only if source/checkpoint access becomes clean.
+1. Train-soundscape sequence/file/site mining branch: sequence-aware MIL or temporal pooling over 5s windows, leave-site/file evaluation, site-balanced sampling, and per-file/context features. This is now the top data-driven lane because train_soundscapes is the most useful under-mined dataset.
+2. Deeper soundscape-native training variant: fine-tune more than a shallow head (last blocks/adapters or compact CNN/SED) on task-aligned soundscape/OOF-teacher targets, with strong regularization and leave-site/file gates. Do not full-fine-tune large AudioSet encoders on sparse labels blindly.
+3. EfficientAT/PANNs AudioSet event/no-call branch, but only after reformulating from frozen 72-label heads into broad acoustic context/no-call features or a 234-class sidecar wrapper with multi-site validation.
+4. Broader OOF negative/no-call SED student.
+5. Non-Aves / no-train-soundscape specialist.
+6. 20s temporal context/localmax branch.
+7. G124/V2S-init larger/all-row pilot.
+8. Alexy/sidecar-derived model only if source/checkpoint access becomes clean.
+
+Soundscape sequence/file/site branch requirements:
+- Treat `train_soundscapes` as sequences/files/sites, not isolated rows.
+- Use group-aware validation: leave-site, leave-file, and site-balanced bootstrap.
+- Include temporal context features: neighbor windows, local max/mean pooling, file-level MIL pooling, label persistence, and time-bin effects.
+- Include data diagnostics: per-site label distribution, per-file label density, class co-occurrence, no-train/non-Aves coverage, and no-call/background protocol.
+- Promotion requires a raw branch or wrapper audited against v616, not just row-level ROC.
