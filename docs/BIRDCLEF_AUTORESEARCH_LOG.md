@@ -4365,3 +4365,10 @@ Decision:
 - Verifier/critic: reject as slot candidate. The wrapper is finite/nonconstant and useful comparison evidence, but loses clearly to v616, covers only 156/240 proxy rows, and is not a hidden-test package. No Kaggle submission.
 - Reports/artifacts: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T2025Z.md`, ledger `artifacts/model_data_point_ledger/20260526T2025Z_soundscape_sequence_sidecar_audit.md`, audit root `artifacts/soundscape_sequence_sidecar_audit/20260526T2025Z/`, and canonical performance table rows in `artifacts/model_data_point_ledger/performance_table.md/jsonl`.
 - Next: perform late-day guarded slot-fill review once inside `<3h` to reset; otherwise build a true hidden-safe 234-class DyMN10/AudioSet sidecar package instead of using leave-site OOF wrappers.
+
+## 2026-05-26 22:20 UTC — late-day public source slot fill v621-v625
+- Live status: best remained `0.949`; v616/v617/v620 tied, v618 `0.946`, v619 `0.944`; 2026-05-26 UTC slots were `0/5` with ~1.66h to reset. No active local/trainer BirdCLEF jobs.
+- Scout/preflight scanned recent/hot public kernels and rejected ERROR/running/malformed/nonnumeric/empty/duplicate-output candidates, including WildSound V8 ERROR and several hier-tax/EoS8 forks with nonnumeric CSV values.
+- Submitted five late-fill source-code candidates after verifier checks: v621 Pilkwang EoS7 OOF-gated PCEN sidecar (`53063922`), v622 Beicicc EoS6 P090 (`53063923`), v623 Anthony M5-only fork (`53063925`), v624 Haru public top2 P125 (`53063927`), v625 Safar 0948 fork (`53063928`). All were pending immediately after submission; slots `5/5`.
+- Updated ranked queue and canonical performance table. Ledger: `artifacts/model_data_point_ledger/20260526T2220Z_late_public_slot_fill.md`; scout/submit reports under `artifacts/public_kernels_20260526_late_scout/`.
+- Next: monitor v621-v625 scores/errors; if none beats `0.949`, resume true hidden-safe 234-class DyMN10/AudioSet package rather than another OOF-only wrapper.

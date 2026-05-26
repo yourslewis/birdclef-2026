@@ -1,0 +1,667 @@
+{
+  "utc_now": "2026-05-26T22:20:23.045331+00:00",
+  "hours_to_reset": 1.6602651858333333,
+  "today_count_start": 0,
+  "latest_submissions": [
+    {
+      "date": "2026-05-25 22:43:18.860000",
+      "desc": "v620: Exploratory direct Kazuhiro Karnak rank fusion source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032524
+    },
+    {
+      "date": "2026-05-25 22:43:15.953000",
+      "desc": "v619: Exploratory direct Kruzzcc Mtoshi UMAP BirdNET source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032523
+    },
+    {
+      "date": "2026-05-25 22:43:13.263000",
+      "desc": "v618: Exploratory direct Kruzzcc Nina EoS4 BirdNET source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032520
+    },
+    {
+      "date": "2026-05-25 22:43:10.330000",
+      "desc": "v617: Exploratory direct Nina EoS7 sz sidecar source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032516
+    },
+    {
+      "date": "2026-05-25 08:02:43.397000",
+      "desc": "v616: Repo-owned Samejima anchor plus Jung21 and SED rank blend",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53012761
+    },
+    {
+      "date": "2026-05-24 22:33:57.160000",
+      "desc": "v615: Exploratory direct Jungchan CT-MoBE branch source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000949
+    },
+    {
+      "date": "2026-05-24 22:33:52.690000",
+      "desc": "v614: Exploratory direct Raunak v9 ProtoSSM SED source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000945
+    },
+    {
+      "date": "2026-05-24 22:33:48.917000",
+      "desc": "v613: Exploratory direct Alexy NS1 CNN noisy-student source",
+      "score": "0.923",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000944
+    },
+    {
+      "date": "2026-05-24 20:03:17.443000",
+      "desc": "v612: Repo-owned Samejima anchor plus HGNet-v57 PT sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52998418
+    },
+    {
+      "date": "2026-05-24 14:03:24.227000",
+      "desc": "v611: Repo-owned Samejima anchor plus Praxel HGNet sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52988938
+    },
+    {
+      "date": "2026-05-23 22:02:09.503000",
+      "desc": "v610: Repo-owned Gandharva B3 checkpoint inference",
+      "score": "0.852",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52967355
+    },
+    {
+      "date": "2026-05-23 18:05:38.237000",
+      "desc": "v609: Guarded direct PerchFusion v951 TTA source",
+      "score": "",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52962837
+    },
+    {
+      "date": "2026-05-23 10:05:17.843000",
+      "desc": "v608: Guarded direct Scenery improved inner-blend source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52950601
+    },
+    {
+      "date": "2026-05-23 08:02:19.613000",
+      "desc": "v607: Repo-owned Eslam v26C ProtoSSM save repair",
+      "score": "0.934",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52947220
+    },
+    {
+      "date": "2026-05-23 00:03:03.357000",
+      "desc": "v604: Repo-owned Pilkwang PCEN sidecar verify",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52937418
+    },
+    {
+      "date": "2026-05-22 05:21:59.830000",
+      "desc": "v602: Guarded direct Nicolas NFNet Aves lprior075",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913380
+    },
+    {
+      "date": "2026-05-22 05:21:56.657000",
+      "desc": "v601: Guarded direct Gendaijin Meenal new visual prior",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913379
+    },
+    {
+      "date": "2026-05-22 05:21:53.420000",
+      "desc": "v600: Guarded direct Gendaijin Pilkwang prior-field fusion",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913377
+    },
+    {
+      "date": "2026-05-22 05:21:50.323000",
+      "desc": "v599: Guarded direct Claudedevore R0952 run2 sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913376
+    },
+    {
+      "date": "2026-05-22 00:03:02.247000",
+      "desc": "v598: Repo-owned Samejima HGNet OpenVINO artifact inference",
+      "score": "0.860",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52905096
+    }
+  ],
+  "candidates": [
+    {
+      "label": "v621",
+      "ref": "pilkwang/birdclef-2026-eos7-sz-oof-gated-pcen-sidecar",
+      "description": "v621: Late-fill direct Pilkwang EoS7 OOF-gated PCEN sidecar",
+      "preflight_ok": true,
+      "version": 22,
+      "info": {
+        "ref": "pilkwang/birdclef-2026-eos7-sz-oof-gated-pcen-sidecar",
+        "version": 22,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 439097,
+        "reason": "Highest-ranked fresh/hot public EoS7+PCEN sidecar; source has hidden test path and nonconstant public dry-run; distinct from prior repo PCEN wrapper.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "sidecar_exp002_diagnostics.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "subm_karnakbayev_poweropt_full.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_yaroslav_v6_priorfield.csv",
+          "subm_yaroslav_v6_priorfield_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46017981093029486,
+          "max": 0.536178957014232,
+          "mean": 0.4893385703199774,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "2cd2be250a4020a4"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063922}"
+    },
+    {
+      "label": "v622",
+      "ref": "beicicc/bc26-eos6-p090-may23",
+      "description": "v622: Late-fill direct Beicicc EoS6 P090 May23",
+      "preflight_ok": true,
+      "version": 6,
+      "info": {
+        "ref": "beicicc/bc26-eos6-p090-may23",
+        "version": 6,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 266520,
+        "reason": "High-vote EoS6/P090 rank-power branch; hidden-test capable public source; nonconstant public dry-run; not submitted under this source.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "subm_rankpower06_prior05_consensus.csv",
+          "subm_yukiz_perch_proto_resssm.csv",
+          "submission.csv",
+          "submission_nfnet_selective.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json",
+          "v53_audit.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4673328647293431,
+          "max": 0.54450182242216,
+          "mean": 0.49616568246900816,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "62274b98d6a4f39c"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063923}"
+    },
+    {
+      "label": "v623",
+      "ref": "mohamadmatali/bc2026-claude-anthony-m5only-fork",
+      "description": "v623: Late-fill Anthony M5-only public fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "mohamadmatali/bc2026-claude-anthony-m5only-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 322360,
+        "reason": "Recent Anthony/M5-only fork; chosen as one representative after duplicate-output Anthony variants; nonconstant public dry-run.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_2.csv",
+          "subm_5.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47687027,
+          "max": 0.5553993,
+          "mean": 0.501408503931624,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "09ef02cb55ff66b7"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063925}"
+    },
+    {
+      "label": "v624",
+      "ref": "hanijezo/bc2026-claude-haru-public-top2-p125-fork",
+      "description": "v624: Late-fill Haru public top2 P125 fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "hanijezo/bc2026-claude-haru-public-top2-p125-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 133505,
+        "reason": "Recent public-top2+P125 fork with hidden-test path; distinct P125/Perch/SED blend; nonconstant public dry-run.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.476223,
+          "max": 0.55592805,
+          "mean": 0.5014659022649572,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "97cd802bb60f6b83"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063927}"
+    },
+    {
+      "label": "v625",
+      "ref": "sultanalgizani/bc2026-claude-safar-0948-fork",
+      "description": "v625: Late-fill Safar 0948 public fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "sultanalgizani/bc2026-claude-safar-0948-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 88171,
+        "reason": "Recent Safar-0948 fork; claimed near-plateau lineage; hidden-test path and nonconstant public dry-run; chosen over malformed/static candidates.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_birdnet.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47677168,
+          "max": 0.55579793,
+          "mean": 0.5014422159401709,
+          "uniq_first100": 93,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "89438737d0b97271"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063928}"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v621",
+      "ref": "pilkwang/birdclef-2026-eos7-sz-oof-gated-pcen-sidecar",
+      "description": "v621: Late-fill direct Pilkwang EoS7 OOF-gated PCEN sidecar",
+      "preflight_ok": true,
+      "version": 22,
+      "info": {
+        "ref": "pilkwang/birdclef-2026-eos7-sz-oof-gated-pcen-sidecar",
+        "version": 22,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 439097,
+        "reason": "Highest-ranked fresh/hot public EoS7+PCEN sidecar; source has hidden test path and nonconstant public dry-run; distinct from prior repo PCEN wrapper.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "sidecar_exp002_diagnostics.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "subm_karnakbayev_poweropt_full.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_yaroslav_v6_priorfield.csv",
+          "subm_yaroslav_v6_priorfield_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46017981093029486,
+          "max": 0.536178957014232,
+          "mean": 0.4893385703199774,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "2cd2be250a4020a4"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063922}"
+    },
+    {
+      "label": "v622",
+      "ref": "beicicc/bc26-eos6-p090-may23",
+      "description": "v622: Late-fill direct Beicicc EoS6 P090 May23",
+      "preflight_ok": true,
+      "version": 6,
+      "info": {
+        "ref": "beicicc/bc26-eos6-p090-may23",
+        "version": 6,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 266520,
+        "reason": "High-vote EoS6/P090 rank-power branch; hidden-test capable public source; nonconstant public dry-run; not submitted under this source.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "subm_rankpower06_prior05_consensus.csv",
+          "subm_yukiz_perch_proto_resssm.csv",
+          "submission.csv",
+          "submission_nfnet_selective.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json",
+          "v53_audit.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4673328647293431,
+          "max": 0.54450182242216,
+          "mean": 0.49616568246900816,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "62274b98d6a4f39c"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063923}"
+    },
+    {
+      "label": "v623",
+      "ref": "mohamadmatali/bc2026-claude-anthony-m5only-fork",
+      "description": "v623: Late-fill Anthony M5-only public fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "mohamadmatali/bc2026-claude-anthony-m5only-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 322360,
+        "reason": "Recent Anthony/M5-only fork; chosen as one representative after duplicate-output Anthony variants; nonconstant public dry-run.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_2.csv",
+          "subm_5.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47687027,
+          "max": 0.5553993,
+          "mean": 0.501408503931624,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "09ef02cb55ff66b7"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063925}"
+    },
+    {
+      "label": "v624",
+      "ref": "hanijezo/bc2026-claude-haru-public-top2-p125-fork",
+      "description": "v624: Late-fill Haru public top2 P125 fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "hanijezo/bc2026-claude-haru-public-top2-p125-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 133505,
+        "reason": "Recent public-top2+P125 fork with hidden-test path; distinct P125/Perch/SED blend; nonconstant public dry-run.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.476223,
+          "max": 0.55592805,
+          "mean": 0.5014659022649572,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "97cd802bb60f6b83"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063927}"
+    },
+    {
+      "label": "v625",
+      "ref": "sultanalgizani/bc2026-claude-safar-0948-fork",
+      "description": "v625: Late-fill Safar 0948 public fork",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "sultanalgizani/bc2026-claude-safar-0948-fork",
+        "version": 1,
+        "status": "KernelWorkerStatus.COMPLETE",
+        "failure": "",
+        "source_len": 88171,
+        "reason": "Recent Safar-0948 fork; claimed near-plateau lineage; hidden-test path and nonconstant public dry-run; chosen over malformed/static candidates.",
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "train_soundscapes": true,
+          "submission.csv": true,
+          "/kaggle/input": true
+        },
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_birdnet.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47677168,
+          "max": 0.55579793,
+          "mean": 0.5014422159401709,
+          "uniq_first100": 93,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "89438737d0b97271"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53063928}"
+    }
+  ],
+  "today_count_end_est": 5,
+  "submitted_count": 5
+}

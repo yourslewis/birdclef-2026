@@ -1,0 +1,2928 @@
+{
+  "utc_now": "2026-05-26T22:17:43.876993+00:00",
+  "hours_to_reset": 1.7044786130555556,
+  "today_count": 0,
+  "latest_submissions": [
+    {
+      "date": "2026-05-25 22:43:18.860000",
+      "desc": "v620: Exploratory direct Kazuhiro Karnak rank fusion source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032524
+    },
+    {
+      "date": "2026-05-25 22:43:15.953000",
+      "desc": "v619: Exploratory direct Kruzzcc Mtoshi UMAP BirdNET source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032523
+    },
+    {
+      "date": "2026-05-25 22:43:13.263000",
+      "desc": "v618: Exploratory direct Kruzzcc Nina EoS4 BirdNET source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032520
+    },
+    {
+      "date": "2026-05-25 22:43:10.330000",
+      "desc": "v617: Exploratory direct Nina EoS7 sz sidecar source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032516
+    },
+    {
+      "date": "2026-05-25 08:02:43.397000",
+      "desc": "v616: Repo-owned Samejima anchor plus Jung21 and SED rank blend",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53012761
+    },
+    {
+      "date": "2026-05-24 22:33:57.160000",
+      "desc": "v615: Exploratory direct Jungchan CT-MoBE branch source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000949
+    },
+    {
+      "date": "2026-05-24 22:33:52.690000",
+      "desc": "v614: Exploratory direct Raunak v9 ProtoSSM SED source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000945
+    },
+    {
+      "date": "2026-05-24 22:33:48.917000",
+      "desc": "v613: Exploratory direct Alexy NS1 CNN noisy-student source",
+      "score": "0.923",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53000944
+    },
+    {
+      "date": "2026-05-24 20:03:17.443000",
+      "desc": "v612: Repo-owned Samejima anchor plus HGNet-v57 PT sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52998418
+    },
+    {
+      "date": "2026-05-24 14:03:24.227000",
+      "desc": "v611: Repo-owned Samejima anchor plus Praxel HGNet sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52988938
+    },
+    {
+      "date": "2026-05-23 22:02:09.503000",
+      "desc": "v610: Repo-owned Gandharva B3 checkpoint inference",
+      "score": "0.852",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52967355
+    },
+    {
+      "date": "2026-05-23 18:05:38.237000",
+      "desc": "v609: Guarded direct PerchFusion v951 TTA source",
+      "score": "",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52962837
+    },
+    {
+      "date": "2026-05-23 10:05:17.843000",
+      "desc": "v608: Guarded direct Scenery improved inner-blend source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52950601
+    },
+    {
+      "date": "2026-05-23 08:02:19.613000",
+      "desc": "v607: Repo-owned Eslam v26C ProtoSSM save repair",
+      "score": "0.934",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52947220
+    },
+    {
+      "date": "2026-05-23 00:03:03.357000",
+      "desc": "v604: Repo-owned Pilkwang PCEN sidecar verify",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52937418
+    },
+    {
+      "date": "2026-05-22 05:21:59.830000",
+      "desc": "v602: Guarded direct Nicolas NFNet Aves lprior075",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913380
+    },
+    {
+      "date": "2026-05-22 05:21:56.657000",
+      "desc": "v601: Guarded direct Gendaijin Meenal new visual prior",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913379
+    },
+    {
+      "date": "2026-05-22 05:21:53.420000",
+      "desc": "v600: Guarded direct Gendaijin Pilkwang prior-field fusion",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913377
+    },
+    {
+      "date": "2026-05-22 05:21:50.323000",
+      "desc": "v599: Guarded direct Claudedevore R0952 run2 sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52913376
+    },
+    {
+      "date": "2026-05-22 00:03:02.247000",
+      "desc": "v598: Repo-owned Samejima HGNet OpenVINO artifact inference",
+      "score": "0.860",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 52905096
+    }
+  ],
+  "candidates": [
+    {
+      "ref": "muhammadsaadalvi/birdclef-2026-wildsound-v8",
+      "title": "BirdCLEF-2026-WildSound-V8",
+      "version": 75,
+      "status": "KernelWorkerStatus.ERROR",
+      "failure": "",
+      "source_len": 25589,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": false,
+        "torch": false,
+        "birdnet": false,
+        "protossm": false,
+        "sed": true,
+        "perch": false,
+        "eos": false,
+        "fallback": false,
+        "dry-run": false,
+        "no hidden test": false,
+        "train_soundscapes": false
+      },
+      "source_risks": [],
+      "decision": "reject_status"
+    },
+    {
+      "ref": "udaken10/submit",
+      "title": "submit_\u3067\u304d\u308b\u304b\u306a\uff1f\u3067\u304d\u306a\u3044\u304b\u306a\uff1f",
+      "version": 7,
+      "status": "KernelWorkerStatus.RUNNING",
+      "failure": "",
+      "source_len": 18050,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": false,
+        "torch": false,
+        "birdnet": false,
+        "protossm": false,
+        "sed": true,
+        "perch": false,
+        "eos": false,
+        "fallback": false,
+        "dry-run": false,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [],
+      "decision": "reject_status"
+    },
+    {
+      "ref": "mohamadmatali/bc2026-claude-anthony-m5only-fork",
+      "title": "BC2026 Claude anthony-m5only Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 322360,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.501408503931624,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "09ef02cb55ff66b7"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "hanijezo/bc2026-claude-anthony-m2heavy-fork",
+      "title": "BC2026 Claude anthony-m2heavy Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 322356,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.501408503931624,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "09ef02cb55ff66b7"
+      },
+      "decision": "needs_review_source_risk",
+      "duplicate_public_csv_with": "mohamadmatali/bc2026-claude-anthony-m5only-fork"
+    },
+    {
+      "ref": "sans6262q/bc2026-claude-anthony-balanced-fork",
+      "title": "BC2026 Claude anthony-balanced Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 322356,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.501408503931624,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "09ef02cb55ff66b7"
+      },
+      "decision": "needs_review_source_risk",
+      "duplicate_public_csv_with": "mohamadmatali/bc2026-claude-anthony-m5only-fork"
+    },
+    {
+      "ref": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork",
+      "title": "BC2026 Claude Karnak Hier Tax Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 763746,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_22.csv",
+        "subm_51.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv"
+    },
+    {
+      "ref": "ahmedkhudair121/bc2026-claude-nina-eos-8-fork",
+      "title": "BC2026 Claude Nina Eos 8 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 770864,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_22.csv",
+        "subm_51.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "karnakbaevarthur/hierarchical-taxonomy-post-processing-birdclef-2",
+      "title": "Hierarchical Taxonomy Post-Processing | BirdCLEF 2",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 765043,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_22.csv",
+        "subm_51.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "archishachanda04/notebook2d3524c2e1",
+      "title": "notebook2d3524c2e1",
+      "version": 4,
+      "status": "KernelWorkerStatus.CANCEL_ACKNOWLEDGED",
+      "failure": "",
+      "source_len": 29204,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": false,
+        "torch": true,
+        "birdnet": true,
+        "protossm": false,
+        "sed": true,
+        "perch": false,
+        "eos": false,
+        "fallback": false,
+        "dry-run": false,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [],
+      "decision": "reject_status"
+    },
+    {
+      "ref": "nina2025/birdclef-2026-eos-7-sz",
+      "title": "BirdCLEF+ 2026 | EoS.7 (sz)",
+      "version": 8,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 767223,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv"
+    },
+    {
+      "ref": "hanijezo/bc2026-claude-haru-public-top2-p125-fork",
+      "title": "BC2026 Claude Haru Public Top2 P125 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 133505,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.476223,
+        "max": 0.55592805,
+        "mean": 0.5014659022649572,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "97cd802bb60f6b83"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "shahadaljayzani/bc2026-claude-jaejohn-perch-starter-fork",
+      "title": "BC2026 Claude Jaejohn Perch Starter Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 46703,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": false,
+        "torch": false,
+        "birdnet": false,
+        "protossm": false,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": false,
+        "dry-run": true,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "submission.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 1.03524255e-11,
+        "max": 1.0,
+        "mean": 0.47733298201971097,
+        "uniq_first100": 95,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "7439ae3b15a3f6c6"
+      },
+      "decision": "preflight_ok"
+    },
+    {
+      "ref": "sultanalgizani/bc2026-claude-cliff-gate-combo-fork",
+      "title": "BC2026 Claude Cliff Gate Combo Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 97652,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.50208336,
+        "max": 0.50677305,
+        "mean": 0.5034885857264958,
+        "uniq_first100": 95,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "aa41ccbbf2a84046"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "mohamadmatali/bc2026-claude-anthony-ensemble-fork",
+      "title": "BC2026 Claude Anthony Ensemble Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 324918,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "hassanalgizani/bc2026-claude-yaroslav-birdnet-3rd-fork",
+      "title": "BC2026 Claude Yaroslav Birdnet 3Rd Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 140861,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47858086,
+        "max": 0.5685633,
+        "mean": 0.5019378756410257,
+        "uniq_first100": 92,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "3224ced9a582e251"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "abdulrahmansu10/bc2026-claude-eos6sz-m74heavy-v1-fork",
+      "title": "BC2026 Claude eos6sz-m74heavy-v1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 760983,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "sans6262q/bc2026-claude-eos6sz-balanced-v1-fork",
+      "title": "BC2026 Claude eos6sz-balanced-v1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 760978,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "abdulrahmansu10/bc2026-claude-eos7sz-m52heavy-v1-fork",
+      "title": "BC2026 Claude eos7sz-m52heavy-v1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 761128,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "nina2025/birdclef-2026-eos-7-sz"
+    },
+    {
+      "ref": "hassan1417/bc2026-claude-eos7sz-m74heavy-v1-fork",
+      "title": "BC2026 Claude eos7sz-m74heavy-v1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 761133,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "nina2025/birdclef-2026-eos-7-sz"
+    },
+    {
+      "ref": "joriahmed/bc2026-claude-eos7sz-balanced-v1-fork",
+      "title": "BC2026 Claude eos7sz-balanced-v1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 761128,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "nina2025/birdclef-2026-eos-7-sz"
+    },
+    {
+      "ref": "archishachanda/birdie-clef",
+      "title": "birdie clef",
+      "version": 1,
+      "status": "KernelWorkerStatus.RUNNING",
+      "failure": "",
+      "source_len": 75919,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": false,
+        "torch": true,
+        "birdnet": false,
+        "protossm": false,
+        "sed": true,
+        "perch": false,
+        "eos": false,
+        "fallback": false,
+        "dry-run": false,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [],
+      "decision": "reject_status"
+    },
+    {
+      "ref": "shahadaljayzani/bc2026-claude-mtoshi-941-fork",
+      "title": "BC2026 Claude Mtoshi 941 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 106222,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.004166667,
+        "max": 1.0,
+        "mean": 0.5040077328438605,
+        "uniq_first100": 94,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "6dcda7328bb22532"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "mohamadmatali/bc2026-claude-nina-eos-2-fork",
+      "title": "BC2026 Claude Nina Eos 2 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 380055,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_3.csv",
+        "subm_41.csv",
+        "subm_42.csv",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "sultanalgizani/bc2026-claude-safar-0948-fork",
+      "title": "BC2026 Claude Safar 0948 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 88171,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47677168,
+        "max": 0.55579793,
+        "mean": 0.5014422159401709,
+        "uniq_first100": 93,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "89438737d0b97271"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "hassanalgizani/bc2026-claude-nina-eos-1-fork",
+      "title": "BC2026 Claude Nina Eos 1 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 533799,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "subm_62.csv",
+        "subm_9.csv",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47674486494999996,
+        "max": 0.5532515855000001,
+        "mean": 0.5014324103534188,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "07f51c964cdf249e"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "sans6262q/bc2026-claude-nina-eos-4-fork",
+      "title": "BC2026 Claude Nina Eos 4 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 402096,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5554188,
+        "mean": 0.5014360891025641,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "fb94c3843d36f980"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "hassan1417/bc2026-claude-tucker-distilled-sed-fork",
+      "title": "BC2026 Claude Tucker Distilled Sed Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 68914,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": false,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": false,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker"
+      ],
+      "files": [
+        "submission.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 60,
+        "n_cols": 235,
+        "unique_rows": 60,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 9.691327e-06,
+        "max": 0.92075646,
+        "mean": 0.014653148252330307,
+        "uniq_first100": 100,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "e293021c399fa925"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "hanijezo/bc2026-claude-imaad-perch-protossm-fork",
+      "title": "BC2026 Claude Imaad Perch Protossm Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 66295,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47800776,
+        "max": 0.5619778,
+        "mean": 0.5016142652564103,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "c166a6c8e22078c1"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "ahmedkhudair121/bc2026-claude-raunak-multi-model-fork",
+      "title": "BC2026 Claude Raunak Multi Model Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 108389,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": false,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47670802,
+        "max": 0.56437147,
+        "mean": 0.5015263996153846,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "30cc8796efbbaee8"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "abdulrahmansu10/bc2026-claude-hideyukizushi-protossm-src-fork",
+      "title": "BC2026 Claude Hideyukizushi Protossm Src Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 163536,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": false,
+        "dry-run": true,
+        "no hidden test": false,
+        "train_soundscapes": true
+      },
+      "source_risks": [],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "submission.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 9.434922e-13,
+        "max": 0.99993974,
+        "mean": 0.24509408153056117,
+        "uniq_first100": 89,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "6b5910239e37bd4b"
+      },
+      "decision": "preflight_ok"
+    },
+    {
+      "ref": "shahadaljayzani/bc2026-claude-raunak-v7-fork",
+      "title": "BC2026 Claude Raunak V7 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 74302,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47870365,
+        "max": 0.5687647,
+        "mean": 0.5019749493589744,
+        "uniq_first100": 92,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "21d11c1a70aad873"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "sultanalgizani/bc2026-claude-raunak-v6-fork",
+      "title": "BC2026 Claude Raunak V6 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 390439,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.5014082841025641,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "f61e71b9368cc673"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "joriahmed/bc2026-claude-maryna-twopass-ssm-fork",
+      "title": "BC2026 Claude Maryna Twopass Ssm Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 106531,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 3.230317e-08,
+        "max": 0.9977007,
+        "mean": 0.12819370392124554,
+        "uniq_first100": 98,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "9fd71fb24d94ca92"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "ahmedkhudair121/bc2026-claude-adarsh-v62-eos3-fork",
+      "title": "BC2026 Claude Adarsh V62 Eos3 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 870503,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_10.csv",
+        "subm_3.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "hanijezo/bc2026-claude-jungchanryu-first-fork",
+      "title": "BC2026 Claude Jungchanryu First Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 785143,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.50208336,
+        "max": 0.5020834,
+        "mean": 0.5020833714529914,
+        "uniq_first100": 2,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "112484be81458fa6"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "abdulrahmansu10/bc2026-claude-analytica-development-fork",
+      "title": "BC2026 Claude Analytica Development Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 760849,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "mohamadmatali/bc2026-claude-meenalsinha-improved-fork",
+      "title": "BC2026 Claude Meenalsinha Improved Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 412976,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "subm_4.csv",
+        "subm_inner_blend.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.0037499997,
+        "max": 1.0,
+        "mean": 0.5011559531553917,
+        "uniq_first100": 94,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "48e8eb7f8409ac11"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "shahadaljayzani/bc2026-claude-sunderekkiz-exp019-fork",
+      "title": "BC2026 Claude Sunderekkiz Exp019 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 404282,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.5014082841025641,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "f61e71b9368cc673"
+      },
+      "decision": "needs_review_source_risk",
+      "duplicate_public_csv_with": "sultanalgizani/bc2026-claude-raunak-v6-fork"
+    },
+    {
+      "ref": "hassan1417/bc2026-claude-yaroslav-946-replay-fork",
+      "title": "BC2026 Claude Yaroslav 946 Replay Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 128757,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.50208336,
+        "max": 0.5091626,
+        "mean": 0.503888632094017,
+        "uniq_first100": 94,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "f0947cc50457ccdd"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "joriahmed/bc2026-claude-mattia-943-blend-fork",
+      "title": "BC2026 Claude Mattia 943 Blend Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 97283,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.004166667,
+        "max": 1.0,
+        "mean": 0.5039453962767896,
+        "uniq_first100": 97,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "4ea48f143ed5b877"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "mohamadmatali/bc2026-claude-mtoshi-947-repro-fork",
+      "title": "BC2026 Claude Mtoshi 947 Repro Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 78327,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.4466501,
+        "max": 0.53982186,
+        "mean": 0.49850077457264963,
+        "uniq_first100": 92,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "e5c937e6d87cb4fc"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "gendaijin/birdclef2026-day0527-yaroslav-v221",
+      "title": "birdclef2026-day0527-yaroslav-v221",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 330681,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "gendaijin/birdclef2026-day0527-nina-eos7sz",
+      "title": "birdclef2026-day0527-nina-eos7sz",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 762531,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "nina2025/birdclef-2026-eos-7-sz"
+    },
+    {
+      "ref": "pilkwang/birdclef-2026-eos7-sz-oof-gated-pcen-sidecar",
+      "title": "\ud83e\udd86 BirdCLEF+2026|EoS7-sz + OOF-Gated PCEN Sidecar",
+      "version": 22,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 439097,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "sidecar_exp002_diagnostics.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_poweropt_full.csv",
+        "subm_karnakbayev_poweropt_pssm.csv",
+        "subm_yaroslav_v6_priorfield.csv",
+        "subm_yaroslav_v6_priorfield_core.csv",
+        "subm_yukiz_perch_proto_res.csv",
+        "submission.csv",
+        "submission_before_all_sidecars.csv",
+        "submission_before_exp002_sidecar.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.46017981093029486,
+        "max": 0.536178957014232,
+        "mean": 0.4893385703199774,
+        "uniq_first100": 96,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "2cd2be250a4020a4"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "beicicc/bc26-eos6-p090-may23",
+      "title": "bc26 eos6 p090 may23",
+      "version": 6,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 266520,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "subm_rankpower06_prior05_consensus.csv",
+        "subm_yukiz_perch_proto_resssm.csv",
+        "submission.csv",
+        "submission_nfnet_selective.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json",
+        "v53_audit.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.4673328647293431,
+        "max": 0.54450182242216,
+        "mean": 0.49616568246900816,
+        "uniq_first100": 96,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "62274b98d6a4f39c"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "sultanalgizani/bc2026-claude-5branch-ensemble-fork",
+      "title": "BC2026 Claude 5Branch Ensemble Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 99118,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": true,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "clap_preds.npy",
+        "site_hour_prior_table.pkl",
+        "snowflake_preds.npy",
+        "submission.csv",
+        "submission_birdnet.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.2602615,
+        "max": 0.34930405,
+        "mean": 0.28922141764957265,
+        "uniq_first100": 94,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "d0545f2c89ce36b8"
+      },
+      "decision": "needs_review_source_risk"
+    },
+    {
+      "ref": "ahmedkhudair121/bc2026-claude-yaroslav-v221-fork",
+      "title": "BC2026 Claude Yaroslav V221 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 329284,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 243,
+        "n_cols": 235,
+        "unique_rows": 243,
+        "bad_values": 56862,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15",
+          "BC2026_Test_0001_S05_20250227_010002_5"
+        ],
+        "sha256_16": "0ee04c918f807616"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "ahmedkhudair121/bc2026-claude-karnak-hier-tax-fork"
+    },
+    {
+      "ref": "hassan1417/bc2026-claude-eos7sz-fork",
+      "title": "BC2026 Claude EoS7SZ Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 761134,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_21.csv",
+        "subm_52.csv",
+        "subm_52p.csv",
+        "subm_74.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "subm_karnakbayev_power_optimization_74.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 0,
+        "n_cols": 235,
+        "unique_rows": 0,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": null,
+        "max": null,
+        "mean": null,
+        "uniq_first100": 0,
+        "head_ids": [],
+        "sha256_16": "5afa1de99305ffd1"
+      },
+      "decision": "reject_bad_csv",
+      "duplicate_public_csv_with": "nina2025/birdclef-2026-eos-7-sz"
+    },
+    {
+      "ref": "hassanalgizani/bc2026-claude-anthony-s124-fork",
+      "title": "BC2026 Claude Anthony S124 Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 322362,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": true,
+        "fallback": true,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "fallback marker",
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "perch_cache/full_oof_meta_features.npz",
+        "perch_cache/full_perch_arrays.npz",
+        "perch_cache/full_perch_meta.parquet",
+        "subm_2.csv",
+        "subm_5.csv",
+        "subm_karnakbayev_power_optimization.csv",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "submission_stats": {
+        "n_rows": 3,
+        "n_cols": 235,
+        "unique_rows": 3,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.47687027,
+        "max": 0.5553993,
+        "mean": 0.5014082841025641,
+        "uniq_first100": 91,
+        "head_ids": [
+          "BC2026_Test_0001_S05_20250227_010002_5",
+          "BC2026_Test_0001_S05_20250227_010002_10",
+          "BC2026_Test_0001_S05_20250227_010002_15"
+        ],
+        "sha256_16": "f61e71b9368cc673"
+      },
+      "decision": "needs_review_source_risk",
+      "duplicate_public_csv_with": "sultanalgizani/bc2026-claude-raunak-v6-fork"
+    },
+    {
+      "ref": "abdulrahmansu10/bc2026-claude-vyanktesh-fork",
+      "title": "BC2026 Claude Vyanktesh Fork",
+      "version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure": "",
+      "source_len": 85573,
+      "source_markers": {
+        "test_soundscapes": true,
+        "sample_submission": true,
+        "submission.csv": true,
+        "/kaggle/input": true,
+        "read_csv": true,
+        "onnx": true,
+        "torch": true,
+        "birdnet": false,
+        "protossm": true,
+        "sed": true,
+        "perch": true,
+        "eos": false,
+        "fallback": false,
+        "dry-run": true,
+        "no hidden test": true,
+        "train_soundscapes": true
+      },
+      "source_risks": [
+        "no-hidden-test marker"
+      ],
+      "files": [
+        "cache/perch_arrays.npz",
+        "cache/perch_meta.parquet",
+        "submission.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv"
+      ],
+      "submission_stats": {
+        "n_rows": 240,
+        "n_cols": 235,
+        "unique_rows": 240,
+        "bad_values": 0,
+        "ragged_rows": 0,
+        "min": 0.004166667,
+        "max": 1.0,
+        "mean": 0.5020833481162376,
+        "uniq_first100": 98,
+        "head_ids": [
+          "BC2026_Train_0001_S08_20250606_030007_5",
+          "BC2026_Train_0001_S08_20250606_030007_10",
+          "BC2026_Train_0001_S08_20250606_030007_15"
+        ],
+        "sha256_16": "c6867f1d294b8ee5"
+      },
+      "decision": "needs_review_source_risk"
+    }
+  ]
+}
