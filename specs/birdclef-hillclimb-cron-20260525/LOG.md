@@ -48,3 +48,16 @@
 - Trained broad-neg B0 soft OOF-teacher student: 1,024 rows, 4 epochs, aux weight `0.01`; macro AUC `0.908278` over 122 classes; TorchScript/ONNX export and CPU smoke passed.
 - Trained matched soft-only 1,024-row/4-epoch control: macro AUC `0.911067` over 122 classes; TorchScript/ONNX export and CPU smoke passed.
 - Critic/verifier: broad mask solved coverage but aux weight slightly underperformed control; keep soft-only as better promotion candidate, no submission approved. Next: no-slot sidecar/v616 audit for soft-only B0 or distinct 20s temporal/localmax smoke.
+
+## 2026-05-26 04:19 UTC — 20s temporal/localmax B0 data point
+
+- Live check: best remains `0.949`; v616 is the tied baseline; v617/v620 tied, v618/v619 dropped; 2026-05-26 UTC slots `0/5`; no active BirdCLEF jobs locally/on trainer before run.
+- Early-day slot decision: no submission. No verifier-grade/high-info non-duplicate candidate was ready; daily slots remain available for later candidates.
+- Scout refresh: web/search scan surfaced no fresh clean >0.949 public lead; visible recent leads are already-tested Nina/EoS/PANNs/discussion/plateau families.
+- Trained next distinct data point from the default queue: `sed-b0-oofteacher-b0v26-nfnetv29-soft-20s-localmax-512-ep3-20260526`.
+- Setup: EfficientNet-B0 SED frame model with clip pooling `0.5*mean + 0.5*amax`; q3/cap80 external init; 512 OOF-teacher-backed train-audio files; all 234 classes; 20s/160-mel input; BCE, no mixup/no aux, 3 epochs.
+- Result: runtime `20.778s` CUDA; best val loss `0.322308`; macro AUC `0.672996` over 72 valid classes. Correlation vs 5s soft-only 1024/ep4 B0 on 407 overlapping files: global Pearson `0.599986`, MAE `0.036360`.
+- Export/runtime: TorchScript `15.389 MB`; ONNX checker OK; CPU TorchScript inference smoke on 4 files `0.301s` total / `0.075s` per file, finite 234-class output.
+- Critic/verifier: accepted as no-slot landscape artifact, rejected as submission-grade. It is decorrelated but too weak; do not package unchanged. Revisit only with true local-window/offset pseudo-labels or multi-crop localmax aggregation.
+- Reports: `ranked_queue_20260526T0419Z.md`, `model_data_point_20260526T0419Z_20s_localmax.md`, ledger `artifacts/model_data_point_ledger/20260526T0419Z_20s_localmax.md`.
+- Next: package/audit the stronger `1024_ep4` soft-only B0 student as a raw 234-class sidecar against v616, or move to G124/V2S if B0 sidecar audit fails.
