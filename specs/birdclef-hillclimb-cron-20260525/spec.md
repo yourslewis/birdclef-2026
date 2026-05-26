@@ -78,3 +78,31 @@ Soundscape sequence/file/site branch requirements:
 - Include temporal context features: neighbor windows, local max/mean pooling, file-level MIL pooling, label persistence, and time-bin effects.
 - Include data diagnostics: per-site label distribution, per-file label density, class co-occurrence, no-train/non-Aves coverage, and no-call/background protocol.
 - Promotion requires a raw branch or wrapper audited against v616, not just row-level ROC.
+
+## Model performance table reporting contract — added 2026-05-26
+Every cron run that trains, fine-tunes, packages, or evaluates a model/data-point must update and report a model performance table.
+
+Required table artifacts:
+- Append/update `artifacts/model_data_point_ledger/performance_table.md` as the canonical human-readable table.
+- When practical, also update a machine-readable companion `artifacts/model_data_point_ledger/performance_table.jsonl` with one row per trained/evaluated model.
+
+Required columns:
+- UTC time
+- experiment id / short name
+- branch family
+- training data and row/file/site counts
+- target scope / class count
+- model/init
+- validation split
+- primary metric and valid class count
+- secondary metrics: no-train AUC, non-Aves AUC, file-MIL AUC, pooled AUC, no-call AUC, sidecar lift vs v616 when available
+- comparison baseline and delta
+- export/runtime status
+- decision: continue / revise / reject / package / submit
+- artifact path
+
+Reporting rules:
+- The final cron report must include a compact model-performance table for models trained/evaluated in that run plus a short delta vs the best relevant baseline.
+- If multiple historical models are relevant, include a leaderboard-style top-5 table from `performance_table.md` by the most comparable metric.
+- Discord delivery should avoid raw wide markdown tables when they would wrap badly; prefer a compact aligned table, bullets, or a rendered table image if available, while keeping the canonical table artifact in the repo.
+- Do not report only prose such as “trained model X”; every trained model must have a comparable row.
