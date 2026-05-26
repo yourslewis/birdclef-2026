@@ -93,3 +93,14 @@
 - User asked whether the data-driven train-soundscape directions are already in queue and whether there is a deeper training variant.
 - Finding: partial queue existed (non-Aves/no-train B0, PANNs/EfficientAT embeddings, broader OOF negative/no-call, 20s localmax, G124/V2S), but no explicit top-priority sequence/file/site mining branch and no true deeper soundscape-native variant beyond row-level CNN/SED smokes.
 - Updated spec and cron prompt so the top queue is now: (1) train-soundscape sequence/file/site mining with MIL/temporal/file context and leave-site/file validation, (2) deeper soundscape-native training variant with last-block/adapters/compact CNN/SED on task-aligned targets, then AudioSet reformulation and existing queues.
+
+## 2026-05-26 10:20 UTC — train_soundscapes sequence/file/site mining data point
+
+- Live state via Bearer API: best `0.949`, v616 tied baseline, latest v617/v620 tied and v618/v619 dropped; 2026-05-26 slots `0/5`.
+- No early-day submission: no verifier-grade, competition-format, nonduplicate candidate exists.
+- Implemented sequence-aware mining script/config: `scripts/birdclef_soundscape_sequence_mining.py`, `configs/birdclef/soundscape_sequence_dymn10_context_losite_ep16_20260526.json`.
+- Trained/evaluated DyMN10 context features on 1,478 official train-soundscape windows grouped by 60 files / 9 sites, 72 non-Aves/no-train labels.
+- Leave-site row AUC: row-only `0.578422`, context `0.601355`, delta `+0.022933`. File-MIL AUC: `0.563852` -> `0.632127`.
+- Positive fold deltas S19/S23/S13; regressions S03/S22, so comparison-grade only.
+- Verifier checks passed: finite/nonconstant `(1314,72)` predictions and TorchScript smoke `(2,5764)->(2,72)`. Not competition-format; no slot approved.
+- Reports: `ranked_queue_20260526T1020Z.md`, `model_data_point_20260526T1020Z_soundscape_sequence_mining.md`, `reports/scout_critic_20260526T1020Z.md`, ledger `artifacts/model_data_point_ledger/20260526T1020Z_soundscape_sequence_mining.md`.
