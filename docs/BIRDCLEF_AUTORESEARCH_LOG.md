@@ -4326,3 +4326,14 @@ Decision:
 - Verifier: final predictions finite/nonconstant (72/72 columns), TorchScript smoke passed `(2,12,input_dim)->(2,12,72)`. No 234-class wrapper/v616 audit; no Kaggle submission.
 - Reports/artifacts: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T1220Z.md`, `artifacts/model_data_point_ledger/20260526T1220Z_soundscape_tcn_sequence_mining.md`, artifact root `artifacts/soundscape_sequence_mining/soundscape-tcn-dymn10-losite-ep20-20260526/`.
 - Decision: useful negative/diagnostic data point. Naive per-file TCN is weaker overall but fixes S03; next exact action is a residual/gated sequence smoother with S03/S22 guard, or pivot to compact deeper soundscape-native CNN/SED.
+
+## 2026-05-26 14:30 UTC — guarded gated train_soundscape sequence smoother
+- Live status via Kaggle Bearer API: best remains `0.949`; latest scored `v616=0.949`, `v617=0.949`, `v618=0.946`, `v619=0.944`, `v620=0.949`; 2026-05-26 UTC slots `0/5` with ~9.6h to reset; no active local/trainer BirdCLEF jobs.
+- Early UTC-day slot decision: no submission. No verifier-grade/high-info non-duplicate candidate was ready; exact/near replays of tied public families remain forbidden.
+- Public scout refresh found no fresh clean >0.949 packageable Kaggle code lead; EfficientAT/PANNs/DyMN10 search still points back to existing AudioSet/soundscape lanes rather than a new source candidate.
+- Added `scripts/birdclef_soundscape_gated_sequence_mining.py` and config `configs/birdclef/soundscape_gated_sequence_dymn10_context_tcn_losite_ep18_20260526.json`.
+- Trained `soundscape-gated-sequence-dymn10-context-tcn-losite-ep18-20260526`: official `train_soundscapes` only; cached EfficientAT DyMN10 embeddings; 1,478 windows / 66 files / 9 sites; 72 non-Aves/no-train labels; row context MLP plus bounded gated TCN residual; leave-site validation; 18 epochs.
+- Result: leave-site row macro AUC mean `0.556907` vs context MLP `0.601355` (`-0.044448`); file-MIL mean `0.591958` vs `0.632127` (`-0.040168`). Fold deltas vs context: S03 `-0.097429`, S08 `-0.047846`, S13 `+0.042120`, S19 `-0.149320`, S22 `+0.037136`, S23 `-0.051347`.
+- Verifier: final predictions finite/nonconstant (72/72 columns); TorchScript export completed. No 234-class wrapper/v616 audit; no Kaggle submission.
+- Reports/artifacts: `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260526T1430Z.md`, `artifacts/model_data_point_ledger/20260526T1430Z_soundscape_gated_sequence_mining.md`, artifact root `artifacts/soundscape_sequence_mining/soundscape-gated-sequence-dymn10-context-tcn-losite-ep18-20260526/`.
+- Decision: useful negative data point. Gating did not rescue the TCN path and failed the S03 guard. Next exact action is a compact deeper soundscape-native CNN/SED or adapter-style branch with leave-site/file gates, rather than another TCN residual smoother.
