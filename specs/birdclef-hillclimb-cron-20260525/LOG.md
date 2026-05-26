@@ -70,3 +70,10 @@
 - **Trained data point:** `g124-effv2s-public946-pseudo-pilot-20260526-v2sinit-power085-localmax-ep6` using EfficientNetV2-RW-S, external V2S init, 792 teacher train-soundscape rows, `teacher_power=0.85`, local-max radius 1 targets, focal BCE, 6 epochs. Best val AUC `0.960094` over 62 valid classes; all-row student AUC `0.944720`; student/teacher corr `0.847478`; TorchScript+ONNX export passed on trainer.
 - **Sidecar audit:** generated raw train-soundscape predictions for the soft-only B0 `1024_ep4` student, filtered to the 240 v616 proxy rows, converted G124 center/localmax predictions to sidecar CSVs, and ran `audit_vs_v616_fast.json`. Best tiny G124-only recipe lifted local proxy from `0.993480668` to `0.993484059` (`+0.00000339`) with corr `0.999986`; soft-B0 weights did not help.
 - **Decision:** no submission. The G124 signal is interesting but the local lift is too small and teacher/proxy-derived for an early-day Kaggle slot. Next: EfficientAT AudioSet embedding branch if assets are clean, otherwise a bounded G124 hard-confidence/power ablation.
+
+
+## 2026-05-26 06:59 UTC EfficientAT MN10 AudioSet soundscape data point
+- User explicitly requested training the EfficientAT embedding branch. Implemented `scripts/birdclef_efficientat_soundscape_embedding_train.py` and config `configs/birdclef/efficientat_mn10_audioset_soundscape_nonaves_notrain_nocall_siteS08_ep12_20260526.json`.
+- Cloned EfficientAT to trainer `/home/yourslewis/external_models/EfficientAT`, installed missing `wget`, and used public AudioSet `mn10_as` checkpoint.
+- Trained 72-label non-Aves/no-train/no-call soundscape head on 1,478 official 5s train-soundscape windows, site-holdout S08. Embedding extraction 13.30s; best val loss 0.487352 at epoch 5; macro AUC 0.488240 over 18 valid classes; no-train AUC 0.472842 over 17 classes.
+- Verification: holdout predictions finite/nonconstant; TorchScript head smoke passed (`2x960 -> 2x72 + 2x1`). No submission: 72-label specialist only and weaker than PANNs/Cnn14 AudioSet branch (`0.517333`).
