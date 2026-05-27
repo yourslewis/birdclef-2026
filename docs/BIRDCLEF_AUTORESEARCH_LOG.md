@@ -4459,3 +4459,8 @@ Decision:
 - Baseline delta vs PANNs all-class no-file: row `-0.011655`, file-MIL `+0.003033`. Native B0 is competitive as a data point but not a direct slot candidate.
 - Verifier: TS/ONNX export checked on trainer; smoke finite; OOF predictions finite/nonconstant `1410x234`. No submission made because no verifier-grade package is ready and late-fill window had not started.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T2020Z_soundscape_native_b0_allclass.md`, and queue `ranked_queue_20260527T2020Z.md`. Next: PANNs all-class no-file hidden-test package/eval, or late source-clean slot fill inside `<3h` to reset.
+
+## BirdCLEF late-day source slot fill — 2026-05-27 21:46 UTC
+- Live check: best remained `0.949`; 2026-05-27 UTC slots were `0/5` with ~2.3h to reset; no active BirdCLEF jobs.
+- Submitted five guarded source-code late-fill candidates after COMPLETE/kernel-output/schema/nonconstant/hash-dedup checks: v626 Jaejohn Perch meta-probe (`53097345`), v627 Hideyukizushi ProtoSSM (`53097346`), v628 Cliff gate combo (`53097347`), v629 Yaroslav BirdNET third (`53097348`), v630 Tucker distilled SED (`53097349`). All were pending immediately after submit; slots `5/5`.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T2146Z_late_public_slot_fill.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T2146Z.md`, and submit artifact `artifacts/public_kernels_20260527_late_scout/submit_v626_v630_late_fill_20260527.json`. Next: monitor scores; if none beat `0.949`, resume PANNs/fused hidden-safe package or no-call/acoustic-background protocol.
