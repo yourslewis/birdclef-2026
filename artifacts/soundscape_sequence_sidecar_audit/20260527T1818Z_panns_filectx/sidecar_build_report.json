@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-05-27T18:22:24Z",
+  "allclass_sidecar": {
+    "output_csv": "artifacts/soundscape_sequence_sidecar_audit/20260527T1818Z_panns_filectx/sidecars/allclass_sequence_sidecar_234.csv",
+    "base_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+    "sequence_npz": "artifacts/soundscape_sequence_mining/soundscape-sequence-panns-cnn14-allcls-r2-filectx-reg-losite-ep18-20260527/leave_site_predictions.npz",
+    "pred_key": "context_pred",
+    "rows": 240,
+    "class_columns": 234,
+    "sequence_scope_labels": 234,
+    "matched_proxy_rows": 156,
+    "unmatched_proxy_rows": 84,
+    "unmatched_proxy_row_examples": [
+      "BC2026_Train_0006_S09_20250828_000000_5",
+      "BC2026_Train_0006_S09_20250828_000000_10",
+      "BC2026_Train_0006_S09_20250828_000000_15",
+      "BC2026_Train_0006_S09_20250828_000000_20",
+      "BC2026_Train_0006_S09_20250828_000000_25",
+      "BC2026_Train_0006_S09_20250828_000000_30",
+      "BC2026_Train_0006_S09_20250828_000000_35",
+      "BC2026_Train_0006_S09_20250828_000000_40",
+      "BC2026_Train_0006_S09_20250828_000000_45",
+      "BC2026_Train_0006_S09_20250828_000000_50",
+      "BC2026_Train_0006_S09_20250828_000000_55",
+      "BC2026_Train_0006_S09_20250828_000000_60"
+    ],
+    "finite": true,
+    "nonconstant_columns": 234,
+    "value_stats": {
+      "min": 8.200976253647241e-07,
+      "max": 1.0,
+      "mean": 0.20368869602680206,
+      "std": 0.295964777469635
+    }
+  }
+}

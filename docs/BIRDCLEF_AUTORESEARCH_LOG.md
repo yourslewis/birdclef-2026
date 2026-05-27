@@ -4440,3 +4440,14 @@ Decision:
 - Comparison: vs PANNs all-class, fused row is `-0.051174` but file-MIL is `+0.005259`; vs DyMN10 all-class, fused row is `-0.000991` and file-MIL `+0.040697`.
 - Sidecar audit: best `allcls_seq_w0p005` scored local AUC `0.991215` / 42 valid, lift vs anchor `+0.000824`, lift vs v616 `-0.002266`; no submission.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T1620Z_fused_dymn10_panns_allclass_sequence.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T1627Z.md`. Next: package true hidden-test PANNs/fused AudioSet sequence signal or build no-call/acoustic-background protocol; late-day source slot fill only inside `<3h` if no package is ready.
+
+
+## 2026-05-27 18:18 UTC — `soundscape-sequence-panns-cnn14-allcls-r2-filectx-reg-losite-ep18-20260527`
+
+- **Track:** BirdCLEF ClawTeam hill-climb / train_soundscapes sequence-file-site mining.
+- **Live status:** best public LB remained `0.949`; 2026-05-27 UTC slots `0/5` with ~5.7h to reset; no BirdCLEF trainer jobs active before launch.
+- **Data/model:** official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels; frozen PANNs/Cnn14 AudioSet embeddings; radius-2 context MLP with file mean/max.
+- **Result:** row AUC `0.642202` vs row-only `0.616097` (`+0.026105`); file-MIL `0.652651` vs row-only `0.677553` (`-0.024902`); no-train `0.667300`; non-Aves `0.707500`.
+- **Sidecar audit:** best local proxy `allcls_seq_w0p0025` AUC `0.991167` / 42 valid classes; lift vs anchor `+0.000776`; lift vs v616 `-0.002314`. Promotion failed; no submission.
+- **Decision:** keep comparison-grade data point; prioritize true hidden-test PANNs no-file package or no-call/acoustic-background protocol next.
+- **Artifacts:** `artifacts/model_data_point_ledger/20260527T1818Z_panns_cnn14_allclass_filectx_sequence.md`, `artifacts/soundscape_sequence_mining/soundscape-sequence-panns-cnn14-allcls-r2-filectx-reg-losite-ep18-20260527/`, `artifacts/soundscape_sequence_sidecar_audit/20260527T1818Z_panns_filectx/`.
