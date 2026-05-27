@@ -16,16 +16,16 @@
 | Label | Source family | Kaggle source | Ref | Public dry-run rows | uniq_first100 | dry-run hash | Status |
 |---|---|---|---:|---:|---:|---|---|
 | v626 | Perch meta/probe soundscape source | `shahadaljayzani/bc2026-claude-jaejohn-perch-starter-fork` | 53097345 | 240 | 95 | `7439ae3b15a3f6c6` | pending |
-| v627 | ProtoSSM source/fork | `abdulrahmansu10/bc2026-claude-hideyukizushi-protossm-src-fork` | 53097346 | 240 | 89 | `6b5910239e37bd4b` | pending |
+| v627 | ProtoSSM source/fork | `abdulrahmansu10/bc2026-claude-hideyukizushi-protossm-src-fork` | 53097346 | 240 | 89 | `6b5910239e37bd4b` | complete `0.928` |
 | v628 | Gate-combo ensemble | `sultanalgizani/bc2026-claude-cliff-gate-combo-fork` | 53097347 | 3 | 95 | `aa41ccbbf2a84046` | pending |
 | v629 | BirdNET/Yaroslav public source | `hassanalgizani/bc2026-claude-yaroslav-birdnet-3rd-fork` | 53097348 | 3 | 92 | `3224ced9a582e251` | pending |
-| v630 | Distilled SED public source | `hassan1417/bc2026-claude-tucker-distilled-sed-fork` | 53097349 | 60 | 100 | `e293021c399fa925` | pending |
+| v630 | Distilled SED public source | `hassan1417/bc2026-claude-tucker-distilled-sed-fork` | 53097349 | 60 | 100 | `e293021c399fa925` | complete `0.917` |
 
 
 ## Decisions and caveats
 - Submitted `5/5` available daily slots: refs `53097345, 53097346, 53097347, 53097348, 53097349`.
-- None of these rows supersede the repo-owned v616/v621-v623 tied baseline until Kaggle scores return.
-- If any score exceeds `0.949`, promote it to the top comparison set and inspect source lineage/private-risk. If all tie/drop/error, resume repo-owned hidden-safe 234-class PANNs/fused sequence packaging or no-call/acoustic-context protocol.
+- Score update at 2026-05-27 22:16 UTC: v627 scored `0.928` and v630 scored `0.917`, both below the repo-owned v616/v621-v623 tied baseline. v626/v628/v629 were still pending at the later 22:25 UTC recount.
+- If any remaining score exceeds `0.949`, promote it to the top comparison set and inspect source lineage/private-risk. If all tie/drop/error, resume repo-owned hidden-safe 234-class PANNs/fused sequence packaging or no-call/acoustic-context protocol.
 
 ## Artifacts
 - Submit report: `artifacts/public_kernels_20260527_late_scout/submit_v626_v630_late_fill_20260527.json`

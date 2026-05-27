@@ -1,0 +1,6 @@
+{
+  "remote_root": "/home/yourslewis/birdclef-2026/artifacts/soundscape_native_losite/soundscape-native-b0-losite-allcls-observedpos-ep4-20260527/",
+  "torchscript_path": "/home/yourslewis/birdclef-2026/artifacts/soundscape_native_losite/soundscape-native-b0-losite-allcls-observedpos-ep4-20260527/model_torchscript.pt",
+  "onnx_path": "/home/yourslewis/birdclef-2026/artifacts/soundscape_native_losite/soundscape-native-b0-losite-allcls-observedpos-ep4-20260527/model.onnx",
+  "note": "Heavy binary exports retained on trainer; local repo stores config/metrics and this manifest."
+}
