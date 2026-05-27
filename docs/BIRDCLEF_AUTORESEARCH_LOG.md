@@ -4390,3 +4390,13 @@ Decision:
 - Result: row-only AUC `0.504940`; context AUC `0.597633` (`+0.092693`); file-MIL `0.487558` -> `0.635285` (`+0.147728`). Secondary context metrics: no-train `0.545890`, non-Aves `0.614342`. All 7 completed folds improved over row-only; weakest fold deltas were S23 `+0.008122` and S15 `+0.020488`.
 - Verifier: finite/nonconstant leave-site predictions `1410x234`; final all-row TorchScript smoke passed on trainer `(2,4804)->(2,234)`. This is not yet a hidden-test inference package or v616-audited sidecar, so no Kaggle submission.
 - Updated canonical performance table/jsonl and ledger `artifacts/model_data_point_ledger/20260527T0618Z_soundscape_sequence_allclass.md`. Next: package hidden-safe EfficientAT DyMN10 extraction + 234-class context-head inference, then audit low-weight sidecar recipes vs v616.
+
+## 2026-05-27 08:24 UTC — All-class DyMN10 sidecar audit + robust r3 sequence ablation
+
+- **Live check:** Best remains `0.949`; latest late-fill public submissions v621/v622/v623 tied `0.949`, v625 `0.948`, v624 `0.943`; 2026-05-27 UTC slots were `0/5` with ~15.7h to reset.
+- **Sidecar audit:** Added `scripts/birdclef_soundscape_allclass_sidecar_audit.py` and audited the 06:18 all-class DyMN10 context head as a 234-class v616 proxy sidecar. The wrapper matched 156/240 proxy rows, anchor-filled 84, and produced finite/nonconstant `240x234` output.
+- **Sidecar result:** Best recipe was tiny `allcls_seq_w0p0025`: local macro AUC `0.991108` over 42 valid classes; lift vs anchor `+0.000718`, but lift vs v616 `-0.002372`, corr vs v616 `0.999689`. Promotion gates failed; no slot approved.
+- **New model data point:** Trained `soundscape-sequence-dymn10-allcls-r3-robust-losite-ep24-20260527`, a radius-3, smaller/stronger-regularized all-class context MLP on official train_soundscapes (1,478 windows / 66 files / 9 sites / 234 labels).
+- **Model result:** leave-site context row AUC `0.501812` vs row-only `0.493697` (`+0.008115`); file-MIL `0.532188` vs `0.523772` (`+0.008416`). Versus the 06:18 all-class r2 baseline (`0.597633` row / `0.635285` file-MIL), robust r3 is `-0.095821` row and `-0.103097` file-MIL; S03/S08 regressed.
+- **Decision:** no Kaggle submission. All-class r2 remains the best sequence-family clue, but direct v616 sidecar failed; robust r3 is rejected unchanged.
+- **Artifacts:** `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T0824Z.md`, ledgers `20260527T0820Z_allclass_sequence_sidecar_audit.md` and `20260527T0824Z_soundscape_sequence_allclass_robust.md`, audit root `artifacts/soundscape_sequence_sidecar_audit/20260527T0820Z_allclass/`, model root `artifacts/soundscape_sequence_mining/soundscape-sequence-dymn10-allcls-r3-robust-losite-ep24-20260527/`.
