@@ -4420,3 +4420,13 @@ Decision:
 - Fold deltas: S03 `+0.197908`, S08 `-0.008732`, S13 `+0.071340`, S15 `+0.078324`, S19 `+0.056543`, S22 `+0.018585`, S23 `+0.003027`.
 - Sidecar audit: finite/nonconstant `240x234` wrapper with 156/240 proxy rows matched; best `allcls_seq_w0p0025` local AUC `0.990943` / 42 valid classes, lift vs anchor `+0.000553`, lift vs v616 `-0.002538`, corr vs v616 `0.999693`. Promotion gates failed; no Kaggle submission.
 - Verifier: leave-site predictions finite/nonconstant `1410x234`; final all-row head nonconstant `234/234`; TorchScript export exists. Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T1220Z_panns_cnn14_allclass_sequence.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T1225Z.md`. Next: true hidden-test package for PANNs/DyMN10 AudioSet context or a real no-call/acoustic-context branch; late-day source slot-fill only inside `<3h` if no package is ready.
+
+
+## 2026-05-27 14:21 UTC — PANNs/Cnn14 focused no-train sequence data point
+- Live status via Kaggle Bearer API: best remains `0.949`; latest late-fill public submissions v621/v622/v623 tied `0.949`, v625 `0.948`, v624 `0.943`; 2026-05-27 UTC slots `0/5` with ~9.7h to reset. No active local/trainer BirdCLEF jobs before training.
+- Mid-day slot decision: no submission. No verifier-grade nonduplicate candidate was ready; direct OOF/proxy wrappers have failed v616 promotion gates.
+- Added config `configs/birdclef/soundscape_sequence_panns_cnn14_notrain_r2_nofile_reg_losite_ep24_20260527.json` and trained `soundscape-sequence-panns-cnn14-notrain-r2-nofile-reg-losite-ep24-20260527`.
+- Data/model: official `train_soundscapes` only, `1,478` windows / `66` files / `9` sites, `28` no-train labels, frozen PANNs/Cnn14 AudioSet embeddings, radius-2 no-file context MLP, leave-site validation.
+- Result: row-only AUC `0.563916`; context AUC `0.601305` (`+0.037389`); file-MIL `0.638104` -> `0.616149` (`-0.021956`). Versus DyMN10 no-train r2, PANNs is row `+0.047660` but file-MIL `-0.022129`.
+- Verifier: leave-site predictions finite/nonconstant `1314x28`; final all-row head nonconstant `28/28`; TorchScript smoke finite `(2,28)`. No Kaggle submission.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T1421Z_panns_cnn14_notrain_sequence.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T1421Z.md`. Next: true hidden-test package for PANNs all-class/no-train or real no-call/acoustic-context protocol; late-day source slot-fill only inside `<3h` if no package is ready.
