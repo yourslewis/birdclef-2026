@@ -4451,3 +4451,11 @@ Decision:
 - **Sidecar audit:** best local proxy `allcls_seq_w0p0025` AUC `0.991167` / 42 valid classes; lift vs anchor `+0.000776`; lift vs v616 `-0.002314`. Promotion failed; no submission.
 - **Decision:** keep comparison-grade data point; prioritize true hidden-test PANNs no-file package or no-call/acoustic-background protocol next.
 - **Artifacts:** `artifacts/model_data_point_ledger/20260527T1818Z_panns_cnn14_allclass_filectx_sequence.md`, `artifacts/soundscape_sequence_mining/soundscape-sequence-panns-cnn14-allcls-r2-filectx-reg-losite-ep18-20260527/`, `artifacts/soundscape_sequence_sidecar_audit/20260527T1818Z_panns_filectx/`.
+
+## 2026-05-27 20:20 UTC — Soundscape-native B0 all-class LOSO data point
+- Live Kaggle check: best remains `0.949`; latest v621/v622/v623 tied `0.949`, v625 `0.948`, v624 `0.943`; 2026-05-27 UTC slots `0/5` with ~3.7h to reset.
+- Trained `soundscape-native-b0-losite-allcls-ep4-20260527`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / all 234 labels, EfficientNet-B0 SED fine-tuned from q3/cap80 init, leave-site validation.
+- Result: row AUC `0.636161`; no-train `0.626084`; non-Aves `0.618037`; file-MIL `0.673756`; pooled row `0.328850` and pooled no-train `0.180350` are weak.
+- Baseline delta vs PANNs all-class no-file: row `-0.011655`, file-MIL `+0.003033`. Native B0 is competitive as a data point but not a direct slot candidate.
+- Verifier: TS/ONNX export checked on trainer; smoke finite; OOF predictions finite/nonconstant `1410x234`. No submission made because no verifier-grade package is ready and late-fill window had not started.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T2020Z_soundscape_native_b0_allclass.md`, and queue `ranked_queue_20260527T2020Z.md`. Next: PANNs all-class no-file hidden-test package/eval, or late source-clean slot fill inside `<3h` to reset.

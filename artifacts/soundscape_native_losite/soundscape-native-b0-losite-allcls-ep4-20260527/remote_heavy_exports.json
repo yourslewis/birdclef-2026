@@ -1,0 +1,8 @@
+{
+  "remote_root": "/home/yourslewis/birdclef-2026/artifacts/soundscape_native_losite/soundscape-native-b0-losite-allcls-ep4-20260527",
+  "excluded_from_rsync": [
+    "model_torchscript.pt",
+    "model.onnx"
+  ],
+  "reason": "large binary exports retained on trainer; metrics/manifests copied locally"
+}
