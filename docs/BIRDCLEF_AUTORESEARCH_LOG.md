@@ -4382,3 +4382,11 @@ Decision:
 - Guard caveat: S03 regressed badly (`-0.225162`), while S08/S13/S19/S22/S23 improved, so this is not package/submission-ready.
 - Verifier: finite/nonconstant leave-site predictions `1314x28`; TorchScript head smoke/export OK. Updated canonical performance table/jsonl and ledger `artifacts/model_data_point_ledger/20260527T0418Z_soundscape_sequence_notrain_focus.md`. Next: true hidden-safe 234-class DyMN10/AudioSet package or S03-guarded no-train sidecar audit; revisit slots later in the UTC day.
 
+## 2026-05-27 06:18 UTC — all-class DyMN10 train_soundscapes sequence data point
+- Live status via Kaggle Bearer API: best remains `0.949`; latest scored late-fill sources are v621/v622/v623 `0.949`, v624 `0.943`, v625 `0.948`; 2026-05-27 UTC slots `0/5` with ~17.7h to reset. No active local/trainer BirdCLEF jobs before training.
+- Early UTC-day slot decision: no submission. No verifier-grade nonduplicate candidate was ready; tied public/source candidates did not beat v616.
+- Added config `configs/birdclef/soundscape_sequence_dymn10_allcls_r2_nofile_reg_losite_ep18_20260527.json` and trained `soundscape-sequence-dymn10-allcls-r2-nofile-reg-losite-ep18-20260527` with existing `scripts/birdclef_soundscape_sequence_mining.py`.
+- Data/model: official train_soundscapes only, `1,478` windows / `66` files / `9` sites, all `234` taxonomy labels, cached EfficientAT DyMN10 embeddings, radius-2 no-file regularized context MLP, leave-site validation.
+- Result: row-only AUC `0.504940`; context AUC `0.597633` (`+0.092693`); file-MIL `0.487558` -> `0.635285` (`+0.147728`). Secondary context metrics: no-train `0.545890`, non-Aves `0.614342`. All 7 completed folds improved over row-only; weakest fold deltas were S23 `+0.008122` and S15 `+0.020488`.
+- Verifier: finite/nonconstant leave-site predictions `1410x234`; final all-row TorchScript smoke passed on trainer `(2,4804)->(2,234)`. This is not yet a hidden-test inference package or v616-audited sidecar, so no Kaggle submission.
+- Updated canonical performance table/jsonl and ledger `artifacts/model_data_point_ledger/20260527T0618Z_soundscape_sequence_allclass.md`. Next: package hidden-safe EfficientAT DyMN10 extraction + 234-class context-head inference, then audit low-weight sidecar recipes vs v616.
