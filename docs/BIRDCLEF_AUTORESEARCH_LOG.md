@@ -4430,3 +4430,13 @@ Decision:
 - Result: row-only AUC `0.563916`; context AUC `0.601305` (`+0.037389`); file-MIL `0.638104` -> `0.616149` (`-0.021956`). Versus DyMN10 no-train r2, PANNs is row `+0.047660` but file-MIL `-0.022129`.
 - Verifier: leave-site predictions finite/nonconstant `1314x28`; final all-row head nonconstant `28/28`; TorchScript smoke finite `(2,28)`. No Kaggle submission.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T1421Z_panns_cnn14_notrain_sequence.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T1421Z.md`. Next: true hidden-test package for PANNs all-class/no-train or real no-call/acoustic-context protocol; late-day source slot-fill only inside `<3h` if no package is ready.
+
+## 2026-05-27 16:27 UTC — Fused DyMN10 + PANNs all-class sequence data point
+- Live status via Kaggle Bearer API: best remains `0.949`; latest scored late-fill submissions v621/v622/v623 tied `0.949`, v625 `0.948`, v624 `0.943`; 2026-05-27 UTC slots `0/5` with ~7.7h to reset. No active BirdCLEF jobs before training.
+- Mid-day slot decision: no submission. No verifier-grade nonduplicate candidate was ready; direct OOF/proxy wrappers have repeatedly failed v616 promotion gates.
+- Added config `configs/birdclef/soundscape_sequence_fused_dymn10_panns_allcls_r2_nofile_reg_losite_ep18_20260527.json` and trained `soundscape-sequence-fused-dymn10-panns-allcls-r2-nofile-reg-losite-ep18-20260527`.
+- Data/model: official `train_soundscapes` only, `1,478` windows / `66` files / `9` sites, all `234` labels, z-scored concatenated EfficientAT DyMN10 (`960`) + PANNs/Cnn14 (`2048`) embeddings, radius-2 no-file context MLP.
+- Result: row-only AUC `0.553997`; context AUC `0.596642` (`+0.042645`); file-MIL `0.654035` -> `0.675982` (`+0.021947`); no-train `0.548856`; non-Aves `0.636103`.
+- Comparison: vs PANNs all-class, fused row is `-0.051174` but file-MIL is `+0.005259`; vs DyMN10 all-class, fused row is `-0.000991` and file-MIL `+0.040697`.
+- Sidecar audit: best `allcls_seq_w0p005` scored local AUC `0.991215` / 42 valid, lift vs anchor `+0.000824`, lift vs v616 `-0.002266`; no submission.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T1620Z_fused_dymn10_panns_allclass_sequence.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T1627Z.md`. Next: package true hidden-test PANNs/fused AudioSet sequence signal or build no-call/acoustic-background protocol; late-day source slot fill only inside `<3h` if no package is ready.
