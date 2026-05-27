@@ -4372,3 +4372,13 @@ Decision:
 - Submitted five late-fill source-code candidates after verifier checks: v621 Pilkwang EoS7 OOF-gated PCEN sidecar (`53063922`), v622 Beicicc EoS6 P090 (`53063923`), v623 Anthony M5-only fork (`53063925`), v624 Haru public top2 P125 (`53063927`), v625 Safar 0948 fork (`53063928`). All were pending immediately after submission; slots `5/5`.
 - Updated ranked queue and canonical performance table. Ledger: `artifacts/model_data_point_ledger/20260526T2220Z_late_public_slot_fill.md`; scout/submit reports under `artifacts/public_kernels_20260526_late_scout/`.
 - Next: monitor v621-v625 scores/errors; if none beats `0.949`, resume true hidden-safe 234-class DyMN10/AudioSet package rather than another OOF-only wrapper.
+
+## 2026-05-27 04:18 UTC — focused no-train sequence data point + late-fill score monitor
+- Live status via Kaggle Bearer API: best remains `0.949`; late-fill v621/v622/v623 tied `0.949`, v624 scored `0.943`, v625 scored `0.948`; 2026-05-27 UTC slots `0/5` with ~19.7h to reset. No active BirdCLEF jobs before training.
+- Early UTC-day slot decision: no submission. No fresh verifier-grade nonduplicate candidate was ready; tied late-fill sources did not beat v616.
+- Added `no_train_only` scope to `scripts/birdclef_soundscape_sequence_mining.py` and config `configs/birdclef/soundscape_sequence_dymn10_notrain_r2_nofile_reg_losite_ep24_20260527.json`.
+- Trained `soundscape-sequence-dymn10-notrain-r2-nofile-reg-losite-ep24-20260527`: official train_soundscapes only, `1478` windows / `66` files / `9` sites, `28` no-train-primary labels, cached EfficientAT DyMN10 embeddings, radius-2 no-file regularized context MLP, leave-site validation.
+- Result: row-only AUC `0.545666`; context AUC `0.553645` (`+0.007980`); file-MIL `0.602732` -> `0.638278` (`+0.035546`). Compared with previous broad r2 no-train AUC `0.489591`, focused context is `+0.064054`.
+- Guard caveat: S03 regressed badly (`-0.225162`), while S08/S13/S19/S22/S23 improved, so this is not package/submission-ready.
+- Verifier: finite/nonconstant leave-site predictions `1314x28`; TorchScript head smoke/export OK. Updated canonical performance table/jsonl and ledger `artifacts/model_data_point_ledger/20260527T0418Z_soundscape_sequence_notrain_focus.md`. Next: true hidden-safe 234-class DyMN10/AudioSet package or S03-guarded no-train sidecar audit; revisit slots later in the UTC day.
+

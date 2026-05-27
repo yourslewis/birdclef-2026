@@ -9,6 +9,10 @@ train_soundscapes labels as ordered files/sites rather than independent rows:
 - evaluates leave-one-site folds plus file-level MIL max pooling;
 - compares row-only vs temporal/file-context heads under the same protocol.
 
+Class scopes include the original broad non-Aves/no-train target and a
+focused no-train-only target for the 28 classes that have soundscape labels but
+no train-audio primary supervision.
+
 The output is intentionally a measured landscape artifact, not a Kaggle
 submission package.
 """
@@ -44,7 +48,7 @@ class SequenceMiningConfig:
     output_dir: str = "artifacts/soundscape_sequence_mining/soundscape-sequence-dymn10-context-losite-ep16-20260526"
     embedding_npz: str = "artifacts/efficientat_soundscape_embeddings/efficientat-dymn10-audioset-soundscape-nonaves-notrain-nocall-siteS08-ep12-20260526/efficientat_embeddings.npz"
     embedding_key: str = "embedding"
-    class_scope: str = "nonaves_or_no_train"  # nonaves_or_no_train | soundscape_positive | all
+    class_scope: str = "nonaves_or_no_train"  # no_train_only | nonaves_or_no_train | soundscape_positive | all
     context_radius: int = 1
     include_prev_next: bool = True
     include_local_mean: bool = True
@@ -111,6 +115,8 @@ def choose_labels(data_root: Path, cfg: SequenceMiningConfig, soundscape_df: pd.
         labels = [x for x in all_labels if x in positive]
     elif cfg.class_scope == "nonaves_or_no_train":
         labels = [x for x in all_labels if x in nonaves or x in no_train]
+    elif cfg.class_scope == "no_train_only":
+        labels = [x for x in all_labels if x in no_train]
     else:
         raise ValueError(f"Unknown class_scope={cfg.class_scope!r}")
     label_info = {
