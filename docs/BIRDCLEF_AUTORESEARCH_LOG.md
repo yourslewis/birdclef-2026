@@ -4482,3 +4482,10 @@ Decision:
 - Sidecar audit: best `allcls_seq_w0p005` local AUC `0.991753` / 42 valid; lift vs anchor `+0.001362`, lift vs v616 `-0.001728`. Reject as slot candidate despite improved anchor lift.
 - Updated canonical performance table/jsonl, ledgers `artifacts/model_data_point_ledger/20260528T0022Z_panns_cnn14_allclass_localmax_sequence.md` and `artifacts/model_data_point_ledger/20260528T0022Z_panns_localmax_sidecar_audit.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T0022Z.md`. Next: PANNs all-class hidden-test package/eval or no-call/acoustic-background protocol.
 
+
+## 2026-05-28 02:21 UTC — PANNs/Cnn14 embedding+AudioSet-tag sequence data point
+- Live Kaggle check: best remains `0.949`; 2026-05-28 UTC slots `0/5`; latest v626-v630 late fills all below best (`0.899/0.928/0.940/0.946/0.917`). No active BirdCLEF jobs; GPU1 free.
+- Trained `soundscape-sequence-panns-cnn14-embclip-allcls-r2-nofile-reg-losite-ep18-20260528`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / all 234 labels; z-scored PANNs/Cnn14 2048-d embeddings concatenated with z-scored 527-d AudioSet tag logits; radius-2 no-file context MLP.
+- Result: context row AUC `0.609194` vs row-only `0.614447` (`-0.005253`); file-MIL `0.668715` vs row-only `0.671901` (`-0.003186`); no-train `0.550128`; non-Aves `0.642714`.
+- Compared with PANNs no-file all-class, emb+tag regressed row `-0.038622` and file-MIL `-0.002008`. Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990515`, lift vs v616 `-0.002966`; no submission.
+- Updated canonical performance table/jsonl, ledgers `20260528T0221Z_panns_cnn14_embclip_allclass_sequence.md` and `20260528T0221Z_panns_embclip_sidecar_audit.md`, queue `ranked_queue_20260528T0221Z.md`. Next: true hidden-test PANNs/localmax package or no-call/background protocol audit.
