@@ -4539,3 +4539,9 @@ Decision:
 - Package audit: best rank blend `soft1279init_native_allcls_w0p08` local AUC `0.994813` / 42 valid, lift vs v616 `+0.001332`, lift vs anchor `+0.004422`, rank corr vs v616 `0.996241`, MAE `0.023480`. Raw member AUC was `0.994941` but high-displacement (`corr 0.204537`, MAE `0.426876`).
 - Verifier decision: no submission. `w0p08` passed lift-vs-v616/file/leave-one gates but failed strict lift-vs-anchor and site-bootstrap q05 gates; `submit_approved=false`. Early/mid-day policy requires stronger evidence.
 - Updated performance table/jsonl, ledgers `artifacts/model_data_point_ledger/20260528T1424Z_soundscape_native_soft1279init_allclass.md` and `artifacts/model_data_point_ledger/20260528T1424Z_soft1279init_native_allclass_package_audit.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T1424Z.md`. Next: stability audit/calibrated blend grid around this sidecar, then no-call/background protocol if gates do not improve.
+
+## 2026-05-28 16:25 UTC — Soft1279-init stability grid + encoder-only ablation
+- Live check: BirdCLEF public best still `0.949`; 2026-05-28 UTC slots `0/5` with ~7.7h to reset; no active BirdCLEF jobs before run.
+- Expanded the head-loaded soft1279-init native all-class sidecar grid. Best moved to `soft1279init_native_allcls_w0p16`: local AUC `0.995545` / 42 valid, lift vs v616 `+0.002064`, lift vs anchor `+0.005155`; still `submit_approved=false` because strict lift-vs-anchor gate failed.
+- Trained `soundscape-native-b0-soft1279enc-losite-allcls-ep4-20260528` as the encoder-only soft1279 ablation: row `0.506642`, file-MIL `0.460169`, no-train `0.552063`, non-Aves `0.467678`; rejected unchanged.
+- Packaged/audited encoder-only sidecar: best non-control `soft1279enc_native_allcls_w0p08` AUC `0.993144`, lift vs v616 `-0.000337`; rejected. Updated performance table/jsonl, ledgers, and ranked queue.
