@@ -4545,3 +4545,13 @@ Decision:
 - Expanded the head-loaded soft1279-init native all-class sidecar grid. Best moved to `soft1279init_native_allcls_w0p16`: local AUC `0.995545` / 42 valid, lift vs v616 `+0.002064`, lift vs anchor `+0.005155`; still `submit_approved=false` because strict lift-vs-anchor gate failed.
 - Trained `soundscape-native-b0-soft1279enc-losite-allcls-ep4-20260528` as the encoder-only soft1279 ablation: row `0.506642`, file-MIL `0.460169`, no-train `0.552063`, non-Aves `0.467678`; rejected unchanged.
 - Packaged/audited encoder-only sidecar: best non-control `soft1279enc_native_allcls_w0p08` AUC `0.993144`, lift vs v616 `-0.000337`; rejected. Updated performance table/jsonl, ledgers, and ranked queue.
+
+
+## 2026-05-28 18:21 UTC — Soft1279 observed-positive ablation + per-class sidecar diagnostic
+
+- Live check: best public LB still `0.949`; 2026-05-28 UTC slots `0/5`; no active BirdCLEF jobs before run; ~5.7h to reset.
+- Trained `soundscape-native-b0-soft1279init-obspos-losite-allcls-ep4-20260528`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels, EfficientNet-B0 SED initialized from soft1279 OOF-teacher checkpoint with head loaded, observed-sqrt positive class weights.
+- Metrics: row AUC `0.569148`, file-MIL `0.474353`, no-train `0.506363`, non-Aves `0.532133`; vs head-loaded soft1279 row `-0.031212` / file `-0.131452`.
+- Package audit best `soft1279init_obspos_native_allcls_w0p16` local AUC `0.993906`, lift vs v616 `+0.000425`, weaker than prior head-loaded `w0.16` by `-0.001639`; rejected.
+- Per-class selector on head-loaded raw sidecar: site-CV lift `+0.000280` but site q05 `-0.003768` and p>0 `0.167`; file-CV lift `+0.001571`; all-row lift `+0.002468`. Decision: hold/reject as submission-grade in mid-day policy.
+- Updated performance table/jsonl, ledgers, ranked queue. No submission.
