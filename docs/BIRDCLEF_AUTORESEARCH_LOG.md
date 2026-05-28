@@ -4564,3 +4564,10 @@ Decision:
 - Trained/evaluated aggregate `soundscape-nocall-gate-soft1279native-agg-losite-20260528` using only confidence summaries from soft1279-init, encoder-only, and observed-positive native package outputs. Result: OOF no-call AUC `0.950469`; site mean/min/q05 `0.853572/0.700899/0.718957`; best raw confidence baseline `soft1279enc_native_max_auc=0.977098`.
 - Decision: aggregate no-call signal is useful comparison-grade evidence, but no submission. The weak negatives are not hand-verified and no v616 suppression sidecar has passed site/file/lift gates. Next: build a conservative suppression-sidecar verifier or use late-day slots only after <3h reset policy activates.
 - Updated canonical performance table/jsonl, ledgers `20260528T2023Z_soundscape_nocall_gate_full.md` and `20260528T2023Z_soundscape_nocall_gate_agg.md`, queue `ranked_queue_20260528T2023Z.md`.
+
+## 2026-05-28 22:18 UTC — Late-day source-code slot fill v631-v635
+
+- Live check: public best still `0.949`; 2026-05-28 UTC slots `0/5` with ~1.7h to reset; late-day slot policy active.
+- Submitted five guarded Kaggle source-code candidates (hidden rerun, not static CSV): v631 Maryna two-pass SSM (`53130259`), v632 Vyanktesh (`53130260`), v633 Raunak multi-model (`53130262`), v634 MeenalSinha improved (`53130270`), v635 Mattia 943 blend (`53130272`). All were pending immediately after submit; slots `5/5`.
+- Guards: complete source kernels; `submission.csv`/`sample_submission`/`test_soundscapes` markers; finite/nonconstant 235-col dry-run outputs; unique dry-run hashes; nonduplicate descriptions; cap recounted after submit.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260528T2218Z_late_public_slot_fill.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T2218Z.md`. Next: monitor v631-v635 public scores and update pending rows.

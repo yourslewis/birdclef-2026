@@ -1,0 +1,504 @@
+{
+  "utc_now": "2026-05-28T22:17:43.074459+00:00",
+  "utc_reset": "2026-05-29T00:00:00+00:00",
+  "hours_to_reset": 1.7047015391666667,
+  "today_count_start": 0,
+  "latest_submissions": [
+    {
+      "date": "2026-05-27 21:46:10.130000",
+      "description": "v630: Late-fill Tucker distilled SED source",
+      "score": "0.917",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097349
+    },
+    {
+      "date": "2026-05-27 21:46:07.533000",
+      "description": "v629: Late-fill Yaroslav BirdNET third source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097348
+    },
+    {
+      "date": "2026-05-27 21:46:04.887000",
+      "description": "v628: Late-fill Cliff gate combo source",
+      "score": "0.940",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097347
+    },
+    {
+      "date": "2026-05-27 21:46:02.317000",
+      "description": "v627: Late-fill Hideyukizushi ProtoSSM source",
+      "score": "0.928",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097346
+    },
+    {
+      "date": "2026-05-27 21:45:59.653000",
+      "description": "v626: Late-fill Jaejohn Perch meta-probe source",
+      "score": "0.899",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097345
+    },
+    {
+      "date": "2026-05-26 22:20:39.907000",
+      "description": "v625: Late-fill Safar 0948 public fork",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063928
+    },
+    {
+      "date": "2026-05-26 22:20:36.840000",
+      "description": "v624: Late-fill Haru public top2 P125 fork",
+      "score": "0.943",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063927
+    },
+    {
+      "date": "2026-05-26 22:20:33.540000",
+      "description": "v623: Late-fill Anthony M5-only public fork",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063925
+    },
+    {
+      "date": "2026-05-26 22:20:30.297000",
+      "description": "v622: Late-fill direct Beicicc EoS6 P090 May23",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063923
+    },
+    {
+      "date": "2026-05-26 22:20:26.947000",
+      "description": "v621: Late-fill direct Pilkwang EoS7 OOF-gated PCEN sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063922
+    },
+    {
+      "date": "2026-05-25 22:43:18.860000",
+      "description": "v620: Exploratory direct Kazuhiro Karnak rank fusion source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032524
+    },
+    {
+      "date": "2026-05-25 22:43:15.953000",
+      "description": "v619: Exploratory direct Kruzzcc Mtoshi UMAP BirdNET source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032523
+    },
+    {
+      "date": "2026-05-25 22:43:13.263000",
+      "description": "v618: Exploratory direct Kruzzcc Nina EoS4 BirdNET source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032520
+    },
+    {
+      "date": "2026-05-25 22:43:10.330000",
+      "description": "v617: Exploratory direct Nina EoS7 sz sidecar source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032516
+    },
+    {
+      "date": "2026-05-25 08:02:43.397000",
+      "description": "v616: Repo-owned Samejima anchor plus Jung21 and SED rank blend",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53012761
+    }
+  ],
+  "candidates": [
+    {
+      "label": "v626",
+      "ref": "shahadaljayzani/bc2026-claude-jaejohn-perch-starter-fork",
+      "description": "v626: Late-fill Jaejohn Perch meta-probe source",
+      "expected_family": "Perch meta/probe soundscape source",
+      "decision": "skip_duplicate_description"
+    },
+    {
+      "label": "v627",
+      "ref": "abdulrahmansu10/bc2026-claude-hideyukizushi-protossm-src-fork",
+      "description": "v627: Late-fill Hideyukizushi ProtoSSM source",
+      "expected_family": "ProtoSSM source/fork",
+      "decision": "skip_duplicate_description"
+    },
+    {
+      "label": "v628",
+      "ref": "sultanalgizani/bc2026-claude-cliff-gate-combo-fork",
+      "description": "v628: Late-fill Cliff gate combo source",
+      "expected_family": "Gate-combo ensemble",
+      "decision": "skip_duplicate_description"
+    },
+    {
+      "label": "v629",
+      "ref": "hassanalgizani/bc2026-claude-yaroslav-birdnet-3rd-fork",
+      "description": "v629: Late-fill Yaroslav BirdNET third source",
+      "expected_family": "BirdNET/Yaroslav public source",
+      "decision": "skip_duplicate_description"
+    },
+    {
+      "label": "v630",
+      "ref": "hassan1417/bc2026-claude-tucker-distilled-sed-fork",
+      "description": "v630: Late-fill Tucker distilled SED source",
+      "expected_family": "Distilled SED public source",
+      "decision": "skip_duplicate_description"
+    },
+    {
+      "label": "v631",
+      "ref": "joriahmed/bc2026-claude-maryna-twopass-ssm-fork",
+      "description": "v631: Late-fill Maryna two-pass SSM source",
+      "expected_family": "Two-pass SSM public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "joriahmed/bc2026-claude-maryna-twopass-ssm-fork",
+        "version": 1,
+        "source_len": 106531,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Two-pass SSM source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Two-pass SSM public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 3.230317e-08,
+          "max": 0.9977007,
+          "mean": 0.12819370392124554,
+          "uniq_first100": 98,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "9fd71fb24d94ca92"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130259}"
+    },
+    {
+      "label": "v632",
+      "ref": "abdulrahmansu10/bc2026-claude-vyanktesh-fork",
+      "description": "v632: Late-fill Vyanktesh source",
+      "expected_family": "Vyanktesh public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "abdulrahmansu10/bc2026-claude-vyanktesh-fork",
+        "version": 1,
+        "source_len": 85573,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": false
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Vyanktesh source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Vyanktesh public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.004166667,
+          "max": 1.0,
+          "mean": 0.5020833481162376,
+          "uniq_first100": 98,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "c6867f1d294b8ee5"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130260}"
+    },
+    {
+      "label": "v633",
+      "ref": "ahmedkhudair121/bc2026-claude-raunak-multi-model-fork",
+      "description": "v633: Late-fill Raunak multi-model source",
+      "expected_family": "Raunak multi-model public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "ahmedkhudair121/bc2026-claude-raunak-multi-model-fork",
+        "version": 1,
+        "source_len": 108389,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": false
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Raunak multi-model source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Raunak multi-model public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47670802,
+          "max": 0.56437147,
+          "mean": 0.5015263996153846,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "30cc8796efbbaee8"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130262}"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v631",
+      "ref": "joriahmed/bc2026-claude-maryna-twopass-ssm-fork",
+      "description": "v631: Late-fill Maryna two-pass SSM source",
+      "expected_family": "Two-pass SSM public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "joriahmed/bc2026-claude-maryna-twopass-ssm-fork",
+        "version": 1,
+        "source_len": 106531,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Two-pass SSM source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Two-pass SSM public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 3.230317e-08,
+          "max": 0.9977007,
+          "mean": 0.12819370392124554,
+          "uniq_first100": 98,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "9fd71fb24d94ca92"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130259}"
+    },
+    {
+      "label": "v632",
+      "ref": "abdulrahmansu10/bc2026-claude-vyanktesh-fork",
+      "description": "v632: Late-fill Vyanktesh source",
+      "expected_family": "Vyanktesh public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "abdulrahmansu10/bc2026-claude-vyanktesh-fork",
+        "version": 1,
+        "source_len": 85573,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": false
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Vyanktesh source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Vyanktesh public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.004166667,
+          "max": 1.0,
+          "mean": 0.5020833481162376,
+          "uniq_first100": 98,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "c6867f1d294b8ee5"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130260}"
+    },
+    {
+      "label": "v633",
+      "ref": "ahmedkhudair121/bc2026-claude-raunak-multi-model-fork",
+      "description": "v633: Late-fill Raunak multi-model source",
+      "expected_family": "Raunak multi-model public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "ahmedkhudair121/bc2026-claude-raunak-multi-model-fork",
+        "version": 1,
+        "source_len": 108389,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": false
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Raunak multi-model source fallback; hidden-test path, nonconstant public dry-run, unique hash.",
+        "expected_family": "Raunak multi-model public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.47670802,
+          "max": 0.56437147,
+          "mean": 0.5015263996153846,
+          "uniq_first100": 91,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "30cc8796efbbaee8"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130262}"
+    }
+  ],
+  "today_count_end_est": 3,
+  "submitted_count": 3
+}

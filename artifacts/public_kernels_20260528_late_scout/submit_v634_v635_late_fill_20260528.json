@@ -1,0 +1,370 @@
+{
+  "utc_now": "2026-05-28T22:18:16.144648+00:00",
+  "utc_reset": "2026-05-29T00:00:00+00:00",
+  "hours_to_reset": 1.6955153755555554,
+  "today_count_start": 3,
+  "candidates": [
+    {
+      "label": "v634",
+      "ref": "mohamadmatali/bc2026-claude-meenalsinha-improved-fork",
+      "description": "v634: Late-fill MeenalSinha improved source",
+      "expected_family": "MeenalSinha improved public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "mohamadmatali/bc2026-claude-meenalsinha-improved-fork",
+        "version": 1,
+        "source_len": 412976,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "240-row complete public source dry-run with hidden-test/sample/submission markers; unique matrix hash; late-day source-code rerun slot fill.",
+        "expected_family": "MeenalSinha improved public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "subm_4.csv",
+          "subm_inner_blend.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_birdnet.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.0037499997,
+          "max": 1.0,
+          "mean": 0.5011559531553917,
+          "uniq_first100": 94,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "48e8eb7f8409ac11"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130270}"
+    },
+    {
+      "label": "v635",
+      "ref": "joriahmed/bc2026-claude-mattia-943-blend-fork",
+      "description": "v635: Late-fill Mattia 943 blend source",
+      "expected_family": "Mattia 943 blend public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "joriahmed/bc2026-claude-mattia-943-blend-fork",
+        "version": 1,
+        "source_len": 97283,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "240-row complete public source dry-run with hidden-test/sample/submission markers; unique matrix hash; late-day source-code rerun slot fill.",
+        "expected_family": "Mattia 943 blend public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.004166667,
+          "max": 1.0,
+          "mean": 0.5039453962767896,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "4ea48f143ed5b877"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130272}"
+    },
+    {
+      "label": "v636",
+      "ref": "shahadaljayzani/bc2026-claude-mtoshi-941-fork",
+      "description": "v636: Late-fill Mtoshi 941 source",
+      "expected_family": "Mtoshi 941 public source",
+      "decision": "skip_cap_reached"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v634",
+      "ref": "mohamadmatali/bc2026-claude-meenalsinha-improved-fork",
+      "description": "v634: Late-fill MeenalSinha improved source",
+      "expected_family": "MeenalSinha improved public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "mohamadmatali/bc2026-claude-meenalsinha-improved-fork",
+        "version": 1,
+        "source_len": 412976,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "240-row complete public source dry-run with hidden-test/sample/submission markers; unique matrix hash; late-day source-code rerun slot fill.",
+        "expected_family": "MeenalSinha improved public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "subm_4.csv",
+          "subm_inner_blend.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_birdnet.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.0037499997,
+          "max": 1.0,
+          "mean": 0.5011559531553917,
+          "uniq_first100": 94,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "48e8eb7f8409ac11"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130270}"
+    },
+    {
+      "label": "v635",
+      "ref": "joriahmed/bc2026-claude-mattia-943-blend-fork",
+      "description": "v635: Late-fill Mattia 943 blend source",
+      "expected_family": "Mattia 943 blend public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "joriahmed/bc2026-claude-mattia-943-blend-fork",
+        "version": 1,
+        "source_len": 97283,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "240-row complete public source dry-run with hidden-test/sample/submission markers; unique matrix hash; late-day source-code rerun slot fill.",
+        "expected_family": "Mattia 943 blend public source",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.004166667,
+          "max": 1.0,
+          "mean": 0.5039453962767896,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "sha256_16": "4ea48f143ed5b877"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53130272}"
+    }
+  ],
+  "latest_submissions": [
+    {
+      "date": "2026-05-28 22:17:52.923000",
+      "description": "v633: Late-fill Raunak multi-model source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53130262
+    },
+    {
+      "date": "2026-05-28 22:17:49.593000",
+      "description": "v632: Late-fill Vyanktesh source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53130260
+    },
+    {
+      "date": "2026-05-28 22:17:46.633000",
+      "description": "v631: Late-fill Maryna two-pass SSM source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53130259
+    },
+    {
+      "date": "2026-05-27 21:46:10.130000",
+      "description": "v630: Late-fill Tucker distilled SED source",
+      "score": "0.917",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097349
+    },
+    {
+      "date": "2026-05-27 21:46:07.533000",
+      "description": "v629: Late-fill Yaroslav BirdNET third source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097348
+    },
+    {
+      "date": "2026-05-27 21:46:04.887000",
+      "description": "v628: Late-fill Cliff gate combo source",
+      "score": "0.940",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097347
+    },
+    {
+      "date": "2026-05-27 21:46:02.317000",
+      "description": "v627: Late-fill Hideyukizushi ProtoSSM source",
+      "score": "0.928",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097346
+    },
+    {
+      "date": "2026-05-27 21:45:59.653000",
+      "description": "v626: Late-fill Jaejohn Perch meta-probe source",
+      "score": "0.899",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097345
+    },
+    {
+      "date": "2026-05-26 22:20:39.907000",
+      "description": "v625: Late-fill Safar 0948 public fork",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063928
+    },
+    {
+      "date": "2026-05-26 22:20:36.840000",
+      "description": "v624: Late-fill Haru public top2 P125 fork",
+      "score": "0.943",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063927
+    },
+    {
+      "date": "2026-05-26 22:20:33.540000",
+      "description": "v623: Late-fill Anthony M5-only public fork",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063925
+    },
+    {
+      "date": "2026-05-26 22:20:30.297000",
+      "description": "v622: Late-fill direct Beicicc EoS6 P090 May23",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063923
+    },
+    {
+      "date": "2026-05-26 22:20:26.947000",
+      "description": "v621: Late-fill direct Pilkwang EoS7 OOF-gated PCEN sidecar",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063922
+    },
+    {
+      "date": "2026-05-25 22:43:18.860000",
+      "description": "v620: Exploratory direct Kazuhiro Karnak rank fusion source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032524
+    },
+    {
+      "date": "2026-05-25 22:43:15.953000",
+      "description": "v619: Exploratory direct Kruzzcc Mtoshi UMAP BirdNET source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53032523
+    }
+  ],
+  "today_count_end_est": 5,
+  "submitted_count": 2
+}
