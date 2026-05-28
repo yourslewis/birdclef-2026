@@ -4489,3 +4489,12 @@ Decision:
 - Result: context row AUC `0.609194` vs row-only `0.614447` (`-0.005253`); file-MIL `0.668715` vs row-only `0.671901` (`-0.003186`); no-train `0.550128`; non-Aves `0.642714`.
 - Compared with PANNs no-file all-class, emb+tag regressed row `-0.038622` and file-MIL `-0.002008`. Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990515`, lift vs v616 `-0.002966`; no submission.
 - Updated canonical performance table/jsonl, ledgers `20260528T0221Z_panns_cnn14_embclip_allclass_sequence.md` and `20260528T0221Z_panns_embclip_sidecar_audit.md`, queue `ranked_queue_20260528T0221Z.md`. Next: true hidden-test PANNs/localmax package or no-call/background protocol audit.
+
+
+## 2026-05-28 04:22 UTC — Native B0 soundscape-positive target data point + sidecar audit
+- Live status: best remains `0.949`; 2026-05-28 UTC slots `0/5` early day; no active BirdCLEF jobs before launch.
+- Trained `soundscape-native-b0-losite-soundpos-ep5-20260528` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 75 soundscape-positive labels, EfficientNet-B0 SED from q3/cap80 init, leave-site validation.
+- Result: row AUC `0.658165`; file-MIL `0.676383`; no-train `0.610377`; non-Aves `0.603244`; pooled row `0.341538` (diagnostic only). Versus native B0 all-class: row `+0.022004`, file-MIL `+0.002627`; versus DyMN10 soundpos sequence: row `+0.140044`, file-MIL `+0.164219`.
+- Export/verifier: TorchScript and ONNX exported/checked on trainer; OOF predictions finite/nonconstant `1410x75`.
+- Sidecar audit: mapped 75-label OOF to v616 234-class proxy, matched 156/240 rows; best `seq_context_w04` local AUC `0.991551` / 42 valid, lift vs anchor `+0.001160`, lift vs v616 `-0.001930`. Promotion failed; no submission.
+- Updated canonical performance table/jsonl, ledgers `artifacts/model_data_point_ledger/20260528T0422Z_soundscape_native_b0_soundpos.md` and `artifacts/model_data_point_ledger/20260528T0422Z_native_soundpos_sidecar_audit.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T0422Z.md`. Next: hidden-safe PANNs/native package path or trusted no-call/background protocol audit; do not spend early-day slots on direct OOF sidecars.
