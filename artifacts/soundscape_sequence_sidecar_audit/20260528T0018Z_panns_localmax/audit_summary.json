@@ -1,0 +1,185 @@
+{
+  "created_utc": "2026-05-28T00:22:18Z",
+  "audit_json": "artifacts/soundscape_sequence_sidecar_audit/20260528T0018Z_panns_localmax/audit/ensemble_strategy_audit.json",
+  "top_by_lift_vs_v616": [
+    {
+      "recipe": "allcls_seq_w0p005",
+      "macro_auc": 0.9917528206428005,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013623141236405178,
+      "lift_vs_v616": -0.0017278469313384281,
+      "rank_corr_vs_v616": 0.9996813083733731,
+      "mae_vs_v616": 0.005868897773325443,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p0025",
+      "macro_auc": 0.991737428085035,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013469215658750144,
+      "lift_vs_v616": -0.0017432394891039316,
+      "rank_corr_vs_v616": 0.9996916050544821,
+      "mae_vs_v616": 0.005997473374009132,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p01",
+      "macro_auc": 0.9916949661384283,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013044596192683944,
+      "lift_vs_v616": -0.0017857014357105516,
+      "rank_corr_vs_v616": 0.9996430945525391,
+      "mae_vs_v616": 0.005913073662668467,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p02",
+      "macro_auc": 0.9914854150445908,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0010949085254308155,
+      "lift_vs_v616": -0.0019952525295481305,
+      "rank_corr_vs_v616": 0.9994944404741632,
+      "mae_vs_v616": 0.0070134480483829975,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p04",
+      "macro_auc": 0.9911155249730276,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007250184538676319,
+      "lift_vs_v616": -0.002365142601111314,
+      "rank_corr_vs_v616": 0.9988939878480195,
+      "mae_vs_v616": 0.011244803667068481,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p08",
+      "macro_auc": 0.9892545746656245,
+      "valid_classes": 42,
+      "lift_vs_anchor": -0.0011359318535354435,
+      "lift_vs_v616": -0.0042260929085143895,
+      "rank_corr_vs_v616": 0.9963624646280803,
+      "mae_vs_v616": 0.021564345806837082,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    }
+  ],
+  "all_recipes": [
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p0025",
+      "macro_auc": 0.991737428085035,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013469215658750144,
+      "lift_vs_v616": -0.0017432394891039316,
+      "rank_corr_vs_v616": 0.9996916050544821,
+      "mae_vs_v616": 0.005997473374009132,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p005",
+      "macro_auc": 0.9917528206428005,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013623141236405178,
+      "lift_vs_v616": -0.0017278469313384281,
+      "rank_corr_vs_v616": 0.9996813083733731,
+      "mae_vs_v616": 0.005868897773325443,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p01",
+      "macro_auc": 0.9916949661384283,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0013044596192683944,
+      "lift_vs_v616": -0.0017857014357105516,
+      "rank_corr_vs_v616": 0.9996430945525391,
+      "mae_vs_v616": 0.005913073662668467,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p02",
+      "macro_auc": 0.9914854150445908,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0010949085254308155,
+      "lift_vs_v616": -0.0019952525295481305,
+      "rank_corr_vs_v616": 0.9994944404741632,
+      "mae_vs_v616": 0.0070134480483829975,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p04",
+      "macro_auc": 0.9911155249730276,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007250184538676319,
+      "lift_vs_v616": -0.002365142601111314,
+      "rank_corr_vs_v616": 0.9988939878480195,
+      "mae_vs_v616": 0.011244803667068481,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p08",
+      "macro_auc": 0.9892545746656245,
+      "valid_classes": 42,
+      "lift_vs_anchor": -0.0011359318535354435,
+      "lift_vs_v616": -0.0042260929085143895,
+      "rank_corr_vs_v616": 0.9963624646280803,
+      "mae_vs_v616": 0.021564345806837082,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    }
+  ],
+  "submit_approved": false
+}

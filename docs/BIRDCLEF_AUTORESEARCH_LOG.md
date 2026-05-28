@@ -4472,3 +4472,13 @@ Decision:
 - Delta vs prior native B0 all-class pos-weight run: row `-0.011821`, file-MIL `-0.090842`; delta vs PANNs no-file all-class: row `-0.023476`, file-MIL `-0.087809`.
 - Verifier: TS/ONNX export checked on trainer, smoke finite; OOF predictions finite/nonconstant `1410x234`. Decision: reject observed-positive weighting unchanged; do not package/submit.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260527T2225Z_soundscape_native_b0_observedpos_allclass.md`, ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260527T2225Z.md`. Next: monitor v626/v628/v629; if none beat `0.949`, resume PANNs all-class no-file hidden-test package/eval or no-call/acoustic-background target audit after UTC reset.
+
+## 2026-05-28 00:22 UTC — PANNs/Cnn14 localmax-only all-class sequence data point
+- Live Kaggle check: best remains `0.949`; new UTC day slots `0/5`. Latest 2026-05-27 late-fill submissions completed below best: v626 `0.899`, v627 `0.928`, v628 `0.940`, v629 `0.946`, v630 `0.917`.
+- No active BirdCLEF jobs at launch; trainer GPU 1 was free while an unrelated LRM job used GPU 0. Early-day slot decision: no submission without verifier-grade/high-info nonduplicate candidate.
+- Trained `soundscape-sequence-panns-cnn14-allcls-r2-localmaxonly-losite-ep20-20260528` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / all 234 taxonomy labels, frozen PANNs/Cnn14 AudioSet embeddings, localmax-only radius-2 context MLP with time features.
+- Result: row AUC `0.641501` vs row-only `0.618042` (`+0.023459`); file-MIL `0.681753` vs row-only `0.679564` (`+0.002189`); no-train `0.606530`; non-Aves `0.669778`.
+- Compared with PANNs all-class no-file: row `-0.006315`, file-MIL `+0.011030`. Compared with PANNs file-context: row `-0.000701`, file-MIL `+0.029102`.
+- Sidecar audit: best `allcls_seq_w0p005` local AUC `0.991753` / 42 valid; lift vs anchor `+0.001362`, lift vs v616 `-0.001728`. Reject as slot candidate despite improved anchor lift.
+- Updated canonical performance table/jsonl, ledgers `artifacts/model_data_point_ledger/20260528T0022Z_panns_cnn14_allclass_localmax_sequence.md` and `artifacts/model_data_point_ledger/20260528T0022Z_panns_localmax_sidecar_audit.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T0022Z.md`. Next: PANNs all-class hidden-test package/eval or no-call/acoustic-background protocol.
+
