@@ -67,6 +67,8 @@ class SequenceMiningConfig:
     pos_weight: bool = True
     pos_weight_power: float = 0.5
     pos_weight_clip: float = 20.0
+    file_mil_loss_weight: float = 0.0
+    file_mil_pos_weight: bool = True
     site_balanced_sampling: bool = True
     min_val_rows: int = 40
     min_valid_classes: int = 4
@@ -377,6 +379,27 @@ def train_one(name: str, x_np: np.ndarray, y: torch.Tensor, rows: list[dict[str,
     pw = pos_weight_tensor(y[train_idx], cfg)
     if pw is not None:
         pw = pw.to(device)
+
+    train_file_groups: list[torch.Tensor] = []
+    train_file_targets: torch.Tensor | None = None
+    file_pw: torch.Tensor | None = None
+    if cfg.file_mil_loss_weight > 0:
+        pos_by_global = {int(g): p for p, g in enumerate(train_idx_np.tolist())}
+        by_file: dict[str, list[int]] = {}
+        for g in train_idx_np.tolist():
+            by_file.setdefault(rows[int(g)]["filename"], []).append(int(g))
+        target_rows = []
+        for globals_for_file in by_file.values():
+            positions = [pos_by_global[g] for g in globals_for_file]
+            train_file_groups.append(torch.tensor(positions, dtype=torch.long, device=device))
+            target_rows.append(y[torch.tensor(globals_for_file, dtype=torch.long)].max(dim=0).values)
+        train_file_targets = torch.stack(target_rows).to(device) if target_rows else None
+        if cfg.file_mil_pos_weight and train_file_targets is not None:
+            file_cfg = SequenceMiningConfig(**{**asdict(cfg), "pos_weight": True})
+            file_pw = pos_weight_tensor(train_file_targets.cpu(), file_cfg)
+            if file_pw is not None:
+                file_pw = file_pw.to(device)
+
     history: list[dict[str, Any]] = []
     best = None
     best_val = float("inf")
@@ -395,6 +418,15 @@ def train_one(name: str, x_np: np.ndarray, y: torch.Tensor, rows: list[dict[str,
             loss.backward()
             opt.step()
             train_losses.append(float(loss.detach().cpu()))
+        mil_loss_value: float | None = None
+        if cfg.file_mil_loss_weight > 0 and train_file_targets is not None and train_file_groups:
+            opt.zero_grad(set_to_none=True)
+            logits_all = model(x[train_idx].to(device))
+            mil_logits = torch.stack([logits_all[group].max(dim=0).values for group in train_file_groups])
+            mil_loss = F.binary_cross_entropy_with_logits(mil_logits, train_file_targets, pos_weight=file_pw)
+            (cfg.file_mil_loss_weight * mil_loss).backward()
+            opt.step()
+            mil_loss_value = float(mil_loss.detach().cpu())
         model.eval()
         val_losses: list[float] = []
         with torch.no_grad():
@@ -405,7 +437,7 @@ def train_one(name: str, x_np: np.ndarray, y: torch.Tensor, rows: list[dict[str,
                 val_losses.append(float(loss.detach().cpu()))
         train_loss = float(np.mean(train_losses)) if train_losses else float("nan")
         val_loss = float(np.mean(val_losses)) if val_losses else float("nan")
-        history.append({"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss})
+        history.append({"epoch": epoch, "train_loss": train_loss, "file_mil_loss": mil_loss_value, "val_loss": val_loss})
         if val_loss < best_val:
             best_val = val_loss
             best = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
