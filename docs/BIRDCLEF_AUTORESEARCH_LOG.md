@@ -4555,3 +4555,12 @@ Decision:
 - Package audit best `soft1279init_obspos_native_allcls_w0p16` local AUC `0.993906`, lift vs v616 `+0.000425`, weaker than prior head-loaded `w0.16` by `-0.001639`; rejected.
 - Per-class selector on head-loaded raw sidecar: site-CV lift `+0.000280` but site q05 `-0.003768` and p>0 `0.167`; file-CV lift `+0.001571`; all-row lift `+0.002468`. Decision: hold/reject as submission-grade in mid-day policy.
 - Updated performance table/jsonl, ledgers, ranked queue. No submission.
+
+## 2026-05-28 20:23 UTC — No-call/background gate protocol data points
+
+- Live check: best public LB still `0.949`; latest v626-v630 below best (`0.899/0.928/0.940/0.946/0.917`); 2026-05-28 UTC slots `0/5` with ~3.6h to reset. No local/trainer BirdCLEF jobs were active before run.
+- Added `scripts/birdclef_soundscape_nocall_gate.py` plus configs for soft1279-native no-call/background gates. Data: 792 full 5s windows from the 66 official train_soundscape files, with 739 labeled any-call windows and 53 weak unlabeled/background windows across S09/S18/S22.
+- Trained/evaluated high-dimensional `soundscape-nocall-gate-soft1279native-trio-losite-20260528` using 3×234 per-class package probabilities plus summaries. Result: leave-site OOF any-call/no-call AUC `0.530166` / 3 valid sites; site min `0.185185`; rejected as overfit.
+- Trained/evaluated aggregate `soundscape-nocall-gate-soft1279native-agg-losite-20260528` using only confidence summaries from soft1279-init, encoder-only, and observed-positive native package outputs. Result: OOF no-call AUC `0.950469`; site mean/min/q05 `0.853572/0.700899/0.718957`; best raw confidence baseline `soft1279enc_native_max_auc=0.977098`.
+- Decision: aggregate no-call signal is useful comparison-grade evidence, but no submission. The weak negatives are not hand-verified and no v616 suppression sidecar has passed site/file/lift gates. Next: build a conservative suppression-sidecar verifier or use late-day slots only after <3h reset policy activates.
+- Updated canonical performance table/jsonl, ledgers `20260528T2023Z_soundscape_nocall_gate_full.md` and `20260528T2023Z_soundscape_nocall_gate_agg.md`, queue `ranked_queue_20260528T2023Z.md`.
