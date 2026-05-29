@@ -4659,3 +4659,10 @@ Decision:
 - Compared with fused all-class r2 no-file: row `-0.002438`, file-MIL `+0.002641`; compared with fused localmax-only: row `+0.021442`, file-MIL `+0.008627`.
 - Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990981` / 42 valid, lift vs v616 `-0.002499`, lift vs anchor `+0.000591`; rejected/no submission.
 - Updated performance table/jsonl, ledger, ranked queue, docs log. Next: soft1279 head-loaded class/site movement diagnosis; if no verifier-grade candidate by <3h to reset, execute guarded late-day source slot fill.
+
+
+## BirdCLEF late-day source slot fill v636-v640 — 2026-05-29 22:19 UTC
+- Live check: public best still `0.949`; latest v631-v635 completed `0.926/0.940/0.946/0.949/0.941`; UTC slots `0/5` with ~1.68h to reset; no active BirdCLEF jobs.
+- Late-day policy activated and submitted five guarded source-code candidates: v636 Mtoshi 947 repro ref `53165843`, v637 Yaroslav 946 replay ref `53165844`, v638 5-branch ensemble ref `53165846`, v639 Mtoshi 941 ref `53165850`, v640 Imaad Perch ProtoSSM ref `53165851`.
+- Preflight: all were COMPLETE public kernels with hidden-test/sample/submission markers, finite/nonconstant 235-column `submission.csv` public-session output, unique descriptions, and nonduplicate dry-run hashes versus v621-v635.
+- Decision: use all daily slots under late-day exploratory policy; all five pending after submission. Updated performance table/jsonl, ledger, and ranked queue. Next: monitor scores and update rows; if no >0.949, resume soft1279 head-loaded class/site movement diagnosis.
