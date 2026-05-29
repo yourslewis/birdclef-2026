@@ -70,16 +70,19 @@ def build_sidecar(args: argparse.Namespace, infer_csv: Path, out_csv: Path) -> d
     anchor = pd.read_csv(args.anchor_csv)
     inf = pd.read_csv(infer_csv)
     cols = anchor.columns[1:].astype(str).tolist()
-    for col in cols:
-        if col not in inf.columns:
-            inf[col] = 0.0
-    inf = inf[["row_id", *cols]]
+    # Preserve the anchor for labels that the model does not emit.  This is
+    # important for scoped/specialist models (e.g. 72 non-Aves/no-train labels)
+    # because zero-filling the other 162 competition labels creates constant
+    # columns and invalidates the ensemble audit.  All-class models still update
+    # every competition column because model_cols == cols.
+    model_cols = [col for col in cols if col in inf.columns]
+    inf = inf[["row_id", *model_cols]]
     side = anchor.copy()
     lookup = inf.set_index("row_id")
     matched: list[str] = []
     for i, rid in enumerate(side["row_id"].astype(str).tolist()):
         if rid in lookup.index:
-            side.loc[i, cols] = lookup.loc[rid, cols].to_numpy(dtype=float)
+            side.loc[i, model_cols] = lookup.loc[rid, model_cols].to_numpy(dtype=float)
             matched.append(rid)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     side.to_csv(out_csv, index=False)
