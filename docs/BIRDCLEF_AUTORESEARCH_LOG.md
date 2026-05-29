@@ -4571,3 +4571,12 @@ Decision:
 - Submitted five guarded Kaggle source-code candidates (hidden rerun, not static CSV): v631 Maryna two-pass SSM (`53130259`), v632 Vyanktesh (`53130260`), v633 Raunak multi-model (`53130262`), v634 MeenalSinha improved (`53130270`), v635 Mattia 943 blend (`53130272`). All were pending immediately after submit; slots `5/5`.
 - Guards: complete source kernels; `submission.csv`/`sample_submission`/`test_soundscapes` markers; finite/nonconstant 235-col dry-run outputs; unique dry-run hashes; nonduplicate descriptions; cap recounted after submit.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260528T2218Z_late_public_slot_fill.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260528T2218Z.md`. Next: monitor v631-v635 public scores and update pending rows.
+
+## 2026-05-29 00:26 UTC — No-call suppression sidecar verifier + late-fill scores
+
+- Live Kaggle Bearer check: best public LB remains `0.949`; v631-v635 completed as `0.926/0.940/0.946/0.949/0.941` with only v634 tying best. New UTC day slots are `0/5`; no local/trainer BirdCLEF jobs and trainer GPUs were free.
+- Added `scripts/birdclef_nocall_suppression_sidecar_audit.py` and ran a bounded no-slot suppression grid from the aggregate no-call gate over v616 proxy predictions: OOF/final no-call probability × all/non-Aves+no-train scopes × alpha `0.01/0.02/0.04/0.08`.
+- Best candidate: `nocall_final_nonaves_notrain_p1p0_a010`, local macro AUC `0.993546` / 42 valid, lift vs v616 `+0.000066`, lift vs anchor `+0.003156`, rank corr vs v616 `0.999984`, MAE `0.000566`. Site/file q05 vs v616 only `+0.000054/+0.000005`; top-5 recall regressed (`0.626316` vs v616 `0.636842`).
+- Decision: reject slot candidate; no submission. Conservative non-Aves/no-train no-call suppression is directionally positive but far below gates and still relies on weak, site-skewed background labels. All-class suppression variants were worse.
+- Updated canonical performance table/jsonl, late public slot-fill ledger, new ledger `artifacts/model_data_point_ledger/20260529T0026Z_nocall_suppression_sidecar_audit.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260529T0026Z.md`.
+- Next: train the next distinct soundscape-native/domain-adaptation data point or upgrade no-call negatives with hand/stricter verification before any suppression submission.
