@@ -44,6 +44,11 @@ class NoCallGateConfig:
     max_iter: int = 2000
     seed: int = 83
     include_class_probs: bool = True
+    # Optional stricter weak-negative protocol.  Unlabeled soundscape windows
+    # closer than this many seconds to a labeled positive in the same file are
+    # excluded from the binary gate fit/eval rather than treated as no-call.
+    # Default 0 preserves the original all-unlabeled protocol.
+    negative_min_distance_sec: int = 0
 
 
 def parse_args() -> argparse.Namespace:
@@ -211,6 +216,10 @@ def main() -> None:
         raw_members[name] = probs
 
     assert row_ids_ref is not None and labels_ref is not None
+    positives_by_file: dict[str, list[int]] = {}
+    for (filename, start_s) in pos_windows.keys():
+        positives_by_file.setdefault(filename, []).append(int(start_s))
+
     meta_rows: list[dict[str, Any]] = []
     y_any = np.zeros(len(row_ids_ref), dtype=np.int64)
     labels_joined: list[str] = []
@@ -219,6 +228,7 @@ def main() -> None:
         labs = sorted(pos_windows.get((filename, start_s), set()))
         y_any[i] = 1 if labs else 0
         labels_joined.append(";".join(labs))
+        nearest_pos_distance_sec = min((abs(int(start_s) - ps) for ps in positives_by_file.get(filename, [])), default=999999)
         meta_rows.append({
             "row_id": str(row_id),
             "filename": filename,
@@ -227,10 +237,19 @@ def main() -> None:
             "site": site,
             "any_call_label": int(y_any[i]),
             "labels": ";".join(labs),
+            "nearest_positive_distance_sec": int(nearest_pos_distance_sec),
         })
     meta = pd.DataFrame(meta_rows)
 
     X = np.concatenate(feature_blocks, axis=1).astype(np.float32)
+    original_rows = int(len(meta))
+    original_negative_rows = int((1 - y_any).sum())
+    if int(cfg.negative_min_distance_sec) > 0:
+        keep_mask = (y_any == 1) | ((y_any == 0) & (meta["nearest_positive_distance_sec"].to_numpy() > int(cfg.negative_min_distance_sec)))
+        X = X[keep_mask]
+        y_any = y_any[keep_mask]
+        meta = meta.loc[keep_mask].reset_index(drop=True)
+        raw_members = {name: probs[keep_mask] for name, probs in raw_members.items()}
     sites = sorted(meta["site"].unique())
     oof = np.full(len(meta), np.nan, dtype=np.float32)
     site_metrics: list[dict[str, Any]] = []
@@ -308,12 +327,15 @@ def main() -> None:
         "config": asdict(cfg),
         "data_profile": {
             **label_profile,
-            "rows_in_feature_npz": int(len(meta)),
+            "rows_in_feature_npz": int(original_rows),
+            "rows_after_negative_protocol": int(len(meta)),
             "files": int(meta["filename"].nunique()),
             "sites": int(meta["site"].nunique()),
             "positive_any_call_windows": int(y_any.sum()),
-            "unlabeled_background_windows": int((1 - y_any).sum()),
-            "negative_label_caveat": "unlabeled train_soundscape windows are weak no-call/background labels, not hand-verified negatives",
+            "unlabeled_background_windows_original": int(original_negative_rows),
+            "unlabeled_background_windows_used": int((1 - y_any).sum()),
+            "negative_min_distance_sec": int(cfg.negative_min_distance_sec),
+            "negative_label_caveat": "unlabeled train_soundscape windows are weak no-call/background labels, not hand-verified negatives; optional distance guard only removes adjacent ambiguous negatives",
             "site_counts": {k: int(v) for k, v in meta["site"].value_counts().sort_index().items()},
             "site_positive_counts": {str(s): int(y_any[meta["site"].values == s].sum()) for s in sites},
             "site_negative_counts": {str(s): int((1 - y_any[meta["site"].values == s]).sum()) for s in sites},

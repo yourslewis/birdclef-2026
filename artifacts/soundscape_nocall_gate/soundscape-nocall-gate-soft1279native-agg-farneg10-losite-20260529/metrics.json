@@ -1,0 +1,199 @@
+{
+  "artifacts": {
+    "metrics_json": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529/metrics.json",
+    "predictions_csv": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529/nocall_gate_predictions.csv"
+  },
+  "config": {
+    "c_value": 0.2,
+    "data_root": "data",
+    "experiment_id": "soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529",
+    "feature_names": [
+      "soft1279init_native",
+      "soft1279enc_native",
+      "soft1279init_obspos"
+    ],
+    "feature_npz": [
+      "artifacts/sed_soundscape_packaging_audit/20260528T1424Z_soft1279init_native_allcls_package/train_soundscapes_soft1279init_native_allcls.npz",
+      "artifacts/sed_soundscape_packaging_audit/20260528T1628Z_soft1279enc_native_allcls_package/train_soundscapes_soft1279enc_native_allcls.npz",
+      "artifacts/sed_soundscape_packaging_audit/20260528T1819Z_soft1279init_obspos_native_allcls_package/train_soundscapes_soft1279init_obspos_native_allcls.npz"
+    ],
+    "include_class_probs": false,
+    "max_iter": 2000,
+    "negative_min_distance_sec": 10,
+    "output_dir": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529",
+    "seed": 83,
+    "track": "Stricter no-call/background aggregate gate over soft1279-native package predictions (unlabeled negatives >10s from labeled positives)"
+  },
+  "data_profile": {
+    "duplicate_label_window_rows": 739,
+    "files": 66,
+    "n_files_with_labels": 66,
+    "negative_label_caveat": "unlabeled train_soundscape windows are weak no-call/background labels, not hand-verified negatives; optional distance guard only removes adjacent ambiguous negatives",
+    "negative_min_distance_sec": 10,
+    "positive_any_call_windows": 739,
+    "raw_label_rows": 1478,
+    "rows_after_negative_protocol": 762,
+    "rows_in_feature_npz": 792,
+    "site_counts": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 38,
+      "S13": 24,
+      "S15": 48,
+      "S18": 18,
+      "S19": 36,
+      "S22": 478,
+      "S23": 36
+    },
+    "site_negative_counts": {
+      "S03": 0,
+      "S08": 0,
+      "S09": 19,
+      "S13": 0,
+      "S15": 0,
+      "S18": 3,
+      "S19": 0,
+      "S22": 1,
+      "S23": 0
+    },
+    "site_positive_counts": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 19,
+      "S13": 24,
+      "S15": 48,
+      "S18": 15,
+      "S19": 36,
+      "S22": 477,
+      "S23": 36
+    },
+    "sites": 9,
+    "unique_labeled_windows": 739,
+    "unlabeled_background_windows_original": 53,
+    "unlabeled_background_windows_used": 23
+  },
+  "decision": "comparison-grade no-call/background data point; do not submit without hand-verified negative audit and sidecar suppression verifier",
+  "experiment_id": "soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529",
+  "primary_metric": {
+    "name": "leave-site OOF any-call ROC-AUC",
+    "valid_rows": 762,
+    "valid_sites": 3,
+    "value": 0.9633464729069837
+  },
+  "runtime_sec": 0.15008783340454102,
+  "secondary_metrics": {
+    "baseline_metrics": {
+      "soft1279enc_native_max_auc": 0.9856445255045008,
+      "soft1279enc_native_sum_auc": 0.7950226510560686,
+      "soft1279enc_native_top5_auc": 0.9389303994822615,
+      "soft1279init_native_max_auc": 0.9729952344531387,
+      "soft1279init_native_sum_auc": 0.9257516032240983,
+      "soft1279init_native_top5_auc": 0.9561099017473672,
+      "soft1279init_obspos_max_auc": 0.8572689298111431,
+      "soft1279init_obspos_sum_auc": 0.8104371359651704,
+      "soft1279init_obspos_top5_auc": 0.8851562040360064
+    },
+    "best_baseline": "soft1279enc_native_max_auc",
+    "best_baseline_auc": 0.9856445255045008,
+    "delta_vs_best_baseline": -0.02229805259751705,
+    "mean_oof_pred_background": 0.2578403949737549,
+    "mean_oof_pred_positive": 0.8944001197814941,
+    "no_call_auc": 0.9633464729069837,
+    "site_auc_mean": 0.8698935908678239,
+    "site_auc_min": 0.703601108033241,
+    "site_auc_q05": 0.7265743305632503
+  },
+  "site_metrics": [
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.6222025596452901,
+      "n_val": 24,
+      "negatives": 0,
+      "positives": 24,
+      "site": "S03",
+      "valid_auc": false
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.794652484591197,
+      "n_val": 60,
+      "negatives": 0,
+      "positives": 60,
+      "site": "S08",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.703601108033241,
+      "mean_pred_neg": 0.25732873932382555,
+      "mean_pred_pos": 0.47521515433954614,
+      "n_val": 38,
+      "negatives": 19,
+      "positives": 19,
+      "site": "S09",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.9349955877884176,
+      "n_val": 24,
+      "negatives": 0,
+      "positives": 24,
+      "site": "S13",
+      "valid_auc": false
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.9634008053901836,
+      "n_val": 48,
+      "negatives": 0,
+      "positives": 48,
+      "site": "S15",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.9333333333333333,
+      "mean_pred_neg": 0.10325730364154623,
+      "mean_pred_pos": 0.7462081183396362,
+      "n_val": 18,
+      "negatives": 3,
+      "positives": 15,
+      "site": "S18",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.7196918837788365,
+      "n_val": 36,
+      "negatives": 0,
+      "positives": 36,
+      "site": "S19",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.9727463312368972,
+      "mean_pred_neg": 0.731311303324314,
+      "mean_pred_pos": 0.9396408796709551,
+      "n_val": 478,
+      "negatives": 1,
+      "positives": 477,
+      "site": "S22",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.9812980573185234,
+      "n_val": 36,
+      "negatives": 0,
+      "positives": 36,
+      "site": "S23",
+      "valid_auc": false
+    }
+  ],
+  "track": "Stricter no-call/background aggregate gate over soft1279-native package predictions (unlabeled negatives >10s from labeled positives)"
+}

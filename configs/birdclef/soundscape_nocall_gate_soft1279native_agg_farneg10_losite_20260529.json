@@ -1,0 +1,17 @@
+{
+  "experiment_id": "soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529",
+  "track": "Stricter no-call/background aggregate gate over soft1279-native package predictions (unlabeled negatives >10s from labeled positives)",
+  "data_root": "data",
+  "output_dir": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg10-losite-20260529",
+  "feature_npz": [
+    "artifacts/sed_soundscape_packaging_audit/20260528T1424Z_soft1279init_native_allcls_package/train_soundscapes_soft1279init_native_allcls.npz",
+    "artifacts/sed_soundscape_packaging_audit/20260528T1628Z_soft1279enc_native_allcls_package/train_soundscapes_soft1279enc_native_allcls.npz",
+    "artifacts/sed_soundscape_packaging_audit/20260528T1819Z_soft1279init_obspos_native_allcls_package/train_soundscapes_soft1279init_obspos_native_allcls.npz"
+  ],
+  "feature_names": ["soft1279init_native", "soft1279enc_native", "soft1279init_obspos"],
+  "c_value": 0.2,
+  "max_iter": 2000,
+  "seed": 83,
+  "include_class_probs": false,
+  "negative_min_distance_sec": 10
+}

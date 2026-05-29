@@ -1,0 +1,170 @@
+{
+  "nocall_final_all_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_all_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "60b1493e865d6c1ef4e4241c7bfff134a30e997227e381f90da5248d9f54bdcf",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "all",
+    "scope_columns": 234,
+    "suppression_stats": {
+      "max": 0.004999989000000001,
+      "mean": 0.0012510576218104166,
+      "min": 0.0,
+      "p50": 0.00026949152,
+      "p90": 0.004478403610000001,
+      "p99": 0.004997352515
+    }
+  },
+  "nocall_final_all_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_all_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "248fe2077d156ceb964edd59e8b04001e90125dbb725d4362b0cea7b864ca42d",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "all",
+    "scope_columns": 234,
+    "suppression_stats": {
+      "max": 0.009999978000000001,
+      "mean": 0.002502115243620833,
+      "min": 0.0,
+      "p50": 0.00053898304,
+      "p90": 0.008956807220000002,
+      "p99": 0.00999470503
+    }
+  },
+  "nocall_final_all_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_all_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "0e65cd449aa5d26b9817cc0cfbf0b43a73f306072a2af41150b2afba81af13f7",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "all",
+    "scope_columns": 234,
+    "suppression_stats": {
+      "max": 0.019999956000000003,
+      "mean": 0.005004230487241666,
+      "min": 0.0,
+      "p50": 0.00107796608,
+      "p90": 0.017913614440000003,
+      "p99": 0.01998941006
+    }
+  },
+  "nocall_final_all_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_all_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "39456d3f0e9cfb91967ea087e52cff20d60b955ce7ba9f901a0dba492ba1a635",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "all",
+    "scope_columns": 234,
+    "suppression_stats": {
+      "max": 0.039999912000000006,
+      "mean": 0.010008460974483333,
+      "min": 0.0,
+      "p50": 0.00215593216,
+      "p90": 0.035827228880000006,
+      "p99": 0.03997882012
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_nonaves_notrain_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "2db09aedb05fb7a6bc9cf19c249095263d6fb45725838cfc230d4b7b26a0f561",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.004999989000000001,
+      "mean": 0.0012510576218104166,
+      "min": 0.0,
+      "p50": 0.00026949152,
+      "p90": 0.004478403610000001,
+      "p99": 0.004997352515
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_nonaves_notrain_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "6914142838b9f332b9158d4c2aa7e1793d677b16e43e52a8f935293a3802157a",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.009999978000000001,
+      "mean": 0.002502115243620833,
+      "min": 0.0,
+      "p50": 0.00053898304,
+      "p90": 0.008956807220000002,
+      "p99": 0.00999470503
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_nonaves_notrain_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "f91bfccb59f75d1ce932db8715b0d7849773f7b91f21005369f2cf7a49ed9715",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.019999956000000003,
+      "mean": 0.005004230487241666,
+      "min": 0.0,
+      "p50": 0.00107796608,
+      "p90": 0.017913614440000003,
+      "p99": 0.01998941006
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg10-smoke-20260529T0630Z/candidates/nocall_final_nonaves_notrain_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 212,
+    "matrix_sha256": "6660fc35e2fca19cb391e7e881a7e8fa5d2faeffa05bf23399a89af5bc0d9ef4",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.039999912000000006,
+      "mean": 0.010008460974483333,
+      "min": 0.0,
+      "p50": 0.00215593216,
+      "p90": 0.035827228880000006,
+      "p99": 0.03997882012
+    }
+  }
+}
