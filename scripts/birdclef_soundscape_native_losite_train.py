@@ -77,6 +77,7 @@ class NativeLoSiteConfig:
     initial_load_head: bool = False
     restore_best_by_val_loss: bool = True
     fold_sites: list[str] | None = None
+    train_sampling: str = "random"  # random | site_balanced
 
 
 def load_config(path: Path | None) -> NativeLoSiteConfig:
@@ -263,7 +264,19 @@ def batch_iter(indices: torch.Tensor, batch_size: int, shuffle: bool, seed: int)
         yield indices[start:start + batch_size]
 
 
-def train_one_fold(x: torch.Tensor, y: torch.Tensor, train_idx: torch.Tensor, val_idx: torch.Tensor, labels: list[str], cfg: NativeLoSiteConfig, fold_seed: int) -> tuple[torch.nn.Module, list[dict[str, Any]], np.ndarray, dict[str, Any]]:
+def make_epoch_order(train_idx: torch.Tensor, rows: list[dict[str, Any]], cfg: NativeLoSiteConfig) -> torch.Tensor:
+    if cfg.train_sampling in ("", "random"):
+        return train_idx[torch.randperm(len(train_idx))]
+    if cfg.train_sampling == "site_balanced":
+        sites = [str(rows[int(i)]["site"]) for i in train_idx]
+        counts = pd.Series(sites, dtype=str).value_counts().to_dict()
+        weights = torch.tensor([1.0 / float(counts[s]) for s in sites], dtype=torch.float32)
+        sampled_pos = torch.multinomial(weights, num_samples=len(train_idx), replacement=True)
+        return train_idx[sampled_pos]
+    raise ValueError(f"Unsupported train_sampling={cfg.train_sampling!r}")
+
+
+def train_one_fold(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], train_idx: torch.Tensor, val_idx: torch.Tensor, labels: list[str], cfg: NativeLoSiteConfig, fold_seed: int) -> tuple[torch.nn.Module, list[dict[str, Any]], np.ndarray, dict[str, Any]]:
     torch.manual_seed(fold_seed)
     np.random.seed(fold_seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -278,7 +291,7 @@ def train_one_fold(x: torch.Tensor, y: torch.Tensor, train_idx: torch.Tensor, va
     for epoch in range(1, cfg.epochs + 1):
         model.train()
         losses = []
-        order = train_idx[torch.randperm(len(train_idx))]
+        order = make_epoch_order(train_idx, rows, cfg)
         for start in range(0, len(order), cfg.batch_size):
             idx = order[start:start + cfg.batch_size]
             xb = x[idx].to(device)
@@ -402,14 +415,14 @@ def export_final_model(model: torch.nn.Module, x: torch.Tensor, output_dir: Path
     return exports
 
 
-def train_final_model(x: torch.Tensor, y: torch.Tensor, labels: list[str], cfg: NativeLoSiteConfig) -> tuple[torch.nn.Module, list[dict[str, Any]], dict[str, Any]]:
+def train_final_model(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], labels: list[str], cfg: NativeLoSiteConfig) -> tuple[torch.nn.Module, list[dict[str, Any]], dict[str, Any]]:
     old_epochs = cfg.epochs
     cfg.epochs = cfg.final_train_epochs
     idx = torch.arange(len(x), dtype=torch.long)
     # Use a tiny pseudo-val slice only for best-state bookkeeping; final model is a packaging smoke, not a metric source.
     train_idx = idx
     val_idx = idx[: min(len(idx), max(8, cfg.batch_size))]
-    model, history, _pred, info = train_one_fold(x, y, train_idx, val_idx, labels, cfg, cfg.seed + 999)
+    model, history, _pred, info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + 999)
     cfg.epochs = old_epochs
     return model, history, info
 
@@ -448,7 +461,7 @@ def main() -> int:
             folds.append({"site": site, "status": "skipped", "reason": "too_few_valid_classes", "n_val": int(len(val_idx)), "valid_classes": valid_classes})
             continue
         fold_t0 = time.time()
-        _model, history, pred, train_info = train_one_fold(x, y, train_idx, val_idx, labels, cfg, cfg.seed + fold_num)
+        _model, history, pred, train_info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + fold_num)
         yy = y[val_idx].numpy()
         fold = {
             "site": site,
@@ -481,7 +494,7 @@ def main() -> int:
         all_y.append(yy.astype(np.float32))
         (output_dir / "fold_metrics_live.json").write_text(json.dumps(folds, indent=2) + "\n")
 
-    final_model, final_history, final_info = train_final_model(x, y, labels, cfg)
+    final_model, final_history, final_info = train_final_model(x, y, rows, labels, cfg)
     exports = export_final_model(final_model, x, output_dir, cfg)
 
     complete = [f for f in folds if f.get("status") == "complete"]

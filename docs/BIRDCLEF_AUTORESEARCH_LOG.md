@@ -4580,3 +4580,12 @@ Decision:
 - Decision: reject slot candidate; no submission. Conservative non-Aves/no-train no-call suppression is directionally positive but far below gates and still relies on weak, site-skewed background labels. All-class suppression variants were worse.
 - Updated canonical performance table/jsonl, late public slot-fill ledger, new ledger `artifacts/model_data_point_ledger/20260529T0026Z_nocall_suppression_sidecar_audit.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260529T0026Z.md`.
 - Next: train the next distinct soundscape-native/domain-adaptation data point or upgrade no-call negatives with hand/stricter verification before any suppression submission.
+
+## 2026-05-29 02:25 UTC — Soft1279 site-balanced native ablation + package audit
+
+- Live check: best public LB remained `0.949`; latest v631-v635 were `0.926/0.940/0.946/0.949/0.941`; 2026-05-29 UTC slots `0/5`; no active BirdCLEF jobs before/after run and trainer GPU1 was free.
+- Added `train_sampling=site_balanced` to `scripts/birdclef_soundscape_native_losite_train.py` and trained `soundscape-native-b0-soft1279init-sitebalanced-losite-allcls-ep4-20260529`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / all 234 labels, EfficientNet-B0 initialized from soft1279 OOF-teacher checkpoint with head loaded.
+- Training metrics regressed: row AUC `0.569405`, no-train `0.559505`, non-Aves `0.545574`, file-MIL `0.513779`, pooled row `0.359269`; vs soft1279 head-loaded native all-class row `-0.030955` / file-MIL `-0.092026`.
+- Package audit matched 240/240 v616 proxy rows, finite/nonconstant 240x234. Best non-control `soft1279init_sitebalanced_native_allcls_w0p16`: local AUC `0.993104` / 42 valid, lift vs v616 `-0.000377`, lift vs anchor `+0.002713`; worse than prior head-loaded w0.16 by `-0.002441` AUC.
+- Decision: reject unchanged; no submission. Site-balanced sampling was a valid robustness ablation but harmed both LOSO and sidecar transfer. Early-day slots remain unused.
+- Updated canonical performance table/jsonl, ledgers `20260529T0225Z_soundscape_native_soft1279init_sitebalanced_allclass.md` and `20260529T0225Z_soft1279init_sitebalanced_package_audit.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260529T0225Z.md`. Next: upgrade no-call/background negatives or try calibration-focused soft1279 adaptation rather than more site-balanced resampling.

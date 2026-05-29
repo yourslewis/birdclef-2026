@@ -121,3 +121,11 @@
 - Added/evaluated `scripts/birdclef_soundscape_sequence_sidecar_audit.py`, wrapping current train_soundscape sequence predictions into 234-class v616 proxy sidecars.
 - Best combo `seq_context02_r201`: local macro AUC `0.991293583`, lift vs anchor `+0.000903076`, lift vs v616 `-0.002187085`. Best single context sidecar: `0.991279099`, lift vs v616 `-0.002201568`. Best single r2 sidecar: `0.991031704`, lift vs v616 `-0.002448964`.
 - Decision: reject as slot candidate; update canonical performance table and ledger. Next exact action: late-day slot-fill review inside `<3h`, or a true hidden-safe 234-class DyMN10/AudioSet package.
+
+## 2026-05-29 02:25 UTC — Soft1279 site-balanced native ablation
+
+- Status: best public LB `0.949`; UTC slots `0/5`; no active BirdCLEF jobs; trainer GPUs free after run.
+- Trained/evaluated `soundscape-native-b0-soft1279init-sitebalanced-losite-allcls-ep4-20260529` and package/audited its sidecar.
+- Performance table: row AUC `0.569405`, no-train `0.559505`, non-Aves `0.545574`, file-MIL `0.513779`; package best w0.16 local AUC `0.993104`, lift vs v616 `-0.000377`.
+- Decision: reject/no submission; site-balanced sampling worsened soft1279 adaptation and did not improve proxy gates.
+- Artifacts: `ranked_queue_20260529T0225Z.md`, `artifacts/model_data_point_ledger/20260529T0225Z_soundscape_native_soft1279init_sitebalanced_allclass.md`, `artifacts/model_data_point_ledger/20260529T0225Z_soft1279init_sitebalanced_package_audit.md`.
