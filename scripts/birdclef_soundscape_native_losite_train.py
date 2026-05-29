@@ -75,6 +75,7 @@ class NativeLoSiteConfig:
     export_onnx: bool = True
     initial_checkpoint: str = "artifacts/external_pretrain/xc-b0-q3-cap80-external-pretrain-balanced-ep12/model_torchscript.pt"
     initial_load_head: bool = False
+    freeze_encoder: bool = False
     restore_best_by_val_loss: bool = True
     fold_sites: list[str] | None = None
     train_sampling: str = "random"  # random | site_balanced
@@ -282,8 +283,18 @@ def train_one_fold(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]],
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = build_model(len(labels), cfg)
     init_info = load_initial_checkpoint(model, cfg)
+    trainable_params = list(model.parameters())
+    if cfg.freeze_encoder and hasattr(model, "encoder"):
+        for param in model.encoder.parameters():
+            param.requires_grad = False
+        trainable_params = [p for p in model.parameters() if p.requires_grad]
+        init_info = {**init_info, "freeze_encoder": True, "trainable_parameters": int(sum(p.numel() for p in trainable_params))}
+    else:
+        init_info = {**init_info, "freeze_encoder": False, "trainable_parameters": int(sum(p.numel() for p in trainable_params))}
+    if not trainable_params:
+        raise ValueError("No trainable parameters remain after freeze settings")
     model.to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
+    opt = torch.optim.AdamW(trainable_params, lr=cfg.learning_rate, weight_decay=cfg.weight_decay)
     pos_weight = make_pos_weight(y[train_idx], cfg, device)
     best_val_loss = float("inf")
     best_state = None
