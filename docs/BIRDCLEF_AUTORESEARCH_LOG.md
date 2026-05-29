@@ -4651,3 +4651,11 @@ Decision:
 - Compared with fused all-class r2 no-file: row `-0.023880`, file-MIL `-0.005986`; compared with PANNs all-class localmax: row `-0.068739`, file-MIL `-0.011757`.
 - Sidecar audit best `allcls_seq_w0p005` local AUC `0.991500` / 42 valid, lift vs v616 `-0.001981`, lift vs anchor `+0.001109`; rejected/no submission.
 - Updated performance table/jsonl, ledger, ranked queue, docs log. Next: soft1279 head-loaded class/site movement diagnosis or no-train file-MIL/sonotype diagnostics; do not submit fused localmax.
+
+## BirdCLEF fused DyMN10+PANNs all-class file-context + file-MIL data point — 2026-05-29 20:25 UTC
+- Live check: public best still `0.949`; v631-v635 `0.926/0.940/0.946/0.949/0.941`; UTC slots `0/5`; ~3.7h to reset, so mid-day policy still applied; no active local/trainer BirdCLEF jobs and trainer GPUs free.
+- Trained `soundscape-sequence-fused-dymn10-panns-allcls-r2-filectx-filemil-losite-ep20-20260529` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 234 labels, fused EfficientAT DyMN10 + PANNs/Cnn14 embeddings, radius-2 prev/next + local mean/max + file mean/max + time features, site-balanced sampling, file-MIL BCE weight 0.35, 20 epochs.
+- Result: LOSO row AUC `0.594204`, no-train `0.574279`, non-Aves `0.645232`, file-MIL `0.678623`; same-run context lift vs row-only `+0.021849` row / `+0.033370` file-MIL.
+- Compared with fused all-class r2 no-file: row `-0.002438`, file-MIL `+0.002641`; compared with fused localmax-only: row `+0.021442`, file-MIL `+0.008627`.
+- Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990981` / 42 valid, lift vs v616 `-0.002499`, lift vs anchor `+0.000591`; rejected/no submission.
+- Updated performance table/jsonl, ledger, ranked queue, docs log. Next: soft1279 head-loaded class/site movement diagnosis; if no verifier-grade candidate by <3h to reset, execute guarded late-day source slot fill.
