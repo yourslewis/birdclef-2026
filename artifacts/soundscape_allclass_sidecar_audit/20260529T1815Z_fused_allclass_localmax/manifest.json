@@ -1,0 +1,119 @@
+{
+  "name": "birdclef_allclass_soundscape_sequence_sidecar_audit",
+  "description": "No-submit audit of the 234-class train_soundscape sequence/file/site DyMN10 sidecar wrapped into the v616 proxy matrix.",
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "Samejima/v616 visual anchor raw output.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output; public LB tied 0.949.",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "allclass_sequence_sidecar": {
+      "role": "analysis_branch",
+      "description": "All-class DyMN10 context MLP leave-site sidecar; 234 labels, anchor-filled for unmatched proxy rows.",
+      "path": "artifacts/soundscape_allclass_sidecar_audit/20260529T1815Z_fused_allclass_localmax/sidecars/allclass_sequence_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control: v616 anchor rank reconstruction.",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Control: actual submitted v616 tied recipe.",
+      "member": "v616_final"
+    },
+    {
+      "name": "allcls_seq_w0p0025",
+      "type": "rank_blend",
+      "description": "0.25% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.9975,
+        "allclass_sequence_sidecar": 0.0025
+      }
+    },
+    {
+      "name": "allcls_seq_w0p005",
+      "type": "rank_blend",
+      "description": "0.50% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "allclass_sequence_sidecar": 0.005
+      }
+    },
+    {
+      "name": "allcls_seq_w0p01",
+      "type": "rank_blend",
+      "description": "1.00% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "allclass_sequence_sidecar": 0.01
+      }
+    },
+    {
+      "name": "allcls_seq_w0p02",
+      "type": "rank_blend",
+      "description": "2.00% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "allclass_sequence_sidecar": 0.02
+      }
+    },
+    {
+      "name": "allcls_seq_w0p04",
+      "type": "rank_blend",
+      "description": "4.00% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "allclass_sequence_sidecar": 0.04
+      }
+    },
+    {
+      "name": "allcls_seq_w0p08",
+      "type": "rank_blend",
+      "description": "8.00% all-class DyMN10 sequence/context sidecar.",
+      "weights": {
+        "anchor_v616_raw": 0.92,
+        "allclass_sequence_sidecar": 0.08
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 200,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 40,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}

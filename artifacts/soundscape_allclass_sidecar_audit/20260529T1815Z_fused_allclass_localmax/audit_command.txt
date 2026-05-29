@@ -1,0 +1,1 @@
+python scripts/birdclef_ensemble_strategy_audit.py --manifest artifacts/soundscape_allclass_sidecar_audit/20260529T1815Z_fused_allclass_localmax/manifest.json --output-dir artifacts/soundscape_allclass_sidecar_audit/20260529T1815Z_fused_allclass_localmax/audit --bootstrap-iters 200 --emit-candidate-csvs

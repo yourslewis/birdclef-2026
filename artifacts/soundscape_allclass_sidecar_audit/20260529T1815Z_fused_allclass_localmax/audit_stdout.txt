@@ -1,0 +1,64 @@
+{
+  "output_json": "artifacts/soundscape_allclass_sidecar_audit/20260529T1815Z_fused_allclass_localmax/audit/ensemble_strategy_audit.json",
+  "labels_loaded": true,
+  "submit_approved": false,
+  "best_recipe_vs_baseline": "allcls_seq_w0p005",
+  "recipe_summary": [
+    {
+      "name": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_baseline": -0.003090161054978946,
+      "submit_approved": false
+    },
+    {
+      "name": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_baseline": 0.0,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p0025",
+      "macro_auc": 0.9914907803378651,
+      "lift_vs_anchor": 0.0011002738187051442,
+      "lift_vs_baseline": -0.001989887236273802,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p005",
+      "macro_auc": 0.9914998270737198,
+      "lift_vs_anchor": 0.0011093205545598117,
+      "lift_vs_baseline": -0.0019808405004191343,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p01",
+      "macro_auc": 0.9914011827235933,
+      "lift_vs_anchor": 0.0010106762044334028,
+      "lift_vs_baseline": -0.0020794848505455432,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p02",
+      "macro_auc": 0.9911836233160739,
+      "lift_vs_anchor": 0.0007931167969139619,
+      "lift_vs_baseline": -0.002297044258064984,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p04",
+      "macro_auc": 0.9907982743970823,
+      "lift_vs_anchor": 0.00040776787792240476,
+      "lift_vs_baseline": -0.0026823931770565412,
+      "submit_approved": false
+    },
+    {
+      "name": "allcls_seq_w0p08",
+      "macro_auc": 0.9886847157531671,
+      "lift_vs_anchor": -0.001705790765992865,
+      "lift_vs_baseline": -0.004795951820971811,
+      "submit_approved": false
+    }
+  ]
+}

@@ -4642,3 +4642,12 @@ Decision:
 - Result: LOSO row AUC `0.554429`, no-train/non-Aves `0.554429`, file-MIL `0.660711`; same-run context lift vs row-only `+0.066813` row / `+0.044756` file-MIL. Compared with PANNs no-train context: row `-0.046876`, file-MIL `+0.044562`; compared with DyMN10 no-train: row `+0.000784`, file-MIL `+0.022433`.
 - Sidecar audit as 28-label anchor-preserved wrapper: best `seq_context_w01` local AUC `0.990398` / 42 valid, lift vs v616 `-0.003083`, lift vs anchor `+0.000007`; rejected/no submission.
 - Updated canonical performance table/jsonl, ledger, ranked queue, and logs. Next: diagnose no-train file-MIL/sonotype movement or the soft1279 head-loaded sidecar before spending early-day slots.
+
+
+## BirdCLEF fused DyMN10+PANNs all-class localmax-only sequence data point — 2026-05-29 18:20 UTC
+- Live check: public best still `0.949`; v631-v635 `0.926/0.940/0.946/0.949/0.941`; UTC slots `0/5`; no active local/trainer BirdCLEF jobs and trainer GPUs free.
+- Trained `soundscape-sequence-fused-dymn10-panns-allcls-r2-localmaxonly-losite-ep20-20260529` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 234 labels, fused EfficientAT DyMN10 + PANNs/Cnn14 embeddings, localmax-only radius-2 temporal feature, 20 epochs.
+- Result: LOSO row AUC `0.572762`, no-train `0.550756`, non-Aves `0.632578`, file-MIL `0.669996`; same-run localmax lift vs row-only `+0.025190` row / `+0.024853` file-MIL.
+- Compared with fused all-class r2 no-file: row `-0.023880`, file-MIL `-0.005986`; compared with PANNs all-class localmax: row `-0.068739`, file-MIL `-0.011757`.
+- Sidecar audit best `allcls_seq_w0p005` local AUC `0.991500` / 42 valid, lift vs v616 `-0.001981`, lift vs anchor `+0.001109`; rejected/no submission.
+- Updated performance table/jsonl, ledger, ranked queue, docs log. Next: soft1279 head-loaded class/site movement diagnosis or no-train file-MIL/sonotype diagnostics; do not submit fused localmax.
