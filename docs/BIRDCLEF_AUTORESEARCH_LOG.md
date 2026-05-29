@@ -4635,3 +4635,10 @@ Decision:
 - Sidecar audit wrapped 28-label OOF predictions into anchor-preserved 234-class v616 proxy rows. Best non-control `seq_context_w01`: local AUC `0.990405` / 42 valid, lift vs v616 `-0.003076`, lift vs anchor `+0.000014`, rank corr `0.999688`; `submit_approved=false`.
 - Decision: reject/no submission. Explicit row-only export did not fix no-train sonotype/site inversion; next should be class-site movement diagnostics or soft1279 head-loaded sidecar diagnosis, not more blind no-train wrappers.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260529T1416Z_panns_notrain_rowonly_sequence.md`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260529T1420Z.md`.
+
+## BirdCLEF fused DyMN10+PANNs no-train sequence data point — 2026-05-29 16:22 UTC
+- Live check: public best still `0.949`; v631-v635 `0.926/0.940/0.946/0.949/0.941`; UTC slots `0/5`; no active local/trainer BirdCLEF jobs and trainer GPUs free.
+- Trained `soundscape-sequence-fused-dymn10-panns-notrain-r2-nofile-losite-ep24-20260529` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 28 no-train labels, fused EfficientAT DyMN10 + PANNs/Cnn14 embeddings, radius-2 context/local mean/max/time features, 24 epochs.
+- Result: LOSO row AUC `0.554429`, no-train/non-Aves `0.554429`, file-MIL `0.660711`; same-run context lift vs row-only `+0.066813` row / `+0.044756` file-MIL. Compared with PANNs no-train context: row `-0.046876`, file-MIL `+0.044562`; compared with DyMN10 no-train: row `+0.000784`, file-MIL `+0.022433`.
+- Sidecar audit as 28-label anchor-preserved wrapper: best `seq_context_w01` local AUC `0.990398` / 42 valid, lift vs v616 `-0.003083`, lift vs anchor `+0.000007`; rejected/no submission.
+- Updated canonical performance table/jsonl, ledger, ranked queue, and logs. Next: diagnose no-train file-MIL/sonotype movement or the soft1279 head-loaded sidecar before spending early-day slots.
