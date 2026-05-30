@@ -4674,3 +4674,10 @@ Decision:
 - Result: LOSO row AUC `0.644272`, no-train `0.631044`, non-Aves `0.701883`, file-MIL `0.678888`; row-only row AUC `0.624443` and file-MIL `0.653546`.
 - Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990951` / 42 valid, lift vs v616 `-0.002529`, lift vs anchor `+0.000561`; rejected/no submission.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0020Z_panns_allclass_filectx_filemil_sequence.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0020Z.md`. Next: soft1279 head-loaded class/site movement diagnosis or no-call negative audit upgrade before slots.
+
+## BirdCLEF PANNs soundscape-positive file-context + file-MIL sequence data point — 2026-05-30 02:25 UTC
+- Live check: public best still `0.949`; v636-v640 completed `0.944/0.943/0.939/0.944/0.945`; 2026-05-30 UTC slots `0/5`; no active jobs before training.
+- Trained `soundscape-sequence-panns-cnn14-soundpos-r2-filectx-filemil-losite-ep22-20260530` on official train_soundscapes: `1,478` windows / `66` files / `9` sites / `75` soundscape-positive labels, frozen PANNs/Cnn14 embeddings, radius-2 temporal + file context, file-MIL loss weight 0.35, 22 epochs.
+- Result: LOSO context row AUC `0.610622`, no-train `0.574690`, non-Aves `0.639635`, file-MIL `0.646776`; row-only was stronger at `0.632460` row / `0.678655` file-MIL (`-0.021838` row delta).
+- Sidecar audit best `seq_context_w01` local AUC `0.990561` / `42` valid, lift vs v616 `-0.002919`, lift vs anchor `+0.000171`; rejected/no submission.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0225Z_panns_soundpos_filectx_filemil_sequence.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0225Z.md`. Next: soft1279 head-loaded sidecar class/site movement diagnosis; avoid more blind PANNs soundpos file-context wrappers.
