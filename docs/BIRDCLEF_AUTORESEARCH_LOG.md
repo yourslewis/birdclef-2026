@@ -4698,3 +4698,11 @@ Decision:
 - Sidecar audit best `allcls_seq_w0p0025`: local AUC `0.990783` / 42 valid, lift vs v616 `-0.002698`; rejected/no submission.
 - Evaluated `soundscape-nocall-gate-soft1279native-agg-farneg20-losite-20260530`: 752 retained rows, only 13 weak negatives, 0 valid leave-site AUC folds. Rejected; distance-only negative filtering beyond 10–12s collapses multi-site validation.
 - Updated performance table/jsonl, ledgers, ranked queue. Next: soft1279 head-loaded class/site movement diagnosis or curated multi-site no-call negatives; avoid more blind PANNs file-context variants.
+
+## 2026-05-30 08:20 UTC — G124/V2S hard-confidence localmax target-shape ablation
+
+- Live Kaggle Bearer check: best public LB remains `0.949`; v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no active BirdCLEF jobs and trainer GPUs free.
+- Trained `g124-effv2s-public946-pseudo-pilot-20260530-v2sinit-hardconf90-localmax-ep6`: 792 train_soundscape teacher rows / 66 files / 9 sites / 234 labels, EfficientNetV2-RW-S with V2S init, localmax radius-1 pseudo targets, hard-conf positives `>=0.90`, negatives `<=0.01`, row/class caps.
+- Result: hard target mask only `0.995%` of cells (`618` positives, `1,226` negatives); best val AUC `0.622851` / 67 valid; all-row student AUC `0.623120` / 75 valid; teacher same-row AUC `0.995541`; student/teacher corr `0.141234`.
+- Teacher-cache blend audit: best w0.005 blend AUC `0.997018`, lift vs teacher `-0.000000443`, site bootstrap q05 `-0.00000704`, leave-site q05 `-0.00000176`; rejected/no submission.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0820Z_g124_v2s_hardconf90_localmax.md`, and ranked queue. Next: soft1279 head-loaded class/site movement diagnosis or curated multi-site no-call negatives; hard-only G124 variants are closed.
