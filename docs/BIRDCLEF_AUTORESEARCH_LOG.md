@@ -4747,3 +4747,10 @@ Decision:
 - Trained `soundscape-native-b0-soft1279init-focal2-losite-allcls-ep4-20260530`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels, EfficientNet-B0 SED, soft1279 head-loaded init, focal BCE gamma 2.0. LOSO row AUC `0.599447`, no-train `0.550339`, non-Aves `0.583959`, file-MIL `0.540916`; TS/ONNX exported.
 - Packaged/audited focal2 model as v616 sidecar: 240/240 proxy rows matched, finite/nonconstant 234 columns; best `w0.08` local AUC `0.992675`, lift vs v616 `-0.000805`, submit_approved false. Rejected/no submission.
 - Updated canonical performance table/jsonl, ledgers, ranked queue. Next: hand/teacher-audited multi-site no-call negatives or explicit site-risk-constrained soft1279 class recipe; do not train more B0 objective knobs without a new transfer hypothesis.
+
+## 2026-05-30 20:20 UTC — PANNs all-class r4 20s local mean+max temporal data point
+
+- Live Kaggle Bearer check: best public LB remains `0.949`; latest v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; 2026-05-30 UTC slots `0/5` with ~3.75h to reset. No active local/trainer BirdCLEF jobs; trainer GPUs idle.
+- Trained `soundscape-sequence-panns-cnn14-allcls-r4-20s-localmeanmax-losite-ep20-20260530`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels, frozen PANNs/Cnn14 embeddings, radius-4 local mean+max context (±20s), no file context, 20 epochs.
+- Metrics: context row AUC `0.627559`, no-train `0.604764`, non-Aves `0.665293`, file-MIL `0.673926`; internal row-only `0.626128` row / `0.671220` file-MIL. This is below prior PANNs all-class filectx+fileMIL row `0.644272` and localmax-only row `0.641501`.
+- Sidecar audit best `allcls_seq_w0p0025`: local AUC `0.991131` / 42 valid, lift vs v616 `-0.002349`, lift vs anchor `+0.000741`; rejected/no submission. Updated performance table/jsonl, ledger, ranked queue. Next: late-day source fill if `<3h` to reset, otherwise hand/teacher-audited multi-site no-call negatives.

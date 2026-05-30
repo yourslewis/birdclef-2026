@@ -1,0 +1,185 @@
+{
+  "created_utc": "2026-05-30T20:19:56Z",
+  "audit_json": "artifacts/model_data_point_ledger/20260530T2020Z_panns_allclass_r4_20s_localmeanmax_sidecar_audit/audit/ensemble_strategy_audit.json",
+  "top_by_lift_vs_v616": [
+    {
+      "recipe": "allcls_seq_w0p0025",
+      "macro_auc": 0.9911312900097584,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007407834905984734,
+      "lift_vs_v616": -0.0023493775643804726,
+      "rank_corr_vs_v616": 0.9996930622817168,
+      "mae_vs_v616": 0.005978782195597887,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p005",
+      "macro_auc": 0.991120942541784,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007304360226240147,
+      "lift_vs_v616": -0.0023597250323549313,
+      "rank_corr_vs_v616": 0.999684185758902,
+      "mae_vs_v616": 0.005833941977471113,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p01",
+      "macro_auc": 0.991088828063152,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0006983215439920754,
+      "lift_vs_v616": -0.0023918395109868706,
+      "rank_corr_vs_v616": 0.9996486952240194,
+      "mae_vs_v616": 0.005853880196809769,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p02",
+      "macro_auc": 0.9909901594748926,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0005996529557326102,
+      "lift_vs_v616": -0.0024905080992463358,
+      "rank_corr_vs_v616": 0.999504977150529,
+      "mae_vs_v616": 0.006944539025425911,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p04",
+      "macro_auc": 0.9904740443026938,
+      "valid_classes": 42,
+      "lift_vs_anchor": 8.353778353387131e-05,
+      "lift_vs_v616": -0.0030066232714450747,
+      "rank_corr_vs_v616": 0.9989119962797887,
+      "mae_vs_v616": 0.01122397743165493,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p08",
+      "macro_auc": 0.9887671021376112,
+      "valid_classes": 42,
+      "lift_vs_anchor": -0.001623404381548732,
+      "lift_vs_v616": -0.004713565436527678,
+      "rank_corr_vs_v616": 0.9963826399243484,
+      "mae_vs_v616": 0.02165447361767292,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    }
+  ],
+  "all_recipes": [
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p0025",
+      "macro_auc": 0.9911312900097584,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007407834905984734,
+      "lift_vs_v616": -0.0023493775643804726,
+      "rank_corr_vs_v616": 0.9996930622817168,
+      "mae_vs_v616": 0.005978782195597887,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p005",
+      "macro_auc": 0.991120942541784,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0007304360226240147,
+      "lift_vs_v616": -0.0023597250323549313,
+      "rank_corr_vs_v616": 0.999684185758902,
+      "mae_vs_v616": 0.005833941977471113,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p01",
+      "macro_auc": 0.991088828063152,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0006983215439920754,
+      "lift_vs_v616": -0.0023918395109868706,
+      "rank_corr_vs_v616": 0.9996486952240194,
+      "mae_vs_v616": 0.005853880196809769,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p02",
+      "macro_auc": 0.9909901594748926,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0005996529557326102,
+      "lift_vs_v616": -0.0024905080992463358,
+      "rank_corr_vs_v616": 0.999504977150529,
+      "mae_vs_v616": 0.006944539025425911,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p04",
+      "macro_auc": 0.9904740443026938,
+      "valid_classes": 42,
+      "lift_vs_anchor": 8.353778353387131e-05,
+      "lift_vs_v616": -0.0030066232714450747,
+      "rank_corr_vs_v616": 0.9989119962797887,
+      "mae_vs_v616": 0.01122397743165493,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "allcls_seq_w0p08",
+      "macro_auc": 0.9887671021376112,
+      "valid_classes": 42,
+      "lift_vs_anchor": -0.001623404381548732,
+      "lift_vs_v616": -0.004713565436527678,
+      "rank_corr_vs_v616": 0.9963826399243484,
+      "mae_vs_v616": 0.02165447361767292,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    }
+  ],
+  "submit_approved": false
+}

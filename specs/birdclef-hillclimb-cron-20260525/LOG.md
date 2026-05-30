@@ -169,3 +169,11 @@
 - Metrics: candidate AUC `0.995545`, v616 AUC `0.993481`, lift `+0.002064`; anchor AUC `0.990391`, lift `+0.005155`; raw sidecar AUC `0.994941`.
 - Diagnosis: aggregate gain is concentrated (`S03`/`S22`), `S18` regresses, no-train-primary lift is only `+0.000190`, Mammalia mean lift is negative.
 - Decision: no submission; comparison-grade only. Updated performance table/jsonl, ledger, ranked queue, docs log. Next: curated multi-site no-call negatives or robust caps limited to stable soft1279 winners.
+
+## 2026-05-30 20:20 UTC
+
+- Live check: public best still `0.949`; v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no active local/trainer jobs and trainer GPUs idle.
+- Trained `soundscape-sequence-panns-cnn14-allcls-r4-20s-localmeanmax-losite-ep20-20260530` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 234 labels, frozen PANNs/Cnn14 embeddings, radius-4 local mean+max temporal context (±20s), 20 epochs.
+- Metrics: context row AUC `0.627559`, no-train `0.604764`, non-Aves `0.665293`, file-MIL `0.673926`; internal row-only row `0.626128` / file-MIL `0.671220`; below prior best PANNs filectx+fileMIL row `0.644272`.
+- Sidecar audit best `allcls_seq_w0p0025` local AUC `0.991131` / 42 valid; lift vs v616 `-0.002349`; finite/nonconstant sidecar; `submit_approved=false`.
+- Updated performance table/jsonl, ledger, ranked queue, and docs log. No submission under mid-day policy; next run should late-fill valid source candidates if `<3h` to UTC reset and no verifier-grade candidate appears.
