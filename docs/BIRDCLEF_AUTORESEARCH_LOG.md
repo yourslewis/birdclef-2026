@@ -4689,3 +4689,12 @@ Decision:
 - All-row diagnostic lift fell to `+0.000348` using only four classes, with top-3 recall unchanged. Compared with global `w0.16` lift `+0.002064`, low-cap selector lost about `0.001987` AUC.
 - Decision: reject/no submission. The original soft1279 head-loaded signal depends on heavier movement that fails robustness gates; low-cap selectors are too close to v616 for early-day slot use.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0418Z_soft1279_capped_selector_retry.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0418Z.md`. Next: no-call negative audit upgrade or class/site attribution, not more selector grid search.
+
+## 2026-05-30 06:20 UTC — PANNs file-context no-MIL ablation + farneg20 no-call protocol
+
+- Live check: public best still `0.949`; v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no local/trainer BirdCLEF jobs and GPUs free.
+- Trained `soundscape-sequence-panns-cnn14-allcls-r2-filectx-nomil-losite-ep20-20260530` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 234 labels, frozen PANNs/Cnn14 embeddings, radius-2 full file context, no file-MIL loss.
+- Result: row AUC `0.626315`, no-train `0.604598`, non-Aves `0.685213`, file-MIL `0.649487`; vs PANNs filectx+fileMIL row `-0.017957` / file-MIL `-0.029401`.
+- Sidecar audit best `allcls_seq_w0p0025`: local AUC `0.990783` / 42 valid, lift vs v616 `-0.002698`; rejected/no submission.
+- Evaluated `soundscape-nocall-gate-soft1279native-agg-farneg20-losite-20260530`: 752 retained rows, only 13 weak negatives, 0 valid leave-site AUC folds. Rejected; distance-only negative filtering beyond 10–12s collapses multi-site validation.
+- Updated performance table/jsonl, ledgers, ranked queue. Next: soft1279 head-loaded class/site movement diagnosis or curated multi-site no-call negatives; avoid more blind PANNs file-context variants.
