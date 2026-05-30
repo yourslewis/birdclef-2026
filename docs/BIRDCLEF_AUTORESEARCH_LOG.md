@@ -4706,3 +4706,12 @@ Decision:
 - Result: hard target mask only `0.995%` of cells (`618` positives, `1,226` negatives); best val AUC `0.622851` / 67 valid; all-row student AUC `0.623120` / 75 valid; teacher same-row AUC `0.995541`; student/teacher corr `0.141234`.
 - Teacher-cache blend audit: best w0.005 blend AUC `0.997018`, lift vs teacher `-0.000000443`, site bootstrap q05 `-0.00000704`, leave-site q05 `-0.00000176`; rejected/no submission.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0820Z_g124_v2s_hardconf90_localmax.md`, and ranked queue. Next: soft1279 head-loaded class/site movement diagnosis or curated multi-site no-call negatives; hard-only G124 variants are closed.
+
+
+## 2026-05-30 10:20 UTC — G124/V2S soft-anchor localmax target-shape ablation
+
+- Live check: public best still `0.949`; latest v636-v640 completed `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no active local/trainer BirdCLEF jobs; trainer GPUs free.
+- Trained `g124-effv2s-public946-pseudo-pilot-20260530-v2sinit-softanchor90-localmax-ep6` on 792 train_soundscape teacher rows / 66 files / 9 sites / 234 labels using EfficientNetV2-RW-S from V2S init, localmax radius-1 pseudo targets, and `soft_anchor` targets (`soft_label_weight=0.5`, anchors >=0.90/<=0.01 with row/class caps).
+- Metrics: best val AUC `0.961641` / 67 valid; all-row student AUC `0.965053` / 75 valid; teacher AUC `0.995541`; corr `0.856930`. This slightly beats the prior G124 soft localmax training metric and massively beats hardconf90, confirming hardconf target starvation.
+- Teacher-cache blend audit: best w`0.02` AUC `0.997042`, lift vs teacher `+0.00002330`; site bootstrap q05 `-0.00016009` and leave-site q05 `-0.00001043`.
+- Decision: no submission. Positive diagnostic, but teacher-cache lift is tiny/unstable and not a v616 sidecar audit. Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T1020Z_g124_v2s_softanchor90_localmax.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T1020Z.md`.
