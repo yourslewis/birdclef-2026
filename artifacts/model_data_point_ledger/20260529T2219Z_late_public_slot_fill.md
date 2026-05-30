@@ -20,3 +20,12 @@
 
 ## Artifact
 - Submission/preflight artifact: `artifacts/public_kernels_20260529_late_scout/submit_v636_v640_late_fill_20260529.json`
+
+
+## Scores updated 2026-05-30T00:16Z
+- v636 ref `53165843`: public LB `0.944` (delta vs v616 `-0.005`) — reject below best.
+- v637 ref `53165844`: public LB `0.943` (delta vs v616 `-0.006`) — reject below best.
+- v638 ref `53165846`: public LB `0.939` (delta vs v616 `-0.010`) — reject weak.
+- v639 ref `53165850`: public LB `0.944` (delta vs v616 `-0.005`) — reject below best.
+- v640 ref `53165851`: public LB `0.945` (delta vs v616 `-0.004`) — reject below best.
+- Best remains `0.949`; no candidate beat/tied v616/v634.

@@ -4666,3 +4666,11 @@ Decision:
 - Late-day policy activated and submitted five guarded source-code candidates: v636 Mtoshi 947 repro ref `53165843`, v637 Yaroslav 946 replay ref `53165844`, v638 5-branch ensemble ref `53165846`, v639 Mtoshi 941 ref `53165850`, v640 Imaad Perch ProtoSSM ref `53165851`.
 - Preflight: all were COMPLETE public kernels with hidden-test/sample/submission markers, finite/nonconstant 235-column `submission.csv` public-session output, unique descriptions, and nonduplicate dry-run hashes versus v621-v635.
 - Decision: use all daily slots under late-day exploratory policy; all five pending after submission. Updated performance table/jsonl, ledger, and ranked queue. Next: monitor scores and update rows; if no >0.949, resume soft1279 head-loaded class/site movement diagnosis.
+
+
+## BirdCLEF PANNs all-class file-context + file-MIL sequence data point — 2026-05-30 00:20 UTC
+- Live Kaggle Bearer check: best public LB remains `0.949`; v636-v640 completed `0.944/0.943/0.939/0.944/0.945`; 2026-05-30 UTC slots `0/5` at fresh reset. No active BirdCLEF local/trainer jobs.
+- Trained `soundscape-sequence-panns-cnn14-allcls-r2-filectx-filemil-losite-ep20-20260530` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 234 labels, frozen PANNs/Cnn14 embeddings, radius-2 temporal + file context, file-MIL loss weight 0.35, 20 epochs.
+- Result: LOSO row AUC `0.644272`, no-train `0.631044`, non-Aves `0.701883`, file-MIL `0.678888`; row-only row AUC `0.624443` and file-MIL `0.653546`.
+- Sidecar audit best `allcls_seq_w0p0025` local AUC `0.990951` / 42 valid, lift vs v616 `-0.002529`, lift vs anchor `+0.000561`; rejected/no submission.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0020Z_panns_allclass_filectx_filemil_sequence.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0020Z.md`. Next: soft1279 head-loaded class/site movement diagnosis or no-call negative audit upgrade before slots.
