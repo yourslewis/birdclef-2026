@@ -4681,3 +4681,11 @@ Decision:
 - Result: LOSO context row AUC `0.610622`, no-train `0.574690`, non-Aves `0.639635`, file-MIL `0.646776`; row-only was stronger at `0.632460` row / `0.678655` file-MIL (`-0.021838` row delta).
 - Sidecar audit best `seq_context_w01` local AUC `0.990561` / `42` valid, lift vs v616 `-0.002919`, lift vs anchor `+0.000171`; rejected/no submission.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0225Z_panns_soundpos_filectx_filemil_sequence.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0225Z.md`. Next: soft1279 head-loaded sidecar class/site movement diagnosis; avoid more blind PANNs soundpos file-context wrappers.
+
+## BirdCLEF soft1279 capped per-class selector retry — 2026-05-30 04:18 UTC
+- Live check: public best remains `0.949`; latest v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no active local/trainer jobs and trainer GPUs free.
+- Evaluated stricter capped per-class selectors over the strongest head-loaded soft1279 native sidecar and a small multi-soft1279 variant set: 240 v616 proxy rows / 42 valid classes; rank-blend weights capped at total `0.04`; min train positives `3`; min lift `0.001`.
+- Result: head-loaded site-CV AUC `0.993558`, lift vs v616 `+0.000077`; head-loaded file-CV `0.993699`, lift `+0.000218`. Multi-sidecar was no better: site/file lifts `+0.000051` / `+0.000193`.
+- All-row diagnostic lift fell to `+0.000348` using only four classes, with top-3 recall unchanged. Compared with global `w0.16` lift `+0.002064`, low-cap selector lost about `0.001987` AUC.
+- Decision: reject/no submission. The original soft1279 head-loaded signal depends on heavier movement that fails robustness gates; low-cap selectors are too close to v616 for early-day slot use.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T0418Z_soft1279_capped_selector_retry.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T0418Z.md`. Next: no-call negative audit upgrade or class/site attribution, not more selector grid search.
