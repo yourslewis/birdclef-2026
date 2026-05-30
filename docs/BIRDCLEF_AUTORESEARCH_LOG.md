@@ -4723,3 +4723,11 @@ Decision:
 - Performance: best val AUC `0.959950` / 67, all-row AUC `0.962337` / 75, teacher AUC `0.996798`, corr `0.856843`. It trails pure soft-anchor localmax by `-0.001691` val / `-0.002716` all-row but remains far above hardconf90.
 - Teacher-cache blend best w`0.04` lift `+0.00003724`, but site bootstrap q05 `-0.00015185`; v616 local sidecar best w`0.01` AUC `0.991195`, lift vs v616 `-0.002286`, so rejected/no submission.
 - Updated performance table/jsonl, ledger, ranked queue. Next: soft1279 head-loaded class/site movement diagnosis or curated multi-site no-call negatives; do not continue blind G124 temporal target variants.
+
+## 2026-05-30 14:20 UTC — Soft1279 head-loaded class/site movement diagnosis
+
+- Live check: public best remains `0.949`; latest v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; 2026-05-30 UTC slots `0/5` with ~9.7h to reset; no active local/trainer jobs and GPUs idle.
+- Evaluated strongest recent sidecar `soft1279init_native_allcls_w0p16` on 240 v616 proxy rows / 190 matched label rows / 20 files / 6 sites / 42 valid classes.
+- Performance table metrics: anchor AUC `0.990391`, v616 AUC `0.993481`, raw soft1279 sidecar AUC `0.994941`, candidate AUC `0.995545`; lift vs v616 `+0.002064`, lift vs anchor `+0.005155`.
+- Movement attribution: gains concentrated on `S03` `+0.011364` and `S22` `+0.012645`; `S18` regressed `-0.005000`; no-train-primary classes averaged only `+0.000190` with only 26% positive. Biggest class wins were `strher2`, `555146`, `undtin1`, `bunibi1`, and `116570`; Mammalia averaged negative.
+- Decision: no submission. This remains comparison-grade and too site/class-concentrated for early-day slots; updated canonical performance table/jsonl, ledger, ranked queue. Next: curated multi-site no-call negatives or robust caps limited to stable soft1279 winners.

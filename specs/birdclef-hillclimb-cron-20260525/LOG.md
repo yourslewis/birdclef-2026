@@ -161,3 +161,11 @@
 - Trained/evaluated `g124-effv2s-public946-pseudo-pilot-20260530-v2sinit-softanchor90-centerlocalmix75-ep6`.
 - Metrics table row added: val AUC `0.959950` / 67; all-row `0.962337` / 75; best teacher blend lift `+0.00003724`; v616 sidecar lift `-0.002286`.
 - Decision: no submission; early-day slot policy plus failed v616 gate. Next exact action: soft1279 head-loaded class/site movement diagnosis.
+
+## 2026-05-30 14:20 UTC — soft1279 head-loaded movement diagnosis
+
+- Live status: public LB best `0.949`; v636-v640 `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; no active local/trainer jobs; trainer GPUs idle.
+- Evaluated strongest soft1279 sidecar `soft1279init_native_allcls_w0p16`: 240 proxy rows, 190 matched label rows, 20 files, 6 sites, 42 valid classes.
+- Metrics: candidate AUC `0.995545`, v616 AUC `0.993481`, lift `+0.002064`; anchor AUC `0.990391`, lift `+0.005155`; raw sidecar AUC `0.994941`.
+- Diagnosis: aggregate gain is concentrated (`S03`/`S22`), `S18` regresses, no-train-primary lift is only `+0.000190`, Mammalia mean lift is negative.
+- Decision: no submission; comparison-grade only. Updated performance table/jsonl, ledger, ranked queue, docs log. Next: curated multi-site no-call negatives or robust caps limited to stable soft1279 winners.
