@@ -154,3 +154,10 @@
 - Metrics: best val AUC `0.961641` / 67 valid; all-row student AUC `0.965053` / 75 valid; teacher AUC `0.995541`; corr `0.856930`. This slightly beats the prior G124 soft localmax training metric and massively beats hardconf90, confirming hardconf target starvation.
 - Teacher-cache blend audit: best w`0.02` AUC `0.997042`, lift vs teacher `+0.00002330`; site bootstrap q05 `-0.00016009` and leave-site q05 `-0.00001043`.
 - Decision: no submission. Positive diagnostic, but teacher-cache lift is tiny/unstable and not a v616 sidecar audit. Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T1020Z_g124_v2s_softanchor90_localmax.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260530T1020Z.md`.
+
+## 2026-05-30 12:20 UTC — G124/V2S soft-anchor center/localmax-mix diagnostic
+
+- Status: Bearer API live best `0.949`; v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; UTC slots `0/5`; trainer idle.
+- Trained/evaluated `g124-effv2s-public946-pseudo-pilot-20260530-v2sinit-softanchor90-centerlocalmix75-ep6`.
+- Metrics table row added: val AUC `0.959950` / 67; all-row `0.962337` / 75; best teacher blend lift `+0.00003724`; v616 sidecar lift `-0.002286`.
+- Decision: no submission; early-day slot policy plus failed v616 gate. Next exact action: soft1279 head-loaded class/site movement diagnosis.
