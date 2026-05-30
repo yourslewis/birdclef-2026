@@ -1,0 +1,354 @@
+{
+  "base_csv": "artifacts/sed_soundscape_packaging_audit/20260528T1618Z_soft1279init_native_allcls_stability_grid/audit/candidate_csvs/v616_baseline.csv",
+  "sidecars": [
+    {
+      "name": "head_raw",
+      "path": "artifacts/sed_soundscape_packaging_audit/20260528T1618Z_soft1279init_native_allcls_stability_grid/audit/candidate_csvs/soft1279init_native_allcls_member_raw.csv"
+    }
+  ],
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "matched_rows": 190,
+  "valid_classes": 42,
+  "group_mode": "site",
+  "n_groups": 6,
+  "weight_grid": [
+    0.0,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12
+  ],
+  "max_total_weight": 0.12,
+  "min_train_pos": 5,
+  "min_train_neg": 20,
+  "min_lift": 0.002,
+  "base_auc": 0.9934806675741389,
+  "cv_auc": 0.9936286657578512,
+  "cv_lift": 0.00014799818371236118,
+  "cv_valid_classes": 42,
+  "leave_group_lifts": {
+    "n": 6,
+    "mean": -1.1999904000784914e-05,
+    "min": -7.199942400470949e-05,
+    "q05": -5.399956800353212e-05,
+    "p_gt_0": 0.0
+  },
+  "held_out_groups": [
+    {
+      "held_out_group": "S03",
+      "rows": 24,
+      "base_auc": 0.9623376623376624,
+      "candidate_auc": 0.9623376623376624,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 5,
+        "mean_total_weight": 0.013333333656191826,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.013333333656191826
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 5
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "trsowl",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "head_raw": 0.07999999821186066
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S08",
+      "rows": 60,
+      "base_auc": 0.985618372636464,
+      "candidate_auc": 0.9855463732124593,
+      "lift": -7.199942400470949e-05,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 4,
+        "mean_total_weight": 0.010476190596818924,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.010476190596818924
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 4
+        },
+        "top_classes": [
+          {
+            "class": "trsowl",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "head_raw": 0.07999999821186066
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S09",
+      "rows": 19,
+      "base_auc": 1.0,
+      "candidate_auc": 1.0,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 2,
+        "mean_total_weight": 0.0057142856530845165,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.0057142856530845165
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 2
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S13",
+      "rows": 24,
+      "base_auc": 0.9923225308641975,
+      "candidate_auc": 0.9923225308641975,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 5,
+        "mean_total_weight": 0.013333333656191826,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.013333333656191826
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 5
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "trsowl",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "head_raw": 0.07999999821186066
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S18",
+      "rows": 15,
+      "base_auc": 0.9050324675324676,
+      "candidate_auc": 0.9050324675324676,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 3,
+        "mean_total_weight": 0.007619047537446022,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.007619047537446022
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 3
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "chacha1",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          },
+          {
+            "class": "undtin1",
+            "total": 0.07999999821186066,
+            "weights": {
+              "head_raw": 0.07999999821186066
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S22",
+      "rows": 48,
+      "base_auc": 0.9630222191445238,
+      "candidate_auc": 0.9630222191445238,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 1,
+        "mean_total_weight": 0.0028571428265422583,
+        "max_total_weight": 0.11999999731779099,
+        "per_sidecar_mean": {
+          "head_raw": 0.0028571428265422583
+        },
+        "per_sidecar_nonzero_classes": {
+          "head_raw": 1
+        },
+        "top_classes": [
+          {
+            "class": "116570",
+            "total": 0.11999999731779099,
+            "weights": {
+              "head_raw": 0.11999999731779099
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "all_row_auc": 0.9944668984710839,
+  "all_row_lift": 0.0009862308969450506,
+  "all_row_weight_summary": {
+    "n_classes": 42,
+    "classes_with_any_sidecar": 4,
+    "mean_total_weight": 0.010476190596818924,
+    "max_total_weight": 0.11999999731779099,
+    "per_sidecar_mean": {
+      "head_raw": 0.010476190596818924
+    },
+    "per_sidecar_nonzero_classes": {
+      "head_raw": 4
+    },
+    "top_classes": [
+      {
+        "class": "116570",
+        "total": 0.11999999731779099,
+        "weights": {
+          "head_raw": 0.11999999731779099
+        }
+      },
+      {
+        "class": "chacha1",
+        "total": 0.11999999731779099,
+        "weights": {
+          "head_raw": 0.11999999731779099
+        }
+      },
+      {
+        "class": "555146",
+        "total": 0.11999999731779099,
+        "weights": {
+          "head_raw": 0.11999999731779099
+        }
+      },
+      {
+        "class": "undtin1",
+        "total": 0.07999999821186066,
+        "weights": {
+          "head_raw": 0.07999999821186066
+        }
+      }
+    ]
+  },
+  "topk_recall": {
+    "base_top3": 0.9421052631578948,
+    "cv_top3": 0.9421052631578948,
+    "all_row_top3": 0.9526315789473684
+  }
+}

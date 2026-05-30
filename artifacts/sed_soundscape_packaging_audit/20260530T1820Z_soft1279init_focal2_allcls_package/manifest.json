@@ -1,0 +1,125 @@
+{
+  "name": "birdclef_soft1279init_focal2_allcls_package_audit",
+  "description": "v616 sidecar audit for soft1279-head-loaded native B0 focal objective",
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "Samejima/v616 visual anchor raw output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output; public LB tied 0.949",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "soft1279init_focal2_allcls": {
+      "role": "packaged_analysis_branch",
+      "description": "Soundscape-native B0 all-class soft1279 head-loaded focal objective model",
+      "path": "artifacts/sed_soundscape_packaging_audit/20260530T1820Z_soft1279init_focal2_allcls_package/sidecars/soft1279init_focal2_allcls_sidecar_234_anchorfill.csv",
+      "hidden_safe_status": "train_soundscape_packaging_audit_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control anchor raw",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Submitted v616 tied recipe",
+      "member": "v616_final"
+    },
+    {
+      "name": "soft1279init_focal2_allcls_member_raw",
+      "type": "member",
+      "description": "Anchor-filled direct soft1279init_focal2_allcls probabilities",
+      "member": "soft1279init_focal2_allcls"
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p0025",
+      "type": "rank_blend",
+      "description": "0.25% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.9975,
+        "soft1279init_focal2_allcls": 0.0025
+      }
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p005",
+      "type": "rank_blend",
+      "description": "0.50% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "soft1279init_focal2_allcls": 0.005
+      }
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p01",
+      "type": "rank_blend",
+      "description": "1.00% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "soft1279init_focal2_allcls": 0.01
+      }
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p02",
+      "type": "rank_blend",
+      "description": "2.00% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "soft1279init_focal2_allcls": 0.02
+      }
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p04",
+      "type": "rank_blend",
+      "description": "4.00% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "soft1279init_focal2_allcls": 0.04
+      }
+    },
+    {
+      "name": "soft1279init_focal2_allcls_w0p08",
+      "type": "rank_blend",
+      "description": "8.00% soft1279init_focal2_allcls sidecar rank blend",
+      "weights": {
+        "anchor_v616_raw": 0.92,
+        "soft1279init_focal2_allcls": 0.08
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 200,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 40,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}

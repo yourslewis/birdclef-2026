@@ -1,0 +1,196 @@
+{
+  "created_utc": "2026-05-30T18:21:24Z",
+  "audit_json": "artifacts/sed_soundscape_packaging_audit/20260530T1820Z_soft1279init_focal2_allcls_package/audit/ensemble_strategy_audit.json",
+  "top_by_lift_vs_v616": [
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p08",
+      "macro_auc": 0.9926754737444157,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0022849672252557296,
+      "lift_vs_v616": -0.0008051938297232164,
+      "rank_corr_vs_v616": 0.9964519984298905,
+      "mae_vs_v616": 0.020961252972483635,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p04",
+      "macro_auc": 0.9925212859612488,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.002130779442088837,
+      "lift_vs_v616": -0.0009593816128901089,
+      "rank_corr_vs_v616": 0.998989108820678,
+      "mae_vs_v616": 0.010658863000571728,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p02",
+      "macro_auc": 0.9922350224011337,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0018445158819737628,
+      "lift_vs_v616": -0.0012456451730051832,
+      "rank_corr_vs_v616": 0.9995515201317908,
+      "mae_vs_v616": 0.006504860706627369,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p01",
+      "macro_auc": 0.992092473024127,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0017019665049670119,
+      "lift_vs_v616": -0.0013881945500119341,
+      "rank_corr_vs_v616": 0.9996736692415921,
+      "mae_vs_v616": 0.0055199782364070415,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p0025",
+      "macro_auc": 0.9919905397838958,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0016000332647359006,
+      "lift_vs_v616": -0.0014901277902430454,
+      "rank_corr_vs_v616": 0.9996995947410692,
+      "mae_vs_v616": 0.0058814589865505695,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p005",
+      "macro_auc": 0.9919905397838958,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0016000332647359006,
+      "lift_vs_v616": -0.0014901277902430454,
+      "rank_corr_vs_v616": 0.9996970636755107,
+      "mae_vs_v616": 0.0056414008140563965,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    }
+  ],
+  "all_recipes": [
+    {
+      "recipe": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_v616": -0.003090161054978946,
+      "rank_corr_vs_v616": 0.999696110417755,
+      "mae_vs_v616": 0.006243720650672913,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_v616": 0.0,
+      "rank_corr_vs_v616": 0.9999999999999998,
+      "mae_vs_v616": 0.0,
+      "gate": "control recipe",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_member_raw",
+      "macro_auc": 0.9816098882950575,
+      "valid_classes": 42,
+      "lift_vs_anchor": -0.008780618224102477,
+      "lift_vs_v616": -0.011870779279081423,
+      "rank_corr_vs_v616": 0.26706800513608786,
+      "mae_vs_v616": 0.3898497521877289,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p0025",
+      "macro_auc": 0.9919905397838958,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0016000332647359006,
+      "lift_vs_v616": -0.0014901277902430454,
+      "rank_corr_vs_v616": 0.9996995947410692,
+      "mae_vs_v616": 0.0058814589865505695,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p005",
+      "macro_auc": 0.9919905397838958,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0016000332647359006,
+      "lift_vs_v616": -0.0014901277902430454,
+      "rank_corr_vs_v616": 0.9996970636755107,
+      "mae_vs_v616": 0.0056414008140563965,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p01",
+      "macro_auc": 0.992092473024127,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0017019665049670119,
+      "lift_vs_v616": -0.0013881945500119341,
+      "rank_corr_vs_v616": 0.9996736692415921,
+      "mae_vs_v616": 0.0055199782364070415,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p02",
+      "macro_auc": 0.9922350224011337,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0018445158819737628,
+      "lift_vs_v616": -0.0012456451730051832,
+      "rank_corr_vs_v616": 0.9995515201317908,
+      "mae_vs_v616": 0.006504860706627369,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p04",
+      "macro_auc": 0.9925212859612488,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.002130779442088837,
+      "lift_vs_v616": -0.0009593816128901089,
+      "rank_corr_vs_v616": 0.998989108820678,
+      "mae_vs_v616": 0.010658863000571728,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    },
+    {
+      "recipe": "soft1279init_focal2_allcls_w0p08",
+      "macro_auc": 0.9926754737444157,
+      "valid_classes": 42,
+      "lift_vs_anchor": 0.0022849672252557296,
+      "lift_vs_v616": -0.0008051938297232164,
+      "rank_corr_vs_v616": 0.9964519984298905,
+      "mae_vs_v616": 0.020961252972483635,
+      "gate": "one or more promotion gates failed",
+      "eligible": false
+    }
+  ],
+  "submit_approved": false
+}

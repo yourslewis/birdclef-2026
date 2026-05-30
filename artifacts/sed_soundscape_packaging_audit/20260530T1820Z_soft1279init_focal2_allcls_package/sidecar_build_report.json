@@ -1,0 +1,29 @@
+{
+  "sidecar_csv": "artifacts/sed_soundscape_packaging_audit/20260530T1820Z_soft1279init_focal2_allcls_package/sidecars/soft1279init_focal2_allcls_sidecar_234_anchorfill.csv",
+  "anchor_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+  "v616_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+  "inference_csv": "artifacts/sed_soundscape_packaging_audit/20260530T1820Z_soft1279init_focal2_allcls_package/train_soundscapes_soft1279init_focal2_allcls.csv",
+  "anchor_rows": 240,
+  "inference_rows": 792,
+  "matched_anchor_rows": 240,
+  "unmatched_anchor_rows": 0,
+  "class_columns": 234,
+  "finite": true,
+  "nonconstant_columns": 234,
+  "value_stats": {
+    "min": 0.0067825653,
+    "max": 0.9418807,
+    "mean": 0.1216214075679701,
+    "std": 0.1164680036272966
+  },
+  "matched_examples": [
+    "BC2026_Train_0001_S08_20250606_030007_5",
+    "BC2026_Train_0001_S08_20250606_030007_10",
+    "BC2026_Train_0001_S08_20250606_030007_15",
+    "BC2026_Train_0001_S08_20250606_030007_20",
+    "BC2026_Train_0001_S08_20250606_030007_25",
+    "BC2026_Train_0001_S08_20250606_030007_30",
+    "BC2026_Train_0001_S08_20250606_030007_35",
+    "BC2026_Train_0001_S08_20250606_030007_40"
+  ]
+}

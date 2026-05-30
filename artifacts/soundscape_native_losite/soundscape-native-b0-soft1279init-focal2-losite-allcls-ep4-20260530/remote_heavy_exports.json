@@ -1,0 +1,18 @@
+{
+  "note": "Heavy model exports are intentionally not committed. They were synced locally for this run and also exist on trainer under ~/birdclef-2026.",
+  "trainer_dir": "/home/yourslewis/birdclef-2026/artifacts/soundscape_native_losite/soundscape-native-b0-soft1279init-focal2-losite-allcls-ep4-20260530",
+  "local_dir": "artifacts/soundscape_native_losite/soundscape-native-b0-soft1279init-focal2-losite-allcls-ep4-20260530",
+  "heavy_files": [
+    "model_torchscript.pt",
+    "model.onnx",
+    "model.onnx.data",
+    "leave_site_predictions.npz"
+  ],
+  "small_committed_files": [
+    "config.input.json",
+    "config.resolved.json",
+    "metrics.json",
+    "remote_heavy_exports.json"
+  ],
+  "created_utc": "2026-05-30T18:22:00Z"
+}
