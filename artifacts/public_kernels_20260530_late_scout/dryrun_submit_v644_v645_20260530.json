@@ -1,0 +1,608 @@
+{
+  "utc_now": "2026-05-30T22:18:55.365653+00:00",
+  "utc_reset": "2026-05-31T00:00:00+00:00",
+  "hours_to_reset": 1.6846206519444444,
+  "today_count_start": 3,
+  "latest_submissions": [
+    {
+      "date": "2026-05-30 22:16:38.920000",
+      "description": "v643: Late-fill Raunak v7 source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53197133
+    },
+    {
+      "date": "2026-05-30 22:16:36.563000",
+      "description": "v642: Late-fill Nina EoS4 source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53197131
+    },
+    {
+      "date": "2026-05-30 22:16:33.933000",
+      "description": "v641: Late-fill Nina EoS1 source",
+      "score": "",
+      "status": "SubmissionStatus.PENDING",
+      "ref": 53197129
+    },
+    {
+      "date": "2026-05-29 22:19:08.980000",
+      "description": "v640: Late-fill Imaad Perch ProtoSSM source",
+      "score": "0.945",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53165851
+    },
+    {
+      "date": "2026-05-29 22:19:06.310000",
+      "description": "v639: Late-fill Mtoshi 941 source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53165850
+    },
+    {
+      "date": "2026-05-29 22:19:03.477000",
+      "description": "v638: Late-fill 5-branch ensemble source",
+      "score": "0.939",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53165846
+    },
+    {
+      "date": "2026-05-29 22:19:00.787000",
+      "description": "v637: Late-fill Yaroslav 946 replay source",
+      "score": "0.943",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53165844
+    },
+    {
+      "date": "2026-05-29 22:18:57.987000",
+      "description": "v636: Late-fill Mtoshi 947 repro source",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53165843
+    },
+    {
+      "date": "2026-05-28 22:18:22.840000",
+      "description": "v635: Late-fill Mattia 943 blend source",
+      "score": "0.941",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53130272
+    },
+    {
+      "date": "2026-05-28 22:18:19.833000",
+      "description": "v634: Late-fill MeenalSinha improved source",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53130270
+    },
+    {
+      "date": "2026-05-28 22:17:52.923000",
+      "description": "v633: Late-fill Raunak multi-model source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53130262
+    },
+    {
+      "date": "2026-05-28 22:17:49.593000",
+      "description": "v632: Late-fill Vyanktesh source",
+      "score": "0.940",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53130260
+    },
+    {
+      "date": "2026-05-28 22:17:46.633000",
+      "description": "v631: Late-fill Maryna two-pass SSM source",
+      "score": "0.926",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53130259
+    },
+    {
+      "date": "2026-05-27 21:46:10.130000",
+      "description": "v630: Late-fill Tucker distilled SED source",
+      "score": "0.917",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097349
+    },
+    {
+      "date": "2026-05-27 21:46:07.533000",
+      "description": "v629: Late-fill Yaroslav BirdNET third source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097348
+    },
+    {
+      "date": "2026-05-27 21:46:04.887000",
+      "description": "v628: Late-fill Cliff gate combo source",
+      "score": "0.940",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097347
+    },
+    {
+      "date": "2026-05-27 21:46:02.317000",
+      "description": "v627: Late-fill Hideyukizushi ProtoSSM source",
+      "score": "0.928",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097346
+    },
+    {
+      "date": "2026-05-27 21:45:59.653000",
+      "description": "v626: Late-fill Jaejohn Perch meta-probe source",
+      "score": "0.899",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53097345
+    },
+    {
+      "date": "2026-05-26 22:20:39.907000",
+      "description": "v625: Late-fill Safar 0948 public fork",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063928
+    },
+    {
+      "date": "2026-05-26 22:20:36.840000",
+      "description": "v624: Late-fill Haru public top2 P125 fork",
+      "score": "0.943",
+      "status": "SubmissionStatus.COMPLETE",
+      "ref": 53063927
+    }
+  ],
+  "candidates": [
+    {
+      "label": "v644",
+      "ref": "yaroslavkholmirzayev/0950-replay",
+      "description": "v644: Late-fill Yaroslav 0950 replay source",
+      "expected_family": "Yaroslav 0950 replay public source",
+      "preflight_ok": true,
+      "version": 16,
+      "info": {
+        "ref": "yaroslavkholmirzayev/0950-replay",
+        "version": 16,
+        "source_len": 364555,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Fresh high-score public source listed at the frontier on 2026-05-30; likely distinct Yaroslav/taxonomy family and useful late-day information.",
+        "expected_family": "Yaroslav 0950 replay public source",
+        "files": [
+          "exp098_sidecar_exp001_diagnostics.csv",
+          "exp098_sidecar_exp001_diagnostics.json",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp098_exp001_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46273795,
+          "max": 0.53167486,
+          "mean": 0.4935156773504274,
+          "uniq_first100": 95,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "87e9ac1be51a0b15"
+        }
+      },
+      "decision": "dry_run_would_submit"
+    },
+    {
+      "label": "v645",
+      "ref": "nina2025/birdclef-2026-eos-9",
+      "description": "v645: Late-fill Nina EoS9 source",
+      "expected_family": "Nina EoS9 public source",
+      "preflight_ok": false,
+      "version": 13,
+      "info": {
+        "ref": "nina2025/birdclef-2026-eos-9",
+        "version": 13,
+        "source_len": 782085,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Top score-sorted public EoS.9 source; distinct from submitted EoS1/EoS4/EoS7 fills and plausible high-LB late-day candidate.",
+        "expected_family": "Nina EoS9 public source",
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_22.csv",
+          "subm_51.csv",
+          "subm_51p.csv",
+          "subm_74.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "subm_karnakbayev_power_optimization_74.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 243,
+          "n_cols": 235,
+          "unique_rows": 243,
+          "bad_values": 56862,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15",
+            "BC2026_Test_0001_S05_20250227_010002_5"
+          ],
+          "sha256_16": "0ee04c918f807616"
+        },
+        "reject": "submission.csv malformed/nonfinite/constant/wrong columns"
+      },
+      "decision": "reject_preflight"
+    },
+    {
+      "label": "v646",
+      "ref": "anthonytherrien/birdclef-2026-ensemble-0-950",
+      "description": "v646: Late-fill Anthony ensemble 0.950 source",
+      "expected_family": "Anthony ensemble 0.950 public source",
+      "preflight_ok": false,
+      "version": 1,
+      "info": {
+        "ref": "anthonytherrien/birdclef-2026-ensemble-0-950",
+        "version": 1,
+        "source_len": 773776,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "High-score public ensemble source; fallback if earlier candidates fail preflight or duplicate guards.",
+        "expected_family": "Anthony ensemble 0.950 public source",
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_22.csv",
+          "subm_51.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 243,
+          "n_cols": 235,
+          "unique_rows": 243,
+          "bad_values": 56862,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15",
+            "BC2026_Test_0001_S05_20250227_010002_5"
+          ],
+          "sha256_16": "0ee04c918f807616"
+        },
+        "reject": "submission.csv malformed/nonfinite/constant/wrong columns"
+      },
+      "decision": "reject_preflight"
+    },
+    {
+      "label": "v647",
+      "ref": "ryutoyoda/birdclef-2026-exp013-eos8-sidecar",
+      "description": "v647: Late-fill Ryuto EoS8 sidecar source",
+      "expected_family": "Ryuto EoS8 sidecar public source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "ryutoyoda/birdclef-2026-exp013-eos8-sidecar",
+        "version": 1,
+        "source_len": 347920,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "EoS8 sidecar variant with nontrivial votes; fallback source-code datapoint under late-day policy.",
+        "expected_family": "Ryuto EoS8 sidecar public source",
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46273795,
+          "max": 0.53167486,
+          "mean": 0.49351568162393167,
+          "uniq_first100": 95,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "3db34d13e789ae73"
+        }
+      },
+      "decision": "dry_run_would_submit"
+    },
+    {
+      "label": "v648",
+      "ref": "fleongg/birdclef-2026-hier-tax-claude-fork",
+      "description": "v648: Late-fill Fleong hier-tax fork source",
+      "expected_family": "Fleong hierarchical taxonomy public source",
+      "preflight_ok": false,
+      "version": 2,
+      "info": {
+        "ref": "fleongg/birdclef-2026-hier-tax-claude-fork",
+        "version": 2,
+        "source_len": 779282,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "Hierarchical-taxonomy fork from score/frontier list; fallback if source and output guards pass.",
+        "expected_family": "Fleong hierarchical taxonomy public source",
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_22.csv",
+          "subm_51.csv",
+          "subm_51p.csv",
+          "subm_74.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "subm_karnakbayev_power_optimization_74.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 243,
+          "n_cols": 235,
+          "unique_rows": 243,
+          "bad_values": 56862,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15",
+            "BC2026_Test_0001_S05_20250227_010002_5"
+          ],
+          "sha256_16": "0ee04c918f807616"
+        },
+        "reject": "submission.csv malformed/nonfinite/constant/wrong columns"
+      },
+      "decision": "reject_preflight"
+    },
+    {
+      "label": "v649",
+      "ref": "fleongg/birdclef-2026-eos-9-claude-fork",
+      "description": "v649: Late-fill Fleong EoS9 fork source",
+      "expected_family": "Fleong EoS9 fork public source",
+      "preflight_ok": false,
+      "version": 2,
+      "info": {
+        "ref": "fleongg/birdclef-2026-eos-9-claude-fork",
+        "version": 2,
+        "source_len": 782085,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "EoS9 fork with separate author/source; fallback if nonduplicate and hidden-safe.",
+        "expected_family": "Fleong EoS9 fork public source",
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_22.csv",
+          "subm_51.csv",
+          "subm_51p.csv",
+          "subm_74.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "subm_karnakbayev_power_optimization_74.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 243,
+          "n_cols": 235,
+          "unique_rows": 243,
+          "bad_values": 56862,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15",
+            "BC2026_Test_0001_S05_20250227_010002_5"
+          ],
+          "sha256_16": "0ee04c918f807616"
+        },
+        "reject": "submission.csv malformed/nonfinite/constant/wrong columns"
+      },
+      "decision": "reject_preflight"
+    },
+    {
+      "label": "v650",
+      "ref": "ahmedkhudair121/bc2026-claude-nina-eos-8-fork",
+      "description": "v650: Late-fill Ahmed Nina EoS8 fork source",
+      "expected_family": "Ahmed Nina EoS8 fork public source",
+      "preflight_ok": false,
+      "version": 1,
+      "info": {
+        "ref": "ahmedkhudair121/bc2026-claude-nina-eos-8-fork",
+        "version": 1,
+        "source_len": 770864,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": false,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "no hidden test": true,
+          "dry-run": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "reason": "EoS8 fork in high-score list; fallback late-day public-source datapoint.",
+        "expected_family": "Ahmed Nina EoS8 fork public source",
+        "files": [
+          "perch_cache/full_oof_meta_features.npz",
+          "perch_cache/full_perch_arrays.npz",
+          "perch_cache/full_perch_meta.parquet",
+          "subm_22.csv",
+          "subm_51.csv",
+          "subm_karnakbayev_power_optimization.csv",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 243,
+          "n_cols": 235,
+          "unique_rows": 243,
+          "bad_values": 56862,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15",
+            "BC2026_Test_0001_S05_20250227_010002_5"
+          ],
+          "sha256_16": "0ee04c918f807616"
+        },
+        "reject": "submission.csv malformed/nonfinite/constant/wrong columns"
+      },
+      "decision": "reject_preflight"
+    }
+  ],
+  "submitted": [],
+  "today_count_end_est": 3,
+  "submitted_count": 0
+}

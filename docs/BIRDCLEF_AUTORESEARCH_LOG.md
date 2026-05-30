@@ -4754,3 +4754,11 @@ Decision:
 - Trained `soundscape-sequence-panns-cnn14-allcls-r4-20s-localmeanmax-losite-ep20-20260530`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels, frozen PANNs/Cnn14 embeddings, radius-4 local mean+max context (±20s), no file context, 20 epochs.
 - Metrics: context row AUC `0.627559`, no-train `0.604764`, non-Aves `0.665293`, file-MIL `0.673926`; internal row-only `0.626128` row / `0.671220` file-MIL. This is below prior PANNs all-class filectx+fileMIL row `0.644272` and localmax-only row `0.641501`.
 - Sidecar audit best `allcls_seq_w0p0025`: local AUC `0.991131` / 42 valid, lift vs v616 `-0.002349`, lift vs anchor `+0.000741`; rejected/no submission. Updated performance table/jsonl, ledger, ranked queue. Next: late-day source fill if `<3h` to reset, otherwise hand/teacher-audited multi-site no-call negatives.
+
+
+## 2026-05-30 22:19 UTC — Late-day source slot fill v641-v644/v647
+- Live check: public best remained `0.949`; 2026-05-30 UTC slots were `0/5` with ~1.68h to reset, so late-fill policy activated.
+- Submitted five guarded public source-code candidates (hidden rerun, not static CSV): v641 Nina EoS1 ref `53197129`, v642 Nina EoS4 ref `53197131`, v643 Raunak v7 ref `53197133`, v644 Yaroslav 0950 replay ref `53197162`, v647 Ryuto EoS8 sidecar ref `53197164`.
+- All submitted candidates passed preflight: COMPLETE public kernels, hidden-test/sample/submission markers, finite/nonconstant 235-column public-session `submission.csv`, unique descriptions, and nonduplicate dry-run hashes vs recent fills.
+- Rejected v645/v646/v648/v649/v650 during live preflight because public `submission.csv` was malformed/nonfinite 243 rows (hash `0ee04c918f807616`).
+- Updated performance table/jsonl, late-fill ledger, and ranked queue. Next: monitor scores and update table rows; after reset resume hand/teacher-audited no-call negatives or site-risk-constrained soft1279 recipe.
