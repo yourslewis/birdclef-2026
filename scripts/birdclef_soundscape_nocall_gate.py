@@ -49,6 +49,16 @@ class NoCallGateConfig:
     # excluded from the binary gate fit/eval rather than treated as no-call.
     # Default 0 preserves the original all-unlabeled protocol.
     negative_min_distance_sec: int = 0
+    # Optional site-balanced weak-negative curation.  When >0, keep all labeled
+    # positives but cap unlabeled/background negatives per site after the
+    # distance filter.  The current train_soundscapes weak negatives are
+    # S09-dominated; this creates a deliberately smaller but less site-skewed
+    # comparison-grade no-call gate.
+    negative_max_per_site: int | None = None
+    # Ranking used when capping negatives.  "lowest_confidence" keeps unlabeled
+    # windows with the lowest mean top-1 confidence across feature members;
+    # "farthest" keeps windows farthest from any labeled positive.
+    negative_selection: str = "lowest_confidence"
 
 
 def parse_args() -> argparse.Namespace:
@@ -244,12 +254,53 @@ def main() -> None:
     X = np.concatenate(feature_blocks, axis=1).astype(np.float32)
     original_rows = int(len(meta))
     original_negative_rows = int((1 - y_any).sum())
+    rows_after_distance_filter: int | None = None
+    negatives_after_distance_filter: int | None = None
     if int(cfg.negative_min_distance_sec) > 0:
         keep_mask = (y_any == 1) | ((y_any == 0) & (meta["nearest_positive_distance_sec"].to_numpy() > int(cfg.negative_min_distance_sec)))
         X = X[keep_mask]
         y_any = y_any[keep_mask]
         meta = meta.loc[keep_mask].reset_index(drop=True)
         raw_members = {name: probs[keep_mask] for name, probs in raw_members.items()}
+        rows_after_distance_filter = int(len(meta))
+        negatives_after_distance_filter = int((1 - y_any).sum())
+
+    negative_selection_used: dict[str, Any] | None = None
+    if cfg.negative_max_per_site is not None and int(cfg.negative_max_per_site) > 0:
+        max_per_site = int(cfg.negative_max_per_site)
+        neg_idx = np.where(y_any == 0)[0]
+        if len(neg_idx) > 0:
+            if cfg.negative_selection == "lowest_confidence":
+                # Lower mean top-1 confidence across members is a weak proxy for
+                # a cleaner background/no-call unlabeled window.
+                member_top1 = np.stack([probs.max(axis=1) for probs in raw_members.values()], axis=1)
+                selection_score = member_top1.mean(axis=1)
+                ascending = True
+            elif cfg.negative_selection == "farthest":
+                selection_score = meta["nearest_positive_distance_sec"].to_numpy(dtype=float)
+                ascending = False
+            else:
+                raise ValueError(f"Unsupported negative_selection={cfg.negative_selection!r}")
+            neg_meta = meta.iloc[neg_idx].copy()
+            neg_meta["_row_pos"] = neg_idx
+            neg_meta["_selection_score"] = selection_score[neg_idx]
+            keep_neg_positions: list[int] = []
+            for _, g in neg_meta.groupby("site", sort=True):
+                g2 = g.sort_values(["_selection_score", "nearest_positive_distance_sec"], ascending=[ascending, False])
+                keep_neg_positions.extend(int(x) for x in g2.head(max_per_site)["_row_pos"].tolist())
+            keep_mask = (y_any == 1)
+            keep_mask[np.asarray(keep_neg_positions, dtype=int)] = True
+            selected_by_site = meta.iloc[keep_neg_positions]["site"].value_counts().sort_index().to_dict()
+            negative_selection_used = {
+                "negative_max_per_site": max_per_site,
+                "negative_selection": cfg.negative_selection,
+                "selected_negative_rows": int(len(keep_neg_positions)),
+                "selected_negative_rows_by_site": {str(k): int(v) for k, v in selected_by_site.items()},
+            }
+            X = X[keep_mask]
+            y_any = y_any[keep_mask]
+            meta = meta.loc[keep_mask].reset_index(drop=True)
+            raw_members = {name: probs[keep_mask] for name, probs in raw_members.items()}
     sites = sorted(meta["site"].unique())
     oof = np.full(len(meta), np.nan, dtype=np.float32)
     site_metrics: list[dict[str, Any]] = []
@@ -329,6 +380,9 @@ def main() -> None:
             **label_profile,
             "rows_in_feature_npz": int(original_rows),
             "rows_after_negative_protocol": int(len(meta)),
+            "rows_after_distance_filter": rows_after_distance_filter,
+            "negatives_after_distance_filter": negatives_after_distance_filter,
+            "negative_selection_used": negative_selection_used,
             "files": int(meta["filename"].nunique()),
             "sites": int(meta["site"].nunique()),
             "positive_any_call_windows": int(y_any.sum()),

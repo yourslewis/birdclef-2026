@@ -4731,3 +4731,12 @@ Decision:
 - Performance table metrics: anchor AUC `0.990391`, v616 AUC `0.993481`, raw soft1279 sidecar AUC `0.994941`, candidate AUC `0.995545`; lift vs v616 `+0.002064`, lift vs anchor `+0.005155`.
 - Movement attribution: gains concentrated on `S03` `+0.011364` and `S22` `+0.012645`; `S18` regressed `-0.005000`; no-train-primary classes averaged only `+0.000190` with only 26% positive. Biggest class wins were `strher2`, `555146`, `undtin1`, `bunibi1`, and `116570`; Mammalia averaged negative.
 - Decision: no submission. This remains comparison-grade and too site/class-concentrated for early-day slots; updated canonical performance table/jsonl, ledger, ranked queue. Next: curated multi-site no-call negatives or robust caps limited to stable soft1279 winners.
+
+## 2026-05-30 16:25 UTC — Balanced farneg5 no-call protocol + suppression audit
+
+- Live Kaggle Bearer check: best public LB remains `0.949`; latest v636-v640 scored `0.944/0.943/0.939/0.944/0.945`; 2026-05-30 UTC slots `0/5` with ~7.7h to reset. No active local/trainer BirdCLEF jobs; trainer GPUs idle.
+- Added site-balanced weak-negative support to `scripts/birdclef_soundscape_nocall_gate.py` and evaluated `soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-lowconf-losite-20260530`: keep unlabeled windows `>5s` from positives, then cap lowest-confidence negatives per site.
+- Data: 753 retained train_soundscape package rows / 66 files / 9 sites; 739 positives / 14 weak negatives (S09=6, S18=6, S22=2). Model: logistic regression over aggregate soft1279-native package confidence features.
+- Gate result: leave-site any-call/no-call AUC `0.964624` / 3 valid sites; site mean/min/q05 `0.939902/0.833333/0.848637`; best raw confidence baseline `soft1279enc_native_max_auc=0.986468`, so trained gate trails raw confidence by `-0.021844`.
+- Suppression sidecar audit best `nocall_final_nonaves_notrain_p1p0_a020`: local AUC `0.993510` / 42 valid, lift vs v616 `+0.000029`, lift vs anchor `+0.003120`, top5 recall `0.631579` vs v616 `0.636842`. Rejected/no submission; cleaner than farneg20 but weaker slot candidate than farneg10 suppression (`+0.000084`).
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260530T1625Z_nocall_gate_farneg5_balanced_lowconf.md`, and ranked queue. Next: hand/teacher-audited multi-site no-call negatives or robust soft1279 class/site caps; do not spend early-day slots on this comparison-grade sidecar.
