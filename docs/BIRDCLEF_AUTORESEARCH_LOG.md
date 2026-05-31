@@ -4820,3 +4820,12 @@ Decision:
 - Sidecar audit: best 1% scoped sidecar local AUC `0.990402` / 42 valid, lift vs v616 `-0.003079`, lift vs anchor `+0.000011`; rejected/no submission.
 - Selector diagnostics: 72-label row-only sidecar has tiny selector CV lift but not robust; new 28-label h384 selector is weaker and file-risky. Conclusion: auxiliary non-Aves multitask labels help no-train generalization; stop no-train-only PANNs capacity tweaks unless new signal appears.
 - Artifacts: `artifacts/model_data_point_ledger/20260531T1016Z_panns_notrain_rowonly_h384_sequence.md`, `artifacts/model_data_point_ledger/20260531T1016Z_panns_notrain_rowonly_h384_sidecar_audit/`, `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1021Z.md`.
+
+## 2026-05-31 12:20 UTC — fused DyMN10+PANNs 72-label row-only data point
+
+- Live Kaggle Bearer check: public best `0.950` from v644/v647; 2026-05-31 UTC slots `0/5`; no active BirdCLEF jobs. Trainer GPU1 was used because GPU0 had unrelated HSTU.
+- Trained `soundscape-sequence-fused-dymn10-panns-nonaves-notrain-rowonly-losite-ep24-20260531` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 72 non-Aves/no-train labels, fused DyMN10+PANNs embeddings, row-only h384 MLP, leave-one-site, 24 epochs.
+- Metrics: row AUC `0.616166`, file-MIL `0.723917`, no-train `0.491181`, non-Aves `0.616166`. Versus PANNs 72-label row-only: row `-0.058319`, file-MIL `+0.032761`; versus PANNs 72-label filectx: row `-0.015425`, file-MIL `+0.033912`.
+- Sidecar audit best `seq_context_w02`: local AUC `0.990059` / 42 valid, lift vs v616 `-0.003422`, lift vs anchor `-0.000332`, submit_approved false.
+- Decision: reject/no submission; keep as a file-MIL clue. Next: v950 PowerOptimization/source-winner confidence verifier, not another blind PANNs/fusion wrapper.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sidecar_audit/audit_summary.json`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1220Z.md`.

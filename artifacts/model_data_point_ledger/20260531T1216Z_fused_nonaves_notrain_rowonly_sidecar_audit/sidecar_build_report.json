@@ -1,0 +1,69 @@
+{
+  "created_utc": "2026-05-31T12:18:23Z",
+  "context_sidecar": {
+    "output_csv": "artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sidecar_audit/sidecars/seq_context_sidecar_234.csv",
+    "base_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+    "sequence_npz": "artifacts/soundscape_sequence_mining/soundscape-sequence-fused-dymn10-panns-nonaves-notrain-rowonly-losite-ep24-20260531/leave_site_predictions.npz",
+    "pred_key": "context_pred",
+    "rows": 240,
+    "class_columns": 234,
+    "sequence_scope_labels": 72,
+    "matched_proxy_rows": 156,
+    "unmatched_proxy_rows": 84,
+    "unmatched_proxy_row_examples": [
+      "BC2026_Train_0006_S09_20250828_000000_5",
+      "BC2026_Train_0006_S09_20250828_000000_10",
+      "BC2026_Train_0006_S09_20250828_000000_15",
+      "BC2026_Train_0006_S09_20250828_000000_20",
+      "BC2026_Train_0006_S09_20250828_000000_25",
+      "BC2026_Train_0006_S09_20250828_000000_30",
+      "BC2026_Train_0006_S09_20250828_000000_35",
+      "BC2026_Train_0006_S09_20250828_000000_40",
+      "BC2026_Train_0006_S09_20250828_000000_45",
+      "BC2026_Train_0006_S09_20250828_000000_50",
+      "BC2026_Train_0006_S09_20250828_000000_55",
+      "BC2026_Train_0006_S09_20250828_000000_60"
+    ],
+    "finite": true,
+    "nonconstant_columns": 234,
+    "value_stats": {
+      "min": 8.183178579201922e-07,
+      "max": 1.0,
+      "mean": 0.42171454429626465,
+      "std": 0.2828771471977234
+    }
+  },
+  "r2_sidecar": {
+    "output_csv": "artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sidecar_audit/sidecars/seq_r2_nofile_reg_sidecar_234.csv",
+    "base_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+    "sequence_npz": "artifacts/soundscape_sequence_mining/soundscape-sequence-fused-dymn10-panns-nonaves-notrain-rowonly-losite-ep24-20260531/leave_site_predictions.npz",
+    "pred_key": "context_pred",
+    "rows": 240,
+    "class_columns": 234,
+    "sequence_scope_labels": 72,
+    "matched_proxy_rows": 156,
+    "unmatched_proxy_rows": 84,
+    "unmatched_proxy_row_examples": [
+      "BC2026_Train_0006_S09_20250828_000000_5",
+      "BC2026_Train_0006_S09_20250828_000000_10",
+      "BC2026_Train_0006_S09_20250828_000000_15",
+      "BC2026_Train_0006_S09_20250828_000000_20",
+      "BC2026_Train_0006_S09_20250828_000000_25",
+      "BC2026_Train_0006_S09_20250828_000000_30",
+      "BC2026_Train_0006_S09_20250828_000000_35",
+      "BC2026_Train_0006_S09_20250828_000000_40",
+      "BC2026_Train_0006_S09_20250828_000000_45",
+      "BC2026_Train_0006_S09_20250828_000000_50",
+      "BC2026_Train_0006_S09_20250828_000000_55",
+      "BC2026_Train_0006_S09_20250828_000000_60"
+    ],
+    "finite": true,
+    "nonconstant_columns": 234,
+    "value_stats": {
+      "min": 8.183178579201922e-07,
+      "max": 1.0,
+      "mean": 0.42171454429626465,
+      "std": 0.2828771471977234
+    }
+  }
+}
