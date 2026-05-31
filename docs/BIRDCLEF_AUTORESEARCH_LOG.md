@@ -4791,3 +4791,13 @@ Decision:
 - Sidecar audit: best `allcls_seq_w0p0025` local AUC `0.991456` / 42 valid, lift vs v616 `-0.002024`, lift vs anchor `+0.001066`; promotion failed and `submit_approved=false`.
 - Decision: no early-day submission; reject PANNs r4 filectx/fileMIL as slot candidate but keep as landscape point. v644/v647 should be treated as one EoS8/PowerOptimization family, not two independent directions.
 - Artifacts: `artifacts/source_winner_audit_20260531T0416Z/source_winner_audit.md`, `artifacts/source_winner_audit_20260531T0416Z/session_outputs/audit_summary.json`, `artifacts/model_data_point_ledger/20260531T0425Z_panns_allclass_r4_filectx_filemil_sequence.md`, `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T0435Z.md`.
+
+
+## 2026-05-31 06:23 UTC — PANNs non-Aves/no-train targeted sequence data point
+
+- Live Kaggle Bearer check: current public best remains `0.950` from v644/v647; 2026-05-31 UTC slots were `0/5` with ~17.7h to reset. No active BirdCLEF job; trainer GPU1 was free.
+- Trained `soundscape-sequence-panns-cnn14-nonaves-notrain-r2-filectx-filemil-losite-ep22-20260531` on official train_soundscapes: 1,478 windows / 66 files / 9 sites / 72 non-Aves/no-train labels, frozen PANNs/Cnn14 embeddings, radius-2 temporal + full file context, file-MIL weight 0.40, 22 epochs.
+- Metrics: context row AUC `0.631592`, file-MIL `0.690005`, no-train `0.541630`, non-Aves `0.631592`. Same-run row-only was stronger at `0.669160` row / `0.720051` file-MIL, so file context/MIL hurt this targeted scope.
+- Sidecar audit best `seq_context_w02`: local AUC `0.990695` / 42 valid, lift vs v616 `-0.002786`, lift vs anchor `+0.000304`, submit_approved false.
+- Decision: reject/no submission. Keep as a measured targeted landscape point; next is v950-family source exploitation or class/site movement diagnostics, not another broad PANNs wrapper.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T0620Z_panns_nonaves_notrain_filectx_filemil_sequence.md`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T0623Z.md`.
