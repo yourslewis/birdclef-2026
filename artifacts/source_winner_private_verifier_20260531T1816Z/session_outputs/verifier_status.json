@@ -1,0 +1,189 @@
+{
+  "utc": "2026-05-31T18:31:35.811424+00:00",
+  "statuses": {
+    "bc26-v651-eos8-sed-heavy-proto020-verifier": {
+      "status": "COMPLETE"
+    },
+    "bc26-v652-eos8-sed-heavy-proto040-verifier": {
+      "status": "COMPLETE"
+    }
+  },
+  "outputs": {
+    "bc26-v651-eos8-sed-heavy-proto020-verifier": {
+      "files": [
+        "sidecar_exp002b_diagnostics.csv",
+        "subm_birdnet_v24.csv",
+        "subm_karnakbayev_poweropt_taxrank.csv",
+        "subm_yukiz_perch_proto_res.csv",
+        "submission.csv",
+        "submission_before_all_sidecars.csv",
+        "submission_before_exp002b_sidecar.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "stats": {
+        "submission.csv": {
+          "ok": true,
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4694749,
+          "max": 0.55911475,
+          "mean": 0.49527603559829064,
+          "uniq_first100": 96,
+          "hash": "85da9a4d397d2aea",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        },
+        "submission_before_all_sidecars.csv": {
+          "ok": true,
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4694749,
+          "max": 0.55911475,
+          "mean": 0.49527603559829064,
+          "uniq_first100": 96,
+          "hash": "85da9a4d397d2aea",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        },
+        "submission_protossm.csv": {
+          "ok": true,
+          "rows": 240,
+          "cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 8.2169266e-10,
+          "max": 0.9982205,
+          "mean": 0.0639043264458187,
+          "uniq_first100": 97,
+          "hash": "054ea5a800a6e0f4",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        },
+        "submission_sed.csv": {
+          "ok": true,
+          "rows": 240,
+          "cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 2.193749e-05,
+          "max": 0.97485524,
+          "mean": 0.012609637170852101,
+          "uniq_first100": 100,
+          "hash": "e55c5631799e96e8",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      }
+    },
+    "bc26-v652-eos8-sed-heavy-proto040-verifier": {
+      "files": [
+        "sidecar_exp002b_diagnostics.csv",
+        "subm_birdnet_v24.csv",
+        "subm_karnakbayev_poweropt_taxrank.csv",
+        "subm_yukiz_perch_proto_res.csv",
+        "submission.csv",
+        "submission_before_all_sidecars.csv",
+        "submission_before_exp002b_sidecar.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "stats": {
+        "submission.csv": {
+          "ok": true,
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46680698,
+          "max": 0.5451739,
+          "mean": 0.4942787096153846,
+          "uniq_first100": 96,
+          "hash": "734f7b0ef74fd52b",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        },
+        "submission_before_all_sidecars.csv": {
+          "ok": true,
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46680698,
+          "max": 0.5451739,
+          "mean": 0.4942787096153846,
+          "uniq_first100": 96,
+          "hash": "734f7b0ef74fd52b",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        },
+        "submission_protossm.csv": {
+          "ok": true,
+          "rows": 240,
+          "cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 8.2169266e-10,
+          "max": 0.9982205,
+          "mean": 0.0639043264458187,
+          "uniq_first100": 97,
+          "hash": "054ea5a800a6e0f4",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        },
+        "submission_sed.csv": {
+          "ok": true,
+          "rows": 240,
+          "cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 2.193749e-05,
+          "max": 0.97485524,
+          "mean": 0.012609637170852101,
+          "uniq_first100": 100,
+          "hash": "e55c5631799e96e8",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      }
+    }
+  }
+}

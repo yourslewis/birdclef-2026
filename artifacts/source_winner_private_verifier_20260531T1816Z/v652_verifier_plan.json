@@ -1,0 +1,11 @@
+{
+  "experiment_id": "v652-eos8-sedheavy-proto040-private-verifier-20260531T1816Z",
+  "source": "ryutoyoda/birdclef-2026-exp013-eos8-sidecar v1",
+  "modifications": [
+    "PROTO_RANK_WEIGHT 0.600 -> 0.400 (SED rank weight 0.600)",
+    "added EXPERIMENT_TAG"
+  ],
+  "expected_behavior": "hidden-safe EoS8/PowerOptimization rerun with moderately stronger SED component; public dry-run may be sample-sized but source path remains hidden-test capable",
+  "kernel_folder": "kaggle-kernels/v652-eos8-sedheavy-proto040",
+  "submission_decision": "submitted after public-session COMPLETE runtime/schema verifier; public LB pending"
+}

@@ -4839,3 +4839,25 @@ Decision:
 - Best no-slot sidecar grid was `0.20*v616 + 0.80*source_sed` in rank space: local AUC `0.996059`, lift vs v616 `+0.002578`, site/file bootstrap q05 `+0.000450/+0.000083` in a 20-boot smoke, rank corr vs v616 `0.857333`.
 - Critic/verifier: `submit_approved=false`. This is the strongest new clue today, but no hidden-test package/source fork was built and SED/v616-family local proxy lifts are known to over-transfer; do not spend an early-day slot on a proxy/static CSV. Next exact action: private verifier/source fork for EoS8 SED-vs-PowerOpt weights.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T1428Z_source_winner_protosed_confidence_meta.md`, audit `artifacts/source_winner_confidence_meta_audit/20260531T1428Z/`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1435Z.md`.
+
+### 2026-05-31 18:31 UTC — EoS8 PowerOpt xSED source forks v651/v652
+
+- Live check: public best remained `0.950` from `v644`/`v647`; UTC usage was 0/5 with ~5.5h to reset.
+- Built private source forks from `ryutoyoda/birdclef-2026-exp013-eos8-sidecar`:
+  - `v652`: PowerOpt xSED `proto=0.40`, `sed=0.60`.
+  - `v651`: PowerOpt xSED `proto=0.20`, `sed=0.80`.
+- Local reconstructed PowerOpt audit (`240` proxy rows, `190` matched labels, `20` files, `6` sites, `42` valid classes):
+  - control proto060/sed040: local AUC `0.992172`, delta vs v616 `-0.001308`.
+  - v652 proto040/sed060: local AUC `0.994267`, delta `+0.000787`, site/file q05 `+0.000324/-0.000226`.
+  - v651 proto020/sed080: local AUC `0.995210`, delta `+0.001729`, site/file q05 `+0.000487/-0.000105`.
+- Public private-kernel verifier: both `COMPLETE`; finite/nonconstant `3 x 235` submission outputs (`v652` hash `734f7b0ef74fd52b`, `v651` hash `85da9a4d397d2aea`).
+- Submitted both as code submissions:
+  - `v652` ref `53228552`, public LB pending.
+  - `v651` ref `53228555`, public LB pending.
+- Ledger/performance artifacts updated:
+  - `artifacts/model_data_point_ledger/20260531T1816Z_eos8_poweropt_xsed_verifier.md`
+  - `artifacts/source_winner_private_verifier_20260531T1816Z/xsed_local_audit/audit_summary.json`
+  - `artifacts/source_winner_private_verifier_20260531T1816Z/session_outputs/verifier_status.json`
+  - `artifacts/source_winner_private_verifier_20260531T1816Z/submit_v651_v652_report.json`
+
+Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fork (`proto=0.30`) after verifier. If both fail, demote SED-heavy hidden fork and return to train-soundscape sequence/file/site mining.

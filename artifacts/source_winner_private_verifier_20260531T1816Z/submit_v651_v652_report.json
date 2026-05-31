@@ -1,0 +1,310 @@
+{
+  "utc_now": "2026-05-31T18:31:26.520378+00:00",
+  "hours_to_reset": 5.475966561666667,
+  "today_count_start": 0,
+  "mode": "submit",
+  "latest_submissions": [
+    {
+      "ref": 53197164,
+      "date": "2026-05-30 22:19:18.633000",
+      "score": "0.950",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v647: Late-fill Ryuto EoS8 sidecar source"
+    },
+    {
+      "ref": 53197162,
+      "date": "2026-05-30 22:19:12.947000",
+      "score": "0.950",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v644: Late-fill Yaroslav 0950 replay source"
+    },
+    {
+      "ref": 53197133,
+      "date": "2026-05-30 22:16:38.920000",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v643: Late-fill Raunak v7 source"
+    },
+    {
+      "ref": 53197131,
+      "date": "2026-05-30 22:16:36.563000",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v642: Late-fill Nina EoS4 source"
+    },
+    {
+      "ref": 53197129,
+      "date": "2026-05-30 22:16:33.933000",
+      "score": "0.947",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v641: Late-fill Nina EoS1 source"
+    },
+    {
+      "ref": 53165851,
+      "date": "2026-05-29 22:19:08.980000",
+      "score": "0.945",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v640: Late-fill Imaad Perch ProtoSSM source"
+    },
+    {
+      "ref": 53165850,
+      "date": "2026-05-29 22:19:06.310000",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v639: Late-fill Mtoshi 941 source"
+    },
+    {
+      "ref": 53165846,
+      "date": "2026-05-29 22:19:03.477000",
+      "score": "0.939",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v638: Late-fill 5-branch ensemble source"
+    },
+    {
+      "ref": 53165844,
+      "date": "2026-05-29 22:19:00.787000",
+      "score": "0.943",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v637: Late-fill Yaroslav 946 replay source"
+    },
+    {
+      "ref": 53165843,
+      "date": "2026-05-29 22:18:57.987000",
+      "score": "0.944",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v636: Late-fill Mtoshi 947 repro source"
+    },
+    {
+      "ref": 53130272,
+      "date": "2026-05-28 22:18:22.840000",
+      "score": "0.941",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v635: Late-fill Mattia 943 blend source"
+    },
+    {
+      "ref": 53130270,
+      "date": "2026-05-28 22:18:19.833000",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v634: Late-fill MeenalSinha improved source"
+    },
+    {
+      "ref": 53130262,
+      "date": "2026-05-28 22:17:52.923000",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v633: Late-fill Raunak multi-model source"
+    },
+    {
+      "ref": 53130260,
+      "date": "2026-05-28 22:17:49.593000",
+      "score": "0.940",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v632: Late-fill Vyanktesh source"
+    },
+    {
+      "ref": 53130259,
+      "date": "2026-05-28 22:17:46.633000",
+      "score": "0.926",
+      "status": "SubmissionStatus.COMPLETE",
+      "description": "v631: Late-fill Maryna two-pass SSM source"
+    }
+  ],
+  "candidates": [
+    {
+      "label": "v652",
+      "slug": "bc26-v652-eos8-sed-heavy-proto040-verifier",
+      "description": "v652: EoS8 PowerOpt proto040 sed060 source verifier",
+      "expected_family": "EoS8/PowerOptimization SED-heavy xSED moderate source fork",
+      "preflight": {
+        "status": {
+          "status": "COMPLETE"
+        },
+        "local_auc": 0.9942674902508776,
+        "delta_vs_v616": 0.0007868226767386854,
+        "local_note": "Local reconstructed PowerOpt xSED proto040/sed060 improves v616 proxy +0.000787 with site q05 +0.000324; file q05 -0.000226.",
+        "version": 1,
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46680698,
+          "max": 0.5451739,
+          "mean": 0.4942787096153846,
+          "uniq_first100": 96,
+          "hash": "734f7b0ef74fd52b",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "ok": true
+        },
+        "ok": true
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53228552}"
+    },
+    {
+      "label": "v651",
+      "slug": "bc26-v651-eos8-sed-heavy-proto020-verifier",
+      "description": "v651: EoS8 PowerOpt proto020 sed080 source verifier",
+      "expected_family": "EoS8/PowerOptimization SED-heavy xSED aggressive source fork",
+      "preflight": {
+        "status": {
+          "status": "COMPLETE"
+        },
+        "local_auc": 0.9952101520329955,
+        "delta_vs_v616": 0.0017294844588565672,
+        "local_note": "Local reconstructed PowerOpt xSED proto020/sed080 improves v616 proxy +0.001729 with site q05 +0.000487; file q05 -0.000105 but high movement.",
+        "version": 1,
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4694749,
+          "max": 0.55911475,
+          "mean": 0.49527603559829064,
+          "uniq_first100": 96,
+          "hash": "85da9a4d397d2aea",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "ok": true
+        },
+        "ok": true
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53228555}"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v652",
+      "slug": "bc26-v652-eos8-sed-heavy-proto040-verifier",
+      "description": "v652: EoS8 PowerOpt proto040 sed060 source verifier",
+      "expected_family": "EoS8/PowerOptimization SED-heavy xSED moderate source fork",
+      "preflight": {
+        "status": {
+          "status": "COMPLETE"
+        },
+        "local_auc": 0.9942674902508776,
+        "delta_vs_v616": 0.0007868226767386854,
+        "local_note": "Local reconstructed PowerOpt xSED proto040/sed060 improves v616 proxy +0.000787 with site q05 +0.000324; file q05 -0.000226.",
+        "version": 1,
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46680698,
+          "max": 0.5451739,
+          "mean": 0.4942787096153846,
+          "uniq_first100": 96,
+          "hash": "734f7b0ef74fd52b",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "ok": true
+        },
+        "ok": true
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53228552}"
+    },
+    {
+      "label": "v651",
+      "slug": "bc26-v651-eos8-sed-heavy-proto020-verifier",
+      "description": "v651: EoS8 PowerOpt proto020 sed080 source verifier",
+      "expected_family": "EoS8/PowerOptimization SED-heavy xSED aggressive source fork",
+      "preflight": {
+        "status": {
+          "status": "COMPLETE"
+        },
+        "local_auc": 0.9952101520329955,
+        "delta_vs_v616": 0.0017294844588565672,
+        "local_note": "Local reconstructed PowerOpt xSED proto020/sed080 improves v616 proxy +0.001729 with site q05 +0.000487; file q05 -0.000105 but high movement.",
+        "version": 1,
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4694749,
+          "max": 0.55911475,
+          "mean": 0.49527603559829064,
+          "uniq_first100": 96,
+          "hash": "85da9a4d397d2aea",
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "ok": true
+        },
+        "ok": true
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53228555}"
+    }
+  ],
+  "today_count_end_est": 2
+}
