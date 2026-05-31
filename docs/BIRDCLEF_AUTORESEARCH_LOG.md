@@ -4861,3 +4861,13 @@ Decision:
   - `artifacts/source_winner_private_verifier_20260531T1816Z/submit_v651_v652_report.json`
 
 Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fork (`proto=0.30`) after verifier. If both fail, demote SED-heavy hidden fork and return to train-soundscape sequence/file/site mining.
+
+## 2026-05-31 20:25 UTC — v651/v652 score readout + DyMN10 file-context/file-MIL sequence data point
+
+- Live Kaggle Bearer/SDK check: current public best remains `0.950` from `v644`/`v647`; 2026-05-31 UTC slots are `2/5` with ~3.7h to reset after v651/v652 completed.
+- Score readout: `v652` EoS8 PowerOpt proto040/sed060 scored `0.948`; `v651` proto020/sed080 scored `0.941`. Both are below the live best and below/near the old v616-era `0.949` plateau, so the SED-heavy xSED source-fork direction is demoted as local proxy overfit.
+- Trained `soundscape-sequence-dymn10-nonaves-notrain-r2-filectx-filemil-losite-ep22-20260531`: official train_soundscapes, `1,478` windows / `66` files / `9` sites / `72` non-Aves/no-train labels, EfficientAT DyMN10 embeddings, radius-2 temporal context + file mean/max + file-MIL.
+- Metrics: context row AUC `0.641802` / 6 folds, row-only `0.559198`, file-MIL `0.745704`, no-train `0.514582`, non-Aves `0.641802`. Context/file features beat same-run row-only by `+0.082604` row and `+0.216561` file-MIL; all six held-out sites had positive row deltas.
+- Sidecar audit: best 1% scoped 72→234 sidecar local AUC `0.991206` / 42 valid, lift vs v616 `-0.002275`, lift vs anchor `+0.000816`, rank corr `0.999676`, `submit_approved=false`. Rejected/no submission.
+- Updated performance table/jsonl, v651/v652 ledger score rows, new DyMN10 ledger `artifacts/model_data_point_ledger/20260531T2020Z_dymn10_nonaves_notrain_filectx_filemil_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260531T2019Z_dymn10_nonaves_notrain_filectx_filemil_sidecar_audit/audit_summary.json`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T2025Z.md`.
+- Next: if next heartbeat is <3h to UTC reset and no verifier-grade candidate exists, use late-fill policy for source-clean guarded candidates; otherwise diagnose why file-MIL gains do not transfer to the 72→234 sidecar.
