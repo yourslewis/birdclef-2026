@@ -1,0 +1,581 @@
+{
+  "comparisons": [
+    {
+      "a": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission.csv",
+      "b": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission.csv",
+      "changed_cells_gt_1e_9": 3,
+      "corr_flat": 0.9999999999873573,
+      "label_a": "v644_yaroslav_0950",
+      "label_b": "v647_ryuto_eos8_sidecar",
+      "max_abs_delta": 9.999999999732445e-07,
+      "mean_abs_delta": 4.273504273389934e-09,
+      "n_common_cols": 234,
+      "row_order_equal": true
+    }
+  ],
+  "refs": {
+    "v644_yaroslav_0950": {
+      "csv_summaries": {
+        "exp098_sidecar_exp001_diagnostics.csv": {
+          "finite_cells": 6,
+          "max": 46.94722390174866,
+          "mean": 8.157870650291443,
+          "min": 0.0,
+          "nonfinite_cells": 5,
+          "numeric_cells": 11,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/exp098_sidecar_exp001_diagnostics.csv",
+          "sha256_16": "41349bc347df0cb7",
+          "shape": [
+            1,
+            11
+          ],
+          "status": "ok",
+          "std": 17.352889820812752,
+          "unique_rounded_8": 3
+        },
+        "subm_karnakbayev_poweropt_taxrank.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.5561502,
+          "mean": 0.5013311129059829,
+          "min": 0.47687027,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/subm_karnakbayev_poweropt_taxrank.csv",
+          "sha256_16": "7b49035e6aa11e92",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.010966920258383635,
+          "unique_rounded_8": 222,
+          "unique_row_ids": 3
+        },
+        "subm_yukiz_perch_proto_res.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.7850482,
+          "mean": 0.24508724769624343,
+          "min": 6.4676766e-09,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/subm_yukiz_perch_proto_res.csv",
+          "sha256_16": "49aa3a1f40f542e0",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.20382186559133153,
+          "unique_rounded_8": 232,
+          "unique_row_ids": 3
+        },
+        "submission.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.4935156773504274,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission.csv",
+          "sha256_16": "87e9ac1be51a0b15",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831684532438452,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_before_all_sidecars.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.4935156773504274,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_all_sidecars.csv",
+          "sha256_16": "87e9ac1be51a0b15",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831684532438452,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_before_exp098_exp001_sidecar.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.4935156773504274,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_exp098_exp001_sidecar.csv",
+          "sha256_16": "87e9ac1be51a0b15",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831684532438452,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_protossm.csv": {
+          "finite_cells": 56160,
+          "head_row_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "max": 0.9982205,
+          "mean": 0.06390432630552277,
+          "min": 8.2169266e-10,
+          "nonfinite_cells": 0,
+          "numeric_cells": 56160,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_protossm.csv",
+          "sha256_16": "38aa1669f9017c90",
+          "shape": [
+            240,
+            235
+          ],
+          "status": "ok",
+          "std": 0.13897425349858838,
+          "unique_rounded_8": 9707,
+          "unique_row_ids": 240
+        },
+        "submission_sed.csv": {
+          "finite_cells": 56160,
+          "head_row_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "max": 0.97485524,
+          "mean": 0.012609637170852101,
+          "min": 2.193749e-05,
+          "nonfinite_cells": 0,
+          "numeric_cells": 56160,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_sed.csv",
+          "sha256_16": "e55c5631799e96e8",
+          "shape": [
+            240,
+            235
+          ],
+          "status": "ok",
+          "std": 0.0703728130280812,
+          "unique_rounded_8": 9879,
+          "unique_row_ids": 240
+        }
+      },
+      "downloaded": {
+        "exp098_sidecar_exp001_diagnostics.csv": {
+          "bytes": 622,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/exp098_sidecar_exp001_diagnostics.csv",
+          "sha256_16": "41349bc347df0cb7"
+        },
+        "exp098_sidecar_exp001_diagnostics.json": {
+          "bytes": 800,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/exp098_sidecar_exp001_diagnostics.json",
+          "sha256_16": "c356d26912b15780"
+        },
+        "subm_karnakbayev_poweropt_taxrank.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/subm_karnakbayev_poweropt_taxrank.csv",
+          "sha256_16": "7b49035e6aa11e92"
+        },
+        "subm_yukiz_perch_proto_res.csv": {
+          "bytes": 9883,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/subm_yukiz_perch_proto_res.csv",
+          "sha256_16": "49aa3a1f40f542e0"
+        },
+        "submission.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission.csv",
+          "sha256_16": "87e9ac1be51a0b15"
+        },
+        "submission_before_all_sidecars.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_all_sidecars.csv",
+          "sha256_16": "87e9ac1be51a0b15"
+        },
+        "submission_before_exp098_exp001_sidecar.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_exp098_exp001_sidecar.csv",
+          "sha256_16": "87e9ac1be51a0b15"
+        },
+        "submission_protossm.csv": {
+          "bytes": 691273,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_protossm.csv",
+          "sha256_16": "38aa1669f9017c90"
+        },
+        "submission_sed.csv": {
+          "bytes": 733953,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_sed.csv",
+          "sha256_16": "e55c5631799e96e8"
+        },
+        "v17_logs.json": {
+          "bytes": 4259,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/v17_logs.json",
+          "sha256_16": "03b3ca52eb76e7b1"
+        }
+      },
+      "file_names": [
+        "exp098_sidecar_exp001_diagnostics.csv",
+        "exp098_sidecar_exp001_diagnostics.json",
+        "subm_karnakbayev_poweropt_taxrank.csv",
+        "subm_yukiz_perch_proto_res.csv",
+        "submission.csv",
+        "submission_before_all_sidecars.csv",
+        "submission_before_exp098_exp001_sidecar.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "internal_deltas": [
+        {
+          "a": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_all_sidecars.csv",
+          "b": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission.csv",
+          "changed_cells_gt_1e_9": 0,
+          "corr_flat": 1.0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "n_common_cols": 234,
+          "row_order_equal": true
+        },
+        {
+          "a": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_before_exp098_exp001_sidecar.csv",
+          "b": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission.csv",
+          "changed_cells_gt_1e_9": 0,
+          "corr_flat": 1.0,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "n_common_cols": 234,
+          "row_order_equal": true
+        }
+      ],
+      "owner": "yaroslavkholmirzayev",
+      "slug": "0950-replay"
+    },
+    "v647_ryuto_eos8_sidecar": {
+      "csv_summaries": {
+        "sidecar_exp002b_diagnostics.csv": {
+          "finite_cells": 13,
+          "max": 48.0,
+          "mean": 6.352615384615384,
+          "min": 0.0,
+          "nonfinite_cells": 2,
+          "numeric_cells": 15,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/sidecar_exp002b_diagnostics.csv",
+          "sha256_16": "d323d3efbddcf8a7",
+          "shape": [
+            1,
+            15
+          ],
+          "status": "ok",
+          "std": 14.690863270117987,
+          "unique_rounded_8": 7
+        },
+        "subm_birdnet_v24.csv": {
+          "finite_cells": 2808,
+          "head_row_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "max": 0.036112614,
+          "mean": 0.0005279607440680627,
+          "min": 0.0,
+          "nonfinite_cells": 0,
+          "numeric_cells": 2808,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_birdnet_v24.csv",
+          "sha256_16": "364f1053f9006cd4",
+          "shape": [
+            12,
+            235
+          ],
+          "status": "ok",
+          "std": 0.002401987054810368,
+          "unique_rounded_8": 1874,
+          "unique_row_ids": 12
+        },
+        "subm_karnakbayev_poweropt_taxrank.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.5561502,
+          "mean": 0.5013311173931624,
+          "min": 0.47687027,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_karnakbayev_poweropt_taxrank.csv",
+          "sha256_16": "1e409423820cbc8b",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.010966911098129214,
+          "unique_rounded_8": 222,
+          "unique_row_ids": 3
+        },
+        "subm_yukiz_perch_proto_res.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.7850482,
+          "mean": 0.24508724853627,
+          "min": 6.4676766e-09,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_yukiz_perch_proto_res.csv",
+          "sha256_16": "ff3cfca17f19daa9",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.20382186533064886,
+          "unique_rounded_8": 232,
+          "unique_row_ids": 3
+        },
+        "submission.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.49351568162393167,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission.csv",
+          "sha256_16": "3db34d13e789ae73",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831674941732317,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_before_all_sidecars.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.49351568162393167,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_all_sidecars.csv",
+          "sha256_16": "3db34d13e789ae73",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831674941732317,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_before_exp002b_sidecar.csv": {
+          "finite_cells": 702,
+          "head_row_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "max": 0.53167486,
+          "mean": 0.49351568162393167,
+          "min": 0.46273795,
+          "nonfinite_cells": 0,
+          "numeric_cells": 702,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_exp002b_sidecar.csv",
+          "sha256_16": "3db34d13e789ae73",
+          "shape": [
+            3,
+            235
+          ],
+          "status": "ok",
+          "std": 0.012831674941732317,
+          "unique_rounded_8": 229,
+          "unique_row_ids": 3
+        },
+        "submission_protossm.csv": {
+          "finite_cells": 56160,
+          "head_row_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "max": 0.9982205,
+          "mean": 0.06390432644581871,
+          "min": 8.2169266e-10,
+          "nonfinite_cells": 0,
+          "numeric_cells": 56160,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_protossm.csv",
+          "sha256_16": "054ea5a800a6e0f4",
+          "shape": [
+            240,
+            235
+          ],
+          "status": "ok",
+          "std": 0.13897425376200126,
+          "unique_rounded_8": 9708,
+          "unique_row_ids": 240
+        },
+        "submission_sed.csv": {
+          "finite_cells": 56160,
+          "head_row_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ],
+          "max": 0.97485524,
+          "mean": 0.012609637170852101,
+          "min": 2.193749e-05,
+          "nonfinite_cells": 0,
+          "numeric_cells": 56160,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_sed.csv",
+          "sha256_16": "e55c5631799e96e8",
+          "shape": [
+            240,
+            235
+          ],
+          "status": "ok",
+          "std": 0.0703728130280812,
+          "unique_rounded_8": 9879,
+          "unique_row_ids": 240
+        }
+      },
+      "downloaded": {
+        "sidecar_exp002b_diagnostics.csv": {
+          "bytes": 312,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/sidecar_exp002b_diagnostics.csv",
+          "sha256_16": "d323d3efbddcf8a7"
+        },
+        "subm_birdnet_v24.csv": {
+          "bytes": 31941,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_birdnet_v24.csv",
+          "sha256_16": "364f1053f9006cd4"
+        },
+        "subm_karnakbayev_poweropt_taxrank.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_karnakbayev_poweropt_taxrank.csv",
+          "sha256_16": "1e409423820cbc8b"
+        },
+        "subm_yukiz_perch_proto_res.csv": {
+          "bytes": 9880,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/subm_yukiz_perch_proto_res.csv",
+          "sha256_16": "ff3cfca17f19daa9"
+        },
+        "submission.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission.csv",
+          "sha256_16": "3db34d13e789ae73"
+        },
+        "submission_before_all_sidecars.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_all_sidecars.csv",
+          "sha256_16": "3db34d13e789ae73"
+        },
+        "submission_before_exp002b_sidecar.csv": {
+          "bytes": 9328,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_exp002b_sidecar.csv",
+          "sha256_16": "3db34d13e789ae73"
+        },
+        "submission_protossm.csv": {
+          "bytes": 691418,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_protossm.csv",
+          "sha256_16": "054ea5a800a6e0f4"
+        },
+        "submission_sed.csv": {
+          "bytes": 733953,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_sed.csv",
+          "sha256_16": "e55c5631799e96e8"
+        },
+        "v17_logs.json": {
+          "bytes": 4257,
+          "path": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/v17_logs.json",
+          "sha256_16": "b77de01a59688948"
+        }
+      },
+      "file_names": [
+        "sidecar_exp002b_diagnostics.csv",
+        "subm_birdnet_v24.csv",
+        "subm_karnakbayev_poweropt_taxrank.csv",
+        "subm_yukiz_perch_proto_res.csv",
+        "submission.csv",
+        "submission_before_all_sidecars.csv",
+        "submission_before_exp002b_sidecar.csv",
+        "submission_protossm.csv",
+        "submission_sed.csv",
+        "v17_logs.json"
+      ],
+      "internal_deltas": [
+        {
+          "a": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_all_sidecars.csv",
+          "b": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission.csv",
+          "changed_cells_gt_1e_9": 0,
+          "corr_flat": 0.9999999999999999,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "n_common_cols": 234,
+          "row_order_equal": true
+        },
+        {
+          "a": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission_before_exp002b_sidecar.csv",
+          "b": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v647_ryuto_eos8_sidecar/submission.csv",
+          "changed_cells_gt_1e_9": 0,
+          "corr_flat": 0.9999999999999999,
+          "max_abs_delta": 0.0,
+          "mean_abs_delta": 0.0,
+          "n_common_cols": 234,
+          "row_order_equal": true
+        }
+      ],
+      "owner": "ryutoyoda",
+      "slug": "birdclef-2026-exp013-eos8-sidecar"
+    }
+  }
+}
