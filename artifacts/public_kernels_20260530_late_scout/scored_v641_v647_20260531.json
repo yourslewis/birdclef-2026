@@ -1,0 +1,12 @@
+{
+  "checked_utc": "2026-05-31T00:16:33Z",
+  "best_public_lb_after_check": 0.950,
+  "new_best_refs": [53197162, 53197164],
+  "submissions": [
+    {"experiment": "v641-late-public-source-20260530T2219Z", "ref": 53197129, "description": "v641: Late-fill Nina EoS1 source", "public_score": 0.947, "delta_vs_v616_0949": -0.002, "decision": "reject public-below-best"},
+    {"experiment": "v642-late-public-source-20260530T2219Z", "ref": 53197131, "description": "v642: Late-fill Nina EoS4 source", "public_score": 0.948, "delta_vs_v616_0949": -0.001, "decision": "reject public-below-best"},
+    {"experiment": "v643-late-public-source-20260530T2219Z", "ref": 53197133, "description": "v643: Late-fill Raunak v7 source", "public_score": 0.946, "delta_vs_v616_0949": -0.003, "decision": "reject public-below-best"},
+    {"experiment": "v644-late-public-source-20260530T2219Z", "ref": 53197162, "description": "v644: Late-fill Yaroslav 0950 replay source", "public_score": 0.950, "delta_vs_v616_0949": 0.001, "decision": "new public best tie; monitor private only"},
+    {"experiment": "v647-late-public-source-20260530T2219Z", "ref": 53197164, "description": "v647: Late-fill Ryuto EoS8 sidecar source", "public_score": 0.950, "delta_vs_v616_0949": 0.001, "decision": "new public best tie; monitor private only"}
+  ]
+}

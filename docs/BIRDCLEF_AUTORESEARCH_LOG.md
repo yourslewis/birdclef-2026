@@ -4762,3 +4762,12 @@ Decision:
 - All submitted candidates passed preflight: COMPLETE public kernels, hidden-test/sample/submission markers, finite/nonconstant 235-column public-session `submission.csv`, unique descriptions, and nonduplicate dry-run hashes vs recent fills.
 - Rejected v645/v646/v648/v649/v650 during live preflight because public `submission.csv` was malformed/nonfinite 243 rows (hash `0ee04c918f807616`).
 - Updated performance table/jsonl, late-fill ledger, and ranked queue. Next: monitor scores and update table rows; after reset resume hand/teacher-audited no-call negatives or site-risk-constrained soft1279 recipe.
+
+## 2026-05-31 00:20 UTC — v644/v647 score update + fused 20s sequence data point
+
+- Live Kaggle Bearer check: v641-v647 completed. New public best is `0.950`: v644 Yaroslav 0950 replay source and v647 Ryuto EoS8 sidecar source both scored `0.950` (+0.001 vs the old v616 0.949 plateau). v641/v642/v643 scored `0.947/0.948/0.946`. New UTC day slots were `0/5` with ~23.7h to reset.
+- Updated canonical performance table rows and JSONL from pending to scored; wrote `artifacts/public_kernels_20260530_late_scout/scored_v641_v647_20260531.json`.
+- Trained `soundscape-sequence-fused-dymn10-panns-allcls-r4-20s-localmeanmax-losite-ep20-20260531`: official train_soundscapes, 1,478 windows / 66 files / 9 sites / 234 labels, fused DyMN10+PANNs embeddings, ±20s local mean+max context, leave-one-site.
+- Metrics: context row AUC `0.581429`, row-only `0.559001`, file-MIL `0.659437`, no-train `0.524384`, non-Aves `0.613439`. Context helped S13/S19/S22 but regressed S03/S15/S23.
+- Sidecar audit best `allcls_seq_w0p005`: local AUC `0.991115` / 42 valid, lift vs v616 `-0.002366`, lift vs anchor `+0.000724`, submit_approved false. Rejected/no submission; it is a useful negative diagnostic, not a candidate.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T0020Z_fused_allclass_r4_20s_localmeanmax_sequence.md`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T0020Z.md`. Next: audit/exploit v644/v647 source winners and resume hand/teacher-audited no-call negatives or site-risk-constrained soft1279, not more blind PANNs/B0 knob cycling.
