@@ -4871,3 +4871,14 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Sidecar audit: best 1% scoped 72→234 sidecar local AUC `0.991206` / 42 valid, lift vs v616 `-0.002275`, lift vs anchor `+0.000816`, rank corr `0.999676`, `submit_approved=false`. Rejected/no submission.
 - Updated performance table/jsonl, v651/v652 ledger score rows, new DyMN10 ledger `artifacts/model_data_point_ledger/20260531T2020Z_dymn10_nonaves_notrain_filectx_filemil_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260531T2019Z_dymn10_nonaves_notrain_filectx_filemil_sidecar_audit/audit_summary.json`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T2025Z.md`.
 - Next: if next heartbeat is <3h to UTC reset and no verifier-grade candidate exists, use late-fill policy for source-clean guarded candidates; otherwise diagnose why file-MIL gains do not transfer to the 72→234 sidecar.
+
+## 2026-05-31 22:40 UTC — Late-window EoS8 Proto/SED frontier verifiers v653-v655
+
+- Rechecked Kaggle via Bearer API: started with `2/5` UTC slots used (`v651` 0.941, `v652` 0.948); current public best remained `0.950` from `v644`/`v647`.
+- Built/pushed three private source-fork verifiers from the v647 EoS8/PowerOptimization lineage:
+  - `v653` proto080/sed020, submission ref `53232636`, score pending.
+  - `v654` proto070/sed030, submission ref `53232692`, score pending.
+  - `v655` proto050/sed050, submission ref `53232648`, score pending.
+- Local xSED proxy audit vs v616: v653 `0.990031` (`-0.003450`), v654 `0.991227` (`-0.002253`), v655 `0.993290` (`-0.000191`). All are late-slot exploratory, not locally promoted winners.
+- Runtime verifier: all three Kaggle kernels reached COMPLETE; public dry-run `submission.csv` files were finite/nonconstant `3x235`, with unique rows and no bad values.
+- Canonical artifacts updated: `artifacts/model_data_point_ledger/performance_table.md`, `.jsonl`, per-model ledgers, `artifacts/source_winner_private_verifier_20260531T2225Z/`, and `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T2240Z.md`.

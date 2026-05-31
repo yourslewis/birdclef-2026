@@ -202,3 +202,10 @@
 - Sidecar audit best `seq_context_w02`: local AUC `0.990059` / 42 valid, lift vs v616 `-0.003422`, lift vs anchor `-0.000332`, submit_approved false.
 - Decision: reject/no submission; keep as a file-MIL clue. Next: v950 PowerOptimization/source-winner confidence verifier, not another blind PANNs/fusion wrapper.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sidecar_audit/audit_summary.json`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1220Z.md`.
+
+## 2026-05-31 22:40 UTC
+- Late-window slot run used remaining UTC slots after live Kaggle check showed `2/5` used and public best `0.950`.
+- Created/pushed/submitted EoS8 PowerOpt frontier verifier forks: v653 proto080/sed020, v654 proto070/sed030, v655 proto050/sed050.
+- Refs: v653 `53232636`, v655 `53232648`, v654 `53232692`; all pending public score at log time.
+- Local xSED audit: v653 `0.990031` (`-0.003450` vs v616), v654 `0.991227` (`-0.002253`), v655 `0.993290` (`-0.000191`).
+- Updated performance table/jsonl and per-model ledgers.

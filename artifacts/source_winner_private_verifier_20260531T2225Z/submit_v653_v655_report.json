@@ -1,0 +1,920 @@
+{
+  "utc_start": "2026-05-31T22:23:35.856728+00:00",
+  "candidates": [
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:23:36.067541+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:23:36.935219+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:23:37.997934+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:24:39.348730+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:24:40.187963+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:24:41.224336+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:25:42.537786+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:25:43.802171+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:25:44.621731+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:26:45.843787+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:26:46.783855+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:26:47.720920+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:27:48.930755+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:27:50.021836+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:27:50.865012+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:28:52.015205+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:28:52.846679+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:28:53.859879+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:29:54.869015+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4544277,
+          "max": 0.5185959,
+          "mean": 0.49293024004273506,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232636}"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:29:59.077936+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:30:00.131018+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:31:01.283144+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:31:02.130659+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4648551,
+          "max": 0.53835356,
+          "mean": 0.4938352012393163,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232648}"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:32:05.878691+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:33:07.136461+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:34:08.423485+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "RUNNING",
+        "failureMessage": null
+      },
+      "decision": "pending_kernel"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:35:09.739263+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.45959768,
+          "max": 0.5250699,
+          "mean": 0.49321155145299145,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232692}"
+    }
+  ],
+  "submitted": [
+    {
+      "candidate": {
+        "label": "v653",
+        "slug": "bc26-v653-eos8-proto080-sed020-verifier",
+        "version": 1,
+        "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+        "expected_tag": "v653_proto080_sed020_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.800",
+        "expected_family": "EoS8/PowerOptimization proto-heavy frontier source fork"
+      },
+      "utc": "2026-05-31T22:29:54.869015+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4544277,
+          "max": 0.5185959,
+          "mean": 0.49293024004273506,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232636}"
+    },
+    {
+      "candidate": {
+        "label": "v655",
+        "slug": "bc26-v655-eos8-proto050-sed050-verifier",
+        "version": 1,
+        "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+        "expected_tag": "v655_proto050_sed050_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.500",
+        "expected_family": "EoS8/PowerOptimization balanced xSED frontier source fork"
+      },
+      "utc": "2026-05-31T22:31:02.130659+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.4648551,
+          "max": 0.53835356,
+          "mean": 0.4938352012393163,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232648}"
+    },
+    {
+      "candidate": {
+        "label": "v654",
+        "slug": "bc26-v654-eos8-proto070-sed030-verifier",
+        "version": 1,
+        "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+        "expected_tag": "v654_proto070_sed030_20260531T2225Z",
+        "expected_proto": "PROTO_RANK_WEIGHT = 0.700",
+        "expected_family": "EoS8/PowerOptimization near-original frontier source fork"
+      },
+      "utc": "2026-05-31T22:35:09.739263+00:00",
+      "source_preflight": {
+        "status_code": 200,
+        "version": 1,
+        "source_len": 307041,
+        "missing_markers": [],
+        "ok": true
+      },
+      "status": {
+        "status": "COMPLETE",
+        "failureMessage": null
+      },
+      "output_preflight": {
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_taxrank.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "ok": true,
+        "submission_stats": {
+          "rows": 3,
+          "cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.45959768,
+          "max": 0.5250699,
+          "mean": 0.49321155145299145,
+          "uniq_first100": 96,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53232692}"
+    }
+  ],
+  "utc_end": "2026-05-31T22:35:14.952821+00:00"
+}

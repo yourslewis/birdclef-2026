@@ -1,0 +1,240 @@
+{
+  "experiment_id": "eos8-poweropt-xsed-weight-audit-20260531T1816Z",
+  "data": {
+    "proxy_rows": 240,
+    "label_matched_rows": 190,
+    "files": 20,
+    "sites": [
+      "S03",
+      "S08",
+      "S09",
+      "S13",
+      "S18",
+      "S22"
+    ],
+    "class_count": 234,
+    "valid_auc_classes": 42
+  },
+  "baselines": {
+    "v616_local_macro_auc": 0.9934806675741389,
+    "current_source_final_local_macro_auc": null,
+    "note": "local proxy audits reconstructed PowerOptimization proto/sed branch only because public final/yukiZ files are sample-session sized"
+  },
+  "results": [
+    {
+      "candidate": "proto080_sed020",
+      "proto_weight": 0.8,
+      "sed_weight": 0.19999999999999996,
+      "csv": "artifacts/source_winner_private_verifier_20260531T2225Z/xsed_local_audit/candidates/poweropt_xsed_proto080_sed020_taxonomy.csv",
+      "local_macro_auc": 0.9900309203338967,
+      "valid_class_count": 42,
+      "delta_vs_v616": -0.0034497472402421625,
+      "delta_vs_current_source_final": null,
+      "non_aves_auc": 0.9928096850467318,
+      "non_aves_valid": 31,
+      "no_train_auc": 0.9955127495687863,
+      "no_train_valid": 19,
+      "site_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.005579153735962938,
+        "q05": -0.011525926081982107,
+        "q50": -0.004675244265209766,
+        "q95": -0.0023644309727833823,
+        "min": -0.020439535712229895,
+        "max": -0.0012680253861118151,
+        "p_gt_0": 0.0
+      },
+      "file_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.0037376426838418735,
+        "q05": -0.0075318327675579,
+        "q50": -0.003576983501978881,
+        "q95": -0.0009845138019338353,
+        "min": -0.011135306528283873,
+        "max": 0.000843484025176422,
+        "p_gt_0": 0.01
+      },
+      "rank_corr_vs_v616": 0.9633293285207362,
+      "mae_vs_v616": 0.06386277079582214,
+      "matrix_hash": "44add5d2b70571ce",
+      "topk": {
+        "top1_row_recall": 0.3157894736842105,
+        "top3_row_recall": 0.6157894736842106,
+        "top5_row_recall": 0.7105263157894737,
+        "top10_row_recall": 0.8
+      }
+    },
+    {
+      "candidate": "proto070_sed030",
+      "proto_weight": 0.7,
+      "sed_weight": 0.30000000000000004,
+      "csv": "artifacts/source_winner_private_verifier_20260531T2225Z/xsed_local_audit/candidates/poweropt_xsed_proto070_sed030_taxonomy.csv",
+      "local_macro_auc": 0.9912272366273901,
+      "valid_class_count": 42,
+      "delta_vs_v616": -0.002253430946748791,
+      "delta_vs_current_source_final": null,
+      "non_aves_auc": 0.9936641021680641,
+      "non_aves_valid": 31,
+      "no_train_auc": 0.9961557610732817,
+      "no_train_valid": 19,
+      "site_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.004109203628732091,
+        "q05": -0.008897567604469026,
+        "q50": -0.0032000104036485344,
+        "q95": -0.0016645040492860208,
+        "min": -0.01945553586685622,
+        "max": -0.0008270123212074099,
+        "p_gt_0": 0.0
+      },
+      "file_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.0025011135760222526,
+        "q05": -0.006307387720613067,
+        "q50": -0.0020473980435715133,
+        "q95": -0.0003598141195222655,
+        "min": -0.007643977594311457,
+        "max": 0.0009596022187911002,
+        "p_gt_0": 0.04
+      },
+      "rank_corr_vs_v616": 0.9831675038264432,
+      "mae_vs_v616": 0.05401204526424408,
+      "matrix_hash": "90dc91663b36b1cd",
+      "topk": {
+        "top1_row_recall": 0.3368421052631579,
+        "top3_row_recall": 0.6157894736842106,
+        "top5_row_recall": 0.7368421052631579,
+        "top10_row_recall": 0.8052631578947368
+      }
+    },
+    {
+      "candidate": "proto060_sed040",
+      "proto_weight": 0.6,
+      "sed_weight": 0.4,
+      "csv": "artifacts/source_winner_private_verifier_20260531T2225Z/xsed_local_audit/candidates/poweropt_xsed_proto060_sed040_taxonomy.csv",
+      "local_macro_auc": 0.9921722646941294,
+      "valid_class_count": 42,
+      "delta_vs_v616": -0.0013084028800094405,
+      "delta_vs_current_source_final": null,
+      "non_aves_auc": 0.9945687443683796,
+      "non_aves_valid": 31,
+      "no_train_auc": 0.9968375002072525,
+      "no_train_valid": 19,
+      "site_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.0022239383134292946,
+        "q05": -0.005380631821311349,
+        "q50": -0.0016304075289623188,
+        "q95": -0.0007515382352942084,
+        "min": -0.012067004926556102,
+        "max": -0.00036369333631602885,
+        "p_gt_0": 0.0
+      },
+      "file_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.0014758587281599078,
+        "q05": -0.004068274168471819,
+        "q50": -0.001278556309863732,
+        "q95": 0.00045124516934219545,
+        "min": -0.005620999851204456,
+        "max": 0.002032446278862232,
+        "p_gt_0": 0.11
+      },
+      "rank_corr_vs_v616": 0.9914232745525574,
+      "mae_vs_v616": 0.052462056279182434,
+      "matrix_hash": "1e23c0342309f3ee",
+      "topk": {
+        "top1_row_recall": 0.3263157894736842,
+        "top3_row_recall": 0.6368421052631579,
+        "top5_row_recall": 0.7526315789473684,
+        "top10_row_recall": 0.8157894736842105
+      }
+    },
+    {
+      "candidate": "proto050_sed050",
+      "proto_weight": 0.5,
+      "sed_weight": 0.5,
+      "csv": "artifacts/source_winner_private_verifier_20260531T2225Z/xsed_local_audit/candidates/poweropt_xsed_proto050_sed050_taxonomy.csv",
+      "local_macro_auc": 0.9932901527724085,
+      "valid_class_count": 42,
+      "delta_vs_v616": -0.00019051480173037927,
+      "delta_vs_current_source_final": null,
+      "non_aves_auc": 0.9954660258157575,
+      "non_aves_valid": 31,
+      "no_train_auc": 0.9972196396779566,
+      "no_train_valid": 19,
+      "site_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -0.00027112946207678515,
+        "q05": -0.001668459360910368,
+        "q50": -0.00010419385760912503,
+        "q95": 0.0007896900969433239,
+        "min": -0.004456711158329352,
+        "max": 0.0017074938276118168,
+        "p_gt_0": 0.38
+      },
+      "file_boot_lift_vs_v616": {
+        "n": 200,
+        "mean": -1.639073325340634e-05,
+        "q05": -0.0014577880606308157,
+        "q50": -6.035754694100337e-05,
+        "q95": 0.0014956781362228384,
+        "min": -0.003204117063119072,
+        "max": 0.0036338113030229824,
+        "p_gt_0": 0.45
+      },
+      "rank_corr_vs_v616": 0.9823086313001046,
+      "mae_vs_v616": 0.058983609080314636,
+      "matrix_hash": "5c0c300cc738037d",
+      "topk": {
+        "top1_row_recall": 0.3105263157894737,
+        "top3_row_recall": 0.6473684210526316,
+        "top5_row_recall": 0.7578947368421053,
+        "top10_row_recall": 0.8315789473684211
+      }
+    }
+  ],
+  "best_by_local_auc": {
+    "candidate": "proto050_sed050",
+    "proto_weight": 0.5,
+    "sed_weight": 0.5,
+    "csv": "artifacts/source_winner_private_verifier_20260531T2225Z/xsed_local_audit/candidates/poweropt_xsed_proto050_sed050_taxonomy.csv",
+    "local_macro_auc": 0.9932901527724085,
+    "valid_class_count": 42,
+    "delta_vs_v616": -0.00019051480173037927,
+    "delta_vs_current_source_final": null,
+    "non_aves_auc": 0.9954660258157575,
+    "non_aves_valid": 31,
+    "no_train_auc": 0.9972196396779566,
+    "no_train_valid": 19,
+    "site_boot_lift_vs_v616": {
+      "n": 200,
+      "mean": -0.00027112946207678515,
+      "q05": -0.001668459360910368,
+      "q50": -0.00010419385760912503,
+      "q95": 0.0007896900969433239,
+      "min": -0.004456711158329352,
+      "max": 0.0017074938276118168,
+      "p_gt_0": 0.38
+    },
+    "file_boot_lift_vs_v616": {
+      "n": 200,
+      "mean": -1.639073325340634e-05,
+      "q05": -0.0014577880606308157,
+      "q50": -6.035754694100337e-05,
+      "q95": 0.0014956781362228384,
+      "min": -0.003204117063119072,
+      "max": 0.0036338113030229824,
+      "p_gt_0": 0.45
+    },
+    "rank_corr_vs_v616": 0.9823086313001046,
+    "mae_vs_v616": 0.058983609080314636,
+    "matrix_hash": "5c0c300cc738037d",
+    "topk": {
+      "top1_row_recall": 0.3105263157894737,
+      "top3_row_recall": 0.6473684210526316,
+      "top5_row_recall": 0.7578947368421053,
+      "top10_row_recall": 0.8315789473684211
+    }
+  }
+}
