@@ -4811,3 +4811,12 @@ Decision:
 - **Performance:** row AUC `0.674485` / 6 folds; file-MIL `0.691156`; no-train `0.600481`; non-Aves `0.674485`. Versus the 06:23 PANNs 72-label filectx+fileMIL point, row improved `+0.042893`, file-MIL `+0.001151`, and no-train `+0.058851`.
 - **Sidecar audit:** 72→234 anchor-filled proxy sidecar matched `156/240` proxy rows; best 1% scoped sidecar local AUC `0.990950` / 42 valid; lift vs v616 `-0.002530`, lift vs anchor `+0.000560`, rank corr vs v616 `0.999677`; `submit_approved=false`.
 - **Decision:** keep as a useful targeted landscape point; reject direct/sidecar submission. Next action is class/site movement diagnostics or a v950/EoS8 PowerOptimization verifier, not another blind PANNs wrapper.
+
+## 2026-05-31 10:21 UTC — PANNs no-train-only row-only h384 isolation + selector diagnostics
+
+- Live Kaggle Bearer check: public best remained `0.950` from v644/v647; 2026-05-31 UTC slots were `0/5`; no active BirdCLEF jobs. Trainer GPU1 was used because GPU0 was occupied by unrelated HSTU.
+- Trained `soundscape-sequence-panns-cnn14-notrain-rowonly-h384-losite-ep24-20260531` on official train_soundscapes: `1,478` windows / `66` files / `9` sites / `28` no-train labels, frozen PANNs/Cnn14 AudioSet embeddings, row-only h384 MLP, leave-site.
+- Metrics: row/no-train/non-Aves AUC `0.590497`, file-MIL `0.640872`; better than old 28-label row-only by `+0.016661` row / `+0.073734` file-MIL, but worse than the 72-label multitask row-only no-train slice by `-0.009984` row / `-0.050284` file-MIL.
+- Sidecar audit: best 1% scoped sidecar local AUC `0.990402` / 42 valid, lift vs v616 `-0.003079`, lift vs anchor `+0.000011`; rejected/no submission.
+- Selector diagnostics: 72-label row-only sidecar has tiny selector CV lift but not robust; new 28-label h384 selector is weaker and file-risky. Conclusion: auxiliary non-Aves multitask labels help no-train generalization; stop no-train-only PANNs capacity tweaks unless new signal appears.
+- Artifacts: `artifacts/model_data_point_ledger/20260531T1016Z_panns_notrain_rowonly_h384_sequence.md`, `artifacts/model_data_point_ledger/20260531T1016Z_panns_notrain_rowonly_h384_sidecar_audit/`, `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1021Z.md`.

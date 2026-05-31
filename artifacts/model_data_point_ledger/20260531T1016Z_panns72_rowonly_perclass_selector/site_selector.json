@@ -1,0 +1,312 @@
+{
+  "base_csv": "artifacts/model_data_point_ledger/20260531T0820Z_panns_nonaves_notrain_rowonly_sidecar_audit/audit/candidate_csvs/v616_baseline.csv",
+  "sidecars": [
+    {
+      "name": "panns72_rowonly",
+      "path": "artifacts/model_data_point_ledger/20260531T0820Z_panns_nonaves_notrain_rowonly_sidecar_audit/sidecars/seq_context_sidecar_234.csv"
+    }
+  ],
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "matched_rows": 190,
+  "valid_classes": 42,
+  "group_mode": "site",
+  "n_groups": 6,
+  "weight_grid": [
+    0.0,
+    0.0025,
+    0.005,
+    0.01,
+    0.02,
+    0.04
+  ],
+  "max_total_weight": 0.04,
+  "min_train_pos": 2,
+  "min_train_neg": 10,
+  "min_lift": 0.0005,
+  "base_auc": 0.9934806675741389,
+  "cv_auc": 0.993559317652789,
+  "cv_lift": 7.865007865015539e-05,
+  "cv_valid_classes": 42,
+  "leave_group_lifts": {
+    "n": 6,
+    "mean": 0.0021208739177489186,
+    "min": 0.0,
+    "q05": 0.0,
+    "p_gt_0": 0.5
+  },
+  "held_out_groups": [
+    {
+      "held_out_group": "S03",
+      "rows": 24,
+      "base_auc": 0.9623376623376624,
+      "candidate_auc": 0.9737012987012987,
+      "lift": 0.011363636363636354,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 3,
+        "mean_total_weight": 0.00238095223903656,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.00238095223903656
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 3
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.019999999552965164,
+            "weights": {
+              "panns72_rowonly": 0.019999999552965164
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S08",
+      "rows": 60,
+      "base_auc": 0.985618372636464,
+      "candidate_auc": 0.985618372636464,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 3,
+        "mean_total_weight": 0.00238095223903656,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.00238095223903656
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 3
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.019999999552965164,
+            "weights": {
+              "panns72_rowonly": 0.019999999552965164
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S09",
+      "rows": 19,
+      "base_auc": 1.0,
+      "candidate_auc": 1.0,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 3,
+        "mean_total_weight": 0.00238095223903656,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.00238095223903656
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 3
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.019999999552965164,
+            "weights": {
+              "panns72_rowonly": 0.019999999552965164
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S13",
+      "rows": 24,
+      "base_auc": 0.9923225308641975,
+      "candidate_auc": 0.9936246141975308,
+      "lift": 0.0013020833333332593,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 3,
+        "mean_total_weight": 0.00238095223903656,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.00238095223903656
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 3
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "555146",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.019999999552965164,
+            "weights": {
+              "panns72_rowonly": 0.019999999552965164
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S18",
+      "rows": 15,
+      "base_auc": 0.9050324675324676,
+      "candidate_auc": 0.9050324675324676,
+      "lift": 0.0,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 2,
+        "mean_total_weight": 0.0014285714132711291,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.0014285714132711291
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 2
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          },
+          {
+            "class": "47144",
+            "total": 0.019999999552965164,
+            "weights": {
+              "panns72_rowonly": 0.019999999552965164
+            }
+          }
+        ]
+      }
+    },
+    {
+      "held_out_group": "S22",
+      "rows": 48,
+      "base_auc": 0.9630222191445238,
+      "candidate_auc": 0.9630817429540477,
+      "lift": 5.952380952389813e-05,
+      "weight_summary": {
+        "n_classes": 42,
+        "classes_with_any_sidecar": 1,
+        "mean_total_weight": 0.0009523809421807528,
+        "max_total_weight": 0.03999999910593033,
+        "per_sidecar_mean": {
+          "panns72_rowonly": 0.0009523809421807528
+        },
+        "per_sidecar_nonzero_classes": {
+          "panns72_rowonly": 1
+        },
+        "top_classes": [
+          {
+            "class": "517063",
+            "total": 0.03999999910593033,
+            "weights": {
+              "panns72_rowonly": 0.03999999910593033
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "all_row_auc": 0.9936830044041104,
+  "all_row_lift": 0.0002023368299715056,
+  "all_row_weight_summary": {
+    "n_classes": 42,
+    "classes_with_any_sidecar": 3,
+    "mean_total_weight": 0.00238095223903656,
+    "max_total_weight": 0.03999999910593033,
+    "per_sidecar_mean": {
+      "panns72_rowonly": 0.00238095223903656
+    },
+    "per_sidecar_nonzero_classes": {
+      "panns72_rowonly": 3
+    },
+    "top_classes": [
+      {
+        "class": "517063",
+        "total": 0.03999999910593033,
+        "weights": {
+          "panns72_rowonly": 0.03999999910593033
+        }
+      },
+      {
+        "class": "555146",
+        "total": 0.03999999910593033,
+        "weights": {
+          "panns72_rowonly": 0.03999999910593033
+        }
+      },
+      {
+        "class": "47144",
+        "total": 0.019999999552965164,
+        "weights": {
+          "panns72_rowonly": 0.019999999552965164
+        }
+      }
+    ]
+  },
+  "topk_recall": {
+    "base_top3": 0.9421052631578948,
+    "cv_top3": 0.9421052631578948,
+    "all_row_top3": 0.9421052631578948
+  }
+}

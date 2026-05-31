@@ -184,3 +184,12 @@
 - Metrics: row AUC `0.674485`, file-MIL `0.691156`, no-train `0.600481`, non-Aves `0.674485`; improves over 06:23 PANNs 72-label filectx+fileMIL by `+0.042893` row and `+0.001151` file-MIL.
 - Sidecar audit: best local AUC `0.990950` / 42 valid, lift vs v616 `-0.002530`; finite/nonconstant but not a slot candidate.
 - Updated `performance_table.md`, `performance_table.jsonl`, `20260531T0820Z_panns_nonaves_notrain_rowonly_sequence.md`, and `ranked_queue_20260531T0820Z.md`.
+
+## 2026-05-31 10:21 UTC — PANNs no-train-only row-only h384 isolation + selector diagnostics
+
+- Live Kaggle Bearer check: current public best remained `0.950` from v644/v647; 2026-05-31 UTC slots `0/5`; no active local BirdCLEF jobs. Trainer GPU0 remained occupied by unrelated HSTU; GPU1 was used via `CUDA_VISIBLE_DEVICES=1`.
+- Trained `soundscape-sequence-panns-cnn14-notrain-rowonly-h384-losite-ep24-20260531`: official train_soundscapes, `1,478` windows / `66` files / `9` sites / `28` no-train labels, frozen PANNs/Cnn14 embeddings, row-only MLP h384/dropout0.40, leave-site.
+- Performance table metrics: row/no-train/non-Aves AUC `0.590497`, file-MIL `0.640872`. This improves over the old 28-label PANNs row-only (`+0.016661` row / `+0.073734` file-MIL) but trails the 72-label multitask PANNs row-only no-train slice (`-0.009984` row / `-0.050284` file-MIL).
+- Sidecar audit: best `seq_context_w01` local AUC `0.990402` / 42 valid, lift vs v616 `-0.003079`, lift vs anchor `+0.000011`, `submit_approved=false`; rejected/no submission.
+- Per-class selector diagnostics: 72-label row-only selector has tiny site/file CV lift (`+0.000079`/`+0.000095`) but no robust held-group support; h384 selector is weaker (`+0.000022` site, `+0.000032` file, file q05 `-0.022727`).
+- Updated canonical performance table MD/JSONL, ledger, ranked queue, and docs log. Decision: close no-train-only PANNs capacity tweaks; next should be v950/EoS8 PowerOptimization verifier or genuinely new signal/curated negatives.
