@@ -1,0 +1,422 @@
+{
+  "nocall_final_nonaves_notrain_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "de8f7ebf2cf38beba0e20aefdbfce7797d5272d64541fa82064dfca8491e4d52",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.00498862325,
+      "mean": 0.0009857727992708333,
+      "min": 0.0,
+      "p50": 0.0001820026375,
+      "p90": 0.0037118988349999996,
+      "p99": 0.004975495065
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "9fa1eae77be022c0bc14904f3c238c4eaf0c053e8a9541fd36b35774fc49bd0b",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0099772465,
+      "mean": 0.0019715455985416666,
+      "min": 0.0,
+      "p50": 0.000364005275,
+      "p90": 0.007423797669999999,
+      "p99": 0.00995099013
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "a033e96914dcf2652898640c2c7e3dd6904c147eea7abf6fe2e5409d180561c1",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.019954493,
+      "mean": 0.003943091197083333,
+      "min": 0.0,
+      "p50": 0.00072801055,
+      "p90": 0.014847595339999999,
+      "p99": 0.01990198026
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "ee480763971651f028da09c788e89fee81f19cf4cc146a1d3e55543750e77f1a",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.039908986,
+      "mean": 0.007886182394166667,
+      "min": 0.0,
+      "p50": 0.0014560211,
+      "p90": 0.029695190679999997,
+      "p99": 0.03980396052
+    }
+  },
+  "nocall_final_nonaves_notrain_p1p0_a080": {
+    "alpha": 0.08,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a080.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "6f7658e7391a47096e83d97f4753b7a3549cf23780a513a3c8b1942a1d8159e7",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.079817972,
+      "mean": 0.015772364788333333,
+      "min": 0.0,
+      "p50": 0.0029120422,
+      "p90": 0.059390381359999994,
+      "p99": 0.07960792104
+    }
+  },
+  "nocall_final_notrain_only_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "07d9d6d499dc4721d5cf31d6eb9c358d5345fe01781ada1dd52620656141dc0b",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.00498862325,
+      "mean": 0.0009857727992708333,
+      "min": 0.0,
+      "p50": 0.0001820026375,
+      "p90": 0.0037118988349999996,
+      "p99": 0.004975495065
+    }
+  },
+  "nocall_final_notrain_only_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "74c77ebcc62ec2003467069b599ea60a8ad9189d83a58f634c5552798f262ae5",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0099772465,
+      "mean": 0.0019715455985416666,
+      "min": 0.0,
+      "p50": 0.000364005275,
+      "p90": 0.007423797669999999,
+      "p99": 0.00995099013
+    }
+  },
+  "nocall_final_notrain_only_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "e1465831172eeb7df794c2bfa7cf1da3d2b6262dc26023bb699db67f3e56ebf0",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.019954493,
+      "mean": 0.003943091197083333,
+      "min": 0.0,
+      "p50": 0.00072801055,
+      "p90": 0.014847595339999999,
+      "p99": 0.01990198026
+    }
+  },
+  "nocall_final_notrain_only_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "463b36539d653bf9a33bc9bfa9b58c6d5f2bc336fd95855abc1adbc82ee115f9",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.039908986,
+      "mean": 0.007886182394166667,
+      "min": 0.0,
+      "p50": 0.0014560211,
+      "p90": 0.029695190679999997,
+      "p99": 0.03980396052
+    }
+  },
+  "nocall_final_notrain_only_p1p0_a080": {
+    "alpha": 0.08,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a080.csv",
+    "finite": true,
+    "gate_col": "final_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "5210e87b981a87c6ec8f0b3b2b6f63c4461545ce5a6a1d3f556a23adfbdc3f25",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.079817972,
+      "mean": 0.015772364788333333,
+      "min": 0.0,
+      "p50": 0.0029120422,
+      "p90": 0.059390381359999994,
+      "p99": 0.07960792104
+    }
+  },
+  "nocall_oof_nonaves_notrain_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "e6ce4349365cfedb759809b03f50e7f1b8964af1c2017fe622686b40e42870e6",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0049714187,
+      "mean": 0.0010675748440416668,
+      "min": 0.0,
+      "p50": 0.000243840365,
+      "p90": 0.004229712945,
+      "p99": 0.004896893376499998
+    }
+  },
+  "nocall_oof_nonaves_notrain_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "92f740aadef57ad684501184c3e4d50a32e57fa1354ff9da080fe4ed274964e5",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0099428374,
+      "mean": 0.0021351496880833336,
+      "min": 0.0,
+      "p50": 0.00048768073,
+      "p90": 0.00845942589,
+      "p99": 0.009793786752999996
+    }
+  },
+  "nocall_oof_nonaves_notrain_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "297f768b3b2867a3b046888ae109fc50ae12cd5e14641037339ec9dff0bf6f7c",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0198856748,
+      "mean": 0.004270299376166667,
+      "min": 0.0,
+      "p50": 0.00097536146,
+      "p90": 0.01691885178,
+      "p99": 0.019587573505999992
+    }
+  },
+  "nocall_oof_nonaves_notrain_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "0cc365030a609a8831c6590f55abc2278a208909045ae5b18975acb7ce2c6bbe",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0397713496,
+      "mean": 0.008540598752333334,
+      "min": 0.0,
+      "p50": 0.00195072292,
+      "p90": 0.03383770356,
+      "p99": 0.039175147011999985
+    }
+  },
+  "nocall_oof_nonaves_notrain_p1p0_a080": {
+    "alpha": 0.08,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a080.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "7a8a87239729d18d84f25444a4a9eff8aea4a25d7734b2a02ed972ff0064cd85",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "nonaves_notrain",
+    "scope_columns": 72,
+    "suppression_stats": {
+      "max": 0.0795426992,
+      "mean": 0.01708119750466667,
+      "min": 0.0,
+      "p50": 0.00390144584,
+      "p90": 0.06767540712,
+      "p99": 0.07835029402399997
+    }
+  },
+  "nocall_oof_notrain_only_p1p0_a005": {
+    "alpha": 0.005,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a005.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "4186b4ce0480c9cc1ea84756e4343d3d58e09e0a6dc205acc7bbc87fbb314e10",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0049714187,
+      "mean": 0.0010675748440416668,
+      "min": 0.0,
+      "p50": 0.000243840365,
+      "p90": 0.004229712945,
+      "p99": 0.004896893376499998
+    }
+  },
+  "nocall_oof_notrain_only_p1p0_a010": {
+    "alpha": 0.01,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a010.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "28730c6cd80985aaffe67d4705e4ff69a4b8bc6a458a56fb19702afb08e864bd",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0099428374,
+      "mean": 0.0021351496880833336,
+      "min": 0.0,
+      "p50": 0.00048768073,
+      "p90": 0.00845942589,
+      "p99": 0.009793786752999996
+    }
+  },
+  "nocall_oof_notrain_only_p1p0_a020": {
+    "alpha": 0.02,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a020.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "75e5abf521eaa43de4d3590a2bac3ec41f7fd4305a03deaabf5dc75ce6eac5a1",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0198856748,
+      "mean": 0.004270299376166667,
+      "min": 0.0,
+      "p50": 0.00097536146,
+      "p90": 0.01691885178,
+      "p99": 0.019587573505999992
+    }
+  },
+  "nocall_oof_notrain_only_p1p0_a040": {
+    "alpha": 0.04,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a040.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "03a71cd86bfdab49e9aa08315a60ffd657f0315dcfa8970ceedac828cb277a14",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0397713496,
+      "mean": 0.008540598752333334,
+      "min": 0.0,
+      "p50": 0.00195072292,
+      "p90": 0.03383770356,
+      "p99": 0.039175147011999985
+    }
+  },
+  "nocall_oof_notrain_only_p1p0_a080": {
+    "alpha": 0.08,
+    "candidate_csv": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a080.csv",
+    "finite": true,
+    "gate_col": "oof_no_call_prob",
+    "matched_gate_rows": 202,
+    "matrix_sha256": "668f6694ecdf68173f1ffb8522fd3f46a86c4f3d416a2b3bffdd94f24db62c62",
+    "nonconstant_columns": 234,
+    "power": 1.0,
+    "rows": 240,
+    "scope": "notrain_only",
+    "scope_columns": 28,
+    "suppression_stats": {
+      "max": 0.0795426992,
+      "mean": 0.01708119750466667,
+      "min": 0.0,
+      "p50": 0.00390144584,
+      "p90": 0.06767540712,
+      "p99": 0.07835029402399997
+    }
+  }
+}

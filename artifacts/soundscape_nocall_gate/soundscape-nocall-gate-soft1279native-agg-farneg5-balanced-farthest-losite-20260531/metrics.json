@@ -1,0 +1,213 @@
+{
+  "artifacts": {
+    "metrics_json": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-farthest-losite-20260531/metrics.json",
+    "predictions_csv": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-farthest-losite-20260531/nocall_gate_predictions.csv"
+  },
+  "config": {
+    "c_value": 0.2,
+    "data_root": "data",
+    "experiment_id": "soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-farthest-losite-20260531",
+    "feature_names": [
+      "soft1279init_native",
+      "soft1279enc_native",
+      "soft1279init_obspos"
+    ],
+    "feature_npz": [
+      "artifacts/sed_soundscape_packaging_audit/20260528T1424Z_soft1279init_native_allcls_package/train_soundscapes_soft1279init_native_allcls.npz",
+      "artifacts/sed_soundscape_packaging_audit/20260528T1628Z_soft1279enc_native_allcls_package/train_soundscapes_soft1279enc_native_allcls.npz",
+      "artifacts/sed_soundscape_packaging_audit/20260528T1819Z_soft1279init_obspos_native_allcls_package/train_soundscapes_soft1279init_obspos_native_allcls.npz"
+    ],
+    "include_class_probs": false,
+    "max_iter": 2000,
+    "negative_max_per_site": 6,
+    "negative_min_distance_sec": 5,
+    "negative_selection": "farthest",
+    "output_dir": "artifacts/soundscape_nocall_gate/soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-farthest-losite-20260531",
+    "seed": 83,
+    "track": "Site-balanced weak no-call/background aggregate gate over soft1279-native package predictions (unlabeled negatives >5s from positives, capped by farthest-in-file per site)"
+  },
+  "data_profile": {
+    "duplicate_label_window_rows": 739,
+    "files": 66,
+    "n_files_with_labels": 66,
+    "negative_label_caveat": "unlabeled train_soundscape windows are weak no-call/background labels, not hand-verified negatives; optional distance guard only removes adjacent ambiguous negatives",
+    "negative_min_distance_sec": 5,
+    "negative_selection_used": {
+      "negative_max_per_site": 6,
+      "negative_selection": "farthest",
+      "selected_negative_rows": 14,
+      "selected_negative_rows_by_site": {
+        "S09": 6,
+        "S18": 6,
+        "S22": 2
+      }
+    },
+    "negatives_after_distance_filter": 36,
+    "positive_any_call_windows": 739,
+    "raw_label_rows": 1478,
+    "rows_after_distance_filter": 775,
+    "rows_after_negative_protocol": 753,
+    "rows_in_feature_npz": 792,
+    "site_counts": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 25,
+      "S13": 24,
+      "S15": 48,
+      "S18": 21,
+      "S19": 36,
+      "S22": 479,
+      "S23": 36
+    },
+    "site_negative_counts": {
+      "S03": 0,
+      "S08": 0,
+      "S09": 6,
+      "S13": 0,
+      "S15": 0,
+      "S18": 6,
+      "S19": 0,
+      "S22": 2,
+      "S23": 0
+    },
+    "site_positive_counts": {
+      "S03": 24,
+      "S08": 60,
+      "S09": 19,
+      "S13": 24,
+      "S15": 48,
+      "S18": 15,
+      "S19": 36,
+      "S22": 477,
+      "S23": 36
+    },
+    "sites": 9,
+    "unique_labeled_windows": 739,
+    "unlabeled_background_windows_original": 53,
+    "unlabeled_background_windows_used": 14
+  },
+  "decision": "comparison-grade no-call/background data point; do not submit without hand-verified negative audit and sidecar suppression verifier",
+  "experiment_id": "soundscape-nocall-gate-soft1279native-agg-farneg5-balanced-farthest-losite-20260531",
+  "primary_metric": {
+    "name": "leave-site OOF any-call ROC-AUC",
+    "valid_rows": 753,
+    "valid_sites": 3,
+    "value": 0.9653972549777692
+  },
+  "runtime_sec": 0.1022801399230957,
+  "secondary_metrics": {
+    "baseline_metrics": {
+      "soft1279enc_native_max_auc": 0.9813454475159482,
+      "soft1279enc_native_sum_auc": 0.8108447709259617,
+      "soft1279enc_native_top5_auc": 0.9276048714479025,
+      "soft1279init_native_max_auc": 0.9485791610284168,
+      "soft1279init_native_sum_auc": 0.9109800889232553,
+      "soft1279init_native_top5_auc": 0.9312777885173013,
+      "soft1279init_obspos_max_auc": 0.9087570075391457,
+      "soft1279init_obspos_sum_auc": 0.823120046394742,
+      "soft1279init_obspos_top5_auc": 0.9097235646626716
+    },
+    "best_baseline": "soft1279enc_native_max_auc",
+    "best_baseline_auc": 0.9813454475159482,
+    "delta_vs_best_baseline": -0.01594819253817903,
+    "mean_oof_pred_background": 0.1908152848482132,
+    "mean_oof_pred_positive": 0.8728443384170532,
+    "no_call_auc": 0.9653972549777692,
+    "site_auc_mean": 0.872146824083269,
+    "site_auc_min": 0.7543859649122807,
+    "site_auc_q05": 0.7667251461988305
+  },
+  "site_metrics": [
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.7167523758221698,
+      "n_val": 24,
+      "negatives": 0,
+      "positives": 24,
+      "site": "S03",
+      "valid_auc": false
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.8014420291971007,
+      "n_val": 60,
+      "negatives": 0,
+      "positives": 60,
+      "site": "S08",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.7543859649122807,
+      "mean_pred_neg": 0.22008700385086113,
+      "mean_pred_pos": 0.5189277248526543,
+      "n_val": 25,
+      "negatives": 6,
+      "positives": 19,
+      "site": "S09",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.9647556270133629,
+      "n_val": 24,
+      "negatives": 0,
+      "positives": 24,
+      "site": "S13",
+      "valid_auc": false
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.6582497447402548,
+      "n_val": 48,
+      "negatives": 0,
+      "positives": 48,
+      "site": "S15",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.8777777777777778,
+      "mean_pred_neg": 0.13922992015929675,
+      "mean_pred_pos": 0.7300512318502312,
+      "n_val": 21,
+      "negatives": 6,
+      "positives": 15,
+      "site": "S18",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.7296082372821971,
+      "n_val": 36,
+      "negatives": 0,
+      "positives": 36,
+      "site": "S19",
+      "valid_auc": false
+    },
+    {
+      "auc": 0.9842767295597484,
+      "mean_pred_neg": 0.25775613645391104,
+      "mean_pred_pos": 0.9273384377814266,
+      "n_val": 479,
+      "negatives": 2,
+      "positives": 477,
+      "site": "S22",
+      "valid_auc": true
+    },
+    {
+      "auc": null,
+      "mean_pred_neg": null,
+      "mean_pred_pos": 0.9882373239142603,
+      "n_val": 36,
+      "negatives": 0,
+      "positives": 36,
+      "site": "S23",
+      "valid_auc": false
+    }
+  ],
+  "track": "Site-balanced weak no-call/background aggregate gate over soft1279-native package predictions (unlabeled negatives >5s from positives, capped by farthest-in-file per site)"
+}

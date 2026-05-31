@@ -1,0 +1,299 @@
+{
+  "name": "birdclef_nocall_suppression_sidecar_audit",
+  "description": "Fast no-call suppression audit using farneg5 site-capped farthest weak negatives over aggregate soft1279-native gate",
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "Samejima/v616 visual anchor raw output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output; public LB tied 0.949",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "nocall_oof_nonaves_notrain_p1p0_a005": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.005 * oof_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a005.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_nonaves_notrain_p1p0_a010": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.01 * oof_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a010.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_nonaves_notrain_p1p0_a020": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.02 * oof_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a020.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_nonaves_notrain_p1p0_a040": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.04 * oof_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a040.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_nonaves_notrain_p1p0_a080": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.08 * oof_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_nonaves_notrain_p1p0_a080.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_notrain_only_p1p0_a005": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.005 * oof_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a005.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_notrain_only_p1p0_a010": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.01 * oof_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a010.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_notrain_only_p1p0_a020": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.02 * oof_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a020.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_notrain_only_p1p0_a040": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.04 * oof_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a040.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_oof_notrain_only_p1p0_a080": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.08 * oof_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_oof_notrain_only_p1p0_a080.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_nonaves_notrain_p1p0_a005": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.005 * final_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a005.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_nonaves_notrain_p1p0_a010": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.01 * final_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a010.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_nonaves_notrain_p1p0_a020": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.02 * final_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a020.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_nonaves_notrain_p1p0_a040": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.04 * final_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a040.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_nonaves_notrain_p1p0_a080": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.08 * final_no_call_prob^1) over nonaves_notrain classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_nonaves_notrain_p1p0_a080.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_notrain_only_p1p0_a005": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.005 * final_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a005.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_notrain_only_p1p0_a010": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.01 * final_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a010.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_notrain_only_p1p0_a020": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.02 * final_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a020.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_notrain_only_p1p0_a040": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.04 * final_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a040.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    },
+    "nocall_final_notrain_only_p1p0_a080": {
+      "role": "nocall_suppression_candidate",
+      "description": "v616 multiplied by (1 - 0.08 * final_no_call_prob^1) over notrain_only classes",
+      "path": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/candidates/nocall_final_notrain_only_p1p0_a080.csv",
+      "hidden_safe_status": "comparison_grade_weak_no_call_gate_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control anchor raw",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Submitted v616 tied recipe",
+      "member": "v616_final"
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a005",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_nonaves_notrain_p1p0_a005",
+      "member": "nocall_oof_nonaves_notrain_p1p0_a005"
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a010",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_nonaves_notrain_p1p0_a010",
+      "member": "nocall_oof_nonaves_notrain_p1p0_a010"
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a020",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_nonaves_notrain_p1p0_a020",
+      "member": "nocall_oof_nonaves_notrain_p1p0_a020"
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a040",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_nonaves_notrain_p1p0_a040",
+      "member": "nocall_oof_nonaves_notrain_p1p0_a040"
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a080",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_nonaves_notrain_p1p0_a080",
+      "member": "nocall_oof_nonaves_notrain_p1p0_a080"
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a005",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_notrain_only_p1p0_a005",
+      "member": "nocall_oof_notrain_only_p1p0_a005"
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a010",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_notrain_only_p1p0_a010",
+      "member": "nocall_oof_notrain_only_p1p0_a010"
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a020",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_notrain_only_p1p0_a020",
+      "member": "nocall_oof_notrain_only_p1p0_a020"
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a040",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_notrain_only_p1p0_a040",
+      "member": "nocall_oof_notrain_only_p1p0_a040"
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a080",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_oof_notrain_only_p1p0_a080",
+      "member": "nocall_oof_notrain_only_p1p0_a080"
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a005",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_nonaves_notrain_p1p0_a005",
+      "member": "nocall_final_nonaves_notrain_p1p0_a005"
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a010",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_nonaves_notrain_p1p0_a010",
+      "member": "nocall_final_nonaves_notrain_p1p0_a010"
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a020",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_nonaves_notrain_p1p0_a020",
+      "member": "nocall_final_nonaves_notrain_p1p0_a020"
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a040",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_nonaves_notrain_p1p0_a040",
+      "member": "nocall_final_nonaves_notrain_p1p0_a040"
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a080",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_nonaves_notrain_p1p0_a080",
+      "member": "nocall_final_nonaves_notrain_p1p0_a080"
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a005",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_notrain_only_p1p0_a005",
+      "member": "nocall_final_notrain_only_p1p0_a005"
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a010",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_notrain_only_p1p0_a010",
+      "member": "nocall_final_notrain_only_p1p0_a010"
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a020",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_notrain_only_p1p0_a020",
+      "member": "nocall_final_notrain_only_p1p0_a020"
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a040",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_notrain_only_p1p0_a040",
+      "member": "nocall_final_notrain_only_p1p0_a040"
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a080",
+      "type": "member",
+      "description": "No-call suppressed v616 candidate nocall_final_notrain_only_p1p0_a080",
+      "member": "nocall_final_notrain_only_p1p0_a080"
+    }
+  ],
+  "bootstrap": {
+    "iters": 20,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 40,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}

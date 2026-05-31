@@ -1,0 +1,162 @@
+{
+  "output_json": "artifacts/soundscape_nocall_suppression/soundscape-nocall-suppression-v616-agg-farneg5-farthest-smoke-20260531T0228Z/audit/ensemble_strategy_audit.json",
+  "labels_loaded": true,
+  "submit_approved": false,
+  "best_recipe_vs_baseline": "nocall_final_nonaves_notrain_p1p0_a010",
+  "recipe_summary": [
+    {
+      "name": "anchor_only",
+      "macro_auc": 0.9903905065191599,
+      "lift_vs_anchor": 0.0,
+      "lift_vs_baseline": -0.003090161054978946,
+      "submit_approved": false
+    },
+    {
+      "name": "v616_baseline",
+      "macro_auc": 0.9934806675741389,
+      "lift_vs_anchor": 0.003090161054978946,
+      "lift_vs_baseline": 0.0,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a005",
+      "macro_auc": 0.9935205423161028,
+      "lift_vs_anchor": 0.0031300357969428205,
+      "lift_vs_baseline": 3.987474196387453e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a010",
+      "macro_auc": 0.9934991290886792,
+      "lift_vs_anchor": 0.0031086225695192704,
+      "lift_vs_baseline": 1.846151454032441e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a020",
+      "macro_auc": 0.9934500215512937,
+      "lift_vs_anchor": 0.0030595150321337528,
+      "lift_vs_baseline": -3.0646022845193244e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a040",
+      "macro_auc": 0.9931611596178099,
+      "lift_vs_anchor": 0.002770653098649989,
+      "lift_vs_baseline": -0.0003195079563289571,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_nonaves_notrain_p1p0_a080",
+      "macro_auc": 0.9914121185320957,
+      "lift_vs_anchor": 0.0010216120129357131,
+      "lift_vs_baseline": -0.002068549042043233,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a005",
+      "macro_auc": 0.9934914077114412,
+      "lift_vs_anchor": 0.0031009011922812357,
+      "lift_vs_baseline": 1.0740137302289732e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a010",
+      "macro_auc": 0.9934731673949732,
+      "lift_vs_anchor": 0.0030826608758132146,
+      "lift_vs_baseline": -7.500179165731424e-06,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a020",
+      "macro_auc": 0.9934290493682221,
+      "lift_vs_anchor": 0.0030385428490621313,
+      "lift_vs_baseline": -5.161820591681465e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a040",
+      "macro_auc": 0.9930859752215463,
+      "lift_vs_anchor": 0.00269546870238635,
+      "lift_vs_baseline": -0.00039469235259259605,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_oof_notrain_only_p1p0_a080",
+      "macro_auc": 0.9914989841891976,
+      "lift_vs_anchor": 0.001108477670037633,
+      "lift_vs_baseline": -0.001981683384941313,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a005",
+      "macro_auc": 0.9935073148028751,
+      "lift_vs_anchor": 0.003116808283715189,
+      "lift_vs_baseline": 2.6647228736242923e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a010",
+      "macro_auc": 0.9935432159898125,
+      "lift_vs_anchor": 0.0031527094706526038,
+      "lift_vs_baseline": 6.254841567365776e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a020",
+      "macro_auc": 0.9935146500184864,
+      "lift_vs_anchor": 0.003124143499326437,
+      "lift_vs_baseline": 3.39824443474912e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a040",
+      "macro_auc": 0.9933471980292972,
+      "lift_vs_anchor": 0.0029566915101372215,
+      "lift_vs_baseline": -0.00013346954484172446,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_nonaves_notrain_p1p0_a080",
+      "macro_auc": 0.9925424422859692,
+      "lift_vs_anchor": 0.0021519357668092765,
+      "lift_vs_baseline": -0.0009382252881696695,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a005",
+      "macro_auc": 0.9934914077114412,
+      "lift_vs_anchor": 0.0031009011922812357,
+      "lift_vs_baseline": 1.0740137302289732e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a010",
+      "macro_auc": 0.9934986676264659,
+      "lift_vs_anchor": 0.00310816110730594,
+      "lift_vs_baseline": 1.8000052326994087e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a020",
+      "macro_auc": 0.9934697320093613,
+      "lift_vs_anchor": 0.0030792254902013427,
+      "lift_vs_baseline": -1.0935564777603268e-05,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a040",
+      "macro_auc": 0.9933304779561523,
+      "lift_vs_anchor": 0.002939971436992317,
+      "lift_vs_baseline": -0.0001501896179866291,
+      "submit_approved": false
+    },
+    {
+      "name": "nocall_final_notrain_only_p1p0_a080",
+      "macro_auc": 0.9925540291253557,
+      "lift_vs_anchor": 0.002163522606195789,
+      "lift_vs_baseline": -0.0009266384487831569,
+      "submit_approved": false
+    }
+  ]
+}
