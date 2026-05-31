@@ -4829,3 +4829,13 @@ Decision:
 - Sidecar audit best `seq_context_w02`: local AUC `0.990059` / 42 valid, lift vs v616 `-0.003422`, lift vs anchor `-0.000332`, submit_approved false.
 - Decision: reject/no submission; keep as a file-MIL clue. Next: v950 PowerOptimization/source-winner confidence verifier, not another blind PANNs/fusion wrapper.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260531T1216Z_fused_nonaves_notrain_rowonly_sidecar_audit/audit_summary.json`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1220Z.md`.
+
+## 2026-05-31 14:35 UTC — Source-winner Proto/SED confidence meta audit; no early slot
+
+- Live Kaggle Bearer check: current public best remains `0.950` from v644/v647; 2026-05-31 UTC slots `0/5` with ~9.7h to reset. No active BirdCLEF local/trainer jobs.
+- Built `scripts/birdclef_source_winner_confidence_meta_audit.py` and evaluated v644/v647 EoS8 source-winner intermediate train-soundscape streams against the v616 local proxy.
+- Data: 240 proxy rows, 190 label-matched rows, 20 files, 6 sites, 234 labels with 42 valid local AUC classes.
+- Metrics: source SED raw AUC `0.995976` (`+0.002495` vs v616), source ProtoSSM AUC `0.986299`, source rankblend AUC `0.992723`. The trained leave-site logistic meta calibrator underperformed: OOF AUC `0.990463` (`-0.003018` vs v616), so reject that meta formulation.
+- Best no-slot sidecar grid was `0.20*v616 + 0.80*source_sed` in rank space: local AUC `0.996059`, lift vs v616 `+0.002578`, site/file bootstrap q05 `+0.000450/+0.000083` in a 20-boot smoke, rank corr vs v616 `0.857333`.
+- Critic/verifier: `submit_approved=false`. This is the strongest new clue today, but no hidden-test package/source fork was built and SED/v616-family local proxy lifts are known to over-transfer; do not spend an early-day slot on a proxy/static CSV. Next exact action: private verifier/source fork for EoS8 SED-vs-PowerOpt weights.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T1428Z_source_winner_protosed_confidence_meta.md`, audit `artifacts/source_winner_confidence_meta_audit/20260531T1428Z/`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T1435Z.md`.
