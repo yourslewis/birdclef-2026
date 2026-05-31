@@ -4801,3 +4801,13 @@ Decision:
 - Sidecar audit best `seq_context_w02`: local AUC `0.990695` / 42 valid, lift vs v616 `-0.002786`, lift vs anchor `+0.000304`, submit_approved false.
 - Decision: reject/no submission. Keep as a measured targeted landscape point; next is v950-family source exploitation or class/site movement diagnostics, not another broad PANNs wrapper.
 - Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260531T0620Z_panns_nonaves_notrain_filectx_filemil_sequence.md`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T0623Z.md`.
+
+## 2026-05-31 08:20 UTC — `soundscape-sequence-panns-cnn14-nonaves-notrain-rowonly-losite-ep24-20260531`
+
+- **Live state:** Kaggle Bearer API check confirmed best public LB remains `0.950` from v644/v647; 2026-05-31 UTC slots `0/5`; no active BirdCLEF jobs. Trainer GPU0 was occupied by an unrelated HSTU job; GPU1 was available.
+- **Track:** train_soundscapes sequence/file/site targeted AudioSet mining. This run isolated the row-only PANNs/Cnn14 72-label non-Aves/no-train signal after the r2 file-context/file-MIL version underperformed its own row-only baseline.
+- **Config/artifacts:** `configs/birdclef/soundscape_sequence_panns_cnn14_nonaves_notrain_rowonly_losite_ep24_20260531.json`; metrics under `artifacts/soundscape_sequence_mining/soundscape-sequence-panns-cnn14-nonaves-notrain-rowonly-losite-ep24-20260531/`; ledger `artifacts/model_data_point_ledger/20260531T0820Z_panns_nonaves_notrain_rowonly_sequence.md`.
+- **Data/model:** official train_soundscapes only, `1,478` windows / `66` files / `9` sites / `72` non-Aves-or-no-train labels, frozen PANNs/Cnn14 AudioSet embeddings, row-only MLP, leave-one-site, 24 epochs, TorchScript export OK.
+- **Performance:** row AUC `0.674485` / 6 folds; file-MIL `0.691156`; no-train `0.600481`; non-Aves `0.674485`. Versus the 06:23 PANNs 72-label filectx+fileMIL point, row improved `+0.042893`, file-MIL `+0.001151`, and no-train `+0.058851`.
+- **Sidecar audit:** 72→234 anchor-filled proxy sidecar matched `156/240` proxy rows; best 1% scoped sidecar local AUC `0.990950` / 42 valid; lift vs v616 `-0.002530`, lift vs anchor `+0.000560`, rank corr vs v616 `0.999677`; `submit_approved=false`.
+- **Decision:** keep as a useful targeted landscape point; reject direct/sidecar submission. Next action is class/site movement diagnostics or a v950/EoS8 PowerOptimization verifier, not another blind PANNs wrapper.

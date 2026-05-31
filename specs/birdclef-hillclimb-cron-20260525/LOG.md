@@ -177,3 +177,10 @@
 - Metrics: context row AUC `0.627559`, no-train `0.604764`, non-Aves `0.665293`, file-MIL `0.673926`; internal row-only row `0.626128` / file-MIL `0.671220`; below prior best PANNs filectx+fileMIL row `0.644272`.
 - Sidecar audit best `allcls_seq_w0p0025` local AUC `0.991131` / 42 valid; lift vs v616 `-0.002349`; finite/nonconstant sidecar; `submit_approved=false`.
 - Updated performance table/jsonl, ledger, ranked queue, and docs log. No submission under mid-day policy; next run should late-fill valid source candidates if `<3h` to UTC reset and no verifier-grade candidate appears.
+
+## 2026-05-31 08:20 UTC — PANNs 72-label row-only targeted data point
+- Live state: Kaggle Bearer best `0.950` (v644/v647), UTC slots `0/5`, no active BirdCLEF jobs; trainer GPU1 used.
+- Trained/evaluated `soundscape-sequence-panns-cnn14-nonaves-notrain-rowonly-losite-ep24-20260531` on official train_soundscapes (`1,478` windows / `66` files / `9` sites / `72` non-Aves/no-train labels), frozen PANNs/Cnn14 row-only MLP.
+- Metrics: row AUC `0.674485`, file-MIL `0.691156`, no-train `0.600481`, non-Aves `0.674485`; improves over 06:23 PANNs 72-label filectx+fileMIL by `+0.042893` row and `+0.001151` file-MIL.
+- Sidecar audit: best local AUC `0.990950` / 42 valid, lift vs v616 `-0.002530`; finite/nonconstant but not a slot candidate.
+- Updated `performance_table.md`, `performance_table.jsonl`, `20260531T0820Z_panns_nonaves_notrain_rowonly_sequence.md`, and `ranked_queue_20260531T0820Z.md`.
