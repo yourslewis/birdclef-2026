@@ -1,0 +1,204 @@
+{
+  "utc_now": "2026-06-01T21:05:07.603106+00:00",
+  "hours_to_reset": 2.9145546927777777,
+  "today_count_start": 3,
+  "candidates": [
+    {
+      "label": "v659",
+      "ref": "alexycactus/birdclef-2026-cnn-inference-regnety",
+      "description": "v659: late-window RegNetY CNN representation source",
+      "preflight_ok": true,
+      "version": 3,
+      "info": {
+        "ref": "alexycactus/birdclef-2026-cnn-inference-regnety",
+        "version": 3,
+        "source_len": 10951,
+        "markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "convnext": false,
+          "regnet": true,
+          "perch": false,
+          "sed": true,
+          "birdnet": false,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "reason": "RegNetY CNN inference source is a structurally distinct front-end public kernel; valid finite public output and high information for remaining late-window slot.",
+        "files": [
+          "diagnostics_nb19c.json",
+          "submission.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 192,
+          "n_cols": 235,
+          "unique_rows": 192,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 1e-07,
+          "max": 0.9999999,
+          "uniq_first100": 99,
+          "sha256_16": "3ea9cb640d1476c4",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "result": "{\"message\": \"\", \"ref\": 53267249}"
+    },
+    {
+      "label": "v660",
+      "ref": "kruzzcc/bc26-convnext-v3r3-active-a03",
+      "description": "v660: late-window ConvNeXt active-a03 source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "kruzzcc/bc26-convnext-v3r3-active-a03",
+        "version": 1,
+        "source_len": 133151,
+        "markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "convnext": true,
+          "regnet": false,
+          "perch": true,
+          "sed": true,
+          "birdnet": false,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "reason": "ConvNeXt public source with Perch/SED integration; valid finite 240x235 public output; representation-level late-window verifier.",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.0037500001,
+          "max": 1.0,
+          "uniq_first100": 90,
+          "sha256_16": "1f50509ddc13b13e",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "result": "{\"message\": \"\", \"ref\": 53267251}"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v659",
+      "ref": "alexycactus/birdclef-2026-cnn-inference-regnety",
+      "description": "v659: late-window RegNetY CNN representation source",
+      "preflight_ok": true,
+      "version": 3,
+      "info": {
+        "ref": "alexycactus/birdclef-2026-cnn-inference-regnety",
+        "version": 3,
+        "source_len": 10951,
+        "markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "convnext": false,
+          "regnet": true,
+          "perch": false,
+          "sed": true,
+          "birdnet": false,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "reason": "RegNetY CNN inference source is a structurally distinct front-end public kernel; valid finite public output and high information for remaining late-window slot.",
+        "files": [
+          "diagnostics_nb19c.json",
+          "submission.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 192,
+          "n_cols": 235,
+          "unique_rows": 192,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 1e-07,
+          "max": 0.9999999,
+          "uniq_first100": 99,
+          "sha256_16": "3ea9cb640d1476c4",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "result": "{\"message\": \"\", \"ref\": 53267249}"
+    },
+    {
+      "label": "v660",
+      "ref": "kruzzcc/bc26-convnext-v3r3-active-a03",
+      "description": "v660: late-window ConvNeXt active-a03 source",
+      "preflight_ok": true,
+      "version": 1,
+      "info": {
+        "ref": "kruzzcc/bc26-convnext-v3r3-active-a03",
+        "version": 1,
+        "source_len": 133151,
+        "markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "convnext": true,
+          "regnet": false,
+          "perch": true,
+          "sed": true,
+          "birdnet": false,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "reason": "ConvNeXt public source with Perch/SED integration; valid finite 240x235 public output; representation-level late-window verifier.",
+        "files": [
+          "cache/perch_arrays.npz",
+          "cache/perch_meta.parquet",
+          "submission.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 240,
+          "n_cols": 235,
+          "unique_rows": 240,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.0037500001,
+          "max": 1.0,
+          "uniq_first100": 90,
+          "sha256_16": "1f50509ddc13b13e",
+          "head_ids": [
+            "BC2026_Train_0001_S08_20250606_030007_5",
+            "BC2026_Train_0001_S08_20250606_030007_10",
+            "BC2026_Train_0001_S08_20250606_030007_15"
+          ]
+        }
+      },
+      "decision": "submitted",
+      "result": "{\"message\": \"\", \"ref\": 53267251}"
+    }
+  ],
+  "today_count_end_est": 5
+}

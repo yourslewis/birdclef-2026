@@ -4976,3 +4976,12 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - SUBMITTED ref 53264588 (slot 1/5) via www.kaggle.com CreateCodeSubmission RPC (api.kaggle.com 401 w/ KGAT). Status pending at report time.
 - First distinct base-embedding family ever on BC26 hidden LB. DEV evidence: weak-AUC 0.8319, decorr 0.7374, DEV 0.002447. Tests whether 42/234 proxy ceiling masked real hidden-test transfer (proxy is a known two-way liar).
 - Next: on score, record LB; if >0.90 → in-kernel small-weight rank-mix distill×E; if weak → blend-member-only path.
+
+## 2026-06-01 21:05 UTC — Late-window source-clean representation slots v657-v660
+- Live poll: v656 distinct-backbone distill standalone scored **0.529** (ref 53264588), so the standalone distill-foundation lane is refuted on hidden LB despite proxy weak-AUC 0.8319 / decorr 0.737. Public best remains 0.950 (v644/v647).
+- Slot policy: with ~2.9h to reset and no DEV-passing owned candidate, used remaining slots on source-clean public code candidates with representation/data-source variation, not STOP-rule head variants. Slots now 5/5.
+- Submitted **v657** ref `53267235` `jungchanryu/birdclef-submission2` v36: dry-run 3x235, uniq100 97, hash `01c39b92aa147bb4`, status `pending`, score `pending`.
+- Submitted **v658** ref `53267236` `pilkwang/birdclef-2026-eos-oof-gated-pcen` v9: dry-run 3x235, uniq100 97, hash `abad620908ef0d89`, status `pending`, score `pending`.
+- Submitted **v659** ref `53267249` `alexycactus/birdclef-2026-cnn-inference-regnety` v3: dry-run 192x235, uniq100 99, hash `3ea9cb640d1476c4`, status `pending`, score `pending`.
+- Submitted **v660** ref `53267251` `kruzzcc/bc26-convnext-v3r3-active-a03` v1: dry-run 240x235, uniq100 90, hash `1f50509ddc13b13e`, status `pending`, score `pending`.
+- Rejected malformed/nonfinite/dedup public candidates during rescout: Nina/Anthony/Fleong/Ahmed EoS forks and Liuyanfeng JAX Perch. Updated canonical performance table/jsonl, ledger, and queue. Next: poll v657-v660 and ledger scored deltas vs 0.950 E and v616.

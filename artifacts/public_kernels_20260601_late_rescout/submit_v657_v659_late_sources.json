@@ -1,0 +1,413 @@
+{
+  "utc_now": "2026-06-01T21:03:43.439440+00:00",
+  "hours_to_reset": 2.937933488888889,
+  "today_count_start": 1,
+  "candidates": [
+    {
+      "label": "v657",
+      "ref": "jungchanryu/birdclef-submission2",
+      "description": "v657: late-window Jung submission2 BirdNET plus source sidecars",
+      "family": "Jun1 updated public source w/ BirdNET + multiple sidecar outputs; valid 3x235 public dry-run; different dry hash from prior fills",
+      "preflight_ok": true,
+      "version": 36,
+      "info": {
+        "ref": "jungchanryu/birdclef-submission2",
+        "version": 36,
+        "source_len": 470550,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "family": "Jun1 updated public source w/ BirdNET + multiple sidecar outputs; valid 3x235 public dry-run; different dry hash from prior fills",
+        "reason": "Highest-freshness/high-vote public source from live rescout; representation mix includes BirdNET/sidecars, not a local head knob.",
+        "files": [
+          "final_submission_diagnostics.json",
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_model51_full_unused.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_karnakbayev_poweropt_sz2.csv",
+          "subm_karnakbayev_poweropt_sz2_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_s124_conservative.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46153113,
+          "max": 0.5299225,
+          "mean": 0.4890106492735043,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "01c39b92aa147bb4"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53267235}"
+    },
+    {
+      "label": "v658",
+      "ref": "pilkwang/birdclef-2026-eos-oof-gated-pcen",
+      "description": "v658: late-window EoS OOF gated PCEN source",
+      "family": "EoS + OOF gated PCEN public source; valid 3x235 dry-run; source-clean external public kernel",
+      "preflight_ok": true,
+      "version": 9,
+      "info": {
+        "ref": "pilkwang/birdclef-2026-eos-oof-gated-pcen",
+        "version": 9,
+        "source_len": 457873,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "family": "EoS + OOF gated PCEN public source; valid 3x235 dry-run; source-clean external public kernel",
+        "reason": "PCEN/gated source family is a data/representation-level public-source verifier for late-window slot use.",
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_model51_full_unused.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_karnakbayev_poweropt_sz2.csv",
+          "subm_karnakbayev_poweropt_sz2_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46153113,
+          "max": 0.5299221,
+          "mean": 0.4890103978632479,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "abad620908ef0d89"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53267236}"
+    },
+    {
+      "label": "v659",
+      "ref": "liuyanfeng/birdclef26-jax-perch-inference-transformer",
+      "description": "v659: late-window JAX Perch transformer source",
+      "family": "JAX Perch transformer public inference source; valid 3x235 dry-run; low overlap with submitted descriptions",
+      "preflight_ok": false,
+      "version": 26,
+      "info": {
+        "ref": "liuyanfeng/birdclef26-jax-perch-inference-transformer",
+        "version": 26,
+        "source_len": 18295,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": false,
+          "birdnet": false,
+          "protossm": false,
+          "sed": true,
+          "perch": true,
+          "fallback": false
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "family": "JAX Perch transformer public inference source; valid 3x235 dry-run; low overlap with submitted descriptions",
+        "reason": "Fresh accessible public transformer inference source; high-info exploratory late slot if cap remains.",
+        "files": [
+          "submission.csv"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 702,
+          "ragged_rows": 0,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "uniq_first100": 0,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "13d980a474e14840"
+        },
+        "reject": "malformed/nonfinite/constant/wrong schema"
+      },
+      "decision": "reject_preflight"
+    }
+  ],
+  "submitted": [
+    {
+      "label": "v657",
+      "ref": "jungchanryu/birdclef-submission2",
+      "description": "v657: late-window Jung submission2 BirdNET plus source sidecars",
+      "family": "Jun1 updated public source w/ BirdNET + multiple sidecar outputs; valid 3x235 public dry-run; different dry hash from prior fills",
+      "preflight_ok": true,
+      "version": 36,
+      "info": {
+        "ref": "jungchanryu/birdclef-submission2",
+        "version": 36,
+        "source_len": 470550,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "family": "Jun1 updated public source w/ BirdNET + multiple sidecar outputs; valid 3x235 public dry-run; different dry hash from prior fills",
+        "reason": "Highest-freshness/high-vote public source from live rescout; representation mix includes BirdNET/sidecars, not a local head knob.",
+        "files": [
+          "final_submission_diagnostics.json",
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_model51_full_unused.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_karnakbayev_poweropt_sz2.csv",
+          "subm_karnakbayev_poweropt_sz2_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_s124_conservative.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46153113,
+          "max": 0.5299225,
+          "mean": 0.4890106492735043,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "01c39b92aa147bb4"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53267235}"
+    },
+    {
+      "label": "v658",
+      "ref": "pilkwang/birdclef-2026-eos-oof-gated-pcen",
+      "description": "v658: late-window EoS OOF gated PCEN source",
+      "family": "EoS + OOF gated PCEN public source; valid 3x235 dry-run; source-clean external public kernel",
+      "preflight_ok": true,
+      "version": 9,
+      "info": {
+        "ref": "pilkwang/birdclef-2026-eos-oof-gated-pcen",
+        "version": 9,
+        "source_len": 457873,
+        "source_markers": {
+          "test_soundscapes": true,
+          "sample_submission": true,
+          "submission.csv": true,
+          "/kaggle/input": true,
+          "read_csv": true,
+          "onnx": true,
+          "torch": true,
+          "birdnet": true,
+          "protossm": true,
+          "sed": true,
+          "perch": true,
+          "fallback": true
+        },
+        "status": "{\"status\": \"COMPLETE\", \"failureMessage\": null}",
+        "failure": "",
+        "family": "EoS + OOF gated PCEN public source; valid 3x235 dry-run; source-clean external public kernel",
+        "reason": "PCEN/gated source family is a data/representation-level public-source verifier for late-window slot use.",
+        "files": [
+          "sidecar_exp002b_diagnostics.csv",
+          "subm_birdnet_v24.csv",
+          "subm_karnakbayev_poweropt_model51_full_unused.csv",
+          "subm_karnakbayev_poweropt_pssm.csv",
+          "subm_karnakbayev_poweropt_sz2.csv",
+          "subm_karnakbayev_poweropt_sz2_core.csv",
+          "subm_yukiz_perch_proto_res.csv",
+          "submission.csv",
+          "submission_before_all_sidecars.csv",
+          "submission_before_exp002b_sidecar.csv",
+          "submission_protossm.csv",
+          "submission_sed.csv",
+          "v17_logs.json"
+        ],
+        "submission_stats": {
+          "n_rows": 3,
+          "n_cols": 235,
+          "unique_rows": 3,
+          "bad_values": 0,
+          "ragged_rows": 0,
+          "min": 0.46153113,
+          "max": 0.5299221,
+          "mean": 0.4890103978632479,
+          "uniq_first100": 97,
+          "head_ids": [
+            "BC2026_Test_0001_S05_20250227_010002_5",
+            "BC2026_Test_0001_S05_20250227_010002_10",
+            "BC2026_Test_0001_S05_20250227_010002_15"
+          ],
+          "sha256_16": "abad620908ef0d89"
+        }
+      },
+      "decision": "submitted",
+      "submit_result": "{\"message\": \"\", \"ref\": 53267236}"
+    }
+  ],
+  "latest": [
+    {
+      "ref": 53264588,
+      "date": "2026-06-01 18:34:30.310000",
+      "description": "v656 distill 3-backbone stack distinct-embedding LB probe",
+      "score": "0.529",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53232692,
+      "date": "2026-05-31 22:35:14.847000",
+      "description": "v654: EoS8 PowerOpt proto070 sed030 frontier verifier",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53232648,
+      "date": "2026-05-31 22:31:05.607000",
+      "description": "v655: EoS8 PowerOpt proto050 sed050 frontier verifier",
+      "score": "0.949",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53232636,
+      "date": "2026-05-31 22:29:58.987000",
+      "description": "v653: EoS8 PowerOpt proto080 sed020 frontier verifier",
+      "score": "0.947",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53228555,
+      "date": "2026-05-31 18:31:33.080000",
+      "description": "v651: EoS8 PowerOpt proto020 sed080 source verifier",
+      "score": "0.941",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53228552,
+      "date": "2026-05-31 18:31:29.790000",
+      "description": "v652: EoS8 PowerOpt proto040 sed060 source verifier",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53197164,
+      "date": "2026-05-30 22:19:18.633000",
+      "description": "v647: Late-fill Ryuto EoS8 sidecar source",
+      "score": "0.950",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53197162,
+      "date": "2026-05-30 22:19:12.947000",
+      "description": "v644: Late-fill Yaroslav 0950 replay source",
+      "score": "0.950",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53197133,
+      "date": "2026-05-30 22:16:38.920000",
+      "description": "v643: Late-fill Raunak v7 source",
+      "score": "0.946",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53197131,
+      "date": "2026-05-30 22:16:36.563000",
+      "description": "v642: Late-fill Nina EoS4 source",
+      "score": "0.948",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53197129,
+      "date": "2026-05-30 22:16:33.933000",
+      "description": "v641: Late-fill Nina EoS1 source",
+      "score": "0.947",
+      "status": "SubmissionStatus.COMPLETE"
+    },
+    {
+      "ref": 53165851,
+      "date": "2026-05-29 22:19:08.980000",
+      "description": "v640: Late-fill Imaad Perch ProtoSSM source",
+      "score": "0.945",
+      "status": "SubmissionStatus.COMPLETE"
+    }
+  ],
+  "today_count_end_est": 3
+}
