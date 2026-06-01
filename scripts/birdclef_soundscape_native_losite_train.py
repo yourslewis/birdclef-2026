@@ -79,6 +79,8 @@ class NativeLoSiteConfig:
     restore_best_by_val_loss: bool = True
     fold_sites: list[str] | None = None
     train_sampling: str = "random"  # random | site_balanced
+    soft_teacher_npz: str = ""  # path to teacher leave_site_predictions.npz (aligned by filename+start)
+    soft_teacher_weight: float = 0.0  # 0=hard only; blend train target = (1-w)*hard + w*teacher_soft
 
 
 def load_config(path: Path | None) -> NativeLoSiteConfig:
@@ -224,6 +226,39 @@ def make_dataset(cfg: NativeLoSiteConfig) -> tuple[torch.Tensor, torch.Tensor, l
         if row["target_indices"]:
             y[i, torch.tensor(row["target_indices"], dtype=torch.long)] = 1.0
 
+    y_soft = y.clone()
+    soft_info: dict[str, Any] = {"enabled": False}
+    if cfg.soft_teacher_npz and cfg.soft_teacher_weight > 0.0:
+        tz = np.load(cfg.soft_teacher_npz, allow_pickle=True)
+        t_files = [str(v) for v in tz["files"]]
+        t_starts = [str(v) for v in tz["starts"]]
+        t_labels = [str(v) for v in tz["labels"]]
+        t_pred = tz["pred"].astype(np.float32)
+        tkey = {(f, s): k for k, (f, s) in enumerate(zip(t_files, t_starts))}
+        tcol = {lb: j for j, lb in enumerate(t_labels)}
+        col_map = np.array([tcol.get(lb, -1) for lb in labels], dtype=np.int64)
+        w = float(cfg.soft_teacher_weight)
+        matched = 0
+        for i, row in enumerate(rows):
+            k = tkey.get((str(row["filename"]), str(row["start"])))
+            if k is None:
+                continue
+            matched += 1
+            tp = t_pred[k]
+            soft_row = np.zeros(len(labels), dtype=np.float32)
+            valid = col_map >= 0
+            soft_row[valid] = tp[col_map[valid]]
+            blended = (1.0 - w) * y[i].numpy() + w * soft_row
+            y_soft[i] = torch.from_numpy(blended.astype(np.float32))
+        soft_info = {
+            "enabled": True,
+            "npz": cfg.soft_teacher_npz,
+            "weight": w,
+            "matched_rows": int(matched),
+            "total_rows": int(len(rows)),
+            "mapped_cols": int(np.sum(col_map >= 0)),
+        }
+
     mel_fb = make_mel_filter(cfg.sample_rate, cfg.n_fft, cfg.n_mels)
     x_items = []
     decode_t0 = time.time()
@@ -234,7 +269,8 @@ def make_dataset(cfg: NativeLoSiteConfig) -> tuple[torch.Tensor, torch.Tensor, l
     profile = data_profile(rows, labels, y.numpy(), label_info)
     profile["input_shape"] = list(x.shape)
     profile["decode_feature_seconds"] = float(time.time() - decode_t0)
-    return x, y, rows, labels, profile, no_train, nonaves
+    profile["soft_teacher"] = soft_info
+    return x, y, y_soft, rows, labels, profile, no_train, nonaves
 
 
 def build_model(n_labels: int, cfg: NativeLoSiteConfig) -> torch.nn.Module:
@@ -277,7 +313,9 @@ def make_epoch_order(train_idx: torch.Tensor, rows: list[dict[str, Any]], cfg: N
     raise ValueError(f"Unsupported train_sampling={cfg.train_sampling!r}")
 
 
-def train_one_fold(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], train_idx: torch.Tensor, val_idx: torch.Tensor, labels: list[str], cfg: NativeLoSiteConfig, fold_seed: int) -> tuple[torch.nn.Module, list[dict[str, Any]], np.ndarray, dict[str, Any]]:
+def train_one_fold(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], train_idx: torch.Tensor, val_idx: torch.Tensor, labels: list[str], cfg: NativeLoSiteConfig, fold_seed: int, y_target: torch.Tensor | None = None) -> tuple[torch.nn.Module, list[dict[str, Any]], np.ndarray, dict[str, Any]]:
+    if y_target is None:
+        y_target = y
     torch.manual_seed(fold_seed)
     np.random.seed(fold_seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -306,7 +344,7 @@ def train_one_fold(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]],
         for start in range(0, len(order), cfg.batch_size):
             idx = order[start:start + cfg.batch_size]
             xb = x[idx].to(device)
-            yb = y[idx].to(device)
+            yb = y_target[idx].to(device)
             xb, yb = maybe_mixup(xb, yb, cfg.mixup_alpha)
             logits, _ = model(xb)
             loss = compute_loss(logits, yb, cfg, pos_weight)
@@ -426,14 +464,14 @@ def export_final_model(model: torch.nn.Module, x: torch.Tensor, output_dir: Path
     return exports
 
 
-def train_final_model(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], labels: list[str], cfg: NativeLoSiteConfig) -> tuple[torch.nn.Module, list[dict[str, Any]], dict[str, Any]]:
+def train_final_model(x: torch.Tensor, y: torch.Tensor, rows: list[dict[str, Any]], labels: list[str], cfg: NativeLoSiteConfig, y_target: torch.Tensor | None = None) -> tuple[torch.nn.Module, list[dict[str, Any]], dict[str, Any]]:
     old_epochs = cfg.epochs
     cfg.epochs = cfg.final_train_epochs
     idx = torch.arange(len(x), dtype=torch.long)
     # Use a tiny pseudo-val slice only for best-state bookkeeping; final model is a packaging smoke, not a metric source.
     train_idx = idx
     val_idx = idx[: min(len(idx), max(8, cfg.batch_size))]
-    model, history, _pred, info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + 999)
+    model, history, _pred, info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + 999, y_target=y_target)
     cfg.epochs = old_epochs
     return model, history, info
 
@@ -452,7 +490,7 @@ def main() -> int:
     (output_dir / "config.resolved.json").write_text(json.dumps(asdict(cfg), indent=2) + "\n")
 
     t0 = time.time()
-    x, y, rows, labels, data_info, no_train, nonaves = make_dataset(cfg)
+    x, y, y_soft, rows, labels, data_info, no_train, nonaves = make_dataset(cfg)
     sites = sorted({r["site"] for r in rows})
     if cfg.fold_sites:
         sites = [s for s in cfg.fold_sites if s in sites]
@@ -472,7 +510,7 @@ def main() -> int:
             folds.append({"site": site, "status": "skipped", "reason": "too_few_valid_classes", "n_val": int(len(val_idx)), "valid_classes": valid_classes})
             continue
         fold_t0 = time.time()
-        _model, history, pred, train_info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + fold_num)
+        _model, history, pred, train_info = train_one_fold(x, y, rows, train_idx, val_idx, labels, cfg, cfg.seed + fold_num, y_target=y_soft)
         yy = y[val_idx].numpy()
         fold = {
             "site": site,
@@ -505,7 +543,7 @@ def main() -> int:
         all_y.append(yy.astype(np.float32))
         (output_dir / "fold_metrics_live.json").write_text(json.dumps(folds, indent=2) + "\n")
 
-    final_model, final_history, final_info = train_final_model(x, y, rows, labels, cfg)
+    final_model, final_history, final_info = train_final_model(x, y, rows, labels, cfg, y_target=y_soft)
     exports = export_final_model(final_model, x, output_dir, cfg)
 
     complete = [f for f in folds if f.get("status") == "complete"]
