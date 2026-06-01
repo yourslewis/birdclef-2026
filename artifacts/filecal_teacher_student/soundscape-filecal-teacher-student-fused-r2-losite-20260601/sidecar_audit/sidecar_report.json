@@ -1,0 +1,15 @@
+{
+  "path": "artifacts/filecal_teacher_student/soundscape-filecal-teacher-student-fused-r2-losite-20260601/sidecar_audit/sidecars/filecal_teacher_student_72to234.csv",
+  "rows": 240,
+  "class_columns": 234,
+  "matched_proxy_rows": 156,
+  "unmatched_proxy_rows": 84,
+  "finite": true,
+  "nonconstant_columns": 234,
+  "value_stats": {
+    "min": 7.489171821362106e-06,
+    "max": 1.0,
+    "mean": 0.41776037216186523,
+    "std": 0.285552442073822
+  }
+}

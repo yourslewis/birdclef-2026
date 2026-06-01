@@ -4903,3 +4903,13 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Sidecar verifier: selected 72→234 mappings were finite/nonconstant and audited vs v616. Best local sidecar was `0.991112` / 42 valid, lift vs v616 `-0.002368`, so `submit_approved=false`; no Kaggle slot used.
 - Decision: keep as a strong landscape point and reject direct slot. Next exact action is a hidden-safe package/student path for the file-calibration signal or a class/file movement diagnostic explaining why row/file gains do not transfer to v616 proxy sidecars.
 - Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic.md`, metrics/audit dir `artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T0224Z.md`.
+
+## 2026-06-01 04:25 UTC — File-calibration teacher student
+
+- Live Kaggle Bearer check: UTC slots `0/5`; latest v653/v654/v655 scored `0.947`/`0.949`/`0.949`; public best remains `0.950` from v644/v647. No active BirdCLEF local/trainer jobs; trainer GPUs busy with unrelated HSTU/LRM work, so this run used local CPU.
+- Added and ran `scripts/birdclef_filecal_teacher_student.py`, distilling the 02:20 file-level calibration teacher (PANNs row + DyMN10 file mean alpha 0.35) into a fused-embedding context MLP student.
+- Metrics: row AUC `0.711995`, file-MIL `0.783017`, no-train `0.638918`, non-Aves `0.711995` across 6 leave-site folds. Delta vs teacher mapping: row `+0.027133`, file-MIL `+0.038952`.
+- Sidecar audit: best `filecal_student_w02` local AUC `0.990896` / 42 valid, lift vs v616 `-0.002585`; finite/nonconstant but `submit_approved=false`.
+- Decision: keep as best current 72-label row/file data point; reject early-day slot. Next exact action: class/site movement selector for the file-cal student or hidden-safe packaging path with stricter v616 gates.
+- Updated performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260601T0421Z_filecal_teacher_student.md`, queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T0425Z.md`.
+

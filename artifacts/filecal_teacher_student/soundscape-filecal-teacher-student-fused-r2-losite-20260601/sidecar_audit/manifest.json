@@ -1,0 +1,97 @@
+{
+  "name": "birdclef_filecal_teacher_student_sidecar_audit",
+  "description": "No-submit audit of hidden-safe file-calibration teacher student OOF sidecar wrapped into 234-class v616 proxy matrix.",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "v616 anchor raw output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "Actual submitted v616 final output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "filecal_student_sidecar": {
+      "role": "analysis_branch",
+      "description": "Fused-embedding student distilled from PANNs-row + DyMN10-filemean calibration teacher; 72-label scope anchor-filled elsewhere.",
+      "path": "artifacts/filecal_teacher_student/soundscape-filecal-teacher-student-fused-r2-losite-20260601/sidecar_audit/sidecars/filecal_teacher_student_72to234.csv",
+      "hidden_safe_status": "student_model_oof_proxy_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "member": "v616_final"
+    },
+    {
+      "name": "filecal_student_w005",
+      "type": "rank_blend",
+      "description": "0.5% filecal student sidecar",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "filecal_student_sidecar": 0.005
+      }
+    },
+    {
+      "name": "filecal_student_w01",
+      "type": "rank_blend",
+      "description": "1.0% filecal student sidecar",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "filecal_student_sidecar": 0.01
+      }
+    },
+    {
+      "name": "filecal_student_w02",
+      "type": "rank_blend",
+      "description": "2.0% filecal student sidecar",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "filecal_student_sidecar": 0.02
+      }
+    },
+    {
+      "name": "filecal_student_w04",
+      "type": "rank_blend",
+      "description": "4.0% filecal student sidecar",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "filecal_student_sidecar": 0.04
+      }
+    },
+    {
+      "name": "filecal_student_w08",
+      "type": "rank_blend",
+      "description": "8.0% filecal student sidecar",
+      "weights": {
+        "anchor_v616_raw": 0.92,
+        "filecal_student_sidecar": 0.08
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 200,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "labels_csv": "data/train_soundscapes_labels.csv"
+}

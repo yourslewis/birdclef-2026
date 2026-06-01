@@ -1,0 +1,1088 @@
+{
+  "created_utc": "2026-06-01T04:21:25Z",
+  "experiment_id": "soundscape-filecal-teacher-student-fused-r2-losite-20260601",
+  "branch_family": "train_soundscapes hidden-safe file-calibration teacher student",
+  "config": {
+    "experiment_id": "soundscape-filecal-teacher-student-fused-r2-losite-20260601",
+    "data_root": "data",
+    "output_dir": "artifacts/filecal_teacher_student/soundscape-filecal-teacher-student-fused-r2-losite-20260601",
+    "embedding_npz": "artifacts/fused_soundscape_embeddings/dymn10_panns_cnn14_train_soundscapes_20260527/fused_embeddings.npz",
+    "embedding_key": "embedding",
+    "panns_oof_npz": "artifacts/soundscape_sequence_mining/soundscape-sequence-panns-cnn14-nonaves-notrain-rowonly-losite-ep24-20260531/leave_site_predictions.npz",
+    "dymn_oof_npz": "artifacts/soundscape_sequence_mining/soundscape-sequence-dymn10-nonaves-notrain-r2-filectx-filemil-losite-ep22-20260531/leave_site_predictions.npz",
+    "panns_pred_key": "row_only_pred",
+    "dymn_pred_key": "context_pred",
+    "teacher_alpha": 0.35,
+    "teacher_file_mode": "mean",
+    "context_radius": 2,
+    "include_prev_next": true,
+    "include_local_mean": true,
+    "include_local_max": true,
+    "include_file_mean": true,
+    "include_file_max": true,
+    "include_time_features": true,
+    "hidden_dim": 384,
+    "dropout": 0.35,
+    "epochs": 24,
+    "batch_size": 80,
+    "learning_rate": 0.00035,
+    "weight_decay": 0.0015,
+    "seed": 611,
+    "hard_loss_weight": 0.55,
+    "soft_loss_weight": 0.45,
+    "pos_weight_power": 0.4,
+    "pos_weight_clip": 12.0,
+    "site_balanced_sampling": true,
+    "min_val_rows": 40,
+    "min_valid_classes": 2,
+    "anchor_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+    "v616_csv": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+    "bootstrap_iters": 200
+  },
+  "data_profile": {
+    "n_taxonomy_labels": 234,
+    "n_training_labels": 72,
+    "n_no_train_labels": 28,
+    "n_nonaves_labels": 72,
+    "n_soundscape_positive_labels": 75,
+    "scope": "nonaves_or_no_train",
+    "n_windows": 1478,
+    "n_files": 66,
+    "n_sites": 9,
+    "site_counts": {
+      "S03": 48,
+      "S08": 120,
+      "S09": 38,
+      "S13": 48,
+      "S15": 96,
+      "S18": 30,
+      "S19": 72,
+      "S22": 954,
+      "S23": 72
+    },
+    "positive_cells": 5420,
+    "density": 0.05093219131231308
+  },
+  "teacher_info": {
+    "panns_oof_rows": 1314,
+    "dymn_oof_rows": 1314,
+    "teacher_rows": 1314,
+    "teacher_alpha": 0.35,
+    "teacher_file_mode": "mean",
+    "teacher_stats": {
+      "min": 2.832251198015001e-07,
+      "max": 0.9646831750869751,
+      "mean": 0.05308308079838753,
+      "std": 0.08071757107973099
+    }
+  },
+  "feature_info": {
+    "row_embedding_dim": 3008,
+    "context_feature_dim": 21060,
+    "n_files": 66,
+    "context_radius": 2
+  },
+  "folds": [
+    {
+      "site": "S03",
+      "n_train": 1266,
+      "n_val": 48,
+      "n_val_files": 2,
+      "valid_classes_raw": 4,
+      "training": {
+        "best_train_loss": 0.11215188664694627,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.22752526352802913
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.13912787909309068
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.1291555717587471
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.1258408283193906
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.1224781853457292
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.120236778135101
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.11935923000176747
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.11781192198395729
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.11789377455910047
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.11669968751569589
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.11604261497656504
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.11519955992698669
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.11427779520551364
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.1148262223849694
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.11420296852787336
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.11434316175679365
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.11336774975061417
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.11365051480631033
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.11372902393341064
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.11280115892489752
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.11336978375911713
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.11241228642563025
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.11227929517626763
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.11215188664694627
+          }
+        ],
+        "seconds": 19.796344995498657
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.6493089375901876,
+          "valid_classes": 4
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.37240259740259746,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.6493089375901876,
+          "valid_classes": 4
+        },
+        "file_mil_all": {
+          "macro_auc": 1.0,
+          "valid_classes": 2,
+          "n_files": 2
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.8071924603174603,
+          "valid_classes": 4
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.6178571428571429,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.8071924603174603,
+          "valid_classes": 4
+        },
+        "file_mil_all": {
+          "macro_auc": 1.0,
+          "valid_classes": 2,
+          "n_files": 2
+        }
+      }
+    },
+    {
+      "site": "S08",
+      "n_train": 1194,
+      "n_val": 120,
+      "n_val_files": 5,
+      "valid_classes_raw": 18,
+      "training": {
+        "best_train_loss": 0.09555297642946244,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.19733753676215807
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.1175899883111318
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.11068454645574093
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.10655494059125582
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.10398167073726654
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.10219344856838385
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.10171788806716602
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.10017742464939754
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.09944850442310174
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.09925742161770662
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.09896997126440207
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.09839819048841794
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.09779062556723754
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.09793190136551858
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.09774472278853258
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.09706643857061863
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.0962665282189846
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.0966643647601207
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.09665669401486715
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.09714422685404618
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.09625425885121028
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.09603454930086931
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.09614870498577753
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.09555297642946244
+          }
+        ],
+        "seconds": 19.38320302963257
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.6098533998165049,
+          "valid_classes": 18
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.5992271292174758,
+          "valid_classes": 17
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.6098533998165049,
+          "valid_classes": 18
+        },
+        "file_mil_all": {
+          "macro_auc": 0.627450980392157,
+          "valid_classes": 17,
+          "n_files": 5
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.5663107120591829,
+          "valid_classes": 18
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.570564283356782,
+          "valid_classes": 17
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.5663107120591829,
+          "valid_classes": 18
+        },
+        "file_mil_all": {
+          "macro_auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_files": 5
+        }
+      }
+    },
+    {
+      "site": "S13",
+      "n_train": 1266,
+      "n_val": 48,
+      "n_val_files": 2,
+      "valid_classes_raw": 6,
+      "training": {
+        "best_train_loss": 0.10759065560996532,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.22070048948129017
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.13352794982492924
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.12500383729736012
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.12067619040608406
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.11791691184043884
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.11582255500058333
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.11540516515572866
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.11328754660983881
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.112258721763889
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.11239348016679288
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.11176894021530946
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.11150480508804321
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.11023803142209848
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.11077128474911054
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.11081525149444739
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.11018886590997377
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.10906549592812856
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.10928340889513492
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.10964658843974272
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.10948469812671344
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.10904638928671678
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.1082974041501681
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.10872846134006978
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.10759065560996532
+          }
+        ],
+        "seconds": 19.556138038635254
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.9580102237654321,
+          "valid_classes": 6
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.927734375,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.9580102237654321,
+          "valid_classes": 6
+        },
+        "file_mil_all": {
+          "macro_auc": 1.0,
+          "valid_classes": 5,
+          "n_files": 2
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.8060474537037038,
+          "valid_classes": 6
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.5959201388888888,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.8060474537037038,
+          "valid_classes": 6
+        },
+        "file_mil_all": {
+          "macro_auc": 1.0,
+          "valid_classes": 5,
+          "n_files": 2
+        }
+      }
+    },
+    {
+      "site": "S19",
+      "n_train": 1242,
+      "n_val": 72,
+      "n_val_files": 3,
+      "valid_classes_raw": 16,
+      "training": {
+        "best_train_loss": 0.09488053458432356,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.20016584768891335
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.11735674987236659
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.10954524079958598
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.10634012644489606
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.1036366214354833
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.10181874670088291
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.10150024431447188
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.09921289645135403
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.09935950475434462
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.09854517405231794
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.09835616524020831
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.09775823093950749
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.09711875009040037
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.09715953183670839
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.09716520346701145
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.09682186444600423
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.09656842288871606
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.09594116446872553
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.09609385716418425
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.09572396216293176
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.09577372881273429
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.09542007173101107
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.09574473525087039
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.09488053458432356
+          }
+        ],
+        "seconds": 19.610294818878174
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.5908115324398643,
+          "valid_classes": 16
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.4852602693344552,
+          "valid_classes": 11
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.5908115324398643,
+          "valid_classes": 16
+        },
+        "file_mil_all": {
+          "macro_auc": 0.5625,
+          "valid_classes": 16,
+          "n_files": 3
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.6475832685489908,
+          "valid_classes": 16
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.5683776951015274,
+          "valid_classes": 11
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.6475832685489908,
+          "valid_classes": 16
+        },
+        "file_mil_all": {
+          "macro_auc": 0.53125,
+          "valid_classes": 16,
+          "n_files": 3
+        }
+      }
+    },
+    {
+      "site": "S22",
+      "n_train": 360,
+      "n_val": 954,
+      "n_val_files": 40,
+      "valid_classes_raw": 15,
+      "training": {
+        "best_train_loss": 0.09374068025499582,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.4340033791959286
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.21762382611632347
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.16154021583497524
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.1432209275662899
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.1296626441180706
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.12063899543136358
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.11796567495912313
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.11451270245015621
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.10587660782039165
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.10959421843290329
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.10394405853003263
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.1024843230843544
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.10150067135691643
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.10108914412558079
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.0995502257719636
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.0994105264544487
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.09794066473841667
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.09560977201908827
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.09640267491340637
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.09374068025499582
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.09671025443822145
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.0950285866856575
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.09493163973093033
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.09539957996457815
+          }
+        ],
+        "seconds": 2.6431937217712402
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.6603472133493532,
+          "valid_classes": 15
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.6686135309630195,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.6603472133493532,
+          "valid_classes": 15
+        },
+        "file_mil_all": {
+          "macro_auc": 0.6748197998965922,
+          "valid_classes": 15,
+          "n_files": 40
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.5992991485711063,
+          "valid_classes": 15
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.6399923616061898,
+          "valid_classes": 2
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.5992991485711063,
+          "valid_classes": 15
+        },
+        "file_mil_all": {
+          "macro_auc": 0.6243190227235146,
+          "valid_classes": 15,
+          "n_files": 40
+        }
+      }
+    },
+    {
+      "site": "S23",
+      "n_train": 1242,
+      "n_val": 72,
+      "n_val_files": 3,
+      "valid_classes_raw": 8,
+      "training": {
+        "best_train_loss": 0.0961911557863156,
+        "history": [
+          {
+            "epoch": 1,
+            "train_loss": 0.20511833305160204
+          },
+          {
+            "epoch": 2,
+            "train_loss": 0.12130762301385403
+          },
+          {
+            "epoch": 3,
+            "train_loss": 0.11200770661234856
+          },
+          {
+            "epoch": 4,
+            "train_loss": 0.10855351376036802
+          },
+          {
+            "epoch": 5,
+            "train_loss": 0.1061911794046561
+          },
+          {
+            "epoch": 6,
+            "train_loss": 0.10385503719250361
+          },
+          {
+            "epoch": 7,
+            "train_loss": 0.10243670952816804
+          },
+          {
+            "epoch": 8,
+            "train_loss": 0.10167332937320074
+          },
+          {
+            "epoch": 9,
+            "train_loss": 0.10169842181106409
+          },
+          {
+            "epoch": 10,
+            "train_loss": 0.10077431028087934
+          },
+          {
+            "epoch": 11,
+            "train_loss": 0.10025765001773834
+          },
+          {
+            "epoch": 12,
+            "train_loss": 0.09929618512590727
+          },
+          {
+            "epoch": 13,
+            "train_loss": 0.09801281007627646
+          },
+          {
+            "epoch": 14,
+            "train_loss": 0.0988055677463611
+          },
+          {
+            "epoch": 15,
+            "train_loss": 0.09823876693844795
+          },
+          {
+            "epoch": 16,
+            "train_loss": 0.09884143061935902
+          },
+          {
+            "epoch": 17,
+            "train_loss": 0.09766068744162719
+          },
+          {
+            "epoch": 18,
+            "train_loss": 0.09819235764443875
+          },
+          {
+            "epoch": 19,
+            "train_loss": 0.0978112464149793
+          },
+          {
+            "epoch": 20,
+            "train_loss": 0.09676219510535398
+          },
+          {
+            "epoch": 21,
+            "train_loss": 0.09766631064315637
+          },
+          {
+            "epoch": 22,
+            "train_loss": 0.09650111384689808
+          },
+          {
+            "epoch": 23,
+            "train_loss": 0.09649146621425947
+          },
+          {
+            "epoch": 24,
+            "train_loss": 0.0961911557863156
+          }
+        ],
+        "seconds": 19.48715591430664
+      },
+      "student": {
+        "macro_auc_all": {
+          "macro_auc": 0.8036375479963842,
+          "valid_classes": 8
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.7802709394160544,
+          "valid_classes": 6
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.8036375479963842,
+          "valid_classes": 8
+        },
+        "file_mil_all": {
+          "macro_auc": 0.8333333333333334,
+          "valid_classes": 6,
+          "n_files": 3
+        }
+      },
+      "teacher": {
+        "macro_auc_all": {
+          "macro_auc": 0.6827365756981418,
+          "valid_classes": 8
+        },
+        "macro_auc_no_train": {
+          "macro_auc": 0.6347998618736166,
+          "valid_classes": 6
+        },
+        "macro_auc_nonaves": {
+          "macro_auc": 0.6827365756981418,
+          "valid_classes": 8
+        },
+        "file_mil_all": {
+          "macro_auc": 0.75,
+          "valid_classes": 6,
+          "n_files": 3
+        }
+      }
+    }
+  ],
+  "summary": {
+    "n_folds": 6,
+    "row_macro_auc_mean": 0.711994809159621,
+    "file_mil_macro_auc_mean": 0.7830173522703471,
+    "no_train_macro_auc_mean": 0.6389181402222671,
+    "nonaves_macro_auc_mean": 0.711994809159621,
+    "teacher_row_macro_auc_mean": 0.6848616031497642,
+    "teacher_file_mil_macro_auc_mean": 0.7440654253558798
+  },
+  "final_train": {
+    "best_train_loss": 0.09918724517855379,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.19947071694251564
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.12253341979036729
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.11415634759598309
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.11011272348049614
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.10797868793209393
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.10606911374876897
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.10566909683661328
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.10442840587347746
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.10348750971671608
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.10309241246432066
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.10235242152379619
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.10179357168575127
+      },
+      {
+        "epoch": 13,
+        "train_loss": 0.10205137357115746
+      },
+      {
+        "epoch": 14,
+        "train_loss": 0.10213153229819404
+      },
+      {
+        "epoch": 15,
+        "train_loss": 0.10076659741914934
+      },
+      {
+        "epoch": 16,
+        "train_loss": 0.100641044581102
+      },
+      {
+        "epoch": 17,
+        "train_loss": 0.10108561524086529
+      },
+      {
+        "epoch": 18,
+        "train_loss": 0.1005167355760932
+      },
+      {
+        "epoch": 19,
+        "train_loss": 0.10058186948299408
+      },
+      {
+        "epoch": 20,
+        "train_loss": 0.10009738616645336
+      },
+      {
+        "epoch": 21,
+        "train_loss": 0.0998840948773755
+      },
+      {
+        "epoch": 22,
+        "train_loss": 0.09926665915797155
+      },
+      {
+        "epoch": 23,
+        "train_loss": 0.09975190367549658
+      },
+      {
+        "epoch": 24,
+        "train_loss": 0.09918724517855379
+      }
+    ],
+    "seconds": 23.74621272087097
+  },
+  "prediction_stats": {
+    "min": 7.073176675476134e-06,
+    "max": 0.9542946815490723,
+    "mean": 0.12309309840202332,
+    "std": 0.14746055006980896,
+    "nonconstant_labels": 72
+  },
+  "decision_hint": "comparison-grade hidden-safe student data point; require v616 sidecar/private verifier lift before submission"
+}
