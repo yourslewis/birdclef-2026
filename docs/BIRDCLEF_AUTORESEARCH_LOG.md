@@ -4958,3 +4958,12 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - TTA alpha=0.25 DOWNGRADED READY→redundant: winner notebook already runs tta_shifts=[0,1,-1,2,-2] on proto; output-pool proxy is TTA-on-TTA, +0.000364 lift non-transferable. Not a slot candidate.
 - RegNetY-008 soft1279 distill (3rd distinct backbone) trained (79s GPU0): row 0.733599 / file-MIL 0.815303 / pooled 0.750041; DEV cand_auc 0.828470, weak-AUC 0.791671, decorr 0.685253, blend_w 0.02, site_q05 -1.40e-05, file_q05 -1.05e-04 → gate_pass false. Orthogonal+competent distill property is BACKBONE-AGNOSTIC but frontier E per-column stronger on every measurable proxy class. Binding constraint = 42/234 proxy ceiling, not the model.
 - No slot spent (early UTC, no DEV-passer). STOP rule intact (all representation-level). Updated perf table (md+jsonl), 3 ledgers, ranked queue ranked_queue_20260601T1440Z.md. Next: package a 234-class hidden-safe student for a guarded late-window LB probe, or try a stronger/multi-teacher distill for a per-column win.
+
+## 2026-06-01 16:20 UTC — Distill 3-backbone stack DEV-gate (diversity lane)
+- Slots 0/5 (latest subs 2026-05-31; ~7.6h to reset); public best 0.950 (v644/v647); GPUs free; no active jobs.
+- NEW datapoint: rank-mean stack of ConvNeXt-w0.7 + ConvNeXt-w0.85 + RegNetY-008 distilled leave-site sidecars.
+  - cand_auc 0.834039; weak-class AUC 0.831885 (HIGHEST diversity stream ever); weak-row AUC 0.877828; rank_decorr 0.737421; DEV 0.002447 (highest distill DEV); blend_best_weight 0.0; both q05 0.0; gate_pass=false -> DEMOTE no slot.
+  - Reading: stacking distinct orthogonal+competent backbones raises competence+DEV to record but blend weight still pins 0 -> the 42/234 PROXY CEILING is the binding limiter, not model competence. Frontier E is per-column stronger on every measurable proxy class.
+- Decision: HOLD all 5 slots (early UTC, no DEV-passing candidate, STOP rule forbids filler head variants). Only honest path for the distill family = late-window guarded hidden-safe 234-class LB probe.
+- Next exact action: package distill stream/stack as a hidden-safe 234-class kernel for a late-window (<3h to reset) guarded LB probe; meanwhile continue scouting a genuinely new accessible public foundation backbone.
+- Artifacts: artifacts/diversity_scout/distill_stack_20260601/; ledger 20260601T1620Z_distill_stack3_dev_gate.md; queue specs/birdclef-hillclimb-cron-20260525/queue_20260601T1620Z.md.
