@@ -1,0 +1,51 @@
+{
+  "frontier": {
+    "definition": "rankblend(proto*0.60 + sed*0.40) of 0.950 EoS8 PowerOpt branches",
+    "proto_csv": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_protossm.csv",
+    "sed_csv": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_sed.csv",
+    "E_macro_auc": 0.9930290985314287,
+    "valid_class_count": 42,
+    "matched_rows": 190,
+    "weak_class_count": 14,
+    "weak_row_count": 63
+  },
+  "lambda": 0.01,
+  "weights_swept": [
+    -0.2,
+    -0.15,
+    -0.1,
+    -0.05,
+    0.02,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.65,
+    0.8,
+    1.0
+  ],
+  "candidates": [
+    {
+      "candidate": "mobilevitv2_050_distill",
+      "path": "artifacts/diversity_scout/mobilevitv2_050_distill_20260601/E_mobilevitv2_050_distill.csv",
+      "cand_auc": 0.7509237765314232,
+      "cand_auc_on_E_weak_classes": 0.7146009115905124,
+      "cand_auc_on_E_weak_rows": 0.7484267054113608,
+      "rank_decorrelation": 0.642348857379708,
+      "residual_error_corr": 0.5927267288153982,
+      "blend_best_weight": 0.02,
+      "blend_best_lift": 7.064325000361027e-05,
+      "blend_best_auc": 0.9930997417814323,
+      "blend_site_q05": -0.00037221605065369535,
+      "blend_site_p_gt_0": 0.66,
+      "blend_file_q05": -0.0003148824824208418,
+      "competence_above_chance_on_E_weak": 0.21460091159051242,
+      "DEV_score": 0.0014491297535317044,
+      "gate_pass": false
+    }
+  ],
+  "errors": []
+}

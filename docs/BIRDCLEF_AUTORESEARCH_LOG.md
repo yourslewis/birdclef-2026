@@ -4985,3 +4985,15 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Submitted **v659** ref `53267249` `alexycactus/birdclef-2026-cnn-inference-regnety` v3: dry-run 192x235, uniq100 99, hash `3ea9cb640d1476c4`, status `pending`, score `pending`.
 - Submitted **v660** ref `53267251` `kruzzcc/bc26-convnext-v3r3-active-a03` v1: dry-run 240x235, uniq100 90, hash `1f50509ddc13b13e`, status `pending`, score `pending`.
 - Rejected malformed/nonfinite/dedup public candidates during rescout: Nina/Anthony/Fleong/Ahmed EoS forks and Liuyanfeng JAX Perch. Updated canonical performance table/jsonl, ledger, and queue. Next: poll v657-v660 and ledger scored deltas vs 0.950 E and v616.
+
+## 2026-06-01 22:22 UTC — v659/v660 readout + MobileViT-v2 distinct-front-end data point
+
+- Live Kaggle Bearer check: UTC slots `5/5` used with ~1.63h to reset. Public best remains `0.950` from v644/v647; v616 secondary baseline remains ~`0.949`.
+- Submission readout: `v659` public RegNetY CNN source scored **0.860** (−0.090 vs E / −0.089 vs v616) -> reject. `v660` public ConvNeXt active-a03 source scored **0.946** (−0.004 vs E / −0.003 vs v616) -> reject below frontier but keep as a useful late-window datapoint. `v657` and `v658` remain pending.
+- Active jobs: no BirdCLEF local/trainer jobs at start; trainer GPU1 was free (GPU0 occupied by unrelated HSTU/LRM). Used GPU1 for one STOP-rule-safe representation-level data point while slots were capped.
+- New datapoint: `soundscape-native-mobilevitv2_050-soft1279teacher-distill-losite-allcls-ep6-20260601`, a MobileViT-v2-050 front-end distilled from the competent soft1279 native-B0 teacher (`w=0.7`) on official train_soundscapes, all 234 labels, leave-one-site OOF.
+- Metrics: row AUC `0.653518`, file-MIL `0.720675`, no-train row `0.609974`, non-Aves row `0.654489`, pooled row `0.665982` / 71 valid, pooled no-train `0.741513` / 28 valid. TorchScript exported (`5.242MB`) with finite smoke.
+- DEV gate vs 0.950 frontier E: cand_auc `0.750924`, weak-class AUC `0.714601`, rank_decorrelation `0.642349`, blend_best_weight `0.02`, blend lift `+0.0000706`, site_q05 `-0.000372`, file_q05 `-0.000315`, DEV `0.001449`, `gate_pass=false`.
+- Decision: **DEMOTE / data point only.** MobileViT-v2 is structurally different and moderately competent, but it is not robustly additive to E; both q05 guards are negative, so no slot would be justified after reset. The STOP rule remained intact (no shared-embedding head knob work).
+- Updated canonical performance table/jsonl, per-model ledger `artifacts/model_data_point_ledger/20260601T2222Z_mobilevitv2_050_distill_dev_gate.md`, late-slot ledger score update, DEV scout `artifacts/diversity_scout/mobilevitv2_050_distill_20260601/scout/`, and ranked queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T2222Z.md`.
+- Next exact action: poll `v657`/`v658` until scored; if neither ties/improves, hold reset slots for only a verifier-grade source-clean candidate with genuine front-end/data processing difference. Do not run another standalone distinct CNN unless it has a concrete frontier-blend path; current evidence says standalone transfer is poor.

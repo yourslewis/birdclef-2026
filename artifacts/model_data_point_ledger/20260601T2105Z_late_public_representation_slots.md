@@ -10,10 +10,15 @@
 |---|---:|---|---:|---|---|---|
 | v657 | 53267235 | `jungchanryu/birdclef-submission2` | pending | pending | v36; 3x235; uniq100=97; hash=01c39b92aa147bb4 | submitted; compare vs E 0.950 and v616 0.949 when scored |
 | v658 | 53267236 | `pilkwang/birdclef-2026-eos-oof-gated-pcen` | pending | pending | v9; 3x235; uniq100=97; hash=abad620908ef0d89 | submitted; compare vs E 0.950 and v616 0.949 when scored |
-| v659 | 53267249 | `alexycactus/birdclef-2026-cnn-inference-regnety` | pending | pending | v3; 192x235; uniq100=99; hash=3ea9cb640d1476c4 | submitted; compare vs E 0.950 and v616 0.949 when scored |
-| v660 | 53267251 | `kruzzcc/bc26-convnext-v3r3-active-a03` | pending | pending | v1; 240x235; uniq100=90; hash=1f50509ddc13b13e | submitted; compare vs E 0.950 and v616 0.949 when scored |
+| v659 | 53267249 | `alexycactus/birdclef-2026-cnn-inference-regnety` | **0.860** | complete | v3; 192x235; uniq100=99; hash=3ea9cb640d1476c4 | reject: -0.090 vs E 0.950 / -0.089 vs v616 |
+| v660 | 53267251 | `kruzzcc/bc26-convnext-v3r3-active-a03` | **0.946** | complete | v1; 240x235; uniq100=90; hash=1f50509ddc13b13e | reject below frontier: -0.004 vs E 0.950 / -0.003 vs v616 |
 
 ## Critic / verifier decision
 - All submitted candidates had Kaggle session status COMPLETE, `test_soundscapes` + `sample_submission` + `submission.csv` source markers, finite/nonconstant public outputs, 235 columns, and nonduplicate dry-run hashes versus the local recent-fill guard.
 - Rejected during this run: malformed/nonfinite public outputs for Nina/Anthony/Fleong/Ahmed EoS forks and Liuyanfeng JAX Perch; duplicate/known-lower sources were not submitted.
 - These are guarded late-window data points, not promotions over the 0.950 frontier. Scores pending at write time.
+
+## 22:22 UTC live score update
+- `v659` completed at public LB `0.860` (−0.090 vs 0.950 frontier E; −0.089 vs v616): reject standalone RegNetY public source.
+- `v660` completed at public LB `0.946` (−0.004 vs E; −0.003 vs v616): useful data point but below frontier.
+- `v657` and `v658` remain pending; slots are `5/5` used until reset.
