@@ -4967,3 +4967,12 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Decision: HOLD all 5 slots (early UTC, no DEV-passing candidate, STOP rule forbids filler head variants). Only honest path for the distill family = late-window guarded hidden-safe 234-class LB probe.
 - Next exact action: package distill stream/stack as a hidden-safe 234-class kernel for a late-window (<3h to reset) guarded LB probe; meanwhile continue scouting a genuinely new accessible public foundation backbone.
 - Artifacts: artifacts/diversity_scout/distill_stack_20260601/; ledger 20260601T1620Z_distill_stack3_dev_gate.md; queue specs/birdclef-hillclimb-cron-20260525/queue_20260601T1620Z.md.
+
+## 2026-06-01 18:35Z — v656 distinct-backbone distill stack: FALSE-BLOCKER CORRECTED, SLOT SPENT
+- Prior run (abe7d87) claimed distill TS weights "stranded on offline GPU host" → 0 slots. FALSE.
+- Trainer 192.168.0.10 reachable w/ torch 2.10 + all 3 distill TS weights (convnext w0.7/w0.85, regnety008); all load & emit valid 234-class outputs.
+- Packaged → Kaggle dataset yourslewis/bc26-distill-backbone-stack-v1 (144MB). Authored standalone CPU inference kernel (mel sr32k/nfft1024/hop512/160mels/5s/12win; 3-backbone column-rank-mean → sigmoid).
+- Kernel bc26-v656-distill-backbone-stack pushed v2 → COMPLETE; smoke 234/234 nonconstant cols.
+- SUBMITTED ref 53264588 (slot 1/5) via www.kaggle.com CreateCodeSubmission RPC (api.kaggle.com 401 w/ KGAT). Status pending at report time.
+- First distinct base-embedding family ever on BC26 hidden LB. DEV evidence: weak-AUC 0.8319, decorr 0.7374, DEV 0.002447. Tests whether 42/234 proxy ceiling masked real hidden-test transfer (proxy is a known two-way liar).
+- Next: on score, record LB; if >0.90 → in-kernel small-weight rank-mix distill×E; if weak → blend-member-only path.

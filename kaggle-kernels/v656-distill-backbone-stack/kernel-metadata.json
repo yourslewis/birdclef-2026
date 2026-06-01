@@ -1,0 +1,19 @@
+{
+  "id": "yourslewis/bc26-v656-distill-backbone-stack",
+  "title": "BC26 v656 Distill Backbone Stack",
+  "code_file": "script.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "competition_sources": [
+    "birdclef-2026"
+  ],
+  "dataset_sources": [
+    "yourslewis/bc26-distill-backbone-stack-v1"
+  ],
+  "kernel_sources": [],
+  "model_sources": []
+}
