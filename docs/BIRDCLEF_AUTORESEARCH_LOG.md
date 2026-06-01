@@ -4882,3 +4882,14 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Local xSED proxy audit vs v616: v653 `0.990031` (`-0.003450`), v654 `0.991227` (`-0.002253`), v655 `0.993290` (`-0.000191`). All are late-slot exploratory, not locally promoted winners.
 - Runtime verifier: all three Kaggle kernels reached COMPLETE; public dry-run `submission.csv` files were finite/nonconstant `3x235`, with unique rows and no bad values.
 - Canonical artifacts updated: `artifacts/model_data_point_ledger/performance_table.md`, `.jsonl`, per-model ledgers, `artifacts/source_winner_private_verifier_20260531T2225Z/`, and `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260531T2240Z.md`.
+
+## 2026-06-01 00:40 UTC — v653-v655 readout + fused DyMN10/PANNs file-context data point
+
+- Live Kaggle Bearer check: UTC slots reset to `0/5`; public best remains `0.950` from `v644`/`v647`.
+- Score readout from late-window EoS8 frontier verifiers: `v653` proto080/sed020 scored `0.947`; `v654` proto070/sed030 scored `0.949`; `v655` proto050/sed050 scored `0.949`. All are below the live `0.950`; scalar frontier is demoted for early-day slots.
+- Trained `soundscape-sequence-fused-dymn10-panns-nonaves-notrain-r2-filectx-filemil-losite-ep22-20260601`: official train_soundscapes, `1,478` windows / `66` files / `9` sites / `72` non-Aves/no-train labels, fused DyMN10+PANNs embeddings, radius-2 temporal context + file mean/max + file-MIL.
+- Metrics: context row AUC `0.652377` / 6 folds, row-only `0.620622`, file-MIL `0.722866`, no-train `0.567523`, non-Aves `0.652377`. Context improved same-run row-only by `+0.031755` row and `+0.027018` file-MIL; one held-out site was negative (S13 `-0.013518`).
+- Baseline comparison: vs fused 72 row-only `+0.036211` row / `-0.001051` file-MIL; vs DyMN10 filectx `+0.010575` row / `-0.022838` file-MIL; vs PANNs 72 row-only `-0.022108` row / `+0.031710` file-MIL.
+- Sidecar audit: best 2% scoped 72→234 sidecar local AUC `0.990914` / 42 valid, lift vs v616 `-0.002567`, lift vs anchor `+0.000523`, rank corr `0.999611`; `submit_approved=false`.
+- Decision: keep as landscape data point; reject direct/sidecar submission. Next exact action: file-level calibration/mapping diagnostic using the best row/file candidates rather than another raw low-weight sidecar.
+- Updated canonical performance table/jsonl, v653-v655 score rows, per-model ledger `artifacts/model_data_point_ledger/20260601T0029Z_fused_nonaves_notrain_filectx_filemil_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260601T0029Z_fused_nonaves_notrain_filectx_filemil_sidecar_audit/audit_summary.json`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T0020Z.md`.

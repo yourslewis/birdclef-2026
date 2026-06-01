@@ -22,7 +22,8 @@ Source: `ryutoyoda/birdclef-2026-exp013-eos8-sidecar` lineage, private repo fork
 - Kaggle public-session status: COMPLETE before submission.
 - Output preflight: rows `3`, cols `235`, unique rows `3`, bad values `0`, uniq_first100 `96`, min/max `0.45959768` / `0.5250699`.
 - Competition submission ref: `53232692`.
-- Public LB score: pending at logging time.
+- Public LB score: `0.949` (scored by 2026-06-01 00:16 UTC).
+- Public delta: -0.001 vs live public best 0.950 / +0.000 vs v616-era 0.949.
 
 ## Decision
-Submitted as late-UTC-day slot-fill / high-information frontier verifier. Not promoted as a model-quality winner locally; monitor public LB, with v647/v644 `0.950` as current live public best and v616 `0.949` as stale baseline.
+Tied old v616-era baseline but below live 0.950; no further scalar frontier slot early-day.
