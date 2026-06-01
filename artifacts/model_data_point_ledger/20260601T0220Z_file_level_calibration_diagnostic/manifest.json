@@ -1,0 +1,269 @@
+{
+  "name": "birdclef_file_level_calibration_diagnostic_20260601",
+  "description": "No-submit audit of file-level calibrated 72-label train_soundscape sidecars wrapped into 234-class v616 proxy matrices.",
+  "labels_csv": "data/train_soundscapes_labels.csv",
+  "anchor": "anchor_v616_raw",
+  "baseline": "v616_final",
+  "anchor_recipe": "anchor_only",
+  "baseline_recipe": "v616_baseline",
+  "allow_submit_approval": false,
+  "members": {
+    "anchor_v616_raw": {
+      "role": "anchor",
+      "description": "v616 anchor raw output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission_anchor_raw.csv",
+      "hidden_safe_status": "private_verifier_output"
+    },
+    "v616_final": {
+      "role": "baseline_tied_recipe",
+      "description": "submitted v616 final output",
+      "path": "artifacts/kaggle_outputs/v616-anchored-jung21-sed-blend/submission.csv",
+      "hidden_safe_status": "submitted_private_verifier_output",
+      "public_lb": 0.949
+    },
+    "pannsrow__dymn_filemean__a35": {
+      "role": "analysis_branch",
+      "description": "File-level calibration diagnostic candidate pannsrow__dymn_filemean__a35",
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemean__a35_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    },
+    "pannsrow__dymn_filemax__a35": {
+      "role": "analysis_branch",
+      "description": "File-level calibration diagnostic candidate pannsrow__dymn_filemax__a35",
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a35_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    },
+    "pannsrow__dymn_filemean__a50": {
+      "role": "analysis_branch",
+      "description": "File-level calibration diagnostic candidate pannsrow__dymn_filemean__a50",
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemean__a50_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    },
+    "pannsrow__dymn_filemax__a20": {
+      "role": "analysis_branch",
+      "description": "File-level calibration diagnostic candidate pannsrow__dymn_filemax__a20",
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a20_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    },
+    "pannsrow__dymn_filemax__a50": {
+      "role": "analysis_branch",
+      "description": "File-level calibration diagnostic candidate pannsrow__dymn_filemax__a50",
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a50_sidecar_234.csv",
+      "hidden_safe_status": "analysis_only_leave_site_oof_proxy_not_submission_package"
+    }
+  },
+  "recipes": [
+    {
+      "name": "anchor_only",
+      "type": "rank_blend",
+      "description": "Control: raw anchor",
+      "weights": {
+        "anchor_v616_raw": 1.0
+      }
+    },
+    {
+      "name": "v616_baseline",
+      "type": "member",
+      "description": "Control: submitted v616",
+      "member": "v616_final"
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a35_w005",
+      "type": "rank_blend",
+      "description": "0.5% file-calibrated sidecar pannsrow__dymn_filemean__a35",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "pannsrow__dymn_filemean__a35": 0.005
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a35_w01",
+      "type": "rank_blend",
+      "description": "1.0% file-calibrated sidecar pannsrow__dymn_filemean__a35",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "pannsrow__dymn_filemean__a35": 0.01
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a35_w02",
+      "type": "rank_blend",
+      "description": "2.0% file-calibrated sidecar pannsrow__dymn_filemean__a35",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "pannsrow__dymn_filemean__a35": 0.02
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a35_w04",
+      "type": "rank_blend",
+      "description": "4.0% file-calibrated sidecar pannsrow__dymn_filemean__a35",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "pannsrow__dymn_filemean__a35": 0.04
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a35_w005",
+      "type": "rank_blend",
+      "description": "0.5% file-calibrated sidecar pannsrow__dymn_filemax__a35",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "pannsrow__dymn_filemax__a35": 0.005
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a35_w01",
+      "type": "rank_blend",
+      "description": "1.0% file-calibrated sidecar pannsrow__dymn_filemax__a35",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "pannsrow__dymn_filemax__a35": 0.01
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a35_w02",
+      "type": "rank_blend",
+      "description": "2.0% file-calibrated sidecar pannsrow__dymn_filemax__a35",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "pannsrow__dymn_filemax__a35": 0.02
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a35_w04",
+      "type": "rank_blend",
+      "description": "4.0% file-calibrated sidecar pannsrow__dymn_filemax__a35",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "pannsrow__dymn_filemax__a35": 0.04
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a50_w005",
+      "type": "rank_blend",
+      "description": "0.5% file-calibrated sidecar pannsrow__dymn_filemean__a50",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "pannsrow__dymn_filemean__a50": 0.005
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a50_w01",
+      "type": "rank_blend",
+      "description": "1.0% file-calibrated sidecar pannsrow__dymn_filemean__a50",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "pannsrow__dymn_filemean__a50": 0.01
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a50_w02",
+      "type": "rank_blend",
+      "description": "2.0% file-calibrated sidecar pannsrow__dymn_filemean__a50",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "pannsrow__dymn_filemean__a50": 0.02
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemean__a50_w04",
+      "type": "rank_blend",
+      "description": "4.0% file-calibrated sidecar pannsrow__dymn_filemean__a50",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "pannsrow__dymn_filemean__a50": 0.04
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a20_w005",
+      "type": "rank_blend",
+      "description": "0.5% file-calibrated sidecar pannsrow__dymn_filemax__a20",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "pannsrow__dymn_filemax__a20": 0.005
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a20_w01",
+      "type": "rank_blend",
+      "description": "1.0% file-calibrated sidecar pannsrow__dymn_filemax__a20",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "pannsrow__dymn_filemax__a20": 0.01
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a20_w02",
+      "type": "rank_blend",
+      "description": "2.0% file-calibrated sidecar pannsrow__dymn_filemax__a20",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "pannsrow__dymn_filemax__a20": 0.02
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a20_w04",
+      "type": "rank_blend",
+      "description": "4.0% file-calibrated sidecar pannsrow__dymn_filemax__a20",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "pannsrow__dymn_filemax__a20": 0.04
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a50_w005",
+      "type": "rank_blend",
+      "description": "0.5% file-calibrated sidecar pannsrow__dymn_filemax__a50",
+      "weights": {
+        "anchor_v616_raw": 0.995,
+        "pannsrow__dymn_filemax__a50": 0.005
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a50_w01",
+      "type": "rank_blend",
+      "description": "1.0% file-calibrated sidecar pannsrow__dymn_filemax__a50",
+      "weights": {
+        "anchor_v616_raw": 0.99,
+        "pannsrow__dymn_filemax__a50": 0.01
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a50_w02",
+      "type": "rank_blend",
+      "description": "2.0% file-calibrated sidecar pannsrow__dymn_filemax__a50",
+      "weights": {
+        "anchor_v616_raw": 0.98,
+        "pannsrow__dymn_filemax__a50": 0.02
+      }
+    },
+    {
+      "name": "pannsrow__dymn_filemax__a50_w04",
+      "type": "rank_blend",
+      "description": "4.0% file-calibrated sidecar pannsrow__dymn_filemax__a50",
+      "weights": {
+        "anchor_v616_raw": 0.96,
+        "pannsrow__dymn_filemax__a50": 0.04
+      }
+    }
+  ],
+  "bootstrap": {
+    "iters": 200,
+    "groups": [
+      "site",
+      "file"
+    ]
+  },
+  "promotion_gates": {
+    "matched_rows_min": 190,
+    "valid_classes_min": 40,
+    "lift_vs_anchor_min": 0.006,
+    "lift_vs_baseline_min": 0.001,
+    "site_bootstrap_q05_min": 0.003,
+    "file_bootstrap_q05_min": 0.0015,
+    "leave_one_site_min": 0.003,
+    "leave_one_file_q05_min": 0.001,
+    "leave_one_file_p_gt_0_min": 0.9
+  }
+}

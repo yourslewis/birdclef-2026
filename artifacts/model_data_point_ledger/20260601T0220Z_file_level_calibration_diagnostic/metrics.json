@@ -1,0 +1,4675 @@
+{
+  "created_utc": "2026-06-01T02:23:41Z",
+  "experiment_id": "file-level-calibration-mapping-diagnostic-20260601T0215Z",
+  "data": {
+    "windows": 1478,
+    "val_windows": 1314,
+    "files": 66,
+    "sites": 9,
+    "labels": 72
+  },
+  "selected_sidecars": [
+    "pannsrow__dymn_filemean__a35",
+    "pannsrow__dymn_filemax__a35",
+    "pannsrow__dymn_filemean__a50",
+    "pannsrow__dymn_filemax__a20",
+    "pannsrow__dymn_filemax__a50"
+  ],
+  "top_by_row_auc": [
+    {
+      "candidate": "pannsrow__dymn_filemean__a35",
+      "row_auc": 0.6873504820211648,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7571452543577251,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5994417763183072,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6873504820211648,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29915646417313707,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7753742784992785,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5858068197463274,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.818161651234568,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6389382143833469,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6021941488616221,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7036277794018455,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5735294117647058,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6255921143816446,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5542207792207792,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5913248679666997,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6063368055555556,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5503302827791069,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6306783242626823,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6637595981250195,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7753742784992785,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5858068197463274,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.818161651234568,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6389382143833469,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6021941488616221,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7036277794018455,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08312153816223145,
+      "std": 0.09343575686216354,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a35",
+      "row_auc": 0.6872255240950453,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7609737249275682,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5995985689487696,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6872255240950453,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3057546926773502,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7625496031746032,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5927116916531473,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8156153549382715,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6454132979458179,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6103388265474959,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6967243703109364,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5833333333333334,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6387590162320765,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5285714285714286,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5962829676327444,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6098090277777777,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5588364547957873,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6495364822444056,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6545550526704741,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7625496031746032,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5927116916531473,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8156153549382715,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6454132979458179,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6103388265474959,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6967243703109364,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08993896096944809,
+      "std": 0.10079385340213776,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a50",
+      "row_auc": 0.6871354549037223,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7741377531074201,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5856400316213184,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6871354549037223,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.30454052803970144,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7214285714285714,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914332040072255,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8315104166666666,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6328028201659172,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6098012186163053,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.735836498537648,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5833333333333334,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6344098519778534,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.8333333333333334,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.44285714285714284,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5970469218900035,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6167534722222221,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5387203650397496,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6100742290625347,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7083880586562579,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7214285714285714,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914332040072255,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8315104166666666,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6328028201659172,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6098012186163053,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.735836498537648,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.07927755266427994,
+      "std": 0.09310352802276611,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a20",
+      "row_auc": 0.6844440851506798,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.73186067840878,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6099009130716432,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6844440851506798,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29764906645725225,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8250992063492063,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5598238115364683,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7975597993827162,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6568470617916562,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6009597634971808,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6663748683468511,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.53125,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6344238743742487,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6571428571428571,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5629899180974371,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5889756944444444,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5799935934134178,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6573191632598068,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6129842520718958,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8250992063492063,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5598238115364683,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7975597993827162,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6568470617916562,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6009597634971808,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6663748683468511,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09200882911682129,
+      "std": 0.09986507892608643,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a20",
+      "row_auc": 0.682679301281786,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7305628346002075,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6055801741310243,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.682679301281786,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29452110944468585,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8212031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5540884566897034,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8000289351851851,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6530546271147544,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953094037597059,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6723912824882652,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.53125,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6266368115228141,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6493506493506493,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5576230717890978,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5889756944444444,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5786773518185839,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.639531641473091,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6193226359102796,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8212031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5540884566897034,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8000289351851851,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6530546271147544,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953094037597059,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6723912824882652,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08795937895774841,
+      "std": 0.09561245143413544,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a50",
+      "row_auc": 0.6826153497264656,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7840444793751588,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5787435867699573,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6826153497264656,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3154406459610306,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6969155844155844,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914937472751677,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8278067129629628,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6378291163943304,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.619107296236624,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7225396410741238,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.607843137254902,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6380904056627175,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.8333333333333334,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.39383116883116887,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5941698500560598,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6167534722222221,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5454448311080573,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6316032830306768,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.690658915371559,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6969155844155844,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914937472751677,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8278067129629628,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6378291163943304,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.619107296236624,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7225396410741238,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08872266858816147,
+      "std": 0.1037151888012886,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a10",
+      "row_auc": 0.6789643209215219,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.6966304724349494,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.607170801703971,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6789643209215219,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29177345662782467,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8426316738816739,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5381946306530105,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7889949845679012,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6672303134877658,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5901401311578062,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6465941917809734,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5245098039215687,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6261063640214615,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6922077922077923,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5405590206914229,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5855034722222222,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5975742193754384,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6399915853725204,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.5871887203544292,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8426316738816739,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5381946306530105,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7889949845679012,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6672303134877658,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5901401311578062,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6465941917809734,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09389754384756088,
+      "std": 0.10054661333560944,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a10",
+      "row_auc": 0.6782410197602321,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.6972496948055924,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6051405199812224,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6782410197602321,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29070439155821276,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8444173881673882,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5368397343275865,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7914641203703704,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6628086719864433,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5868967523887875,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6470194513208163,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5343137254901961,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6200177766766921,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6957792207792208,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5391244245821505,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5855034722222222,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5946715489764336,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.626325218569586,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.5894392347577213,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8444173881673882,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5368397343275865,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7914641203703704,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6628086719864433,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5868967523887875,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6470194513208163,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09181349724531174,
+      "std": 0.09837323427200317,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a05",
+      "row_auc": 0.678036898827461,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.6935263284355114,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6069539048480692,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.678036898827461,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.2897842399853017,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8587031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5291943836304893,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7878375771604939,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6708814259281477,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5833435192506161,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6382613845419162,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5098039215686275,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6221873823777746,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7243506493506493,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5307940532558122,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.58203125,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6028634975158081,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6210812574893823,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.5806027214767636,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8587031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5291943836304893,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7878375771604939,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6708814259281477,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5833435192506161,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6382613845419162,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09499821066856384,
+      "std": 0.10130220651626587,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a05",
+      "row_auc": 0.67742254934028,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.6928213216994816,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6054940472116174,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.67742254934028,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.28913677450324987,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8587031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5268671345264969,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7878375771604939,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6693679290643484,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5813280294064339,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6404315234308051,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5098039215686275,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6179573419615955,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7243506493506493,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5284475542045262,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.58203125,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6021140677341204,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6125245219851263,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.5834962399952822,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8587031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5268671345264969,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7878375771604939,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6693679290643484,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5813280294064339,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6404315234308051,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09394054114818573,
+      "std": 0.1002006083726883,
+      "nonconstant_labels": 72
+    }
+  ],
+  "top_by_file_mil_auc": [
+    {
+      "candidate": "pannsrow__dymn_filemax__a50",
+      "row_auc": 0.6826153497264656,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7840444793751588,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5787435867699573,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6826153497264656,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3154406459610306,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6969155844155844,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914937472751677,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8278067129629628,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6378291163943304,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.619107296236624,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7225396410741238,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.607843137254902,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6380904056627175,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.8333333333333334,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.39383116883116887,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5941698500560598,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6167534722222221,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5454448311080573,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6316032830306768,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.690658915371559,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6969155844155844,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914937472751677,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8278067129629628,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6378291163943304,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.619107296236624,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7225396410741238,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08872266858816147,
+      "std": 0.1037151888012886,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a50",
+      "row_auc": 0.6871354549037223,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7741377531074201,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5856400316213184,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6871354549037223,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.30454052803970144,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7214285714285714,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914332040072255,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8315104166666666,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6328028201659172,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6098012186163053,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.735836498537648,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5833333333333334,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6344098519778534,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.8333333333333334,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.44285714285714284,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5970469218900035,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6167534722222221,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5387203650397496,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6100742290625347,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7083880586562579,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7214285714285714,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5914332040072255,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8315104166666666,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6328028201659172,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6098012186163053,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.735836498537648,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.07927755266427994,
+      "std": 0.09310352802276611,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a35",
+      "row_auc": 0.6872255240950453,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7609737249275682,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5995985689487696,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6872255240950453,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3057546926773502,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7625496031746032,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5927116916531473,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8156153549382715,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6454132979458179,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6103388265474959,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6967243703109364,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5833333333333334,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6387590162320765,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5285714285714286,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5962829676327444,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6098090277777777,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5588364547957873,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6495364822444056,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6545550526704741,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7625496031746032,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5927116916531473,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8156153549382715,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6454132979458179,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6103388265474959,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6967243703109364,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08993896096944809,
+      "std": 0.10079385340213776,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a35",
+      "row_auc": 0.6873504820211648,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7571452543577251,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5994417763183072,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6873504820211648,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29915646417313707,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7753742784992785,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5858068197463274,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.818161651234568,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6389382143833469,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6021941488616221,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7036277794018455,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5735294117647058,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6255921143816446,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5542207792207792,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5913248679666997,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6063368055555556,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5503302827791069,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6306783242626823,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6637595981250195,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7753742784992785,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5858068197463274,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.818161651234568,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6389382143833469,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6021941488616221,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7036277794018455,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08312153816223145,
+      "std": 0.09343575686216354,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "dymn_filemax_self",
+      "row_auc": 0.6641428085524171,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7457040971197718,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5664710686488218,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6641428085524171,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3479305325944709,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6428571428571428,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5892847880032336,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.9034722222222222,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5426444921609134,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.636818512584401,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.66977969348659,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5686274509803922,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6555971317382389,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.2857142857142857,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5917133049446003,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.84375,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.4405814416567104,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.594027788261881,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6430395913154534,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6428571428571428,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5892847880032336,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.9034722222222222,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5426444921609134,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.636818512584401,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.66977969348659,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08967802673578262,
+      "std": 0.12264939397573471,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "dymn_context",
+      "row_auc": 0.6418024964862905,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7457040971197718,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5145821371202107,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6418024964862905,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.3379612273646953,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5141729797979798,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5886120172322374,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8503906249999998,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5198361508324018,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.639910289651073,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7378929164040514,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5686274509803922,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6555971317382389,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.75,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.18806818181818183,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5793539005988396,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6178385416666666,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.41204823121967765,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5853671495862343,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7048168178316646,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.5141729797979798,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5886120172322374,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8503906249999998,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5198361508324018,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.639910289651073,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.7378929164040514,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.07173194736242294,
+      "std": 0.10238362103700638,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "rowfile_panns60_dymnfile25_fused15",
+      "row_auc": 0.6764803122720785,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7434273491099126,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5800220063127447,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6764803122720785,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.30567078465818065,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7254678481240981,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.59493796355326,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.814038387345679,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6423599231878034,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5986303359699041,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6834474154517258,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.625,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6100738985810447,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.455275974025974,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5952284319975695,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6182725694444444,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5547101848447612,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6298934414732029,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6267514360905165,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.7254678481240981,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.59493796355326,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.814038387345679,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6423599231878034,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5986303359699041,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6834474154517258,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09189772605895996,
+      "std": 0.10427577048540115,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "rowblend_panns50_dymn25_fused25",
+      "row_auc": 0.670122557033283,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7386620315838442,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.5608046039127926,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.670122557033283,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.31190085046509736,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6667049963924964,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.6045781501287828,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8171585648148149,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6407988290400171,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953055622570127,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6961892395665743,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5637254901960784,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.59375,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6078300326403209,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.3351461038961039,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5990827471951818,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.6236979166666667,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5571793178036409,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6076645046883495,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.642057033226813,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6667049963924964,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.6045781501287828,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8171585648148149,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6407988290400171,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953055622570127,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6961892395665743,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08995059877634048,
+      "std": 0.1068226769566536,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemax__a20",
+      "row_auc": 0.6844440851506798,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.73186067840878,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6099009130716432,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.6844440851506798,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29764906645725225,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8250992063492063,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5598238115364683,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7975597993827162,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6568470617916562,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6009597634971808,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6663748683468511,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.53125,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6344238743742487,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6571428571428571,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5629899180974371,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5889756944444444,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5799935934134178,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6573191632598068,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6129842520718958,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8250992063492063,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5598238115364683,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.7975597993827162,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6568470617916562,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6009597634971808,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6663748683468511,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.09200882911682129,
+      "std": 0.09986507892608643,
+      "nonconstant_labels": 72
+    },
+    {
+      "candidate": "pannsrow__dymn_filemean__a20",
+      "row_auc": 0.682679301281786,
+      "row_valid_classes": 11,
+      "file_mil_auc": 0.7305628346002075,
+      "file_valid_classes": 10,
+      "no_train_auc": 0.6055801741310243,
+      "no_train_valid_classes": 7,
+      "nonaves_auc": 0.682679301281786,
+      "nonaves_valid_classes": 11,
+      "pooled_row_auc": 0.29452110944468585,
+      "pooled_row_valid_classes": 45,
+      "row_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8212031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5540884566897034,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8000289351851851,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6530546271147544,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953094037597059,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6723912824882652,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "file_mil_folds": [
+        {
+          "site": "S03",
+          "auc": 1.0,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5588235294117647,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 1.0,
+          "valid_classes": 5,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.53125,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.6266368115228141,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6666666666666666,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "no_train_folds": [
+        {
+          "site": "S03",
+          "auc": 0.6493506493506493,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5576230717890978,
+          "valid_classes": 17,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.5889756944444444,
+          "valid_classes": 2,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.5786773518185839,
+          "valid_classes": 11,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.639531641473091,
+          "valid_classes": 2,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6193226359102796,
+          "valid_classes": 6,
+          "n_rows": 72
+        }
+      ],
+      "nonaves_folds": [
+        {
+          "site": "S03",
+          "auc": 0.8212031024531024,
+          "valid_classes": 4,
+          "n_rows": 48
+        },
+        {
+          "site": "S08",
+          "auc": 0.5540884566897034,
+          "valid_classes": 18,
+          "n_rows": 120
+        },
+        {
+          "site": "S13",
+          "auc": 0.8000289351851851,
+          "valid_classes": 6,
+          "n_rows": 48
+        },
+        {
+          "site": "S19",
+          "auc": 0.6530546271147544,
+          "valid_classes": 16,
+          "n_rows": 72
+        },
+        {
+          "site": "S22",
+          "auc": 0.5953094037597059,
+          "valid_classes": 15,
+          "n_rows": 954
+        },
+        {
+          "site": "S23",
+          "auc": 0.6723912824882652,
+          "valid_classes": 8,
+          "n_rows": 72
+        }
+      ],
+      "mean": 0.08795937895774841,
+      "std": 0.09561245143413544,
+      "nonconstant_labels": 72
+    }
+  ],
+  "sidecar_build": [
+    {
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemean__a35_sidecar_234.csv",
+      "rows": 240,
+      "class_columns": 234,
+      "scope_labels": 72,
+      "matched_proxy_rows": 156,
+      "unmatched_proxy_rows": 84,
+      "finite": true,
+      "nonconstant_columns": 234,
+      "value_stats": {
+        "min": 1.5926623746054247e-05,
+        "max": 1.0,
+        "mean": 0.41133806109428406,
+        "std": 0.29159295558929443
+      },
+      "candidate": "pannsrow__dymn_filemean__a35",
+      "member": "pannsrow__dymn_filemean__a35",
+      "metric": {
+        "candidate": "pannsrow__dymn_filemean__a35",
+        "row_auc": 0.6873504820211648,
+        "row_valid_classes": 11,
+        "file_mil_auc": 0.7571452543577251,
+        "file_valid_classes": 10,
+        "no_train_auc": 0.5994417763183072,
+        "no_train_valid_classes": 7,
+        "nonaves_auc": 0.6873504820211648,
+        "nonaves_valid_classes": 11,
+        "pooled_row_auc": 0.29915646417313707,
+        "pooled_row_valid_classes": 45,
+        "row_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7753742784992785,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5858068197463274,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.818161651234568,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6389382143833469,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6021941488616221,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.7036277794018455,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "file_mil_folds": [
+          {
+            "site": "S03",
+            "auc": 1.0,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5735294117647058,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 1.0,
+            "valid_classes": 5,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.59375,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6255921143816446,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.75,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "no_train_folds": [
+          {
+            "site": "S03",
+            "auc": 0.5542207792207792,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5913248679666997,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.6063368055555556,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.5503302827791069,
+            "valid_classes": 11,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6306783242626823,
+            "valid_classes": 2,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6637595981250195,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "nonaves_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7753742784992785,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5858068197463274,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.818161651234568,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6389382143833469,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6021941488616221,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.7036277794018455,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "mean": 0.08312153816223145,
+        "std": 0.09343575686216354,
+        "nonconstant_labels": 72
+      }
+    },
+    {
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a35_sidecar_234.csv",
+      "rows": 240,
+      "class_columns": 234,
+      "scope_labels": 72,
+      "matched_proxy_rows": 156,
+      "unmatched_proxy_rows": 84,
+      "finite": true,
+      "nonconstant_columns": 234,
+      "value_stats": {
+        "min": 2.536874308134429e-05,
+        "max": 1.0,
+        "mean": 0.4127866327762604,
+        "std": 0.29064133763313293
+      },
+      "candidate": "pannsrow__dymn_filemax__a35",
+      "member": "pannsrow__dymn_filemax__a35",
+      "metric": {
+        "candidate": "pannsrow__dymn_filemax__a35",
+        "row_auc": 0.6872255240950453,
+        "row_valid_classes": 11,
+        "file_mil_auc": 0.7609737249275682,
+        "file_valid_classes": 10,
+        "no_train_auc": 0.5995985689487696,
+        "no_train_valid_classes": 7,
+        "nonaves_auc": 0.6872255240950453,
+        "nonaves_valid_classes": 11,
+        "pooled_row_auc": 0.3057546926773502,
+        "pooled_row_valid_classes": 45,
+        "row_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7625496031746032,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5927116916531473,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8156153549382715,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6454132979458179,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6103388265474959,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6967243703109364,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "file_mil_folds": [
+          {
+            "site": "S03",
+            "auc": 1.0,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5833333333333334,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 1.0,
+            "valid_classes": 5,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.59375,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6387590162320765,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.75,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "no_train_folds": [
+          {
+            "site": "S03",
+            "auc": 0.5285714285714286,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5962829676327444,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.6098090277777777,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.5588364547957873,
+            "valid_classes": 11,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6495364822444056,
+            "valid_classes": 2,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6545550526704741,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "nonaves_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7625496031746032,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5927116916531473,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8156153549382715,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6454132979458179,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6103388265474959,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6967243703109364,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "mean": 0.08993896096944809,
+        "std": 0.10079385340213776,
+        "nonconstant_labels": 72
+      }
+    },
+    {
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemean__a50_sidecar_234.csv",
+      "rows": 240,
+      "class_columns": 234,
+      "scope_labels": 72,
+      "matched_proxy_rows": 156,
+      "unmatched_proxy_rows": 84,
+      "finite": true,
+      "nonconstant_columns": 234,
+      "value_stats": {
+        "min": 1.9442308257566765e-05,
+        "max": 1.0,
+        "mean": 0.4110044240951538,
+        "std": 0.29201340675354004
+      },
+      "candidate": "pannsrow__dymn_filemean__a50",
+      "member": "pannsrow__dymn_filemean__a50",
+      "metric": {
+        "candidate": "pannsrow__dymn_filemean__a50",
+        "row_auc": 0.6871354549037223,
+        "row_valid_classes": 11,
+        "file_mil_auc": 0.7741377531074201,
+        "file_valid_classes": 10,
+        "no_train_auc": 0.5856400316213184,
+        "no_train_valid_classes": 7,
+        "nonaves_auc": 0.6871354549037223,
+        "nonaves_valid_classes": 11,
+        "pooled_row_auc": 0.30454052803970144,
+        "pooled_row_valid_classes": 45,
+        "row_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7214285714285714,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5914332040072255,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8315104166666666,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6328028201659172,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6098012186163053,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.735836498537648,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "file_mil_folds": [
+          {
+            "site": "S03",
+            "auc": 1.0,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5833333333333334,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 1.0,
+            "valid_classes": 5,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.59375,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6344098519778534,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.8333333333333334,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "no_train_folds": [
+          {
+            "site": "S03",
+            "auc": 0.44285714285714284,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5970469218900035,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.6167534722222221,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.5387203650397496,
+            "valid_classes": 11,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6100742290625347,
+            "valid_classes": 2,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.7083880586562579,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "nonaves_folds": [
+          {
+            "site": "S03",
+            "auc": 0.7214285714285714,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5914332040072255,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8315104166666666,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6328028201659172,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6098012186163053,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.735836498537648,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "mean": 0.07927755266427994,
+        "std": 0.09310352802276611,
+        "nonconstant_labels": 72
+      }
+    },
+    {
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a20_sidecar_234.csv",
+      "rows": 240,
+      "class_columns": 234,
+      "scope_labels": 72,
+      "matched_proxy_rows": 156,
+      "unmatched_proxy_rows": 84,
+      "finite": true,
+      "nonconstant_columns": 234,
+      "value_stats": {
+        "min": 1.7022703104885295e-05,
+        "max": 1.0,
+        "mean": 0.41272854804992676,
+        "std": 0.29052233695983887
+      },
+      "candidate": "pannsrow__dymn_filemax__a20",
+      "member": "pannsrow__dymn_filemax__a20",
+      "metric": {
+        "candidate": "pannsrow__dymn_filemax__a20",
+        "row_auc": 0.6844440851506798,
+        "row_valid_classes": 11,
+        "file_mil_auc": 0.73186067840878,
+        "file_valid_classes": 10,
+        "no_train_auc": 0.6099009130716432,
+        "no_train_valid_classes": 7,
+        "nonaves_auc": 0.6844440851506798,
+        "nonaves_valid_classes": 11,
+        "pooled_row_auc": 0.29764906645725225,
+        "pooled_row_valid_classes": 45,
+        "row_folds": [
+          {
+            "site": "S03",
+            "auc": 0.8250992063492063,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5598238115364683,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.7975597993827162,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6568470617916562,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6009597634971808,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6663748683468511,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "file_mil_folds": [
+          {
+            "site": "S03",
+            "auc": 1.0,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5588235294117647,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 1.0,
+            "valid_classes": 5,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.53125,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6344238743742487,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6666666666666666,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "no_train_folds": [
+          {
+            "site": "S03",
+            "auc": 0.6571428571428571,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5629899180974371,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.5889756944444444,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.5799935934134178,
+            "valid_classes": 11,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6573191632598068,
+            "valid_classes": 2,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6129842520718958,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "nonaves_folds": [
+          {
+            "site": "S03",
+            "auc": 0.8250992063492063,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5598238115364683,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.7975597993827162,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6568470617916562,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6009597634971808,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.6663748683468511,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "mean": 0.09200882911682129,
+        "std": 0.09986507892608643,
+        "nonconstant_labels": 72
+      }
+    },
+    {
+      "path": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/sidecars/pannsrow__dymn_filemax__a50_sidecar_234.csv",
+      "rows": 240,
+      "class_columns": 234,
+      "scope_labels": 72,
+      "matched_proxy_rows": 156,
+      "unmatched_proxy_rows": 84,
+      "finite": true,
+      "nonconstant_columns": 234,
+      "value_stats": {
+        "min": 3.7806559703312814e-05,
+        "max": 1.0,
+        "mean": 0.4130653738975525,
+        "std": 0.29073968529701233
+      },
+      "candidate": "pannsrow__dymn_filemax__a50",
+      "member": "pannsrow__dymn_filemax__a50",
+      "metric": {
+        "candidate": "pannsrow__dymn_filemax__a50",
+        "row_auc": 0.6826153497264656,
+        "row_valid_classes": 11,
+        "file_mil_auc": 0.7840444793751588,
+        "file_valid_classes": 10,
+        "no_train_auc": 0.5787435867699573,
+        "no_train_valid_classes": 7,
+        "nonaves_auc": 0.6826153497264656,
+        "nonaves_valid_classes": 11,
+        "pooled_row_auc": 0.3154406459610306,
+        "pooled_row_valid_classes": 45,
+        "row_folds": [
+          {
+            "site": "S03",
+            "auc": 0.6969155844155844,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5914937472751677,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8278067129629628,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6378291163943304,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.619107296236624,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.7225396410741238,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "file_mil_folds": [
+          {
+            "site": "S03",
+            "auc": 1.0,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.607843137254902,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 1.0,
+            "valid_classes": 5,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.625,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6380904056627175,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.8333333333333334,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "no_train_folds": [
+          {
+            "site": "S03",
+            "auc": 0.39383116883116887,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5941698500560598,
+            "valid_classes": 17,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.6167534722222221,
+            "valid_classes": 2,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.5454448311080573,
+            "valid_classes": 11,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.6316032830306768,
+            "valid_classes": 2,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.690658915371559,
+            "valid_classes": 6,
+            "n_rows": 72
+          }
+        ],
+        "nonaves_folds": [
+          {
+            "site": "S03",
+            "auc": 0.6969155844155844,
+            "valid_classes": 4,
+            "n_rows": 48
+          },
+          {
+            "site": "S08",
+            "auc": 0.5914937472751677,
+            "valid_classes": 18,
+            "n_rows": 120
+          },
+          {
+            "site": "S13",
+            "auc": 0.8278067129629628,
+            "valid_classes": 6,
+            "n_rows": 48
+          },
+          {
+            "site": "S19",
+            "auc": 0.6378291163943304,
+            "valid_classes": 16,
+            "n_rows": 72
+          },
+          {
+            "site": "S22",
+            "auc": 0.619107296236624,
+            "valid_classes": 15,
+            "n_rows": 954
+          },
+          {
+            "site": "S23",
+            "auc": 0.7225396410741238,
+            "valid_classes": 8,
+            "n_rows": 72
+          }
+        ],
+        "mean": 0.08872266858816147,
+        "std": 0.1037151888012886,
+        "nonconstant_labels": 72
+      }
+    }
+  ],
+  "audit_summary": {
+    "audit_json": "artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/audit/ensemble_strategy_audit.json",
+    "top_by_lift_vs_v616": [
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w02",
+        "macro_auc": 0.991112417406331,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0007219108871711066,
+        "lift_vs_v616": -0.0023682501678078394,
+        "rank_corr_vs_v616": 0.9996127054126814,
+        "mae_vs_v616": 0.006450955290347338,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w02",
+        "macro_auc": 0.9910958382680859,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0007053317489259525,
+        "lift_vs_v616": -0.0023848293060529935,
+        "rank_corr_vs_v616": 0.999612671037979,
+        "mae_vs_v616": 0.006451828870922327,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w01",
+        "macro_auc": 0.9910795058607851,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006889993416251405,
+        "lift_vs_v616": -0.0024011617133538055,
+        "rank_corr_vs_v616": 0.9996766467851985,
+        "mae_vs_v616": 0.006153745576739311,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w01",
+        "macro_auc": 0.9910608854322266,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006703789130666493,
+        "lift_vs_v616": -0.0024197821419122967,
+        "rank_corr_vs_v616": 0.9996765211387431,
+        "mae_vs_v616": 0.006155049428343773,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w005",
+        "macro_auc": 0.9910604475438166,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006699410246566728,
+        "lift_vs_v616": -0.002420220030322273,
+        "rank_corr_vs_v616": 0.9996918975272145,
+        "mae_vs_v616": 0.006140617653727531,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w01",
+        "macro_auc": 0.9910577125212712,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006672060021112314,
+        "lift_vs_v616": -0.0024229550528677146,
+        "rank_corr_vs_v616": 0.9996767335095152,
+        "mae_vs_v616": 0.006154090631753206,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w02",
+        "macro_auc": 0.9910506272951646,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006601207760046357,
+        "lift_vs_v616": -0.0024300402789743103,
+        "rank_corr_vs_v616": 0.9996132264588393,
+        "mae_vs_v616": 0.006448076106607914,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w01",
+        "macro_auc": 0.9910465657404617,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006560592213017413,
+        "lift_vs_v616": -0.0024341018336772047,
+        "rank_corr_vs_v616": 0.999676851044224,
+        "mae_vs_v616": 0.006154648959636688,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w02",
+        "macro_auc": 0.9910452640846396,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006547575654796134,
+        "lift_vs_v616": -0.0024354034894993326,
+        "rank_corr_vs_v616": 0.9996138921778732,
+        "mae_vs_v616": 0.0064437552355229855,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w005",
+        "macro_auc": 0.9910418608741759,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.000651354355015954,
+        "lift_vs_v616": -0.002438806699962992,
+        "rank_corr_vs_v616": 0.9996918080154057,
+        "mae_vs_v616": 0.006141653284430504,
+        "gate": null,
+        "eligible": null
+      }
+    ],
+    "all_recipes": [
+      {
+        "recipe": "anchor_only",
+        "macro_auc": 0.9903905065191599,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0,
+        "lift_vs_v616": -0.003090161054978946,
+        "rank_corr_vs_v616": 0.9996961104177539,
+        "mae_vs_v616": 0.006243720650672913,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "v616_baseline",
+        "macro_auc": 0.9934806675741389,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.003090161054978946,
+        "lift_vs_v616": 0.0,
+        "rank_corr_vs_v616": 0.9999999999999998,
+        "mae_vs_v616": 0.0,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w005",
+        "macro_auc": 0.9910418608741759,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.000651354355015954,
+        "lift_vs_v616": -0.002438806699962992,
+        "rank_corr_vs_v616": 0.9996918080154057,
+        "mae_vs_v616": 0.006141653284430504,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w01",
+        "macro_auc": 0.9910608854322266,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006703789130666493,
+        "lift_vs_v616": -0.0024197821419122967,
+        "rank_corr_vs_v616": 0.9996765211387431,
+        "mae_vs_v616": 0.006155049428343773,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w02",
+        "macro_auc": 0.9910958382680859,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0007053317489259525,
+        "lift_vs_v616": -0.0023848293060529935,
+        "rank_corr_vs_v616": 0.999612671037979,
+        "mae_vs_v616": 0.006451828870922327,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a35_w04",
+        "macro_auc": 0.9908742618234967,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0004837553043367526,
+        "lift_vs_v616": -0.0026064057506421934,
+        "rank_corr_vs_v616": 0.9993496344550051,
+        "mae_vs_v616": 0.007671291008591652,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w005",
+        "macro_auc": 0.9910418608741759,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.000651354355015954,
+        "lift_vs_v616": -0.002438806699962992,
+        "rank_corr_vs_v616": 0.9996918981216663,
+        "mae_vs_v616": 0.00614134082570672,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w01",
+        "macro_auc": 0.9910577125212712,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006672060021112314,
+        "lift_vs_v616": -0.0024229550528677146,
+        "rank_corr_vs_v616": 0.9996767335095152,
+        "mae_vs_v616": 0.006154090631753206,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w02",
+        "macro_auc": 0.9910506272951646,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006601207760046357,
+        "lift_vs_v616": -0.0024300402789743103,
+        "rank_corr_vs_v616": 0.9996132264588393,
+        "mae_vs_v616": 0.006448076106607914,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a35_w04",
+        "macro_auc": 0.9908679600802311,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.00047745356107120607,
+        "lift_vs_v616": -0.00261270749390774,
+        "rank_corr_vs_v616": 0.9993512841467395,
+        "mae_vs_v616": 0.007657173555344343,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a50_w005",
+        "macro_auc": 0.9909807417088414,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0005902351896814872,
+        "lift_vs_v616": -0.0024999258652974587,
+        "rank_corr_vs_v616": 0.9996917808007161,
+        "mae_vs_v616": 0.006142592988908291,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a50_w01",
+        "macro_auc": 0.9909673107734625,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0005768042543025098,
+        "lift_vs_v616": -0.002513356800676436,
+        "rank_corr_vs_v616": 0.9996765513962322,
+        "mae_vs_v616": 0.006156108342111111,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a50_w02",
+        "macro_auc": 0.9909791669710647,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0005886604519047545,
+        "lift_vs_v616": -0.0025015006030741915,
+        "rank_corr_vs_v616": 0.9996130757009681,
+        "mae_vs_v616": 0.006448865402489901,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemean__a50_w04",
+        "macro_auc": 0.9907973690285621,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0004068625094021394,
+        "lift_vs_v616": -0.0026832985455768066,
+        "rank_corr_vs_v616": 0.9993518633058587,
+        "mae_vs_v616": 0.007663320284336805,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w005",
+        "macro_auc": 0.9910604475438166,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006699410246566728,
+        "lift_vs_v616": -0.002420220030322273,
+        "rank_corr_vs_v616": 0.9996918975272145,
+        "mae_vs_v616": 0.006140617653727531,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w01",
+        "macro_auc": 0.9910795058607851,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006889993416251405,
+        "lift_vs_v616": -0.0024011617133538055,
+        "rank_corr_vs_v616": 0.9996766467851985,
+        "mae_vs_v616": 0.006153745576739311,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w02",
+        "macro_auc": 0.991112417406331,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0007219108871711066,
+        "lift_vs_v616": -0.0023682501678078394,
+        "rank_corr_vs_v616": 0.9996127054126814,
+        "mae_vs_v616": 0.006450955290347338,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a20_w04",
+        "macro_auc": 0.9909107892290517,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.000520282709891795,
+        "lift_vs_v616": -0.002569878345087151,
+        "rank_corr_vs_v616": 0.9993488080819131,
+        "mae_vs_v616": 0.0076675815507769585,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w005",
+        "macro_auc": 0.9910418608741759,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.000651354355015954,
+        "lift_vs_v616": -0.002438806699962992,
+        "rank_corr_vs_v616": 0.9996919038965643,
+        "mae_vs_v616": 0.006142182741314173,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w01",
+        "macro_auc": 0.9910465657404617,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006560592213017413,
+        "lift_vs_v616": -0.0024341018336772047,
+        "rank_corr_vs_v616": 0.999676851044224,
+        "mae_vs_v616": 0.006154648959636688,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w02",
+        "macro_auc": 0.9910452640846396,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0006547575654796134,
+        "lift_vs_v616": -0.0024354034894993326,
+        "rank_corr_vs_v616": 0.9996138921778732,
+        "mae_vs_v616": 0.0064437552355229855,
+        "gate": null,
+        "eligible": null
+      },
+      {
+        "recipe": "pannsrow__dymn_filemax__a50_w04",
+        "macro_auc": 0.9909390882689363,
+        "valid_classes": 42,
+        "lift_vs_anchor": 0.0005485817497763446,
+        "lift_vs_v616": -0.0025415793052026014,
+        "rank_corr_vs_v616": 0.9993543915244005,
+        "mae_vs_v616": 0.007641160394996405,
+        "gate": null,
+        "eligible": null
+      }
+    ],
+    "submit_approved": false
+  },
+  "decision": "reject_submission_grade_unless_audit_beats_v616_and_gates"
+}

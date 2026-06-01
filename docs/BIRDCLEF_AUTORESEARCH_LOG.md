@@ -4893,3 +4893,13 @@ Next: read scores; if either ≥0.950, audit and possibly submit one neighbor fo
 - Sidecar audit: best 2% scoped 72→234 sidecar local AUC `0.990914` / 42 valid, lift vs v616 `-0.002567`, lift vs anchor `+0.000523`, rank corr `0.999611`; `submit_approved=false`.
 - Decision: keep as landscape data point; reject direct/sidecar submission. Next exact action: file-level calibration/mapping diagnostic using the best row/file candidates rather than another raw low-weight sidecar.
 - Updated canonical performance table/jsonl, v653-v655 score rows, per-model ledger `artifacts/model_data_point_ledger/20260601T0029Z_fused_nonaves_notrain_filectx_filemil_sequence.md`, sidecar audit `artifacts/model_data_point_ledger/20260601T0029Z_fused_nonaves_notrain_filectx_filemil_sidecar_audit/audit_summary.json`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T0020Z.md`.
+
+## 2026-06-01 02:24 UTC — File-level calibration/mapping diagnostic
+
+- Live Kaggle Bearer check: UTC slots `0/5`; latest v653/v654/v655 scored `0.947`/`0.949`/`0.949`; public best remains `0.950` from v644/v647. No active BirdCLEF local/trainer jobs; all recent submissions complete.
+- Implemented and ran `scripts/birdclef_file_level_calibration_diagnostic.py`, using existing leave-site OOF predictions from PANNs 72-label row-only, DyMN10 72-label filectx/fileMIL, and fused DyMN10+PANNs filectx/fileMIL.
+- Best row/file mapping: PANNs row predictions plus 35% DyMN10 file-mean evidence in logit space. Row AUC `0.687350`, file-MIL `0.757145`, no-train `0.599442`, non-Aves `0.687350`.
+- Comparison: vs PANNs row-only `+0.012865` row / `+0.065989` file-MIL; vs DyMN10 filectx `+0.011441` file-MIL for the best-row mapping. Best grid file-MIL was `0.784044` from PANNs row + 50% DyMN10 file-max.
+- Sidecar verifier: selected 72→234 mappings were finite/nonconstant and audited vs v616. Best local sidecar was `0.991112` / 42 valid, lift vs v616 `-0.002368`, so `submit_approved=false`; no Kaggle slot used.
+- Decision: keep as a strong landscape point and reject direct slot. Next exact action is a hidden-safe package/student path for the file-calibration signal or a class/file movement diagnostic explaining why row/file gains do not transfer to v616 proxy sidecars.
+- Updated canonical performance table/jsonl, ledger `artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic.md`, metrics/audit dir `artifacts/model_data_point_ledger/20260601T0220Z_file_level_calibration_diagnostic/`, and queue `specs/birdclef-hillclimb-cron-20260525/ranked_queue_20260601T0224Z.md`.
