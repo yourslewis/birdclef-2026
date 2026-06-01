@@ -49,3 +49,4 @@ logs/
 # Local temp
 /tmp/
 tmp/
+.venv_scout/
