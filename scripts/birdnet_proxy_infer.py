@@ -80,7 +80,12 @@ def main() -> int:
     ap.add_argument("--out-csv", type=Path, required=True)
     ap.add_argument("--map-json", type=Path, required=True)
     ap.add_argument("--min-conf", type=float, default=0.01)
+    ap.add_argument("--no-location", action="store_true",
+                    help="omit the Pantanal geo-prior (location-agnostic re-score) to "
+                         "test the orthogonality/competence domain-shift hypothesis")
     args = ap.parse_args()
+    use_lat = None if args.no_location else PANTANAL_LAT
+    use_lon = None if args.no_location else PANTANAL_LON
     args.out_csv.parent.mkdir(parents=True, exist_ok=True)
 
     proxy = pd.read_csv(args.proxy_csv, nrows=0)
@@ -110,8 +115,11 @@ def main() -> int:
         ogg = args.audio_dir / f"{stem}.ogg"
         if not ogg.exists():
             raise FileNotFoundError(f"missing audio for proxy stem: {ogg}")
-        rec = Recording(analyzer, str(ogg), lat=PANTANAL_LAT, lon=PANTANAL_LON,
-                        week_48=-1, min_conf=args.min_conf)
+        if use_lat is None:
+            rec = Recording(analyzer, str(ogg), min_conf=args.min_conf)
+        else:
+            rec = Recording(analyzer, str(ogg), lat=use_lat, lon=use_lon,
+                            week_48=-1, min_conf=args.min_conf)
         rec.analyze()
         dets = rec.detections
         # init dense rows for this file with low prior on mapped species (0 elsewhere later)
@@ -160,7 +168,8 @@ def main() -> int:
         "unmapped_codes": how["unmapped"],
         "low_prior": LOW_PRIOR,
         "min_conf": args.min_conf,
-        "lat": PANTANAL_LAT, "lon": PANTANAL_LON,
+        "lat": use_lat, "lon": use_lon,
+        "location_agnostic": bool(args.no_location),
     }, indent=2))
     print(f"wrote mapping diagnostics {args.map_json}")
     return 0
