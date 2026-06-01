@@ -1,0 +1,51 @@
+{
+  "frontier": {
+    "definition": "rankblend(proto*0.60 + sed*0.40) of 0.950 EoS8 PowerOpt branches",
+    "proto_csv": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_protossm.csv",
+    "sed_csv": "artifacts/source_winner_audit_20260531T0416Z/session_outputs/v644_yaroslav_0950/submission_sed.csv",
+    "E_macro_auc": 0.9930290985314287,
+    "valid_class_count": 42,
+    "matched_rows": 190,
+    "weak_class_count": 14,
+    "weak_row_count": 63
+  },
+  "lambda": 0.01,
+  "weights_swept": [
+    -0.2,
+    -0.15,
+    -0.1,
+    -0.05,
+    0.02,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.65,
+    0.8,
+    1.0
+  ],
+  "candidates": [
+    {
+      "candidate": "birdnet_baseline",
+      "path": "artifacts/diversity_scout/birdnet_proxy/birdnet_train_soundscape_proxy.csv",
+      "cand_auc": 0.563917089476825,
+      "cand_auc_on_E_weak_classes": 0.5728956860453821,
+      "cand_auc_on_E_weak_rows": 0.5785200776103865,
+      "rank_decorrelation": 0.8696711755863487,
+      "residual_error_corr": 0.5100161630107308,
+      "blend_best_weight": 0.05,
+      "blend_best_lift": 0.0004208630808694158,
+      "blend_best_auc": 0.9934499616122981,
+      "blend_site_q05": 0.0,
+      "blend_site_p_gt_0": 0.88,
+      "blend_file_q05": -0.0004821796783005206,
+      "competence_above_chance_on_E_weak": 0.0728956860453821,
+      "DEV_score": 0.0010548158506520243,
+      "gate_pass": false
+    }
+  ],
+  "errors": []
+}

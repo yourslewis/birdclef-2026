@@ -50,3 +50,4 @@ logs/
 /tmp/
 tmp/
 .venv_scout/
+.venv_birdnet/
